@@ -9,7 +9,8 @@ import { BADGES_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
 import { AvatarCustomizer } from '@/components/AvatarCustomizer';
 import { RpgCombatViewport } from '@/components/RpgCombatViewport';
-import AdventureCarousel from '@/components/AdventureCarousel';
+import SagaMap from '@/components/SagaMap';
+import QuestCardModal from '@/components/QuestCardModal';
 import { 
   Flame, Coins, Sparkles, Compass, Trophy, Star, ArrowRight, 
   Lock, Heart, HelpCircle, Gamepad2, Dumbbell, Brain, Shield,
@@ -419,26 +420,12 @@ export default function StudentDashboard() {
         </div>
 
         {/* Laberinto de Misiones */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {missions.map(mission => (
-            <div key={mission.id} className="rounded-2xl border border-zinc-200/80 bg-white dark:border-zinc-800/80 dark:bg-zinc-900 p-5 flex flex-col justify-between shadow-sm">
-              <div>
-                <span className="px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-[10px] text-emerald-600 font-bold uppercase tracking-wider">
-                  Laberinto de {mission.subject_id === 'sub-math' ? 'Matemáticas' : 'Español'}
-                </span>
-                <h3 className="text-md font-bold mt-2 text-zinc-900 dark:text-white">{mission.title}</h3>
-                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{mission.description}</p>
-              </div>
-              
-              <Link
-                href={`/student/missions/${mission.id}`}
-                className="w-full text-center mt-5 bg-emerald-600 hover:bg-emerald-500 py-2.5 rounded-xl text-xs font-bold text-white shadow-md shadow-emerald-500/10 transition-all flex items-center justify-center gap-1.5"
-              >
-                Buscar pistas en el laberinto
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          ))}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Compass className="h-5 w-5 text-emerald-500" />
+            Mapa del Laberinto Académico
+          </h2>
+          <SagaMap missions={missions} activeLevel={activeLevel} activeGrade={activeGrade} />
         </div>
       </div>
     );
@@ -485,25 +472,12 @@ export default function StudentDashboard() {
         </div>
 
         {/* Mapa de Misiones */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {missions.map(mission => (
-            <div key={mission.id} className="rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
-              <div>
-                <span className="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/40 text-[10px] text-blue-600 font-bold uppercase tracking-wider">
-                  Misión Espacial
-                </span>
-                <h3 className="text-md font-bold mt-2 text-zinc-900 dark:text-white">{mission.title}</h3>
-                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{mission.description}</p>
-              </div>
-              <Link
-                href={`/student/missions/${mission.id}`}
-                className="w-full text-center mt-5 bg-blue-600 hover:bg-blue-500 py-2.5 rounded-xl text-xs font-bold text-white shadow-md shadow-blue-500/10 transition-all flex items-center justify-center gap-1.5"
-              >
-                Iniciar Aventura
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          ))}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Compass className="h-5 w-5 text-blue-500" />
+            Ruta Intergaláctica de Misiones
+          </h2>
+          <SagaMap missions={missions} activeLevel={activeLevel} activeGrade={activeGrade} />
         </div>
       </div>
     );
@@ -666,9 +640,13 @@ export default function StudentDashboard() {
           <RpgCombatViewport />
         </div>
 
-        {/* Tablero de Gremios / Contratos de Secundaria - Carrusel 3D */}
-        <div className="w-full">
-          <AdventureCarousel missions={missions} />
+        {/* Tablero de Gremios / Contratos de Secundaria - Saga Map */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Compass className="h-5 w-5 text-purple-500" />
+            Sendero del Héroe: Contratos Activos
+          </h2>
+          <SagaMap missions={missions} activeLevel={activeLevel} activeGrade={activeGrade} />
         </div>
 
 
@@ -753,29 +731,10 @@ export default function StudentDashboard() {
         {/* Misiones / Hitos de Proyecto */}
         <div className="flex flex-col gap-4">
           <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-            <Compass className="h-5 w-5 text-blue-500" />
-            Hitos y Entregables Activos
+            <Compass className="h-5 w-5 text-sky-500" />
+            Red de Hitos de Proyecto
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {missions.map(mission => (
-              <div key={mission.id} className="rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 p-5 flex flex-col justify-between shadow-sm">
-                <div>
-                  <span className="px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-950 text-[10px] text-zinc-600 dark:text-zinc-400 font-bold uppercase tracking-wider">
-                    Proyecto de Hito
-                  </span>
-                  <h3 className="text-md font-bold mt-2 text-zinc-900 dark:text-white">{mission.title}</h3>
-                  <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{mission.description}</p>
-                </div>
-                <Link
-                  href={`/student/missions/${mission.id}`}
-                  className="w-full text-center mt-5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5"
-                >
-                  Entregar Documento Ejecutivo
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            ))}
-          </div>
+          <SagaMap missions={missions} activeLevel={activeLevel} activeGrade={activeGrade} />
         </div>
 
         {/* Modal de Coevaluación */}
@@ -990,6 +949,8 @@ export default function StudentDashboard() {
           </div>
         </div>
       )}
+
+      <QuestCardModal />
     </div>
   );
 }

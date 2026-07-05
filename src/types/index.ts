@@ -496,6 +496,7 @@ export interface PortfolioItem {
   
   created_at: string;
   updated_at: string;
+  isNewRealtime?: boolean;
 
   // Relaciones anidadas opcionales
   student_profile?: UserProfile;

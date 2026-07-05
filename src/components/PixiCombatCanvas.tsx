@@ -492,22 +492,54 @@ export default function PixiCombatCanvas({
         bgContainer.x += (targetParallax.current.x - bgContainer.x) * 0.1;
         bgContainer.y += (targetParallax.current.y - bgContainer.y) * 0.1;
 
-        // 2. Bobbing / Breathing and combat recoil
+        // 2. Bobbing / Breathing and combat recoil (Magic Wand Raising)
         renderedChars.forEach((char, idx) => {
           let targetX = char.baseX;
+          let targetRotation = 0;
+          let targetY = 0;
+          
           if (combatStateRef.current === 'attacking' || localCombatState === 'attacking') {
-            targetX = char.baseX - 14;
+            targetX = char.baseX - 12;
+            targetRotation = -0.32; // point wand up/forward
+            targetY = -16;          // raise wand arm/body up
           }
+          
           char.container.x += (targetX - char.container.x) * 0.15;
+          char.sprite.rotation += (targetRotation - char.sprite.rotation) * 0.15;
+          char.sprite.y += (targetY - char.sprite.y) * 0.15;
           char.sprite.scale.y = (char.height / char.sprite.texture.height) * (1 + Math.sin(time * 0.003 + idx) * 0.022);
         });
 
-        // Levitating Boss
+        // Levitating and Fading Boss (Humo Violeta en Derrota)
         const targetBossX = 680;
         const targetBossY = 175;
         
         if (boss) {
-          if (combatStateRef.current !== 'boss_hurt' && localCombatState !== 'boss_hurt') {
+          if (combatStateRef.current === 'victory') {
+            // Shrink and fade into violet mist
+            boss.alpha += (0 - boss.alpha) * 0.05;
+            boss.scale.x += (0 - boss.scale.x) * 0.05;
+            boss.scale.y += (0 - boss.scale.y) * 0.05;
+            bossEscudo.alpha += (0 - bossEscudo.alpha) * 0.05;
+            
+            // Spawn violet smoke particles
+            if (Math.random() > 0.45 && boss.alpha > 0.05) {
+              const text = new PIXI.Text({
+                text: Math.random() > 0.5 ? '🔮' : '✨',
+                style: { fontSize: 12 + Math.floor(Math.random() * 12) }
+              });
+              text.anchor.set(0.5);
+              text.position.set(boss.x + (Math.random() - 0.5) * 50, boss.y + (Math.random() - 0.5) * 60);
+              text.tint = 0xA78BFA; // Violet smoke tint
+              app.stage.addChild(text);
+              particles.current.push({
+                text,
+                vx: (Math.random() - 0.5) * 3,
+                vy: -1.5 - Math.random() * 2,
+                life: 1.0
+              });
+            }
+          } else if (combatStateRef.current !== 'boss_hurt' && localCombatState !== 'boss_hurt') {
             boss.y = targetBossY + Math.sin(time * 0.002) * 5.5;
             boss.x += (targetBossX - boss.x) * 0.15;
             bossEscudo.rotation += 0.004;
@@ -570,29 +602,48 @@ export default function PixiCombatCanvas({
           }
         };
 
-        // 5. Render lasers (attacks)
+        // 5. Render magical beams (attacks)
         lasers.clear();
         if (combatStateRef.current === 'attacking') {
           const bossY = boss ? boss.y : 175;
           const targetX = 680;
           const targetY = bossY - 5;
 
-          renderedChars.forEach((char) => {
+          renderedChars.forEach((char, charIdx) => {
             const muzzleX = char.container.x + char.muzzleOffsetX;
             const muzzleY = char.container.y + char.muzzleOffsetY;
 
-            lasers.stroke({ width: char.laserWidth + Math.sin(time * 0.055) * 4.5, color: char.color, alpha: 0.28 });
-            lasers.moveTo(muzzleX, muzzleY); lasers.lineTo(targetX, targetY);
-            lasers.stroke({ width: char.laserWidth / 2, color: char.color, alpha: 0.75 });
-            lasers.moveTo(muzzleX, muzzleY); lasers.lineTo(targetX, targetY);
-            lasers.stroke({ width: 2, color: 0xFFFFFF, alpha: 1 });
-            lasers.moveTo(muzzleX, muzzleY); lasers.lineTo(targetX, targetY);
-            drawMuzzleFlash(lasers, muzzleX, muzzleY, char.laserWidth + Math.sin(time * 0.12) * 5, char.color);
+            // Magic Colors: Cyan, Esmeralda, Carmesí
+            const magicColors = [0x00F0FF, 0x10B981, 0xEF4444];
+            const color = magicColors[charIdx % magicColors.length];
+
+            // 1. Outer glowing wavy beam
+            lasers.stroke({ width: 3.5 + Math.sin(time * 0.08) * 1.5, color: color, alpha: 0.75 });
+            lasers.moveTo(muzzleX, muzzleY);
+            const steps = 12;
+            for (let s = 1; s <= steps; s++) {
+              const t = s / steps;
+              const px = muzzleX + (targetX - muzzleX) * t;
+              const py = muzzleY + (targetY - muzzleY) * t + Math.sin(t * Math.PI * 3 + time * 0.12 + charIdx) * 6;
+              lasers.lineTo(px, py);
+            }
+
+            // 2. White core beam
+            lasers.stroke({ width: 1.5, color: 0xFFFFFF, alpha: 0.95 });
+            lasers.moveTo(muzzleX, muzzleY);
+            for (let s = 1; s <= steps; s++) {
+              const t = s / steps;
+              const px = muzzleX + (targetX - muzzleX) * t;
+              const py = muzzleY + (targetY - muzzleY) * t + Math.sin(t * Math.PI * 3 + time * 0.12 + charIdx) * 2;
+              lasers.lineTo(px, py);
+            }
+
+            drawMuzzleFlash(lasers, muzzleX, muzzleY, 15 + Math.sin(time * 0.1) * 4, color);
           });
 
-          // Energy rings on impact
-          lasers.stroke({ width: 1.8, color: 0xFFFFFF, alpha: 0.55 });
-          lasers.drawCircle(targetX, targetY, 14 + (time % 28) * 0.65);
+          // Energy magic rings on impact
+          lasers.stroke({ width: 1.8, color: 0xFFD700, alpha: 0.75 }); // Golden impact rings
+          lasers.drawCircle(targetX, targetY, 12 + (time % 24) * 0.75);
         }
 
         // Side glow flares
@@ -709,6 +760,48 @@ export default function PixiCombatCanvas({
           particles.current.push({ text, vx, vy, life: 1.0 });
         }
       }
+    } else if (combatState === 'victory' && appRef.current) {
+      // Majestic victory float text: ¡HECHIZO COMPLETADO! +[X] Puntos para tu Casa
+      const text = new PIXI.Text({
+        text: `¡HECHIZO COMPLETADO!\n+${guildBoss.xp_reward} Puntos para tu Casa`,
+        style: {
+          fontFamily: 'serif',
+          fontSize: 20,
+          fontWeight: '900',
+          fill: 0xFBBF24, // Gold
+          align: 'center',
+          stroke: { color: 0x4C1D95, width: 4 }, // Dark purple stroke
+          dropShadow: {
+            color: 0x000000,
+            blur: 5,
+            angle: Math.PI / 6,
+            distance: 3
+          }
+        }
+      });
+      text.anchor.set(0.5);
+      text.position.set(400, 150);
+      text.scale.set(0.2);
+      text.alpha = 0;
+      appRef.current.stage.addChild(text);
+      
+      let tScale = 0.2;
+      let tAlpha = 0;
+      const animateVictoryText = () => {
+        if (!appRef.current) return;
+        tScale += (1.0 - tScale) * 0.08;
+        tAlpha += (1.0 - tAlpha) * 0.08;
+        text.scale.set(tScale + Math.sin(Date.now() * 0.005) * 0.025);
+        text.alpha = tAlpha;
+        
+        if (combatStateRef.current === 'victory') {
+          requestAnimationFrame(animateVictoryText);
+        } else {
+          appRef.current.stage.removeChild(text);
+          text.destroy();
+        }
+      };
+      animateVictoryText();
     }
   }, [combatState]);
 

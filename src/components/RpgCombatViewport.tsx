@@ -1271,28 +1271,7 @@ export function RpgCombatViewport() {
         </div>
       </div>
 
-      {/* Informativo del Gremio */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm">
-        <h3 className="text-xs font-black uppercase text-zinc-400 dark:text-zinc-500 tracking-wider mb-3 flex items-center gap-2">
-          <Briefcase className="h-4 w-4 text-purple-500" />
-          Reglas del Gremio del Examen Final (Simulador Secundaria)
-        </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-850 flex flex-col gap-1">
-            <strong className="text-zinc-700 dark:text-zinc-300">⚔️ Poder Académico:</strong>
-            <p className="leading-relaxed">Tu daño final depende de las tareas entregadas. Si tienes 0/2 tareas, harás 0 de daño.</p>
-          </div>
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-850 flex flex-col gap-1">
-            <strong className="text-zinc-700 dark:text-zinc-300">⌛ Turnos & Calificación:</strong>
-            <p className="leading-relaxed">1-3 turnos = Nota 10 | 4-5 turnos = Nota 9 | 6-7 turnos = Nota 8 | 8-9 turnos = Nota 7 | 10+ turnos = Nota 6.</p>
-          </div>
-          <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-850 flex flex-col gap-1">
-            <strong className="text-zinc-700 dark:text-zinc-300">🎁 Oportunidades Extra:</strong>
-            <p className="leading-relaxed">Cuentas con 1 intento base. Cada artefacto comprado en la tienda o dado por tu profesor otorga +1 intento extra.</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

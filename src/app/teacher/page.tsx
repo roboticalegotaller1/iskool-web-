@@ -142,6 +142,28 @@ export default function TeacherDashboard() {
   // Navegación principal del portal del profesor
   const [currentMenuTab, setCurrentMenuTab] = useState<'evaluation' | 'attendance' | 'tasks' | 'design' | 'planning'>('evaluation');
 
+  // Realtime toast notification state
+  const [realtimeToast, setRealtimeToast] = useState<{ studentName: string; questTitle: string } | null>(null);
+
+  const subscribeToSubmissions = usePortfolioStore(state => state.subscribeToSubmissions);
+  const unsubscribeFromSubmissions = usePortfolioStore(state => state.unsubscribeFromSubmissions);
+
+  // Subscribe to Realtime submissions when component mounts
+  useEffect(() => {
+    subscribeToSubmissions((studentName, questTitle) => {
+      setRealtimeToast({ studentName, questTitle });
+      
+      // Auto-hide toast after 6 seconds
+      setTimeout(() => {
+        setRealtimeToast(null);
+      }, 6000);
+    });
+
+    return () => {
+      unsubscribeFromSubmissions();
+    };
+  }, [subscribeToSubmissions, unsubscribeFromSubmissions]);
+
   // Estados para Asistencia
   const [selectedAttendanceGroup, setSelectedAttendanceGroup] = useState<string>('');
   const [selectedAttendanceSubject, setSelectedAttendanceSubject] = useState<string>('');
@@ -738,6 +760,11 @@ export default function TeacherDashboard() {
                             >
                               {item.student_profile ? formatStudentName(item.student_profile) : ''}
                             </span>
+                            {item.isNewRealtime && (
+                              <span className="ml-2 px-1.5 py-0.5 text-[8.5px] bg-red-500 text-white font-black rounded-lg uppercase tracking-wider animate-pulse select-none">
+                                ¡Nuevo!
+                              </span>
+                            )}
                           </p>
                           <p className="text-[9px] text-zinc-400 leading-none mt-0.5">{item.subject?.name}</p>
                         </div>
@@ -3562,6 +3589,19 @@ export default function TeacherDashboard() {
         currentTeacher={currentTeacher}
         detailedStudents={detailedStudents}
       />
+
+      {realtimeToast && (
+        <div className="fixed bottom-6 right-6 z-[250] bg-zinc-950/90 border-2 border-indigo-500/50 backdrop-blur-xl p-4 rounded-2xl shadow-[0_0_25px_rgba(99,102,241,0.35)] flex items-center gap-3 animate-in slide-in-from-bottom-8 duration-300 max-w-sm">
+          <div className="text-3xl p-2 bg-indigo-950/60 border border-indigo-500/30 rounded-xl select-none animate-pulse">👑</div>
+          <div className="flex-1 text-left">
+            <strong className="text-[10px] font-black text-indigo-400 uppercase tracking-widest block">¡Alerta de Combate Académico!</strong>
+            <p className="text-xs text-zinc-100 font-bold mt-0.5">
+              ¡El alumno <strong className="text-yellow-400">{realtimeToast.studentName}</strong> ha derrotado a <strong className="text-indigo-400">{realtimeToast.questTitle}</strong>!
+            </p>
+          </div>
+          <button onClick={() => setRealtimeToast(null)} className="p-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors">✕</button>
+        </div>
+      )}
 
     </div>
   );

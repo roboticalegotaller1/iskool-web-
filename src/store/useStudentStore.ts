@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { useMemo } from 'react';
-import { StudentStats, StudentAvatar, StudentMessage, UserProfile } from '../types';
+import { StudentStats, StudentAvatar, StudentMessage, UserProfile, Quest } from '../types';
 import { STATS_MAP_SEED, AVATAR_MAP_SEED, STUDENT_INVENTORY_SEED, STUDENT_MESSAGES_SEED, STUDENTS_LIST_SEED } from './seeds';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -11,8 +11,12 @@ interface StudentStoreState {
   studentInventoryMap: Record<string, string[]>;
   studentMessages: StudentMessage[];
   isLoadingStats: boolean;
+  activeQuest: Quest | null;
+  isQuestModalOpen: boolean;
   
   // Actions
+  openQuestModal: (quest: Quest) => void;
+  closeQuestModal: () => void;
   switchStudent: (studentId: string) => Promise<void>;
   changeAvatar: (config: Partial<StudentAvatar>) => void;
   feedPet: () => void;
@@ -44,6 +48,11 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
   studentInventoryMap: STUDENT_INVENTORY_SEED,
   studentMessages: STUDENT_MESSAGES_SEED,
   isLoadingStats: false,
+  activeQuest: null,
+  isQuestModalOpen: false,
+
+  openQuestModal: (quest) => set({ activeQuest: quest, isQuestModalOpen: true }),
+  closeQuestModal: () => set({ activeQuest: null, isQuestModalOpen: false }),
 
   switchStudent: async (studentId) => {
     set({ activeStudentId: studentId });
