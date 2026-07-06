@@ -2802,7 +2802,6 @@ export default function TeacherDashboard() {
             groupsList={groupsList}
           />
         )}
-      </main>
 
       {/* ----------------- MODAL DE VINCULAR EVIDENCIA ----------------- */}
       {isLinkModalOpen && linkingStudent && (
@@ -2855,7 +2854,7 @@ export default function TeacherDashboard() {
                   return (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {unlinkedItems.map(item => (
-                        <div key={item.id} className="p-3 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col justify-between gap-3 shadow-xs">
+                        <div key={item.id} className="p-3 bg-white dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col justify-between gap-3 shadow-xs">
                           <div>
                             <span className="text-[9px] bg-zinc-100 dark:bg-zinc-800 text-zinc-500 px-2 py-0.5 rounded font-black capitalize">
                               {item.file_type === 'image' ? 'Imagen' : item.file_type === 'audio' ? 'Audio' : 'Documento'}
@@ -2914,7 +2913,7 @@ export default function TeacherDashboard() {
                       <select
                         value={mockEvidenceFileType}
                         onChange={(e) => setMockEvidenceFileType(e.target.value as any)}
-                        className="w-full text-xs p-2.5 rounded-xl border border-zinc-250 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
+                        className="w-full text-xs p-2.5 rounded-xl border border-zinc-250 dark:border-zinc-800 bg-white dark:bg-zinc-955 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
                       >
                         <option value="image">Imagen / Fotografía</option>
                         <option value="pdf">Documento Escrito / Libreta</option>
@@ -3000,7 +2999,7 @@ export default function TeacherDashboard() {
 
             <div>
               <p className="text-xs text-zinc-650 dark:text-zinc-350">
-                Estudiante: <strong>{notifyingStudent.first_name} {notifyingStudent.last_name_1}</strong><br />
+                Dirigido a: <strong>Tutor de {notifyingStudent.first_name} {notifyingStudent.last_name_1}</strong><br />
                 Asignatura: <strong>{subjects.find(s => s.id === selectedTaskSubject)?.name}</strong>
               </p>
             </div>
@@ -3085,6 +3084,7 @@ export default function TeacherDashboard() {
           </div>
         </div>
       )}
+      </main>
 
       {/* Modal de Detalle de Alumno */}
       {selectedStudent && (

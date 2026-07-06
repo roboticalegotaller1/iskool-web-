@@ -16,7 +16,7 @@ import {
 const PixiCombatCanvas = dynamic(() => import('./PixiCombatCanvas'), { ssr: false });
 
 // Retro Sound Chiptune Synth Player
-const playChiptuneSound = (type: 'laser' | 'hit' | 'victory' | 'charge') => {
+const playChiptuneSound = (type: string) => {
   try {
     const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
     if (!AudioContext) return;
@@ -125,7 +125,7 @@ export default function QuestCardModal() {
   useEffect(() => {
     if (activeQuest) {
       const maxHp = activeQuest.type === 'exam' 
-        ? (activeQuest.content?.bossHp || 180) 
+        ? ((activeQuest.content as import('@/types').ExamContent)?.bossHp || 180) 
         : (activeQuest.type === 'quiz' ? 80 : 120);
       setEnemyHp(maxHp);
       setEnemyMaxHp(maxHp);
@@ -321,8 +321,8 @@ export default function QuestCardModal() {
               activeQuest.id,
               score,
               quizAnswers,
-              activeQuest.content.statBoost,
-              activeQuest.content.customLoot
+              (activeQuest.content as any).statBoost,
+              (activeQuest.content as any).customLoot
             );
           } else {
             result = await submitQuiz(activeQuest.id, score, quizAnswers);

@@ -255,8 +255,8 @@ export default function MissionPage({ params }: MissionPageProps) {
               setBossBattlePhase('intro');
               setCanvasCombatState('idle');
               setPlayerHp(100);
-              setBossHp(targetQuest.content?.bossHp || 100);
-              setBossMaxHp(targetQuest.content?.bossHp || 100);
+              setBossHp((targetQuest.content as import('@/types').ExamContent)?.bossHp || 100);
+              setBossMaxHp((targetQuest.content as import('@/types').ExamContent)?.bossHp || 100);
               setCombatLog(['⚔️ ¡El Jefe del Gremio ha aparecido!']);
             } else if (targetQuest.type === 'quiz') {
               setIsPlayingQuiz(true);
@@ -374,11 +374,11 @@ export default function MissionPage({ params }: MissionPageProps) {
     }
   };
 
-  const handlePortfolioSubmit = (e: React.FormEvent) => {
+  const handlePortfolioSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!mockFile) return;
 
-    submitPortfolioItem(
+    await submitPortfolioItem(
       evidenceTitle,
       evidenceDesc,
       mockFile.url,
@@ -474,14 +474,14 @@ export default function MissionPage({ params }: MissionPageProps) {
     }
   };
 
-  const continueBossBattle = () => {
+  const continueBossBattle = async () => {
     const questions = (selectedQuest.content as any).questions;
     const currentHp = coopPartyId ? coopBossHp : bossHp;
 
     if (currentHp <= 0) {
       setBossBattlePhase('victory');
       const score = Math.max(60, Math.round((examCorrectCount / questions.length) * 100));
-      const results = submitExam(
+      const results = await submitExam(
         selectedQuest.id,
         score,
         examAnswers,
@@ -492,7 +492,7 @@ export default function MissionPage({ params }: MissionPageProps) {
     } else if (playerHp <= 0) {
       setBossBattlePhase('defeat');
       const score = Math.round((examCorrectCount / questions.length) * 100);
-      submitExam(selectedQuest.id, score, examAnswers, undefined, undefined);
+      await submitExam(selectedQuest.id, score, examAnswers, undefined, undefined);
     } else if (examCurrentQuestionIdx < questions.length - 1) {
       setExamCurrentQuestionIdx(prev => prev + 1);
       setExamSelectedOptionIdx(null);
@@ -506,7 +506,7 @@ export default function MissionPage({ params }: MissionPageProps) {
         }
         setBossBattlePhase('victory');
         const score = Math.round((examCorrectCount / questions.length) * 100);
-        const results = submitExam(
+        const results = await submitExam(
           selectedQuest.id,
           score,
           examAnswers,
@@ -517,7 +517,7 @@ export default function MissionPage({ params }: MissionPageProps) {
       } else {
         setBossBattlePhase('defeat');
         const score = Math.round((examCorrectCount / questions.length) * 100);
-        submitExam(selectedQuest.id, score, examAnswers, undefined, undefined);
+        await submitExam(selectedQuest.id, score, examAnswers, undefined, undefined);
       }
     }
   };
@@ -1143,12 +1143,12 @@ export default function MissionPage({ params }: MissionPageProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl font-black text-purple-400 tracking-wider">¡SE APROXIMA EL JEFE DE NIVEL!</h2>
-                  <h3 className="text-xl font-bold text-white mt-1">{selectedQuest.content.bossName || 'Tirano Oscuro'}</h3>
-                  <p className="text-xs text-purple-300 font-semibold mt-1">HP: {selectedQuest.content.bossHp || 100} | Daño: 10-{selectedQuest.content.bossMaxDmg || 20}</p>
+                  <h3 className="text-xl font-bold text-white mt-1">{(selectedQuest.content as import('@/types').ExamContent).bossName || 'Tirano Oscuro'}</h3>
+                  <p className="text-xs text-purple-300 font-semibold mt-1">HP: {(selectedQuest.content as import('@/types').ExamContent).bossHp || 100} | Daño: 10-{(selectedQuest.content as import('@/types').ExamContent).bossMaxDmg || 20}</p>
                 </div>
 
                 <div className="max-w-md p-5 rounded-2xl bg-zinc-900/80 border border-purple-950/60 leading-relaxed font-semibold italic text-xs text-zinc-350 shadow-inner">
-                  "{selectedQuest.content.storyIntro || 'Un gran reto te espera. Usa tus saberes para derrotar al guardián.'}"
+                  "{(selectedQuest.content as import('@/types').ExamContent).storyIntro || 'Un gran reto te espera. Usa tus saberes para derrotar al guardián.'}"
                 </div>
 
                 {/* RPG stats del alumno */}

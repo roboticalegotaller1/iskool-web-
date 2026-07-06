@@ -19,8 +19,8 @@ interface StudentStoreState {
   closeQuestModal: () => void;
   switchStudent: (studentId: string) => Promise<void>;
   changeAvatar: (config: Partial<StudentAvatar>) => void;
-  feedPet: () => void;
-  playWithPet: () => void;
+  feedPet: (studentId?: string) => void;
+  playWithPet: (studentId?: string) => void;
   levelUpAttribute: (statName: 'strength' | 'intelligence' | 'defense') => Promise<void>;
   purchaseArtifact: (studentId: string, artifactId: string) => Promise<void>;
   grantArtifact: (studentId: string, artifactId: string) => Promise<void>;
@@ -74,86 +74,124 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
   },
 
   changeAvatar: (config) => {
-    const { activeStudentId } = get();
-    set((state) => ({
-      allAvatars: {
-        ...state.allAvatars,
-        [activeStudentId]: {
-          ...state.allAvatars[activeStudentId],
-          ...config,
-          updated_at: new Date().toISOString(),
+    const rawId = get().activeStudentId;
+    const activeId = normalizeStudentId(rawId);
+    set((state) => {
+      const currentAv = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
+      const updatedAv = {
+        ...currentAv,
+        ...config,
+        updated_at: new Date().toISOString(),
+      };
+      return {
+        allAvatars: {
+          ...state.allAvatars,
+          [activeId]: updatedAv,
+          [rawId]: updatedAv,
         },
-      },
-    }));
+      };
+    });
   },
 
-  feedPet: () => {
-    const { activeStudentId, allStats, allAvatars } = get();
-    const stats = allStats[activeStudentId];
+  feedPet: (studentId?: string) => {
+    const rawId = studentId || get().activeStudentId;
+    const activeId = normalizeStudentId(rawId);
+    const { allStats, allAvatars } = get();
+    console.log('DEBUG feedPet:', {
+      rawId,
+      activeId,
+      allAvatarsKeys: Object.keys(allAvatars),
+      hasActiveId: activeId in allAvatars,
+      hasRawId: rawId in allAvatars,
+      currentAv: allAvatars[activeId] || allAvatars[rawId]
+    });
+    const stats = allStats[activeId] || allStats[rawId];
     if (!stats || stats.coins < 5) {
       alert('¡No tienes suficientes monedas! Resuelve retos para ganar monedas.');
       return;
     }
 
     set((state) => {
-      const currentStats = state.allStats[activeStudentId];
-      const currentAv = state.allAvatars[activeStudentId];
+      const currentStats = state.allStats[activeId] || state.allStats[rawId];
+      const currentAv = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
       const newHunger = Math.max(0, (currentAv.pet_hunger || 50) - 20);
       const newHappiness = Math.min(100, (currentAv.pet_happiness || 50) + 5);
+
+      const updatedStats = {
+        ...currentStats,
+        coins: currentStats.coins - 5,
+        xp: currentStats.xp + 10,
+      };
+
+      const updatedAv = {
+        ...currentAv,
+        pet_hunger: newHunger,
+        pet_happiness: newHappiness,
+        updated_at: new Date().toISOString(),
+      };
 
       return {
         allStats: {
           ...state.allStats,
-          [activeStudentId]: {
-            ...currentStats,
-            coins: currentStats.coins - 5,
-            xp: currentStats.xp + 10,
-          },
+          [activeId]: updatedStats,
+          [rawId]: updatedStats,
         },
         allAvatars: {
           ...state.allAvatars,
-          [activeStudentId]: {
-            ...currentAv,
-            pet_hunger: newHunger,
-            pet_happiness: newHappiness,
-            updated_at: new Date().toISOString(),
-          },
+          [activeId]: updatedAv,
+          [rawId]: updatedAv,
         },
       };
     });
   },
 
-  playWithPet: () => {
-    const { activeStudentId, allStats } = get();
-    const stats = allStats[activeStudentId];
+  playWithPet: (studentId?: string) => {
+    const rawId = studentId || get().activeStudentId;
+    const activeId = normalizeStudentId(rawId);
+    const { allStats, allAvatars } = get();
+    console.log('DEBUG playWithPet:', {
+      rawId,
+      activeId,
+      allAvatarsKeys: Object.keys(allAvatars),
+      hasActiveId: activeId in allAvatars,
+      hasRawId: rawId in allAvatars,
+      currentAv: allAvatars[activeId] || allAvatars[rawId]
+    });
+    const stats = allStats[activeId] || allStats[rawId];
     if (!stats || stats.coins < 2) {
       alert('¡No tienes suficientes monedas!');
       return;
     }
 
     set((state) => {
-      const currentStats = state.allStats[activeStudentId];
-      const currentAv = state.allAvatars[activeStudentId];
+      const currentStats = state.allStats[activeId] || state.allStats[rawId];
+      const currentAv = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
       const newHunger = Math.min(100, (currentAv.pet_hunger || 50) + 10);
       const newHappiness = Math.min(100, (currentAv.pet_happiness || 50) + 20);
+
+      const updatedStats = {
+        ...currentStats,
+        coins: currentStats.coins - 2,
+        xp: currentStats.xp + 5,
+      };
+
+      const updatedAv = {
+        ...currentAv,
+        pet_hunger: newHunger,
+        pet_happiness: newHappiness,
+        updated_at: new Date().toISOString(),
+      };
 
       return {
         allStats: {
           ...state.allStats,
-          [activeStudentId]: {
-            ...currentStats,
-            coins: currentStats.coins - 2,
-            xp: currentStats.xp + 5,
-          },
+          [activeId]: updatedStats,
+          [rawId]: updatedStats,
         },
         allAvatars: {
           ...state.allAvatars,
-          [activeStudentId]: {
-            ...currentAv,
-            pet_hunger: newHunger,
-            pet_happiness: newHappiness,
-            updated_at: new Date().toISOString(),
-          },
+          [activeId]: updatedAv,
+          [rawId]: updatedAv,
         },
       };
     });
@@ -477,7 +515,7 @@ export const normalizeStudentId = (id: string): string => {
 // Selectores React
 export const useCurrentStudentStats = () => {
   const activeStudentId = useStudentStore(state => state.activeStudentId);
-  const stats = useStudentStore(state => state.allStats[activeStudentId]);
+  const stats = useStudentStore(state => state.allStats[normalizeStudentId(activeStudentId)] || state.allStats[activeStudentId]);
   
   return useMemo(() => {
     const active = stats || STATS_MAP_SEED[activeStudentId] || STATS_MAP_SEED[normalizeStudentId(activeStudentId)];
@@ -496,7 +534,7 @@ export const useCurrentStudentStats = () => {
 
 export const useCurrentStudentAvatar = () => {
   const activeStudentId = useStudentStore(state => state.activeStudentId);
-  const avatar = useStudentStore(state => state.allAvatars[activeStudentId]);
+  const avatar = useStudentStore(state => state.allAvatars[normalizeStudentId(activeStudentId)] || state.allAvatars[activeStudentId]);
   
   return useMemo(() => {
     const active = avatar || AVATAR_MAP_SEED[activeStudentId] || AVATAR_MAP_SEED[normalizeStudentId(activeStudentId)];

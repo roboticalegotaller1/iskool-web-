@@ -946,19 +946,21 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
               {planningsHistory.map((plan) => {
                 const isActive = activePlanning?.id === plan.id;
                 return (
-                  <button
+                  <div
                     key={plan.id}
-                    onClick={() => setActivePlanning(plan)}
                     className={`w-full text-left p-2.5 rounded-xl border text-xs flex justify-between items-center transition-all ${
                       isActive
                         ? 'bg-blue-50/50 border-blue-200 dark:bg-blue-950/10 dark:border-blue-900/50 text-blue-600 dark:text-blue-400 font-bold'
                         : 'bg-white dark:bg-zinc-900 border-zinc-150 hover:border-zinc-250 dark:border-zinc-800/80 dark:hover:border-zinc-700 text-zinc-700 dark:text-zinc-300'
                     }`}
                   >
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      <FileText className="h-4 w-4 flex-shrink-0" />
+                    <button
+                      onClick={() => setActivePlanning(plan)}
+                      className="flex items-center gap-2 overflow-hidden flex-1 text-left"
+                    >
+                      <FileText className="h-4 w-4 flex-shrink-0 text-zinc-400 dark:text-zinc-500" />
                       <span className="truncate">{plan.title}</span>
-                    </div>
+                    </button>
                     
                     <button
                       onClick={(e) => handleDeletePlanning(plan.id, e)}
@@ -966,7 +968,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
-                  </button>
+                  </div>
                 );
               })}
             </div>

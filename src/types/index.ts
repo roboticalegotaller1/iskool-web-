@@ -394,6 +394,12 @@ export interface ExamContent {
   bossHp: number;
   bossMaxDmg: number;
   storyIntro: string;
+  statBoost?: {
+    strength?: number;
+    intelligence?: number;
+    defense?: number;
+  };
+  customLoot?: string;
 }
 
 /**

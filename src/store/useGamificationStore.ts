@@ -169,30 +169,50 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
         return { xpEarned: 0, coinsEarned: 0, leveledUp: false, badgeEarned: null };
       }
 
-      if (response && response.data && response.data.success) {
+      if (response && response.data) {
+        const data = response.data;
+        const attemptId = data.attempt_id || `att-${Date.now()}`;
+        const feedback = data.feedback || '';
+
+        const newAttempt: QuestAttempt = {
+          id: attemptId,
+          student_id: activeStudentId,
+          quest_id: questId,
+          score: score,
+          is_completed: score >= 60,
+          answers: answers,
+          feedback: feedback,
+          created_at: new Date().toISOString()
+        };
+
         // Update quest attempts
         set((state) => ({
-          questAttempts: [response.data.new_attempt, ...state.questAttempts]
+          questAttempts: [newAttempt, ...state.questAttempts]
         }));
 
         // Update student store stats
-        useStudentStore.setState((state) => ({
-          allStats: {
-            ...state.allStats,
-            [activeStudentId]: response.data.new_stats
-          }
-        }));
+        if (data.new_stats) {
+          useStudentStore.setState((state) => ({
+            allStats: {
+              ...state.allStats,
+              [activeStudentId]: {
+                ...state.allStats[activeStudentId],
+                ...data.new_stats
+              }
+            }
+          }));
+        }
 
         // Update student badges
-        if (response.data.badge_earned) {
-          get().unlockBadge(activeStudentId, response.data.badge_earned.id);
+        if (data.badge_earned) {
+          get().unlockBadge(activeStudentId, data.badge_earned.id);
         }
 
         return {
-          xpEarned: response.data.xp_earned,
-          coinsEarned: response.data.coins_earned,
-          leveledUp: response.data.leveled_up,
-          badgeEarned: response.data.badge_earned
+          xpEarned: data.xp_earned || 0,
+          coinsEarned: data.coins_earned || 0,
+          leveledUp: !!data.leveled_up,
+          badgeEarned: data.badge_earned || null
         };
       }
     } catch (err) {
@@ -222,34 +242,54 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
         return { xpEarned: 0, coinsEarned: 0, leveledUp: false, badgeEarned: null };
       }
 
-      if (response && response.data && response.data.success) {
+      if (response && response.data) {
+        const data = response.data;
+        const attemptId = data.attempt_id || `att-${Date.now()}`;
+        const feedback = data.feedback || '';
+
+        const newAttempt: QuestAttempt = {
+          id: attemptId,
+          student_id: activeStudentId,
+          quest_id: questId,
+          score: score,
+          is_completed: score >= 60,
+          answers: answers,
+          feedback: feedback,
+          created_at: new Date().toISOString()
+        };
+
         // Update quest attempts
         set((state) => ({
-          questAttempts: [response.data.new_attempt, ...state.questAttempts]
+          questAttempts: [newAttempt, ...state.questAttempts]
         }));
 
         // Update student store stats & avatars
         useStudentStore.setState((state) => ({
           allStats: {
             ...state.allStats,
-            [activeStudentId]: response.data.new_stats
+            [activeStudentId]: {
+              ...state.allStats[activeStudentId],
+              ...data.new_stats
+            }
           },
           allAvatars: {
             ...state.allAvatars,
-            [activeStudentId]: response.data.new_avatar || state.allAvatars[activeStudentId]
+            [activeStudentId]: data.new_avatar 
+              ? { ...state.allAvatars[activeStudentId], ...data.new_avatar }
+              : state.allAvatars[activeStudentId]
           }
         }));
 
         // Update student badges
-        if (response.data.badge_earned) {
-          get().unlockBadge(activeStudentId, response.data.badge_earned.id);
+        if (data.badge_earned) {
+          get().unlockBadge(activeStudentId, data.badge_earned.id);
         }
 
         return {
-          xpEarned: response.data.xp_earned,
-          coinsEarned: response.data.coins_earned,
-          leveledUp: response.data.leveled_up,
-          badgeEarned: response.data.badge_earned
+          xpEarned: data.xp_earned || 0,
+          coinsEarned: data.coins_earned || 0,
+          leveledUp: !!data.leveled_up,
+          badgeEarned: data.badge_earned || null
         };
       }
     } catch (err) {

@@ -322,52 +322,63 @@ export default function StudentDashboard() {
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
             
             {/* Visualización de la Mascota */}
-            <div className="flex flex-col items-center gap-3 bg-white/10 p-5 rounded-2xl border border-white/20 backdrop-blur-sm shadow-inner w-52">
-              <span className="text-[10px] font-extrabold bg-yellow-400 text-teal-950 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                Mascota: {avatar?.pet_name ?? 'Mascota'}
-              </span>
-              
-              {/* Pet SVG */}
-              <div className="h-28 w-28 flex items-center justify-center relative bg-emerald-950/20 rounded-full border border-white/10 p-2">
-                <svg viewBox="0 0 100 100" className="w-full h-full filter drop-shadow-md">
-                  {renderPetSVG(avatar?.pet_type || 'dragon')}
-                  {renderPetAccessories(avatar?.pet_type || 'dragon', petOutfit)}
-                </svg>
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-3 bg-white/10 p-5 rounded-2xl border border-white/20 backdrop-blur-sm shadow-inner w-52">
+                <span className="text-[10px] font-extrabold bg-yellow-400 text-teal-950 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  Mascota: {avatar?.pet_name ?? 'Mascota'}
+                </span>
+                
+                {/* Pet SVG */}
+                <div className="h-28 w-28 flex items-center justify-center relative bg-emerald-950/20 rounded-full border border-white/10 p-2">
+                  <svg viewBox="0 0 100 100" className="w-full h-full filter drop-shadow-md">
+                    {renderPetSVG(avatar?.pet_type || 'dragon')}
+                    {renderPetAccessories(avatar?.pet_type || 'dragon', petOutfit)}
+                  </svg>
+                </div>
+
+                {/* Ropa selector */}
+                <div className="flex gap-1.5 mt-2">
+                  <button
+                    onClick={() => setIsPetModalOpen(true)}
+                    className="px-2 py-0.5 rounded text-[9px] font-bold bg-white text-emerald-700 hover:bg-emerald-50"
+                  >
+                    Mascota
+                  </button>
+                  <button
+                    onClick={() => changeAvatar({ pet_outfit: 'hat' })}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'hat' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
+                  >
+                    Gorro
+                  </button>
+                  <button
+                    onClick={() => changeAvatar({ pet_outfit: 'glasses' })}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'glasses' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
+                  >
+                    Lentes
+                  </button>
+                  <button
+                    onClick={() => changeAvatar({ pet_outfit: 'cape' })}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'cape' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
+                  >
+                    Capa
+                  </button>
+                  <button
+                    onClick={() => changeAvatar({ pet_outfit: 'none' })}
+                    className="px-1.5 py-0.5 rounded text-[9px] bg-red-500/20 text-white font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
 
-              {/* Ropa selector */}
-              <div className="flex gap-1.5 mt-2">
-                <button
-                  onClick={() => setIsPetModalOpen(true)}
-                  className="px-2 py-0.5 rounded text-[9px] font-bold bg-white text-emerald-700 hover:bg-emerald-50"
-                >
-                  Mascota
-                </button>
-                <button
-                  onClick={() => changeAvatar({ pet_outfit: 'hat' })}
-                  className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'hat' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
-                >
-                  Gorro
-                </button>
-                <button
-                  onClick={() => changeAvatar({ pet_outfit: 'glasses' })}
-                  className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'glasses' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
-                >
-                  Lentes
-                </button>
-                <button
-                  onClick={() => changeAvatar({ pet_outfit: 'cape' })}
-                  className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'cape' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
-                >
-                  Capa
-                </button>
-                <button
-                  onClick={() => changeAvatar({ pet_outfit: 'none' })}
-                  className="px-1.5 py-0.5 rounded text-[9px] bg-red-500/20 text-white font-bold"
-                >
-                  ✕
-                </button>
-              </div>
+              {/* Botón Cuidar Mascota */}
+              <button
+                onClick={() => setIsPetModalOpen(true)}
+                className="w-full py-2 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-350 hover:to-amber-450 text-emerald-950 font-black rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95"
+              >
+                <Heart className="h-4 w-4 fill-current text-rose-600 animate-pulse" />
+                Cuidar Mascota ❤️
+              </button>
             </div>
 
             {/* Acciones de Mascota e Info */}
@@ -400,14 +411,14 @@ export default function StudentDashboard() {
               {/* Botones de Cuidado */}
               <div className="flex gap-3 mt-5">
                 <button
-                  onClick={feedPet}
+                  onClick={() => feedPet(activeStudentId)}
                   className="px-4 py-2 bg-white text-emerald-800 rounded-xl text-xs font-bold shadow-md hover:bg-emerald-50 transition-all flex items-center gap-1.5"
                 >
                   <Gamepad2 className="h-4 w-4" />
                   Alimentar (5 🪙)
                 </button>
                 <button
-                  onClick={playWithPet}
+                  onClick={() => playWithPet(activeStudentId)}
                   className="px-4 py-2 bg-emerald-950/45 text-white border border-white/25 rounded-xl text-xs font-bold hover:bg-emerald-950/60 transition-all flex items-center gap-1.5"
                 >
                   <Heart className="h-4 w-4 fill-current text-rose-300" />
@@ -631,15 +642,6 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* Campo de Batalla del Gremio */}
-        <div id="rpg-combat-arena" className="flex flex-col gap-4">
-          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-            <Swords className="h-5 w-5 text-purple-500" />
-            Arena del Gremio: Batalla Sincrónica
-          </h2>
-          <RpgCombatViewport />
-        </div>
-
         {/* Tablero de Gremios / Contratos de Secundaria - Saga Map */}
         <div className="flex flex-col gap-4">
           <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
@@ -647,6 +649,15 @@ export default function StudentDashboard() {
             Sendero del Héroe: Contratos Activos
           </h2>
           <SagaMap missions={missions} activeLevel={activeLevel} activeGrade={activeGrade} />
+        </div>
+
+        {/* Campo de Batalla del Gremio */}
+        <div id="rpg-combat-arena" className="flex flex-col gap-4">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Swords className="h-5 w-5 text-purple-500" />
+            Arena del Gremio: Batalla Sincrónica
+          </h2>
+          <RpgCombatViewport />
         </div>
 
 
@@ -829,31 +840,80 @@ export default function StudentDashboard() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl p-6 border border-zinc-200 dark:border-zinc-800">
             <h3 className="text-lg font-black text-zinc-900 dark:text-white flex items-center gap-2 mb-4">
-              ✨ Elige tu Mascota y su Nombre
+              ✨ Centro de Cuidado de tu Mascota
             </h3>
-            
-            {/* Opciones de Mascota */}
-            <div className="grid grid-cols-5 gap-2 mb-6">
-              {[
-                { type: 'dragon', label: 'Dragón', emoji: '🐉' },
-                { type: 'lobo', label: 'Lobo', emoji: '🐺' },
-                { type: 'venado', label: 'Venado', emoji: '🦌' },
-                { type: 'gusano', label: 'Gusano', emoji: '🐛' },
-                { type: 'gatito', label: 'Gato', emoji: '🐱' }
-              ].map(option => (
+
+            {/* Estadísticas de la Mascota */}
+            <div className="bg-zinc-50 dark:bg-zinc-950 p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800/60 mb-6 flex flex-col gap-3">
+              <h4 className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Estado de {avatar?.pet_name || 'Mascota'}</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="flex justify-between items-center text-xs font-bold mb-1 text-zinc-650 dark:text-zinc-350">
+                    <span>Hambre</span>
+                    <span>{avatar?.pet_hunger ?? 50}%</span>
+                  </div>
+                  <div className="h-2 w-full bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-orange-500 rounded-full transition-all duration-300" style={{ width: `${avatar?.pet_hunger ?? 50}%` }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between items-center text-xs font-bold mb-1 text-zinc-650 dark:text-zinc-350">
+                    <span>Felicidad</span>
+                    <span>{avatar?.pet_happiness ?? 50}%</span>
+                  </div>
+                  <div className="h-2 w-full bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-yellow-500 rounded-full transition-all duration-300" style={{ width: `${avatar?.pet_happiness ?? 50}%` }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Botones de Acción de Cuidado */}
+              <div className="grid grid-cols-2 gap-3 mt-1.5">
                 <button
-                  key={option.type}
-                  onClick={() => changeAvatar({ pet_type: option.type as any })}
-                  className={`flex flex-col items-center justify-center p-2 rounded-2xl border transition-all ${
-                    (avatar?.pet_type || 'dragon') === option.type
-                      ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/35 text-emerald-700 dark:text-emerald-400 font-bold'
-                      : 'border-zinc-200 dark:border-zinc-800 hover:border-emerald-300'
-                  }`}
+                  type="button"
+                  onClick={() => feedPet(activeStudentId)}
+                  className="py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-95"
                 >
-                  <span className="text-2xl">{option.emoji}</span>
-                  <span className="text-[9px] mt-1 text-center truncate w-full">{option.label}</span>
+                  <Gamepad2 className="h-4 w-4" />
+                  Alimentar (5 🪙)
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => playWithPet(activeStudentId)}
+                  className="py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-95"
+                >
+                  <Heart className="h-4 w-4 fill-current text-rose-300" />
+                  Jugar (2 🪙)
+                </button>
+              </div>
+            </div>
+
+            {/* Opciones de Mascota */}
+            <div className="mb-6">
+              <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase block mb-2">Especie de Mascota</label>
+              <div className="grid grid-cols-5 gap-2">
+                {[
+                  { type: 'dragon', label: 'Dragón', emoji: '🐉' },
+                  { type: 'lobo', label: 'Lobo', emoji: '🐺' },
+                  { type: 'venado', label: 'Venado', emoji: '🦌' },
+                  { type: 'gusano', label: 'Gusano', emoji: '🐛' },
+                  { type: 'gatito', label: 'Gato', emoji: '🐱' }
+                ].map(option => (
+                  <button
+                    key={option.type}
+                    type="button"
+                    onClick={() => changeAvatar({ pet_type: option.type as any })}
+                    className={`flex flex-col items-center justify-center p-2 rounded-2xl border transition-all ${
+                      (avatar?.pet_type || 'dragon') === option.type
+                        ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/35 text-emerald-700 dark:text-emerald-400 font-bold'
+                        : 'border-zinc-200 dark:border-zinc-800 hover:border-emerald-300'
+                    }`}
+                  >
+                    <span className="text-2xl">{option.emoji}</span>
+                    <span className="text-[9px] mt-1 text-center truncate w-full">{option.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Nombre de la Mascota */}
@@ -868,12 +928,13 @@ export default function StudentDashboard() {
               />
             </div>
 
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3 border-t border-zinc-100 dark:border-zinc-800 pt-3">
               <button
+                type="button"
                 onClick={() => setIsPetModalOpen(false)}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full text-xs font-bold shadow-md shadow-emerald-500/10 transition-all"
+                className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 rounded-xl text-xs font-black transition-all"
               >
-                ¡Listo!
+                Cerrar
               </button>
             </div>
           </div>
