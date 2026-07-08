@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage } from '../types';
-import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHER_SEED } from './seeds';
+import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile } from '../types';
+import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHER_SEED, SUBJECTS_SEED } from './seeds';
 import { useStudentStore } from './useStudentStore';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -32,11 +32,19 @@ const mapGroupIdToUuid = (id: string): string => {
   return 'a00a0eeb-9c0b-4ef8-bb6d-' + hex;
 };
 
+const INITIAL_TEACHERS_SEED: UserProfile[] = [
+  TEACHER_SEED,
+  { id: 'usr-teacher-2', first_name: 'María', last_name: 'Fernández', role: 'teacher', email: 'maria.fernandez@iskool.edu.mx', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: 'usr-teacher-3', first_name: 'Roberto', last_name: 'Díaz', role: 'teacher', email: 'roberto.diaz@iskool.edu.mx', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+];
+
 interface SchoolAdminStoreState {
   schoolSettings: SchoolSettings;
   detailedStudents: DetailedStudent[];
   groupsList: Group[];
   schedulesList: ClassSchedule[];
+  subjectsList: Subject[];
+  teachersList: UserProfile[];
   attendanceList: Attendance[];
   parentMessages: ParentMessage[];
   syncError: string | null;
@@ -53,6 +61,11 @@ interface SchoolAdminStoreState {
   sendParentMessage: (msg: Omit<ParentMessage, 'id' | 'sent_at' | 'is_read'>) => void;
   replyToParentMessage: (messageId: string, replyText: string) => void;
   markMessageAsRead: (messageId: string) => void;
+  
+  createSubject: (subjectData: Omit<Subject, 'id' | 'created_at'>) => void;
+  deleteSubject: (subjectId: string) => Promise<void>;
+  registerTeacher: (teacherData: Omit<UserProfile, 'id' | 'role' | 'created_at' | 'updated_at'>) => void;
+  
   resetSchoolAdminStore: () => void;
 }
 
@@ -78,6 +91,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   detailedStudents: DETAILED_STUDENTS_SEED,
   groupsList: GROUPS_SEED,
   schedulesList: SCHEDULES_SEED,
+  subjectsList: SUBJECTS_SEED,
+  teachersList: INITIAL_TEACHERS_SEED,
   attendanceList: ATTENDANCE_SEED,
   parentMessages: PARENT_MESSAGES_SEED,
   syncError: null,
@@ -288,6 +303,48 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     }));
   },
 
+  createSubject: (subjectData) => {
+    const newSubject: Subject = {
+      ...subjectData,
+      id: `sub-${Date.now()}`,
+      created_at: new Date().toISOString()
+    };
+    set((state) => ({
+      subjectsList: [...state.subjectsList, newSubject]
+    }));
+  },
+
+  deleteSubject: async (subjectId) => {
+    set({ syncError: null });
+    try {
+      set((state) => ({
+        subjectsList: state.subjectsList.filter(s => s.id !== subjectId),
+        schedulesList: state.schedulesList.filter(s => s.subjectId !== subjectId)
+      }));
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al eliminar la materia';
+      console.error('Error deleting subject:', err);
+      set({ syncError: errorMsg });
+    }
+  },
+
+  registerTeacher: (teacherData) => {
+    const newTeacher: UserProfile = {
+      ...teacherData,
+      id: `usr-teacher-${Date.now()}`,
+      role: 'teacher',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    set((state) => ({
+      teachersList: [...state.teachersList, newTeacher],
+      schoolSettings: {
+        ...state.schoolSettings,
+        teachers: [...state.schoolSettings.teachers, `${teacherData.first_name} ${teacherData.last_name}`]
+      }
+    }));
+  },
+
   resetSchoolAdminStore: () => {
     set({
       schoolSettings: {
@@ -309,6 +366,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
       detailedStudents: DETAILED_STUDENTS_SEED,
       groupsList: GROUPS_SEED,
       schedulesList: SCHEDULES_SEED,
+      subjectsList: SUBJECTS_SEED,
+      teachersList: INITIAL_TEACHERS_SEED,
       attendanceList: ATTENDANCE_SEED,
       parentMessages: PARENT_MESSAGES_SEED,
       syncError: null

@@ -338,14 +338,14 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
                           e.preventDefault();
                         }
                       }}
-                      className={`w-full text-center py-3 rounded-xl text-xs font-black text-zinc-950 transition-all duration-300 flex items-center justify-center gap-2 tracking-wider uppercase ${
+                      className={`w-full text-center py-3 rounded-xl text-xs font-black transition-all duration-300 flex items-center justify-center gap-2 tracking-wider uppercase ${
                         isActive 
-                          ? 'bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.45)] hover:scale-[1.01] active:scale-[0.98]' 
+                          ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 text-amber-100 shadow-[0_0_15px_rgba(245,158,11,0.6)] animate-glow-pulse hover:shadow-[0_0_25px_rgba(245,158,11,0.95)] hover:from-amber-500 hover:to-amber-600 hover:scale-[1.03] active:scale-[0.98]' 
                           : 'bg-zinc-800 text-zinc-400 pointer-events-none'
                       }`}
                     >
-                      <Swords className="h-4 w-4 stroke-[2.5]" />
-                      ¡INICIAR RETO! ⚡
+                      <Swords className="h-4 w-4 stroke-[2.5] text-amber-100 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]" />
+                      <span className="drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)]">¡INICIAR RETO! ⚡</span>
                     </Link>
                   )}
                 </div>

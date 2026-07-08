@@ -133,6 +133,8 @@ interface GamificationStoreState {
   createArtifact: (artifactData: Omit<ShopArtifact, 'id'>) => Promise<void>;
   unlockBadge: (studentId: string, badgeId: string) => Promise<void>;
   fetchMissions: () => Promise<void>;
+  fetchQuestAttempts: (studentId: string) => Promise<void>;
+  subscribeToGamificationChanges: (studentId: string) => () => void;
   fetchActiveGuildBoss: () => Promise<void>;
   subscribeToGuildChanges: () => () => void;
   resetGamificationStore: () => void;
@@ -642,6 +644,61 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     } finally {
       set({ isLoadingMissions: false });
     }
+  },
+
+  fetchQuestAttempts: async (studentId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('quest_attempts')
+        .select('*')
+        .eq('student_id', studentId);
+      
+      if (error) throw error;
+      set({ questAttempts: data || [] });
+    } catch (err) {
+      console.error('Error fetching quest attempts:', err);
+    }
+  },
+
+  subscribeToGamificationChanges: (studentId: string) => {
+    const channel = supabase
+      .channel(`gamification_realtime_${studentId}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'quest_attempts', filter: `student_id=eq.${studentId}` },
+        async (payload) => {
+          console.log('Realtime quest_attempts update:', payload);
+          // Reload all attempts when a change occurs
+          const { data, error } = await supabase
+            .from('quest_attempts')
+            .select('*')
+            .eq('student_id', studentId);
+          if (!error && data) {
+            set({ questAttempts: data });
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'missions' },
+        () => {
+          console.log('Realtime missions update');
+          get().fetchMissions();
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'quests' },
+        () => {
+          console.log('Realtime quests update');
+          get().fetchMissions();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   },
 
   resetGamificationStore: () => {

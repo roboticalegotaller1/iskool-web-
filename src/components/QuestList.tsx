@@ -47,7 +47,7 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
 
           // Select visual style based on status and quest type
           let itemBorderClass = 'border-zinc-800 hover:border-zinc-700 bg-zinc-900/30';
-          let hoverGlowClass = 'hover:shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:border-purple-500/40';
+          let hoverGlowClass = 'hover:shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:border-purple-500/40 hover:scale-[1.005]';
           let iconContainerClass = 'bg-zinc-950/60 text-zinc-400 border-zinc-800';
 
           if (isLocked) {
@@ -55,16 +55,17 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
             hoverGlowClass = '';
           } else if (isCompleted) {
             itemBorderClass = 'border-emerald-500/30 bg-emerald-950/10';
-            hoverGlowClass = 'hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:border-emerald-500/50';
+            hoverGlowClass = 'hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:border-emerald-500/50 hover:scale-[1.005]';
             iconContainerClass = 'bg-emerald-950/45 text-emerald-400 border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.2)]';
           } else if (isBoss) {
             itemBorderClass = 'border-purple-500/30 bg-purple-950/10';
-            hoverGlowClass = 'hover:shadow-[0_0_18px_rgba(168,85,247,0.25)] hover:border-purple-500/50';
+            hoverGlowClass = 'hover:shadow-[0_0_18px_rgba(168,85,247,0.25)] hover:border-purple-500/50 hover:scale-[1.005]';
             iconContainerClass = 'bg-purple-950/45 text-purple-400 border-purple-500/30 shadow-[0_0_10px_rgba(168,85,247,0.3)]';
           } else {
             // Pending standard quest
-            iconContainerClass = 'bg-blue-950/45 text-blue-400 border-blue-500/30 shadow-[0_0_8px_rgba(59,130,246,0.2)]';
-            hoverGlowClass = 'hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:border-blue-500/40';
+            itemBorderClass = 'border-amber-500/40 bg-zinc-950/85';
+            iconContainerClass = 'bg-amber-950/45 text-amber-450 border-amber-500/30 shadow-[0_0_8px_rgba(245,158,11,0.25)]';
+            hoverGlowClass = 'hover:shadow-[0_0_20px_rgba(245,158,11,0.65)] hover:border-amber-500/70 hover:scale-[1.02] transition-transform duration-300';
           }
 
           const contentElements = (
@@ -137,12 +138,12 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
                   </div>
                 ) : (
                   <button
-                    className={`px-4.5 py-2.5 rounded-xl text-xs font-black text-zinc-950 transition-all duration-300 flex items-center gap-1.5 active:scale-95 ${
+                    className={`px-4.5 py-2.5 rounded-xl text-xs font-black transition-all duration-300 flex items-center gap-1.5 active:scale-95 ${
                       isCompleted
                         ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 border border-zinc-700/50'
                         : isBoss
                           ? 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white shadow-md shadow-purple-500/25 border border-purple-400/20'
-                          : 'bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400'
+                          : 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 text-amber-100 shadow-[0_0_12px_rgba(245,158,11,0.45)] hover:shadow-[0_0_18px_rgba(245,158,11,0.75)] border border-amber-500/20'
                     }`}
                   >
                     {isBoss ? (
@@ -151,7 +152,7 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
                         {isCompleted ? 'Desafiar Jefe ⚔️' : 'Desafiar Jefe ⚔️'}
                       </>
                     ) : (
-                      isCompleted ? 'Reintentar' : 'Jugar'
+                      isCompleted ? 'Reintentar' : <span className="drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">Jugar ⚡</span>
                     )}
                   </button>
                 )}
@@ -172,8 +173,12 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
             return (
               <Link
                 key={quest.id}
-                href={`/student/missions/${quest.id}`}
-                className={`flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 rounded-2xl border transition-all duration-350 ${itemBorderClass} ${hoverGlowClass} cursor-pointer hover:scale-[1.005]`}
+                href={`/student/missions/${quest.mission_id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onQuestClick(quest);
+                }}
+                className={`flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 rounded-2xl border transition-all duration-350 ${itemBorderClass} ${hoverGlowClass} cursor-pointer`}
               >
                 {contentElements}
               </Link>

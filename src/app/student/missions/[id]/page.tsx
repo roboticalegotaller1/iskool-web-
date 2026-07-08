@@ -5,6 +5,7 @@ import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { Header } from '@/components/Header';
+import { Loader } from '@/components/Loader';
 import { 
   ArrowLeft, Play, FileSpreadsheet, AudioLines, 
   CheckCircle2, XCircle, ChevronRight, Coins, 
@@ -39,6 +40,7 @@ export default function MissionPage({ params }: MissionPageProps) {
   const stats = useCurrentStudentStats();
   
   const missions = useGamificationStore(state => state.missionsList);
+  const isLoadingMissions = useGamificationStore(state => state.isLoadingMissions);
   const submitQuiz = useGamificationStore(state => state.submitQuiz);
   const submitExam = useGamificationStore(state => state.submitExam);
   const questAttempts = useGamificationStore(state => state.questAttempts);
@@ -223,63 +225,31 @@ export default function MissionPage({ params }: MissionPageProps) {
     if (user && user.role === 'student') {
       fetchStats();
       fetchMissions();
+
+      // Cargar los intentos de retos (quest attempts) en tiempo real
+      const gamificationStore = useGamificationStore.getState();
+      gamificationStore.fetchQuestAttempts(user.id);
+
+      // Suscribirse a las actualizaciones de gamificación en tiempo real
+      const unsubscribe = gamificationStore.subscribeToGamificationChanges(user.id);
+      return () => {
+        unsubscribe();
+      };
     }
   }, [user, fetchStats, fetchMissions]);
 
   // Helper to normalize seed IDs to real database UUIDs
-  const normalizeMissionOrQuestId = (targetId: string): string => {
+  const normalizeMissionId = (targetId: string): string => {
     if (targetId === 'mis-selva') return 'd00a0eeb-9c0b-4ef8-bb6d-7e9aa39842e5';
     if (targetId === 'mis-fractions') return 'd00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d11';
-    if (targetId === 'qst-selva-1' || targetId === 'qst-selva-2' || targetId === 'qst-selva-3') return 'e00a0eeb-9c0b-4ef8-bb6d-44072205c41a';
-    if (targetId === 'qst-fractions-1' || targetId === 'qst-fractions-2') return 'e00a0eeb-9c0b-4ef8-bb6d-69bad5a8a9ca';
     return targetId;
   };
 
-  const normalizedId = normalizeMissionOrQuestId(id);
+  const normalizedId = normalizeMissionId(id);
 
-  // Buscar misión (por su ID propio o por el ID de uno de sus retos)
-  const mission = missions.find(m => m.id === normalizedId || m.quests?.some(q => q.id === normalizedId));
+  // Buscar misión por su ID propio
+  const mission = missions.find(m => m.id === normalizedId);
 
-  // Auto-cargar el reto seleccionado si el ID de la URL corresponde a un reto (ej. qst-selva-1 o UUID correspondiente)
-  useEffect(() => {
-    if (mission && normalizedId) {
-      const isQuestId = normalizedId.startsWith('qst-') || normalizedId === 'e00a0eeb-9c0b-4ef8-bb6d-44072205c41a' || normalizedId === 'e00a0eeb-9c0b-4ef8-bb6d-69bad5a8a9ca';
-      if (isQuestId) {
-        const targetQuest = mission.quests?.find(q => q.id === normalizedId || q.id === 'e00a0eeb-9c0b-4ef8-bb6d-44072205c41a' || q.id === 'e00a0eeb-9c0b-4ef8-bb6d-69bad5a8a9ca');
-        if (targetQuest) {
-          // Asegurarnos de que no reiniciemos el estado si ya está seleccionado
-          if (selectedQuest?.id !== targetQuest.id) {
-            setSelectedQuest(targetQuest);
-            if (targetQuest.type === 'exam') {
-              setIsPlayingExam(true);
-              setBossBattlePhase('intro');
-              setCanvasCombatState('idle');
-              setPlayerHp(100);
-              setBossHp((targetQuest.content as import('@/types').ExamContent)?.bossHp || 100);
-              setBossMaxHp((targetQuest.content as import('@/types').ExamContent)?.bossHp || 100);
-              setCombatLog(['⚔️ ¡El Jefe del Gremio ha aparecido!']);
-            } else if (targetQuest.type === 'quiz') {
-              setIsPlayingQuiz(true);
-              setCurrentQuestionIdx(0);
-              setSelectedOptionIdx(null);
-              setIsAnswerSubmitted(false);
-              setQuizScore(0);
-              setQuizAnswers({});
-              setTimer(20);
-              setQuizResult(null);
-            } else {
-              setIsSubmittingEvidence(true);
-              setEvidenceTitle('');
-              setEvidenceDesc('');
-              setEvidenceReflection('');
-              setMockFile(null);
-              setIsSubmissionFinished(false);
-            }
-          }
-        }
-      }
-    }
-  }, [mission, normalizedId, selectedQuest]);
   
   // Cuestionario (Quiz State)
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
@@ -558,23 +528,12 @@ export default function MissionPage({ params }: MissionPageProps) {
     );
   }
 
-  if (!mission) {
-    return (
-      <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950">
-        <Header />
-        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-          <HelpCircle className="h-16 w-16 text-zinc-400 mb-4 animate-bounce" />
-          <h2 className="text-xl font-bold">Misión no encontrada</h2>
-          <Link href="/student" className="mt-4 text-blue-600 font-semibold hover:underline">
-            Regresar al mapa
-          </Link>
-        </div>
-      </div>
-    );
+  if (isLoadingMissions || !mission) {
+    return <Loader />;
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-950 text-white relative">
+    <div className="min-h-screen flex flex-col bg-zinc-950 text-white relative animate-fade-in">
       <Header />
 
       {/* Background Starry/Glowing Aura */}

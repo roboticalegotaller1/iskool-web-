@@ -98,6 +98,16 @@ export default function StudentDashboard() {
 
       fetchPortfolioItems();
       fetchMissions();
+
+      // Cargar los intentos de retos (quest attempts) en tiempo real
+      const gamificationStore = useGamificationStore.getState();
+      gamificationStore.fetchQuestAttempts(user.id);
+
+      // Suscribirse a las actualizaciones de gamificación en tiempo real
+      const unsubscribe = gamificationStore.subscribeToGamificationChanges(user.id);
+      return () => {
+        unsubscribe();
+      };
     }
   }, [user, fetchStats, fetchPortfolioItems, fetchMissions]);
 

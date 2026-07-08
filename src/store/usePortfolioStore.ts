@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { PortfolioItem, FeedbackAuthorRole, PortfolioItemStatus, PortfolioFeedback, UserProfile } from '../types';
 import { PORTFOLIO_SEED, SUBJECTS_SEED, TEACHER_SEED, PARENT_SEED, STUDENTS_LIST_SEED, BADGES_SEED } from './seeds';
-import { useStudentStore, normalizeStudentId } from './useStudentStore';
+import { useStudentStore, normalizeStudentId, mapStudentIdToUuid } from './useStudentStore';
 import { useGamificationStore } from './useGamificationStore';
 import { useSchoolAdminStore } from './useSchoolAdminStore';
 import { supabase } from '@/lib/supabaseClient';
@@ -9,14 +9,6 @@ import { supabase } from '@/lib/supabaseClient';
 const isUuid = (str?: string): boolean => {
   if (!str) return false;
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
-};
-
-const mapStudentIdToUuid = (id: string): string => {
-  if (id === 'std-pa') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a11';
-  if (id === 'std-sec') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a22';
-  if (id === 'std-pb') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a33';
-  if (id === 'std-prep') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44';
-  return id;
 };
 
 const ensureSubjectUuid = async (subjectId?: string): Promise<string> => {

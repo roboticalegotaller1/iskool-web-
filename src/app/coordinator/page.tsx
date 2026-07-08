@@ -24,13 +24,19 @@ export default function CoordinatorDashboard() {
   const deleteGroup = useSchoolAdminStore(state => state.deleteGroup);
   const saveSchoolSettings = useSchoolAdminStore(state => state.saveSchoolSettings);
 
+  const subjectsList = useSchoolAdminStore(state => state.subjectsList);
+  const teachersList = useSchoolAdminStore(state => state.teachersList);
+  const createSubject = useSchoolAdminStore(state => state.createSubject);
+  const deleteSubject = useSchoolAdminStore(state => state.deleteSubject);
+  const registerTeacher = useSchoolAdminStore(state => state.registerTeacher);
+
   const setDetailedStudents = (val: DetailedStudent[] | ((prev: DetailedStudent[]) => DetailedStudent[])) => {
     const current = useSchoolAdminStore.getState().detailedStudents;
     const next = typeof val === 'function' ? (val as Function)(current) : val;
     useSchoolAdminStore.setState({ detailedStudents: next });
   };
 
-  const subjects = SUBJECTS_SEED;
+  const subjects = subjectsList;
 
   // Gestión de Pestañas
   const [activeTab, setActiveTab] = useState<'students' | 'groups' | 'schedules' | 'settings'>('students');
@@ -105,12 +111,11 @@ export default function CoordinatorDashboard() {
   const [selectedTeacher, setSelectedTeacher] = useState('usr-teacher-1'); // Default
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('08:00 - 09:30');
 
-  // Lista de profesores estáticos simulados
-  const TEACHERS = [
-    { id: 'usr-teacher-1', name: 'Israel López (Matemáticas/Ciencias)' },
-    { id: 'usr-teacher-2', name: 'María Fernández (Español/Historia)' },
-    { id: 'usr-teacher-3', name: 'Roberto Díaz (Inglés/Cívica)' }
-  ];
+  // Lista de profesores del store
+  const TEACHERS = teachersList.map(t => ({
+    id: t.id,
+    name: `${t.first_name} ${t.last_name} (${t.email})`
+  }));
 
   // Horarios de tiempo disponibles
   const TIME_SLOTS = [
@@ -945,6 +950,167 @@ export default function CoordinatorDashboard() {
                   <Plus className="h-4 w-4" />
                   Agregar Clase al Horario
                 </button>
+              </div>
+
+              {/* Gestor de Materias */}
+              <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 p-5 rounded-3xl shadow-sm flex flex-col gap-4">
+                <h3 className="text-xs font-black text-zinc-800 dark:text-white uppercase tracking-wider flex items-center gap-1.5 border-b border-zinc-100 dark:border-zinc-800 pb-3">
+                  <BookOpen className="h-4.5 w-4.5 text-emerald-500" />
+                  Gestión de Materias
+                </h3>
+                
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Nombre de la Materia</label>
+                    <input
+                      type="text"
+                      id="new-subject-name"
+                      placeholder="Ej. Robótica, Historia"
+                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-850 dark:text-zinc-100 focus:outline-none focus:border-violet-500 font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Código SEP</label>
+                    <input
+                      type="text"
+                      id="new-subject-code"
+                      placeholder="Ej. ROB-123"
+                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-850 dark:text-zinc-100 focus:outline-none focus:border-violet-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Grado/Nivel Destino</label>
+                    <select
+                      id="new-subject-grade"
+                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-850 dark:text-zinc-100 focus:outline-none focus:border-violet-500 font-bold"
+                    >
+                      <option value="primaria-1º">Primaria - 1º</option>
+                      <option value="primaria-4º">Primaria - 4º</option>
+                      <option value="secundaria-2º">Secundaria - 2º</option>
+                      <option value="preparatoria-4ºSemestre">Preparatoria - 4º Semestre</option>
+                    </select>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const nameInput = document.getElementById('new-subject-name') as HTMLInputElement;
+                      const codeInput = document.getElementById('new-subject-code') as HTMLInputElement;
+                      const gradeSelect = document.getElementById('new-subject-grade') as HTMLSelectElement;
+                      if (!nameInput.value.trim()) return alert('El nombre es requerido');
+                      createSubject({
+                        school_id: 'sch-1',
+                        name: nameInput.value.trim(),
+                        sep_code: codeInput.value.trim() || undefined,
+                        level_grade_id: gradeSelect.value
+                      });
+                      nameInput.value = '';
+                      codeInput.value = '';
+                    }}
+                    className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-500/10 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Registrar Materia
+                  </button>
+                </div>
+
+                <div className="mt-2 border-t border-zinc-100 dark:border-zinc-800 pt-3">
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-2">Materias Registradas</label>
+                  <div className="max-h-40 overflow-y-auto flex flex-col gap-2 pr-1">
+                    {subjects.map(sub => (
+                      <div key={sub.id} className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-xl border border-zinc-100 dark:border-zinc-800/80">
+                        <div>
+                          <div className="text-xs font-black text-zinc-800 dark:text-zinc-200">{sub.name}</div>
+                          <div className="text-[9px] text-zinc-400 font-mono uppercase">{sub.level_grade_id.split('-').join(' ')} {sub.sep_code ? `| ${sub.sep_code}` : ''}</div>
+                        </div>
+                        {sub.id.startsWith('sub-') && sub.id !== 'sub-math' && sub.id !== 'sub-span' && sub.id !== 'sub-sci' ? (
+                          <button
+                            onClick={() => deleteSubject(sub.id)}
+                            className="text-red-500 hover:text-red-400 p-1 cursor-pointer"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        ) : (
+                          <span className="text-[8px] font-bold text-zinc-400 bg-zinc-200/50 dark:bg-zinc-800 px-1.5 py-0.5 rounded">Fijo</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Gestor de Profesores */}
+              <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 p-5 rounded-3xl shadow-sm flex flex-col gap-4">
+                <h3 className="text-xs font-black text-zinc-800 dark:text-white uppercase tracking-wider flex items-center gap-1.5 border-b border-zinc-100 dark:border-zinc-800 pb-3">
+                  <Users className="h-4.5 w-4.5 text-blue-500" />
+                  Gestión de Profesores
+                </h3>
+                
+                <div className="flex flex-col gap-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Nombre</label>
+                      <input
+                        type="text"
+                        id="new-teacher-first-name"
+                        placeholder="Ej. Juan"
+                        className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-850 dark:text-zinc-100 focus:outline-none focus:border-violet-500 font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Apellidos</label>
+                      <input
+                        type="text"
+                        id="new-teacher-last-name"
+                        placeholder="Ej. Pérez"
+                        className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-850 dark:text-zinc-100 focus:outline-none focus:border-violet-500 font-bold"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Correo Electrónico</label>
+                    <input
+                      type="email"
+                      id="new-teacher-email"
+                      placeholder="ejemplo@iskool.edu.mx"
+                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-850 dark:text-zinc-100 focus:outline-none focus:border-violet-500"
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      const firstInput = document.getElementById('new-teacher-first-name') as HTMLInputElement;
+                      const lastInput = document.getElementById('new-teacher-last-name') as HTMLInputElement;
+                      const emailInput = document.getElementById('new-teacher-email') as HTMLInputElement;
+                      if (!firstInput.value.trim() || !lastInput.value.trim()) return alert('Nombre y apellidos requeridos');
+                      if (!emailInput.value.trim() || !emailInput.value.includes('@')) return alert('Correo electrónico válido requerido');
+                      registerTeacher({
+                        first_name: firstInput.value.trim(),
+                        last_name: lastInput.value.trim(),
+                        email: emailInput.value.trim()
+                      });
+                      firstInput.value = '';
+                      lastInput.value = '';
+                      emailInput.value = '';
+                    }}
+                    className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-500/10 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    Registrar Profesor
+                  </button>
+                </div>
+
+                <div className="mt-2 border-t border-zinc-100 dark:border-zinc-800 pt-3">
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-2">Profesores Registrados</label>
+                  <div className="max-h-40 overflow-y-auto flex flex-col gap-2 pr-1">
+                    {teachersList.map(t => (
+                      <div key={t.id} className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-xl border border-zinc-100 dark:border-zinc-800/80">
+                        <div>
+                          <div className="text-xs font-black text-zinc-800 dark:text-zinc-200">{t.first_name} {t.last_name}</div>
+                          <div className="text-[9px] text-zinc-400 font-mono">{t.email}</div>
+                        </div>
+                        <span className="text-[8px] font-bold text-blue-600 bg-blue-100/50 dark:bg-blue-950 dark:text-blue-300 px-1.5 py-0.5 rounded">Docente</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
             </div>

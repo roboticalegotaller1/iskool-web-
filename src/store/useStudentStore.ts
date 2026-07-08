@@ -470,21 +470,22 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
   fetchStats: async (groupId?: string) => {
     set({ isLoadingStats: true });
     try {
-      let query = supabase.from('student_stats').select('*');
-      if (groupId) {
-        query = query.eq('group_id', groupId);
-      }
+      // The student_stats table does not have a group_id column.
+      // We load all stats and filter/match them locally to avoid DB errors.
+      const query = supabase.from('student_stats').select('*');
       const response = await query;
       if (response.error) throw new Error(response.error.message);
       
       const statsList = response.data || [];
-      if (statsList.length > 0) {
-        const statsMap = { ...get().allStats };
-        statsList.forEach((stat: StudentStats) => {
-          statsMap[stat.student_id] = stat;
-        });
-        set({ allStats: statsMap });
-      }
+      const statsMap = { ...get().allStats };
+      statsList.forEach((stat: StudentStats) => {
+        const normalizedId = normalizeStudentId(stat.student_id);
+        statsMap[normalizedId] = {
+          ...stat,
+          student_id: normalizedId
+        };
+      });
+      set({ allStats: statsMap });
     } catch (err: any) {
       console.error('Error fetching student stats:', err.message);
     } finally {
@@ -503,6 +504,20 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
     });
   },
 }));
+
+export const isUuid = (str?: string): boolean => {
+  if (!str) return false;
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+};
+
+export const mapStudentIdToUuid = (id: string): string => {
+  if (isUuid(id)) return id;
+  if (id === 'std-pa') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a11';
+  if (id === 'std-sec') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a22';
+  if (id === 'std-pb') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a33';
+  if (id === 'std-prep') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44';
+  return id;
+};
 
 export const normalizeStudentId = (id: string): string => {
   if (id === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a11') return 'std-pa';
