@@ -9,6 +9,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { UserProfile, Subject, ClassSchedule, Group } from '@/types';
+import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 
 // ==========================================
 // BASE DE DATOS CURRICULAR DE LA NEM 2022
@@ -183,6 +184,32 @@ interface PlanningTabProps {
 }
 
 export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsList }: PlanningTabProps) {
+  const subjectsList = useSchoolAdminStore(state => state.subjectsList);
+
+  // Filter subjects taught by the current teacher
+  const teacherSubjectIds = schedulesList
+    .filter(s => s.teacherId === currentTeacher.id)
+    .map(s => s.subjectId);
+    
+  const filteredSubjects = subjectsList.filter(sub => teacherSubjectIds.includes(sub.id));
+  
+  // Fallback: If empty, load all school subjects
+  const displaySubjects = filteredSubjects.length > 0 ? filteredSubjects : subjectsList;
+
+  // Helper to map subject ID/name to curriculum database category keys
+  const mapSubjectToCurriculumKey = (subjectId: string, subjectName: string): 'matematicas' | 'ciencias' | 'lenguajes' => {
+    const cleanId = subjectId.toLowerCase();
+    const cleanName = subjectName.toLowerCase();
+    
+    if (cleanId.includes('math') || cleanId.includes('matemat') || cleanName.includes('matemat')) {
+      return 'matematicas';
+    }
+    if (cleanId.includes('sci') || cleanId.includes('cienc') || cleanName.includes('cienc') || cleanName.includes('quim') || cleanName.includes('fisic') || cleanName.includes('biolog')) {
+      return 'ciencias';
+    }
+    return 'lenguajes';
+  };
+
   // --- Estados de Entrada ---
   const [inputText, setInputText] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('primaria-alta');
@@ -221,15 +248,11 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   useEffect(() => {
     const teacherSchedules = schedulesList.filter(s => s.teacherId === currentTeacher.id);
     if (teacherSchedules.length > 0) {
-      const firstSubjectId = teacherSchedules[0].subjectId;
-      // Mapear subject del seed a la clave del curriculum
-      const curSubject = firstSubjectId === 'sub-math' ? 'matematicas' : 
-                         firstSubjectId === 'sub-sci' ? 'ciencias' : 'lenguajes';
-      setSelectedSubject(curSubject);
-    } else {
-      setSelectedSubject('ciencias');
+      setSelectedSubject(teacherSchedules[0].subjectId);
+    } else if (displaySubjects.length > 0) {
+      setSelectedSubject(displaySubjects[0].id);
     }
-  }, [schedulesList, currentTeacher]);
+  }, [schedulesList, currentTeacher, displaySubjects]);
 
   // Cargar historial de planeaciones al montar
   useEffect(() => {
@@ -333,16 +356,22 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
     // Determinar si usamos Gemini Real u Offline
     let resultPlanning: any = null;
+    const currKey = mapSubjectToCurriculumKey(selectedSubject, displaySubjects.find(s => s.id === selectedSubject)?.name || '');
 
     if (geminiApiKey.trim()) {
       try {
-        resultPlanning = await callGeminiAPI(inputText, selectedLevel, selectedSubject);
+        resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey);
       } catch (err) {
         console.error("Fallo llamada a Gemini API, usando motor heurístico local", err);
-        resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, selectedSubject);
+        resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
       }
     } else {
-      resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, selectedSubject);
+      resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
+    }
+
+    if (resultPlanning) {
+      resultPlanning.subjectId = selectedSubject;
+      resultPlanning.subjectName = displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
     }
 
     clearInterval(interval);
@@ -830,9 +859,9 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
               onChange={(e) => setSelectedSubject(e.target.value)}
               className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
             >
-              <option value="ciencias">Ciencias Naturales</option>
-              <option value="matematicas">Matemáticas</option>
-              <option value="lenguajes">Español / Lenguajes</option>
+              {displaySubjects?.map(sub => (
+                <option key={sub.id} value={sub.id}>{sub.name}</option>
+              ))}
             </select>
           </div>
         </div>
