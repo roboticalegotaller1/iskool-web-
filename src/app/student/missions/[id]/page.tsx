@@ -528,8 +528,17 @@ export default function MissionPage({ params }: MissionPageProps) {
     );
   }
 
-  if (isLoadingMissions || !mission) {
+  if (isLoadingMissions) {
     return <Loader />;
+  }
+
+  if (!mission) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-white gap-4">
+        <h2 className="text-2xl font-bold text-rose-500">Misión no encontrada</h2>
+        <Link href="/student" className="px-6 py-2 bg-blue-600 rounded-full font-bold text-xs">Volver al mapa</Link>
+      </div>
+    );
   }
 
   return (

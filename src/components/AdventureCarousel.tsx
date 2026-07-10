@@ -333,6 +333,7 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
                     <Link
                       href={`/student/missions/${card.id}`}
                       onClick={(e) => {
+                        e.stopPropagation();
                         // Prevent clicking through to center card if the card was not active
                         if (!isActive) {
                           e.preventDefault();

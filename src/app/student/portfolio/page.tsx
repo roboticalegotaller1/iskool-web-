@@ -14,6 +14,8 @@ export default function StudentPortfolio() {
 
   const portfolioItems = usePortfolioStore(state => state.portfolioItems);
   const fetchPortfolioItems = usePortfolioStore(state => state.fetchPortfolioItems);
+  const subscribeToPortfolioChanges = usePortfolioStore(state => state.subscribeToPortfolioChanges);
+  const unsubscribeFromPortfolioChanges = usePortfolioStore(state => state.unsubscribeFromPortfolioChanges);
   const [commentText, setCommentText] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -25,8 +27,15 @@ export default function StudentPortfolio() {
   useEffect(() => {
     if (user && user.role === 'student') {
       fetchPortfolioItems();
+
+      // Subscribe to realtime portfolio and feedback updates
+      subscribeToPortfolioChanges();
+
+      return () => {
+        unsubscribeFromPortfolioChanges();
+      };
     }
-  }, [user, fetchPortfolioItems]);
+  }, [user, fetchPortfolioItems, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges]);
 
   if (loading || !user) {
     return (

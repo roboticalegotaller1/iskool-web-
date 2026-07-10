@@ -33,7 +33,11 @@ export default function StudentDashboard() {
   const studentMessages = useStudentStore(state => state.studentMessages);
   const markStudentMessageAsRead = useStudentStore(state => state.markStudentMessageAsRead);
   const fetchStats = useStudentStore(state => state.fetchStats);
+  const subscribeToStudentStats = useStudentStore(state => state.subscribeToStudentStats);
+  const unsubscribeFromStudentStats = useStudentStore(state => state.unsubscribeFromStudentStats);
   const fetchPortfolioItems = usePortfolioStore(state => state.fetchPortfolioItems);
+  const subscribeToPortfolioChanges = usePortfolioStore(state => state.subscribeToPortfolioChanges);
+  const unsubscribeFromPortfolioChanges = usePortfolioStore(state => state.unsubscribeFromPortfolioChanges);
   const fetchMissions = useGamificationStore(state => state.fetchMissions);
   
   const rawStats = useCurrentStudentStats();
@@ -105,11 +109,20 @@ export default function StudentDashboard() {
 
       // Suscribirse a las actualizaciones de gamificación en tiempo real
       const unsubscribe = gamificationStore.subscribeToGamificationChanges(user.id);
+      
+      // Suscribirse a las actualizaciones del portafolio en tiempo real
+      subscribeToPortfolioChanges();
+
+      // Suscribirse a las estadísticas del estudiante en tiempo real
+      subscribeToStudentStats(user.id);
+
       return () => {
         unsubscribe();
+        unsubscribeFromPortfolioChanges();
+        unsubscribeFromStudentStats();
       };
     }
-  }, [user, fetchStats, fetchPortfolioItems, fetchMissions]);
+  }, [user, fetchStats, fetchPortfolioItems, fetchMissions, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges, subscribeToStudentStats, unsubscribeFromStudentStats]);
 
   const purchaseArtifact = async (studentId: string, artifactId: string) => {
     await useStudentStore.getState().purchaseArtifact(studentId, artifactId);

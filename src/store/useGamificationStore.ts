@@ -315,7 +315,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
         mission_id: missionUuid,
         title: questData.title,
         description: questData.description,
-        type: questData.type === 'exam' ? 'quiz' : questData.type,
+        type: questData.type,
         sequence_order: questData.sequence_order || 1,
         xp_reward: questData.xp_reward,
         coins_reward: questData.coins_reward,

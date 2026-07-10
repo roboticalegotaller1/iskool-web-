@@ -112,8 +112,8 @@ interface PortfolioStoreState {
   linkPortfolioItemToQuest: (itemId: string, questId: string) => void;
   submitPeerReview: (itemId: string, score: number, comment: string) => void;
   fetchPortfolioItems: (groupId?: string) => Promise<void>;
-  subscribeToSubmissions: (onNewSubmission?: (studentName: string, questTitle: string) => void) => void;
-  unsubscribeFromSubmissions: () => void;
+  subscribeToPortfolioChanges: (onUpdateReceived?: (studentName?: string, questTitle?: string) => void) => void;
+  unsubscribeFromPortfolioChanges: () => void;
   resetPortfolioStore: () => void;
 }
 
@@ -668,72 +668,53 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
     }
   },
 
-  subscribeToSubmissions: (onNewSubmission) => {
+  subscribeToPortfolioChanges: (onUpdateReceived) => {
     if (submissionsChannel) return;
     
     submissionsChannel = supabase
-      .channel('custom-insert-channel')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'submissions' }, (payload) => {
-        console.log("Realtime submission payload received:", payload);
+      .channel('custom-portfolio-channel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'portfolio_items' }, async (payload) => {
+        console.log("Realtime portfolio item change received:", payload);
         
-        const studentStore = useStudentStore.getState();
-        const gamificationStore = useGamificationStore.getState();
+        await get().fetchPortfolioItems();
         
-        const currentStudent = STUDENTS_LIST_SEED.find(s => s.id === payload.new.student_id) || {
-          id: payload.new.student_id,
-          first_name: 'Alumno',
-          last_name: 'Desconocido',
-          avatar_url: '/images/students/default.png',
-          group_id: 'grp-sec-a'
-        };
-        const studentName = `${currentStudent.first_name} ${currentStudent.last_name}`;
-        
-        const quest = gamificationStore.missionsList.flatMap(m => m.quests || []).find(q => q.id === payload.new.quest_id);
-        const questTitle = quest?.title || 'Desafío del Gremio';
-        
-        const mission = gamificationStore.missionsList.find(m => m.quests?.some(q => q.id === payload.new.quest_id));
-        const subjectId = mission?.subject_id || 'sub-math';
-        const subject = SUBJECTS_SEED.find(s => s.id === subjectId) || SUBJECTS_SEED[0];
-
-        const newItem: PortfolioItem = {
-          id: payload.new.id || `port-${Date.now()}`,
-          student_id: payload.new.student_id,
-          subject_id: subjectId,
-          quest_id: payload.new.quest_id,
-          title: questTitle,
-          description: quest?.description || 'Evidencia enviada en tiempo real',
-          file_url: payload.new.file_url || '/files/mock_reflection.png',
-          file_type: payload.new.file_type || 'document',
-          status: 'submitted',
-          self_reflection: payload.new.reflection || '',
-          campos_formativos: quest?.campos_formativos,
-          ejes_articuladores: quest?.ejes_articuladores,
-          pdas: quest?.pdas,
-          created_at: payload.new.created_at || new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          student_profile: currentStudent as any,
-          subject: subject,
-          feedbacks: [],
-          isNewRealtime: true
-        };
-
-        set((state) => {
-          if (state.portfolioItems.some(item => item.id === newItem.id)) {
-            return state;
+        if (onUpdateReceived) {
+          let studentName = undefined;
+          let questTitle = undefined;
+          
+          if (payload.eventType === 'INSERT') {
+            const studentStore = useStudentStore.getState();
+            const gamificationStore = useGamificationStore.getState();
+            
+            const studentId = normalizeStudentId(payload.new.student_id);
+            const questId = normalizeQuestId(payload.new.quest_id);
+            
+            const currentStudent = STUDENTS_LIST_SEED.find(s => s.id === studentId) || {
+              first_name: 'Alumno',
+              last_name: 'Desconocido'
+            };
+            studentName = `${currentStudent.first_name} ${currentStudent.last_name}`;
+            
+            const quest = questId ? gamificationStore.missionsList.flatMap(m => m.quests || []).find(q => q.id === questId) : null;
+            questTitle = payload.new.title || quest?.title || 'Desafío del Gremio';
           }
-          return {
-            portfolioItems: [newItem, ...state.portfolioItems]
-          };
-        });
-
-        if (onNewSubmission) {
-          onNewSubmission(studentName, questTitle);
+          
+          onUpdateReceived(studentName, questTitle);
+        }
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'portfolio_feedback' }, async (payload) => {
+        console.log("Realtime portfolio feedback received:", payload);
+        
+        await get().fetchPortfolioItems();
+        
+        if (onUpdateReceived) {
+          onUpdateReceived();
         }
       })
       .subscribe();
   },
 
-  unsubscribeFromSubmissions: () => {
+  unsubscribeFromPortfolioChanges: () => {
     if (submissionsChannel) {
       supabase.removeChannel(submissionsChannel);
       submissionsChannel = null;

@@ -145,24 +145,26 @@ export default function TeacherDashboard() {
   // Realtime toast notification state
   const [realtimeToast, setRealtimeToast] = useState<{ studentName: string; questTitle: string } | null>(null);
 
-  const subscribeToSubmissions = usePortfolioStore(state => state.subscribeToSubmissions);
-  const unsubscribeFromSubmissions = usePortfolioStore(state => state.unsubscribeFromSubmissions);
+  const subscribeToPortfolioChanges = usePortfolioStore(state => state.subscribeToPortfolioChanges);
+  const unsubscribeFromPortfolioChanges = usePortfolioStore(state => state.unsubscribeFromPortfolioChanges);
 
   // Subscribe to Realtime submissions when component mounts
   useEffect(() => {
-    subscribeToSubmissions((studentName, questTitle) => {
-      setRealtimeToast({ studentName, questTitle });
-      
-      // Auto-hide toast after 6 seconds
-      setTimeout(() => {
-        setRealtimeToast(null);
-      }, 6000);
+    subscribeToPortfolioChanges((studentName, questTitle) => {
+      if (studentName && questTitle) {
+        setRealtimeToast({ studentName, questTitle });
+        
+        // Auto-hide toast after 6 seconds
+        setTimeout(() => {
+          setRealtimeToast(null);
+        }, 6000);
+      }
     });
 
     return () => {
-      unsubscribeFromSubmissions();
+      unsubscribeFromPortfolioChanges();
     };
-  }, [subscribeToSubmissions, unsubscribeFromSubmissions]);
+  }, [subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges]);
 
   // Estados para Asistencia
   const [selectedAttendanceGroup, setSelectedAttendanceGroup] = useState<string>('');

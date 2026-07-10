@@ -4,6 +4,8 @@ import { StudentStats, StudentAvatar, StudentMessage, UserProfile, Quest } from 
 import { STATS_MAP_SEED, AVATAR_MAP_SEED, STUDENT_INVENTORY_SEED, STUDENT_MESSAGES_SEED, STUDENTS_LIST_SEED } from './seeds';
 import { supabase } from '@/lib/supabaseClient';
 
+let statsChannel: any = null;
+
 interface StudentStoreState {
   activeStudentId: string;
   allStats: Record<string, StudentStats>;
@@ -18,7 +20,7 @@ interface StudentStoreState {
   openQuestModal: (quest: Quest) => void;
   closeQuestModal: () => void;
   switchStudent: (studentId: string) => Promise<void>;
-  changeAvatar: (config: Partial<StudentAvatar>) => void;
+  changeAvatar: (config: Partial<StudentAvatar>) => Promise<void>;
   feedPet: (studentId?: string) => void;
   playWithPet: (studentId?: string) => void;
   levelUpAttribute: (statName: 'strength' | 'intelligence' | 'defense') => Promise<void>;
@@ -27,6 +29,8 @@ interface StudentStoreState {
   revokeArtifact: (studentId: string, artifactId: string, reason: string) => Promise<void>;
   markStudentMessageAsRead: (messageId: string) => void;
   fetchStats: (groupId?: string) => Promise<void>;
+  subscribeToStudentStats: (studentId: string) => void;
+  unsubscribeFromStudentStats: () => void;
   
   // Cross-store helpers
   addXpAndCoins: (studentId: string, xpEarned: number, coinsEarned: number, levelUpCallback?: (leveledUp: boolean) => void) => void;
@@ -70,12 +74,45 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
           }
         }));
       }
+
+      // Fetch avatar to sync
+      try {
+        const avResponse = await supabase.from('student_avatars').select('*');
+        if (avResponse && avResponse.data && avResponse.data.length > 0) {
+          const dbAv = avResponse.data[0];
+          const normalizedId = normalizeStudentId(dbAv.student_id || studentId);
+          set((state) => ({
+            allAvatars: {
+              ...state.allAvatars,
+              [studentId]: dbAv,
+              [normalizedId]: dbAv
+            }
+          }));
+        }
+      } catch (err) {
+        console.error('Error fetching student avatar:', err);
+      }
     }
   },
 
-  changeAvatar: (config) => {
+  changeAvatar: async (config) => {
     const rawId = get().activeStudentId;
     const activeId = normalizeStudentId(rawId);
+    
+    try {
+      const dbStudentId = mapStudentIdToUuid(activeId);
+      const { error } = await supabase
+        .from('student_avatars')
+        .update(config)
+        .eq('student_id', dbStudentId);
+        
+      if (error) {
+        console.error('Error updating avatar in Supabase:', error.message);
+      }
+    } catch (err) {
+      console.error('Unexpected error updating avatar in Supabase:', err);
+    }
+
     set((state) => {
       const currentAv = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
       const updatedAv = {
@@ -490,6 +527,48 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       console.error('Error fetching student stats:', err.message);
     } finally {
       set({ isLoadingStats: false });
+    }
+  },
+
+  subscribeToStudentStats: (studentId) => {
+    if (statsChannel) return;
+
+    const dbStudentId = mapStudentIdToUuid(studentId);
+    
+    statsChannel = supabase
+      .channel('custom-stats-channel')
+      .on('postgres_changes', { 
+        event: 'UPDATE', 
+        schema: 'public', 
+        table: 'student_stats', 
+        filter: `student_id=eq.${dbStudentId}` 
+      }, (payload) => {
+        console.log("Realtime stats update received:", payload);
+        
+        const updatedStats = payload.new;
+        const normalizedId = normalizeStudentId(updatedStats.student_id);
+        
+        set((state) => ({
+          allStats: {
+            ...state.allStats,
+            [studentId]: {
+              ...updatedStats,
+              student_id: studentId
+            },
+            [normalizedId]: {
+              ...updatedStats,
+              student_id: normalizedId
+            }
+          }
+        }));
+      })
+      .subscribe();
+  },
+
+  unsubscribeFromStudentStats: () => {
+    if (statsChannel) {
+      supabase.removeChannel(statsChannel);
+      statsChannel = null;
     }
   },
 
