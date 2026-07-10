@@ -7,6 +7,7 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Quest } from '@/types';
+import { useCurrentStudentStats } from '@/store/useStudentStore';
 
 interface QuestListProps {
   quests: Quest[];
@@ -16,6 +17,8 @@ interface QuestListProps {
 
 export default function QuestList({ quests, getQuestStatus, onQuestClick }: QuestListProps) {
   const router = useRouter();
+  const stats = useCurrentStudentStats();
+  const currentStudentLevel = stats?.level || 1;
   return (
     <div className="w-full flex flex-col gap-6 bg-zinc-950/60 p-6 sm:p-8 rounded-3xl border border-zinc-900 shadow-2xl backdrop-blur-md relative overflow-hidden">
       
@@ -40,7 +43,9 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
       <div className="flex flex-col gap-4 relative z-10 mt-2">
         {quests.map((quest, index) => {
           const status = getQuestStatus(quest.id);
-          const isLocked = index > 0 && getQuestStatus(quests[index - 1].id) !== 'completed';
+          const isLevelLocked = quest.required_level !== undefined && quest.required_level > currentStudentLevel;
+          const isSequenceLocked = index > 0 && getQuestStatus(quests[index - 1].id) !== 'completed';
+          const isLocked = isLevelLocked || isSequenceLocked;
           const isCompleted = status === 'completed';
           const isFailed = status === 'failed';
           const isBoss = quest.type === 'exam';
@@ -101,6 +106,12 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
                       <span className="inline-flex items-center gap-1 text-[9px] font-extrabold px-2 py-0.5 rounded bg-rose-950/50 border border-rose-500/30 text-rose-400">
                         <XCircle className="h-3 w-3" />
                         REINTENTAR
+                      </span>
+                    )}
+                    {isLevelLocked && (
+                      <span className="inline-flex items-center gap-1 text-[9px] font-extrabold px-2 py-0.5 rounded bg-rose-950/50 border border-rose-500/30 text-rose-450 animate-pulse">
+                        <Lock className="h-3 w-3" />
+                        BLOQUEADO: REQUIERE NIVEL {quest.required_level}
                       </span>
                     )}
                     {isBoss && !isCompleted && (

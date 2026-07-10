@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useGamificationStore } from '@/store/useGamificationStore';
-import { useStudentStore } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
+import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { Mission, Quest } from '@/types';
 import { 
   Lock, Check, Star, Play, Swords, Trophy, Sparkles, BookOpen, 
@@ -43,8 +44,38 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     return { x: calculatedX, y: calculatedY };
   };
 
+  const stats = useCurrentStudentStats();
+  const currentStudentLevel = stats?.level || 1;
+
+  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
+  const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const schedulesList = useSchoolAdminStore(state => state.schedulesList);
+
+  const activeStudent = detailedStudents.find(s => s.id === activeStudentId);
+  const studentGroupId = activeStudent?.group_id;
+
+  // Get subjects for this group
+  const studentSubjectIds = schedulesList
+    .filter(s => s.groupId === studentGroupId)
+    .map(s => s.subjectId);
+
+  // Filter missions by student's subjects
+  const filteredMissions = missions.filter(m => {
+    if (studentSubjectIds.length > 0) {
+      return studentSubjectIds.some(subId => {
+        if (subId === m.subject_id) return true;
+        const subjects = useSchoolAdminStore.getState().subjectsList;
+        const studentSub = subjects.find(s => s.id === subId);
+        const missionSub = subjects.find(s => s.id === m.subject_id);
+        if (studentSub && missionSub && studentSub.name === missionSub.name) return true;
+        return false;
+      }) || studentSubjectIds.includes(m.subject_id);
+    }
+    return true;
+  });
+
   // Sort missions to form a sequence
-  const sortedMissions = [...missions].sort((a, b) => a.created_at.localeCompare(b.created_at));
+  const sortedMissions = [...filteredMissions].sort((a, b) => a.created_at.localeCompare(b.created_at));
   
   // Map node coordinates
   const nodes = sortedMissions.map((m, idx) => ({
@@ -360,16 +391,26 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
                 {selectedMission.quests?.map((quest: Quest) => {
                   const completed = isQuestCompleted(quest.id);
                   const isQuiz = quest.type === 'quiz';
+                  const isLocked = quest.required_level !== undefined && quest.required_level > currentStudentLevel;
+                  
+                  let cardStyle = '';
+                  if (completed) {
+                    cardStyle = 'bg-emerald-950/15 border-emerald-900/35 text-zinc-300';
+                  } else if (isLocked) {
+                    cardStyle = 'bg-zinc-950/10 border-zinc-900/40 text-zinc-500 cursor-not-allowed opacity-50';
+                  } else {
+                    cardStyle = 'bg-zinc-950/30 border-zinc-850 text-zinc-200 cursor-pointer hover:border-indigo-500/50 hover:bg-zinc-900/50';
+                  }
                   
                   return (
                     <div 
                       key={quest.id} 
-                      className={`flex justify-between items-center p-3 rounded-2xl border transition-all ${
-                        completed 
-                          ? 'bg-emerald-950/15 border-emerald-900/35 text-zinc-300' 
-                          : 'bg-zinc-950/30 border-zinc-850 text-zinc-200 cursor-pointer hover:border-indigo-500/50 hover:bg-zinc-900/50'
-                      }`}
+                      className={`flex justify-between items-center p-3 rounded-2xl border transition-all ${cardStyle}`}
                       onClick={() => {
+                        if (isLocked) {
+                          alert(`⚠️ Nivel insuficiente. Requiere nivel ${quest.required_level} para desbloquear este reto.`);
+                          return;
+                        }
                         if (!completed) {
                           openQuestModal(quest);
                           setSelectedMission(null);
@@ -380,12 +421,23 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
                     >
                       <div className="flex items-center gap-3 text-left">
                         <div className={`p-2 rounded-xl shrink-0 ${
-                          completed ? 'bg-emerald-950/40 text-emerald-400' : 'bg-zinc-900 border border-zinc-800 text-zinc-400'
+                          completed 
+                            ? 'bg-emerald-950/40 text-emerald-400' 
+                            : isLocked 
+                              ? 'bg-zinc-950 border border-zinc-900 text-zinc-600' 
+                              : 'bg-zinc-900 border border-zinc-800 text-zinc-400'
                         }`}>
-                          {isQuiz ? <Sparkles className="h-4 w-4" /> : <BookOpen className="h-4 w-4" />}
+                          {isLocked ? <Lock className="h-4 w-4" /> : isQuiz ? <Sparkles className="h-4 w-4" /> : <BookOpen className="h-4 w-4" />}
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-xs font-bold">{quest.title}</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs font-bold">{quest.title}</span>
+                            {isLocked && (
+                              <span className="px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase bg-rose-950/40 border border-rose-500/25 text-rose-400 flex items-center gap-0.5">
+                                <Lock className="h-2 w-2" /> Nivel {quest.required_level}
+                              </span>
+                            )}
+                          </div>
                           <span className="text-[10px] text-zinc-400 line-clamp-1">{quest.description}</span>
                         </div>
                       </div>
@@ -400,6 +452,10 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
                         {completed ? (
                           <div className="h-5 w-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center shrink-0 animate-pulse">
                             <Check className="h-3 w-3" />
+                          </div>
+                        ) : isLocked ? (
+                          <div className="h-5 w-5 rounded-full bg-zinc-950 border border-zinc-900 text-zinc-650 flex items-center justify-center shrink-0">
+                            <Lock className="h-3 w-3" />
                           </div>
                         ) : (
                           <div className="h-5 w-5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-500 flex items-center justify-center shrink-0">

@@ -432,6 +432,7 @@ export interface Quest {
   campos_formativos?: string[];
   ejes_articuladores?: string[];
   pdas?: string[];
+  required_level?: number;
 }
 
 /**

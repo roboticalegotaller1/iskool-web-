@@ -104,6 +104,7 @@ interface GamificationStoreState {
   shopArtifacts: ShopArtifact[];
   isLoadingMissions: boolean;
   syncError: string | null;
+  isInitialized: boolean;
 
   // Actions
   submitQuiz: (questId: string, score: number, answers: Record<string, string | number>) => Promise<{
@@ -153,6 +154,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
   shopArtifacts: DEFAULT_ARTIFACTS_SEED,
   isLoadingMissions: false,
   syncError: null,
+  isInitialized: false,
 
   submitQuiz: async (questId, score, answers) => {
     const studentStore = useStudentStore.getState();
@@ -642,7 +644,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
       const errorMsg = err instanceof Error ? err.message : String(err);
       console.error('Error fetching missions:', errorMsg);
     } finally {
-      set({ isLoadingMissions: false });
+      set({ isLoadingMissions: false, isInitialized: true });
     }
   },
 
@@ -713,7 +715,8 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
       guildSubmissions: [],
       shopArtifacts: DEFAULT_ARTIFACTS_SEED,
       isLoadingMissions: false,
-      syncError: null
+      syncError: null,
+      isInitialized: false
     });
   }
 }));

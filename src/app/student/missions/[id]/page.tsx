@@ -41,6 +41,7 @@ export default function MissionPage({ params }: MissionPageProps) {
   
   const missions = useGamificationStore(state => state.missionsList);
   const isLoadingMissions = useGamificationStore(state => state.isLoadingMissions);
+  const isInitialized = useGamificationStore(state => state.isInitialized);
   const submitQuiz = useGamificationStore(state => state.submitQuiz);
   const submitExam = useGamificationStore(state => state.submitExam);
   const questAttempts = useGamificationStore(state => state.questAttempts);
@@ -528,7 +529,7 @@ export default function MissionPage({ params }: MissionPageProps) {
     );
   }
 
-  if (isLoadingMissions) {
+  if (!isInitialized || isLoadingMissions) {
     return <Loader />;
   }
 

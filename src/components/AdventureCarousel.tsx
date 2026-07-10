@@ -8,6 +8,8 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Mission } from '@/types';
+import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
 
 interface AdventureCarouselProps {
   missions: Mission[];
@@ -34,6 +36,35 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
   const [activeIndex, setActiveIndex] = useState(0);
   const [cards, setCards] = useState<ExtendedCard[]>([]);
 
+  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
+  const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const schedulesList = useSchoolAdminStore(state => state.schedulesList);
+  const stats = useCurrentStudentStats();
+  const currentStudentLevel = stats?.level || 1;
+
+  const activeStudent = detailedStudents.find(s => s.id === activeStudentId);
+  const studentGroupId = activeStudent?.group_id;
+
+  // Get subjects for this group
+  const studentSubjectIds = schedulesList
+    .filter(s => s.groupId === studentGroupId)
+    .map(s => s.subjectId);
+
+  // Filter missions by student's subjects
+  const filteredMissions = missions.filter(m => {
+    if (studentSubjectIds.length > 0) {
+      return studentSubjectIds.some(subId => {
+        if (subId === m.subject_id) return true;
+        const subjects = useSchoolAdminStore.getState().subjectsList;
+        const studentSub = subjects.find(s => s.id === subId);
+        const missionSub = subjects.find(s => s.id === m.subject_id);
+        if (studentSub && missionSub && studentSub.name === missionSub.name) return true;
+        return false;
+      }) || studentSubjectIds.includes(m.subject_id);
+    }
+    return true;
+  });
+
   const handleCardClick = (card: ExtendedCard, isActive: boolean) => {
     if (!isActive) return;
     if (card.isLocked) {
@@ -45,7 +76,7 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
 
   // Build the list of cards, combining real missions with immersive locked RPG placeholders
   useEffect(() => {
-    const realCards: ExtendedCard[] = missions.map((mission) => {
+    const realCards: ExtendedCard[] = filteredMissions.map((mission) => {
       const isMath = mission.subject_id === 'sub-math';
       const subjectName = isMath ? 'Alquimia Matemática' : 'Runas y Lenguaje';
       const subjectColor = isMath 
