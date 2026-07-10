@@ -261,6 +261,11 @@ export interface StudentStats {
 
   // Preparatoria (Proyectos Productivos)
   funding_credits?: number;
+
+  // Tamagotchi RPG Mascotas
+  pet_stage?: 'egg' | 'baby' | 'adult' | 'mystic';
+  pet_energy?: number;
+  pet_happiness?: number;
 }
 
 /**

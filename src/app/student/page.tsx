@@ -11,6 +11,7 @@ import { AvatarCustomizer } from '@/components/AvatarCustomizer';
 import { RpgCombatViewport } from '@/components/RpgCombatViewport';
 import SagaMap from '@/components/SagaMap';
 import QuestCardModal from '@/components/QuestCardModal';
+import { PetSanctuary } from '@/components/PetSanctuary';
 import { 
   Flame, Coins, Sparkles, Compass, Trophy, Star, ArrowRight, 
   Lock, Heart, HelpCircle, Gamepad2, Dumbbell, Brain, Shield,
@@ -27,6 +28,8 @@ export default function StudentDashboard() {
   const activeStudentId = useStudentStore(state => state.activeStudentId);
   const feedPet = useStudentStore(state => state.feedPet);
   const playWithPet = useStudentStore(state => state.playWithPet);
+  const feedPetRpg = useStudentStore(state => state.feedPetRpg);
+  const trainPetRpg = useStudentStore(state => state.trainPetRpg);
   const levelUpAttribute = useStudentStore(state => state.levelUpAttribute);
   const changeAvatar = useStudentStore(state => state.changeAvatar);
   const studentInventoryMap = useStudentStore(state => state.studentInventoryMap);
@@ -56,6 +59,9 @@ export default function StudentDashboard() {
     attribute_defense: 10,
     skill_points: 0,
     funding_credits: 1000,
+    pet_stage: 'egg' as 'egg' | 'baby' | 'adult' | 'mystic',
+    pet_energy: 100,
+    pet_happiness: 50,
     updated_at: new Date().toISOString()
   };
 
@@ -203,7 +209,18 @@ export default function StudentDashboard() {
     );
   };
 
-  const renderPetSVG = (type = 'dragon') => {
+  const renderPetSVG = (type = 'dragon', stage?: string) => {
+    if (stage === 'egg') {
+      return (
+        <>
+          <ellipse cx="50" cy="55" rx="23" ry="32" fill="#FEF3C7" stroke="#D97706" strokeWidth="2.5" />
+          <circle cx="43" cy="42" r="3.5" fill="#FBBF24" opacity="0.6" />
+          <circle cx="57" cy="52" r="5.5" fill="#FBBF24" opacity="0.6" />
+          <circle cx="45" cy="68" r="4.5" fill="#FBBF24" opacity="0.6" />
+          <circle cx="50" cy="60" r="2.5" fill="#FBBF24" opacity="0.6" />
+        </>
+      );
+    }
     switch (type) {
       case 'lobo':
         return (
@@ -527,13 +544,12 @@ export default function StudentDashboard() {
 
     return (
       <div className="flex flex-col gap-8">
-        {/* Banner RPG */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-950 p-8 text-white shadow-xl border border-indigo-700/30">
           <div className="absolute -right-8 -top-8 h-36 w-36 rounded-full bg-purple-500/25 blur-xl animate-pulse" />
-          <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+          <div className="relative z-10 flex flex-col lg:flex-row gap-8 items-stretch w-full">
             
             {/* Hoja de Atributos */}
-            <div id="rpg-attributes-panel" className="bg-zinc-950/50 p-5 rounded-2xl border border-zinc-800 backdrop-blur-md shadow-2xl w-full md:w-72 flex flex-col gap-4">
+            <div id="rpg-attributes-panel" className="bg-zinc-950/50 p-5 rounded-2xl border border-zinc-800 backdrop-blur-md shadow-2xl w-full lg:w-72 flex flex-col gap-4">
               <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
                 <span className="text-xs font-black text-purple-400 uppercase tracking-widest flex items-center gap-1">
                   <User className="h-4 w-4" />
@@ -614,7 +630,7 @@ export default function StudentDashboard() {
             </div>
 
             {/* Info principal RPG */}
-            <div className="flex-1 flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-6">
+            <div className="flex-1 flex flex-col justify-between items-start w-full gap-6">
               <div>
                 <span className="bg-purple-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                   Gremio de Héroes
@@ -661,6 +677,9 @@ export default function StudentDashboard() {
                 </Link>
               </div>
             </div>
+
+            {/* Mascota de Combate / Tamagotchi RPG */}
+            <PetSanctuary />
 
           </div>
         </div>

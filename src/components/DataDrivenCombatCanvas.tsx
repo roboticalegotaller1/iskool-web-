@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as PIXI from 'pixi.js';
+import { useStudentStore } from '@/store/useStudentStore';
 
 export interface RpgEnemyData {
   enemy_id: string;
@@ -86,6 +87,63 @@ export default function DataDrivenCombatCanvas({
       sprite.scale.set(ratio);
     }
   };
+
+  // Turn and pet shield effect tracking
+  const turnCountCanvas = useRef(0);
+  const lastCombatState = useRef(combatState);
+  const petTriggerEffectRef = useRef(false);
+  const [petTriggerEffect, setPetTriggerEffect] = useState(false);
+
+  useEffect(() => {
+    petTriggerEffectRef.current = petTriggerEffect;
+  }, [petTriggerEffect]);
+
+  useEffect(() => {
+    const activeStudentId = useStudentStore.getState().activeStudentId;
+    const normalizedId = useStudentStore.getState().allStats[activeStudentId] ? activeStudentId : (activeStudentId === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44' ? 'std-prep' : (activeStudentId === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a42' ? 'std-sec' : (activeStudentId === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a01' ? 'std-pa' : activeStudentId)));
+    const studentStats = useStudentStore.getState().allStats[normalizedId];
+    const petHappiness = studentStats?.pet_happiness ?? 50;
+
+    if (combatState === 'attacking' && lastCombatState.current !== 'attacking') {
+      turnCountCanvas.current += 1;
+      if (turnCountCanvas.current % 3 === 0 && petHappiness > 80 && appRef.current) {
+        setPetTriggerEffect(true);
+        setTimeout(() => setPetTriggerEffect(false), 2000);
+        
+        // Spawn floating text over pet
+        const shieldText = new PIXI.Text({
+          text: "🛡️ BARRERA MASCOTA (-15% Daño Boss)",
+          style: {
+            fontFamily: 'monospace',
+            fontSize: 10,
+            fontWeight: 'bold',
+            fill: 0xC084FC,
+            align: 'center'
+          }
+        });
+        shieldText.anchor.set(0.5);
+        shieldText.position.set(180, 200);
+        appRef.current.stage.addChild(shieldText);
+        
+        let sY = shieldText.y;
+        let sAlpha = 1.0;
+        const animateShieldText = () => {
+          sY -= 0.5;
+          sAlpha -= 0.015;
+          shieldText.y = sY;
+          shieldText.alpha = sAlpha;
+          if (sAlpha <= 0) {
+            if (appRef.current) appRef.current.stage.removeChild(shieldText);
+            shieldText.destroy();
+          } else {
+            requestAnimationFrame(animateShieldText);
+          }
+        };
+        animateShieldText();
+      }
+    }
+    lastCombatState.current = combatState;
+  }, [combatState]);
 
   useEffect(() => {
     let active = true;
@@ -248,6 +306,65 @@ export default function DataDrivenCombatCanvas({
         nameTag.position.set(0, 52);
         charContainer.addChild(nameTag);
       });
+
+      // --- INJECT RPG PET IF HAPPINESS > 80 ---
+      const activeStudentId = useStudentStore.getState().activeStudentId;
+      const normalizedId = useStudentStore.getState().allStats[activeStudentId] ? activeStudentId : (activeStudentId === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44' ? 'std-prep' : (activeStudentId === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a42' ? 'std-sec' : (activeStudentId === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a01' ? 'std-pa' : activeStudentId)));
+      const studentStats = useStudentStore.getState().allStats[normalizedId];
+      const studentAvatar = useStudentStore.getState().allAvatars[normalizedId];
+      
+      const petHappiness = studentStats?.pet_happiness ?? 50;
+      const petType = studentAvatar?.pet_type || 'dragon';
+      const petStage = studentStats?.pet_stage || 'egg';
+
+      let petContainer: PIXI.Container | null = null;
+      if (petHappiness > 80) {
+        petContainer = new PIXI.Container();
+        petContainer.position.set(180, 240);
+        mainContainer.addChild(petContainer);
+
+        // Pet shadow
+        const petShadow = new PIXI.Graphics();
+        petShadow.fill({ color: 0x000, alpha: 0.35 });
+        petShadow.ellipse(0, 18, 16, 5);
+        petContainer.addChild(petShadow);
+
+        // Emoji visualizer based on stage/type
+        let petEmoji = '🥚';
+        if (petStage === 'egg') petEmoji = '🥚';
+        else if (petStage === 'baby') petEmoji = '🐣';
+        else {
+          if (petType === 'dragon') petEmoji = petStage === 'mystic' ? '⚡🐉' : '🐉';
+          else if (petType === 'lobo') petEmoji = petStage === 'mystic' ? '🔥🐺' : '🐺';
+          else if (petType === 'venado') petEmoji = petStage === 'mystic' ? '❄️🦌' : '🦌';
+          else if (petType === 'gusano') petEmoji = petStage === 'mystic' ? '🌟🐛' : '🐛';
+          else if (petType === 'gatito') petEmoji = petStage === 'mystic' ? '🌌🐱' : '🐱';
+        }
+
+        const petSprite = new PIXI.Text({
+          text: petEmoji,
+          style: {
+            fontSize: 26,
+            align: 'center'
+          }
+        });
+        petSprite.anchor.set(0.5);
+        petContainer.addChild(petSprite);
+
+        // Name tag
+        const petName = new PIXI.Text({
+          text: studentAvatar?.pet_name || 'Compañero',
+          style: {
+            fontFamily: 'monospace',
+            fontSize: 8,
+            fontWeight: 'bold',
+            fill: 0xC084FC
+          }
+        });
+        petName.anchor.set(0.5);
+        petName.position.set(0, 26);
+        petContainer.addChild(petName);
+      }
 
       // Ordenar capas en base a Z-Index isométrico
       mainContainer.sortChildren();
@@ -425,6 +542,26 @@ export default function DataDrivenCombatCanvas({
 
         // 6. Dibujar Láseres y Muzzle Flashes
         lasers.clear();
+
+        if (petContainer) {
+          petContainer.y = 240 + Math.sin(time * 0.004) * 3;
+        }
+
+        if (petTriggerEffectRef.current) {
+          lasers.stroke({ width: 3 + Math.sin(time * 0.1) * 1, color: 0xA855F7, alpha: 0.65 });
+          // Draw a circle shield around main operators in the container
+          const operatorContainers = mainContainer.children.filter(
+            (c: any) => c !== petContainer && c !== lasers && c !== shockwave && c !== boss
+          );
+          operatorContainers.forEach((charContainer: any) => {
+            lasers.drawCircle(charContainer.x, charContainer.y + 10, 32);
+          });
+
+          if (petContainer) {
+            lasers.fill({ color: 0xA855F7, alpha: 0.1 });
+            lasers.drawCircle(petContainer.x, petContainer.y, 25);
+          }
+        }
         if (combatStateRef.current === 'attacking') {
           const bossY = boss ? boss.y : 175;
           const laserTargetX = 680;

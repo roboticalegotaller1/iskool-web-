@@ -562,9 +562,20 @@ export function RpgCombatViewport() {
       const defenseMitigation = Math.round((stats.attribute_defense || 10) * 0.6);
       incomingDmg = Math.max(4, incomingDmg - defenseMitigation);
       
+      // MECÁNICA MASCOTA FELIZ: Si felicidad > 80, cada 3 turnos se reduce el daño del boss en 15%
+      const petHappiness = stats?.pet_happiness ?? 50;
+      const isPetDefending = petHappiness > 80 && turnCount % 3 === 0;
+      if (isPetDefending) {
+        incomingDmg = Math.round(incomingDmg * 0.85);
+      }
+      
       if (activeShield) {
         incomingDmg = Math.round(incomingDmg * 0.4); // Reducir 60%
-        setSombraText("Sombra: 🛡️ ¡El Escudo de Concentración bloqueó gran parte del daño!");
+        setSombraText(isPetDefending
+          ? `Sombra: 🛡️ ¡El Escudo de Concentración y la barrera de tu mascota redujeron el daño enormemente!`
+          : "Sombra: 🛡️ ¡El Escudo de Concentración bloqueó gran parte del daño!");
+      } else if (isPetDefending) {
+        setSombraText(`Sombra: 🛡️ ¡${avatar?.pet_name || 'Tu mascota'} lanzó una barrera mística que redujo el daño del jefe en un 15%!`);
       }
 
       const newPlayerHp = Math.max(0, playerHp - incomingDmg);

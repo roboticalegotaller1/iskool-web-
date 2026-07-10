@@ -27,6 +27,11 @@ create table public.student_stats (
   -- Financiamiento (Preparatoria)
   funding_credits integer default 1000 check (funding_credits >= 0),
   
+  -- Tamagotchi RPG Mascotas (Secundaria)
+  pet_stage varchar default 'egg' check (pet_stage in ('egg', 'baby', 'adult', 'mystic')),
+  pet_energy integer default 100 check (pet_energy >= 0 and pet_energy <= 100),
+  pet_happiness integer default 50 check (pet_happiness >= 0 and pet_happiness <= 100),
+  
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
