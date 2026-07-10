@@ -11,6 +11,8 @@ import { AvatarCustomizer } from '@/components/AvatarCustomizer';
 import { RpgCombatViewport } from '@/components/RpgCombatViewport';
 import SagaMap from '@/components/SagaMap';
 import QuestCardModal from '@/components/QuestCardModal';
+import { Loader } from '@/components/Loader';
+import { useHydration } from '@/hooks/useHydration';
 import { PetSanctuary } from '@/components/PetSanctuary';
 import { 
   Flame, Coins, Sparkles, Compass, Trophy, Star, ArrowRight, 
@@ -173,15 +175,10 @@ export default function StudentDashboard() {
     }
   }, [activeLevel]);
 
-  if (loading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white">
-        <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500" />
-          <p className="text-sm font-medium text-zinc-400">Verificando sesión...</p>
-        </div>
-      </div>
-    );
+  const isHydrated = useHydration();
+
+  if (!isHydrated || loading || !user) {
+    return <Loader />;
   }
 
 

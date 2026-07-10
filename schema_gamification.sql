@@ -179,7 +179,7 @@ create table public.portfolio_items (
   id uuid default uuid_generate_v4() primary key,
   student_id uuid references public.students(id) on delete cascade not null,
   subject_id uuid references public.subjects(id) on delete cascade not null,
-  quest_id uuid references public.quests(id) on delete set null, -- Opcional
+  quest_id uuid references public.quests(id) on delete cascade, -- Opcional
   title text not null,
   description text,
   file_url text not null,

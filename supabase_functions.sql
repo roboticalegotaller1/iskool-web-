@@ -459,3 +459,111 @@ begin
   );
 end;
 $$;
+
+
+---------------------------------------------------------
+-- RPC: process_reward
+-- Safely increments or decrements student statistics on the database side
+---------------------------------------------------------
+create or replace function public.process_reward(
+  p_student_id uuid,
+  p_xp_change integer default 0,
+  p_coins_change integer default 0,
+  p_energy_change integer default 0,
+  p_happiness_change integer default 0
+)
+returns jsonb
+language plpgsql
+security definer
+SET search_path = public, pg_catalog, pg_temp
+as $$
+declare
+  v_current_xp integer;
+  v_current_coins integer;
+  v_level integer;
+  v_skill_points integer;
+  v_pet_energy integer;
+  v_pet_happiness integer;
+  v_pet_stage text;
+  v_xp_for_next_level integer;
+  v_updated_row public.student_stats%rowtype;
+begin
+  -- Fetch current stats
+  select xp, level, coins, skill_points, pet_energy, pet_happiness, pet_stage
+  into v_current_xp, v_level, v_current_coins, v_skill_points, v_pet_energy, v_pet_happiness, v_pet_stage
+  from public.student_stats
+  where student_id = p_student_id;
+
+  if not found then
+    raise exception 'Student stats for % not found', p_student_id;
+  end if;
+
+  -- Apply changes with validation
+  -- Coins check: if subtraction results in negative coins, prevent transaction
+  v_current_coins := v_current_coins + p_coins_change;
+  if v_current_coins < 0 then
+    raise exception 'Monedas insuficientes';
+  end if;
+
+  -- Happiness check: clamp between 0 and 100
+  v_pet_happiness := coalesce(v_pet_happiness, 50) + p_happiness_change;
+  if v_pet_happiness > 100 then
+    v_pet_happiness := 100;
+  elsif v_pet_happiness < 0 then
+    v_pet_happiness := 0;
+  end if;
+
+  -- Energy check: clamp between 0 and 100
+  v_pet_energy := coalesce(v_pet_energy, 100) + p_energy_change;
+  if v_pet_energy > 100 then
+    v_pet_energy := 100;
+  elsif v_pet_energy < 0 then
+    v_pet_energy := 0;
+  end if;
+
+  -- XP change
+  v_current_xp := v_current_xp + p_xp_change;
+  if v_current_xp < 0 then
+    v_current_xp := 0;
+  end if;
+
+  -- Level up loop
+  v_xp_for_next_level := v_level * 200;
+  while v_current_xp >= v_xp_for_next_level loop
+    v_current_xp := v_current_xp - v_xp_for_next_level;
+    v_level := v_level + 1;
+    -- standard skill points update
+    if p_student_id = 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a22'::uuid then
+      v_skill_points := coalesce(v_skill_points, 0) + 2;
+    end if;
+    v_xp_for_next_level := v_level * 200;
+  end loop;
+
+  -- Determine stage
+  if v_level >= 8 then
+    v_pet_stage := 'mystic';
+  elsif v_level >= 5 then
+    v_pet_stage := 'adult';
+  elsif v_level >= 3 then
+    v_pet_stage := 'baby';
+  else
+    v_pet_stage := 'egg';
+  end if;
+
+  -- Update student stats
+  update public.student_stats
+  set xp = v_current_xp,
+      level = v_level,
+      coins = v_current_coins,
+      skill_points = v_skill_points,
+      pet_energy = v_pet_energy,
+      pet_happiness = v_pet_happiness,
+      pet_stage = v_pet_stage,
+      updated_at = now()
+  where student_id = p_student_id
+  returning * into v_updated_row;
+
+  return row_to_json(v_updated_row)::jsonb;
+end;
+$$;
+

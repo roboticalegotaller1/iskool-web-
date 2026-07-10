@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useStudentStore, useCurrentStudentAvatar } from '@/store/useStudentStore';
 import { AnimeAvatarSprite } from '@/components/AnimeAvatarSprite';
 import { Header } from '@/components/Header';
+import { Loader } from '@/components/Loader';
+import { useHydration } from '@/hooks/useHydration';
 import { 
   Sparkles, Check, ChevronLeft, Save, Shield, Compass, User, 
   Smile, Scissors, Eye, Wand2, Paintbrush, Flame, Info 
@@ -63,15 +65,10 @@ export default function AvatarCustomizerPage() {
     }
   }, [avatar]);
 
-  if (loading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white">
-        <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500" />
-          <p className="text-sm font-medium text-zinc-400">Verificando sesión...</p>
-        </div>
-      </div>
-    );
+  const isHydrated = useHydration();
+
+  if (!isHydrated || loading || !user) {
+    return <Loader />;
   }
 
   // Audio helper

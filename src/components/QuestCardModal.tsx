@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, mapStudentIdToUuid, normalizeStudentId } from '@/store/useStudentStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { supabase } from '@/lib/supabaseClient';
@@ -298,19 +298,6 @@ export default function QuestCardModal() {
               });
             }
 
-            const { data: statsData } = await supabase
-              .from('student_stats')
-              .select('xp')
-              .eq('student_id', activeStudentId)
-              .maybeSingle();
-
-            if (statsData) {
-              const newXp = statsData.xp + activeQuest.xp_reward;
-              await supabase
-                .from('student_stats')
-                .update({ xp: newXp })
-                .eq('student_id', activeStudentId);
-            }
           } catch (e) {
             console.warn("Supabase database sync threw an error:", e);
           }
@@ -371,18 +358,31 @@ export default function QuestCardModal() {
           });
         }
 
-        const { data: statsData } = await supabase
-          .from('student_stats')
-          .select('xp')
-          .eq('student_id', activeStudentId)
-          .maybeSingle();
+        const dbStudentId = mapStudentIdToUuid(activeStudentId);
+        const { data, error } = await supabase.rpc('process_reward', {
+          p_student_id: dbStudentId,
+          p_xp_change: activeQuest.xp_reward,
+          p_coins_change: activeQuest.coins_reward
+        });
 
-        if (statsData) {
-          const newXp = statsData.xp + activeQuest.xp_reward;
-          await supabase
-            .from('student_stats')
-            .update({ xp: newXp })
-            .eq('student_id', activeStudentId);
+        if (error) {
+          console.error("Error processing portfolio reward in Supabase:", error.message);
+        } else if (data) {
+          useStudentStore.setState((state) => ({
+            allStats: {
+              ...state.allStats,
+              [activeStudentId]: {
+                ...state.allStats[activeStudentId],
+                ...data,
+                student_id: activeStudentId
+              },
+              [normalizeStudentId(activeStudentId)]: {
+                ...state.allStats[normalizeStudentId(activeStudentId)],
+                ...data,
+                student_id: normalizeStudentId(activeStudentId)
+              }
+            }
+          }));
         }
       } catch (e) {
         console.warn("Supabase database sync threw an error:", e);

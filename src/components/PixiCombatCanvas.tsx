@@ -850,7 +850,7 @@ export default function PixiCombatCanvas({
       if (cleanupMouse) cleanupMouse();
       if (cleanupCoop) cleanupCoop();
       if (appRef.current) {
-        appRef.current.destroy(true, { children: true });
+        appRef.current.destroy(true, { children: true, texture: true });
         appRef.current = null;
       }
     };

@@ -247,34 +247,41 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       return;
     }
 
-    const newHappiness = Math.min(100, (currentStats.pet_happiness ?? 50) + 20);
-    const newCoins = currentStats.coins - 50;
-
-    const updatedStats = {
-      ...currentStats,
-      coins: newCoins,
-      pet_happiness: newHappiness,
-      updated_at: new Date().toISOString()
-    };
-
     try {
       const dbStudentId = mapStudentIdToUuid(activeId);
-      const { error } = await supabase
-        .from('student_stats')
-        .update({ coins: newCoins, pet_happiness: newHappiness })
-        .eq('student_id', dbStudentId);
-      if (error) console.error('Error updating pet happiness in Supabase:', error.message);
+      const { data, error } = await supabase.rpc('process_reward', {
+        p_student_id: dbStudentId,
+        p_coins_change: -50,
+        p_happiness_change: 20
+      });
+
+      if (error) {
+        console.error('Error updating pet happiness in Supabase:', error.message);
+        alert('Error al alimentar a tu mascota: ' + error.message);
+        return;
+      }
+
+      if (data) {
+        const updatedStats = data as StudentStats;
+        set((state) => ({
+          allStats: {
+            ...state.allStats,
+            [activeId]: {
+              ...state.allStats[activeId],
+              ...updatedStats,
+              student_id: activeId
+            },
+            [rawId]: {
+              ...state.allStats[rawId],
+              ...updatedStats,
+              student_id: rawId
+            }
+          }
+        }));
+      }
     } catch (err) {
       console.error('Unexpected error updating pet happiness:', err);
     }
-
-    set((state) => ({
-      allStats: {
-        ...state.allStats,
-        [activeId]: updatedStats,
-        [rawId]: updatedStats
-      }
-    }));
   },
 
   trainPetRpg: async () => {
@@ -289,62 +296,41 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       return;
     }
 
-    const newEnergy = Math.max(0, currentEnergy - 25);
-    const xpReward = 40;
-
-    let newXp = (currentStats.xp ?? 0) + xpReward;
-    let newLevel = currentStats.level ?? 1;
-    let skillPoints = currentStats.skill_points ?? 0;
-    const xpRequired = newLevel * 200;
-    
-    if (newXp >= xpRequired) {
-      newXp -= xpRequired;
-      newLevel += 1;
-      if (activeId === 'std-sec') {
-        skillPoints += 2;
-      }
-    }
-
-    // Determine pet stage based on level
-    let newPetStage = currentStats.pet_stage || 'egg';
-    if (newLevel >= 8) newPetStage = 'mystic';
-    else if (newLevel >= 5) newPetStage = 'adult';
-    else if (newLevel >= 3) newPetStage = 'baby';
-
-    const updatedStats = {
-      ...currentStats,
-      pet_energy: newEnergy,
-      xp: newXp,
-      level: newLevel,
-      skill_points: skillPoints,
-      pet_stage: newPetStage,
-      updated_at: new Date().toISOString()
-    };
-
     try {
       const dbStudentId = mapStudentIdToUuid(activeId);
-      const { error } = await supabase
-        .from('student_stats')
-        .update({ 
-          pet_energy: newEnergy, 
-          xp: newXp, 
-          level: newLevel, 
-          skill_points: skillPoints,
-          pet_stage: newPetStage 
-        })
-        .eq('student_id', dbStudentId);
-      if (error) console.error('Error updating pet training in Supabase:', error.message);
+      const { data, error } = await supabase.rpc('process_reward', {
+        p_student_id: dbStudentId,
+        p_energy_change: -25,
+        p_xp_change: 40
+      });
+
+      if (error) {
+        console.error('Error updating pet training in Supabase:', error.message);
+        alert('Error al entrenar a tu mascota: ' + error.message);
+        return;
+      }
+
+      if (data) {
+        const updatedStats = data as StudentStats;
+        set((state) => ({
+          allStats: {
+            ...state.allStats,
+            [activeId]: {
+              ...state.allStats[activeId],
+              ...updatedStats,
+              student_id: activeId
+            },
+            [rawId]: {
+              ...state.allStats[rawId],
+              ...updatedStats,
+              student_id: rawId
+            }
+          }
+        }));
+      }
     } catch (err) {
       console.error('Unexpected error updating pet training:', err);
     }
-
-    set((state) => ({
-      allStats: {
-        ...state.allStats,
-        [activeId]: updatedStats,
-        [rawId]: updatedStats
-      }
-    }));
   },
 
   levelUpAttribute: async (statName) => {

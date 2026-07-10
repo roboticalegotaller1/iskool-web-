@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { Loader } from '@/components/Loader';
+import { useHydration } from '@/hooks/useHydration';
 import { Mission, Quest } from '@/types';
 import { 
   Lock, Check, Star, Play, Swords, Trophy, Sparkles, BookOpen, 
@@ -18,9 +20,14 @@ interface SagaMapProps {
 }
 
 export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapProps) {
+  const isHydrated = useHydration();
   const questAttempts = useGamificationStore(state => state.questAttempts);
   const openQuestModal = useStudentStore(state => state.openQuestModal);
   const [selectedMission, setSelectedMission] = useState<Mission | null>(null);
+
+  if (!isHydrated) {
+    return <Loader />;
+  }
 
   // Helper to determine if a quest is completed
   const isQuestCompleted = (qId: string) => {
