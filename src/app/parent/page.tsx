@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar, useCurrentStudentProfile } from '@/store/useStudentStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
@@ -22,6 +22,14 @@ export default function ParentDashboard() {
   const addPortfolioFeedback = usePortfolioStore(state => state.addPortfolioFeedback);
   const addReaction = usePortfolioStore(state => state.addReaction);
   
+  const fetchStats = useStudentStore(state => state.fetchStats);
+  const subscribeToStudentStats = useStudentStore(state => state.subscribeToStudentStats);
+  const unsubscribeFromStudentStats = useStudentStore(state => state.unsubscribeFromStudentStats);
+
+  const fetchPortfolioItems = usePortfolioStore(state => state.fetchPortfolioItems);
+  const subscribeToPortfolioChanges = usePortfolioStore(state => state.subscribeToPortfolioChanges);
+  const unsubscribeFromPortfolioChanges = usePortfolioStore(state => state.unsubscribeFromPortfolioChanges);
+
   const parentMessages = useSchoolAdminStore(state => state.parentMessages);
   const markMessageAsRead = useSchoolAdminStore(state => state.markMessageAsRead);
   const replyToParentMessage = useSchoolAdminStore(state => state.replyToParentMessage);
@@ -31,6 +39,24 @@ export default function ParentDashboard() {
   const [parentComment, setParentComment] = useState<Record<string, string>>({});
   const [currentTab, setCurrentTab] = useState<'achievements' | 'messages'>('achievements');
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (currentStudent?.id) {
+      fetchStats();
+      fetchPortfolioItems();
+      
+      subscribeToPortfolioChanges(() => {
+        console.log("Parent Dashboard: portfolio update in realtime");
+      });
+      
+      subscribeToStudentStats(currentStudent.id);
+    }
+    
+    return () => {
+      unsubscribeFromPortfolioChanges();
+      unsubscribeFromStudentStats();
+    };
+  }, [currentStudent?.id, fetchStats, fetchPortfolioItems, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges, subscribeToStudentStats, unsubscribeFromStudentStats]);
 
   // Filtrar los portafolios del hijo actual
   const childItems = portfolioItems.filter(item => item.student_id === currentStudent.id);

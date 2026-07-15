@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, use, useRef } from 'react';
+import React, { useState, useEffect, use, useRef, Suspense } from 'react';
 import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
@@ -28,7 +28,7 @@ interface MissionPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function MissionPage({ params }: MissionPageProps) {
+function MissionPageContent({ params }: MissionPageContentProps) {
   const { id } = use(params);
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -1448,3 +1448,16 @@ export default function MissionPage({ params }: MissionPageProps) {
     </div>
   );
 }
+
+interface MissionPageContentProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function MissionPage({ params }: MissionPageProps) {
+  return (
+    <Suspense fallback={<Loader />}>
+      <MissionPageContent params={params} />
+    </Suspense>
+  );
+}
+

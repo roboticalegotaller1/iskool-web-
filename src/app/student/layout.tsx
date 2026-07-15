@@ -1,5 +1,25 @@
-import React, { Suspense } from 'react';
+"use client";
+
+import React, { Suspense, useEffect } from 'react';
 import { Loader } from '@/components/Loader';
+import { useAuth } from '@/context/AuthContext';
+import { useStudentStore } from '@/store/useStudentStore';
+
+function StudentSyncProvider({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user && user.role === 'student') {
+      const currentActiveId = useStudentStore.getState().activeStudentId;
+      if (currentActiveId !== user.id) {
+        console.log('Sincronizando activeStudentId con el usuario logueado:', user.id);
+        useStudentStore.setState({ activeStudentId: user.id });
+      }
+    }
+  }, [user]);
+
+  return <>{children}</>;
+}
 
 export default function StudentLayout({
   children,
@@ -8,7 +28,10 @@ export default function StudentLayout({
 }) {
   return (
     <Suspense fallback={<Loader />}>
-      {children}
+      <StudentSyncProvider>
+        {children}
+      </StudentSyncProvider>
     </Suspense>
   );
 }
+

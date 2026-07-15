@@ -25,7 +25,7 @@ export default function StudentPortfolio() {
   }, [user, loading, router]);
 
   useEffect(() => {
-    if (user && user.role === 'student') {
+    if (user?.id && user?.role === 'student') {
       fetchPortfolioItems();
 
       // Subscribe to realtime portfolio and feedback updates
@@ -35,7 +35,7 @@ export default function StudentPortfolio() {
         unsubscribeFromPortfolioChanges();
       };
     }
-  }, [user, fetchPortfolioItems, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges]);
+  }, [user?.id, user?.role, fetchPortfolioItems, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges]);
 
   if (loading || !user) {
     return (

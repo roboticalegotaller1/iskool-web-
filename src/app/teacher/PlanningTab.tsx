@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { UserProfile, Subject, ClassSchedule, Group } from '@/types';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { supabase } from '@/lib/supabaseClient';
 
 // ==========================================
 // BASE DE DATOS CURRICULAR DE LA NEM 2022
@@ -183,12 +184,78 @@ interface PlanningTabProps {
   groupsList: Group[];
 }
 
+const getPdaMap = (capitalizedTopic: string): Record<string, Record<string, string>> => {
+  return {
+    'preescolar': {
+      ecology:   `Fase 2 - Observa con atención elementos de "${capitalizedTopic}" en la naturaleza, describe sus características y propone formas sencillas de cuidarla.`,
+      health:    `Fase 2 - Practica hábitos de higiene y alimentación relacionados con "${capitalizedTopic}" para mantenerse sano y evitar enfermedades.`,
+      history:   `Fase 2 - Comparte relatos y costumbres de su familia sobre "${capitalizedTopic}" y reconoce elementos de su historia personal.`,
+      art:       `Fase 2 - Representa de forma creativa ideas y sentimientos sobre "${capitalizedTopic}" usando pintura, modelado o música.`,
+      tech:      `Fase 2 - Reconoce herramientas de "${capitalizedTopic}" que se usan en casa y en la escuela de forma segura.`,
+      math:      `Fase 2 - Utiliza números y formas en juegos relacionados con "${capitalizedTopic}" para contar y ubicar objetos.`,
+      civics:    `Fase 2 - Colabora con sus compañeros en actividades sobre "${capitalizedTopic}" respetando las reglas del salón.`,
+      language:  `Fase 2 - Expresa oralmente sus ideas sobre "${capitalizedTopic}" y escucha las opiniones de los demás.`,
+      social:    `Fase 2 - Conoce lugares de su comunidad que se relacionan con "${capitalizedTopic}" y platica sobre lo que hacen ahí.`,
+      default:   `Fase 2 - Explora su entorno inmediato descubriendo aspectos de "${capitalizedTopic}", y los comparte con sus compañeros mediante expresiones orales y artísticas.`
+    },
+    'primaria-baja': {
+      ecology:   `Fase 3 - Reconoce la importancia de "${capitalizedTopic}" en su entorno inmediato, observa e identifica sus características mediante exploración sensorial y elabora registros gráficos de sus hallazgos.`,
+      health:    `Fase 3 - Identifica hábitos saludables relacionados con "${capitalizedTopic}" que contribuyen a su bienestar y al de su familia, y los practica en la vida cotidiana de la escuela.`,
+      history:   `Fase 3 - Reconoce elementos básicos de "${capitalizedTopic}" como parte de la memoria colectiva de su comunidad a través de relatos, imágenes y testimonios sencillos.`,
+      art:       `Fase 3 - Explora y experimenta con elementos de "${capitalizedTopic}" a través de la creación artística libre, expresando ideas y emociones propias.`,
+      tech:      `Fase 3 - Identifica usos cotidianos de "${capitalizedTopic}" y explora herramientas digitales básicas como instrumentos para aprender y comunicarse.`,
+      math:      `Fase 3 - Comprende y aplica conceptos de "${capitalizedTopic}" en situaciones concretas y cotidianas utilizando material manipulable y representaciones gráficas.`,
+      civics:    `Fase 3 - Reconoce la importancia de "${capitalizedTopic}" para la convivencia respetuosa en el aula y la escuela, y practica acuerdos de grupo.`,
+      language:  `Fase 3 - Comprende y produce textos sencillos relacionados con "${capitalizedTopic}", identificando su propósito comunicativo y elementos básicos.`,
+      social:    `Fase 3 - Identifica características de "${capitalizedTopic}" en su comunidad y región a través de mapas, ilustraciones y conversaciones con su entorno familiar.`,
+      default:   `Fase 3 - Identifica y describe con sus palabras las principales características de "${capitalizedTopic}" en su contexto escolar y comunitario, registrando sus observaciones de forma gráfica.`
+    },
+    'primaria-alta': {
+      ecology:   `Fase 5 - Analiza el impacto de "${capitalizedTopic}" en los ecosistemas locales, plantea hipótesis sobre sus causas y consecuencias, y diseña propuestas de acción sustentable en su comunidad.`,
+      health:    `Fase 5 - Investiga la relación entre "${capitalizedTopic}" y la salud pública, analiza datos estadísticos sencillos y propone campañas informativas para su escuela.`,
+      history:   `Fase 5 - Investiga causas y consecuencias de "${capitalizedTopic}" en el contexto nacional y regional, y elabora líneas del tiempo, mapas históricos y textos argumentativos.`,
+      art:       `Fase 5 - Investiga los elementos y contextos de "${capitalizedTopic}", analiza obras representativas y crea producciones artísticas originales integrando técnicas y estilos aprendidos.`,
+      tech:      `Fase 5 - Analiza el impacto social y ético de "${capitalizedTopic}" en la vida cotidiana, y diseña un proyecto colaborativo usando herramientas digitales disponibles.`,
+      math:      `Fase 5 - Resuelve problemas contextualizados aplicando conceptos de "${capitalizedTopic}", y representa soluciones de manera gráfica, numérica y algebraica.`,
+      civics:    `Fase 5 - Analiza situaciones de la vida real vinculadas a "${capitalizedTopic}", debate su importancia democrática y diseña acciones colectivas de mejora comunitaria.`,
+      language:  `Fase 5 - Analiza, produce y comparte textos complejos sobre "${capitalizedTopic}", aplicando estrategias de comprensión lectora y de escritura formal para audiencias específicas.`,
+      social:    `Fase 5 - Investiga características socioeconómicas y geográficas de "${capitalizedTopic}" en México y el mundo, y elabora reportes con datos estadísticos y cartografía.`,
+      default:   `Fase 5 - Investiga y sistematiza información sobre "${capitalizedTopic}", identifica sus implicaciones en la sociedad y el entorno, y propone alternativas creativas y fundamentadas.`
+    },
+    'secundaria': {
+      ecology:   `Fase 6 - Evalúa críticamente el impacto de "${capitalizedTopic}" en los ecosistemas, aplica conceptos científicos para analizar datos ambientales reales y propone estrategias de intervención comunitaria sustentable.`,
+      health:    `Fase 6 - Analiza científicamente los factores de riesgo y protección relacionados con "${capitalizedTopic}", interpreta datos epidemiológicos y diseña estrategias de prevención argumentadas.`,
+      history:   `Fase 6 - Analiza críticamente "${capitalizedTopic}" desde múltiples perspectivas históricas y sociales, evalúa fuentes primarias y secundarias, y elabora ensayos argumentativos sobre su vigencia.`,
+      art:       `Fase 6 - Analiza críticamente manifestaciones de "${capitalizedTopic}" en contextos culturales e históricos diversos, y produce obras originales aplicando principios estéticos y técnicas avanzadas.`,
+      tech:      `Fase 6 - Analiza el impacto ético, social y económico de "${capitalizedTopic}" en la vida cotidiana, y desarrolla un prototipo o propuesta tecnológica que responda a una problemática local.`,
+      math:      `Fase 6 - Aplica el pensamiento algebraico y el razonamiento matemático para modelar y resolver situaciones reales vinculadas a "${capitalizedTopic}", justificando procedimientos y resultados.`,
+      civics:    `Fase 6 - Analiza críticamente problemáticas sociales vinculadas a "${capitalizedTopic}", evalúa marcos normativos y propone mecanismos ciudadanos de incidencia y cambio colectivo.`,
+      language:  `Fase 6 - Analiza textos de distintos géneros discursivos relacionados con "${capitalizedTopic}", evalúa argumentos e intenciones comunicativas, y produce textos propios con rigor y creatividad.`,
+      social:    `Fase 6 - Analiza procesos sociales, económicos y geopolíticos relacionados con "${capitalizedTopic}", interpreta indicadores y propone reflexiones fundamentadas sobre sus implicaciones.`,
+      default:   `Fase 6 - Analiza críticamente el impacto social, científico y cultural de "${capitalizedTopic}", fundamenta su postura con evidencia, y elabora un producto comunicativo argumentativo de calidad.`
+    },
+    'preparatoria': {
+      ecology:   `Modela interacciones ecosistémicas relacionadas con "${capitalizedTopic}" utilizando pensamiento sistémico, y diseña proyectos de investigación-acción con metodología científica para su contexto regional.`,
+      health:    `Analiza desde perspectivas interdisciplinarias los determinantes sociales relacionados con "${capitalizedTopic}", diseña protocolos de investigación y elabora propuestas de política pública comunitaria.`,
+      history:   `Construye interpretaciones historiográficas sobre "${capitalizedTopic}" integrando fuentes primarias, teorías sociales y perspectivas comparadas, y las presenta en formatos académicos rigurosos.`,
+      art:       `Investiga y teoriza sobre "${capitalizedTopic}" desde enfoques estéticos e interdisciplinares, y desarrolla un proyecto artístico-conceptual que dialogue con problemáticas contemporáneas.`,
+      tech:      `Diseña y argumenta soluciones innovadoras a problemáticas reales integrando principios de "${capitalizedTopic}", evaluando implicaciones éticas, sociales y de sustentabilidad.`,
+      math:      `Modela fenómenos complejos mediante herramientas de "${capitalizedTopic}", aplica métodos analíticos y de cálculo avanzado, y justifica la validez de sus resultados de forma rigurosa.`,
+      civics:    `Diseña propuestas de intervención ciudadana fundamentadas en marcos jurídicos y filosóficos sobre "${capitalizedTopic}", evaluando su factibilidad e impacto en contextos democráticos.`,
+      language:  `Analiza y produce textos académicos y argumentativos de alta complejidad sobre "${capitalizedTopic}", evaluando el uso del lenguaje en contextos de poder, cultura e identidad.`,
+      social:    `Analiza tendencias globales relacionadas con "${capitalizedTopic}" usando indicadores cuantitativos y cualitativos, y elabora propuestas de desarrollo sustentable fundamentadas.`,
+      default:   `Integra marcos teóricos, datos empíricos y perspectivas interdisciplinarias para analizar "${capitalizedTopic}" y formular propuestas fundamentadas con impacto en su contexto social y natural.`
+    }
+  };
+};
+
 export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsList }: PlanningTabProps) {
   const subjectsList = useSchoolAdminStore(state => state.subjectsList);
+  const normalizedTeacherId = currentTeacher?.id === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55' ? 'usr-teacher-1' : currentTeacher?.id;
 
   // Filter subjects taught by the current teacher
   const teacherSubjectIds = schedulesList
-    .filter(s => s.teacherId === currentTeacher.id)
+    .filter(s => s.teacherId === normalizedTeacherId)
     .map(s => s.subjectId);
     
   const filteredSubjects = subjectsList.filter(sub => teacherSubjectIds.includes(sub.id));
@@ -214,10 +281,64 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const [inputText, setInputText] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('primaria-alta');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [pdaSuggestions, setPdaSuggestions] = useState<string[]>([]);
+  const [isLoadingPDAs, setIsLoadingPDAs] = useState(false);
+  const [selectedSuggestedPda, setSelectedSuggestedPda] = useState('');
   
   // --- Estado de Archivos ---
   const [uploadedFile, setUploadedFile] = useState<{ name: string; type: 'image' | 'pdf'; size: string } | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // Sugerencias inteligentes de PDAs (Debounce)
+  useEffect(() => {
+    if (!inputText || inputText.trim().length < 3) {
+      setPdaSuggestions([]);
+      setSelectedSuggestedPda('');
+      return;
+    }
+
+    setIsLoadingPDAs(true);
+    const delayDebounce = setTimeout(async () => {
+      try {
+        const queryWords = inputText.trim().split(/\s+/).filter(w => w.length > 2);
+        let dbSuggestions: string[] = [];
+
+        if (queryWords.length > 0) {
+          const word = queryWords[0];
+          const { data, error } = await supabase
+            .from('pdas')
+            .select('pda_text')
+            .ilike('pda_text', `%${word}%`)
+            .limit(10);
+            
+          if (data && data.length > 0) {
+            dbSuggestions = data.map((d: any) => d.pda_text);
+          }
+        }
+
+        // Fallback local: buscar en pdaMap
+        const localResults: string[] = [];
+        const localPdaMap = getPdaMap(inputText);
+        Object.values(localPdaMap).forEach(catMap => {
+          Object.values(catMap).forEach(pdaText => {
+            if (pdaText.toLowerCase().includes(inputText.toLowerCase()) || 
+                queryWords.some(w => pdaText.toLowerCase().includes(w.toLowerCase()))) {
+              localResults.push(pdaText);
+            }
+          });
+        });
+
+        const combined = Array.from(new Set([...dbSuggestions, ...localResults]));
+        setPdaSuggestions(combined);
+      } catch (err) {
+        console.error("Error searching PDAs in PlanningTab:", err);
+      } finally {
+        setIsLoadingPDAs(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [inputText]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // --- Estados del Gemini API ---
@@ -372,6 +493,9 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     if (resultPlanning) {
       resultPlanning.subjectId = selectedSubject;
       resultPlanning.subjectName = displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
+      if (selectedSuggestedPda) {
+        resultPlanning.pda = selectedSuggestedPda;
+      }
     }
 
     clearInterval(interval);
@@ -385,7 +509,8 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
   // --- Llamada a la API Real de Gemini ---
   const callGeminiAPI = async (promptText: string, level: string, subject: string) => {
-    const levelLabel = level === 'primaria-baja' ? 'Primaria Baja (1º a 3º Grado)' :
+    const levelLabel = level === 'preescolar' ? 'Preescolar (Fase 2)' :
+                       level === 'primaria-baja' ? 'Primaria Baja (1º a 3º Grado)' :
                        level === 'primaria-alta' ? 'Primaria Alta (4º a 6º Grado)' :
                        level === 'secundaria' ? 'Secundaria (1º a 3º Grado)' : 'Preparatoria / Bachillerato';
 
@@ -492,64 +617,13 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
     else if (isSocial) ejes = ['Interculturalidad Crítica', 'Pensamiento Crítico'];
     else               ejes = ['Pensamiento Crítico', 'Vida Saludable'];
 
-    // ── 3. PDA por nivel y categoría ──
-    const pdaMap: Record<string, Record<string, string>> = {
-      'primaria-baja': {
-        ecology:   `Fase 3 - Reconoce la importancia de "${capitalizedTopic}" en su entorno inmediato, observa e identifica sus características mediante exploración sensorial y elabora registros gráficos de sus hallazgos.`,
-        health:    `Fase 3 - Identifica hábitos saludables relacionados con "${capitalizedTopic}" que contribuyen a su bienestar y al de su familia, y los practica en la vida cotidiana de la escuela.`,
-        history:   `Fase 3 - Reconoce elementos básicos de "${capitalizedTopic}" como parte de la memoria colectiva de su comunidad a través de relatos, imágenes y testimonios sencillos.`,
-        art:       `Fase 3 - Explora y experimenta con elementos de "${capitalizedTopic}" a través de la creación artística libre, expresando ideas y emociones propias.`,
-        tech:      `Fase 3 - Identifica usos cotidianos de "${capitalizedTopic}" y explora herramientas digitales básicas como instrumentos para aprender y comunicarse.`,
-        math:      `Fase 3 - Comprende y aplica conceptos de "${capitalizedTopic}" en situaciones concretas y cotidianas utilizando material manipulable y representaciones gráficas.`,
-        civics:    `Fase 3 - Reconoce la importancia de "${capitalizedTopic}" para la convivencia respetuosa en el aula y la escuela, y practica acuerdos de grupo.`,
-        language:  `Fase 3 - Comprende y produce textos sencillos relacionados con "${capitalizedTopic}", identificando su propósito comunicativo y elementos básicos.`,
-        social:    `Fase 3 - Identifica características de "${capitalizedTopic}" en su comunidad y región a través de mapas, ilustraciones y conversaciones con su entorno familiar.`,
-        default:   `Fase 3 - Identifica y describe con sus palabras las principales características de "${capitalizedTopic}" en su contexto escolar y comunitario, registrando sus observaciones de forma gráfica.`
-      },
-      'primaria-alta': {
-        ecology:   `Fase 5 - Analiza el impacto de "${capitalizedTopic}" en los ecosistemas locales, plantea hipótesis sobre sus causas y consecuencias, y diseña propuestas de acción sustentable en su comunidad.`,
-        health:    `Fase 5 - Investiga la relación entre "${capitalizedTopic}" y la salud pública, analiza datos estadísticos sencillos y propone campañas informativas para su escuela.`,
-        history:   `Fase 5 - Investiga causas y consecuencias de "${capitalizedTopic}" en el contexto nacional y regional, y elabora líneas del tiempo, mapas históricos y textos argumentativos.`,
-        art:       `Fase 5 - Investiga los elementos y contextos de "${capitalizedTopic}", analiza obras representativas y crea producciones artísticas originales integrando técnicas y estilos aprendidos.`,
-        tech:      `Fase 5 - Analiza el impacto social y ético de "${capitalizedTopic}" en la vida cotidiana, y diseña un proyecto colaborativo usando herramientas digitales disponibles.`,
-        math:      `Fase 5 - Resuelve problemas contextualizados aplicando conceptos de "${capitalizedTopic}", y representa soluciones de manera gráfica, numérica y algebraica.`,
-        civics:    `Fase 5 - Analiza situaciones de la vida real vinculadas a "${capitalizedTopic}", debate su importancia democrática y diseña acciones colectivas de mejora comunitaria.`,
-        language:  `Fase 5 - Analiza, produce y comparte textos complejos sobre "${capitalizedTopic}", aplicando estrategias de comprensión lectora y de escritura formal para audiencias específicas.`,
-        social:    `Fase 5 - Investiga características socioeconómicas y geográficas de "${capitalizedTopic}" en México y el mundo, y elabora reportes con datos estadísticos y cartografía.`,
-        default:   `Fase 5 - Investiga y sistematiza información sobre "${capitalizedTopic}", identifica sus implicaciones en la sociedad y el entorno, y propone alternativas creativas y fundamentadas.`
-      },
-      'secundaria': {
-        ecology:   `Fase 6 - Evalúa críticamente el impacto de "${capitalizedTopic}" en los ecosistemas, aplica conceptos científicos para analizar datos ambientales reales y propone estrategias de intervención comunitaria sustentable.`,
-        health:    `Fase 6 - Analiza científicamente los factores de riesgo y protección relacionados con "${capitalizedTopic}", interpreta datos epidemiológicos y diseña estrategias de prevención argumentadas.`,
-        history:   `Fase 6 - Analiza críticamente "${capitalizedTopic}" desde múltiples perspectivas históricas y sociales, evalúa fuentes primarias y secundarias, y elabora ensayos argumentativos sobre su vigencia.`,
-        art:       `Fase 6 - Analiza críticamente manifestaciones de "${capitalizedTopic}" en contextos culturales e históricos diversos, y produce obras originales aplicando principios estéticos y técnicas avanzadas.`,
-        tech:      `Fase 6 - Analiza el impacto ético, social y económico de "${capitalizedTopic}" en la sociedad actual, y desarrolla un prototipo o propuesta tecnológica que responda a una problemática local.`,
-        math:      `Fase 6 - Aplica el pensamiento algebraico y el razonamiento matemático para modelar y resolver situaciones reales vinculadas a "${capitalizedTopic}", justificando procedimientos y resultados.`,
-        civics:    `Fase 6 - Analiza críticamente problemáticas sociales vinculadas a "${capitalizedTopic}", evalúa marcos normativos y propone mecanismos ciudadanos de incidencia y cambio colectivo.`,
-        language:  `Fase 6 - Analiza textos de distintos géneros discursivos relacionados con "${capitalizedTopic}", evalúa argumentos e intenciones comunicativas, y produce textos propios con rigor y creatividad.`,
-        social:    `Fase 6 - Analiza procesos sociales, económicos y geopolíticos relacionados con "${capitalizedTopic}", interpreta indicadores y propone reflexiones fundamentadas sobre sus implicaciones.`,
-        default:   `Fase 6 - Analiza críticamente el impacto social, científico y cultural de "${capitalizedTopic}", fundamenta su postura con evidencia, y elabora un producto comunicativo argumentativo de calidad.`
-      },
-      'preparatoria': {
-        ecology:   `Modela interacciones ecosistémicas relacionadas con "${capitalizedTopic}" utilizando pensamiento sistémico, y diseña proyectos de investigación-acción con metodología científica para su contexto regional.`,
-        health:    `Analiza desde perspectivas interdisciplinarias los determinantes sociales relacionados con "${capitalizedTopic}", diseña protocolos de investigación y elabora propuestas de política pública comunitaria.`,
-        history:   `Construye interpretaciones historiográficas sobre "${capitalizedTopic}" integrando fuentes primarias, teorías sociales y perspectivas comparadas, y las presenta en formatos académicos rigurosos.`,
-        art:       `Investiga y teoriza sobre "${capitalizedTopic}" desde enfoques estéticos e interdisciplinares, y desarrolla un proyecto artístico-conceptual que dialogue con problemáticas contemporáneas.`,
-        tech:      `Diseña y argumenta soluciones innovadoras a problemáticas reales integrando principios de "${capitalizedTopic}", evaluando implicaciones éticas, sociales y de sustentabilidad.`,
-        math:      `Modela fenómenos complejos mediante herramientas de "${capitalizedTopic}", aplica métodos analíticos y de cálculo avanzado, y justifica la validez de sus resultados de forma rigurosa.`,
-        civics:    `Diseña propuestas de intervención ciudadana fundamentadas en marcos jurídicos y filosóficos sobre "${capitalizedTopic}", evaluando su factibilidad e impacto en contextos democráticos.`,
-        language:  `Analiza y produce textos académicos y argumentativos de alta complejidad sobre "${capitalizedTopic}", evaluando el uso del lenguaje en contextos de poder, cultura e identidad.`,
-        social:    `Analiza tendencias globales relacionadas con "${capitalizedTopic}" usando indicadores cuantitativos y cualitativos, y elabora propuestas de desarrollo sustentable fundamentadas.`,
-        default:   `Integra marcos teóricos, datos empíricos y perspectivas interdisciplinarias para analizar "${capitalizedTopic}" y formular propuestas fundamentadas con impacto en su contexto social y natural.`
-      }
-    };
-
     const topicKey = isEcology ? 'ecology' : isHealth ? 'health' : isHistory ? 'history' : isArt ? 'art' : isTech ? 'tech' : isMath ? 'math' : isCivics ? 'civics' : isLanguage ? 'language' : isSocial ? 'social' : 'default';
+    const pdaMap = getPdaMap(capitalizedTopic);
     const pda = pdaMap[level]?.[topicKey] || pdaMap['primaria-alta']['default'];
 
     // ── 4. Secuencia didáctica diferenciada por tema y nivel ──
     const buildSequence = () => {
-      const levelShort = level === 'primaria-baja' ? 'pb' : level === 'primaria-alta' ? 'pa' : level === 'secundaria' ? 'sec' : 'prep';
+      const levelShort = level === 'preescolar' ? 'pb' : level === 'primaria-baja' ? 'pb' : level === 'primaria-alta' ? 'pa' : level === 'secundaria' ? 'sec' : 'prep';
       
       // Actividades de INICIO diferenciadas
       const inicioMap: Record<string, Record<string, string>> = {
@@ -730,6 +804,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
     };
 
     const levelNames = {
+      'preescolar':     'Preescolar (Fase 2)',
       'primaria-baja':  'Primaria Baja (1º a 3º Grado)',
       'primaria-alta':  'Primaria Alta (4º a 6º Grado)',
       'secundaria':     'Secundaria (1º a 3º Grado)',
@@ -845,10 +920,11 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
               onChange={(e) => setSelectedLevel(e.target.value)}
               className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
             >
-              <option value="primaria-baja">Primaria Baja (1º-3º)</option>
-              <option value="primaria-alta">Primaria Alta (4º-6º)</option>
-              <option value="secundaria">Secundaria (1º-3º)</option>
-              <option value="preparatoria">Preparatoria</option>
+              <option value="preescolar">Preescolar (Fase 2)</option>
+              <option value="primaria-baja">Primaria Baja (Fase 3: 1º-3º)</option>
+              <option value="primaria-alta">Primaria Alta (Fase 5: 4º-6º)</option>
+              <option value="secundaria">Secundaria (Fase 6: 1º-3º)</option>
+              <option value="preparatoria">Preparatoria (Fase 6 / Bachillerato)</option>
             </select>
           </div>
 
@@ -867,8 +943,8 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
         </div>
 
         {/* Entrada de Texto o Párrafo */}
-        <div className="flex flex-col gap-1.5 text-xs">
-          <label className="text-[9.5px] text-zinc-400 font-bold uppercase tracking-wider">Idea, Palabra Clave o Párrafo</label>
+        <div className="flex flex-col gap-1.5 text-xs relative">
+          <label className="text-[9.5px] text-zinc-400 font-bold uppercase tracking-wider">Idea, Palabra Clave o Párrafo (Tema)</label>
           <textarea
             rows={4}
             value={inputText}
@@ -876,6 +952,32 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
             placeholder="Escribe el tema de la clase, ejemplo: 'fracciones equivalentes con pizza', 'cuidado del agua', 'biodigestores', 'leyendas prehispánicas'..."
             className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 leading-relaxed font-semibold resize-none"
           />
+          {/* Sugerencias Inteligentes de PDAs para Planeación */}
+          {pdaSuggestions.length > 0 && (
+            <div className="mt-1 flex flex-col gap-1">
+              <label className="text-[9px] font-bold text-blue-500 uppercase flex items-center gap-1">
+                <Sparkles className="h-3 w-3 animate-pulse" />
+                Sugerencias de PDAs ({isLoadingPDAs ? 'Buscando...' : 'Recomendadas'}):
+              </label>
+              <select
+                onChange={(e) => {
+                  setSelectedSuggestedPda(e.target.value);
+                }}
+                className="w-full text-[10px] p-2 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-950/20 text-zinc-800 dark:text-zinc-200 focus:outline-none font-medium"
+                value={selectedSuggestedPda}
+              >
+                <option value="">-- Selecciona un PDA sugerido --</option>
+                {pdaSuggestions.map((pda, idx) => (
+                  <option key={idx} value={pda}>{pda}</option>
+                ))}
+              </select>
+              {selectedSuggestedPda && (
+                <div className="text-[9.5px] text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-950 p-2 rounded-lg mt-1 border border-zinc-250 dark:border-zinc-800">
+                  <strong>PDA Seleccionado:</strong> {selectedSuggestedPda}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Subida de Archivos (Imagen o PDF) */}

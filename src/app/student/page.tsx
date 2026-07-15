@@ -130,7 +130,7 @@ export default function StudentDashboard() {
         unsubscribeFromStudentStats();
       };
     }
-  }, [user, fetchStats, fetchPortfolioItems, fetchMissions, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges, subscribeToStudentStats, unsubscribeFromStudentStats]);
+  }, [user?.id, loading, fetchStats, fetchPortfolioItems, fetchMissions, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges, subscribeToStudentStats, unsubscribeFromStudentStats]);
 
   const purchaseArtifact = async (studentId: string, artifactId: string) => {
     await useStudentStore.getState().purchaseArtifact(studentId, artifactId);
@@ -345,6 +345,7 @@ export default function StudentDashboard() {
   };
 
   // --- RENDER 1: PRIMARIA BAJA (MASCOTAS VIRTUALES) ---
+  // --- RENDER 1: PRIMARIA (MASCOTAS VIRTUALES Y AVATARES) ---
   const renderPrimariaBaja = () => {
     // Ropa de mascota seleccionada
     const petOutfit = avatar?.pet_outfit || 'none';
@@ -353,20 +354,41 @@ export default function StudentDashboard() {
 
     return (
       <div className="flex flex-col gap-8">
-        {/* Banner Mascota */}
+        {/* Banner Mascota y Avatar */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-teal-500 to-emerald-600 p-8 text-white shadow-lg">
           <div className="absolute -right-8 -top-8 h-36 w-36 rounded-full bg-white/10 blur-xl animate-pulse" />
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
+          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8">
             
-            {/* Visualización de la Mascota */}
-            <div className="flex flex-col items-center gap-3">
-              <div className="flex flex-col items-center gap-3 bg-white/10 p-5 rounded-2xl border border-white/20 backdrop-blur-sm shadow-inner w-52">
-                <span className="text-[10px] font-extrabold bg-yellow-400 text-teal-950 px-2 py-0.5 rounded-full uppercase tracking-wider">
+            {/* Visualización de Avatar y Mascota */}
+            <div className="flex flex-col sm:flex-row items-center gap-6 bg-white/5 p-4 rounded-3xl border border-white/10 backdrop-blur-md">
+              {/* Bloque del Avatar */}
+              <div className="flex flex-col items-center gap-3 bg-white/10 p-5 rounded-2xl border border-white/20 backdrop-blur-sm shadow-inner w-48">
+                <span className="text-[10px] font-extrabold bg-blue-400 text-teal-950 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  Avatar: {avatar?.avatar_name ?? 'Estudiante'}
+                </span>
+                
+                {/* Avatar Preview */}
+                <div className="relative">
+                  {renderAvatarPreview(100, 100)}
+                </div>
+
+                {/* Botón Personalizar */}
+                <button
+                  onClick={() => setIsCustomizerOpen(true)}
+                  className="w-full py-1.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-450 hover:to-indigo-500 text-white font-bold rounded-xl text-[10px] uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer"
+                >
+                  Personalizar Traje
+                </button>
+              </div>
+
+              {/* Bloque de la Mascota */}
+              <div className="flex flex-col items-center gap-3 bg-white/10 p-5 rounded-2xl border border-white/20 backdrop-blur-sm shadow-inner w-48">
+                <span className="text-[10px] font-extrabold bg-yellow-400 text-teal-950 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   Mascota: {avatar?.pet_name ?? 'Mascota'}
                 </span>
                 
                 {/* Pet SVG */}
-                <div className="h-28 w-28 flex items-center justify-center relative bg-emerald-950/20 rounded-full border border-white/10 p-2">
+                <div className="h-24 w-24 flex items-center justify-center relative bg-emerald-950/20 rounded-full border border-white/10 p-1.5">
                   <svg viewBox="0 0 100 100" className="w-full h-full filter drop-shadow-md">
                     {renderPetSVG(avatar?.pet_type || 'dragon')}
                     {renderPetAccessories(avatar?.pet_type || 'dragon', petOutfit)}
@@ -374,52 +396,41 @@ export default function StudentDashboard() {
                 </div>
 
                 {/* Ropa selector */}
-                <div className="flex gap-1.5 mt-2">
-                  <button
-                    onClick={() => setIsPetModalOpen(true)}
-                    className="px-2 py-0.5 rounded text-[9px] font-bold bg-white text-emerald-700 hover:bg-emerald-50"
-                  >
-                    Mascota
-                  </button>
+                <div className="flex gap-1 justify-center w-full">
                   <button
                     onClick={() => changeAvatar({ pet_outfit: 'hat' })}
-                    className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'hat' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
+                    className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${petOutfit === 'hat' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'} cursor-pointer`}
+                    title="Gorro"
                   >
-                    Gorro
+                    🎩
                   </button>
                   <button
                     onClick={() => changeAvatar({ pet_outfit: 'glasses' })}
-                    className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'glasses' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
+                    className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${petOutfit === 'glasses' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'} cursor-pointer`}
+                    title="Lentes"
                   >
-                    Lentes
+                    👓
                   </button>
                   <button
                     onClick={() => changeAvatar({ pet_outfit: 'cape' })}
-                    className={`px-2 py-0.5 rounded text-[9px] font-bold ${petOutfit === 'cape' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'}`}
+                    className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${petOutfit === 'cape' ? 'bg-white text-emerald-700' : 'bg-white/25 text-white'} cursor-pointer`}
+                    title="Capa"
                   >
-                    Capa
+                    🧥
                   </button>
                   <button
                     onClick={() => changeAvatar({ pet_outfit: 'none' })}
-                    className="px-1.5 py-0.5 rounded text-[9px] bg-red-500/20 text-white font-bold"
+                    className="px-1 py-0.5 rounded text-[10px] bg-red-500/20 text-white font-bold cursor-pointer"
+                    title="Quitar todo"
                   >
                     ✕
                   </button>
                 </div>
               </div>
-
-              {/* Botón Cuidar Mascota */}
-              <button
-                onClick={() => setIsPetModalOpen(true)}
-                className="w-full py-2 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-350 hover:to-amber-450 text-emerald-950 font-black rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95"
-              >
-                <Heart className="h-4 w-4 fill-current text-rose-600 animate-pulse" />
-                Cuidar Mascota ❤️
-              </button>
             </div>
 
             {/* Acciones de Mascota e Info */}
-            <div className="flex-1">
+            <div className="flex-1 w-full lg:w-auto">
               <h1 className="text-3xl font-extrabold tracking-tight">¡Hola, {avatar?.avatar_name ?? 'Estudiante'}!</h1>
               <p className="text-emerald-100 text-xs mt-1">Cuida de {avatar?.pet_name ?? 'Mascota'} resolviendo tus retos escolares.</p>
               
@@ -431,7 +442,7 @@ export default function StudentDashboard() {
                     <span>{petHunger}%</span>
                   </div>
                   <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-orange-400 rounded-full" style={{ width: `${petHunger}%` }} />
+                    <div className="h-full bg-orange-400 rounded-full transition-all duration-300" style={{ width: `${petHunger}%` }} />
                   </div>
                 </div>
                 <div>
@@ -440,26 +451,33 @@ export default function StudentDashboard() {
                     <span>{petHappiness}%</span>
                   </div>
                   <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${petHappiness}%` }} />
+                    <div className="h-full bg-yellow-400 rounded-full transition-all duration-300" style={{ width: `${petHappiness}%` }} />
                   </div>
                 </div>
               </div>
 
               {/* Botones de Cuidado */}
-              <div className="flex gap-3 mt-5">
+              <div className="flex flex-wrap gap-3 mt-5">
                 <button
                   onClick={() => feedPet(activeStudentId)}
-                  className="px-4 py-2 bg-white text-emerald-800 rounded-xl text-xs font-bold shadow-md hover:bg-emerald-50 transition-all flex items-center gap-1.5"
+                  className="px-4 py-2.5 bg-white text-emerald-800 rounded-xl text-xs font-bold shadow-md hover:bg-emerald-50 transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <Gamepad2 className="h-4 w-4" />
                   Alimentar (5 🪙)
                 </button>
                 <button
                   onClick={() => playWithPet(activeStudentId)}
-                  className="px-4 py-2 bg-emerald-950/45 text-white border border-white/25 rounded-xl text-xs font-bold hover:bg-emerald-950/60 transition-all flex items-center gap-1.5"
+                  className="px-4 py-2.5 bg-emerald-950/45 text-white border border-white/25 rounded-xl text-xs font-bold hover:bg-emerald-950/60 transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <Heart className="h-4 w-4 fill-current text-rose-300" />
                   Jugar (2 🪙)
+                </button>
+                <button
+                  onClick={() => setIsPetModalOpen(true)}
+                  className="px-4 py-2.5 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-350 hover:to-amber-450 text-emerald-950 font-black rounded-xl text-xs shadow-md transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                >
+                  <Heart className="h-4 w-4 fill-current text-rose-650" />
+                  Centro de Cuidado ❤️
                 </button>
               </div>
             </div>
@@ -864,7 +882,7 @@ export default function StudentDashboard() {
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* Renderizado Condicional por Nivel */}
-        {activeLevel === 'primaria' && (parseInt(activeGrade) <= 3 ? renderPrimariaBaja() : renderPrimariaAlta())}
+        {activeLevel === 'primaria' && renderPrimariaBaja()}
         {activeLevel === 'secundaria' && renderSecundariaRPG()}
         {activeLevel === 'preparatoria' && renderPreparatoriaStartup()}
 

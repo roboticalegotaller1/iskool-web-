@@ -24,6 +24,12 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
   const questAttempts = useGamificationStore(state => state.questAttempts);
   const openQuestModal = useStudentStore(state => state.openQuestModal);
   const [selectedMission, setSelectedMission] = useState<Mission | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('Todos');
+
+  const stats = useCurrentStudentStats();
+  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
+  const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const schedulesList = useSchoolAdminStore(state => state.schedulesList);
 
   if (!isHydrated) {
     return <Loader />;
@@ -51,12 +57,7 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     return { x: calculatedX, y: calculatedY };
   };
 
-  const stats = useCurrentStudentStats();
   const currentStudentLevel = stats?.level || 1;
-
-  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
-  const activeStudentId = useStudentStore(state => state.activeStudentId);
-  const schedulesList = useSchoolAdminStore(state => state.schedulesList);
 
   const activeStudent = detailedStudents.find(s => s.id === activeStudentId);
   const studentGroupId = activeStudent?.group_id;
@@ -84,12 +85,33 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
   // Sort missions to form a sequence
   const sortedMissions = [...filteredMissions].sort((a, b) => a.created_at.localeCompare(b.created_at));
   
+  // Assign periods dynamically
+  const missionsWithPeriod = sortedMissions.map((m, idx) => {
+    let period = 'Trimestre 1';
+    if (m.id === 'mis-fractions' || m.title.includes('Fracciones')) {
+      period = 'Trimestre 1';
+    } else if (m.id === 'mis-selva' || m.title.includes('Selva') || m.title.includes('Jaguar')) {
+      period = 'Trimestre 2';
+    } else {
+      const termNum = (idx % 2) + 2; // Alternate other missions between Trimestre 2 and 3
+      period = `Trimestre ${termNum}`;
+    }
+    return { ...m, period };
+  });
+
+  const filteredByPeriod = selectedPeriod === 'Todos'
+    ? missionsWithPeriod
+    : missionsWithPeriod.filter(m => m.period === selectedPeriod);
+
   // Map node coordinates
-  const nodes = sortedMissions.map((m, idx) => ({
-    mission: m,
-    idx,
-    ...getCoordinates(m, idx, sortedMissions.length)
-  }));
+  const nodes = filteredByPeriod.map((m, idx) => {
+    const overallIdx = sortedMissions.findIndex(orig => orig.id === m.id);
+    return {
+      mission: m,
+      idx: overallIdx,
+      ...getCoordinates(m, idx, filteredByPeriod.length)
+    };
+  });
 
   // Determine status of each mission
   const getMissionStatus = (mission: Mission, index: number) => {
@@ -246,6 +268,26 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
               <div className="w-2.5 h-2.5 bg-zinc-850 border border-zinc-750 rotate-45" />
               <span className="text-[9px] font-bold text-zinc-300 ml-1">Bloqueado</span>
             </div>
+          </div>
+        </div>
+
+        {/* Period Selector */}
+        <div className="absolute top-4 right-6 z-10 bg-zinc-950/70 border border-zinc-800/80 backdrop-blur-md px-3 py-1.5 rounded-2xl flex items-center gap-2 shadow-lg select-none">
+          <span className="text-[10px] font-black text-purple-400 uppercase tracking-wider">Periodo:</span>
+          <div className="flex gap-1.5">
+            {['Todos', 'Trimestre 1', 'Trimestre 2', 'Trimestre 3'].map((p) => (
+              <button
+                key={p}
+                onClick={() => setSelectedPeriod(p)}
+                className={`px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide transition-all cursor-pointer ${
+                  selectedPeriod === p
+                    ? 'bg-purple-650 text-white shadow shadow-purple-950/50 border border-purple-500/30'
+                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5 border border-transparent'
+                }`}
+              >
+                {p}
+              </button>
+            ))}
           </div>
         </div>
 

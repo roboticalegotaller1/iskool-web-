@@ -78,12 +78,14 @@ const RUBRIC_CRITERIA = [
 
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function TeacherDashboard() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
   const currentTeacher = user as UserProfile;
+  const normalizedTeacherId = currentTeacher?.id === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55' ? 'usr-teacher-1' : currentTeacher?.id;
   const subjects = SUBJECTS_SEED;
 
   const portfolioItems = usePortfolioStore(state => state.portfolioItems);
@@ -218,6 +220,8 @@ export default function TeacherDashboard() {
 
   // Estados para Diseño de Tareas (NEM)
   const [selectedDesignSubject, setSelectedDesignSubject] = useState<string>('');
+  const [pdaSuggestions, setPdaSuggestions] = useState<string[]>([]);
+  const [isLoadingPDAs, setIsLoadingPDAs] = useState(false);
   const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
   const [designQuestTitle, setDesignQuestTitle] = useState('');
   const [designQuestDesc, setDesignQuestDesc] = useState('');
@@ -242,7 +246,7 @@ export default function TeacherDashboard() {
   // Inicializar grupos y materias por defecto para Israel López
   useEffect(() => {
     if (!currentTeacher) return;
-    const mySchedules = schedulesList.filter(s => s.teacherId === currentTeacher.id);
+    const mySchedules = schedulesList.filter(s => s.teacherId === normalizedTeacherId);
     if (mySchedules.length > 0) {
       const firstGroup = mySchedules[0].groupId;
       const firstSubject = mySchedules[0].subjectId;
@@ -292,6 +296,51 @@ export default function TeacherDashboard() {
       setNotifyingQuestTitle('');
     }
   }, [selectedTaskSubject, missions]);
+
+  // Sugerencia Inteligente de PDAs reactiva (Debounce)
+  useEffect(() => {
+    if (!designQuestTitle || designQuestTitle.trim().length < 3) {
+      setPdaSuggestions([]);
+      return;
+    }
+
+    setIsLoadingPDAs(true);
+    const delayDebounce = setTimeout(async () => {
+      try {
+        const queryWords = designQuestTitle.trim().split(/\s+/).filter(w => w.length > 2);
+        let dbSuggestions: string[] = [];
+        
+        if (queryWords.length > 0) {
+          const word = queryWords[0];
+          const { data, error } = await supabase
+            .from('pdas')
+            .select('pda_text')
+            .ilike('pda_text', `%${word}%`)
+            .limit(10);
+            
+          if (data && data.length > 0) {
+            dbSuggestions = data.map((d: any) => d.pda_text);
+          }
+        }
+
+        // Local search fallback (merging results)
+        const localPDAs = (PDA_CATALOG[selectedDesignSubject] || []).filter(pda => 
+          pda.toLowerCase().includes(designQuestTitle.toLowerCase()) ||
+          queryWords.some(w => pda.toLowerCase().includes(w.toLowerCase()))
+        );
+
+        // Combine and dedup
+        const combined = Array.from(new Set([...dbSuggestions, ...localPDAs]));
+        setPdaSuggestions(combined);
+      } catch (err) {
+        console.error("Error searching PDAs:", err);
+      } finally {
+        setIsLoadingPDAs(false);
+      }
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(delayDebounce);
+  }, [designQuestTitle, selectedDesignSubject]);
 
   // Actualizar plantilla de mensaje al cambiar plantilla o alumno notificado
   useEffect(() => {
@@ -748,7 +797,7 @@ export default function TeacherDashboard() {
                                 
                                 // Validar que el profesor da clase al grupo del alumno
                                 const teacherGroupIds = schedulesList
-                                  .filter(s => s.teacherId === currentTeacher.id)
+                                  .filter(s => s.teacherId === normalizedTeacherId)
                                   .map(s => s.groupId);
                                 
                                 const hasAccess = student.group_id && teacherGroupIds.includes(student.group_id);
@@ -1339,7 +1388,7 @@ export default function TeacherDashboard() {
                   className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 >
                   {groupsList
-                    .filter(g => schedulesList.some(s => s.groupId === g.id && s.teacherId === currentTeacher.id))
+                    .filter(g => schedulesList.some(s => s.groupId === g.id && s.teacherId === normalizedTeacherId))
                     .map(g => (
                       <option key={g.id} value={g.id}>{g.name} - {g.level_grade_id.startsWith('primaria') ? 'Primaria Alta' : g.level_grade_id.startsWith('secundaria') ? 'Secundaria' : 'Preparatoria'}</option>
                     ))
@@ -1355,7 +1404,7 @@ export default function TeacherDashboard() {
                   className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 >
                   {subjects
-                    .filter(sub => schedulesList.some(s => s.subjectId === sub.id && s.groupId === selectedAttendanceGroup && s.teacherId === currentTeacher.id))
+                    .filter(sub => schedulesList.some(s => s.subjectId === sub.id && s.groupId === selectedAttendanceGroup && s.teacherId === normalizedTeacherId))
                     .map(sub => (
                       <option key={sub.id} value={sub.id}>{sub.name}</option>
                     ))
@@ -1541,7 +1590,7 @@ export default function TeacherDashboard() {
                   className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 >
                   {groupsList
-                    .filter(g => schedulesList.some(s => s.groupId === g.id && s.teacherId === currentTeacher.id))
+                    .filter(g => schedulesList.some(s => s.groupId === g.id && s.teacherId === normalizedTeacherId))
                     .map(g => (
                       <option key={g.id} value={g.id}>{g.name} - {g.level_grade_id.startsWith('primaria') ? 'Primaria Alta' : g.level_grade_id.startsWith('secundaria') ? 'Secundaria' : 'Preparatoria'}</option>
                     ))
@@ -1557,7 +1606,7 @@ export default function TeacherDashboard() {
                   className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 >
                   {subjects
-                    .filter(sub => schedulesList.some(s => s.subjectId === sub.id && s.groupId === selectedTaskGroup && s.teacherId === currentTeacher.id))
+                    .filter(sub => schedulesList.some(s => s.subjectId === sub.id && s.groupId === selectedTaskGroup && s.teacherId === normalizedTeacherId))
                     .map(sub => (
                       <option key={sub.id} value={sub.id}>{sub.name}</option>
                     ))
@@ -1788,7 +1837,7 @@ export default function TeacherDashboard() {
                   className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-blue-500 font-bold"
                 >
                   {subjects
-                    .filter(sub => schedulesList.some(s => s.subjectId === sub.id && s.teacherId === currentTeacher.id))
+                    .filter(sub => schedulesList.some(s => s.subjectId === sub.id && s.teacherId === normalizedTeacherId))
                     .map(sub => (
                       <option key={sub.id} value={sub.id}>{sub.name}</option>
                     ))
@@ -1912,7 +1961,7 @@ export default function TeacherDashboard() {
                     
                     {/* Fila 1: Título y Tipo */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold">
-                      <div className="flex flex-col gap-1.5">
+                      <div className="flex flex-col gap-1.5 relative">
                         <label className="text-[10px] font-bold text-zinc-400 uppercase">Título de la Tarea</label>
                         <input
                           type="text"
@@ -1921,6 +1970,29 @@ export default function TeacherDashboard() {
                           placeholder="Ej. Fraccionando en Casa, La Leyenda del Jaguar..."
                           className="w-full text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-blue-500 font-semibold"
                         />
+                        {/* Sugerencias Inteligentes de PDAs */}
+                        {pdaSuggestions.length > 0 && (
+                          <div className="mt-1 flex flex-col gap-1">
+                            <label className="text-[9px] font-bold text-blue-500 uppercase flex items-center gap-1">
+                              <Sparkles className="h-3 w-3 animate-pulse" />
+                              Sugerencias de PDAs ({isLoadingPDAs ? 'Buscando...' : 'Recomendadas'}):
+                            </label>
+                            <select
+                              onChange={(e) => {
+                                if (e.target.value) {
+                                  setDesignSelectedPDA(e.target.value);
+                                }
+                              }}
+                              className="w-full text-[10px] p-2 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-950/20 text-zinc-800 dark:text-zinc-200 focus:outline-none font-medium"
+                              value={designSelectedPDA}
+                            >
+                              <option value="">-- Selecciona un PDA sugerido --</option>
+                              {pdaSuggestions.map((pda, idx) => (
+                                <option key={idx} value={pda}>{pda}</option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
                       </div>
                       <div className="flex flex-col gap-1.5">
                         <label className="text-[10px] font-bold text-zinc-400 uppercase">Tipo de Actividad</label>

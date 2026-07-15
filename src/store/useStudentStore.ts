@@ -749,7 +749,16 @@ export const useCurrentStudentAvatar = () => {
   
   return useMemo(() => {
     const active = avatar || AVATAR_MAP_SEED[activeStudentId] || AVATAR_MAP_SEED[normalizeStudentId(activeStudentId)];
-    if (active) return active;
+    if (active) {
+      return {
+        pet_type: 'dragon' as const,
+        pet_name: 'Mascota',
+        pet_hunger: 50,
+        pet_happiness: 50,
+        pet_outfit: 'none',
+        ...active
+      };
+    }
     return {
       student_id: activeStudentId,
       avatar_name: 'Estudiante',
@@ -760,6 +769,11 @@ export const useCurrentStudentAvatar = () => {
       outfit_color: '#3B82F6',
       background_style: 'forest',
       unlocked_items: ['classic', 'happy', 'explorer', 'forest'],
+      pet_type: 'dragon' as const,
+      pet_name: 'Mascota',
+      pet_hunger: 50,
+      pet_happiness: 50,
+      pet_outfit: 'none',
       updated_at: ''
     };
   }, [avatar, activeStudentId]);
