@@ -567,3 +567,92 @@ begin
 end;
 $$;
 
+
+---------------------------------------------------------
+-- trigger & function: handle_quest_completion_stats
+-- Updates student elemental stats when a quest is completed (quiz attempt or portfolio approval)
+---------------------------------------------------------
+create or replace function public.handle_quest_completion_stats()
+returns trigger as $$
+declare
+  v_campo_formativo_name text;
+  v_xp_earned integer;
+  v_xp_reward integer;
+begin
+  -- Caso A: Quest completado por intento exitoso (Quizzes / Exams)
+  if TG_TABLE_NAME = 'quest_attempts' then
+    if NEW.is_completed = true and (OLD.is_completed is null or OLD.is_completed = false) then
+      -- Obtener el campo formativo del Quest
+      select q.xp_reward, cf.name
+      into v_xp_reward, v_campo_formativo_name
+      from public.quests q
+      join public.nem_campos_formativos cf on q.campo_formativo_id = cf.id
+      where q.id = NEW.quest_id;
+
+      if found and v_campo_formativo_name is not null then
+        -- XP ganado es proporcional a la puntuación obtenida
+        v_xp_earned := round(v_xp_reward * (NEW.score / 100.0));
+        
+        -- Sumar XP a la afinidad elemental correspondiente
+        if v_campo_formativo_name = 'Lenguajes' then
+          update public.student_stats set stat_lenguajes = stat_lenguajes + v_xp_earned where student_id = NEW.student_id;
+        elsif v_campo_formativo_name = 'Saberes' then
+          update public.student_stats set stat_saberes = stat_saberes + v_xp_earned where student_id = NEW.student_id;
+        elsif v_campo_formativo_name = 'Ética' then
+          update public.student_stats set stat_etica = stat_etica + v_xp_earned where student_id = NEW.student_id;
+        elsif v_campo_formativo_name = 'De lo Humano' then
+          update public.student_stats set stat_de_lo_humano = stat_de_lo_humano + v_xp_earned where student_id = NEW.student_id;
+        end if;
+      end if;
+    end if;
+  
+  -- Caso B: Quest completado por aprobación de portafolio
+  elsif TG_TABLE_NAME = 'portfolio_items' then
+    if NEW.status = 'approved' and OLD.status != 'approved' and NEW.quest_id is not null then
+      -- Obtener el campo formativo del Quest
+      select q.xp_reward, cf.name
+      into v_xp_reward, v_campo_formativo_name
+      from public.quests q
+      join public.nem_campos_formativos cf on q.campo_formativo_id = cf.id
+      where q.id = NEW.quest_id;
+
+      if found and v_campo_formativo_name is not null then
+        v_xp_reward := coalesce(v_xp_reward, 100); -- Fallback
+        
+        -- 1. Actualizar afinidad elemental
+        if v_campo_formativo_name = 'Lenguajes' then
+          update public.student_stats set stat_lenguajes = stat_lenguajes + v_xp_reward where student_id = NEW.student_id;
+        elsif v_campo_formativo_name = 'Saberes' then
+          update public.student_stats set stat_saberes = stat_saberes + v_xp_reward where student_id = NEW.student_id;
+        elsif v_campo_formativo_name = 'Ética' then
+          update public.student_stats set stat_etica = stat_etica + v_xp_reward where student_id = NEW.student_id;
+        elsif v_campo_formativo_name = 'De lo Humano' then
+          update public.student_stats set stat_de_lo_humano = stat_de_lo_humano + v_xp_reward where student_id = NEW.student_id;
+        end if;
+
+        -- 2. Asegurar que el XP/Monedas principales se apliquen en la base de datos para aprobación de portafolio
+        perform public.process_reward(NEW.student_id, v_xp_reward, 20, 0, 0);
+      end if;
+    end if;
+  end if;
+  
+  return NEW;
+end;
+$$ language plpgsql security definer;
+
+-- Crear disparador para quest_attempts
+drop trigger if exists tr_quest_attempts_completion on public.quest_attempts;
+create trigger tr_quest_attempts_completion
+  after insert or update of is_completed
+  on public.quest_attempts
+  for each row
+  execute function public.handle_quest_completion_stats();
+
+-- Crear disparador para portfolio_items
+drop trigger if exists tr_portfolio_items_approval on public.portfolio_items;
+create trigger tr_portfolio_items_approval
+  after update of status
+  on public.portfolio_items
+  for each row
+  execute function public.handle_quest_completion_stats();
+

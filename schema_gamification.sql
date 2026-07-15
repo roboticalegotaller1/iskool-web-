@@ -32,6 +32,12 @@ create table public.student_stats (
   pet_energy integer default 100 check (pet_energy >= 0 and pet_energy <= 100),
   pet_happiness integer default 50 check (pet_happiness >= 0 and pet_happiness <= 100),
   
+  -- Afinidades Elementales / Stats NEM (Nueva Escuela Mexicana)
+  stat_lenguajes integer default 0 not null check (stat_lenguajes >= 0),
+  stat_saberes integer default 0 not null check (stat_saberes >= 0),
+  stat_etica integer default 0 not null check (stat_etica >= 0),
+  stat_de_lo_humano integer default 0 not null check (stat_de_lo_humano >= 0),
+  
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -102,6 +108,33 @@ create table public.student_badges (
 
 alter table public.student_badges enable row level security;
 
+-- 4.5. NEM Catalog Tables (Nueva Escuela Mexicana)
+/**
+ * @table nem_campos_formativos
+ * @description Catálogo estático de campos formativos según el plan de estudios NEM.
+ */
+create table public.nem_campos_formativos (
+  id uuid default uuid_generate_v4() primary key,
+  name text not null unique,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.nem_campos_formativos enable row level security;
+
+/**
+ * @table nem_pdas
+ * @description Procesos de Desarrollo de Aprendizaje (PDAs) asociados a campos formativos.
+ */
+create table public.nem_pdas (
+  id uuid default uuid_generate_v4() primary key,
+  campo_formativo_id uuid references public.nem_campos_formativos(id) on delete cascade not null,
+  code text,
+  description text not null,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.nem_pdas enable row level security;
+
 -- 5. Missions / Misiones Académicas (Narrativa de aprendizaje)
 /**
  * @table missions
@@ -114,6 +147,8 @@ create table public.missions (
   school_id uuid references public.schools(id) on delete cascade not null,
   subject_id uuid references public.subjects(id) on delete cascade not null,
   level_grade_id uuid references public.levels_grades(id) on delete cascade not null,
+  campo_formativo_id uuid references public.nem_campos_formativos(id) on delete set null,
+  pda_ids uuid[],
   title text not null,
   description text not null,
   story_intro text not null, -- Texto introductorio de la narrativa
@@ -135,6 +170,8 @@ alter table public.missions enable row level security;
 create table public.quests (
   id uuid default uuid_generate_v4() primary key,
   mission_id uuid references public.missions(id) on delete cascade not null,
+  campo_formativo_id uuid references public.nem_campos_formativos(id) on delete set null,
+  pda_ids uuid[],
   title text not null,
   description text not null,
   type text not null check (type in ('quiz', 'portfolio_submission')),

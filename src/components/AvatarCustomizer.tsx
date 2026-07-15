@@ -20,24 +20,34 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
   const hairOptions = [
     { id: 'classic', name: 'Clásico', price: 0 },
     { id: 'spiky', name: 'Alocado', price: 0 },
-    { id: 'wizard_hat', name: 'Sombrero Mago', price: 0 }
+    { id: 'wizard_hat', name: 'Sombrero Mago', price: 0 },
+    { id: 'hero_tiara', name: 'Corona del Gremio 👑', price: 0 }
   ];
 
   const eyeOptions = [
     { id: 'happy', name: 'Felices', price: 0 },
-    { id: 'sparkle', name: 'Brillantes', price: 0 }
+    { id: 'sparkle', name: 'Brillantes', price: 0 },
+    { id: 'scientist_goggles', name: 'Visor Científico 🥽', price: 0 }
   ];
 
   const outfitOptions = [
     { id: 'space_suit', name: 'Traje Espacial', price: 0 },
     { id: 'explorer', name: 'Explorador', price: 0 },
-    { id: 'purple', name: 'Túnica Púrpura', price: 0 }
+    { id: 'purple', name: 'Túnica Púrpura', price: 0 },
+    { id: 'scribe_robe', name: 'Túnica de Escriba 📜', price: 0 }
   ];
 
   const backgroundOptions = [
     { id: 'nebula', name: 'Nébula', price: 0 },
-    { id: 'forest', name: 'Bosque', price: 0 }
+    { id: 'forest', name: 'Bosque', price: 0 },
+    { id: 'nature_spirit', name: 'Espíritu Naturaleza 🍃', price: 0 }
   ];
+
+  const isItemUnlocked = (itemId: string) => {
+    const defaults = ['classic', 'happy', 'space_suit', 'nebula', 'explorer', 'forest', 'spiky', 'wizard_hat', 'purple', 'eyes', 'hair', 'outfit', 'background', 'standard', 'pale', 'medium', 'dark', 'pink', 'brown', 'yellow', 'black', 'blue', 'red', 'silver', 'orange', 'green', 'light'];
+    if (defaults.includes(itemId)) return true;
+    return (avatar.unlocked_items || []).includes(itemId);
+  };
 
   const colors = [
     { name: 'Azul', value: '#3B82F6' },
@@ -64,7 +74,9 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
   const renderAvatarPreview = (width = 160, height = 160) => {
     const bgGradient = avatar.background_style === 'nebula' 
       ? 'from-indigo-950 via-slate-900 to-purple-950'
-      : 'from-emerald-950 via-teal-900 to-cyan-950';
+      : avatar.background_style === 'nature_spirit'
+        ? 'from-emerald-900 via-teal-950 to-stone-900'
+        : 'from-emerald-950 via-teal-900 to-cyan-950';
 
     return (
       <div className={`relative flex items-center justify-center rounded-2xl bg-gradient-to-br ${bgGradient} overflow-hidden shadow-inner`} style={{ width, height }}>
@@ -75,6 +87,14 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
             <div className="absolute top-12 right-10 h-1.5 w-1.5 rounded-full bg-indigo-300 animate-pulse" />
             <div className="absolute bottom-6 left-12 h-1 w-1 rounded-full bg-purple-300 animate-pulse" />
             <div className="absolute bottom-12 right-6 h-0.5 w-0.5 rounded-full bg-white" />
+          </div>
+        ) : avatar.background_style === 'nature_spirit' ? (
+          <div className="absolute inset-0 opacity-50 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.2),transparent_70%)]">
+            <div className="absolute top-6 left-6 h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+            <div className="absolute top-12 right-12 h-1.5 w-1.5 rounded-full bg-teal-300 animate-pulse" />
+            <div className="absolute bottom-8 left-16 h-2 w-2 rounded-full bg-emerald-300 animate-bounce" />
+            <span className="absolute top-4 right-6 text-[10px] opacity-60">🍃</span>
+            <span className="absolute bottom-6 left-4 text-[10px] opacity-60">🍃</span>
           </div>
         ) : (
           <div className="absolute inset-0 opacity-40">
@@ -101,6 +121,15 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
           {avatar.outfit_style === 'purple' && (
             <path d="M22 80 C 22 50, 78 50, 78 80 Z" fill="#6D28D9" />
           )}
+          {avatar.outfit_style === 'scribe_robe' && (
+            <g>
+              <path d="M22 80 C 22 50, 78 50, 78 80 Z" fill="#1E1B4B" />
+              <polygon points="40,58 50,66 60,58" fill="#FBBF24" />
+              <rect x="46" y="66" width="8" height="10" rx="1" fill="#FEF3C7" stroke="#D97706" strokeWidth="0.5" />
+              <line x1="49" y1="69" x2="51" y2="69" stroke="#4338CA" strokeWidth="0.5" />
+              <line x1="49" y1="71" x2="51" y2="71" stroke="#4338CA" strokeWidth="0.5" />
+            </g>
+          )}
 
           {/* Cabeza (Piel) */}
           <circle cx="50" cy="45" r="18" fill="#FDBA74" />
@@ -118,6 +147,13 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
               <path d="M54 41 L 58 45 M 58 41 L 54 45" stroke="#3B82F6" strokeWidth="2.5" strokeLinecap="round" />
             </>
           )}
+          {avatar.eyes_style === 'scientist_goggles' && (
+            <g>
+              <rect x="34" y="38" width="12" height="7" rx="1.5" fill="#06B6D4" opacity="0.85" stroke="#FFF" strokeWidth="0.6" />
+              <rect x="54" y="38" width="12" height="7" rx="1.5" fill="#06B6D4" opacity="0.85" stroke="#FFF" strokeWidth="0.6" />
+              <line x1="46" y1="41.5" x2="54" y2="41.5" stroke="#FFF" strokeWidth="1" />
+            </g>
+          )}
 
           {/* Boca sonriente */}
           <path d="M44 51 Q 50 56 56 51" stroke="#1F2937" strokeWidth="2" fill="none" strokeLinecap="round" />
@@ -128,6 +164,13 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
           )}
           {avatar.hair_style === 'spiky' && (
             <path d="M30 38 L 35 25 L 43 32 L 50 20 L 57 32 L 65 25 L 70 38 Z" fill={avatar.hair_color} />
+          )}
+          {avatar.hair_style === 'hero_tiara' && (
+            <g>
+              <path d="M30 38 C 30 20, 70 20, 70 38 C 65 34, 35 34, 30 38" fill={avatar.hair_color} />
+              <polygon points="40,25 50,12 60,25 55,28 45,28" fill="#FBBF24" stroke="#D97706" strokeWidth="0.8" />
+              <circle cx="50" cy="12" r="1.5" fill="#EF4444" />
+            </g>
           )}
           {avatar.hair_style === 'wizard_hat' && (
             <>
@@ -240,19 +283,27 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                 <div className="flex flex-col gap-4">
                   {/* Estilo de Cabello */}
                   <div className="grid grid-cols-3 gap-2">
-                    {hairOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => handleSelect('hair', opt.id)}
-                        className={`p-2 rounded-xl border text-xs font-medium text-center transition-all ${
-                          avatar.hair_style === opt.id
-                            ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400'
-                            : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
-                        }`}
-                      >
-                        {opt.name}
-                      </button>
-                    ))}
+                    {hairOptions.map((opt) => {
+                      const unlocked = isItemUnlocked(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          disabled={!unlocked}
+                          onClick={() => handleSelect('hair', opt.id)}
+                          className={`p-2 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                            avatar.hair_style === opt.id
+                              ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
+                              : unlocked
+                                ? 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
+                                : 'border-zinc-200/30 bg-zinc-100/5 text-zinc-400 dark:border-zinc-800/30 dark:bg-zinc-950/20 cursor-not-allowed opacity-60'
+                          }`}
+                          title={unlocked ? opt.name : 'Bloqueado. Completa la rama "De lo Humano" en tu portafolio/habilidades.'}
+                        >
+                          {!unlocked && <Lock className="h-3 w-3 text-zinc-500" />}
+                          <span>{opt.name}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                   {/* Color de Cabello */}
                   {avatar.hair_style !== 'wizard_hat' && (
@@ -277,45 +328,61 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                   )}
                 </div>
               )}
-
+ 
               {activeTab === 'eyes' && (
                 <div className="grid grid-cols-2 gap-2">
-                  {eyeOptions.map((opt) => (
-                    <button
-                      key={opt.id}
-                      onClick={() => handleSelect('eyes', opt.id)}
-                      className={`p-3 rounded-xl border text-xs font-medium text-center transition-all ${
-                        avatar.eyes_style === opt.id
-                          ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400'
-                          : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
-                      }`}
-                    >
-                      {opt.name}
-                    </button>
-                  ))}
+                  {eyeOptions.map((opt) => {
+                    const unlocked = isItemUnlocked(opt.id);
+                    return (
+                      <button
+                        key={opt.id}
+                        disabled={!unlocked}
+                        onClick={() => handleSelect('eyes', opt.id)}
+                        className={`p-3 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                          avatar.eyes_style === opt.id
+                            ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
+                            : unlocked
+                              ? 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
+                              : 'border-zinc-200/30 bg-zinc-100/5 text-zinc-400 dark:border-zinc-800/30 dark:bg-zinc-950/20 cursor-not-allowed opacity-60'
+                        }`}
+                        title={unlocked ? opt.name : 'Bloqueado. Completa la rama "Saberes" en tu portafolio/habilidades.'}
+                      >
+                        {!unlocked && <Lock className="h-3 w-3 text-zinc-500" />}
+                        <span>{opt.name}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               )}
-
+ 
               {activeTab === 'outfit' && (
                 <div className="flex flex-col gap-4">
                   {/* Estilo de Traje */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {outfitOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => handleSelect('outfit', opt.id)}
-                        className={`p-2 rounded-xl border text-xs font-medium text-center transition-all ${
-                          avatar.outfit_style === opt.id
-                            ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400'
-                            : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
-                        }`}
-                      >
-                        {opt.name}
-                      </button>
-                    ))}
+                  <div className="grid grid-cols-2 gap-2">
+                    {outfitOptions.map((opt) => {
+                      const unlocked = isItemUnlocked(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          disabled={!unlocked}
+                          onClick={() => handleSelect('outfit', opt.id)}
+                          className={`p-2.5 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                            avatar.outfit_style === opt.id
+                              ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
+                              : unlocked
+                                ? 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
+                                : 'border-zinc-200/30 bg-zinc-100/5 text-zinc-400 dark:border-zinc-800/30 dark:bg-zinc-950/20 cursor-not-allowed opacity-60'
+                          }`}
+                          title={unlocked ? opt.name : 'Bloqueado. Completa la rama "Lenguajes" en tu portafolio/habilidades.'}
+                        >
+                          {!unlocked && <Lock className="h-3 w-3 text-zinc-500" />}
+                          <span>{opt.name}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                   {/* Color de Traje */}
-                  {avatar.outfit_style !== 'purple' && (
+                  {avatar.outfit_style !== 'purple' && avatar.outfit_style !== 'scribe_robe' && (
                     <div>
                       <p className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 mb-2">Color del Traje</p>
                       <div className="flex flex-wrap gap-2">
@@ -337,22 +404,30 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                   )}
                 </div>
               )}
-
+ 
               {activeTab === 'background' && (
                 <div className="grid grid-cols-2 gap-2">
-                  {backgroundOptions.map((opt) => (
-                    <button
-                      key={opt.id}
-                      onClick={() => handleSelect('background', opt.id)}
-                      className={`p-3 rounded-xl border text-xs font-medium text-center transition-all ${
-                        avatar.background_style === opt.id
-                          ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400'
-                          : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
-                      }`}
-                    >
-                      {opt.name}
-                    </button>
-                  ))}
+                  {backgroundOptions.map((opt) => {
+                    const unlocked = isItemUnlocked(opt.id);
+                    return (
+                      <button
+                        key={opt.id}
+                        disabled={!unlocked}
+                        onClick={() => handleSelect('background', opt.id)}
+                        className={`p-3 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                          avatar.background_style === opt.id
+                            ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
+                            : unlocked
+                              ? 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
+                              : 'border-zinc-200/30 bg-zinc-100/5 text-zinc-400 dark:border-zinc-800/30 dark:bg-zinc-950/20 cursor-not-allowed opacity-60'
+                        }`}
+                        title={unlocked ? opt.name : 'Bloqueado. Completa la rama "Ética" en tu portafolio/habilidades.'}
+                      >
+                        {!unlocked && <Lock className="h-3 w-3 text-zinc-500" />}
+                        <span>{opt.name}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>

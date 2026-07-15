@@ -21,6 +21,7 @@ interface StudentStoreState {
   closeQuestModal: () => void;
   switchStudent: (studentId: string) => Promise<void>;
   changeAvatar: (config: Partial<StudentAvatar>) => Promise<void>;
+  unlockBranchCosmetic: (cosmeticId: string) => Promise<void>;
   feedPet: (studentId?: string) => void;
   playWithPet: (studentId?: string) => void;
   feedPetRpg: () => Promise<void>;
@@ -120,6 +121,49 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       const updatedAv = {
         ...currentAv,
         ...config,
+        updated_at: new Date().toISOString(),
+      };
+      return {
+        allAvatars: {
+          ...state.allAvatars,
+          [activeId]: updatedAv,
+          [rawId]: updatedAv,
+        },
+      };
+    });
+  },
+
+  unlockBranchCosmetic: async (cosmeticId) => {
+    const rawId = get().activeStudentId;
+    const activeId = normalizeStudentId(rawId);
+    
+    const currentAv = get().allAvatars[activeId] || get().allAvatars[rawId];
+    if (!currentAv) return;
+    
+    const currentUnlocked = currentAv.unlocked_items || [];
+    if (currentUnlocked.includes(cosmeticId)) return;
+    
+    const updatedUnlocked = [...currentUnlocked, cosmeticId];
+    
+    try {
+      const dbStudentId = mapStudentIdToUuid(activeId);
+      const { error } = await supabase
+        .from('student_avatars')
+        .update({ unlocked_items: updatedUnlocked })
+        .eq('student_id', dbStudentId);
+        
+      if (error) {
+        console.error('Error unlocking cosmetic in Supabase:', error.message);
+      }
+    } catch (err) {
+      console.error('Unexpected error unlocking cosmetic:', err);
+    }
+    
+    set((state) => {
+      const avatarToUpdate = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
+      const updatedAv = {
+        ...avatarToUpdate,
+        unlocked_items: updatedUnlocked,
         updated_at: new Date().toISOString(),
       };
       return {

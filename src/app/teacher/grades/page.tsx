@@ -14,6 +14,7 @@ import { DetailedStudent, StudentStats } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useStudentStore, normalizeStudentId } from '@/store/useStudentStore';
+import { supabase } from '@/lib/supabaseClient';
 
 // Custom Avatar Preview component for RPG styling
 const PlayerAvatarPreview = ({ avatar, name }: { avatar: any; name: string }) => {
@@ -65,10 +66,35 @@ export default function TeacherGrades() {
   const fetchStats = useStudentStore(state => state.fetchStats);
   const statsMap = useStudentStore(state => state.allStats);
   const avatarsMap = useStudentStore(state => state.allAvatars);
-  const questAttempts = useGamificationStore(state => state.questAttempts);
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
   const schedulesList = useSchoolAdminStore(state => state.schedulesList);
   const groupsList = useSchoolAdminStore(state => state.groupsList);
+  
+  const missionsList = useGamificationStore(state => state.missionsList);
+  const fetchMissions = useGamificationStore(state => state.fetchMissions);
+
+  const [allAttempts, setAllAttempts] = useState<any[]>([]);
+  const [evaluations, setEvaluations] = useState<Record<string, 'En proceso' | 'Avanzando' | 'Logrado'>>({});
+  const [feedbacks, setFeedbacks] = useState<Record<string, string>>({});
+  const [evaluatingIds, setEvaluatingIds] = useState<Record<string, boolean>>({});
+  const [successMessages, setSuccessMessages] = useState<Record<string, string>>({});
+
+  const allQuests = useMemo(() => {
+    return missionsList.flatMap(m => m.quests || []);
+  }, [missionsList]);
+
+  const fetchAllAttempts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('quest_attempts')
+        .select('*');
+      if (!error && data) {
+        setAllAttempts(data);
+      }
+    } catch (err) {
+      console.error('Error fetching all quest attempts:', err);
+    }
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -80,12 +106,52 @@ export default function TeacherGrades() {
     if (user && user.role === 'teacher') {
       fetchPortfolioItems();
       fetchStats();
+      fetchMissions();
+      fetchAllAttempts();
     }
-  }, [user, fetchPortfolioItems, fetchStats]);
+  }, [user, fetchPortfolioItems, fetchStats, fetchMissions]);
 
   const [selectedStudent, setSelectedStudent] = useState<DetailedStudent | null>(null);
   const [expandedStudentId, setExpandedStudentId] = useState<string | null>(null);
   const totalQuests = 4;
+
+  const handleSendFormativeEvaluation = async (studentId: string, questId: string) => {
+    const key = `${studentId}-${questId}`;
+    const evaluation = evaluations[key] || 'En proceso';
+    const feedback = feedbacks[key] || '';
+    
+    setEvaluatingIds(prev => ({ ...prev, [key]: true }));
+    try {
+      const grantFormativeLoot = useGamificationStore.getState().grantFormativeLoot;
+      const res = await grantFormativeLoot(studentId, questId, evaluation, feedback);
+      
+      if (res.success) {
+        let msg = `¡Evaluación enviada! `;
+        if (evaluation === 'Logrado') {
+          msg += `El alumno recibió 💎 +${res.xpEarned} XP y 🪙 +${res.coinsEarned} Monedas (¡2x multiplicador!).`;
+        } else if (evaluation === 'Avanzando') {
+          msg += `El alumno recibió 💎 +${res.xpEarned} XP y 🪙 +${res.coinsEarned} Monedas.`;
+        } else {
+          msg += `El alumno recibió 💎 +${res.xpEarned} XP, 🪙 +${res.coinsEarned} Monedas y un ítem "Poción de perseverancia".`;
+        }
+        setSuccessMessages(prev => ({ ...prev, [key]: msg }));
+        
+        // Recargar datos
+        await fetchStats();
+        await fetchAllAttempts();
+        
+        setTimeout(() => {
+          setSuccessMessages(prev => ({ ...prev, [key]: '' }));
+        }, 8000);
+      } else {
+        alert(`Error al guardar la evaluación: ${res.error}`);
+      }
+    } catch (err: any) {
+      alert(`Error: ${err.message || err}`);
+    } finally {
+      setEvaluatingIds(prev => ({ ...prev, [key]: false }));
+    }
+  };
 
   // Mappings between UUIDs and seed IDs
   const denormalizeStudentId = (id: string): string => {
@@ -150,52 +216,7 @@ export default function TeacherGrades() {
     });
   }, [myStudents]);
 
-  // Estados de configuración de pesos (Porcentaje total = 100)
-  const [questWeight, setQuestWeight] = useState(60); // 60% cuestionarios
-  const [portfolioWeight, setPortfolioWeight] = useState(40); // 40% portafolio
 
-  // Estados locales para boletas guardadas
-  const [comments, setComments] = useState<Record<string, string>>({
-    'std-pb': 'El alumno demuestra mucho entusiasmo con su mascota y sus laberintos. Muestra un avance excelente en lectoescritura.',
-    'std-pa': 'Excelente desempeño en matemáticas. Muestra una actitud positiva frente al error y los reintentos.',
-    'std-sec': 'Muy activa en las dinámicas RPG escolares. Ha incrementado su inteligencia en un 40% mediante actividades de ciencias.',
-    'std-prep': 'Gran rol como coevaluador de proyectos. Sus análisis demuestran madurez técnica.'
-  });
-  const [gradesSaved, setGradesSaved] = useState<Record<string, boolean>>({});
-
-  // Función para calcular la calificación SEP formativa (escala 5.0 a 10.0)
-  const calculateSepGrade = (studentId: string) => {
-    const norm = normalizeStudentId(studentId);
-    const denorm = denormalizeStudentId(studentId);
-
-    // 1. Calcular porcentaje de Quests aprobados
-    const attempts = questAttempts?.filter(a => 
-      (a.student_id === studentId || a.student_id === norm || a.student_id === denorm) && a.score >= 60
-    ) || [];
-    const uniqueQuestsPassed = new Set(attempts.map(a => a.quest_id)).size;
-    const questRatio = Math.min(1, uniqueQuestsPassed / totalQuests);
-
-    // 2. Calcular porcentaje de portafolios aprobados
-    const items = portfolioItems.filter(p => p.student_id === studentId || p.student_id === norm || p.student_id === denorm);
-    const approvedItemsCount = items.filter(p => p.status === 'approved').length;
-    const totalItemsCount = items.length;
-    const portfolioRatio = totalItemsCount > 0 ? approvedItemsCount / totalItemsCount : 0.5;
-
-    // 3. Ponderación
-    const score0to100 = (questRatio * questWeight) + (portfolioRatio * portfolioWeight);
-    
-    // Mapear de 0-100 a la escala SEP (5.0 a 10.0)
-    const finalScore = 5.0 + (score0to100 / 100) * 5.0;
-    return parseFloat(finalScore.toFixed(1));
-  };
-
-  const handleSaveGrade = (studentId: string, e: React.MouseEvent) => {
-    e.stopPropagation(); // Evitar que el clic en el botón expanda/cierre la fila
-    setGradesSaved(prev => ({ ...prev, [studentId]: true }));
-    setTimeout(() => {
-      setGradesSaved(prev => ({ ...prev, [studentId]: false }));
-    }, 2500);
-  };
 
   const getStudentLevelLabel = (id: string) => {
     const norm = normalizeStudentId(id);
@@ -235,41 +256,7 @@ export default function TeacherGrades() {
           </div>
         </div>
 
-        {/* Ponderación y Configuración */}
-        <div className="rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-md p-6 mb-8 shadow-2xl">
-          <h2 className="text-sm font-bold text-zinc-200 flex items-center gap-1.5 mb-4 text-left">
-            <Settings className="h-4.5 w-4.5 text-zinc-500" />
-            Configuración de Ponderación Formativa
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <div className="flex justify-between items-center text-xs font-bold text-zinc-400 mb-2.5">
-                <span>Retos y Cuestionarios Académicos: <span className="text-blue-400">{questWeight}%</span></span>
-                <span>Portafolio de Evidencias Digital: <span className="text-purple-400">{portfolioWeight}%</span></span>
-              </div>
-              <input
-                type="range"
-                min="10"
-                max="90"
-                value={questWeight}
-                onChange={(e) => {
-                  const val = parseInt(e.target.value);
-                  setQuestWeight(val);
-                  setPortfolioWeight(100 - val);
-                }}
-                className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
-              />
-            </div>
-            
-            <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-800/60 text-xs text-left">
-              <Info className="h-4.5 w-4.5 text-amber-500 flex-shrink-0 mt-0.5" />
-              <p className="text-zinc-400 leading-relaxed font-semibold">
-                <strong>Fórmula de Evaluación Formativa:</strong> Calcula el avance del jugador en contratos de misiones ({questWeight}%) y Seesaw ({portfolioWeight}%) para determinar su calificación para la boleta (escala 5.0 a 10.0).
-              </p>
-            </div>
-          </div>
-        </div>
+
 
         {/* Lista de Jugadores */}
         <div className="flex flex-col gap-4">
@@ -285,15 +272,13 @@ export default function TeacherGrades() {
           {sortedStudents.map((student) => {
             const normId = normalizeStudentId(student.id);
             const denormId = denormalizeStudentId(student.id);
-            const finalGrade = calculateSepGrade(student.id);
-            const isSaved = gradesSaved[student.id] || gradesSaved[normId];
             const isExpanded = expandedStudentId === student.id;
             
             const stats = getStudentStats(student.id);
             const avatar = getStudentAvatar(student.id);
 
             // Fetch student attempts
-            const attempts = questAttempts.filter(a => 
+            const attempts = allAttempts.filter(a => 
               a.student_id === student.id || a.student_id === normId || a.student_id === denormId
             );
 
@@ -360,35 +345,28 @@ export default function TeacherGrades() {
                     </div>
                   </div>
 
-                  {/* SEP Grade and Action */}
+                  {/* Formative Evaluation Progress and Toggle */}
                   <div className="flex items-center gap-4 self-stretch md:self-auto justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0 border-zinc-900">
-                    <div className="text-center md:text-right flex items-center md:flex-col gap-2 md:gap-0.5">
-                      <span className="text-[9px] font-black text-zinc-500 uppercase tracking-wider block md:hidden">SEP SUGERIDO</span>
-                      <span className={`text-2xl font-black ${finalGrade >= 8 ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.25)]' : finalGrade >= 6 ? 'text-amber-400' : 'text-rose-400'}`}>
-                        {finalGrade.toFixed(1)}
+                    <div className="text-center md:text-right flex flex-col gap-0.5">
+                      <span className="text-[9px] font-black text-zinc-500 uppercase tracking-wider">EVALUACIÓN FORMATIVA</span>
+                      <span className="text-xs font-black text-amber-500 font-mono">
+                        {(() => {
+                          const evaluatedCount = attempts.filter(a => a.feedback).length;
+                          return `${evaluatedCount} / ${totalQuests} Evaluados`;
+                        })()}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={(e) => handleSaveGrade(student.id, e)}
-                        className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all duration-300 ${
-                          isSaved 
-                            ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/10'
-                            : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white border border-zinc-700/50'
-                        }`}
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedStudentId(isExpanded ? null : student.id);
+                        }}
+                        className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/50 rounded-xl text-xs font-black transition-all flex items-center gap-1.5"
                       >
-                        {isSaved ? (
-                          <>
-                            <CheckCircle2 className="h-4 w-4" />
-                            Firmada
-                          </>
-                        ) : (
-                          <>
-                            <Save className="h-4 w-4" />
-                            Firmar Boleta
-                          </>
-                        )}
+                        {isExpanded ? 'Cerrar Panel' : 'Evaluar Retos'}
                       </button>
                       
                       {isExpanded ? (
@@ -452,76 +430,166 @@ export default function TeacherGrades() {
                       </div>
                     </div>
 
-                    {/* Column 2: Recent Contracts / Attempts */}
-                    <div className="flex flex-col gap-4">
-                      <h4 className="text-xs font-black text-zinc-400 uppercase tracking-widest border-b border-zinc-850 pb-2 flex items-center gap-1.5">
-                        <Swords className="h-4 w-4 text-purple-400" />
-                        Historial de Contratos
-                      </h4>
+                    {/* Column 2 & 3: Panel de Evaluación Formativa (col-span-2) */}
+                    <div className="lg:col-span-2 flex flex-col gap-4">
+                      <div className="flex justify-between items-center border-b border-zinc-850 pb-2">
+                        <h4 className="text-xs font-black text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                          <Swords className="h-4 w-4 text-purple-400" />
+                          Panel de Evaluación Formativa cualitativa (Rúbricas NEM)
+                        </h4>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedStudent(student);
+                          }}
+                          className="text-[10px] font-black text-amber-500 hover:text-amber-400 uppercase tracking-wider"
+                        >
+                          Ver Expediente Dossier
+                        </button>
+                      </div>
 
-                      <div className="space-y-2 max-h-[170px] overflow-y-auto pr-1">
-                        {attempts.length === 0 ? (
-                          <div className="text-center py-6 text-xs text-zinc-500 italic bg-zinc-950/40 border border-zinc-900/60 rounded-xl">
-                            Sin contratos iniciados aún.
+                      <div className="flex flex-col gap-4 max-h-[400px] overflow-y-auto pr-1">
+                        {allQuests.length === 0 ? (
+                          <div className="text-center py-8 text-xs text-zinc-500 italic bg-zinc-950/40 border border-zinc-900/60 rounded-2xl">
+                            No hay misiones (Quests) registradas en el sistema para evaluar.
                           </div>
                         ) : (
-                          attempts.map((attempt) => (
-                            <div key={attempt.id} className="p-3 bg-zinc-950/50 rounded-xl border border-zinc-900/60 flex items-center justify-between text-xs gap-3">
-                              <div className="flex flex-col gap-0.5 truncate text-left">
-                                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-wider">{attempt.quest_id?.split('-')[1] || 'RETO'}</span>
-                                <span className="font-bold text-zinc-200 truncate">{attempt.quest_id}</span>
-                              </div>
-                              
-                              <div className="flex items-center gap-2 flex-shrink-0">
-                                <span className={`font-black ${attempt.score >= 60 ? 'text-emerald-400' : 'text-rose-400'}`}>
-                                  {attempt.score}%
-                                </span>
-                                {attempt.score >= 60 ? (
-                                  <span className="px-1.5 py-0.5 bg-emerald-950/30 border border-emerald-500/20 text-emerald-400 text-[8px] font-black uppercase rounded">Aprobado</span>
-                                ) : (
-                                  <span className="px-1.5 py-0.5 bg-rose-950/30 border border-rose-500/20 text-rose-400 text-[8px] font-black uppercase rounded">Fallo</span>
+                          allQuests.map((quest) => {
+                            const attempt = attempts.find(a => a.quest_id === quest.id);
+                            const key = `${student.id}-${quest.id}`;
+                            
+                            // Determinar valor inicial del estado local o base de datos
+                            const selectedEval = evaluations[key] || (attempt?.score === 100 ? 'Logrado' : attempt?.score === 70 ? 'Avanzando' : attempt?.score === 40 ? 'En proceso' : 'En proceso');
+                            const feedbackText = feedbacks[key] !== undefined ? feedbacks[key] : (attempt?.feedback || '');
+                            const isEvaluating = !!evaluatingIds[key];
+                            const successMsg = successMessages[key] || '';
+
+                            return (
+                              <div 
+                                key={quest.id} 
+                                className="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4.5 flex flex-col gap-3 text-left shadow-xs hover:border-zinc-700/60 transition-colors"
+                              >
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-850 pb-2">
+                                  <div>
+                                    <h5 className="text-xs font-black text-zinc-200 flex items-center gap-1.5">
+                                      <span>{quest.title}</span>
+                                      {attempt ? (
+                                        <span className="px-1.5 py-0.5 bg-emerald-950/30 border border-emerald-500/20 text-emerald-400 text-[7.5px] font-black uppercase rounded">Entregado</span>
+                                      ) : (
+                                        <span className="px-1.5 py-0.5 bg-zinc-950/40 border border-zinc-800 text-zinc-550 text-[7.5px] font-black uppercase rounded">Sin entrega</span>
+                                      )}
+                                    </h5>
+                                    <p className="text-[10px] text-zinc-500 mt-0.5 line-clamp-1">{quest.description}</p>
+                                  </div>
+
+                                  {/* Tipo y recompensas base */}
+                                  <div className="flex items-center gap-2.5 text-[8.5px] font-mono text-zinc-400 font-bold uppercase">
+                                    <span>🎯 {quest.type === 'quiz' ? 'Quiz' : 'Portafolio'}</span>
+                                    <span>•</span>
+                                    <span>💎 {quest.xp_reward} XP</span>
+                                    <span>🪙 {quest.coins_reward}</span>
+                                  </div>
+                                </div>
+
+                                {/* Formulario: Rúbrica Cualitativa y Comentarios */}
+                                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                                  {/* Rúbrica */}
+                                  <div className="md:col-span-5 flex flex-col gap-1.5">
+                                    <label className="text-[9px] font-black text-zinc-505 uppercase tracking-wide">Rúbrica Cualitativa NEM</label>
+                                    <div className="flex flex-col gap-1.5">
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setEvaluations(prev => ({ ...prev, [key]: 'En proceso' }));
+                                        }}
+                                        className={`w-full py-1.5 px-3 rounded-xl border text-[10px] font-black uppercase flex items-center gap-1.5 transition-all ${
+                                          selectedEval === 'En proceso'
+                                            ? 'bg-rose-500/10 border-rose-500 text-rose-400 shadow-[0_0_8px_rgba(239,68,68,0.15)]'
+                                            : 'bg-zinc-950/20 border-zinc-850 text-zinc-500 hover:border-zinc-700'
+                                        }`}
+                                      >
+                                        <Shield className="h-3.5 w-3.5" />
+                                        En proceso
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setEvaluations(prev => ({ ...prev, [key]: 'Avanzando' }));
+                                        }}
+                                        className={`w-full py-1.5 px-3 rounded-xl border text-[10px] font-black uppercase flex items-center gap-1.5 transition-all ${
+                                          selectedEval === 'Avanzando'
+                                            ? 'bg-blue-500/10 border-blue-500 text-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.15)]'
+                                            : 'bg-zinc-950/20 border-zinc-850 text-zinc-500 hover:border-zinc-700'
+                                        }`}
+                                      >
+                                        <Activity className="h-3.5 w-3.5" />
+                                        Avanzando
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setEvaluations(prev => ({ ...prev, [key]: 'Logrado' }));
+                                        }}
+                                        className={`w-full py-1.5 px-3 rounded-xl border text-[10px] font-black uppercase flex items-center gap-1.5 transition-all ${
+                                          selectedEval === 'Logrado'
+                                            ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.15)]'
+                                            : 'bg-zinc-950/20 border-zinc-850 text-zinc-500 hover:border-zinc-700'
+                                        }`}
+                                      >
+                                        <Award className="h-3.5 w-3.5" />
+                                        Logrado
+                                      </button>
+                                    </div>
+                                  </div>
+
+                                  {/* Comentarios */}
+                                  <div className="md:col-span-7 flex flex-col gap-1.5">
+                                    <label className="text-[9px] font-black text-zinc-505 uppercase tracking-wide">Retroalimentación Cualitativa (Reportes SEP)</label>
+                                    <textarea
+                                      rows={2}
+                                      onClick={(e) => e.stopPropagation()}
+                                      value={feedbackText}
+                                      onChange={(e) => setFeedbacks(prev => ({ ...prev, [key]: e.target.value }))}
+                                      placeholder="Escribe comentarios formativos..."
+                                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-800 bg-zinc-950/40 text-zinc-200 focus:border-purple-500 focus:outline-none min-h-[65px] font-semibold leading-relaxed"
+                                    ></textarea>
+
+                                    <button
+                                      type="button"
+                                      disabled={isEvaluating}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSendFormativeEvaluation(student.id, quest.id);
+                                      }}
+                                      className={`mt-1 py-2 px-4 rounded-xl text-[10px] font-black uppercase flex items-center justify-center gap-1.5 self-end transition-all ${
+                                        isEvaluating
+                                          ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                                          : 'bg-purple-600 hover:bg-purple-700 text-white shadow-sm hover:scale-[1.01]'
+                                      }`}
+                                    >
+                                      {isEvaluating ? 'Guardando...' : 'Enviar Evaluación'}
+                                    </button>
+                                  </div>
+                                </div>
+
+                                {/* Mensajes de éxito */}
+                                {successMsg && (
+                                  <div className="bg-emerald-500/10 border border-emerald-500/20 p-2.5 rounded-xl text-[10.5px] font-semibold text-emerald-400 leading-relaxed text-left mt-2">
+                                    {successMsg}
+                                  </div>
                                 )}
                               </div>
-                            </div>
-                          ))
+                            );
+                          })
                         )}
                       </div>
                     </div>
-
-                    {/* Column 3: Qualitative Feedback / SEP Observations */}
-                    <div className="flex flex-col gap-4">
-                      <h4 className="text-xs font-black text-zinc-400 uppercase tracking-widest border-b border-zinc-850 pb-2 flex items-center gap-1.5">
-                        <Award className="h-4 w-4 text-purple-400" />
-                        Evaluación Oficial (SEP)
-                      </h4>
-
-                      <div className="flex flex-col gap-2.5">
-                        <label htmlFor={`obs-${student.id}`} className="text-[9px] font-black text-zinc-500 uppercase tracking-wide">
-                          Observaciones Cualitativas y Sugerencias
-                        </label>
-                        <textarea
-                          id={`obs-${student.id}`}
-                          onClick={(e) => e.stopPropagation()} // Prevent closing accordion on textarea click
-                          value={comments[student.id] || ''}
-                          onChange={(e) => setComments(prev => ({ ...prev, [student.id]: e.target.value }))}
-                          placeholder="Escribe comentarios formativos de retroalimentación cualitativa..."
-                          className="w-full text-xs p-3 rounded-xl border border-zinc-800 bg-zinc-950/50 focus:border-amber-500 focus:outline-none text-zinc-200 min-h-[90px] font-semibold leading-relaxed shadow-inner"
-                        />
-                        <div className="flex justify-between items-center mt-1">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedStudent(student);
-                            }}
-                            className="text-[10px] font-black text-amber-500 hover:text-amber-400 uppercase tracking-wider"
-                          >
-                            Ver Expediente Dossier
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
                   </div>
                 )}
               </div>

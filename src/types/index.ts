@@ -266,6 +266,12 @@ export interface StudentStats {
   pet_stage?: 'egg' | 'baby' | 'adult' | 'mystic';
   pet_energy?: number;
   pet_happiness?: number;
+
+  // Afinidades Elementales / Stats NEM (Nueva Escuela Mexicana)
+  stat_lenguajes?: number;
+  stat_saberes?: number;
+  stat_etica?: number;
+  stat_de_lo_humano?: number;
 }
 
 /**
@@ -357,6 +363,8 @@ export interface Mission {
   map_position_y: number;
   is_active: boolean;
   created_at: string;
+  campo_formativo_id?: string;
+  pda_ids?: string[];
   
   // Relaciones opcionales cargadas
   subject?: Subject;
@@ -434,6 +442,8 @@ export interface Quest {
   coins_reward: number;
   content: QuizContent | SubmissionContent | ExamContent;
   created_at: string;
+  campo_formativo_id?: string;
+  pda_ids?: string[];
   campos_formativos?: string[];
   ejes_articuladores?: string[];
   pdas?: string[];

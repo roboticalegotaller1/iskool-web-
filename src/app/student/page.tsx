@@ -8,6 +8,7 @@ import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { BADGES_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
 import { AvatarCustomizer } from '@/components/AvatarCustomizer';
+import { AnimeAvatarSprite } from '@/components/AnimeAvatarSprite';
 import { RpgCombatViewport } from '@/components/RpgCombatViewport';
 import SagaMap from '@/components/SagaMap';
 import QuestCardModal from '@/components/QuestCardModal';
@@ -190,18 +191,33 @@ export default function StudentDashboard() {
   const renderAvatarPreview = (width = 120, height = 120) => {
     const bgGradient = (avatar?.background_style ?? 'forest') === 'nebula' 
       ? 'from-indigo-950 via-slate-900 to-purple-950'
-      : 'from-emerald-950 via-teal-900 to-cyan-950';
+      : (avatar?.background_style ?? 'forest') === 'nature_spirit'
+        ? 'from-emerald-900 via-teal-950 to-stone-900'
+        : 'from-emerald-950 via-teal-900 to-cyan-950';
 
     return (
       <div className={`relative flex items-center justify-center rounded-2xl bg-gradient-to-br ${bgGradient} overflow-hidden shadow-md`} style={{ width, height }}>
-        <svg viewBox="0 0 100 100" className="w-4/5 h-4/5 z-10 filter drop-shadow-md">
-          <path d="M25 80 C 25 55, 75 55, 75 80 Z" fill={avatar?.outfit_color ?? '#3B82F6'} />
-          <circle cx="50" cy="45" r="18" fill="#FDBA74" />
-          <path d="M41 43 Q 44 39 47 43" stroke="#1F2937" strokeWidth="2" fill="none" strokeLinecap="round" />
-          <path d="M53 43 Q 56 39 59 43" stroke="#1F2937" strokeWidth="2" fill="none" strokeLinecap="round" />
-          <path d="M44 51 Q 50 56 56 51" stroke="#1F2937" strokeWidth="2" fill="none" strokeLinecap="round" />
-          <path d="M30 38 C 30 20, 70 20, 70 38" fill={avatar?.hair_color ?? '#4B5563'} />
-        </svg>
+        {/* Hojas flotantes para el Espíritu de la Naturaleza */}
+        {(avatar?.background_style ?? 'forest') === 'nature_spirit' && (
+          <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.2),transparent_70%)]">
+            <div className="absolute top-4 left-4 h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="absolute bottom-4 right-4 h-1.5 w-1.5 rounded-full bg-emerald-300 animate-bounce" />
+            <span className="absolute top-2 right-4 text-[8px] opacity-40">🍃</span>
+            <span className="absolute bottom-2 left-2 text-[8px] opacity-40">🍃</span>
+          </div>
+        )}
+        <div className="w-full h-full p-2 relative filter drop-shadow-md">
+          <AnimeAvatarSprite 
+            gender={(avatar as any)?.gender ?? 'female'}
+            rpgClass={(avatar as any)?.rpg_class ?? avatar?.outfit_style ?? 'mago'}
+            headType={(avatar as any)?.head_type ?? avatar?.eyes_style ?? 'standard'}
+            skinTone={(avatar as any)?.skin_tone ?? 'light'}
+            hairColor={avatar?.hair_color ?? 'pink'}
+            hairStyle={avatar?.hair_style ?? 'spiky'}
+            equippedArtifacts={ownedArtifactIds}
+            className="w-full h-full"
+          />
+        </div>
       </div>
     );
   };

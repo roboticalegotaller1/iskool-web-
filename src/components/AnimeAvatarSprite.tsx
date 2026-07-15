@@ -143,6 +143,19 @@ export const AnimeAvatarSprite: React.FC<AnimeAvatarSpriteProps> = ({
           </g>
         )}
 
+        {rpgClass === 'scribe_robe' && (
+          <g>
+            {/* Túnica de Escriba - Indigo/Gold */}
+            <path d="M 28 85 L 36 52 Q 50 45 64 52 L 72 85 Q 50 90 28 85 Z" fill="#1E1B4B" stroke="#FBBF24" strokeWidth="1.2" />
+            <path d="M 45 50 L 50 87 L 55 50 Z" fill="#FBBF24" />
+            {/* Book emblem on chest */}
+            <rect x="46" y="58" width="8" height="10" rx="1" fill="#FEF3C7" stroke="#D97706" strokeWidth="0.6" />
+            <line x1="49" y1="61" x2="51" y2="61" stroke="#4338CA" strokeWidth="0.6" />
+            <line x1="49" y1="63" x2="51" y2="63" stroke="#4338CA" strokeWidth="0.6" />
+            <line x1="49" y1="65" x2="51" y2="65" stroke="#4338CA" strokeWidth="0.6" />
+          </g>
+        )}
+
         {rpgClass === 'ninja' && (
           <g>
             {/* Stealth Dark wrap */}
@@ -281,6 +294,17 @@ export const AnimeAvatarSprite: React.FC<AnimeAvatarSpriteProps> = ({
             <path d="M 34 43 Q 50 40 66 43 Q 66 52 50 54 Q 34 52 34 43 Z" fill="#18181B" stroke="#27272A" strokeWidth="0.5" />
           </g>
         )}
+
+        {headType === 'scientist_goggles' && (
+          <g id="head-option-goggles">
+            {/* Glowing cian scientist goggles */}
+            <rect x="34" y="38" width="12" height="7" rx="1.5" fill="#06B6D4" opacity="0.85" stroke="#FFF" strokeWidth="0.6" />
+            <rect x="54" y="38" width="12" height="7" rx="1.5" fill="#06B6D4" opacity="0.85" stroke="#FFF" strokeWidth="0.6" />
+            <line x1="46" y1="41.5" x2="54" y2="41.5" stroke="#FFF" strokeWidth="1" />
+            <line x1="30" y1="41.5" x2="34" y2="41.5" stroke="#374151" strokeWidth="1" />
+            <line x1="66" y1="41.5" x2="70" y2="41.5" stroke="#374151" strokeWidth="1" />
+          </g>
+        )}
       </g>
 
       {/* 4. HAIR STYLES FRONT LAYERS */}
@@ -359,6 +383,17 @@ export const AnimeAvatarSprite: React.FC<AnimeAvatarSpriteProps> = ({
             {/* 10. Mohawk */}
             {hairStyle === 'mohawk' && (
               <path d="M 48 34 C 48 20, 44 14, 46 4 C 54 4, 52 20, 52 34 Z M 48 20 Q 50 6 52 6" fill={hColor} />
+            )}
+
+            {/* 11. Corona/Diadema del Gremio (hero_tiara) */}
+            {hairStyle === 'hero_tiara' && (
+              <g>
+                <path d="M 33 34 C 33 22, 40 16, 50 16 C 60 16, 67 22, 67 34 C 67 34, 62 26, 50 28 C 38 26, 33 34, 33 34" fill={hColor} />
+                <polygon points="40,20 50,8 60,20 55,23 45,23" fill="#FBBF24" stroke="#D97706" strokeWidth="0.8" />
+                <circle cx="50" cy="8" r="1.5" fill="#EF4444" />
+                <circle cx="45" cy="20" r="1" fill="#3B82F6" />
+                <circle cx="55" cy="20" r="1" fill="#3B82F6" />
+              </g>
             )}
           </g>
         )}
@@ -480,6 +515,20 @@ export const AnimeAvatarSprite: React.FC<AnimeAvatarSpriteProps> = ({
             <line x1="12" y1="14" x2="18" y2="12" stroke="#000" strokeWidth="0.8" />
             <line x1="22" y1="8" x2="28" y2="10" stroke="#000" strokeWidth="0.8" />
             <line x1="22" y1="12" x2="28" y2="14" stroke="#000" strokeWidth="0.8" />
+          </g>
+        )}
+
+        {(equippedArtifacts.includes('cos_nature_spirit') || equippedArtifacts.includes('nature_spirit')) && (
+          <g id="cosmetic-nature-spirit" className="animate-pulse">
+            {/* Partículas de hojas mágicas flotando */}
+            <path d="M 18 42 Q 13 37 16 32 Q 21 37 18 42 Z" fill="#10B981" />
+            <path d="M 82 45 Q 87 40 84 35 Q 79 40 82 45 Z" fill="#10B981" />
+            <path d="M 23 72 Q 26 67 22 62 Q 18 67 23 72 Z" fill="#34D399" />
+            <path d="M 77 72 Q 74 67 78 62 Q 82 67 77 72 Z" fill="#34D399" />
+            <circle cx="15" cy="55" r="1.5" fill="#A7F3D0" />
+            <circle cx="85" cy="55" r="1.5" fill="#A7F3D0" />
+            <circle cx="28" cy="30" r="1" fill="#A7F3D0" />
+            <circle cx="72" cy="30" r="1" fill="#A7F3D0" />
           </g>
         )}
       </g>

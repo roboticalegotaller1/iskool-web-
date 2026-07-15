@@ -9,7 +9,7 @@ import { Loader } from '@/components/Loader';
 import { useHydration } from '@/hooks/useHydration';
 import { 
   Sparkles, Check, ChevronLeft, Save, Shield, Compass, User, 
-  Smile, Scissors, Eye, Wand2, Paintbrush, Flame, Info 
+  Smile, Scissors, Eye, Wand2, Paintbrush, Flame, Info, Lock 
 } from 'lucide-react';
 
 import { useAuth } from '@/context/AuthContext';
@@ -24,6 +24,19 @@ export default function AvatarCustomizerPage() {
   const fetchStats = useStudentStore(state => state.fetchStats);
   const avatar = useCurrentStudentAvatar();
   const ownedArtifactIds = studentInventoryMap[activeStudentId] || [];
+
+  const isItemUnlocked = (itemId: string) => {
+    const defaults = [
+      'classic', 'happy', 'space_suit', 'nebula', 'explorer', 'forest', 'spiky',
+      'wizard_hat', 'purple', 'eyes', 'hair', 'outfit', 'background', 'standard',
+      'pale', 'medium', 'dark', 'pink', 'brown', 'yellow', 'black', 'blue',
+      'red', 'silver', 'orange', 'green', 'light', 'elf', 'cat', 'horns', 'mask',
+      'guerrero', 'mago', 'ninja', 'curador', 'domador', 'cazador', 'reptil',
+      'long', 'ponytail', 'twintails', 'bob', 'dreadlocks', 'bald', 'short', 'hat', 'mohawk'
+    ];
+    if (defaults.includes(itemId)) return true;
+    return (avatar?.unlocked_items || []).includes(itemId);
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -164,7 +177,8 @@ export default function AvatarCustomizerPage() {
     { id: 'curador', label: 'Curadora', icon: '❤️', desc: 'Túnicas blancas sagradas y cetro de cruz.' },
     { id: 'domador', label: 'Domador de Dragones', icon: '🐉', desc: 'Escamas de dragón y cría compañera.' },
     { id: 'cazador', label: 'Cazador', icon: '🏹', desc: 'Ropas forestales y arco de cazador.' },
-    { id: 'reptil', label: 'Reptil', icon: '🦎', desc: 'Túnica verde escamosa y garras brillantes.' }
+    { id: 'reptil', label: 'Reptil', icon: '🦎', desc: 'Túnica verde escamosa y garras brillantes.' },
+    { id: 'scribe_robe', label: 'Túnica de Escriba', icon: '📜', desc: 'Túnica sagrada del Campo Formativo Lenguajes.' }
   ];
 
   const headOptions = [
@@ -172,7 +186,8 @@ export default function AvatarCustomizerPage() {
     { id: 'elf', label: 'Elfo', icon: '🧝', desc: 'Orejas puntiagudas de elfo noble.' },
     { id: 'cat', label: 'Neko Gato', icon: '🐱', desc: 'Tiernas orejas de gato en el cabello.' },
     { id: 'horns', label: 'Dracónico', icon: '😈', desc: 'Cuernos de dragón llameantes.' },
-    { id: 'mask', label: 'Ninja Embozo', icon: '😷', desc: 'Máscara táctica que cubre tu boca.' }
+    { id: 'mask', label: 'Ninja Embozo', icon: '😷', desc: 'Máscara táctica que cubre tu boca.' },
+    { id: 'scientist_goggles', label: 'Visor Científico', icon: '🥽', desc: 'Visor tecnológico del Campo Formativo Saberes.' }
   ];
 
   const skinToneOptions = [
@@ -207,7 +222,8 @@ export default function AvatarCustomizerPage() {
     { id: 'bald', label: 'Calvo', desc: 'Estilo limpio sin cabello.' },
     { id: 'short', label: 'Corto Militar', desc: 'Corto y fácil de manejar.' },
     { id: 'hat', label: 'Sombrero Mago', icon: '🎩', desc: 'Gorro puntiagudo sobre el cabello.' },
-    { id: 'mohawk', label: 'Cresta Punk', desc: 'Cresta de combate levantada.' }
+    { id: 'mohawk', label: 'Cresta Punk', desc: 'Cresta de combate levantada.' },
+    { id: 'hero_tiara', label: 'Corona del Gremio', icon: '👑', desc: 'Corona dorada del Campo Formativo De lo Humano.' }
   ];
 
   return (
@@ -383,28 +399,38 @@ export default function AvatarCustomizerPage() {
                   <p className="text-zinc-400 text-[11px] mb-3">La clase determina tu armadura de batalla, tu báculo o arma especial y tu acompañante.</p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[380px] overflow-y-auto pr-2">
-                    {classOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => handleOptionChange(setRpgClass, opt.id)}
-                        className={`group p-3.5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden flex items-start gap-3.5 ${
-                          rpgClass === opt.id
-                            ? 'border-purple-500 bg-purple-950/20 text-white shadow-md'
-                            : 'border-zinc-800 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
-                        }`}
-                      >
-                        <span className="text-2xl mt-1">{opt.icon}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-bold text-xs uppercase tracking-wide">{opt.label}</p>
-                          <p className="text-[10px] text-zinc-500 mt-0.5 leading-relaxed">{opt.desc}</p>
-                        </div>
-                        {rpgClass === opt.id && (
-                          <div className="absolute right-3 top-3 bg-purple-500 text-white rounded-full p-0.5">
-                            <Check className="h-3 w-3" />
+                    {classOptions.map((opt) => {
+                      const unlocked = isItemUnlocked(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          disabled={!unlocked}
+                          onClick={() => handleOptionChange(setRpgClass, opt.id)}
+                          className={`group p-3.5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden flex items-start gap-3.5 ${
+                            rpgClass === opt.id
+                              ? 'border-purple-500 bg-purple-950/20 text-white shadow-md font-bold'
+                              : unlocked
+                                ? 'border-zinc-800 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                                : 'border-zinc-900 bg-zinc-950/20 text-zinc-650 cursor-not-allowed opacity-50'
+                          }`}
+                          title={unlocked ? opt.label : 'Bloqueado. Completa la rama de Lenguajes en tu portafolio/habilidades.'}
+                        >
+                          <span className="text-2xl mt-1 flex items-center gap-1">
+                            {!unlocked && <Lock className="h-4 w-4 text-zinc-500 flex-shrink-0" />}
+                            {opt.icon}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-bold text-xs uppercase tracking-wide">{opt.label}</p>
+                            <p className="text-[10px] text-zinc-500 mt-0.5 leading-relaxed">{opt.desc}</p>
                           </div>
-                        )}
-                      </button>
-                    ))}
+                          {rpgClass === opt.id && (
+                            <div className="absolute right-3 top-3 bg-purple-500 text-white rounded-full p-0.5">
+                              <Check className="h-3 w-3" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -418,28 +444,38 @@ export default function AvatarCustomizerPage() {
                   <p className="text-zinc-400 text-[11px] mb-3">Dale un aspecto mitológico o ninja a las orejas y accesorios del rostro.</p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {headOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        onClick={() => handleOptionChange(setHeadType, opt.id)}
-                        className={`group p-3.5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden flex items-start gap-3.5 ${
-                          headType === opt.id
-                            ? 'border-purple-500 bg-purple-950/20 text-white shadow-md'
-                            : 'border-zinc-800 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
-                        }`}
-                      >
-                        <span className="text-2xl">{opt.icon}</span>
-                        <div>
-                          <p className="font-bold text-xs uppercase tracking-wide">{opt.label}</p>
-                          <p className="text-[10px] text-zinc-500 mt-0.5 leading-relaxed">{opt.desc}</p>
-                        </div>
-                        {headType === opt.id && (
-                          <div className="absolute right-3 top-3 bg-purple-500 text-white rounded-full p-0.5">
-                            <Check className="h-3 w-3" />
+                    {headOptions.map((opt) => {
+                      const unlocked = isItemUnlocked(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          disabled={!unlocked}
+                          onClick={() => handleOptionChange(setHeadType, opt.id)}
+                          className={`group p-3.5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden flex items-start gap-3.5 ${
+                            headType === opt.id
+                              ? 'border-purple-500 bg-purple-950/20 text-white shadow-md font-bold'
+                              : unlocked
+                                ? 'border-zinc-800 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                                : 'border-zinc-900 bg-zinc-950/20 text-zinc-650 cursor-not-allowed opacity-50'
+                          }`}
+                          title={unlocked ? opt.label : 'Bloqueado. Completa la rama de Saberes en tu portafolio/habilidades.'}
+                        >
+                          <span className="text-2xl flex items-center gap-1">
+                            {!unlocked && <Lock className="h-4 w-4 text-zinc-500 flex-shrink-0" />}
+                            {opt.icon}
+                          </span>
+                          <div>
+                            <p className="font-bold text-xs uppercase tracking-wide">{opt.label}</p>
+                            <p className="text-[10px] text-zinc-500 mt-0.5 leading-relaxed">{opt.desc}</p>
                           </div>
-                        )}
-                      </button>
-                    ))}
+                          {headType === opt.id && (
+                            <div className="absolute right-3 top-3 bg-purple-500 text-white rounded-full p-0.5">
+                              <Check className="h-3 w-3" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -456,24 +492,32 @@ export default function AvatarCustomizerPage() {
                     <p className="text-zinc-400 text-[11px] mb-3">Elige entre 10 peinados de fantasía y corte anime medieval.</p>
                     
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[200px] overflow-y-auto pr-2">
-                      {hairStyleOptions.map((opt) => (
-                        <button
-                          key={opt.id}
-                          onClick={() => handleOptionChange(setHairStyle, opt.id)}
-                          className={`p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden flex items-center gap-2 ${
-                            hairStyle === opt.id
-                              ? 'border-purple-500 bg-purple-950/20 text-white'
-                              : 'border-zinc-800 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
-                          }`}
-                        >
-                          <span className="text-sm font-bold truncate">{opt.label}</span>
-                          {hairStyle === opt.id && (
-                            <span className="ml-auto text-purple-400">
-                              <Check className="h-3.5 w-3.5" />
-                            </span>
-                          )}
-                        </button>
-                      ))}
+                      {hairStyleOptions.map((opt) => {
+                        const unlocked = isItemUnlocked(opt.id);
+                        return (
+                          <button
+                            key={opt.id}
+                            disabled={!unlocked}
+                            onClick={() => handleOptionChange(setHairStyle, opt.id)}
+                            className={`p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden flex items-center gap-2 ${
+                              hairStyle === opt.id
+                                ? 'border-purple-500 bg-purple-950/20 text-white font-bold'
+                                : unlocked
+                                  ? 'border-zinc-800 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                                  : 'border-zinc-900 bg-zinc-950/20 text-zinc-650 cursor-not-allowed opacity-50'
+                            }`}
+                            title={unlocked ? opt.label : 'Bloqueado. Completa la rama de De lo Humano en tu portafolio/habilidades.'}
+                          >
+                            {!unlocked && <Lock className="h-3 w-3 text-zinc-500 flex-shrink-0" />}
+                            <span className="text-sm font-bold truncate">{opt.label}</span>
+                            {hairStyle === opt.id && (
+                              <span className="ml-auto text-purple-400">
+                                <Check className="h-3.5 w-3.5" />
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 

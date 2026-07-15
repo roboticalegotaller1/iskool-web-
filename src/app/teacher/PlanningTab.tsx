@@ -6,10 +6,12 @@ import {
   Scale, Globe, Palette, Download, Save, Trash2, Plus, 
   ChevronRight, Image, FileDown, CheckCircle2, Wand2, Eye, 
   RefreshCw, Settings, Check, HelpCircle, Edit3, Lock,
-  ChevronDown
+  ChevronDown, ChevronLeft, Shield, Award, Compass, Swords, Info
 } from 'lucide-react';
-import { UserProfile, Subject, ClassSchedule, Group } from '@/types';
+import { UserProfile, Subject, ClassSchedule, Group, Quest } from '@/types';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { useGamificationStore } from '@/store/useGamificationStore';
+import { usePlanningStore } from '@/store/usePlanningStore';
 import { supabase } from '@/lib/supabaseClient';
 
 // ==========================================
@@ -277,6 +279,204 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     return 'lenguajes';
   };
 
+  // --- Estados de Programa Analítico (SEP / NEM) ---
+  const [activeModule, setActiveModule] = useState<'generator' | 'programa-analitico'>('generator');
+  const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
+  
+  // Paso 1: Lectura de la realidad
+  const [realityDiagnosis, setRealityDiagnosis] = useState('');
+  const [problematic, setProblematic] = useState('');
+  const [studentNeeds, setStudentNeeds] = useState('');
+
+  // Paso 2: Contextualización
+  const [camposFormativos, setCamposFormativos] = useState<any[]>([]);
+  const [pdasList, setPdasList] = useState<any[]>([]);
+  const [selectedCampoId, setSelectedCampoId] = useState('');
+  const [selectedPdaIds, setSelectedPdaIds] = useState<string[]>([]);
+  const [selectedNEMSubject, setSelectedNEMSubject] = useState('');
+  const [selectedNEMLevel, setSelectedNEMLevel] = useState('primaria-alta');
+
+  // Paso 3: Formulación (Campañas de Gremio)
+  const [campaignTitle, setCampaignTitle] = useState('');
+  const [campaignQuests, setCampaignQuests] = useState<any[]>([]);
+  const [isPublishingCampaign, setIsPublishingCampaign] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Cargar campos formativos al montar
+  useEffect(() => {
+    const fetchNemData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('nem_campos_formativos')
+          .select('*')
+          .order('name');
+        if (error) throw error;
+        if (data) {
+          setCamposFormativos(data);
+          if (data.length > 0) {
+            setSelectedCampoId(data[0].id);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching nem_campos_formativos:', err);
+      }
+    };
+    fetchNemData();
+  }, []);
+
+  // Cargar PDAs cuando cambia el campo formativo
+  useEffect(() => {
+    if (!selectedCampoId) return;
+    const fetchPdas = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('nem_pdas')
+          .select('*')
+          .eq('campo_formativo_id', selectedCampoId)
+          .order('code');
+        if (error) throw error;
+        if (data) {
+          setPdasList(data);
+        }
+      } catch (err) {
+        console.error('Error fetching nem_pdas:', err);
+      }
+    };
+    fetchPdas();
+  }, [selectedCampoId]);
+
+
+  const handlePublishCampaign = async () => {
+    const isUuid = (val: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
+    if (!campaignTitle.trim()) {
+      alert('Por favor introduce un título para la campaña del gremio.');
+      return;
+    }
+    if (campaignQuests.length === 0) {
+      alert('Por favor agrega al menos una misión a la campaña.');
+      return;
+    }
+
+    setIsPublishingCampaign(true);
+    try {
+      let subjectUuid = selectedNEMSubject;
+      if (!isUuid(subjectUuid)) {
+        const subjectObj = displaySubjects.find(s => s.id === selectedNEMSubject);
+        const name = subjectObj ? subjectObj.name : 'Matemáticas';
+        const { data: existingSubject } = await supabase
+          .from('subjects')
+          .select('id')
+          .eq('name', name)
+          .maybeSingle();
+        if (existingSubject) {
+          subjectUuid = existingSubject.id;
+        } else {
+          subjectUuid = '00000000-0000-0000-0000-000000000000'; // fallback
+        }
+      }
+
+      // Insertar misión (campaña)
+      const { data: missionData, error: missionError } = await supabase
+        .from('missions')
+        .insert({
+          school_id: '00000000-0000-0000-0000-000000000000',
+          subject_id: subjectUuid,
+          level_grade_id: '1111c019-61c7-4097-8aca-03cc0c4db68a', // Default to 4º Primaria
+          title: campaignTitle,
+          description: `Campaña del Programa Analítico: ${problematic || 'Plan de estudios'}`,
+          story_intro: `¡Atención Gremio! Se ha desplegado una nueva campaña basada en: ${realityDiagnosis.slice(0, 100)}...`,
+          map_position_x: Math.floor(Math.random() * 80) + 10,
+          map_position_y: Math.floor(Math.random() * 80) + 10,
+          campo_formativo_id: selectedCampoId,
+          pda_ids: selectedPdaIds,
+          is_active: true
+        })
+        .select('id')
+        .single();
+
+      if (missionError) throw missionError;
+      const missionId = missionData.id;
+
+      // Insertar Quests vinculadas
+      const questsToInsert = campaignQuests.map((q, idx) => ({
+        mission_id: missionId,
+        title: q.title,
+        description: q.description,
+        type: q.type,
+        sequence_order: idx + 1,
+        xp_reward: q.xp_reward,
+        coins_reward: q.coins_reward,
+        campo_formativo_id: selectedCampoId,
+        pda_ids: q.pda_ids,
+        content: q.type === 'quiz' ? {
+          questions: [
+            {
+              id: `q-${Date.now()}-${idx}-1`,
+              question: `Pregunta sobre: ${q.title}`,
+              options: ["Opción A", "Opción B", "Opción C", "Opción D"],
+              correctAnswerIndex: 0,
+              explanation: "Respuesta correcta por defecto para la campaña."
+            }
+          ]
+        } : {
+          instructions: q.description,
+          acceptedFormats: ["image", "audio", "video", "pdf", "link"]
+        }
+      }));
+
+      const { error: questsError } = await supabase
+        .from('quests')
+        .insert(questsToInsert);
+
+      if (questsError) throw questsError;
+
+      // Actualizar store de Zustand local
+      const campaignInfo = {
+        id: missionId,
+        subject_id: selectedNEMSubject,
+        subject_name: displaySubjects.find(s => s.id === selectedNEMSubject)?.name || 'Materia',
+        level: selectedNEMLevel,
+        reality_diagnosis: realityDiagnosis,
+        problematic: problematic,
+        student_needs: studentNeeds,
+        campo_formativo_id: selectedCampoId,
+        campo_formativo_name: camposFormativos.find(cf => cf.id === selectedCampoId)?.name || 'Campo Formativo',
+        selected_pda_ids: selectedPdaIds,
+        quests: campaignQuests,
+        published_at: new Date().toISOString()
+      };
+      
+      const { addCampaign } = usePlanningStore.getState();
+      addCampaign(campaignInfo);
+
+      // Recargar misiones en el store de gamificación
+      const gamificationStore = useGamificationStore.getState();
+      if (gamificationStore.fetchMissions) {
+        await gamificationStore.fetchMissions();
+      }
+
+      // Mostrar toast
+      setToastMessage('¡Campaña del Programa Analítico desplegada al Gremio!');
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 5000);
+
+      // Reiniciar estados del wizard
+      setWizardStep(1);
+      setRealityDiagnosis('');
+      setProblematic('');
+      setStudentNeeds('');
+      setSelectedPdaIds([]);
+      setCampaignTitle('');
+      setCampaignQuests([]);
+    } catch (err: any) {
+      console.error('Error al publicar campaña del programa analítico:', err.message || err);
+      alert(`Error al publicar la campaña: ${err.message || err}`);
+    } finally {
+      setIsPublishingCampaign(false);
+    }
+  };
+
   // --- Estados de Entrada ---
   const [inputText, setInputText] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('primaria-alta');
@@ -284,6 +484,13 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const [pdaSuggestions, setPdaSuggestions] = useState<string[]>([]);
   const [isLoadingPDAs, setIsLoadingPDAs] = useState(false);
   const [selectedSuggestedPda, setSelectedSuggestedPda] = useState('');
+  
+  // Sincronizar materia seleccionada
+  useEffect(() => {
+    if (selectedSubject && !selectedNEMSubject) {
+      setSelectedNEMSubject(selectedSubject);
+    }
+  }, [selectedSubject, selectedNEMSubject]);
   
   // --- Estado de Archivos ---
   const [uploadedFile, setUploadedFile] = useState<{ name: string; type: 'image' | 'pdf'; size: string } | null>(null);
@@ -867,7 +1074,48 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <div className="flex flex-col gap-6 relative">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-6 right-6 z-50 bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 px-6 py-4 rounded-2xl shadow-xl border border-zinc-800 dark:border-zinc-200 flex items-center gap-3 animate-bounce">
+          <Award className="h-6 w-6 text-yellow-500 animate-pulse" />
+          <div className="flex flex-col text-left">
+            <span className="text-[10px] font-black uppercase tracking-wider text-yellow-500 text-left">Gremio Actualizado</span>
+            <span className="text-xs font-bold text-left">{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Selector de Módulo */}
+      <div className="flex border-b border-zinc-200 dark:border-zinc-800 pb-px gap-4 no-print">
+        <button
+          type="button"
+          onClick={() => setActiveModule('generator')}
+          className={`pb-3 text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+            activeModule === 'generator'
+              ? 'border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold'
+              : 'border-transparent text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300'
+          }`}
+        >
+          <Wand2 className="h-4.5 w-4.5" />
+          Generador de Planeación Didáctica
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveModule('programa-analitico')}
+          className={`pb-3 text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+            activeModule === 'programa-analitico'
+              ? 'border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold'
+              : 'border-transparent text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300'
+          }`}
+        >
+          <BookOpen className="h-4.5 w-4.5" />
+          Programa Analítico (SEP)
+        </button>
+      </div>
+
+      {activeModule === 'generator' ? (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       
       {/* -------------------- COLUMNA IZQUIERDA: INPUTS (lg:col-span-4) -------------------- */}
       <div className="lg:col-span-4 flex flex-col gap-5 bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-5 shadow-sm text-left no-print">
@@ -1485,6 +1733,478 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
         )}
 
       </div>
+    </div>
+  ) : (
+        /* VISTA DEL PROGRAMA ANALÍTICO (CAMPAÑA DE GREMIO) */
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col gap-6 text-left no-print">
+          {/* Header de la Campaña de Gremio */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-100 dark:border-zinc-800 pb-5 gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-2xl border border-amber-100 dark:border-amber-900/30">
+                <Swords className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-base font-black text-zinc-950 dark:text-white uppercase tracking-wide flex items-center gap-1.5">
+                  Planificador de Programa Analítico
+                </h2>
+                <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider mt-1">Campaña de Gremio Escolar • Planes de la SEP</p>
+              </div>
+            </div>
+
+            {/* Pasos del Mago / Timeline */}
+            <div className="flex items-center gap-2 bg-zinc-50 dark:bg-zinc-950/60 rounded-2xl border border-zinc-150 dark:border-zinc-850 p-2 text-[10px] font-black uppercase tracking-wider">
+              <button 
+                type="button"
+                onClick={() => setWizardStep(1)}
+                className={`px-3 py-1.5 rounded-xl transition-all ${wizardStep === 1 ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/20' : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300'}`}
+              >
+                1. Lectura
+              </button>
+              <ChevronRight className="h-3 w-3 text-zinc-300" />
+              <button 
+                type="button"
+                onClick={() => { if (realityDiagnosis.trim()) setWizardStep(2); else alert('Por favor llena la lectura de la realidad primero.'); }}
+                className={`px-3 py-1.5 rounded-xl transition-all ${wizardStep === 2 ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/20' : 'text-zinc-400 hover:text-zinc-650'}`}
+              >
+                2. Contextualizar
+              </button>
+              <ChevronRight className="h-3 w-3 text-zinc-300" />
+              <button 
+                type="button"
+                onClick={() => { if (realityDiagnosis.trim() && selectedPdaIds.length > 0) setWizardStep(3); else alert('Por favor selecciona al menos un PDA en la fase de contextualización.'); }}
+                className={`px-3 py-1.5 rounded-xl transition-all ${wizardStep === 3 ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/20' : 'text-zinc-400 hover:text-zinc-650'}`}
+              >
+                3. Formulación
+              </button>
+            </div>
+          </div>
+
+          {/* PASO 1: LECTURA DE LA REALIDAD */}
+          {wizardStep === 1 && (
+            <div className="flex flex-col gap-5">
+              <div className="bg-amber-500/5 border border-amber-500/10 rounded-2xl p-4 flex gap-3 text-xs leading-relaxed text-amber-800 dark:text-amber-400">
+                <Info className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-extrabold uppercase tracking-wide text-[10px] block mb-1">Plano 1: Lectura de la realidad</span>
+                  Analiza la situación de tu comunidad, la problemática del entorno escolar y familiar de tus estudiantes para trazar las metas de la campaña de aprendizaje.
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-black text-zinc-450 uppercase tracking-wider text-left">Bitácora de Exploración (Diagnóstico de la Comunidad)</label>
+                  <textarea
+                    rows={6}
+                    value={realityDiagnosis}
+                    onChange={(e) => setRealityDiagnosis(e.target.value)}
+                    placeholder="Analiza las condiciones socioeconómicas, familiares, geográficas o culturales de tu comunidad que impactan el aprendizaje de tus alumnos..."
+                    className="w-full text-xs p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-amber-500 leading-relaxed font-semibold"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-black text-zinc-450 uppercase tracking-wider text-left">Amenazas del Reino (Problemáticas del Entorno)</label>
+                    <textarea
+                      rows={2}
+                      value={problematic}
+                      onChange={(e) => setProblematic(e.target.value)}
+                      placeholder="Ej. Malos hábitos de alimentación, acoso escolar, escasez de áreas verdes, falta de agua..."
+                      className="w-full text-xs p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-amber-500 leading-relaxed font-semibold"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-black text-zinc-450 uppercase tracking-wider text-left">Atributos del Gremio (Intereses y Necesidades de Alumnos)</label>
+                    <textarea
+                      rows={2}
+                      value={studentNeeds}
+                      onChange={(e) => setStudentNeeds(e.target.value)}
+                      placeholder="Ej. Interés por videojuegos, artes escénicas, deportes grupales, necesidad de apoyo socioemocional..."
+                      className="w-full text-xs p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-amber-500 leading-relaxed font-semibold"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end border-t border-zinc-100 dark:border-zinc-800 pt-5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!realityDiagnosis.trim()) {
+                      alert('Por favor describe el diagnóstico comunitario.');
+                      return;
+                    }
+                    setWizardStep(2);
+                  }}
+                  className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-black shadow-sm shadow-amber-500/10 flex items-center gap-2 hover:scale-[1.01] transition-all"
+                >
+                  Continuar a Contextualización
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PASO 2: CONTEXTUALIZACIÓN */}
+          {wizardStep === 2 && (
+            <div className="flex flex-col gap-5">
+              <div className="bg-amber-500/5 border border-amber-500/10 rounded-2xl p-4 flex gap-3 text-xs leading-relaxed text-amber-800 dark:text-amber-400">
+                <Compass className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-extrabold uppercase tracking-wide text-[10px] block mb-1">Plano 2: Contextualización</span>
+                  Alinea los insumos comunitarios del paso anterior con los planes de estudio. Selecciona el Campo Formativo y marca las habilidades (PDAs) que desbloquearán tus alumnos en esta campaña.
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+                {/* Configuración de Materia y Campo Formativo */}
+                <div className="md:col-span-1 flex flex-col gap-4 bg-zinc-50 dark:bg-zinc-950/30 p-4.5 rounded-2xl border border-zinc-150 dark:border-zinc-850">
+                  <div className="flex flex-col gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                    <label className="text-[10px] text-zinc-455 uppercase tracking-wider text-left">Asignatura de la Campaña</label>
+                    <select
+                      value={selectedNEMSubject}
+                      onChange={(e) => setSelectedNEMSubject(e.target.value)}
+                      className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-855 dark:text-zinc-150 font-bold focus:outline-none"
+                    >
+                      {displaySubjects?.map(sub => (
+                        <option key={sub.id} value={sub.id}>{sub.name}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                    <label className="text-[10px] text-zinc-455 uppercase tracking-wider text-left">Nivel / Fase</label>
+                    <select
+                      value={selectedNEMLevel}
+                      onChange={(e) => setSelectedNEMLevel(e.target.value)}
+                      className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-855 dark:text-zinc-150 font-bold focus:outline-none"
+                    >
+                      <option value="preescolar">Preescolar (Fase 2)</option>
+                      <option value="primaria-baja">Primaria Baja (Fase 3)</option>
+                      <option value="primaria-alta">Primaria Alta (Fase 5)</option>
+                      <option value="secundaria">Secundaria (Fase 6)</option>
+                      <option value="preparatoria">Preparatoria (Fase 6 / Bachillerato)</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                    <label className="text-[10px] text-zinc-455 uppercase tracking-wider text-left">Campo Formativo Asociado</label>
+                    <select
+                      value={selectedCampoId}
+                      onChange={(e) => {
+                        setSelectedCampoId(e.target.value);
+                        setSelectedPdaIds([]); // Reset pdas selection
+                      }}
+                      className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-855 dark:text-zinc-150 font-bold focus:outline-none"
+                    >
+                      {camposFormativos.map(cf => (
+                        <option key={cf.id} value={cf.id}>{cf.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Lista de PDAs del Campo Formativo */}
+                <div className="md:col-span-2 flex flex-col gap-3">
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-wider flex items-center justify-between">
+                    <span>Habilidades del Códice (Seleccionar PDAs a Trabajar)</span>
+                    <span className="text-amber-500 font-black">{selectedPdaIds.length} seleccionados</span>
+                  </label>
+
+                  <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-1">
+                    {pdasList.length === 0 ? (
+                      <div className="text-center py-8 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl text-zinc-400 text-xs">
+                        No hay PDAs registrados para este campo formativo.
+                      </div>
+                    ) : (
+                      pdasList.map(pda => {
+                        const isChecked = selectedPdaIds.includes(pda.id);
+                        return (
+                          <div 
+                            key={pda.id}
+                            onClick={() => {
+                              if (isChecked) {
+                                setSelectedPdaIds(selectedPdaIds.filter(id => id !== pda.id));
+                              } else {
+                                setSelectedPdaIds([...selectedPdaIds, pda.id]);
+                              }
+                            }}
+                            className={`p-3 rounded-xl border transition-all cursor-pointer flex gap-3 text-xs leading-normal font-medium text-left ${isChecked ? 'bg-amber-500/10 border-amber-400 text-zinc-850 dark:text-zinc-100' : 'bg-white dark:bg-zinc-950 border-zinc-150 dark:border-zinc-850 text-zinc-500 hover:border-zinc-300'}`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              readOnly
+                              className="accent-amber-500 h-4.5 w-4.5 flex-shrink-0 mt-0.5 rounded-lg cursor-pointer"
+                            />
+                            <div>
+                              <span className="font-mono text-[9px] uppercase font-bold text-amber-600 dark:text-amber-400 block mb-0.5">{pda.code || 'PDA'}</span>
+                              <span>{pda.description}</span>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-between border-t border-zinc-100 dark:border-zinc-800 pt-5">
+                <button
+                  type="button"
+                  onClick={() => setWizardStep(1)}
+                  className="px-4 py-2 border border-zinc-200 dark:border-zinc-850 hover:bg-zinc-50 text-zinc-500 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Regresar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (selectedPdaIds.length === 0) {
+                      alert('Por favor selecciona al menos un PDA (habilidad) del códice.');
+                      return;
+                    }
+                    setWizardStep(3);
+                  }}
+                  className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-black shadow-sm shadow-amber-500/10 flex items-center gap-2 hover:scale-[1.01] transition-all"
+                >
+                  Continuar a Formulación
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PASO 3: FORMULACIÓN (CODISEÑO DE CAMPAÑA) */}
+          {wizardStep === 3 && (
+            <div className="flex flex-col gap-6">
+              <div className="bg-amber-500/5 border border-amber-500/10 rounded-2xl p-4 flex gap-3 text-xs leading-relaxed text-amber-800 dark:text-amber-400">
+                <Swords className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-extrabold uppercase tracking-wide text-[10px] block mb-1">Plano 3: Formulación (Despliegue de Campaña)</span>
+                  Define el nombre de la Campaña de Gremio y agrega las misiones (Quests) que resolverán tus alumnos. Los alumnos ganarán XP elemental correspondiente en base al campo formativo seleccionado.
+                </div>
+              </div>
+
+              {/* Titulo de Campaña */}
+              <div className="flex flex-col gap-1.5 text-xs font-bold">
+                <label className="text-[10px] text-zinc-400 uppercase tracking-wider text-left">Título de la Campaña de Gremio</label>
+                <input
+                  type="text"
+                  value={campaignTitle}
+                  onChange={(e) => setCampaignTitle(e.target.value)}
+                  placeholder="Ej. Campaña del Bosque Nutrido (Alimentación Sostenible)"
+                  className="w-full text-xs p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-amber-500 font-bold"
+                />
+              </div>
+
+              {/* Grid: Misiones Creadas (Izquierda) y Crear Misión (Derecha) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* Panel Izquierdo: Lista de Quests agregadas */}
+                <div className="lg:col-span-6 flex flex-col gap-4.5">
+                  <span className="text-[10px] font-black text-zinc-450 uppercase tracking-wider text-left block">
+                    Misiones Desplegadas en esta Campaña ({campaignQuests.length})
+                  </span>
+
+                  <div className="flex flex-col gap-3 max-h-[350px] overflow-y-auto pr-1">
+                    {campaignQuests.length === 0 ? (
+                      <div className="text-center py-12 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl text-zinc-400 text-xs bg-zinc-50/20">
+                        Aún no has agregado misiones de gremio. Configura una misión en el formulario lateral y agrégala.
+                      </div>
+                    ) : (
+                      campaignQuests.map((quest, idx) => (
+                        <div key={idx} className="bg-white dark:bg-zinc-950 border border-zinc-150 dark:border-zinc-850 rounded-2xl p-4.5 text-left flex gap-4 items-start shadow-xs relative">
+                          <div className="h-9 w-9 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center flex-shrink-0">
+                            {quest.type === 'quiz' ? <Brain className="h-4.5 w-4.5" /> : <FileText className="h-4.5 w-4.5" />}
+                          </div>
+                          <div className="flex-1 overflow-hidden">
+                            <h4 className="text-xs font-black text-zinc-850 dark:text-zinc-100 flex items-center gap-2">
+                              <span>Misión {idx + 1}: {quest.title}</span>
+                              <span className="text-[8.5px] font-mono bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800 px-1.5 py-0.5 rounded text-zinc-450 uppercase font-bold">{quest.type === 'quiz' ? 'Quiz' : 'Portafolio'}</span>
+                            </h4>
+                            <p className="text-[10.5px] text-zinc-450 mt-1 line-clamp-2">{quest.description}</p>
+                            
+                            {/* Recompensas */}
+                            <div className="flex items-center gap-3 mt-3 text-[9px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                              <span>💎 {quest.xp_reward} XP</span>
+                              <span>🪙 {quest.coins_reward} Monedas</span>
+                              <span>•</span>
+                              <span>🎯 {quest.pda_ids.length} PDA(s) Vinculados</span>
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => setCampaignQuests(campaignQuests.filter((_, qIdx) => qIdx !== idx))}
+                            className="p-1 hover:bg-rose-50 hover:text-rose-600 rounded-lg text-zinc-400 transition-colors self-start cursor-pointer"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* Panel Derecho: Formulario para añadir misión */}
+                <div className="lg:col-span-6 bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-150 dark:border-zinc-850 p-4.5 rounded-3xl flex flex-col gap-4 text-xs font-bold text-zinc-855 dark:text-zinc-150">
+                  <span className="text-[10px] font-black text-amber-600 dark:text-amber-400 tracking-wider text-left pb-2 border-b border-zinc-200/60 dark:border-zinc-850 block uppercase">
+                    + Configurar Misión de Gremio
+                  </span>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider text-left">Nombre de la Misión</label>
+                    <input
+                      id="new-quest-title"
+                      type="text"
+                      placeholder="Ej. Cuestionario de los Microbios Beneficiosos"
+                      className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 font-bold focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider text-left">Objetivo / Bitácora de Misión</label>
+                    <textarea
+                      id="new-quest-desc"
+                      rows={2}
+                      placeholder="Explica qué deben investigar o responder en esta misión..."
+                      className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 focus:outline-none leading-relaxed"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider text-left">Tipo de Reto</label>
+                      <select
+                        id="new-quest-type"
+                        className="p-2.5 rounded-xl border border-zinc-250 dark:border-zinc-800 bg-white dark:bg-zinc-950 font-bold focus:outline-none"
+                      >
+                        <option value="quiz">Quiz RPG</option>
+                        <option value="portfolio_submission">Portafolio</option>
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider text-left">💎 Recompensa XP</label>
+                      <input
+                        id="new-quest-xp"
+                        type="number"
+                        defaultValue={50}
+                        min={10}
+                        max={500}
+                        className="p-2.5 rounded-xl border border-zinc-250 dark:border-zinc-800 bg-white dark:bg-zinc-950 font-mono font-bold focus:outline-none"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider text-left">🪙 Monedas</label>
+                      <input
+                        id="new-quest-coins"
+                        type="number"
+                        defaultValue={10}
+                        min={1}
+                        max={100}
+                        className="p-2.5 rounded-xl border border-zinc-250 dark:border-zinc-800 bg-white dark:bg-zinc-950 font-mono font-bold focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Asignación de PDAs de los elegidos en el Paso 2 */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider text-left">Habilidades Vinculadas (PDAs a Acreditar)</label>
+                    <div className="flex flex-wrap gap-1.5 max-h-[100px] overflow-y-auto p-2 bg-white dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                      {selectedPdaIds.map(pdaId => {
+                        const pdaObj = pdasList.find(p => p.id === pdaId);
+                        if (!pdaObj) return null;
+                        return (
+                          <div 
+                            key={pdaId}
+                            className="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/25 px-2 py-1 rounded-lg text-[9px] text-amber-700 dark:text-amber-400"
+                          >
+                            <span>{pdaObj.code || 'PDA'}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const titleEl = document.getElementById('new-quest-title') as HTMLInputElement;
+                      const descEl = document.getElementById('new-quest-desc') as HTMLTextAreaElement;
+                      const typeEl = document.getElementById('new-quest-type') as HTMLSelectElement;
+                      const xpEl = document.getElementById('new-quest-xp') as HTMLInputElement;
+                      const coinsEl = document.getElementById('new-quest-coins') as HTMLInputElement;
+
+                      if (!titleEl.value.trim() || !descEl.value.trim()) {
+                        alert('Por favor llena el nombre y objetivo de la misión.');
+                        return;
+                      }
+
+                      const newQ = {
+                        title: titleEl.value.trim(),
+                        description: descEl.value.trim(),
+                        type: typeEl.value as 'quiz' | 'portfolio_submission',
+                        xp_reward: parseInt(xpEl.value) || 50,
+                        coins_reward: parseInt(coinsEl.value) || 10,
+                        pda_ids: [...selectedPdaIds]
+                      };
+
+                      setCampaignQuests([...campaignQuests, newQ]);
+
+                      // Limpiar campos
+                      titleEl.value = '';
+                      descEl.value = '';
+                    }}
+                    className="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-950 rounded-xl text-xs font-black shadow-sm transition-all"
+                  >
+                    Añadir Misión al Gremio
+                  </button>
+                </div>
+              </div>
+
+              {/* Botones de Navegación del Wizard */}
+              <div className="flex justify-between border-t border-zinc-100 dark:border-zinc-800 pt-5">
+                <button
+                  type="button"
+                  onClick={() => setWizardStep(2)}
+                  className="px-4 py-2 border border-zinc-200 dark:border-zinc-850 hover:bg-zinc-50 text-zinc-500 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Regresar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handlePublishCampaign}
+                  disabled={isPublishingCampaign || campaignQuests.length === 0}
+                  className={`px-6 py-3 rounded-2xl text-xs font-black shadow-md flex items-center gap-2 transition-all ${
+                    isPublishingCampaign || campaignQuests.length === 0
+                      ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-400 cursor-not-allowed shadow-none'
+                      : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/10 hover:scale-[1.01]'
+                  }`}
+                >
+                  {isPublishingCampaign ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      Desplegando Campaña...
+                    </>
+                  ) : (
+                    <>
+                      <Award className="h-4.5 w-4.5" />
+                      Publicar Campaña de Gremio
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -138,6 +138,18 @@ interface GamificationStoreState {
   subscribeToGamificationChanges: (studentId: string) => () => void;
   fetchActiveGuildBoss: () => Promise<void>;
   subscribeToGuildChanges: () => () => void;
+  grantFormativeLoot: (
+    studentId: string,
+    questId: string,
+    evaluation: 'En proceso' | 'Avanzando' | 'Logrado',
+    feedback: string
+  ) => Promise<{
+    success: boolean;
+    xpEarned?: number;
+    coinsEarned?: number;
+    itemGranted?: string | null;
+    error?: string;
+  }>;
   resetGamificationStore: () => void;
 }
 
@@ -701,6 +713,176 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     return () => {
       supabase.removeChannel(channel);
     };
+  },
+
+  grantFormativeLoot: async (studentId, questId, evaluation, feedback) => {
+    const denormalizeStudentId = (id: string): string => {
+      if (id === 'std-pa') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a11';
+      if (id === 'std-sec') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a22';
+      if (id === 'std-pb') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a33';
+      if (id === 'std-prep') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44';
+      return id;
+    };
+
+    const normStudentId = isUuid(studentId) ? studentId : denormalizeStudentId(studentId);
+
+    try {
+      // 1. Obtener Quest de Supabase
+      const { data: questData, error: questError } = await supabase
+        .from('quests')
+        .select('*')
+        .eq('id', questId)
+        .maybeSingle();
+
+      if (questError) throw questError;
+
+      const xpRewardBase = questData?.xp_reward || 100;
+      const coinsRewardBase = questData?.coins_reward || 20;
+
+      let xpToGrant = 0;
+      let coinsToGrant = 0;
+      let itemGranted: string | null = null;
+
+      // 2. Lógica de recompensas
+      if (evaluation === 'Logrado') {
+        xpToGrant = xpRewardBase * 2;
+        coinsToGrant = coinsRewardBase * 2;
+      } else if (evaluation === 'Avanzando') {
+        xpToGrant = xpRewardBase;
+        coinsToGrant = coinsRewardBase;
+      } else {
+        // En proceso
+        xpToGrant = Math.floor(xpRewardBase * 0.2);
+        coinsToGrant = Math.floor(coinsRewardBase * 0.2);
+        itemGranted = 'art-potion-perseverancia';
+
+        // Insertar item en inventario
+        const { error: invError } = await supabase
+          .from('student_inventory')
+          .insert({
+            student_id: normStudentId,
+            artifact_id: 'art-potion-perseverancia',
+            acquired_at: new Date().toISOString()
+          });
+        if (invError) console.error('Error inserting perseverance potion in inventory:', invError);
+
+        // Insertar mensaje de aliento
+        const { error: msgError } = await supabase
+          .from('student_messages')
+          .insert({
+            student_id: normStudentId,
+            title: '¡Mensaje de perseverancia de tu Mentor!',
+            message: `¡No te rindas! Sigue intentándolo en el reto "${questData?.title || 'la misión'}". Has recibido una "Poción de perseverancia" para tu inventario.`,
+            sent_at: new Date().toISOString(),
+            is_read: false,
+            type: 'system'
+          });
+        if (msgError) console.error('Error inserting message in student_messages:', msgError);
+      }
+
+      // 3. Registrar o actualizar feedback en quest_attempts
+      const { data: existingAttempts, error: attemptsError } = await supabase
+        .from('quest_attempts')
+        .select('*')
+        .eq('student_id', normStudentId)
+        .eq('quest_id', questId)
+        .order('created_at', { ascending: false });
+
+      if (attemptsError) throw attemptsError;
+
+      if (existingAttempts && existingAttempts.length > 0) {
+        const attemptId = existingAttempts[0].id;
+        const { error: updateError } = await supabase
+          .from('quest_attempts')
+          .update({
+            feedback: feedback,
+            is_completed: evaluation === 'Logrado' || evaluation === 'Avanzando',
+            score: evaluation === 'Logrado' ? 100 : evaluation === 'Avanzando' ? 70 : 40
+          })
+          .eq('id', attemptId);
+        if (updateError) throw updateError;
+      } else {
+        const { error: insertError } = await supabase
+          .from('quest_attempts')
+          .insert({
+            student_id: normStudentId,
+            quest_id: questId,
+            score: evaluation === 'Logrado' ? 100 : evaluation === 'Avanzando' ? 70 : 40,
+            is_completed: evaluation === 'Logrado' || evaluation === 'Avanzando',
+            feedback: feedback,
+            created_at: new Date().toISOString()
+          });
+        if (insertError) throw insertError;
+      }
+
+      // 4. Actualizar estadísticas del alumno (XP y monedas)
+      const { data: currentStats, error: statsError } = await supabase
+        .from('student_stats')
+        .select('*')
+        .eq('student_id', normStudentId)
+        .maybeSingle();
+
+      if (statsError) throw statsError;
+
+      if (currentStats) {
+        const newXp = (currentStats.xp || 0) + xpToGrant;
+        const newCoins = (currentStats.coins || 0) + coinsToGrant;
+
+        const xpForCurrentLevel = currentStats.level * 200;
+        let finalLevel = currentStats.level;
+        let finalXp = newXp;
+
+        if (finalXp >= xpForCurrentLevel) {
+          finalXp = finalXp - xpForCurrentLevel;
+          finalLevel += 1;
+        }
+
+        const { error: updateStatsError } = await supabase
+          .from('student_stats')
+          .update({
+            xp: finalXp,
+            coins: newCoins,
+            level: finalLevel,
+            updated_at: new Date().toISOString()
+          })
+          .eq('student_id', normStudentId);
+
+        if (updateStatsError) throw updateStatsError;
+
+        // Sincronizar en useStudentStore local
+        useStudentStore.setState((state) => ({
+          allStats: {
+            ...state.allStats,
+            [studentId]: {
+              ...state.allStats[studentId],
+              xp: finalXp,
+              coins: newCoins,
+              level: finalLevel
+            },
+            [normStudentId]: {
+              ...state.allStats[normStudentId],
+              xp: finalXp,
+              coins: newCoins,
+              level: finalLevel
+            }
+          }
+        }));
+      }
+
+      // Forzar recarga local de intentos
+      await get().fetchQuestAttempts(studentId);
+
+      return {
+        success: true,
+        xpEarned: xpToGrant,
+        coinsEarned: coinsToGrant,
+        itemGranted: itemGranted
+      };
+
+    } catch (err: any) {
+      console.error('Error in grantFormativeLoot:', err.message || err);
+      return { success: false, error: err.message || err };
+    }
   },
 
   resetGamificationStore: () => {
