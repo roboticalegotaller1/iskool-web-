@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar } from '@/store/useStudentStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { AnimeAvatarSprite } from './AnimeAvatarSprite';
+import { BruxaPixiSprite } from './BruxaPixiSprite';
 import { 
   Volume2, VolumeX, Shield, Swords, Sparkles, HelpCircle, 
   Briefcase, Zap, RotateCcw, Award, Heart, Brain, Play, RefreshCw, AlertCircle
@@ -889,14 +890,10 @@ export function RpgCombatViewport() {
 
           {/* LADO IZQUIERDO: ALUMNOS (HUD SIN BORDES INTEGRADO DE ALTA FIDELIDAD) */}
           <div className="flex items-end gap-6 z-20 self-end mb-2">
-            {/* Elena (Mago) */}
+            {/* Elena (Mago / Bruja Pixi.js) */}
             <div className={`flex items-end gap-3 relative jrpg-idle ${combatState === 'player_attack' ? 'translate-x-6 -translate-y-4 scale-110 duration-200' : 'duration-500'}`}>
-              <div className="relative h-28 w-24 overflow-visible">
-                <img 
-                  src="/images/rpg/elena_sprite.png" 
-                  alt="Elena (Sage)" 
-                  className="w-full h-full object-contain filter drop-shadow-[0_6px_8px_rgba(0,0,0,0.65)]"
-                />
+              <div className="relative h-28 w-24 overflow-visible flex items-center justify-center">
+                <BruxaPixiSprite className="w-24 h-28" />
               </div>
               <div className="flex flex-col mb-1 text-left select-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] min-w-[70px] gap-1">
                 <span className="text-[10px] font-black uppercase text-purple-300 tracking-wider">Elena</span>
