@@ -10,8 +10,8 @@ interface BruxaPixiSpriteProps {
 }
 
 export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
-  className = "w-20 h-28",
-  width = 80,
+  className = "w-28 h-28",
+  width = 112,
   height = 112
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -89,12 +89,12 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
       animSprite.loop = true;
       animSprite.play();
 
-      // 4. Posicionamiento y escala vertical fija basada en la altura (112px) para igualar el tamaño exacto de Santi y Lucas
-      animSprite.anchor.set(0.5);
-      animSprite.x = (width / 2) + 4;
+      // 4. Anclaje a (0.15, 0.5) para que al reflejarse el cuerpo quede completamente desplazado hacia la derecha sin alterar el tamaño
+      animSprite.anchor.set(0.15, 0.5);
+      animSprite.x = width / 2;
       animSprite.y = height / 2;
 
-      // Escalar basado en la altura objetivo para que mida ~110px de alto igual que los otros alumnos
+      // Mantener la escala exacta de altura (~110px igual a Santi y Lucas)
       const scaleFactor = (height / frameHeight) * 1.48;
       animSprite.scale.set(-scaleFactor, scaleFactor);
 
