@@ -94,8 +94,8 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
       animSprite.x = width / 2;
       animSprite.y = height / 2;
 
-      // Escala horizontal negativa para efecto espejo
-      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 0.9;
+      // Escala horizontal negativa para efecto espejo (escalado 1.75x para igualar altura de alumnos)
+      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 1.75;
       animSprite.scale.set(-scaleFactor, scaleFactor);
 
       app.stage.addChild(animSprite);

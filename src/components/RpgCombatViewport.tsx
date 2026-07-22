@@ -1004,47 +1004,47 @@ export function RpgCombatViewport() {
                   
                   return (
                     <div key={quest.id} className="flex flex-col items-center gap-1.5 bg-slate-900/60 p-2.5 rounded-2xl border border-slate-800">
-                      <div className="relative h-14 w-14 flex items-center justify-center">
+                      <div className="relative h-24 w-24 flex items-center justify-center">
                         {status === 'completed' ? (
                           // Enemigo Derrotado
                           <div className="opacity-45 text-center flex flex-col items-center">
-                            <span className="text-2xl grayscale">☠️</span>
-                            <span className="text-[7px] text-emerald-400 font-black uppercase tracking-wider block mt-1">Vencido</span>
+                            <span className="text-3xl grayscale">☠️</span>
+                            <span className="text-[8px] text-emerald-400 font-black uppercase tracking-wider block mt-1">Vencido</span>
                           </div>
                         ) : (
-                          // Tarea Activa (Dragón de la carpeta de enemigos)
+                          // Tarea Activa (Dragón de la carpeta de enemigos - 2x tamaño)
                           <div className="jrpg-idle flex flex-col items-center relative">
                             <img 
                               src={getDragonSpriteForQuest(quest.id, idx)} 
                               alt={quest.title} 
-                              className="w-14 h-14 object-contain filter drop-shadow-[0_4px_12px_rgba(239,68,68,0.65)]"
+                              className="w-24 h-24 object-contain filter drop-shadow-[0_4px_14px_rgba(239,68,68,0.75)]"
                             />
                             {/* HP Bar */}
-                            <div className="w-10 h-1 bg-red-950 border border-slate-800 rounded-full mt-1 overflow-hidden">
+                            <div className="w-16 h-1.5 bg-red-950 border border-slate-800 rounded-full mt-1 overflow-hidden">
                               <div className="h-full bg-red-500 w-full" />
                             </div>
                           </div>
                         )}
                       </div>
-                      <span className="text-[8px] font-bold text-zinc-300 text-center truncate w-20">{quest.title}</span>
+                      <span className="text-[8.5px] font-bold text-zinc-300 text-center truncate w-24">{quest.title}</span>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              // Vista en Combate: Examen Boss Final Activo (Dragón de la carpeta de enemigos)
+              // Vista en Combate: Examen Boss Final Activo (Dragón de la carpeta de enemigos - 2x tamaño)
               <div className={`flex flex-col items-center relative gap-2 duration-300 ${combatState === 'boss_attack' ? '-translate-x-20 scale-105 duration-200' : ''}`}>
                 
-                {/* Sprite del Jefe Final Dragón */}
+                {/* Sprite del Jefe Final Dragón (2x tamaño: w-56 h-56) */}
                 <div className={`relative ${combatState === 'boss_hurt' ? 'animate-bounce opacity-85' : 'jrpg-idle'}`}>
                   <img 
                     src={getDragonSpriteForQuest(selectedMissionId, 0)} 
                     alt={examContent.bossName || "Dragón Jefe Examen"} 
-                    className="w-32 h-32 object-contain filter drop-shadow-[0_0_25px_rgba(239,68,68,0.8)]"
+                    className="w-56 h-56 object-contain filter drop-shadow-[0_0_35px_rgba(239,68,68,0.9)]"
                   />
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500/20 border border-yellow-400/40 backdrop-blur-sm px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg animate-bounce">
-                    <span className="text-xs">👑</span>
-                    <span className="text-[8px] font-black text-yellow-300 uppercase tracking-widest">Jefe Boss</span>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-500/20 border border-yellow-400/40 backdrop-blur-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-lg animate-bounce">
+                    <span className="text-sm">👑</span>
+                    <span className="text-[9px] font-black text-yellow-300 uppercase tracking-widest">Jefe Boss</span>
                   </div>
 
                   {/* Glitch Overlay en daño */}
@@ -1054,8 +1054,8 @@ export function RpgCombatViewport() {
                 </div>
 
                 {/* HP Bar del Jefe */}
-                <div className="w-36 bg-zinc-950 p-2 rounded-xl border border-purple-950/60 shadow-lg text-center">
-                  <div className="flex justify-between items-center text-[8px] font-black text-purple-300 uppercase tracking-widest mb-1">
+                <div className="w-44 bg-zinc-950 p-2 rounded-xl border border-purple-950/60 shadow-lg text-center">
+                  <div className="flex justify-between items-center text-[8.5px] font-black text-purple-300 uppercase tracking-widest mb-1">
                     <span>{examContent?.bossName || 'EXAMEN FINAL'}</span>
                     <span>HP {bossHp}/{bossMaxHp}</span>
                   </div>
