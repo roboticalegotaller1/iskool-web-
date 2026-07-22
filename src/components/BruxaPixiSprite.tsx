@@ -10,8 +10,8 @@ interface BruxaPixiSpriteProps {
 }
 
 export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
-  className = "w-16 h-28",
-  width = 64,
+  className = "w-20 h-28",
+  width = 80,
   height = 112
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -89,13 +89,13 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
       animSprite.loop = true;
       animSprite.play();
 
-      // 4. Posicionamiento ajustado para eliminar el espacio transparente delante de la varita
+      // 4. Posicionamiento y escala vertical fija basada en la altura (112px) para igualar el tamaño exacto de Santi y Lucas
       animSprite.anchor.set(0.5);
-      animSprite.x = (width / 2) + 6;
+      animSprite.x = (width / 2) + 4;
       animSprite.y = height / 2;
 
-      // Escala ajustada para llenar el ancho apretado de 64px
-      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 1.6;
+      // Escalar basado en la altura objetivo para que mida ~110px de alto igual que los otros alumnos
+      const scaleFactor = (height / frameHeight) * 1.48;
       animSprite.scale.set(-scaleFactor, scaleFactor);
 
       app.stage.addChild(animSprite);
@@ -118,7 +118,7 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
   return (
     <div 
       ref={containerRef} 
-      className={`relative inline-flex items-center justify-center filter drop-shadow-[0_6px_12px_rgba(168,85,247,0.8)] ${className}`}
+      className={`relative inline-flex items-center justify-center filter drop-shadow-[0_6px_12px_rgba(168,85,247,0.8)] overflow-visible ${className}`}
     />
   );
 };

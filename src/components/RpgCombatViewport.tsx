@@ -892,8 +892,8 @@ export function RpgCombatViewport() {
           <div className="flex items-end gap-6 z-20 self-end mb-2">
             {/* Elena (Mago / Bruja Pixi.js) */}
             <div className={`flex items-end gap-3 relative jrpg-idle ${combatState === 'player_attack' ? 'translate-x-6 -translate-y-4 scale-110 duration-200' : 'duration-500'}`}>
-              <div className="relative h-28 w-16 overflow-visible flex items-center justify-center">
-                <BruxaPixiSprite className="w-16 h-28" width={64} height={112} />
+              <div className="relative h-28 w-20 overflow-visible flex items-center justify-center">
+                <BruxaPixiSprite className="w-20 h-28" width={80} height={112} />
               </div>
               <div className="flex flex-col mb-1 text-left select-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] min-w-[70px] gap-1">
                 <span className="text-[10px] font-black uppercase text-purple-300 tracking-wider">Elena</span>
