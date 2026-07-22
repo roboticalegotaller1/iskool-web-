@@ -5,6 +5,10 @@ import { useStudentStore } from './useStudentStore';
 export interface PartyMember {
   student_id: string;
   name: string;
+  avatar_url?: string;
+  avatar?: string;
+  image?: string;
+  photo_url?: string;
 }
 
 export interface PartyAction {

@@ -2,15 +2,20 @@
 import React, { useEffect } from 'react';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 
+const cleanHslColor = (colorStr: string): string => {
+  if (!colorStr) return '';
+  return colorStr.replace(/hsl\(|\)/gi, '').trim();
+};
+
 export const ThemeSync: React.FC = () => {
   const schoolSettings = useSchoolAdminStore(state => state.schoolSettings);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const root = document.documentElement;
-      const primary = schoolSettings.themeColors.primary;
-      const secondary = schoolSettings.themeColors.secondary;
-      const accent = schoolSettings.themeColors.accent;
+      const primary = cleanHslColor(schoolSettings.themeColors.primary);
+      const secondary = cleanHslColor(schoolSettings.themeColors.secondary);
+      const accent = cleanHslColor(schoolSettings.themeColors.accent);
 
       // Inyectar tanto en formato HSL directo
       root.style.setProperty('--color-primary-hsl', primary);

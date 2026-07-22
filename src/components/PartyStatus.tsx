@@ -1,41 +1,38 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
-import { useCoopStore, PartyAction } from '@/store/useCoopStore';
+import React, { useEffect, useRef, useMemo } from 'react';
+import { useCoopStore, PartyAction, PartyMember } from '@/store/useCoopStore';
 import { ShieldAlert, Swords, Heart, MessageSquareText } from 'lucide-react';
 
-const getStudentAvatarUrl = (name: string): string => {
-  const firstName = name.split(' ')[0].toLowerCase();
-  const validAvatars = ['elena', 'lucas', 'mateo', 'santi'];
-  if (validAvatars.includes(firstName)) {
-    return `/images/students/${firstName}.png`;
+const getStudentAvatarUrl = (member: PartyMember): string => {
+  const avatar = member.avatar_url || member.avatar || member.image || member.photo_url;
+  if (avatar) {
+    return avatar;
   }
   return '/images/students/default.png';
 };
+
+const GENERAL_SKILLS = [
+  'Golpe Intelectual',
+  'Ráfaga Matemática',
+  'Ataque Crítico',
+  'Rayo de Lógica',
+  'Explosión Mental',
+  'Corte de Sabiduría',
+  'Prisma Sagrado',
+  'Chispa Creativa'
+];
 
 const getRpgActionMessage = (action: PartyAction): string => {
   const name = action.student_name || 'Compañero';
   const firstName = name.split(' ')[0];
   const damage = action.damage_dealt;
-  
-  const nameLower = firstName.toLowerCase();
-  let skill = 'Ataque Rápido';
-  if (nameLower === 'mateo') {
-    const skills = ['Bola de Fuego', 'Rayo de Energía', 'Explosión Mental'];
-    skill = skills[damage % skills.length];
-  } else if (nameLower === 'elena') {
-    const skills = ['Tormenta de Hielo', 'Rayo de Lógica', 'Prisma Sagrado'];
-    skill = skills[damage % skills.length];
-  } else if (nameLower === 'lucas') {
-    const skills = ['Flecha Veloz', 'Tiro con Arco', 'Corte Rápido'];
-    skill = skills[damage % skills.length];
-  } else if (nameLower === 'santi') {
-    const skills = ['Espadazo Fuerte', 'Corte Sagrado', 'Furia Guerrera'];
-    skill = skills[damage % skills.length];
-  } else {
-    const skills = ['Golpe Intelectual', 'Ráfaga Matemática', 'Ataque Crítico'];
-    skill = skills[damage % skills.length];
-  }
+
+  const numericId = action.student_id
+    ? action.student_id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    : 0;
+
+  const skill = GENERAL_SKILLS[(numericId + damage) % GENERAL_SKILLS.length];
 
   return `¡${firstName} lanzó ${skill} por ${damage} XP!`;
 };
@@ -54,10 +51,12 @@ export default function PartyStatus() {
   if (!partyId) return null;
 
   // Calculate damage per student ID
-  const damageMap = actions.reduce((acc, action) => {
-    acc[action.student_id] = (acc[action.student_id] || 0) + action.damage_dealt;
-    return acc;
-  }, {} as Record<string, number>);
+  const damageMap = useMemo(() => {
+    return actions.reduce((acc, action) => {
+      acc[action.student_id] = (acc[action.student_id] || 0) + action.damage_dealt;
+      return acc;
+    }, {} as Record<string, number>);
+  }, [actions]);
 
   return (
     <div className="rounded-3xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/90 p-5 shadow-lg shadow-zinc-500/5 flex flex-col gap-5">
@@ -76,7 +75,7 @@ export default function PartyStatus() {
             <p className="text-xs text-zinc-400 italic">Esperando a que se unan aliados...</p>
           ) : (
             members.map((member) => {
-              const avatarUrl = getStudentAvatarUrl(member.name);
+              const avatarUrl = getStudentAvatarUrl(member);
               const totalDmg = damageMap[member.student_id] || 0;
 
               return (
