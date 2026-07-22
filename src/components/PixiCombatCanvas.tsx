@@ -5,6 +5,88 @@ import * as PIXI from 'pixi.js';
 import { useCoopStore, PartyAction } from '@/store/useCoopStore';
 import { useStudentStore } from '@/store/useStudentStore';
 
+export interface DragonEnemyDef {
+  key: string;
+  name: string;
+  textureUrl: string;
+  sparkTextureUrl?: string;
+  scaleHeight: number;
+  isThunderwing?: boolean;
+}
+
+export const DRAGON_ENEMIES_MAP: Record<string, DragonEnemyDef> = {
+  blood_dragon: {
+    key: 'blood_dragon',
+    name: 'Dragón Carmesí de Sangre',
+    textureUrl: '/images/rpg/enemies/blood_dragon.png',
+    scaleHeight: 210
+  },
+  glacialserpent: {
+    key: 'glacialserpent',
+    name: 'Serpiente Glacial del Abismo',
+    textureUrl: '/images/rpg/enemies/glacialserpent.png',
+    scaleHeight: 185
+  },
+  thunderwing: {
+    key: 'thunderwing',
+    name: 'Dragón Rayo Thunderwing',
+    textureUrl: '/images/rpg/enemies/thunderwing_drake_nosparks.png',
+    sparkTextureUrl: '/images/rpg/enemies/thunderwing_drake_sparks.png',
+    scaleHeight: 195,
+    isThunderwing: true
+  },
+  crimson: {
+    key: 'crimson',
+    name: 'Dragón Voraz Carmesí',
+    textureUrl: '/images/rpg/enemies/crimson_dragon.png',
+    scaleHeight: 190
+  },
+  emberheart: {
+    key: 'emberheart',
+    name: 'Dragón Núcleo de Fuego',
+    textureUrl: '/images/rpg/enemies/emberheart_dragon.png',
+    scaleHeight: 195
+  },
+  luminous: {
+    key: 'luminous',
+    name: 'Dragón Luminoso Solar',
+    textureUrl: '/images/rpg/enemies/luminous_dragon.png',
+    scaleHeight: 185
+  },
+  moonshadow: {
+    key: 'moonshadow',
+    name: 'Dragón Sombra de Luna',
+    textureUrl: '/images/rpg/enemies/moonshadow_dragon.png',
+    scaleHeight: 190
+  }
+};
+
+export function getDragonEnemyKey(bossName?: string, enemyType?: string): string {
+  if (enemyType && DRAGON_ENEMIES_MAP[enemyType]) {
+    return enemyType;
+  }
+  const nameLower = (bossName || '').toLowerCase();
+  if (nameLower.includes('examen') || nameLower.includes('boss') || nameLower.includes('gremio') || nameLower.includes('final')) {
+    return 'blood_dragon';
+  }
+  if (nameLower.includes('matematica') || nameLower.includes('fraccion') || nameLower.includes('calculo') || nameLower.includes('rayo')) {
+    return 'thunderwing';
+  }
+  if (nameLower.includes('ciencia') || nameLower.includes('quimica') || nameLower.includes('fisica') || nameLower.includes('hielo')) {
+    return 'glacialserpent';
+  }
+  if (nameLower.includes('historia') || nameLower.includes('social') || nameLower.includes('fuego')) {
+    return 'emberheart';
+  }
+  if (nameLower.includes('lengua') || nameLower.includes('arte') || nameLower.includes('luz')) {
+    return 'luminous';
+  }
+  if (nameLower.includes('codigo') || nameLower.includes('tech') || nameLower.includes('sombra')) {
+    return 'moonshadow';
+  }
+  return 'crimson';
+}
+
 interface PixiCombatCanvasProps {
   combatState: 'idle' | 'attacking' | 'boss_hurt' | 'victory' | 'defeat';
   volume: number;
@@ -13,6 +95,7 @@ interface PixiCombatCanvasProps {
     hp_max: number;
     name: string;
     xp_reward: number;
+    enemy_type?: string;
   };
   partyHp: number;
   elenaSub: {
@@ -21,6 +104,7 @@ interface PixiCombatCanvasProps {
   } | undefined;
   playSound: (type: 'laser' | 'hit' | 'victory' | 'defeat' | 'error' | 'powerup' | 'charge') => void;
   onAttackFinish: () => void;
+  enemyType?: string;
 }
 
 const getStudentAvatarUrl = (name: string): string => {
@@ -39,11 +123,13 @@ export default function PixiCombatCanvas({
   partyHp,
   elenaSub,
   playSound,
-  onAttackFinish
+  onAttackFinish,
+  enemyType
 }: PixiCombatCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PIXI.Application | null>(null);
   const [loading, setLoading] = useState(true);
+
 
   // References
   const bossRef = useRef<PIXI.Container | null>(null);
@@ -62,6 +148,17 @@ export default function PixiCombatCanvas({
   useEffect(() => {
     combatStateRef.current = combatState;
   }, [combatState]);
+
+  const guildBossRef = useRef(guildBoss);
+  useEffect(() => {
+    guildBossRef.current = guildBoss;
+  }, [guildBoss]);
+
+  const partyHpRef = useRef(partyHp);
+  useEffect(() => {
+    partyHpRef.current = partyHp;
+  }, [partyHp]);
+
 
   // Code/binary floating particles list
   const particles = useRef<Array<{
@@ -149,18 +246,44 @@ export default function PixiCombatCanvas({
 
       // 1. Load textures asynchronously
       let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
+      let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
+      let activeDragonDef: DragonEnemyDef = DRAGON_ENEMIES_MAP.blood_dragon;
+      let mainDragonTex: PIXI.Texture | null = null;
+      let sparksDragonTex: PIXI.Texture | null = null;
       const avatarTextures = new Map<string, PIXI.Texture>();
 
       try {
         bgTex = await PIXI.Assets.load('/images/rpg/combat_bg.png?v=3');
         bossTex = await PIXI.Assets.load('/images/rpg/boss_sprite.png?v=3');
         
+        // High fidelity Dragon HP Bar UI Assets
+        hpFrameTex = await PIXI.Assets.load('/images/rpg/ui/Dragonhpbar.png');
+        hpFillTex = await PIXI.Assets.load('/images/rpg/ui/DragonHpBar2.png');
+        hpFillAltTex = await PIXI.Assets.load('/images/rpg/ui/DragonHpBar3.png');
+
+        // Preload Dragon Enemy Assets
+        const dragonTextures = new Map<string, PIXI.Texture>();
+        for (const [key, def] of Object.entries(DRAGON_ENEMIES_MAP)) {
+          dragonTextures.set(key, await PIXI.Assets.load(def.textureUrl));
+          if (def.sparkTextureUrl) {
+            dragonTextures.set(`${key}_sparks`, await PIXI.Assets.load(def.sparkTextureUrl));
+          }
+        }
+
+        const selectedDragonKey = getDragonEnemyKey(guildBoss.name, enemyType || guildBoss.enemy_type);
+        activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
+        mainDragonTex = dragonTextures.get(activeDragonDef.key) || bossTex;
+        sparksDragonTex = activeDragonDef.sparkTextureUrl ? (dragonTextures.get(`${activeDragonDef.key}_sparks`) || null) : null;
+
         // Dynamic student avatars
+
+
         avatarTextures.set('default', await PIXI.Assets.load('/images/students/default.png'));
         avatarTextures.set('elena', await PIXI.Assets.load('/images/students/elena.png'));
         avatarTextures.set('lucas', await PIXI.Assets.load('/images/students/lucas.png'));
         avatarTextures.set('mateo', await PIXI.Assets.load('/images/students/mateo.png'));
         avatarTextures.set('santi', await PIXI.Assets.load('/images/students/santi.png'));
+
 
         // Preload default RPG sprites for backwards compatibility
         avatarTextures.set('santi_sprite', await PIXI.Assets.load('/images/rpg/santi_sprite.png?v=3'));
@@ -261,6 +384,7 @@ export default function PixiCombatCanvas({
         muzzleOffsetY: number;
         color: number;
         laserWidth: number;
+        updateHpBar?: (ratio: number) => void;
       }
       const renderedChars: RenderedCharacter[] = [];
 
@@ -282,6 +406,42 @@ export default function PixiCombatCanvas({
         sprite.anchor.set(0.5, 0.5);
         fitToHeight(sprite, slot.height);
         container.addChild(sprite);
+
+        // --- DRAGON HP BAR (STUDENT UI) ---
+        const studentHpContainer = new PIXI.Container();
+        studentHpContainer.position.set(0, -slot.height * 0.60);
+        container.addChild(studentHpContainer);
+
+        const hpFrameSprite = new PIXI.Sprite(hpFrameTex);
+        hpFrameSprite.anchor.set(0.5, 0.5);
+        const hpBarWidth = 90;
+        const scale = hpBarWidth / hpFrameTex.width;
+        hpFrameSprite.scale.set(scale);
+
+        const hpFillSprite = new PIXI.Sprite(hpFillAltTex);
+        hpFillSprite.anchor.set(0.5, 0.5);
+        hpFillSprite.scale.set(scale);
+
+        const fullBarWidth = hpFrameSprite.width;
+        const fullBarHeight = hpFrameSprite.height;
+        const leftX = -fullBarWidth / 2;
+        const topY = -fullBarHeight / 2;
+
+        const hpMask = new PIXI.Graphics();
+        hpMask.rect(leftX, topY, fullBarWidth, fullBarHeight);
+        hpMask.fill({ color: 0xffffff });
+
+        studentHpContainer.addChild(hpFillSprite);
+        studentHpContainer.addChild(hpMask);
+        hpFillSprite.mask = hpMask;
+        studentHpContainer.addChild(hpFrameSprite);
+
+        const updateStudentHp = (ratio: number) => {
+          const clamped = Math.max(0, Math.min(1, ratio));
+          hpMask.clear();
+          hpMask.rect(leftX, topY, fullBarWidth * clamped, fullBarHeight);
+          hpMask.fill({ color: 0xffffff });
+        };
 
         // Tag text
         const tag = new PIXI.Text({
@@ -308,7 +468,8 @@ export default function PixiCombatCanvas({
           muzzleOffsetX: idx === 0 ? 36 : idx === 1 ? 28 : 32,
           muzzleOffsetY: idx === 0 ? -12 : idx === 1 ? -18 : -24,
           color: idx === 2 ? 0xFF9900 : 0x00F0FF,
-          laserWidth: idx === 0 ? 14 : idx === 1 ? 12 : 16
+          laserWidth: idx === 0 ? 14 : idx === 1 ? 12 : 16,
+          updateHpBar: updateStudentHp
         });
       });
 
@@ -371,43 +532,51 @@ export default function PixiCombatCanvas({
         petContainer.addChild(petName);
       }
 
-      // --- CREATION OF BOSS (Firewall Corrupto) ---
+      // --- CREATION OF DRAGON BOSS / ENEMY ---
+      const dragonHeight = activeDragonDef.scaleHeight || 195;
       const boss = new PIXI.Container();
-      boss.position.set(680, 175);
+      boss.position.set(680, 245); // Floor level at Y=245
       mainContainer.addChild(boss);
       bossRef.current = boss;
 
       const bossSombra = new PIXI.Graphics();
       bossSombra.fill({ color: 0x000, alpha: 0.55 });
-      bossSombra.ellipse(0, 75, 50, 14);
+      bossSombra.ellipse(0, 5, 55, 14);
       boss.addChild(bossSombra);
 
+      const dragonCenterY = -dragonHeight * 0.5;
       const bossEscudo = new PIXI.Graphics();
       bossEscudo.stroke({ width: 1.5, color: 0xFF00FF, alpha: 0.4 });
-      bossEscudo.moveTo(0, -90);
-      bossEscudo.lineTo(65, -50);
-      bossEscudo.lineTo(65, 40);
-      bossEscudo.lineTo(0, 80);
-      bossEscudo.lineTo(-65, 40);
-      bossEscudo.lineTo(-65, -50);
+      bossEscudo.moveTo(0, dragonCenterY - 70);
+      bossEscudo.lineTo(65, dragonCenterY - 30);
+      bossEscudo.lineTo(65, dragonCenterY + 40);
+      bossEscudo.lineTo(0, dragonCenterY + 75);
+      bossEscudo.lineTo(-65, dragonCenterY + 40);
+      bossEscudo.lineTo(-65, dragonCenterY - 30);
       bossEscudo.closePath();
       boss.addChild(bossEscudo);
 
       const bossMatrix = new PIXI.Container();
       boss.addChild(bossMatrix);
 
-      const bossRed = new PIXI.Sprite(bossTex);
-      bossRed.anchor.set(0.5, 0.5);
-      fitToHeight(bossRed, 170);
+      const fitDragonSprite = (sprite: PIXI.Sprite, targetHeight: number) => {
+        sprite.anchor.set(0.5, 1.0);
+        if (sprite.texture && sprite.texture.height > 0) {
+          const ratio = targetHeight / sprite.texture.height;
+          sprite.scale.set(ratio);
+        }
+      };
+
+      const bossRed = new PIXI.Sprite(mainDragonTex);
+      fitDragonSprite(bossRed, dragonHeight);
       bossRed.tint = 0xFF0000;
       bossRed.alpha = 0.65;
       bossRed.visible = false;
       bossMatrix.addChild(bossRed);
       bossRedRef.current = bossRed;
 
-      const bossCyan = new PIXI.Sprite(bossTex);
-      bossCyan.anchor.set(0.5, 0.5);
-      fitToHeight(bossCyan, 170);
+      const bossCyan = new PIXI.Sprite(mainDragonTex);
+      fitDragonSprite(bossCyan, dragonHeight);
       bossCyan.tint = 0x00FFFF;
       bossCyan.alpha = 0.65;
       bossCyan.visible = false;
@@ -417,10 +586,54 @@ export default function PixiCombatCanvas({
       const bossMain = new PIXI.Container();
       bossMatrix.addChild(bossMain);
 
-      const bossMainSprite = new PIXI.Sprite(bossTex);
-      bossMainSprite.anchor.set(0.5, 0.5);
-      fitToHeight(bossMainSprite, 170);
+      const bossMainSprite = new PIXI.Sprite(mainDragonTex);
+      fitDragonSprite(bossMainSprite, dragonHeight);
       bossMain.addChild(bossMainSprite);
+
+      // --- BOSS DRAGON HP BAR ---
+      const bossHpBarContainer = new PIXI.Container();
+      bossHpBarContainer.position.set(0, -dragonHeight - 15);
+      boss.addChild(bossHpBarContainer);
+
+      const bossHpFrameSprite = new PIXI.Sprite(hpFrameTex);
+      bossHpFrameSprite.anchor.set(0.5, 0.5);
+      const bossHpScale = 145 / hpFrameTex.width;
+      bossHpFrameSprite.scale.set(bossHpScale);
+
+      const bossHpFillSprite = new PIXI.Sprite(hpFillTex);
+      bossHpFillSprite.anchor.set(0.5, 0.5);
+      bossHpFillSprite.scale.set(bossHpScale);
+
+      const bBarW = bossHpFrameSprite.width;
+      const bBarH = bossHpFrameSprite.height;
+      const bLeftX = -bBarW / 2;
+      const bTopY = -bBarH / 2;
+
+      const bossHpMask = new PIXI.Graphics();
+      bossHpMask.rect(bLeftX, bTopY, bBarW, bBarH);
+      bossHpMask.fill({ color: 0xffffff });
+
+      bossHpBarContainer.addChild(bossHpFillSprite);
+      bossHpBarContainer.addChild(bossHpMask);
+      bossHpFillSprite.mask = bossHpMask;
+      bossHpBarContainer.addChild(bossHpFrameSprite);
+
+      const bossHpText = new PIXI.Text({
+        text: `${guildBoss.hp_actual} / ${guildBoss.hp_max}`,
+        style: {
+          fontFamily: 'monospace',
+          fontSize: 8,
+          fontWeight: 'bold',
+          fill: 0xFFFFFF,
+          align: 'center',
+          stroke: { color: 0x000000, width: 2 }
+        }
+      });
+
+      bossHpText.anchor.set(0.5);
+      bossHpText.position.set(0, 15);
+      bossHpBarContainer.addChild(bossHpText);
+
 
       // --- LASERS AND ATTACKS ---
       const lasers = new PIXI.Graphics();
@@ -604,6 +817,37 @@ export default function PixiCombatCanvas({
       app.ticker.add((ticker) => {
         const time = ticker.lastTime;
 
+        // 0. Dynamic Dragon HP Bar Clipping Mask Updates
+        const partyHpRatio = Math.max(0, Math.min(1, partyHpRef.current / 100));
+        renderedChars.forEach((char) => {
+          if (char.updateHpBar) {
+            char.updateHpBar(partyHpRatio);
+          }
+        });
+
+        if (bossHpMask && bossHpText) {
+          const currentBossHp = Math.max(0, guildBossRef.current.hp_actual);
+          const currentBossMaxHp = Math.max(1, guildBossRef.current.hp_max);
+          const bossRatio = Math.max(0, Math.min(1, currentBossHp / currentBossMaxHp));
+
+          bossHpMask.clear();
+          bossHpMask.rect(bLeftX, bTopY, bBarW * bossRatio, bBarH);
+          bossHpMask.fill({ color: 0xffffff });
+          bossHpText.text = `${currentBossHp} / ${currentBossMaxHp}`;
+        }
+
+
+        // Thunderwing electrical sparks Idle animation
+        if (activeDragonDef.isThunderwing && sparksDragonTex && bossMainSprite) {
+          const frameIndex = Math.floor(time / 200) % 2;
+          const currentTex = frameIndex === 0 ? mainDragonTex : sparksDragonTex;
+          if (bossMainSprite.texture !== currentTex) {
+            bossMainSprite.texture = currentTex;
+            if (bossRed) bossRed.texture = currentTex;
+            if (bossCyan) bossCyan.texture = currentTex;
+          }
+        }
+
         // 1. Parallax background
         bgContainer.x += (targetParallax.current.x - bgContainer.x) * 0.1;
         bgContainer.y += (targetParallax.current.y - bgContainer.y) * 0.1;
@@ -628,9 +872,10 @@ export default function PixiCombatCanvas({
 
         // Levitating and Fading Boss (Humo Violeta en Derrota)
         const targetBossX = 680;
-        const targetBossY = 175;
+        const targetBossY = 245;
         
         if (boss) {
+
           if (combatStateRef.current === 'victory') {
             // Shrink and fade into violet mist
             boss.alpha += (0 - boss.alpha) * 0.05;
