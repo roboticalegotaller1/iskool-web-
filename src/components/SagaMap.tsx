@@ -40,21 +40,23 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     return questAttempts.some(a => a.quest_id === qId && (a.is_completed || a.score >= 60));
   };
 
-  // Helper to calculate coordinates of the node
+  // Helper to calculate coordinates of the node with collision prevention and organic pathing
   const getCoordinates = (mission: Mission, index: number, total: number) => {
-    const x = mission.map_position_x;
-    const y = mission.map_position_y;
-    
-    if (typeof x === 'number' && typeof y === 'number' && x > 0 && y > 0) {
-      return { x, y };
+    if (total <= 1) {
+      return { x: 50, y: 50 };
     }
     
-    // Fallback: dynamic curve along a sine wave
-    const segment = 100 / (total + 1);
-    const calculatedX = segment * (index + 1);
-    const calculatedY = 50 + 20 * Math.sin((index + 1) * Math.PI / 1.5);
+    // Spread X evenly from 8% to 92% across map container width
+    const startX = 8;
+    const endX = 92;
+    const stepX = (endX - startX) / Math.max(1, total - 1);
+    const x = startX + index * stepX;
     
-    return { x: calculatedX, y: calculatedY };
+    // Smooth wavy pattern for Y: alternates heights to create an organic, beautiful path
+    const wavePattern = [48, 28, 68, 34, 64, 26, 72];
+    const y = wavePattern[index % wavePattern.length];
+    
+    return { x, y };
   };
 
   const currentStudentLevel = stats?.level || 1;
@@ -82,8 +84,11 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     return true;
   });
 
+  // Fallback to all provided missions if subject-specific filter returns empty
+  const displayMissions = filteredMissions.length > 0 ? filteredMissions : missions;
+
   // Sort missions to form a sequence
-  const sortedMissions = [...filteredMissions].sort((a, b) => a.created_at.localeCompare(b.created_at));
+  const sortedMissions = [...displayMissions].sort((a, b) => a.created_at.localeCompare(b.created_at));
   
   // Assign periods dynamically
   const missionsWithPeriod = sortedMissions.map((m, idx) => {
@@ -112,6 +117,8 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
       ...getCoordinates(m, idx, filteredByPeriod.length)
     };
   });
+
+  const mapCanvasWidth = Math.max(1000, nodes.length * 180);
 
   // Determine status of each mission
   const getMissionStatus = (mission: Mission, index: number) => {
@@ -295,7 +302,7 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
         <div className="w-full overflow-x-auto overflow-y-hidden relative h-[360px] pb-4 mt-6 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
           
           {/* Map canvas with relative positions */}
-          <div className="w-[1000px] h-[300px] relative mx-auto my-auto">
+          <div style={{ width: `${mapCanvasWidth}px` }} className="h-[310px] relative mx-auto my-auto px-10">
             
             {/* SVG Connecting Path */}
             {nodes.length >= 2 && (
@@ -347,6 +354,10 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
                 badgeEmoji = '🔮'; // Crystal ball of active quest
               }
 
+              // Determine if title tooltip goes above or below based on Y coordinate
+              const isUpperHalf = y <= 50;
+              const tooltipPositionClass = isUpperHalf ? 'top-[68px]' : 'bottom-[68px]';
+
               return (
                 <div
                   key={mission.id}
@@ -369,16 +380,16 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
                     </div>
                   </button>
 
-                  {/* Floating Title Tooltip */}
-                  <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 min-w-[140px] text-center select-none pointer-events-none z-30">
-                    <span className={`text-[8.5px] font-black tracking-wide block uppercase truncate ${
-                      isActive ? 'text-yellow-400 animate-pulse font-black' : isCompleted ? 'text-emerald-450' : 'text-zinc-500'
+                  {/* Floating Title Tooltip (Anti-Collision Pill) */}
+                  <div className={`absolute ${tooltipPositionClass} left-1/2 -translate-x-1/2 min-w-[140px] max-w-[190px] text-center select-none pointer-events-none z-30 bg-slate-950/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-zinc-800/80 shadow-xl shadow-black/50`}>
+                    <span className={`text-[8.5px] font-black tracking-wider block uppercase truncate ${
+                      isActive ? 'text-yellow-400 animate-pulse font-black' : isCompleted ? 'text-emerald-400' : 'text-zinc-500'
                     }`}>
                       {isActive && "Desafío Arcano Actual"}
                       {isCompleted && "Superado"}
                       {isLocked && "Bloqueado"}
                     </span>
-                    <span className="text-[9.5px] font-bold text-zinc-150 dark:text-zinc-200 block truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mt-0.5">
+                    <span className="text-[10px] font-bold text-zinc-100 block truncate mt-0.5" title={mission.title}>
                       {mission.title.replace('La Aventura de ', '').replace('Guardianes de ', '')}
                     </span>
                   </div>
