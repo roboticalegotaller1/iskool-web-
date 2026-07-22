@@ -159,51 +159,51 @@ export default function DataDrivenCombatCanvas({
     async function initPixi() {
       if (!containerRef.current) return;
 
-      // 1. Cargar texturas de manera dinámica basadas en el Payload JSON
-      let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
-      let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
-      let activeDragonDef = DRAGON_ENEMIES_MAP.blood_dragon;
-      let mainDragonTex: PIXI.Texture | null = null;
-      let sparksDragonTex: PIXI.Texture | null = null;
-      const attackerTextures: Map<string, PIXI.Texture> = new Map();
+        const attackerSkinUrls = payload.attackers.map(
+          a => `/images/rpg/${a.skin_texture_id.replace('skin_', '')}_sprite.png`
+        );
+        const assetsToLoad = [
+          '/images/rpg/combat_bg.png',
+          '/images/rpg/boss_sprite.png',
+          '/images/rpg/ui/Dragonhpbar.png',
+          '/images/rpg/ui/DragonHpBar2.png',
+          '/images/rpg/ui/DragonHpBar3.png',
+          ...attackerSkinUrls,
+          ...Object.values(DRAGON_ENEMIES_MAP).map(def => def.textureUrl),
+          ...Object.values(DRAGON_ENEMIES_MAP).filter(def => def.sparkTextureUrl).map(def => def.sparkTextureUrl!)
+        ];
 
-      try {
-        // Carga de mapa y jefe basados en el ID
-        bgTex = await PIXI.Assets.load(`/images/rpg/combat_bg.png?v=3`);
-        bossTex = await PIXI.Assets.load(`/images/rpg/boss_sprite.png?v=3`);
-        
-        // High fidelity Dragon HP Bar UI Assets
-        hpFrameTex = await PIXI.Assets.load('/images/rpg/ui/Dragonhpbar.png');
-        hpFillTex = await PIXI.Assets.load('/images/rpg/ui/DragonHpBar2.png');
-        hpFillAltTex = await PIXI.Assets.load('/images/rpg/ui/DragonHpBar3.png');
+        let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
+        let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
+        let activeDragonDef = DRAGON_ENEMIES_MAP.blood_dragon;
+        let mainDragonTex: PIXI.Texture;
+        let sparksDragonTex: PIXI.Texture | null = null;
+        const attackerTextures: Map<string, PIXI.Texture> = new Map();
 
-        // Preload Dragon Enemy Assets
-        const dragonTextures = new Map<string, PIXI.Texture>();
-        for (const [key, def] of Object.entries(DRAGON_ENEMIES_MAP)) {
-          dragonTextures.set(key, await PIXI.Assets.load(def.textureUrl));
-          if (def.sparkTextureUrl) {
-            dragonTextures.set(`${key}_sparks`, await PIXI.Assets.load(def.sparkTextureUrl));
+        try {
+          await PIXI.Assets.load(assetsToLoad);
+
+          bgTex = PIXI.Assets.get('/images/rpg/combat_bg.png');
+          bossTex = PIXI.Assets.get('/images/rpg/boss_sprite.png');
+          
+          hpFrameTex = PIXI.Assets.get('/images/rpg/ui/Dragonhpbar.png');
+          hpFillTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar2.png');
+          hpFillAltTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar3.png');
+
+          const selectedDragonKey = getDragonEnemyKey(payload.enemy_data.name, payload.enemy_data.skin_id);
+          activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
+          mainDragonTex = PIXI.Assets.get(activeDragonDef.textureUrl) || bossTex;
+          sparksDragonTex = activeDragonDef.sparkTextureUrl ? (PIXI.Assets.get(activeDragonDef.sparkTextureUrl) || null) : null;
+
+          for (const attacker of payload.attackers) {
+            const skinUrl = `/images/rpg/${attacker.skin_texture_id.replace('skin_', '')}_sprite.png`;
+            const tex = PIXI.Assets.get(skinUrl) || bossTex;
+            attackerTextures.set(attacker.student_id, tex);
           }
+        } catch (e) {
+          console.error("Error al cargar dinámicamente los assets de la misión:", e);
+          return;
         }
-
-        const selectedDragonKey = getDragonEnemyKey(payload.enemy_data.name, payload.enemy_data.skin_id);
-        activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
-        mainDragonTex = dragonTextures.get(activeDragonDef.key) || bossTex;
-        sparksDragonTex = activeDragonDef.sparkTextureUrl ? (dragonTextures.get(`${activeDragonDef.key}_sparks`) || null) : null;
-
-
-        // Cargar skins de atacantes dinámicamente
-
-        for (const attacker of payload.attackers) {
-          const skinUrl = `/images/rpg/${attacker.skin_texture_id.replace('skin_', '')}_sprite.png?v=3`;
-          const tex = await PIXI.Assets.load(skinUrl);
-          attackerTextures.set(attacker.student_id, tex);
-        }
-
-      } catch (e) {
-        console.error("Error al cargar dinámicamente los assets de la misión:", e);
-        return;
-      }
 
       if (!active) return;
 
@@ -515,10 +515,11 @@ export default function DataDrivenCombatCanvas({
       bossHpMask.rect(bLeftX, bTopY, bBarW, bBarH);
       bossHpMask.fill({ color: 0xffffff });
 
+      // Hierarchy: 1. Marco (bottom), 2. Relleno (top), 3. Mask aligned with fill
+      bossHpBarContainer.addChild(bossHpFrameSprite);
       bossHpBarContainer.addChild(bossHpFillSprite);
       bossHpBarContainer.addChild(bossHpMask);
       bossHpFillSprite.mask = bossHpMask;
-      bossHpBarContainer.addChild(bossHpFrameSprite);
 
       const bossHpText = new PIXI.Text({
         text: `${payload.enemy_data.hp_remaining} / ${payload.enemy_data.hp_max}`,
