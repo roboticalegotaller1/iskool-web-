@@ -8,7 +8,22 @@ import {
   Volume2, VolumeX, Shield, Swords, Sparkles, HelpCircle, 
   Briefcase, Zap, RotateCcw, Award, Heart, Brain, Play, RefreshCw, AlertCircle
 } from 'lucide-react';
+// Lista de sprites de dragones en /images/rpg/enemies/
+const DRAGON_ENEMIES_SPRITES = [
+  '/images/rpg/enemies/blood_dragon.png',
+  '/images/rpg/enemies/crimson_dragon.png',
+  '/images/rpg/enemies/emberheart_dragon.png',
+  '/images/rpg/enemies/glacialserpent.png',
+  '/images/rpg/enemies/luminous_dragon.png',
+  '/images/rpg/enemies/moonshadow_dragon.png',
+  '/images/rpg/enemies/thunderwing_drake_nosparks.png',
+];
 
+export const getDragonSpriteForQuest = (questId: string, idx: number = 0): string => {
+  if (!questId) return DRAGON_ENEMIES_SPRITES[idx % DRAGON_ENEMIES_SPRITES.length];
+  const charSum = questId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return DRAGON_ENEMIES_SPRITES[(charSum + idx) % DRAGON_ENEMIES_SPRITES.length];
+};
 // Motor de Audio Avanzado sintetizado con Música de Fondo Retro y Control de Volumen Master
 class RetroSoundEngine {
   private ctx: AudioContext | null = null;
@@ -946,83 +961,13 @@ export function RpgCombatViewport() {
                             <span className="text-[7px] text-emerald-400 font-black uppercase tracking-wider block mt-1">Vencido</span>
                           </div>
                         ) : (
-                          // Tarea Activa (Enemigo Vivo)
+                          // Tarea Activa (Dragón de la carpeta de enemigos)
                           <div className="jrpg-idle flex flex-col items-center relative">
-                            {isMath ? (
-                              // Math Slime (JRPG Style)
-                              <svg viewBox="0 0 100 100" className="w-12 h-12">
-                                {/* Glossy Slime Body */}
-                                <ellipse cx="50" cy="65" rx="36" ry="26" fill="url(#slimeGradient)" stroke="#059669" strokeWidth="2" />
-                                <ellipse cx="50" cy="62" rx="30" ry="20" fill="url(#slimeInnerGradient)" />
-                                <ellipse cx="34" cy="50" rx="12" ry="6" fill="#FFF" opacity="0.45" transform="rotate(-15 34 50)" />
-                                <circle cx="34" cy="48" r="2" fill="#FFF" opacity="0.6" />
-
-                                {/* Angry eyes */}
-                                <polygon points="32,46 44,52 32,54" fill="#EF4444" />
-                                <polygon points="68,46 56,52 68,54" fill="#EF4444" />
-                                <circle cx="37" cy="52" r="2.5" fill="#FFF" />
-                                <circle cx="63" cy="52" r="2.5" fill="#FFF" />
-
-                                {/* Math symbols floating */}
-                                <g stroke="#FFF" strokeWidth="3" strokeLinecap="round" opacity="0.95" className="animate-pulse">
-                                  <line x1="50" y1="70" x2="50" y2="80" />
-                                  <line x1="45" y1="75" x2="55" y2="75" />
-                                  
-                                  <line x1="20" y1="30" x2="28" y2="30" stroke="#34D399" />
-                                  <circle cx="24" cy="24" r="1.5" fill="#34D399" />
-                                  <circle cx="24" cy="36" r="1.5" fill="#34D399" />
-
-                                  <line x1="72" y1="26" x2="80" y2="34" stroke="#34D399" />
-                                  <line x1="80" y1="26" x2="72" y2="34" stroke="#34D399" />
-                                </g>
-
-                                <defs>
-                                  <radialGradient id="slimeGradient" cx="50%" cy="30%" r="75%">
-                                    <stop offset="0%" stopColor="#34D399" />
-                                    <stop offset="70%" stopColor="#10B981" />
-                                    <stop offset="100%" stopColor="#047857" />
-                                  </radialGradient>
-                                  <radialGradient id="slimeInnerGradient" cx="50%" cy="30%" r="75%">
-                                    <stop offset="0%" stopColor="#A7F3D0" stopOpacity="0.4" />
-                                    <stop offset="100%" stopColor="#059669" stopOpacity="0" />
-                                  </radialGradient>
-                                </defs>
-                              </svg>
-                            ) : (
-                              // Spanish Specter (JRPG Style)
-                              <svg viewBox="0 0 100 100" className="w-12 h-12">
-                                {/* Ethereal Specter Tail / Body */}
-                                <path d="M 50 15 C 26 15, 18 35, 18 65 C 18 78, 30 78, 30 70 C 30 60, 42 75, 50 62 C 58 75, 70 60, 70 70 C 70 78, 82 78, 82 65 C 82 35, 74 15, 50 15 Z" fill="url(#specterGradient)" stroke="#2563EB" strokeWidth="1.5" />
-
-                                <path d="M 30 25 C 40 20, 60 20, 70 25" stroke="#60A5FA" strokeWidth="2.5" fill="none" opacity="0.6" />
-
-                                {/* Ethereal Glow Eyes */}
-                                <circle cx="38" cy="38" r="6.5" fill="#FBBF24" />
-                                <circle cx="62" cy="38" r="6.5" fill="#FBBF24" />
-                                <circle cx="38" cy="38" r="2.5" fill="#000" />
-                                <circle cx="62" cy="38" r="2.5" fill="#000" />
-                                <circle cx="41" cy="36" r="1" fill="#FFF" />
-                                <circle cx="65" cy="36" r="1" fill="#FFF" />
-
-                                {/* Floating Spellbook */}
-                                <g transform="translate(35, 62) scale(0.65)" className="animate-bounce">
-                                  <path d="M 5 5 L 20 2 L 35 5 L 35 25 L 20 22 L 5 25 Z" fill="#78350F" stroke="#FBBF24" />
-                                  <path d="M 8 7 L 20 4 L 32 7 L 32 23 L 20 20 L 8 23 Z" fill="#FEF3C7" />
-                                  <line x1="12" y1="10" x2="18" y2="8" stroke="#000" strokeWidth="1" />
-                                  <line x1="12" y1="14" x2="18" y2="12" stroke="#000" strokeWidth="1" />
-                                  <line x1="22" y1="8" x2="28" y2="10" stroke="#000" strokeWidth="1" />
-                                  <line x1="22" y1="12" x2="28" y2="14" stroke="#000" strokeWidth="1" />
-                                </g>
-
-                                <defs>
-                                  <linearGradient id="specterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stopColor="#60A5FA" stopOpacity="0.95" />
-                                    <stop offset="60%" stopColor="#3B82F6" stopOpacity="0.75" />
-                                    <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0.1" />
-                                  </linearGradient>
-                                </defs>
-                              </svg>
-                            )}
+                            <img 
+                              src={getDragonSpriteForQuest(quest.id, idx)} 
+                              alt={quest.title} 
+                              className="w-14 h-14 object-contain filter drop-shadow-[0_4px_12px_rgba(239,68,68,0.65)]"
+                            />
                             {/* HP Bar */}
                             <div className="w-10 h-1 bg-red-950 border border-slate-800 rounded-full mt-1 overflow-hidden">
                               <div className="h-full bg-red-500 w-full" />
@@ -1036,73 +981,21 @@ export function RpgCombatViewport() {
                 })}
               </div>
             ) : (
-              // Vista en Combate: Examen Boss Final Activo
+              // Vista en Combate: Examen Boss Final Activo (Dragón de la carpeta de enemigos)
               <div className={`flex flex-col items-center relative gap-2 duration-300 ${combatState === 'boss_attack' ? '-translate-x-20 scale-105 duration-200' : ''}`}>
                 
-                {/* Sprite del Jefe Final */}
+                {/* Sprite del Jefe Final Dragón */}
                 <div className={`relative ${combatState === 'boss_hurt' ? 'animate-bounce opacity-85' : 'jrpg-idle'}`}>
-                  <svg viewBox="0 0 120 120" className="w-28 h-28 filter drop-shadow-[0_0_20px_rgba(239,68,68,0.45)]">
-                    {/* Shadow */}
-                    <ellipse cx="60" cy="112" rx="42" ry="7" fill="#000" opacity="0.4" />
+                  <img 
+                    src={getDragonSpriteForQuest(selectedMissionId, 0)} 
+                    alt={examContent.bossName || "Dragón Jefe Examen"} 
+                    className="w-32 h-32 object-contain filter drop-shadow-[0_0_25px_rgba(239,68,68,0.8)]"
+                  />
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500/20 border border-yellow-400/40 backdrop-blur-sm px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg animate-bounce">
+                    <span className="text-xs">👑</span>
+                    <span className="text-[8px] font-black text-yellow-300 uppercase tracking-widest">Jefe Boss</span>
+                  </div>
 
-                    {/* Wings (Flapping back) */}
-                    <path d="M 45 65 C 10 40, 5 90, 20 95 C 32 90, 38 75, 45 65 Z" fill="#7F1D1D" stroke="#EF4444" strokeWidth="1.5" />
-                    <path d="M 75 65 C 110 40, 115 90, 100 95 C 88 90, 82 75, 75 65 Z" fill="#7F1D1D" stroke="#EF4444" strokeWidth="1.5" />
-
-                    {/* Tail */}
-                    <path d="M 42 100 C 30 115, 12 110, 8 98 C 12 92, 28 100, 42 100 Z" fill="#991B1B" />
-                    <polygon points="8,94 0,98 8,102" fill="#FBBF24" />
-
-                    {/* Dragon Body / Torso */}
-                    <path d="M 38 105 C 32 85, 38 65, 60 65 C 82 65, 88 85, 82 105 Z" fill="url(#dragonBodyGradient)" stroke="#991B1B" strokeWidth="1.5" />
-                    
-                    {/* Segmented belly plates */}
-                    <path d="M 48 68 C 48 68, 60 76, 72 68 C 72 68, 60 84, 48 84" fill="#FDE047" opacity="0.8" />
-                    <path d="M 46 82 C 46 82, 60 90, 74 82 C 74 82, 60 98, 46 98" fill="#FDE047" opacity="0.8" />
-                    <path d="M 45 96 C 45 96, 60 104, 75 96 C 75 96, 60 110, 45 110" fill="#FDE047" opacity="0.8" />
-
-                    {/* Dragon Neck */}
-                    <path d="M 52 70 L 45 42 L 62 42 L 68 70 Z" fill="#991B1B" stroke="#7F1D1D" strokeWidth="1" />
-
-                    {/* Dragon Head (Facing left) */}
-                    <path d="M 32 30 C 32 20, 68 20, 68 35 C 68 45, 52 48, 45 45 C 35 45, 28 35, 32 30 Z" fill="#B91C1C" stroke="#7F1D1D" strokeWidth="1.5" />
-                    <path d="M 28 42 L 38 42 L 35 48 Z" fill="#991B1B" />
-
-                    {/* Horns */}
-                    <path d="M 54 22 C 58 12, 72 6, 75 10 C 70 14, 62 20, 58 22" fill="#FBBF24" stroke="#D97706" />
-                    <path d="M 46 22 C 42 12, 28 6, 25 10 C 30 14, 38 20, 42 22" fill="#FBBF24" stroke="#D97706" />
-
-                    {/* Glowing Red Eyes */}
-                    <polygon points="35,28 43,30 38,34" fill="#FDE047" />
-                    <circle cx="37" cy="30.5" r="1.2" fill="#EF4444" />
-
-                    {/* Spikes along neck & back */}
-                    <polygon points="65,58 72,55 68,64" fill="#111827" />
-                    <polygon points="67,78 76,75 70,86" fill="#111827" />
-                    <polygon points="65,92 74,90 68,100" fill="#111827" />
-
-                    {/* Floating Boss Crown */}
-                    <g transform="translate(40, -4) scale(0.65)" className="animate-bounce">
-                      <polygon points="10,25 25,5 40,25 32,32 18,32" fill="#FBBF24" stroke="#D97706" strokeWidth="1.5" />
-                      <circle cx="25" cy="5" r="2" fill="#EF4444" />
-                      <circle cx="10" cy="25" r="1.5" fill="#3B82F6" />
-                      <circle cx="40" cy="25" r="1.5" fill="#3B82F6" />
-                    </g>
-
-                    {/* Fire breath particles */}
-                    <g opacity="0.85">
-                      <circle cx="20" cy="48" r="4.5" fill="#F97316" className="animate-ping" />
-                      <circle cx="12" cy="54" r="3" fill="#EF4444" className="animate-pulse" />
-                      <circle cx="26" cy="52" r="2" fill="#FBBF24" />
-                    </g>
-
-                    <defs>
-                      <linearGradient id="dragonBodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#DC2626" />
-                        <stop offset="100%" stopColor="#7F1D1D" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
                   {/* Glitch Overlay en daño */}
                   {combatState === 'boss_hurt' && (
                     <div className="absolute inset-0 bg-red-500/30 mix-blend-color-dodge animate-ping" />
