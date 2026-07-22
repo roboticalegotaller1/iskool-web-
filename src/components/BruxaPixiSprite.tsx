@@ -10,8 +10,8 @@ interface BruxaPixiSpriteProps {
 }
 
 export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
-  className = "w-24 h-28",
-  width = 96,
+  className = "w-16 h-28",
+  width = 64,
   height = 112
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -89,13 +89,13 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
       animSprite.loop = true;
       animSprite.play();
 
-      // 4. Anclaje y posición ajustada para centrar el cuerpo de la bruja sin cortar el gorro a la izquierda
+      // 4. Posicionamiento ajustado para eliminar el espacio transparente delante de la varita
       animSprite.anchor.set(0.5);
-      animSprite.x = (width / 2) + 12; // Desplazar 12px a la derecha para margen limpio en el gorro
+      animSprite.x = (width / 2) + 6;
       animSprite.y = height / 2;
 
-      // Escala horizontal negativa para efecto espejo (1.55x)
-      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 1.55;
+      // Escala ajustada para llenar el ancho apretado de 64px
+      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 1.6;
       animSprite.scale.set(-scaleFactor, scaleFactor);
 
       app.stage.addChild(animSprite);
