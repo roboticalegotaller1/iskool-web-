@@ -712,9 +712,21 @@ export function RpgCombatViewport() {
           50% { opacity: 0.8; }
           100% { transform: translateY(-30px) scale(1.2); opacity: 0; }
         }
+        @keyframes treeSwaySoft {
+          0%, 100% { transform: rotate(0deg) skewX(0deg); }
+          50% { transform: rotate(1.8deg) skewX(0.8deg); }
+        }
+        @keyframes treeSwayAlt {
+          0%, 100% { transform: rotate(0deg) skewX(0deg); }
+          50% { transform: rotate(-1.8deg) skewX(-0.8deg); }
+        }
         .jrpg-idle { animation: JRPG-float 2.5s ease-in-out infinite; }
         .slash-effect { animation: slash-hit 0.3s ease-out forwards; }
         .combat-firefly { animation: firefly-up 4s ease-in-out infinite; }
+        .tree-sway-1 { transform-origin: bottom center; animation: treeSwaySoft 5.5s ease-in-out infinite; }
+        .tree-sway-2 { transform-origin: bottom center; animation: treeSwayAlt 6.8s ease-in-out infinite; }
+        .tree-sway-3 { transform-origin: bottom center; animation: treeSwaySoft 4.8s ease-in-out infinite 1.2s; }
+        .tree-sway-4 { transform-origin: bottom center; animation: treeSwayAlt 7.2s ease-in-out infinite 0.5s; }
       `}} />
 
       {/* Contenedor del Celular de la Presentación */}
@@ -788,22 +800,64 @@ export function RpgCombatViewport() {
         {/* CAMPO DE BATALLA SIDE-VIEW (Classic JRPG) */}
         <div className="relative h-[55%] w-full flex items-center justify-between px-10 bg-gradient-to-b from-indigo-950 via-emerald-950/50 to-zinc-950 border-y border-zinc-900 overflow-hidden">
           
-          {/* Forest JRPG Background Backdrop */}
-          <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
-            <svg viewBox="0 0 800 200" className="w-full h-full object-cover">
-              <path d="M 0 200 L 0 120 Q 120 100 240 140 Q 360 180 480 130 Q 600 90 720 150 Q 760 160 800 140 L 800 200 Z" fill="#047857" />
-              <path d="M 0 200 L 0 150 Q 200 130 400 170 Q 600 190 800 150 L 800 200 Z" fill="#064E3B" />
-              <g fill="#022C22">
-                <polygon points="50,140 30,190 70,190" />
-                <polygon points="50,110 35,150 65,150" />
-                <polygon points="180,150 160,200 200,200" />
-                <polygon points="380,130 350,190 410,190" />
-                <polygon points="380,105 360,150 400,150" />
-                <polygon points="620,140 590,200 650,200" />
-                <polygon points="720,130 690,190 750,190" />
-                <polygon points="720,105 700,150 740,150" />
-              </g>
-            </svg>
+          {/* Base Background Image Layer */}
+          <div className="absolute inset-0 pointer-events-none z-0">
+            <img 
+              src="/images/rpg/background/Background.png" 
+              alt="Forest Background Base" 
+              className="w-full h-full object-cover opacity-85"
+            />
+            {/* Subtle Gradient Overlays for contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-indigo-950/30 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-950/30 via-transparent to-zinc-950/70" />
+          </div>
+
+          {/* Layered Animated Forest Trees Layer */}
+          <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-end">
+            
+            {/* Background Trees (Distant, Smaller, Subtle Opacity) */}
+            <img 
+              src="/images/rpg/background/Dark-Tree.png" 
+              alt="Dark Tree" 
+              className="tree-sway-2 absolute bottom-[2%] left-[1%] h-40 opacity-75 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)]"
+            />
+            <img 
+              src="/images/rpg/background/Red-Tree.png" 
+              alt="Red Tree" 
+              className="tree-sway-1 absolute bottom-[5%] left-[15%] h-36 opacity-80 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)]"
+            />
+            <img 
+              src="/images/rpg/background/Green-Tree.png" 
+              alt="Green Tree" 
+              className="tree-sway-3 absolute bottom-[6%] left-[32%] h-40 opacity-80 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)]"
+            />
+            <img 
+              src="/images/rpg/background/Yellow-Tree.png" 
+              alt="Yellow Tree" 
+              className="tree-sway-4 absolute bottom-[4%] left-[50%] h-38 opacity-75 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)]"
+            />
+            <img 
+              src="/images/rpg/background/Golden-Tree.png" 
+              alt="Golden Tree" 
+              className="tree-sway-2 absolute bottom-[7%] left-[68%] h-42 opacity-80 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)]"
+            />
+            <img 
+              src="/images/rpg/background/Dark-Tree.png" 
+              alt="Dark Tree Right" 
+              className="tree-sway-1 absolute bottom-[2%] right-[1%] h-44 opacity-75 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)]"
+            />
+
+            {/* Midground Frame Trees */}
+            <img 
+              src="/images/rpg/background/Green-Tree.png" 
+              alt="Foreground Green Tree" 
+              className="tree-sway-3 absolute -bottom-[6%] -left-[4%] h-56 opacity-90 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.85)] z-10"
+            />
+            <img 
+              src="/images/rpg/background/Golden-Tree.png" 
+              alt="Foreground Golden Tree" 
+              className="tree-sway-4 absolute -bottom-[5%] -right-[4%] h-60 opacity-90 object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.85)] z-10"
+            />
           </div>
 
           {/* Floating Firefly Particles */}
