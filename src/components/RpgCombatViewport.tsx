@@ -892,8 +892,8 @@ export function RpgCombatViewport() {
           <div className="flex items-end gap-6 z-20 self-end mb-2">
             {/* Elena (Mago / Bruja Pixi.js) */}
             <div className={`flex items-end gap-3 relative jrpg-idle ${combatState === 'player_attack' ? 'translate-x-6 -translate-y-4 scale-110 duration-200' : 'duration-500'}`}>
-              <div className="relative h-28 w-24 overflow-visible flex items-center justify-center">
-                <BruxaPixiSprite className="w-24 h-28" />
+              <div className="relative h-28 w-32 overflow-visible flex items-center justify-center">
+                <BruxaPixiSprite className="w-32 h-28" width={128} height={112} />
               </div>
               <div className="flex flex-col mb-1 text-left select-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] min-w-[70px] gap-1">
                 <span className="text-[10px] font-black uppercase text-purple-300 tracking-wider">Elena</span>
@@ -1004,47 +1004,47 @@ export function RpgCombatViewport() {
                   
                   return (
                     <div key={quest.id} className="flex flex-col items-center gap-1.5 bg-slate-900/60 p-2.5 rounded-2xl border border-slate-800">
-                      <div className="relative h-24 w-24 flex items-center justify-center">
+                      <div className="relative h-32 w-32 flex items-center justify-center">
                         {status === 'completed' ? (
                           // Enemigo Derrotado
                           <div className="opacity-45 text-center flex flex-col items-center">
-                            <span className="text-3xl grayscale">☠️</span>
-                            <span className="text-[8px] text-emerald-400 font-black uppercase tracking-wider block mt-1">Vencido</span>
+                            <span className="text-4xl grayscale">☠️</span>
+                            <span className="text-[9px] text-emerald-400 font-black uppercase tracking-wider block mt-1">Vencido</span>
                           </div>
                         ) : (
-                          // Tarea Activa (Dragón de la carpeta de enemigos - 2x tamaño)
+                          // Tarea Activa (Dragón Gigante)
                           <div className="jrpg-idle flex flex-col items-center relative">
                             <img 
                               src={getDragonSpriteForQuest(quest.id, idx)} 
                               alt={quest.title} 
-                              className="w-24 h-24 object-contain filter drop-shadow-[0_4px_14px_rgba(239,68,68,0.75)]"
+                              className="w-32 h-32 object-contain filter drop-shadow-[0_4px_16px_rgba(239,68,68,0.85)]"
                             />
                             {/* HP Bar */}
-                            <div className="w-16 h-1.5 bg-red-950 border border-slate-800 rounded-full mt-1 overflow-hidden">
+                            <div className="w-20 h-2 bg-red-950 border border-slate-800 rounded-full mt-1 overflow-hidden">
                               <div className="h-full bg-red-500 w-full" />
                             </div>
                           </div>
                         )}
                       </div>
-                      <span className="text-[8.5px] font-bold text-zinc-300 text-center truncate w-24">{quest.title}</span>
+                      <span className="text-[9px] font-bold text-zinc-300 text-center truncate w-28">{quest.title}</span>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              // Vista en Combate: Examen Boss Final Activo (Dragón de la carpeta de enemigos - 2x tamaño)
+              // Vista en Combate: Examen Boss Final Activo
               <div className={`flex flex-col items-center relative gap-2 duration-300 ${combatState === 'boss_attack' ? '-translate-x-20 scale-105 duration-200' : ''}`}>
                 
-                {/* Sprite del Jefe Final Dragón (2x tamaño: w-56 h-56) */}
+                {/* Sprite del Jefe Final Dragón (Gigante) */}
                 <div className={`relative ${combatState === 'boss_hurt' ? 'animate-bounce opacity-85' : 'jrpg-idle'}`}>
                   <img 
                     src={getDragonSpriteForQuest(selectedMissionId, 0)} 
                     alt={examContent.bossName || "Dragón Jefe Examen"} 
-                    className="w-56 h-56 object-contain filter drop-shadow-[0_0_35px_rgba(239,68,68,0.9)]"
+                    className="w-72 h-72 object-contain filter drop-shadow-[0_0_40px_rgba(239,68,68,0.95)]"
                   />
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-500/20 border border-yellow-400/40 backdrop-blur-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-lg animate-bounce">
-                    <span className="text-sm">👑</span>
-                    <span className="text-[9px] font-black text-yellow-300 uppercase tracking-widest">Jefe Boss</span>
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-yellow-500/20 border border-yellow-400/40 backdrop-blur-sm px-3 py-0.5 rounded-full flex items-center gap-1 shadow-lg animate-bounce">
+                    <span className="text-base">👑</span>
+                    <span className="text-[10px] font-black text-yellow-300 uppercase tracking-widest">Jefe Boss</span>
                   </div>
 
                   {/* Glitch Overlay en daño */}

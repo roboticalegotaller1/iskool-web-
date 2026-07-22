@@ -10,8 +10,8 @@ interface BruxaPixiSpriteProps {
 }
 
 export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
-  className = "w-24 h-28",
-  width = 96,
+  className = "w-36 h-28",
+  width = 144,
   height = 112
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -94,8 +94,8 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
       animSprite.x = width / 2;
       animSprite.y = height / 2;
 
-      // Escala horizontal negativa para efecto espejo (escalado 1.75x para igualar altura de alumnos)
-      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 1.75;
+      // Escala horizontal negativa para efecto espejo (1.5x en canvas ampliado a 144px)
+      const scaleFactor = Math.min(width / frameWidth, height / frameHeight) * 1.5;
       animSprite.scale.set(-scaleFactor, scaleFactor);
 
       app.stage.addChild(animSprite);
