@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  
+  /* Valores HSL por defecto si no son sobreescritos dinámicamente */
+  --color-primary-hsl: 250 84% 54%;
+  --color-secondary-hsl: 221 83% 53%;
+  --color-accent-hsl: 142 71% 45%;
+
+  /* Variables de colores Tailwind */
+  --color-primary: hsl(var(--color-primary-hsl));
+  --color-secondary: hsl(var(--color-secondary-hsl));
+  --color-accent: hsl(var(--color-accent-hsl));
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Registrar las variables en el motor de Tailwind v4 */
+  --color-brand-primary: var(--color-primary);
+  --color-brand-secondary: var(--color-secondary);
+  --color-brand-accent: var(--color-accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade-in {
+  animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.75);
+  }
+}
+
+@utility animate-glow-pulse {
+  animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+
