@@ -486,10 +486,11 @@ export default function TeacherDashboard() {
     if (user && user.role === 'teacher') {
       const activeGroup = currentMenuTab === 'attendance' ? selectedAttendanceGroup : selectedTaskGroup;
       const groupToFetch = activeGroup || selectedAttendanceGroup || 'grp-pa-a';
-      fetchPortfolioItems(groupToFetch);
+      fetchPortfolioItems();
       fetchStats(groupToFetch);
     }
   }, [user, currentMenuTab, selectedAttendanceGroup, selectedTaskGroup, fetchPortfolioItems, fetchStats]);
+
 
   if (loading || !user) {
     return (

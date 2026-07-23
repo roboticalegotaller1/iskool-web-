@@ -1904,10 +1904,6 @@ export const AVATAR_MAP_SEED: Record<string, StudentAvatar> = {
     student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d07', avatar_name: 'AlejandroAvatar', hair_style: 'classic', hair_color: '#4B5563', eyes_style: 'happy', outfit_style: 'space_suit', outfit_color: '#3B82F6', background_style: 'forest', unlocked_items: ["classic","happy","explorer","forest","spiky","sparkle","space_suit","nebula"],
     updated_at: '2026-07-08T11:50:26.932Z'
   },
-  'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d08': {
-    student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d08', avatar_name: 'CamilaAvatar', hair_style: 'spiky', hair_color: '#FBBF24', eyes_style: 'sparkle', outfit_style: 'space_suit', outfit_color: '#10B981', background_style: 'nebula', unlocked_items: ["classic","happy","explorer","forest","spiky","sparkle","space_suit","nebula"],
-    updated_at: '2026-07-08T11:50:26.932Z'
-  },
   'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d09': {
     student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d09', avatar_name: 'DiegoAvatar', hair_style: 'classic', hair_color: '#1F2937', eyes_style: 'happy', outfit_style: 'space_suit', outfit_color: '#3B82F6', background_style: 'forest', unlocked_items: ["classic","happy","explorer","forest","spiky","sparkle","space_suit","nebula"],
     updated_at: '2026-07-08T11:50:26.932Z'
@@ -1963,6 +1959,31 @@ export const PORTFOLIO_SEED: PortfolioItem[] = [
     updated_at: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
     student_profile: STUDENTS_LIST_SEED[3],
     subject: SUBJECTS_SEED[2],
+    feedbacks: []
+  },
+  {
+    id: 'port-helena-1',
+    student_id: 'std-sec',
+    subject_id: 'sub-math',
+    quest_id: 'q-fractions-2',
+    title: 'Fraccionando en Casa - Círculo de 5/8',
+    description: 'Dibujo de un círculo dividido en 8 partes iguales con 5 partes coloreadas y reflexión académica.',
+    file_url: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=400',
+    file_type: 'image',
+    status: 'submitted',
+    self_reflection: 'Dibujé un círculo grande en mi cuaderno, lo dividí en 8 partes iguales y coloreé 5 partes para representar la fracción 5/8.',
+    created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    student_profile: {
+      id: 'std-sec',
+      first_name: 'Helena',
+      last_name: 'Rostova',
+      role: 'student' as any,
+      email: 'helena.rostova@iskool.edu.mx',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    subject: SUBJECTS_SEED[0],
     feedbacks: []
   }
 ];
