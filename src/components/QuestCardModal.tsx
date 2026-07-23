@@ -117,9 +117,27 @@ export default function QuestCardModal() {
 
   // Local state for Portfolio submission
   const [reflection, setReflection] = useState('');
-  const [mockFile, setMockFile] = useState<{ type: 'image' | 'audio'; url: string } | null>(null);
+  const [mockFile, setMockFile] = useState<{ type: 'image' | 'audio'; url: string; name?: string } | null>(null);
   const [showPortfolioForm, setShowPortfolioForm] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleRealFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const url = evt.target?.result as string;
+      const isAudio = file.type.startsWith('audio');
+      setMockFile({
+        type: isAudio ? 'audio' : 'image',
+        url: url,
+        name: file.name
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Reset local states when activeQuest changes
   useEffect(() => {
@@ -402,16 +420,22 @@ export default function QuestCardModal() {
     triggerCombatSequence(onFinalize);
   };
 
-  // Simular subida de archivos
+  // Subida de archivos reales y simulación de respaldo
   const simulateFileUpload = (type: 'image' | 'audio') => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
     const mockUrls = {
       image: '/files/mock_reflection.png',
       audio: '/files/mock_audio.mp3'
     };
-    setMockFile({
-      type,
-      url: mockUrls[type]
-    });
+    if (!mockFile) {
+      setMockFile({
+        type,
+        url: mockUrls[type],
+        name: type === 'image' ? 'evidencia_foto.png' : 'evidencia_lectura.mp3'
+      });
+    }
   };
 
   // Editor Markdown helpers
@@ -837,14 +861,32 @@ export default function QuestCardModal() {
                           )}
                         </div>
 
-                        {/* Launch Attack Button */}
+                        {/* Selector de archivos nativo oculto */}
+                        <input 
+                          type="file" 
+                          ref={fileInputRef} 
+                          onChange={handleRealFileChange} 
+                          accept="image/*,audio/*" 
+                          className="hidden" 
+                        />
+
+                        {/* Launch Attack Button con alto contraste y visibilidad */}
                         <button
                           type="submit"
                           disabled={!mockFile || !reflection}
-                          className="w-full mt-2 py-3.5 bg-gradient-to-r from-amber-550 to-yellow-550 hover:from-amber-450 hover:to-yellow-450 font-serif font-black text-xs uppercase tracking-widest text-stone-950 disabled:opacity-40 disabled:pointer-events-none transition-all rounded-xl border border-amber-500/20 hover:shadow-[0_0_25px_rgba(245,158,11,0.5)]"
+                          className={`w-full mt-3 py-3.5 font-serif font-black text-xs uppercase tracking-widest transition-all rounded-xl border ${
+                            !mockFile || !reflection
+                              ? 'bg-stone-900 text-stone-300 border-stone-700 opacity-90 cursor-not-allowed'
+                              : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-stone-950 border-amber-400 shadow-lg shadow-amber-500/25 cursor-pointer'
+                          }`}
                         >
                           ¡LANZAR HECHIZO!
                         </button>
+                        {(!mockFile || !reflection) && (
+                          <p className="text-[10px] text-amber-300/90 font-sans font-semibold text-center mt-1.5">
+                            ⚠️ Completa tu reflexión y adjunta evidencia para habilitar el botón de envío.
+                          </p>
+                        )}
                       </form>
                     )}
 

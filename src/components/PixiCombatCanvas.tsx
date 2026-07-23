@@ -259,6 +259,7 @@ export default function PixiCombatCanvas({
           '/images/rpg/santi_sprite.png',
           '/images/rpg/lucas_sprite.png',
           '/images/rpg/elena_sprite.png',
+          '/images/caracteres/bruja/bruxa.png',
           ...Object.values(DRAGON_ENEMIES_MAP).map(def => def.textureUrl),
           ...Object.values(DRAGON_ENEMIES_MAP).filter(def => def.sparkTextureUrl).map(def => def.sparkTextureUrl!)
         ];
@@ -294,10 +295,30 @@ export default function PixiCombatCanvas({
           avatarTextures.set('mateo', PIXI.Assets.get('/images/students/mateo.png'));
           avatarTextures.set('santi', PIXI.Assets.get('/images/students/santi.png'));
 
-          // RPG sprites for backwards compatibility
+          // RPG sprites y Bruxa Helena
           avatarTextures.set('santi_sprite', PIXI.Assets.get('/images/rpg/santi_sprite.png'));
           avatarTextures.set('lucas_sprite', PIXI.Assets.get('/images/rpg/lucas_sprite.png'));
-          avatarTextures.set('elena_sprite', PIXI.Assets.get('/images/rpg/elena_sprite.png'));
+          
+          const rawBruxaTex = PIXI.Assets.get('/images/caracteres/bruja/bruxa.png');
+          if (rawBruxaTex) {
+            try {
+              const frame = new PIXI.Rectangle(100, 0, 100, 100);
+              const croppedBruxaTex = new PIXI.Texture({
+                source: rawBruxaTex.source,
+                frame: frame
+              });
+              avatarTextures.set('elena', croppedBruxaTex);
+              avatarTextures.set('elena_sprite', croppedBruxaTex);
+              avatarTextures.set('helena', croppedBruxaTex);
+              avatarTextures.set('bruxa', croppedBruxaTex);
+            } catch (err) {
+              avatarTextures.set('elena', rawBruxaTex);
+              avatarTextures.set('elena_sprite', rawBruxaTex);
+              avatarTextures.set('helena', rawBruxaTex);
+            }
+          } else {
+            avatarTextures.set('elena_sprite', PIXI.Assets.get('/images/rpg/elena_sprite.png'));
+          }
         } catch (e) {
           console.error("Error preloading combat assets:", e);
           return;
@@ -375,10 +396,10 @@ export default function PixiCombatCanvas({
             });
           });
         } else {
-          // Fallback to offline JRPG defaults
+          // Fallback a héroes JRPG offline (Santi, Lucas, Helena con sprite Bruxa)
           charactersData.push({ id: 'santi', name: 'Santi', isCoop: false, texKey: 'santi_sprite' });
           charactersData.push({ id: 'lucas', name: 'Lucas', isCoop: false, texKey: 'lucas_sprite' });
-          charactersData.push({ id: 'elena', name: 'Elena', isCoop: false, texKey: 'elena_sprite' });
+          charactersData.push({ id: 'elena', name: 'Helena', isCoop: false, texKey: 'elena_sprite' });
         }
 
         // --- RENDER CHARACTERS ---

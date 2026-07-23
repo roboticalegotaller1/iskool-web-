@@ -266,8 +266,26 @@ function MissionPageContent({ params }: MissionPageContentProps) {
   const [evidenceTitle, setEvidenceTitle] = useState('');
   const [evidenceDesc, setEvidenceDesc] = useState('');
   const [evidenceReflection, setEvidenceReflection] = useState('');
-  const [mockFile, setMockFile] = useState<{ url: string, type: string } | null>(null);
+  const [mockFile, setMockFile] = useState<{ url: string, type: string, name?: string } | null>(null);
   const [isSubmissionFinished, setIsSubmissionFinished] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleRealFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const url = evt.target?.result as string;
+      const isAudio = file.type.startsWith('audio');
+      setMockFile({
+        url: url,
+        type: isAudio ? 'audio' : 'image',
+        name: file.name
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
 
   // --- LOGICA DE CUESTIONARIO ---
@@ -333,16 +351,23 @@ function MissionPageContent({ params }: MissionPageContentProps) {
   };
 
   const simulateFileUpload = (type: 'image' | 'audio') => {
-    if (type === 'image') {
-      setMockFile({
-        url: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=400',
-        type: 'image'
-      });
-    } else {
-      setMockFile({
-        url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-        type: 'audio'
-      });
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+    if (!mockFile) {
+      if (type === 'image') {
+        setMockFile({
+          url: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=400',
+          type: 'image',
+          name: 'boceto_fraccionamiento.png'
+        });
+      } else {
+        setMockFile({
+          url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+          type: 'audio',
+          name: 'grabacion_poema.mp3'
+        });
+      }
     }
   };
 
@@ -1003,24 +1028,44 @@ function MissionPageContent({ params }: MissionPageContentProps) {
                           )}
                         </div>
 
+                        {/* Input de archivo nativo oculto */}
+                        <input 
+                          type="file" 
+                          ref={fileInputRef} 
+                          onChange={handleRealFileChange} 
+                          accept="image/*,audio/*" 
+                          className="hidden" 
+                        />
+
                         {/* Botones de Acción */}
-                        <div className="flex justify-end gap-3 mt-4 border-t border-zinc-850 pt-4">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setShowForm(false);
-                            }}
-                            className="px-5 py-2.5 border border-zinc-850 hover:bg-zinc-800 rounded-xl font-bold text-xs text-zinc-400 hover:text-white transition-all"
-                          >
-                            Cancelar
-                          </button>
-                          <button
-                            type="submit"
-                            disabled={!mockFile || !evidenceReflection}
-                            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-650 hover:from-emerald-400 hover:to-teal-550 text-zinc-950 font-black text-xs shadow-md shadow-emerald-500/10 disabled:opacity-40 disabled:pointer-events-none transition-all"
-                          >
-                            Subir a mi Portafolio ⚔️
-                          </button>
+                        <div className="flex flex-col gap-2 mt-4 border-t border-zinc-850 pt-4">
+                          <div className="flex justify-end gap-3">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowForm(false);
+                              }}
+                              className="px-5 py-2.5 border border-zinc-850 hover:bg-zinc-800 rounded-xl font-bold text-xs text-zinc-400 hover:text-white transition-all"
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              type="submit"
+                              disabled={!mockFile || !evidenceReflection}
+                              className={`px-6 py-2.5 rounded-xl font-black text-xs transition-all ${
+                                !mockFile || !evidenceReflection
+                                  ? 'bg-zinc-800 text-zinc-300 border border-zinc-700 opacity-90 cursor-not-allowed'
+                                  : 'bg-gradient-to-r from-emerald-500 to-teal-650 hover:from-emerald-400 hover:to-teal-550 text-zinc-950 border border-emerald-400 shadow-md shadow-emerald-500/20 cursor-pointer'
+                              }`}
+                            >
+                              Subir a mi Portafolio ⚔️
+                            </button>
+                          </div>
+                          {(!mockFile || !evidenceReflection) && (
+                            <p className="text-[10px] text-emerald-400/90 font-semibold text-right">
+                              ⚠️ Completa tu reflexión y adjunta una imagen/audio para habilitar la entrega.
+                            </p>
+                          )}
                         </div>
                       </form>
                     )}
