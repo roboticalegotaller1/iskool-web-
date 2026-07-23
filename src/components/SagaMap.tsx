@@ -295,11 +295,11 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
           <span className="text-[10px] font-black text-yellow-400 uppercase tracking-wider">Progreso Arcano</span>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
-              <div className="w-2.5 h-2.5 bg-emerald-550 border border-emerald-450 rotate-45 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+              <div className="w-2.5 h-2.5 bg-emerald-500 border border-emerald-400 rotate-45 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
               <span className="text-[9px] font-bold text-zinc-300 ml-1">Superado</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-2.5 h-2.5 bg-yellow-550 border border-yellow-400 rotate-45 animate-pulse shadow-[0_0_8px_rgba(255,215,0,0.8)]" />
+              <div className="w-2.5 h-2.5 bg-yellow-500 border border-yellow-400 rotate-45 animate-pulse shadow-[0_0_8px_rgba(255,215,0,0.8)]" />
               <span className="text-[9px] font-bold text-zinc-300 ml-1">Actual</span>
             </div>
             <div className="flex items-center gap-1">

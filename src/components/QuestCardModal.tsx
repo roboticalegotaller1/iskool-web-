@@ -754,10 +754,12 @@ export default function QuestCardModal() {
 
                     {!showPortfolioForm ? (
                       <button
+                        type="button"
                         onClick={() => setShowPortfolioForm(true)}
-                        className="w-full py-3.5 rounded-xl font-serif font-black text-xs text-stone-950 bg-gradient-to-r from-amber-550 to-yellow-550 hover:from-amber-450 hover:to-yellow-450 uppercase tracking-widest transition-all duration-200 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                        className="w-full py-4 rounded-xl font-serif font-black text-xs text-stone-950 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 uppercase tracking-widest transition-all duration-200 border border-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
                       >
-                        Preparar grimorio escolar 🛡️
+                        <span>Preparar grimorio escolar</span>
+                        <Shield className="h-4 w-4 fill-stone-950 text-stone-950" />
                       </button>
                     ) : (
                       <form onSubmit={handlePortfolioSubmit} className="flex flex-col gap-4">
