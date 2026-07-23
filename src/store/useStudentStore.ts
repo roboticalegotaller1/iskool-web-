@@ -22,8 +22,8 @@ interface StudentStoreState {
   switchStudent: (studentId: string) => Promise<void>;
   changeAvatar: (config: Partial<StudentAvatar>) => Promise<void>;
   unlockBranchCosmetic: (cosmeticId: string) => Promise<void>;
-  feedPet: (studentId?: string) => void;
-  playWithPet: (studentId?: string) => void;
+  feedPet: (studentId?: string) => Promise<void>;
+  playWithPet: (studentId?: string) => Promise<void>;
   feedPetRpg: () => Promise<void>;
   trainPetRpg: () => Promise<void>;
   levelUpAttribute: (statName: 'strength' | 'intelligence' | 'defense') => Promise<void>;
@@ -36,14 +36,14 @@ interface StudentStoreState {
   unsubscribeFromStudentStats: () => void;
   
   // Cross-store helpers
-  addXpAndCoins: (studentId: string, xpEarned: number, coinsEarned: number, levelUpCallback?: (leveledUp: boolean) => void) => void;
+  addXpAndCoins: (studentId: string, xpEarned: number, coinsEarned: number, levelUpCallback?: (leveledUp: boolean) => void) => Promise<void>;
   updateStatsAfterExam: (
     studentId: string, 
     xpEarned: number, 
     coinsEarned: number, 
     statBoost?: { strength?: number; intelligence?: number; defense?: number },
     customLoot?: string
-  ) => void;
+  ) => Promise<void>;
   initializeNewStudent: (studentId: string, firstName: string) => void;
   resetStudentStore: () => void;
 }
@@ -176,108 +176,126 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
     });
   },
 
-  feedPet: (studentId?: string) => {
+  feedPet: async (studentId?: string) => {
     const rawId = studentId || get().activeStudentId;
     const activeId = normalizeStudentId(rawId);
+    const dbStudentId = mapStudentIdToUuid(activeId);
     const { allStats, allAvatars } = get();
-    console.log('DEBUG feedPet:', {
-      rawId,
-      activeId,
-      allAvatarsKeys: Object.keys(allAvatars),
-      hasActiveId: activeId in allAvatars,
-      hasRawId: rawId in allAvatars,
-      currentAv: allAvatars[activeId] || allAvatars[rawId]
-    });
     const stats = allStats[activeId] || allStats[rawId];
-    if (!stats || stats.coins < 5) {
+    if (!stats || (stats.coins || 0) < 5) {
       alert('¡No tienes suficientes monedas! Resuelve retos para ganar monedas.');
       return;
     }
 
-    set((state) => {
-      const currentStats = state.allStats[activeId] || state.allStats[rawId];
-      const currentAv = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
-      const newHunger = Math.max(0, (currentAv.pet_hunger || 50) - 20);
-      const newHappiness = Math.min(100, (currentAv.pet_happiness || 50) + 5);
+    const currentAv = allAvatars[activeId] || allAvatars[rawId] || {};
+    const newHunger = Math.max(0, (currentAv.pet_hunger || 50) - 20);
+    const newHappiness = Math.min(100, (currentAv.pet_happiness || 50) + 5);
 
-      const updatedStats = {
-        ...currentStats,
-        coins: currentStats.coins - 5,
-        xp: currentStats.xp + 10,
-      };
+    try {
+      if (isUuid(dbStudentId)) {
+        await supabase.rpc('process_reward', {
+          p_student_id: dbStudentId,
+          p_coins_change: -5,
+          p_xp_change: 10,
+          p_happiness_change: 5
+        });
 
-      const updatedAv = {
-        ...currentAv,
-        pet_hunger: newHunger,
-        pet_happiness: newHappiness,
-        updated_at: new Date().toISOString(),
-      };
+        await supabase.from('student_avatars').update({
+          pet_hunger: newHunger,
+          pet_happiness: newHappiness,
+          updated_at: new Date().toISOString()
+        }).eq('student_id', dbStudentId);
+      }
+    } catch (e) {
+      console.warn('Error en sincronización de feedPet con Supabase:', e);
+    }
 
-      return {
-        allStats: {
-          ...state.allStats,
-          [activeId]: updatedStats,
-          [rawId]: updatedStats,
-        },
-        allAvatars: {
-          ...state.allAvatars,
-          [activeId]: updatedAv,
-          [rawId]: updatedAv,
-        },
-      };
-    });
+    const updatedStats = {
+      ...stats,
+      coins: Math.max(0, (stats.coins || 0) - 5),
+      xp: (stats.xp || 0) + 10,
+    };
+
+    const updatedAv = {
+      ...currentAv,
+      pet_hunger: newHunger,
+      pet_happiness: newHappiness,
+      updated_at: new Date().toISOString(),
+    };
+
+    set((state) => ({
+      allStats: {
+        ...state.allStats,
+        [activeId]: updatedStats,
+        [rawId]: updatedStats,
+      },
+      allAvatars: {
+        ...state.allAvatars,
+        [activeId]: updatedAv,
+        [rawId]: updatedAv,
+      },
+    }));
   },
 
-  playWithPet: (studentId?: string) => {
+  playWithPet: async (studentId?: string) => {
     const rawId = studentId || get().activeStudentId;
     const activeId = normalizeStudentId(rawId);
+    const dbStudentId = mapStudentIdToUuid(activeId);
     const { allStats, allAvatars } = get();
-    console.log('DEBUG playWithPet:', {
-      rawId,
-      activeId,
-      allAvatarsKeys: Object.keys(allAvatars),
-      hasActiveId: activeId in allAvatars,
-      hasRawId: rawId in allAvatars,
-      currentAv: allAvatars[activeId] || allAvatars[rawId]
-    });
     const stats = allStats[activeId] || allStats[rawId];
-    if (!stats || stats.coins < 2) {
+    if (!stats || (stats.coins || 0) < 2) {
       alert('¡No tienes suficientes monedas!');
       return;
     }
 
-    set((state) => {
-      const currentStats = state.allStats[activeId] || state.allStats[rawId];
-      const currentAv = state.allAvatars[activeId] || state.allAvatars[rawId] || {};
-      const newHunger = Math.min(100, (currentAv.pet_hunger || 50) + 10);
-      const newHappiness = Math.min(100, (currentAv.pet_happiness || 50) + 20);
+    const currentAv = allAvatars[activeId] || allAvatars[rawId] || {};
+    const newHunger = Math.min(100, (currentAv.pet_hunger || 50) + 10);
+    const newHappiness = Math.min(100, (currentAv.pet_happiness || 50) + 20);
 
-      const updatedStats = {
-        ...currentStats,
-        coins: currentStats.coins - 2,
-        xp: currentStats.xp + 5,
-      };
+    try {
+      if (isUuid(dbStudentId)) {
+        await supabase.rpc('process_reward', {
+          p_student_id: dbStudentId,
+          p_coins_change: -2,
+          p_xp_change: 5,
+          p_happiness_change: 20
+        });
 
-      const updatedAv = {
-        ...currentAv,
-        pet_hunger: newHunger,
-        pet_happiness: newHappiness,
-        updated_at: new Date().toISOString(),
-      };
+        await supabase.from('student_avatars').update({
+          pet_hunger: newHunger,
+          pet_happiness: newHappiness,
+          updated_at: new Date().toISOString()
+        }).eq('student_id', dbStudentId);
+      }
+    } catch (e) {
+      console.warn('Error en sincronización de playWithPet con Supabase:', e);
+    }
 
-      return {
-        allStats: {
-          ...state.allStats,
-          [activeId]: updatedStats,
-          [rawId]: updatedStats,
-        },
-        allAvatars: {
-          ...state.allAvatars,
-          [activeId]: updatedAv,
-          [rawId]: updatedAv,
-        },
-      };
-    });
+    const updatedStats = {
+      ...stats,
+      coins: Math.max(0, (stats.coins || 0) - 2),
+      xp: (stats.xp || 0) + 5,
+    };
+
+    const updatedAv = {
+      ...currentAv,
+      pet_hunger: newHunger,
+      pet_happiness: newHappiness,
+      updated_at: new Date().toISOString(),
+    };
+
+    set((state) => ({
+      allStats: {
+        ...state.allStats,
+        [activeId]: updatedStats,
+        [rawId]: updatedStats,
+      },
+      allAvatars: {
+        ...state.allAvatars,
+        [activeId]: updatedAv,
+        [rawId]: updatedAv,
+      },
+    }));
   },
 
   feedPetRpg: async () => {
@@ -378,115 +396,298 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
   },
 
   levelUpAttribute: async (statName) => {
-    const { activeStudentId } = get();
+    const rawId = get().activeStudentId;
+    const activeId = normalizeStudentId(rawId);
+    const dbStudentId = mapStudentIdToUuid(activeId);
+    
+    // 1. Intento via RPC
     try {
       const response = await supabase.rpc('level_up_attribute', {
-        student_id: activeStudentId,
-        attribute_name: statName
+        p_student_id: dbStudentId,
+        p_attribute_name: statName
       });
-      if (response.error) {
-        console.error('SQL / SCHEMA DEVIATION DETECTED: La función RPC "level_up_attribute" no existe o falló en la base de datos de Supabase.', response.error);
-        alert('Error al subir de nivel el atributo: ' + response.error.message);
+      if (!response.error && response.data && response.data.success) {
+        const newStatsData = response.data.new_stats;
+        set((state) => {
+          const currentStats = state.allStats[activeId] || state.allStats[rawId] || {};
+          const updatedStats = {
+            ...currentStats,
+            ...newStatsData
+          };
+          return {
+            allStats: {
+              ...state.allStats,
+              [activeId]: updatedStats,
+              [rawId]: updatedStats
+            }
+          };
+        });
         return;
       }
-      if (response && response.data && response.data.success) {
-        set((state) => ({
-          allStats: {
-            ...state.allStats,
-            [activeStudentId]: response.data.new_stats
-          }
-        }));
-      }
-    } catch (err: any) {
-      console.error('Error al subir de nivel el atributo:', err);
-      alert(err.message || 'Error al subir de nivel el atributo');
+    } catch (err) {
+      console.warn('RPC level_up_attribute falló, realizando actualización directa:', err);
     }
+
+    // 2. Fallback de actualización directa en Supabase
+    const currentStats = get().allStats[activeId] || get().allStats[rawId];
+    if (!currentStats) return;
+
+    const availableSkillPoints = currentStats.skill_points || 0;
+    if (availableSkillPoints <= 0) {
+      alert('¡No tienes puntos de habilidad disponibles!');
+      return;
+    }
+
+    const newSkillPoints = availableSkillPoints - 1;
+    const newStrength = (currentStats.attribute_strength ?? 10) + (statName === 'strength' ? 1 : 0);
+    const newIntelligence = (currentStats.attribute_intelligence ?? 10) + (statName === 'intelligence' ? 1 : 0);
+    const newDefense = (currentStats.attribute_defense ?? 10) + (statName === 'defense' ? 1 : 0);
+
+    try {
+      const { error } = await supabase
+        .from('student_stats')
+        .update({
+          skill_points: newSkillPoints,
+          attribute_strength: newStrength,
+          attribute_intelligence: newIntelligence,
+          attribute_defense: newDefense,
+          updated_at: new Date().toISOString()
+        })
+        .eq('student_id', dbStudentId);
+
+      if (error) {
+        console.error('Error al actualizar atributos en Supabase:', error.message);
+      }
+    } catch (err) {
+      console.error('Error inesperado al actualizar atributos:', err);
+    }
+
+    set((state) => {
+      const current = state.allStats[activeId] || state.allStats[rawId] || {};
+      const updated = {
+        ...current,
+        skill_points: newSkillPoints,
+        attribute_strength: newStrength,
+        attribute_intelligence: newIntelligence,
+        attribute_defense: newDefense,
+        updated_at: new Date().toISOString()
+      };
+      return {
+        allStats: {
+          ...state.allStats,
+          [activeId]: updated,
+          [rawId]: updated
+        }
+      };
+    });
   },
 
   purchaseArtifact: async (studentId, artifactId) => {
+    const normId = normalizeStudentId(studentId);
+    const dbStudentId = mapStudentIdToUuid(normId);
+
     try {
-      const response = await supabase.rpc('purchase_artifact', {
-        student_id: studentId,
-        artifact_id: artifactId
-      });
-      if (response.error) {
-        console.error('SQL / SCHEMA DEVIATION DETECTED: La función RPC "purchase_artifact" no está definida en Supabase.', response.error);
-        alert('Error al comprar el artefacto: ' + response.error.message);
-        return;
-      }
-      if (response && response.data && response.data.success) {
-        set((state) => ({
-          allStats: {
-            ...state.allStats,
-            [studentId]: response.data.new_stats
-          },
-          studentInventoryMap: {
-            ...state.studentInventoryMap,
-            [studentId]: response.data.new_inventory
-          },
-          studentMessages: [response.data.new_message, ...state.studentMessages]
-        }));
-        alert(`¡Compraste el artefacto con éxito!`);
+      if (isUuid(dbStudentId)) {
+        const response = await supabase.rpc('purchase_artifact', {
+          p_student_id: dbStudentId,
+          p_artifact_id: artifactId
+        });
+
+        if (!response.error && response.data && response.data.success) {
+          const newCoins = response.data.new_coins;
+          const newInventory = response.data.inventory || [];
+          const newMessage = response.data.new_message;
+
+          set((state) => {
+            const currentStats = state.allStats[normId] || state.allStats[studentId] || {};
+            const updatedStats = { ...currentStats, coins: newCoins };
+            return {
+              allStats: {
+                ...state.allStats,
+                [studentId]: updatedStats,
+                [normId]: updatedStats
+              },
+              studentInventoryMap: {
+                ...state.studentInventoryMap,
+                [studentId]: newInventory,
+                [normId]: newInventory
+              },
+              studentMessages: newMessage ? [newMessage, ...state.studentMessages] : state.studentMessages
+            };
+          });
+          alert('¡Compraste el artefacto con éxito!');
+          return;
+        }
       }
     } catch (err: any) {
-      console.error('Error al comprar artefacto:', err);
-      alert(err.message || 'Error al comprar el artefacto');
+      console.warn('RPC purchase_artifact no disponible o falló. Ejecutando lógica de respaldo:', err);
     }
+
+    // Fallback de compra directa
+    const { allStats, studentInventoryMap } = get();
+    const currentStats = allStats[normId] || allStats[studentId];
+    if (!currentStats) return;
+
+    // Verificar precio y saldo
+    const price = 50; // Costo estándar si no hay datos de tienda
+    if ((currentStats.coins || 0) < price) {
+      alert(`¡No tienes suficientes monedas! Se requieren ${price} monedas.`);
+      return;
+    }
+
+    const currentInventory = studentInventoryMap[normId] || studentInventoryMap[studentId] || [];
+    if (currentInventory.includes(artifactId)) {
+      alert('¡Ya posees este artefacto en tu inventario!');
+      return;
+    }
+
+    const updatedCoins = currentStats.coins - price;
+    const updatedInventory = [...currentInventory, artifactId];
+
+    if (isUuid(dbStudentId)) {
+      try {
+        await supabase
+          .from('student_stats')
+          .update({ coins: updatedCoins, updated_at: new Date().toISOString() })
+          .eq('student_id', dbStudentId);
+
+        await supabase
+          .from('student_inventory')
+          .insert({ student_id: dbStudentId, artifact_id: artifactId, acquired_at: new Date().toISOString() });
+      } catch (e) {
+        console.error('Error en fallback de compra de artefacto:', e);
+      }
+    }
+
+    set((state) => {
+      const updatedStats = { ...currentStats, coins: updatedCoins };
+      return {
+        allStats: {
+          ...state.allStats,
+          [studentId]: updatedStats,
+          [normId]: updatedStats
+        },
+        studentInventoryMap: {
+          ...state.studentInventoryMap,
+          [studentId]: updatedInventory,
+          [normId]: updatedInventory
+        }
+      };
+    });
+    alert('¡Compraste el artefacto con éxito!');
   },
 
   grantArtifact: async (studentId, artifactId) => {
+    const normId = normalizeStudentId(studentId);
+    const dbStudentId = mapStudentIdToUuid(normId);
+
     try {
-      const response = await supabase.rpc('grant_artifact', {
-        student_id: studentId,
-        artifact_id: artifactId
-      });
-      if (response.error) {
-        console.error('SQL / SCHEMA DEVIATION DETECTED: La función RPC "grant_artifact" no está definida en la base de datos de Supabase.', response.error);
-        alert('Error al otorgar artefacto: ' + response.error.message);
-        return;
-      }
-      if (response && response.data && response.data.success) {
-        set((state) => ({
-          studentInventoryMap: {
-            ...state.studentInventoryMap,
-            [studentId]: response.data.new_inventory
-          },
-          studentMessages: [response.data.new_message, ...state.studentMessages]
-        }));
-        alert("Artefacto otorgado con éxito.");
+      if (isUuid(dbStudentId)) {
+        const response = await supabase.rpc('grant_artifact', {
+          p_student_id: dbStudentId,
+          p_artifact_id: artifactId
+        });
+
+        if (!response.error && response.data && response.data.success) {
+          const newInventory = response.data.inventory || response.data.new_inventory || [];
+          const newMessage = response.data.new_message;
+
+          set((state) => ({
+            studentInventoryMap: {
+              ...state.studentInventoryMap,
+              [studentId]: newInventory,
+              [normId]: newInventory
+            },
+            studentMessages: newMessage ? [newMessage, ...state.studentMessages] : state.studentMessages
+          }));
+          alert('Artefacto otorgado con éxito.');
+          return;
+        }
       }
     } catch (err: any) {
-      console.error('Error al otorgar artefacto:', err);
-      alert(err.message || 'Error al otorgar artefacto');
+      console.warn('RPC grant_artifact falló o no existe. Ejecutando actualización directa:', err);
     }
+
+    // Fallback de asignación directa
+    const currentInventory = get().studentInventoryMap[normId] || get().studentInventoryMap[studentId] || [];
+    const updatedInventory = Array.from(new Set([...currentInventory, artifactId]));
+
+    if (isUuid(dbStudentId)) {
+      try {
+        await supabase
+          .from('student_inventory')
+          .insert({ student_id: dbStudentId, artifact_id: artifactId, acquired_at: new Date().toISOString() });
+      } catch (e) {
+        console.error('Error insertando artefacto en Supabase:', e);
+      }
+    }
+
+    set((state) => ({
+      studentInventoryMap: {
+        ...state.studentInventoryMap,
+        [studentId]: updatedInventory,
+        [normId]: updatedInventory
+      }
+    }));
+    alert('Artefacto otorgado con éxito.');
   },
 
   revokeArtifact: async (studentId, artifactId, reason) => {
+    const normId = normalizeStudentId(studentId);
+    const dbStudentId = mapStudentIdToUuid(normId);
+
     try {
-      const response = await supabase.rpc('revoke_artifact', {
-        student_id: studentId,
-        artifact_id: artifactId,
-        reason: reason
-      });
-      if (response.error) {
-        console.error('SQL / SCHEMA DEVIATION DETECTED: La función RPC "revoke_artifact" no se encuentra registrada en la base de datos de Supabase.', response.error);
-        alert('Error al retirar artefacto: ' + response.error.message);
-        return;
-      }
-      if (response && response.data && response.data.success) {
-        set((state) => ({
-          studentInventoryMap: {
-            ...state.studentInventoryMap,
-            [studentId]: response.data.new_inventory
-          },
-          studentMessages: [response.data.new_message, ...state.studentMessages]
-        }));
-        alert("Artefacto retirado e informe enviado al alumno.");
+      if (isUuid(dbStudentId)) {
+        const response = await supabase.rpc('revoke_artifact', {
+          p_student_id: dbStudentId,
+          p_artifact_id: artifactId,
+          p_reason: reason
+        });
+
+        if (!response.error && response.data && response.data.success) {
+          const newInventory = response.data.inventory || response.data.new_inventory || [];
+          const newMessage = response.data.new_message;
+
+          set((state) => ({
+            studentInventoryMap: {
+              ...state.studentInventoryMap,
+              [studentId]: newInventory,
+              [normId]: newInventory
+            },
+            studentMessages: newMessage ? [newMessage, ...state.studentMessages] : state.studentMessages
+          }));
+          alert('Artefacto retirado e informe enviado al alumno.');
+          return;
+        }
       }
     } catch (err: any) {
-      console.error('Error al retirar artefacto:', err);
-      alert(err.message || 'Error al retirar artefacto');
+      console.warn('RPC revoke_artifact falló o no existe. Ejecutando retiro directo:', err);
     }
+
+    // Fallback de retiro directo
+    const currentInventory = get().studentInventoryMap[normId] || get().studentInventoryMap[studentId] || [];
+    const updatedInventory = currentInventory.filter(id => id !== artifactId);
+
+    if (isUuid(dbStudentId)) {
+      try {
+        await supabase
+          .from('student_inventory')
+          .delete()
+          .eq('student_id', dbStudentId)
+          .eq('artifact_id', artifactId);
+      } catch (e) {
+        console.error('Error borrando artefacto de Supabase:', e);
+      }
+    }
+
+    set((state) => ({
+      studentInventoryMap: {
+        ...state.studentInventoryMap,
+        [studentId]: updatedInventory,
+        [normId]: updatedInventory
+      }
+    }));
+    alert('Artefacto retirado e informe enviado al alumno.');
   },
 
   markStudentMessageAsRead: (messageId) => {
@@ -497,79 +698,105 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
     }));
   },
 
-  addXpAndCoins: (studentId, xpEarned, coinsEarned, levelUpCallback) => {
+  addXpAndCoins: async (studentId, xpEarned, coinsEarned, levelUpCallback) => {
+    const activeId = normalizeStudentId(studentId);
+    const dbStudentId = mapStudentIdToUuid(activeId);
     const { allStats } = get();
-    const studentStats = allStats[studentId];
+    const studentStats = allStats[activeId] || allStats[studentId];
     if (!studentStats) return;
 
-    let currentXP = studentStats.xp + xpEarned;
-    let currentCoins = studentStats.coins + coinsEarned;
-    let level = studentStats.level;
+    let currentXP = (studentStats.xp || 0) + xpEarned;
+    let currentCoins = (studentStats.coins || 0) + coinsEarned;
+    let level = studentStats.level || 1;
     let leveledUp = false;
-    let skillPoints = studentStats.skill_points || 0;
+    let skillPoints = studentStats.skill_points ?? 0;
 
-    const xpRequiredForNextLevel = level * 200;
-    if (currentXP >= xpRequiredForNextLevel) {
+    // Bucle para acumulación de niveles y asignación de +2 skill_points por cada nivel ganado a TODOS los estudiantes
+    let xpRequiredForNextLevel = level * 200;
+    while (currentXP >= xpRequiredForNextLevel) {
       currentXP -= xpRequiredForNextLevel;
       level += 1;
+      skillPoints += 2;
       leveledUp = true;
-      const isSec = studentId === 'std-sec';
-      if (isSec) {
-        skillPoints += 2;
-      }
+      xpRequiredForNextLevel = level * 200;
     }
 
-    let newStreak = studentStats.current_streak;
+    let newStreak = studentStats.current_streak || 0;
     const todayStr = new Date().toISOString().split('T')[0];
     if (studentStats.last_active_date !== todayStr) {
-      newStreak = studentStats.current_streak + 1;
+      newStreak = (studentStats.current_streak || 0) + 1;
     }
 
-    set((state) => ({
-      allStats: {
-        ...state.allStats,
-        [studentId]: {
-          ...studentStats,
-          xp: currentXP,
-          level: level,
-          coins: currentCoins,
-          current_streak: newStreak,
-          max_streak: Math.max(newStreak, studentStats.max_streak),
-          last_active_date: todayStr,
-          skill_points: skillPoints,
-          pet_energy: Math.min(100, (studentStats.pet_energy ?? 100) + 15),
-          updated_at: new Date().toISOString(),
-        },
-      },
-    }));
+    const updatedStatsPayload = {
+      xp: currentXP,
+      level: level,
+      coins: currentCoins,
+      current_streak: newStreak,
+      max_streak: Math.max(newStreak, studentStats.max_streak || 0),
+      last_active_date: todayStr,
+      skill_points: skillPoints,
+      pet_energy: Math.min(100, (studentStats.pet_energy ?? 100) + 15),
+      updated_at: new Date().toISOString()
+    };
+
+    // 1. Envío asíncrono a Supabase primero
+    try {
+      const { error } = await supabase
+        .from('student_stats')
+        .update(updatedStatsPayload)
+        .eq('student_id', dbStudentId);
+
+      if (error) {
+        console.error('Error al actualizar estadísticas en Supabase:', error.message);
+      }
+    } catch (err) {
+      console.error('Error inesperado al enviar estadísticas a Supabase:', err);
+    }
+
+    // 2. Actualizar estado local en Zustand
+    set((state) => {
+      const current = state.allStats[activeId] || state.allStats[studentId] || {};
+      const newStats = {
+        ...current,
+        ...updatedStatsPayload
+      };
+      return {
+        allStats: {
+          ...state.allStats,
+          [activeId]: newStats,
+          [studentId]: newStats
+        }
+      };
+    });
 
     if (levelUpCallback) {
       levelUpCallback(leveledUp);
     }
   },
 
-  updateStatsAfterExam: (studentId, xpEarned, coinsEarned, statBoost, customLoot) => {
+  updateStatsAfterExam: async (studentId, xpEarned, coinsEarned, statBoost, customLoot) => {
+    const activeId = normalizeStudentId(studentId);
+    const dbStudentId = mapStudentIdToUuid(activeId);
     const { allStats } = get();
-    const studentStats = allStats[studentId];
+    const studentStats = allStats[activeId] || allStats[studentId];
     if (!studentStats) return;
 
-    let currentXP = studentStats.xp + xpEarned;
-    let currentCoins = studentStats.coins + coinsEarned;
-    let level = studentStats.level;
-    let skillPoints = studentStats.skill_points || 0;
+    let currentXP = (studentStats.xp || 0) + xpEarned;
+    let currentCoins = (studentStats.coins || 0) + coinsEarned;
+    let level = studentStats.level || 1;
+    let skillPoints = studentStats.skill_points ?? 0;
 
-    const xpRequiredForNextLevel = level * 200;
-    if (currentXP >= xpRequiredForNextLevel) {
+    let xpRequiredForNextLevel = level * 200;
+    while (currentXP >= xpRequiredForNextLevel) {
       currentXP -= xpRequiredForNextLevel;
       level += 1;
-      if (studentId === 'std-sec') {
-        skillPoints += 2;
-      }
+      skillPoints += 2;
+      xpRequiredForNextLevel = level * 200;
     }
 
-    let finalStrength = studentStats.attribute_strength || 1;
-    let finalIntelligence = studentStats.attribute_intelligence || 1;
-    let finalDefense = studentStats.attribute_defense || 1;
+    let finalStrength = studentStats.attribute_strength ?? 10;
+    let finalIntelligence = studentStats.attribute_intelligence ?? 10;
+    let finalDefense = studentStats.attribute_defense ?? 10;
 
     if (statBoost) {
       if (statBoost.strength) finalStrength += statBoost.strength;
@@ -577,43 +804,81 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       if (statBoost.defense) finalDefense += statBoost.defense;
     }
 
-    set((state) => ({
-      allStats: {
-        ...state.allStats,
-        [studentId]: {
-          ...studentStats,
-          xp: currentXP,
-          level: level,
-          coins: currentCoins,
-          skill_points: skillPoints,
-          attribute_strength: finalStrength,
-          attribute_intelligence: finalIntelligence,
-          attribute_defense: finalDefense,
-          pet_energy: Math.min(100, (studentStats.pet_energy ?? 100) + 15),
-          updated_at: new Date().toISOString(),
-        },
-      },
-    }));
+    const updatedStatsPayload = {
+      xp: currentXP,
+      level: level,
+      coins: currentCoins,
+      skill_points: skillPoints,
+      attribute_strength: finalStrength,
+      attribute_intelligence: finalIntelligence,
+      attribute_defense: finalDefense,
+      pet_energy: Math.min(100, (studentStats.pet_energy ?? 100) + 15),
+      updated_at: new Date().toISOString(),
+    };
+
+    // 1. Envío asíncrono a Supabase primero
+    try {
+      const { error } = await supabase
+        .from('student_stats')
+        .update(updatedStatsPayload)
+        .eq('student_id', dbStudentId);
+
+      if (error) {
+        console.error('Error al actualizar estadísticas del examen en Supabase:', error.message);
+      }
+    } catch (err) {
+      console.error('Error inesperado al enviar estadísticas del examen a Supabase:', err);
+    }
+
+    // 2. Actualizar estado local en Zustand
+    set((state) => {
+      const current = state.allStats[activeId] || state.allStats[studentId] || {};
+      const newStats = {
+        ...current,
+        ...updatedStatsPayload
+      };
+      return {
+        allStats: {
+          ...state.allStats,
+          [activeId]: newStats,
+          [studentId]: newStats
+        }
+      };
+    });
 
     if (customLoot) {
-      set((state) => {
-        const studentAvatar = state.allAvatars[studentId];
-        if (!studentAvatar) return state;
-        const currentUnlocked = studentAvatar.unlocked_items || [];
+      const currentAvatar = get().allAvatars[activeId] || get().allAvatars[studentId];
+      if (currentAvatar) {
+        const currentUnlocked = currentAvatar.unlocked_items || [];
         const nextUnlocked = currentUnlocked.includes(customLoot) ? currentUnlocked : [...currentUnlocked, customLoot];
-        return {
-          allAvatars: {
-            ...state.allAvatars,
-            [studentId]: {
-              ...studentAvatar,
-              unlocked_items: nextUnlocked,
-              pet_hunger: 100,
-              pet_happiness: 100,
-              updated_at: new Date().toISOString(),
+        
+        try {
+          await supabase
+            .from('student_avatars')
+            .update({ unlocked_items: nextUnlocked })
+            .eq('student_id', dbStudentId);
+        } catch (err) {
+          console.error('Error al desbloquear recompensa del examen en Supabase:', err);
+        }
+
+        set((state) => {
+          const avatarToUpdate = state.allAvatars[activeId] || state.allAvatars[studentId] || {};
+          const updatedAv = {
+            ...avatarToUpdate,
+            unlocked_items: nextUnlocked,
+            pet_hunger: 100,
+            pet_happiness: 100,
+            updated_at: new Date().toISOString(),
+          };
+          return {
+            allAvatars: {
+              ...state.allAvatars,
+              [activeId]: updatedAv,
+              [studentId]: updatedAv,
             },
-          },
-        };
-      });
+          };
+        });
+      }
     }
   },
 

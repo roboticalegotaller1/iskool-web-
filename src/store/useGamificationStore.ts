@@ -9,6 +9,15 @@ const isUuid = (str?: string): boolean => {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
 };
 
+const mapStudentIdToUuid = (id: string): string => {
+  if (isUuid(id)) return id;
+  if (id === 'std-pa') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a11';
+  if (id === 'std-sec') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a22';
+  if (id === 'std-pb') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a33';
+  if (id === 'std-prep') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44';
+  return id;
+};
+
 const ensureSubjectExists = async (subjectId: string): Promise<string> => {
   if (isUuid(subjectId)) {
     const { data, error } = await supabase
@@ -171,43 +180,160 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
   submitQuiz: async (questId, score, answers) => {
     const studentStore = useStudentStore.getState();
     const activeStudentId = studentStore.activeStudentId;
+    const dbStudentId = mapStudentIdToUuid(activeStudentId);
 
+    // 1. Intentar llamar a la RPC `submit_quiz` de Supabase con UUID normalizado
     try {
-      const response = await supabase.rpc('submit_quiz', {
-        student_id: activeStudentId,
-        quest_id: questId,
-        score: score,
-        answers: answers
-      });
+      if (isUuid(dbStudentId)) {
+        const response = await supabase.rpc('submit_quiz', {
+          p_student_id: dbStudentId,
+          p_quest_id: isUuid(questId) ? questId : '00000000-0000-0000-0000-000000000001',
+          p_score: score,
+          p_answers: answers
+        });
 
-      if (response.error) {
-        console.error('SQL / SCHEMA DEVIATION DETECTED: La función RPC "submit_quiz" no existe o falló en la base de datos de Supabase.', response.error);
-        return { xpEarned: 0, coinsEarned: 0, leveledUp: false, badgeEarned: null };
+        if (!response.error && response.data) {
+          const data = response.data;
+          const attemptId = data.attempt_id || `att-${Date.now()}`;
+          const feedback = data.feedback || '';
+
+          const newAttempt: QuestAttempt = {
+            id: attemptId,
+            student_id: activeStudentId,
+            quest_id: questId,
+            score: score,
+            is_completed: score >= 60,
+            answers: answers,
+            feedback: feedback,
+            created_at: new Date().toISOString()
+          };
+
+          set((state) => ({
+            questAttempts: [newAttempt, ...state.questAttempts]
+          }));
+
+          if (data.new_stats) {
+            useStudentStore.setState((state) => ({
+              allStats: {
+                ...state.allStats,
+                [activeStudentId]: {
+                  ...state.allStats[activeStudentId],
+                  ...data.new_stats
+                }
+              }
+            }));
+          }
+
+          if (data.badge_earned) {
+            get().unlockBadge(activeStudentId, data.badge_earned.id);
+          }
+
+          return {
+            xpEarned: data.xp_earned || 0,
+            coinsEarned: data.coins_earned || 0,
+            leveledUp: !!data.leveled_up,
+            badgeEarned: data.badge_earned || null
+          };
+        }
       }
+    } catch (err) {
+      console.warn('RPC submit_quiz falló, ejecutando lógica de respaldo:', err);
+    }
 
-      if (response && response.data) {
-        const data = response.data;
-        const attemptId = data.attempt_id || `att-${Date.now()}`;
-        const feedback = data.feedback || '';
+    // 2. Fallback de respaldo cuando la RPC no está disponible o falla
+    let xpBase = 100;
+    let coinsBase = 20;
+    
+    for (const m of get().missionsList) {
+      const q = m.quests?.find(item => item.id === questId);
+      if (q) {
+        xpBase = q.xp_reward || 100;
+        coinsBase = q.coins_reward || 20;
+        break;
+      }
+    }
 
-        const newAttempt: QuestAttempt = {
-          id: attemptId,
-          student_id: activeStudentId,
+    const xpEarned = Math.round(xpBase * (score / 100.0));
+    const coinsEarned = score === 100 ? coinsBase + 5 : Math.round(coinsBase * (score / 100.0));
+
+    let leveledUp = false;
+    await useStudentStore.getState().addXpAndCoins(activeStudentId, xpEarned, coinsEarned, (lvl) => {
+      leveledUp = lvl;
+    });
+
+    const attemptId = `att-${Date.now()}`;
+    const feedback = score >= 60 ? '¡Bien hecho! Has superado este reto.' : 'Sigue practicando para dominar el tema.';
+    const newAttempt: QuestAttempt = {
+      id: attemptId,
+      student_id: activeStudentId,
+      quest_id: questId,
+      score: score,
+      is_completed: score >= 60,
+      answers: answers,
+      feedback: feedback,
+      created_at: new Date().toISOString()
+    };
+
+    set((state) => ({
+      questAttempts: [newAttempt, ...state.questAttempts]
+    }));
+
+    if (isUuid(dbStudentId) && isUuid(questId)) {
+      try {
+        await supabase.from('quest_attempts').insert({
+          student_id: dbStudentId,
           quest_id: questId,
           score: score,
           is_completed: score >= 60,
           answers: answers,
           feedback: feedback,
           created_at: new Date().toISOString()
-        };
+        });
+      } catch (err) {
+        console.error('Error insertando intento en Supabase:', err);
+      }
+    }
 
-        // Update quest attempts
-        set((state) => ({
-          questAttempts: [newAttempt, ...state.questAttempts]
-        }));
+    return { xpEarned, coinsEarned, leveledUp, badgeEarned: null };
+  },
 
-        // Update student store stats
-        if (data.new_stats) {
+  submitExam: async (questId, score, answers, statBoost, customLoot) => {
+    const studentStore = useStudentStore.getState();
+    const activeStudentId = studentStore.activeStudentId;
+    const dbStudentId = mapStudentIdToUuid(activeStudentId);
+
+    // 1. Intentar llamar a la RPC `submit_exam` de Supabase con UUID normalizado
+    try {
+      if (isUuid(dbStudentId)) {
+        const response = await supabase.rpc('submit_exam', {
+          p_student_id: dbStudentId,
+          p_quest_id: isUuid(questId) ? questId : '00000000-0000-0000-0000-000000000002',
+          p_score: score,
+          p_answers: answers,
+          p_stat_boost: statBoost || {},
+          p_custom_loot: customLoot || null
+        });
+
+        if (!response.error && response.data) {
+          const data = response.data;
+          const attemptId = data.attempt_id || `att-${Date.now()}`;
+          const feedback = data.feedback || '';
+
+          const newAttempt: QuestAttempt = {
+            id: attemptId,
+            student_id: activeStudentId,
+            quest_id: questId,
+            score: score,
+            is_completed: score >= 60,
+            answers: answers,
+            feedback: feedback,
+            created_at: new Date().toISOString()
+          };
+
+          set((state) => ({
+            questAttempts: [newAttempt, ...state.questAttempts]
+          }));
+
           useStudentStore.setState((state) => ({
             allStats: {
               ...state.allStats,
@@ -215,105 +341,77 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
                 ...state.allStats[activeStudentId],
                 ...data.new_stats
               }
+            },
+            allAvatars: {
+              ...state.allAvatars,
+              [activeStudentId]: data.new_avatar 
+                ? { ...state.allAvatars[activeStudentId], ...data.new_avatar }
+                : state.allAvatars[activeStudentId]
             }
           }));
-        }
 
-        // Update student badges
-        if (data.badge_earned) {
-          get().unlockBadge(activeStudentId, data.badge_earned.id);
-        }
+          if (data.badge_earned) {
+            get().unlockBadge(activeStudentId, data.badge_earned.id);
+          }
 
-        return {
-          xpEarned: data.xp_earned || 0,
-          coinsEarned: data.coins_earned || 0,
-          leveledUp: !!data.leveled_up,
-          badgeEarned: data.badge_earned || null
-        };
+          return {
+            xpEarned: data.xp_earned || 0,
+            coinsEarned: data.coins_earned || 0,
+            leveledUp: !!data.leveled_up,
+            badgeEarned: data.badge_earned || null
+          };
+        }
       }
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : String(err);
-      console.error('Error submitting quiz:', errorMsg);
+      console.warn('RPC submit_exam falló, ejecutando lógica de respaldo:', err);
     }
 
-    return { xpEarned: 0, coinsEarned: 0, leveledUp: false, badgeEarned: null };
-  },
+    // 2. Fallback de respaldo cuando la RPC no está en Supabase
+    const xpEarned = Math.round(200 * (score / 100.0));
+    const coinsEarned = Math.round(50 * (score / 100.0));
 
-  submitExam: async (questId, score, answers, statBoost, customLoot) => {
-    const studentStore = useStudentStore.getState();
-    const activeStudentId = studentStore.activeStudentId;
+    await useStudentStore.getState().updateStatsAfterExam(
+      activeStudentId,
+      xpEarned,
+      coinsEarned,
+      statBoost,
+      customLoot
+    );
 
-    try {
-      const response = await supabase.rpc('submit_exam', {
-        student_id: activeStudentId,
-        quest_id: questId,
-        score: score,
-        answers: answers,
-        stat_boost: statBoost,
-        custom_loot: customLoot
-      });
+    const attemptId = `att-${Date.now()}`;
+    const feedback = '¡Examen final completado!';
+    const newAttempt: QuestAttempt = {
+      id: attemptId,
+      student_id: activeStudentId,
+      quest_id: questId,
+      score: score,
+      is_completed: score >= 60,
+      answers: answers,
+      feedback: feedback,
+      created_at: new Date().toISOString()
+    };
 
-      if (response.error) {
-        console.error('SQL / SCHEMA DEVIATION DETECTED: La función RPC "submit_exam" no está registrada en Supabase.', response.error);
-        return { xpEarned: 0, coinsEarned: 0, leveledUp: false, badgeEarned: null };
-      }
+    set((state) => ({
+      questAttempts: [newAttempt, ...state.questAttempts]
+    }));
 
-      if (response && response.data) {
-        const data = response.data;
-        const attemptId = data.attempt_id || `att-${Date.now()}`;
-        const feedback = data.feedback || '';
-
-        const newAttempt: QuestAttempt = {
-          id: attemptId,
-          student_id: activeStudentId,
+    if (isUuid(dbStudentId) && isUuid(questId)) {
+      try {
+        await supabase.from('quest_attempts').insert({
+          student_id: dbStudentId,
           quest_id: questId,
           score: score,
           is_completed: score >= 60,
           answers: answers,
           feedback: feedback,
           created_at: new Date().toISOString()
-        };
-
-        // Update quest attempts
-        set((state) => ({
-          questAttempts: [newAttempt, ...state.questAttempts]
-        }));
-
-        // Update student store stats & avatars
-        useStudentStore.setState((state) => ({
-          allStats: {
-            ...state.allStats,
-            [activeStudentId]: {
-              ...state.allStats[activeStudentId],
-              ...data.new_stats
-            }
-          },
-          allAvatars: {
-            ...state.allAvatars,
-            [activeStudentId]: data.new_avatar 
-              ? { ...state.allAvatars[activeStudentId], ...data.new_avatar }
-              : state.allAvatars[activeStudentId]
-          }
-        }));
-
-        // Update student badges
-        if (data.badge_earned) {
-          get().unlockBadge(activeStudentId, data.badge_earned.id);
-        }
-
-        return {
-          xpEarned: data.xp_earned || 0,
-          coinsEarned: data.coins_earned || 0,
-          leveledUp: !!data.leveled_up,
-          badgeEarned: data.badge_earned || null
-        };
+        });
+      } catch (err) {
+        console.error('Error insertando intento de examen en Supabase:', err);
       }
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : String(err);
-      console.error('Error submitting exam:', errorMsg);
     }
 
-    return { xpEarned: 0, coinsEarned: 0, leveledUp: false, badgeEarned: null };
+    return { xpEarned, coinsEarned, leveledUp: false, badgeEarned: null };
   },
 
   saveQuest: async (subjectId, questData) => {
@@ -825,16 +923,17 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
       if (statsError) throw statsError;
 
       if (currentStats) {
-        const newXp = (currentStats.xp || 0) + xpToGrant;
+        let finalXp = (currentStats.xp || 0) + xpToGrant;
         const newCoins = (currentStats.coins || 0) + coinsToGrant;
+        let finalLevel = currentStats.level || 1;
+        let finalSkillPoints = currentStats.skill_points ?? 0;
 
-        const xpForCurrentLevel = currentStats.level * 200;
-        let finalLevel = currentStats.level;
-        let finalXp = newXp;
-
-        if (finalXp >= xpForCurrentLevel) {
-          finalXp = finalXp - xpForCurrentLevel;
+        let xpForCurrentLevel = finalLevel * 200;
+        while (finalXp >= xpForCurrentLevel) {
+          finalXp -= xpForCurrentLevel;
           finalLevel += 1;
+          finalSkillPoints += 2;
+          xpForCurrentLevel = finalLevel * 200;
         }
 
         const { error: updateStatsError } = await supabase
@@ -843,6 +942,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
             xp: finalXp,
             coins: newCoins,
             level: finalLevel,
+            skill_points: finalSkillPoints,
             updated_at: new Date().toISOString()
           })
           .eq('student_id', normStudentId);
@@ -850,23 +950,29 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
         if (updateStatsError) throw updateStatsError;
 
         // Sincronizar en useStudentStore local
-        useStudentStore.setState((state) => ({
-          allStats: {
-            ...state.allStats,
-            [studentId]: {
-              ...state.allStats[studentId],
-              xp: finalXp,
-              coins: newCoins,
-              level: finalLevel
-            },
-            [normStudentId]: {
-              ...state.allStats[normStudentId],
-              xp: finalXp,
-              coins: newCoins,
-              level: finalLevel
+        useStudentStore.setState((state) => {
+          const currentA = state.allStats[studentId] || {};
+          const currentB = state.allStats[normStudentId] || {};
+          return {
+            allStats: {
+              ...state.allStats,
+              [studentId]: {
+                ...currentA,
+                xp: finalXp,
+                coins: newCoins,
+                level: finalLevel,
+                skill_points: finalSkillPoints
+              },
+              [normStudentId]: {
+                ...currentB,
+                xp: finalXp,
+                coins: newCoins,
+                level: finalLevel,
+                skill_points: finalSkillPoints
+              }
             }
-          }
-        }));
+          };
+        });
       }
 
       // Forzar recarga local de intentos

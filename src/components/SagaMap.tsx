@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useGamificationStore } from '@/store/useGamificationStore';
-import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, normalizeStudentId, mapStudentIdToUuid } from '@/store/useStudentStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { Loader } from '@/components/Loader';
 import { useHydration } from '@/hooks/useHydration';
@@ -29,15 +29,21 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
   const stats = useCurrentStudentStats();
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
   const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const normActiveStudentId = normalizeStudentId(activeStudentId);
+  const dbActiveStudentUuid = mapStudentIdToUuid(activeStudentId);
   const schedulesList = useSchoolAdminStore(state => state.schedulesList);
 
   if (!isHydrated) {
     return <Loader />;
   }
 
-  // Helper to determine if a quest is completed
+  // Helper to determine if a quest is completed for active student
   const isQuestCompleted = (qId: string) => {
-    return questAttempts.some(a => a.quest_id === qId && (a.is_completed || a.score >= 60));
+    return questAttempts.some(a => 
+      a.quest_id === qId && 
+      (a.student_id === activeStudentId || a.student_id === normActiveStudentId || a.student_id === dbActiveStudentUuid) &&
+      (a.is_completed || a.score >= 60)
+    );
   };
 
   // Helper to calculate coordinates of the node with collision prevention and organic pathing
@@ -61,7 +67,11 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
 
   const currentStudentLevel = stats?.level || 1;
 
-  const activeStudent = detailedStudents.find(s => s.id === activeStudentId);
+  const activeStudent = detailedStudents.find(s => 
+    s.id === activeStudentId || 
+    s.id === normActiveStudentId || 
+    s.id === dbActiveStudentUuid
+  );
   const studentGroupId = activeStudent?.group_id;
 
   // Get subjects for this group
@@ -69,8 +79,9 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     .filter(s => s.groupId === studentGroupId)
     .map(s => s.subjectId);
 
-  // Filter missions by student's subjects
+  // Filter active missions by student's subjects
   const filteredMissions = missions.filter(m => {
+    if (m.is_active === false) return false;
     if (studentSubjectIds.length > 0) {
       return studentSubjectIds.some(subId => {
         if (subId === m.subject_id) return true;
@@ -84,8 +95,9 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     return true;
   });
 
-  // Fallback to all provided missions if subject-specific filter returns empty
-  const displayMissions = filteredMissions.length > 0 ? filteredMissions : missions;
+  // Fallback to all active provided missions if subject-specific filter returns empty
+  const activeMissions = missions.filter(m => m.is_active !== false);
+  const displayMissions = filteredMissions.length > 0 ? filteredMissions : activeMissions;
 
   // Sort missions to form a sequence
   const sortedMissions = [...displayMissions].sort((a, b) => a.created_at.localeCompare(b.created_at));
@@ -122,6 +134,15 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
 
   // Determine status of each mission
   const getMissionStatus = (mission: Mission, index: number) => {
+    const missionMinLevel = (mission as any).required_level || 
+      (mission.quests && mission.quests.length > 0 
+        ? Math.min(...mission.quests.map(q => q.required_level || 1)) 
+        : 1);
+    
+    if (currentStudentLevel < missionMinLevel) {
+      return 'locked';
+    }
+
     const totalQuests = mission.quests?.length || 0;
     const completedQuests = mission.quests?.filter(q => isQuestCompleted(q.id)).length || 0;
     const isCompleted = totalQuests > 0 && completedQuests === totalQuests;
@@ -140,7 +161,7 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     }
 
     if (index < firstUncompletedIndex) {
-      return 'completed'; // Treat past incomplete as completed/re-playable or active
+      return 'completed';
     }
 
     return 'locked';
@@ -205,6 +226,16 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
 
   // Handle clicking on a node
   const handleNodeClick = (mission: Mission, status: string) => {
+    const missionMinLevel = (mission as any).required_level || 
+      (mission.quests && mission.quests.length > 0 
+        ? Math.min(...mission.quests.map(q => q.required_level || 1)) 
+        : 1);
+
+    if (currentStudentLevel < missionMinLevel) {
+      alert(`⚠️ Nivel insuficiente para desbloquear esta aventura. Requiere Nivel ${missionMinLevel}. Tu nivel actual es ${currentStudentLevel}.`);
+      return;
+    }
+
     if (status === 'locked') {
       alert("⚠️ Esta aventura aún está bloqueada. Completa las misiones previas.");
       return;

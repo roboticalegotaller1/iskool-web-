@@ -7,9 +7,11 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useHydration } from '@/hooks/useHydration';
+import { Loader } from '@/components/Loader';
 import { Mission } from '@/types';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
-import { useStudentStore, useCurrentStudentStats } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, normalizeStudentId, mapStudentIdToUuid } from '@/store/useStudentStore';
 
 interface AdventureCarouselProps {
   missions: Mission[];
@@ -32,17 +34,24 @@ interface ExtendedCard {
 }
 
 export default function AdventureCarousel({ missions }: AdventureCarouselProps) {
+  const isHydrated = useHydration();
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const [cards, setCards] = useState<ExtendedCard[]>([]);
 
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
   const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const normActiveStudentId = normalizeStudentId(activeStudentId);
+  const dbActiveStudentUuid = mapStudentIdToUuid(activeStudentId);
   const schedulesList = useSchoolAdminStore(state => state.schedulesList);
   const stats = useCurrentStudentStats();
   const currentStudentLevel = stats?.level || 1;
 
-  const activeStudent = detailedStudents.find(s => s.id === activeStudentId);
+  const activeStudent = detailedStudents.find(s => 
+    s.id === activeStudentId || 
+    s.id === normActiveStudentId || 
+    s.id === dbActiveStudentUuid
+  );
   const studentGroupId = activeStudent?.group_id;
 
   // Get subjects for this group
@@ -50,8 +59,9 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
     .filter(s => s.groupId === studentGroupId)
     .map(s => s.subjectId);
 
-  // Filter missions by student's subjects
+  // Filter active missions by student's subjects
   const filteredMissions = missions.filter(m => {
+    if (m.is_active === false) return false;
     if (studentSubjectIds.length > 0) {
       return studentSubjectIds.some(subId => {
         if (subId === m.subject_id) return true;
@@ -68,7 +78,7 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
   const handleCardClick = (card: ExtendedCard, isActive: boolean) => {
     if (!isActive) return;
     if (card.isLocked) {
-      alert('Nivel insuficiente para desbloquear esta aventura');
+      alert(`⚠️ Nivel insuficiente. Requiere Nivel ${card.minLevel || 1} para desbloquear esta aventura.`);
       return;
     }
     router.push(`/student/missions/${card.id}`);
@@ -88,6 +98,13 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
       const coinsReward = mission.quests?.reduce((acc, q) => acc + (q.coins_reward || 0), 0) || 45;
       const questsCount = mission.quests?.length || 2;
 
+      // Calculate minimum level required
+      const missionMinLevel = (mission as any).required_level || 
+        (mission.quests && mission.quests.length > 0 
+          ? Math.min(...mission.quests.map(q => q.required_level || 1)) 
+          : 1);
+      const isLocked = currentStudentLevel < missionMinLevel;
+
       const icon = isMath 
         ? <Brain className="h-8 w-8 text-cyan-400" />
         : <BookOpen className="h-8 w-8 text-purple-400" />;
@@ -103,7 +120,8 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
         subjectName,
         subjectColor,
         glowColor,
-        isLocked: false,
+        isLocked,
+        minLevel: missionMinLevel,
         xpReward,
         coinsReward,
         questsCount,
@@ -181,6 +199,10 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [cards]);
+
+  if (!isHydrated) {
+    return <Loader />;
+  }
 
   if (cards.length === 0) return null;
 
