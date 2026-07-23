@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar, useCurrentStudentAcademicPower } from '@/store/useStudentStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { AnimeAvatarSprite } from './AnimeAvatarSprite';
 import { BruxaPixiSprite } from './BruxaPixiSprite';
@@ -419,14 +419,10 @@ export function RpgCombatViewport() {
 
   const examContent = missionExamQuest.content as any;
 
-  // Determinar tareas completadas
-  const completedHomeworkCount = homeworkQuests.filter(q => {
-    const attempts = questAttempts.filter(a => a.quest_id === q.id);
-    return attempts.some(a => a.is_completed || a.score >= 60);
-  }).length;
-
-  const totalHomeworkCount = homeworkQuests.length || 1;
-  const battlePowerPercent = Math.round((completedHomeworkCount / totalHomeworkCount) * 100);
+  // Cálculo Dinámico de Poder Académico (Nivel/XP, Misiones, Artefactos, Tareas Misión)
+  const academicPowerData = useCurrentStudentAcademicPower(activeMission?.quests || []);
+  const { effectivePower, totalBasePower, percentage: battlePowerPercent, breakdown } = academicPowerData;
+  const { completedHomeworkCount, totalHomeworkCount, homeworkMultiplier } = breakdown;
 
   // Estados de Combate JRPG
   const [battlePhase, setBattlePhase] = useState<'idle' | 'fight' | 'victory' | 'defeat'>('idle');
@@ -530,18 +526,15 @@ export function RpgCombatViewport() {
     playSound('charge');
 
     setTimeout(() => {
-      // Calcular daño
-      const baseDmg = actionType === 'skill' ? 35 : 20;
+      // Calcular daño dinámico en función del Poder Académico Efectivo (Nivel, XP, Misiones, Artefactos, Tareas)
+      const actionBase = actionType === 'skill' ? 35 : 20;
       const statBonus = actionType === 'skill' 
-        ? (stats.attribute_intelligence || 10) * 1.5 
-        : (stats.attribute_strength || 10) * 1.2;
+        ? (stats.attribute_intelligence || 10) * 1.3 
+        : (stats.attribute_strength || 10) * 1.3;
 
-      // El factor de daño es battlePowerPercent / 100
-      const damageFactor = battlePowerPercent / 100;
-      let finalDamage = Math.round((baseDmg + statBonus + bonusDamage) * damageFactor);
-      
-      // Randomizar +/- 15%
-      finalDamage = Math.round(finalDamage * (0.85 + Math.random() * 0.3));
+      // El daño escala directamente con el Poder Académico Efectivo del alumno
+      const powerDamageBonus = Math.round(effectivePower / 3.5);
+      let finalDamage = Math.round((actionBase + statBonus + powerDamageBonus + bonusDamage) * (0.85 + Math.random() * 0.3));
       
       const newBossHp = Math.max(0, bossHp - finalDamage);
       setBossHp(newBossHp);
@@ -789,12 +782,21 @@ export function RpgCombatViewport() {
             </button>
           </div>
 
-          {/* Poder de Batalla */}
-          <div className="flex items-center gap-2 bg-slate-900/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-emerald-500/20">
-            <Zap className="h-3 w-3 text-emerald-400 fill-current" />
-            <span className="text-[10px] font-black text-zinc-100 uppercase tracking-widest">
-              PODER ACADÉMICO: <strong className="text-emerald-400">{battlePowerPercent}%</strong>
-            </span>
+          {/* Poder de Batalla Dinámico HUD */}
+          <div 
+            className="flex items-center gap-2 bg-slate-900/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-emerald-500/30 group relative cursor-help"
+            title={`Poder Base: ${totalBasePower} | Multiplicador Tareas: ${Math.round(homeworkMultiplier * 100)}% | Poder Efectivo: ${effectivePower}`}
+          >
+            <Zap className="h-3.5 w-3.5 text-emerald-400 fill-current animate-pulse" />
+            <div className="flex flex-col text-left">
+              <span className="text-[10px] font-black text-zinc-100 uppercase tracking-widest leading-none flex items-center gap-1.5">
+                PODER ACADÉMICO: <strong className="text-emerald-400 font-extrabold">{effectivePower} PTS</strong>
+                <span className="text-[9px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">({battlePowerPercent}%)</span>
+              </span>
+              <span className="text-[8px] text-zinc-400 font-medium leading-tight">
+                Nivel ({breakdown.levelPower}p) + Misiones ({breakdown.questPower}p) + Artefactos ({breakdown.artifactPower}p)
+              </span>
+            </div>
           </div>
         </div>
 

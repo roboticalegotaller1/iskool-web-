@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import { StudentStats, StudentAvatar, StudentMessage, UserProfile, Quest } from '../types';
 import { STATS_MAP_SEED, AVATAR_MAP_SEED, STUDENT_INVENTORY_SEED, STUDENT_MESSAGES_SEED, STUDENTS_LIST_SEED } from './seeds';
 import { supabase } from '@/lib/supabaseClient';
+import { calculateAcademicPower, AcademicPowerResult } from '@/utils/academicPower';
+import { useGamificationStore } from './useGamificationStore';
 
 let statsChannel: any = null;
 
@@ -1094,4 +1096,22 @@ export const useCurrentStudentProfile = () => {
     const norm = normalizeStudentId(activeStudentId);
     return STUDENTS_LIST_SEED.find(s => s.id === norm) || STUDENTS_LIST_SEED.find(s => s.id === activeStudentId) || STUDENTS_LIST_SEED[1];
   }, [activeStudentId]);
+};
+
+export const useCurrentStudentAcademicPower = (activeMissionQuests: Quest[] = []): AcademicPowerResult => {
+  const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const normId = normalizeStudentId(activeStudentId);
+  const stats = useCurrentStudentStats();
+  const studentInventoryMap = useStudentStore(state => state.studentInventoryMap);
+
+  const ownedArtifactIds = useMemo(() => {
+    return studentInventoryMap[normId] || studentInventoryMap[activeStudentId] || [];
+  }, [studentInventoryMap, normId, activeStudentId]);
+
+  const shopArtifacts = useGamificationStore(state => state.shopArtifacts);
+  const questAttempts = useGamificationStore(state => state.questAttempts);
+
+  return useMemo(() => {
+    return calculateAcademicPower(stats, questAttempts, ownedArtifactIds, shopArtifacts, activeMissionQuests);
+  }, [stats, questAttempts, ownedArtifactIds, shopArtifacts, activeMissionQuests]);
 };
