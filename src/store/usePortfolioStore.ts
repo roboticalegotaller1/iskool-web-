@@ -57,6 +57,7 @@ const normalizeQuestId = (id?: string | null): string => {
 
 const mapAuthorIdToUuid = (id: string, role: string): string => {
   if (role === 'teacher') return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55';
+  if (role === 'parent' || role === 'tutor') return 'd00a0eeb-9c0b-4ef8-bb6d-7bb9bd380a66';
   if (role === 'student' || role === 'peer') return mapStudentIdToUuid(id);
   if (isUuid(id)) return id;
   return 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55';
@@ -67,6 +68,7 @@ let submissionsChannel: any = null;
 interface PortfolioStoreState {
   portfolioItems: PortfolioItem[];
   isLoadingPortfolio: boolean;
+  portfolioError: string | null;
   
   // Actions
   submitPortfolioItem: (
@@ -107,11 +109,11 @@ interface PortfolioStoreState {
       collaborative?: number;
       communication?: number;
     }
-  ) => void;
+  ) => Promise<void>;
   
   linkPortfolioItemToQuest: (itemId: string, questId: string) => void;
   submitPeerReview: (itemId: string, score: number, comment: string) => void;
-  fetchPortfolioItems: (groupId?: string) => Promise<void>;
+  fetchPortfolioItems: (groupId?: string, targetStudentId?: string) => Promise<void>;
   subscribeToPortfolioChanges: (onUpdateReceived?: (studentName?: string, questTitle?: string) => void) => void;
   unsubscribeFromPortfolioChanges: () => void;
   resetPortfolioStore: () => void;
@@ -120,6 +122,7 @@ interface PortfolioStoreState {
 export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
   portfolioItems: PORTFOLIO_SEED,
   isLoadingPortfolio: false,
+  portfolioError: null,
 
   submitPortfolioItem: async (title, description, fileUrl, fileType, selfReflection, questId, subjectId) => {
     const studentStore = useStudentStore.getState();
@@ -341,7 +344,7 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
 
     let authorProfile: UserProfile = currentStudent;
     if (role === 'teacher') authorProfile = TEACHER_SEED;
-    if (role === 'parent') authorProfile = PARENT_SEED;
+    if (role === 'parent' || role === 'tutor') authorProfile = PARENT_SEED;
 
     const newFeedback: PortfolioFeedback = {
       id: `fb-${Date.now()}`,
@@ -369,12 +372,13 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
 
     if (isUuid(itemId)) {
       const dbAuthorId = mapAuthorIdToUuid(authorId, role);
+      const dbRole = role === 'tutor' ? 'parent' : role;
       supabase
         .from('portfolio_feedback')
         .insert({
           portfolio_item_id: itemId,
           author_id: dbAuthorId,
-          author_role: role,
+          author_role: dbRole,
           feedback_text: text,
           reactions: {}
         })
@@ -411,7 +415,7 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
     }));
   },
 
-  reviewPortfolioItem: (itemId, status, comment, xpAward = 100, campos_formativos, pdas, ejes_articuladores, xp_breakdown) => {
+  reviewPortfolioItem: async (itemId, status, comment, xpAward = 100, campos_formativos, pdas, ejes_articuladores, xp_breakdown) => {
     const newFeedback: PortfolioFeedback = {
       id: `fb-${Date.now()}`,
       portfolio_item_id: itemId,
@@ -424,11 +428,25 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
     };
 
     let targetStudentId = '';
+    let previousStatus: PortfolioItemStatus | undefined = undefined;
+
+    const currentItems = get().portfolioItems;
+    const targetItem = currentItems.find(i => i.id === itemId);
+    if (targetItem) {
+      targetStudentId = targetItem.student_id;
+      previousStatus = targetItem.status;
+
+      // RECHAZO BACKEND (HTTP 403 Forbidden): Rechazar actualización si la evidencia ya está en estado 'approved' (evaluado)
+      if (targetItem.status === 'approved') {
+        const forbiddenErr = new Error("HTTP 403 Forbidden: La evidencia ya se encuentra evaluada y su calificación ha sido bloqueada.");
+        console.error(forbiddenErr.message);
+        throw forbiddenErr;
+      }
+    }
 
     set((state) => ({
       portfolioItems: state.portfolioItems.map(item => {
         if (item.id === itemId) {
-          targetStudentId = item.student_id;
           return {
             ...item,
             status: status,
@@ -444,32 +462,47 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
       })
     }));
 
-    if (status === 'approved' && targetStudentId) {
+    // IDEMPOTENCY CHECK: Otorgar XP al estudiante ÚNICAMENTE si la entrega no estaba previamente aprobada
+    if (status === 'approved' && previousStatus !== 'approved' && targetStudentId) {
       const studentStore = useStudentStore.getState();
-      studentStore.addXpAndCoins(targetStudentId, xpAward, 20);
+      await studentStore.addXpAndCoins(targetStudentId, xpAward, 20);
     }
 
     if (isUuid(itemId)) {
-      supabase
-        .from('portfolio_items')
-        .update({ status: status })
-        .eq('id', itemId)
-        .then(({ error }) => {
-          if (error) console.error('Error updating portfolio item status:', error.message);
-        });
+      try {
+        const { error: updateError } = await supabase
+          .from('portfolio_items')
+          .update({ status: status })
+          .eq('id', itemId);
 
-      supabase
-        .from('portfolio_feedback')
-        .insert({
-          portfolio_item_id: itemId,
-          author_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
-          author_role: 'teacher',
-          feedback_text: comment,
-          reactions: { teacher: ['👏', '⭐'] }
-        })
-        .then(({ error }) => {
-          if (error) console.error('Error inserting feedback to Supabase:', error.message);
-        });
+        if (updateError) {
+          console.error('Error updating portfolio item status:', updateError.message);
+          throw new Error(updateError.message);
+        }
+
+        const { error: feedbackError } = await supabase
+          .from('portfolio_feedback')
+          .insert({
+            portfolio_item_id: itemId,
+            author_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
+            author_role: 'teacher',
+            feedback_text: comment,
+            reactions: { teacher: ['👏', '⭐'] }
+          });
+
+        if (feedbackError) {
+          console.error('Error inserting feedback to Supabase:', feedbackError.message);
+        }
+      } catch (err: any) {
+        console.error('Fallo en la persistencia de revisión:', err);
+        // Rollback local state on network error to keep frontend consistent
+        if (targetItem) {
+          set((state) => ({
+            portfolioItems: state.portfolioItems.map(i => i.id === itemId ? targetItem : i)
+          }));
+        }
+        throw err;
+      }
     }
   },
 
@@ -549,8 +582,8 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
     }
   },
 
-  fetchPortfolioItems: async (groupId) => {
-    set({ isLoadingPortfolio: true });
+  fetchPortfolioItems: async (groupId, targetStudentId) => {
+    set({ isLoadingPortfolio: true, portfolioError: null });
     try {
       const schoolAdminStore = useSchoolAdminStore.getState();
       let query = supabase
@@ -567,10 +600,8 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
               email
             )
           )
-        `);
-
-      const studentStore = useStudentStore.getState();
-      const activeStudentId = studentStore.activeStudentId;
+        `)
+        .order('created_at', { ascending: false });
 
       if (groupId) {
         const groupStudents = schoolAdminStore.detailedStudents
@@ -580,23 +611,34 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
         if (groupStudents.length > 0) {
           query = query.in('student_id', groupStudents);
         } else {
-          set({ portfolioItems: [], isLoadingPortfolio: false });
+          set({ portfolioItems: [], isLoadingPortfolio: false, portfolioError: null });
           return;
         }
-      } else if (activeStudentId) {
-        const dbStudentId = mapStudentIdToUuid(activeStudentId);
+      } else if (targetStudentId) {
+        const dbStudentId = mapStudentIdToUuid(targetStudentId);
         query = query.eq('student_id', dbStudentId);
       }
 
       const response = await query;
       if (response.error) throw new Error(response.error.message);
 
+      const detailedStudents = schoolAdminStore.detailedStudents;
+
       const mappedItems = (response.data || []).map((dbItem: any) => {
         const studentId = normalizeStudentId(dbItem.student_id);
         const subjectId = normalizeSubjectId(dbItem.subject_id);
         const questId = normalizeQuestId(dbItem.quest_id);
 
-        const currentStudent = STUDENTS_LIST_SEED.find(s => s.id === studentId) || {
+        const sDetail = detailedStudents.find(s => s.id === studentId || mapStudentIdToUuid(s.id) === dbItem.student_id);
+        const currentStudent: UserProfile = sDetail ? {
+          id: sDetail.id,
+          first_name: sDetail.first_name,
+          last_name: `${sDetail.last_name_1 || ''} ${sDetail.last_name_2 || ''}`.trim() || sDetail.last_name_1 || 'Alumno',
+          role: 'student' as any,
+          email: sDetail.email || `${sDetail.id}@iskool.edu.mx`,
+          created_at: sDetail.birth_date || new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        } : (STUDENTS_LIST_SEED.find(s => s.id === studentId) || {
           id: studentId,
           first_name: 'Estudiante',
           last_name: 'Desconocido',
@@ -604,7 +646,7 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
           email: `${studentId}@iskool.edu.mx`,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
-        };
+        });
 
         const finalSubject = SUBJECTS_SEED.find(s => s.id === subjectId) || SUBJECTS_SEED[0];
 
@@ -660,9 +702,18 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
         } as PortfolioItem;
       });
 
-      set({ portfolioItems: mappedItems });
+      // Merge with seed items if database items are fewer than seed items to preserve offline/demo UX
+      if (mappedItems.length === 0) {
+        set({ portfolioItems: PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
+      } else {
+        // Dedup DB items and non-overlapping SEED items
+        const dbIds = new Set(mappedItems.map(i => i.id));
+        const extraSeeds = PORTFOLIO_SEED.filter(s => !dbIds.has(s.id));
+        set({ portfolioItems: [...mappedItems, ...extraSeeds], isLoadingPortfolio: false, portfolioError: null });
+      }
     } catch (err: any) {
       console.error('Error fetching portfolio items:', err.message);
+      set({ portfolioError: err.message || 'Error al conectar con la base de datos' });
     } finally {
       set({ isLoadingPortfolio: false });
     }
@@ -676,30 +727,70 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
       .on('postgres_changes', { event: '*', schema: 'public', table: 'portfolio_items' }, async (payload) => {
         console.log("Realtime portfolio item change received:", payload);
         
-        await get().fetchPortfolioItems();
-        
-        if (onUpdateReceived) {
-          let studentName = undefined;
-          let questTitle = undefined;
+        if (payload.eventType === 'INSERT') {
+          const gamificationStore = useGamificationStore.getState();
+          const schoolAdminStore = useSchoolAdminStore.getState();
           
-          if (payload.eventType === 'INSERT') {
-            const studentStore = useStudentStore.getState();
-            const gamificationStore = useGamificationStore.getState();
-            
-            const studentId = normalizeStudentId(payload.new.student_id);
-            const questId = normalizeQuestId(payload.new.quest_id);
-            
-            const currentStudent = STUDENTS_LIST_SEED.find(s => s.id === studentId) || {
-              first_name: 'Alumno',
-              last_name: 'Desconocido'
-            };
-            studentName = `${currentStudent.first_name} ${currentStudent.last_name}`;
-            
-            const quest = questId ? gamificationStore.missionsList.flatMap(m => m.quests || []).find(q => q.id === questId) : null;
-            questTitle = payload.new.title || quest?.title || 'Desafío del Gremio';
+          const studentId = normalizeStudentId(payload.new.student_id);
+          const subjectId = normalizeSubjectId(payload.new.subject_id);
+          const questId = normalizeQuestId(payload.new.quest_id);
+          
+          const sDetail = schoolAdminStore.detailedStudents.find(s => s.id === studentId || mapStudentIdToUuid(s.id) === payload.new.student_id);
+          const currentStudent: UserProfile = sDetail ? {
+            id: sDetail.id,
+            first_name: sDetail.first_name,
+            last_name: `${sDetail.last_name_1 || ''} ${sDetail.last_name_2 || ''}`.trim() || sDetail.last_name_1 || 'Alumno',
+            role: 'student' as any,
+            email: sDetail.email || `${sDetail.id}@iskool.edu.mx`,
+            created_at: sDetail.birth_date || new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          } : (STUDENTS_LIST_SEED.find(s => s.id === studentId) || {
+            id: studentId,
+            first_name: 'Estudiante',
+            last_name: 'Desconocido',
+            role: 'student' as any,
+            email: `${studentId}@iskool.edu.mx`,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          });
+
+          const finalSubject = SUBJECTS_SEED.find(s => s.id === subjectId) || SUBJECTS_SEED[0];
+
+          const newItem: PortfolioItem = {
+            id: payload.new.id,
+            student_id: studentId,
+            subject_id: subjectId,
+            quest_id: questId,
+            title: payload.new.title,
+            description: payload.new.description,
+            file_url: payload.new.file_url,
+            file_type: payload.new.file_type,
+            status: payload.new.status || 'submitted',
+            self_reflection: payload.new.self_reflection,
+            created_at: payload.new.created_at || new Date().toISOString(),
+            updated_at: payload.new.updated_at || new Date().toISOString(),
+            student_profile: currentStudent,
+            subject: finalSubject,
+            feedbacks: [],
+            isNewRealtime: true
+          };
+
+          set((state) => ({
+            portfolioItems: [newItem, ...state.portfolioItems.filter(i => i.id !== newItem.id)]
+          }));
+
+          const quest = questId ? gamificationStore.missionsList.flatMap(m => m.quests || []).find(q => q.id === questId) : null;
+          const questTitle = payload.new.title || quest?.title || 'Desafío del Gremio';
+          const studentName = `${currentStudent.first_name} ${currentStudent.last_name}`;
+
+          if (onUpdateReceived) {
+            onUpdateReceived(studentName, questTitle);
           }
-          
-          onUpdateReceived(studentName, questTitle);
+        } else {
+          await get().fetchPortfolioItems();
+          if (onUpdateReceived) {
+            onUpdateReceived();
+          }
         }
       })
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'portfolio_feedback' }, async (payload) => {
@@ -724,7 +815,8 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
   resetPortfolioStore: () => {
     set({
       portfolioItems: PORTFOLIO_SEED,
-      isLoadingPortfolio: false
+      isLoadingPortfolio: false,
+      portfolioError: null
     });
   }
 }));

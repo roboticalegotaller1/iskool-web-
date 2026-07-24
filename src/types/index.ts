@@ -3,7 +3,7 @@
  * @description Define los roles de usuario autorizados en el sistema escolar.
  * @stateImpact Determina los permisos en el frontend, accesibilidad de rutas y control RLS.
  */
-export type UserRole = 'superadmin' | 'admin' | 'director' | 'coordinator' | 'teacher' | 'student' | 'parent';
+export type UserRole = 'superadmin' | 'admin' | 'director' | 'coordinator' | 'teacher' | 'student' | 'parent' | 'tutor';
 
 /**
  * @interface UserProfile
@@ -531,7 +531,7 @@ export interface PortfolioItem {
  * @typedef {('teacher' | 'parent' | 'student' | 'peer')} FeedbackAuthorRole
  * @description Rol del autor que emite una retroalimentación formativa.
  */
-export type FeedbackAuthorRole = 'teacher' | 'parent' | 'student' | 'peer';
+export type FeedbackAuthorRole = 'teacher' | 'parent' | 'student' | 'peer' | 'tutor';
 
 /**
  * @interface PortfolioFeedback

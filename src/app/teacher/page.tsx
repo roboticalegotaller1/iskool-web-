@@ -16,7 +16,7 @@ import {
   ChevronDown, ChevronUp, RefreshCw, FileCode,
   ZoomIn, ZoomOut, Maximize2, Users, Palette,
   X, MapPin, Phone, Mail, User, AlertTriangle, Bell,
-  Bookmark, Save, Sparkles
+  Bookmark, Save, Sparkles, Lock
 } from 'lucide-react';
 import { FormattedDate } from '@/components/FormattedDate';
 import { DetailedStudent, AttendanceStatus, Attendance, ParentMessage, Quest, QuizQuestion, UserProfile } from '@/types';
@@ -89,6 +89,8 @@ export default function TeacherDashboard() {
   const subjects = SUBJECTS_SEED;
 
   const portfolioItems = usePortfolioStore(state => state.portfolioItems);
+  const isLoadingPortfolio = usePortfolioStore(state => state.isLoadingPortfolio);
+  const portfolioError = usePortfolioStore(state => state.portfolioError);
   const reviewPortfolioItem = usePortfolioStore(state => state.reviewPortfolioItem);
   const linkPortfolioItemToQuest = usePortfolioStore(state => state.linkPortfolioItemToQuest);
   const submitPortfolioItemOnBehalf = usePortfolioStore(state => state.submitPortfolioItemOnBehalf);
@@ -729,41 +731,89 @@ export default function TeacherDashboard() {
         {/* MÓDULO DE EVALUACIÓN FORMATIVA */}
         {currentMenuTab === 'evaluation' && (
           <>
-            {/* Sub-Pestañas para Evaluación Formativa */}
-            <div className="flex justify-end bg-white dark:bg-zinc-900 p-3 px-4 rounded-2xl border border-zinc-200/50 dark:border-zinc-850/50 shadow-sm -mt-2">
-              <div className="flex gap-1 bg-zinc-100 dark:bg-zinc-950 p-1 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40 w-full sm:w-auto">
+            {/* Sub-Pestañas y Controles para Evaluación Formativa */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 bg-white dark:bg-zinc-900 p-3 px-4 rounded-2xl border border-zinc-200/50 dark:border-zinc-850/50 shadow-sm -mt-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>Entregas sincronizadas con Supabase Backend</span>
+                {isLoadingPortfolio && (
+                  <span className="flex items-center gap-1 text-blue-500 text-[11px] animate-pulse">
+                    <RefreshCw className="h-3 w-3 animate-spin" /> Actualizando...
+                  </span>
+                )}
+              </div>
+              
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
-                  onClick={() => { setActiveTab('pending'); setSelectedItemId(null); }}
-                  className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    activeTab === 'pending'
-                      ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                      : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-                  }`}
+                  type="button"
+                  onClick={() => fetchPortfolioItems()}
+                  disabled={isLoadingPortfolio}
+                  title="Sincronizar entregas recientes desde el backend"
+                  className="px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm disabled:opacity-50"
                 >
-                  Pendientes ({pendingItems.length})
+                  <RefreshCw className={`h-3.5 w-3.5 ${isLoadingPortfolio ? 'animate-spin text-blue-500' : ''}`} />
+                  <span>Sincronizar</span>
                 </button>
-                <button
-                  onClick={() => { setActiveTab('reviewed'); setSelectedItemId(null); }}
-                  className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    activeTab === 'reviewed'
-                      ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                      : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-                  }`}
-                >
-                  Evaluados ({reviewedItems.length})
-                </button>
+
+                <div className="flex gap-1 bg-zinc-100 dark:bg-zinc-950 p-1 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40 flex-1 sm:flex-initial">
+                  <button
+                    onClick={() => { setActiveTab('pending'); setSelectedItemId(null); }}
+                    className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeTab === 'pending'
+                        ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                        : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                    }`}
+                  >
+                    Pendientes ({pendingItems.length})
+                  </button>
+                  <button
+                    onClick={() => { setActiveTab('reviewed'); setSelectedItemId(null); }}
+                    className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeTab === 'reviewed'
+                        ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                        : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                    }`}
+                  >
+                    Evaluados ({reviewedItems.length})
+                  </button>
+                </div>
               </div>
             </div>
 
+            {/* Banner de error de red / Supabase */}
+            {portfolioError && (
+              <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 rounded-2xl p-4 flex items-center justify-between gap-3 text-rose-700 dark:text-rose-300 text-xs font-medium my-3 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
+                  <span>No se pudieron sincronizar las entregas recientes desde el servidor: <strong>{portfolioError}</strong>. Mostrando datos locales en caché.</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => fetchPortfolioItems()}
+                  className="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition-colors shrink-0 shadow-sm"
+                >
+                  Reintentar
+                </button>
+              </div>
+            )}
+
         {sortedCurrentItems.length === 0 ? (
           <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-16 text-center flex flex-col items-center justify-center gap-4">
-            <CheckCircle2 className="h-16 w-16 text-emerald-500 animate-bounce" />
-            <div>
-              <h3 className="text-lg font-bold text-zinc-950 dark:text-white">¡No hay evidencias en esta sección!</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-                Todas las entregas han sido evaluadas o no se han subido evidencias aún.
-              </p>
-            </div>
+            {isLoadingPortfolio ? (
+              <div className="flex flex-col items-center gap-3">
+                <RefreshCw className="h-10 w-10 text-blue-500 animate-spin" />
+                <p className="text-xs font-bold text-zinc-400">Cargando entregas desde el servidor...</p>
+              </div>
+            ) : (
+              <>
+                <CheckCircle2 className="h-16 w-16 text-emerald-500 animate-bounce" />
+                <div>
+                  <h3 className="text-lg font-bold text-zinc-950 dark:text-white">¡No hay evidencias en esta sección!</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                    Todas las entregas han sido evaluadas o no se han subido evidencias aún.
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -978,395 +1028,428 @@ export default function TeacherDashboard() {
                 </div>
 
                 {/* PARTE DERECHA: PANEL DE EVALUACIÓN NEM (md:col-span-7) */}
-                <div className="md:col-span-7 bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-6 flex flex-col gap-6 shadow-sm">
-                  
-                  {/* Status Banner */}
-                  <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950/40 p-3 px-4 rounded-2xl border border-zinc-100 dark:border-zinc-800/50">
-                    <span className="text-[11px] font-semibold text-zinc-400">Estado de Evaluación:</span>
-                    {getStatusLabel(activeItem.status)}
-                  </div>
-
-                  {/* SECCIÓN 1: ALINEACIÓN NEM */}
-                  <div className="flex flex-col gap-3">
-                    <h4 className="text-xs font-black text-zinc-800 dark:text-zinc-200 uppercase tracking-widest flex items-center gap-1.5 border-b border-zinc-100 dark:border-zinc-800/60 pb-2">
-                      <BookOpen className="h-4 w-4 text-blue-500" />
-                      1. Alineación con la NEM
-                      <span className="ml-auto text-[9px] text-zinc-400 font-bold bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 rounded-full border border-zinc-200/55 dark:border-zinc-800/60 uppercase">Definido en Tarea</span>
-                    </h4>
-
-                    {/* Campos Formativos */}
-                    <div className="flex flex-col gap-1.5">
-                      <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Campos Formativos:</span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {selectedCampos.length > 0 ? (
-                          selectedCampos.map((campo) => (
-                            <div
-                              key={campo}
-                              className="px-3 py-1.5 rounded-xl text-[10px] font-bold bg-blue-600 border border-blue-600 text-white shadow-sm flex items-center gap-1"
-                            >
-                              <CheckCircle2 className="h-3 w-3" />
-                              {campo}
-                            </div>
-                          ))
-                        ) : (
-                          <span className="text-xs text-zinc-400 italic">Ningún Campo Formativo asignado a esta tarea.</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Ejes Articuladores */}
-                    <div className="flex flex-col gap-1.5 mt-1">
-                      <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Ejes Articuladores:</span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {selectedEjes.length > 0 ? (
-                          selectedEjes.map((ejeName) => {
-                            const eje = ejesArticuladoresList.find(e => e.name === ejeName);
-                            const EjeIcon = eje?.icon || Brain;
-                            return (
-                              <div
-                                key={ejeName}
-                                className="px-3 py-1.5 rounded-xl text-[9px] font-bold bg-zinc-950 border border-zinc-950 text-white dark:bg-zinc-800 dark:border-zinc-755 shadow-sm flex items-center gap-1.5"
-                              >
-                                <EjeIcon className="h-3.5 w-3.5" />
-                                {ejeName}
-                              </div>
-                            );
-                          })
-                        ) : (
-                          <span className="text-xs text-zinc-400 italic">Ningún Eje Articulador asignado a esta tarea.</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* PDAs (Procesos de Desarrollo de Aprendizaje) */}
-                    <div className="flex flex-col gap-1.5 mt-1">
-                      <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">PDA Seleccionado para Evaluar:</span>
-                      {selectedPDA ? (
-                        <div className="p-3 rounded-2xl bg-zinc-50 border border-zinc-200/50 dark:bg-zinc-950/40 dark:border-zinc-850 flex gap-2.5 items-start">
-                          <Bookmark className="h-4 w-4 text-indigo-500 mt-0.5 flex-shrink-0" />
-                          <p className="text-xs font-semibold leading-relaxed text-zinc-800 dark:text-zinc-250">
-                            {selectedPDA}
-                          </p>
-                        </div>
-                      ) : (
-                        <span className="text-xs text-zinc-400 italic">Ningún PDA seleccionado para esta tarea.</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* SECCIÓN 2: RETROALIMENTACIÓN FORMATIVA Y PRODUCTIVIDAD */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/60 pb-2">
-                      <h4 className="text-xs font-black text-zinc-800 dark:text-zinc-200 uppercase tracking-widest flex items-center gap-1.5">
-                        <Award className="h-4.5 w-4.5 text-yellow-500" />
-                        2. Retroalimentación Formativa
-                      </h4>
+                {(() => {
+                  const isEvaluated = activeItem.status === 'approved';
+                  return (
+                    <div className="md:col-span-7 bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-6 flex flex-col gap-6 shadow-sm">
                       
-                      {/* Botón de Rúbricas Interactivas */}
-                      <button
-                        onClick={() => setIsRubricOpen(!isRubricOpen)}
-                        className="text-[10px] font-extrabold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2.5 py-1 rounded-lg border border-blue-100 dark:border-blue-900/30 flex items-center gap-1 transition-all hover:bg-blue-100"
-                      >
-                        <Award className="h-3.5 w-3.5" />
-                        {isRubricOpen ? 'Ocultar Rúbrica' : 'Evaluar con Rúbrica'}
-                        <ChevronDown className={`h-3 w-3 transition-transform ${isRubricOpen ? 'rotate-180' : ''}`} />
-                      </button>
-                    </div>
+                      {/* Status Banner */}
+                      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950/40 p-3 px-4 rounded-2xl border border-zinc-100 dark:border-zinc-800/50">
+                        <span className="text-[11px] font-semibold text-zinc-400">Estado de Evaluación:</span>
+                        {getStatusLabel(activeItem.status)}
+                      </div>
 
-                    {/* Desplegable de Rúbricas */}
-                    {isRubricOpen && (
-                      <div className="p-4 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 flex flex-col gap-4 transition-all">
-                        <p className="text-[10px] text-zinc-400 font-semibold uppercase tracking-wide">Rúbrica de Evaluación:</p>
-                        {RUBRIC_CRITERIA.map((crit) => (
-                          <div key={crit.key} className="flex flex-col gap-2">
-                            <div className="flex items-center gap-2 mt-1">
-                              <span className="text-[10.5px] font-black text-zinc-850 dark:text-zinc-200">{crit.name}</span>
-                              <span className="h-0.5 flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
-                            </div>
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                              {Object.entries(crit.levels).map(([levelKey, levelInfo]) => {
-                                const isSelected = rubricSelections[crit.key] === levelKey;
+                      {/* Lock Banner if already evaluated */}
+                      {isEvaluated && (
+                        <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 rounded-2xl p-3.5 flex items-center gap-3 text-amber-800 dark:text-amber-300 shadow-xs">
+                          <Lock className="h-5 w-5 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+                          <div className="flex flex-col text-xs">
+                            <span className="font-extrabold uppercase tracking-wide">Evidencia Evaluada (Calificación Bloqueada)</span>
+                            <span className="text-[10.5px] opacity-90 mt-0.5 leading-relaxed">
+                              Esta tarea ya fue calificada y aprobada. Los controles e inputs de evaluación están inhabilitados (disabled).
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* SECCIÓN 1: ALINEACIÓN NEM */}
+                      <div className="flex flex-col gap-3">
+                        <h4 className="text-xs font-black text-zinc-800 dark:text-zinc-200 uppercase tracking-widest flex items-center gap-1.5 border-b border-zinc-100 dark:border-zinc-800/60 pb-2">
+                          <BookOpen className="h-4 w-4 text-blue-500" />
+                          1. Alineación con la NEM
+                          <span className="ml-auto text-[9px] text-zinc-400 font-bold bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 rounded-full border border-zinc-200/55 dark:border-zinc-800/60 uppercase">Definido en Tarea</span>
+                        </h4>
+
+                        {/* Campos Formativos */}
+                        <div className="flex flex-col gap-1.5">
+                          <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Campos Formativos:</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {selectedCampos.length > 0 ? (
+                              selectedCampos.map((campo) => (
+                                <div
+                                  key={campo}
+                                  className="px-3 py-1.5 rounded-xl text-[10px] font-bold bg-blue-600 border border-blue-600 text-white shadow-sm flex items-center gap-1"
+                                >
+                                  <CheckCircle2 className="h-3 w-3" />
+                                  {campo}
+                                </div>
+                              ))
+                            ) : (
+                              <span className="text-xs text-zinc-400 italic">Ningún Campo Formativo asignado a esta tarea.</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Ejes Articuladores */}
+                        <div className="flex flex-col gap-1.5 mt-1">
+                          <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Ejes Articuladores:</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {selectedEjes.length > 0 ? (
+                              selectedEjes.map((ejeName) => {
+                                const eje = ejesArticuladoresList.find(e => e.name === ejeName);
+                                const EjeIcon = eje?.icon || Brain;
                                 return (
-                                  <button
-                                    key={levelKey}
-                                    type="button"
-                                    onClick={() => handleRubricSelect(crit.key, levelKey)}
-                                    title={levelInfo.desc}
-                                    className={`p-3 rounded-2xl text-[9px] text-left border flex flex-col justify-between transition-all duration-200 transform hover:scale-102 ${
-                                      isSelected
-                                        ? levelKey === 'avanzado'
-                                          ? 'bg-gradient-to-br from-amber-500 to-yellow-600 border-yellow-600 text-white shadow-md shadow-yellow-500/20 font-black'
-                                          : levelKey === 'logrado'
-                                          ? 'bg-gradient-to-br from-indigo-500 to-purple-600 border-indigo-600 text-white shadow-md shadow-indigo-500/20 font-black'
-                                          : levelKey === 'proceso'
-                                          ? 'bg-gradient-to-br from-sky-500 to-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/20 font-black'
-                                          : 'bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-600 text-white shadow-md shadow-emerald-500/20 font-black'
-                                        : 'bg-white border-zinc-205 hover:border-zinc-350 dark:bg-zinc-900 dark:border-zinc-800 text-zinc-655 dark:text-zinc-300 hover:shadow-xs'
-                                    }`}
+                                  <div
+                                    key={ejeName}
+                                    className="px-3 py-1.5 rounded-xl text-[9px] font-bold bg-zinc-950 border border-zinc-950 text-white dark:bg-zinc-800 dark:border-zinc-755 shadow-sm flex items-center gap-1.5"
                                   >
-                                    <span className="font-extrabold truncate">{levelInfo.label}</span>
-                                    <span className="text-[8px] leading-tight opacity-80 mt-1 line-clamp-3">{levelInfo.desc}</span>
-                                  </button>
+                                    <EjeIcon className="h-3.5 w-3.5" />
+                                    {ejeName}
+                                  </div>
                                 );
-                              })}
+                              })
+                            ) : (
+                              <span className="text-xs text-zinc-400 italic">Ningún Eje Articulador asignado a esta tarea.</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* PDAs (Procesos de Desarrollo de Aprendizaje) */}
+                        <div className="flex flex-col gap-1.5 mt-1">
+                          <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">PDA Seleccionado para Evaluar:</span>
+                          {selectedPDA ? (
+                            <div className="p-3 rounded-2xl bg-zinc-50 border border-zinc-200/50 dark:bg-zinc-950/40 dark:border-zinc-850 flex gap-2.5 items-start">
+                              <Bookmark className="h-4 w-4 text-indigo-500 mt-0.5 flex-shrink-0" />
+                              <p className="text-xs font-semibold leading-relaxed text-zinc-800 dark:text-zinc-250">
+                                {selectedPDA}
+                              </p>
                             </div>
-                          </div>
-                        ))}
+                          ) : (
+                            <span className="text-xs text-zinc-400 italic">Ningún PDA seleccionado para esta tarea.</span>
+                          )}
+                        </div>
                       </div>
-                    )}
 
-                    {/* Banco de Comentarios Rápidos */}
-                    <div className="flex flex-wrap gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => insertQuickComment('felicitacion')}
-                        className="text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-2.5 py-1 rounded-lg text-zinc-700 dark:text-zinc-300 transition-colors"
-                      >
-                        🌟 Felicitar
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => insertQuickComment('mejora')}
-                        className="text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-2.5 py-1 rounded-lg text-zinc-700 dark:text-zinc-300 transition-colors"
-                      >
-                        💡 Sugerir Mejora
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => insertQuickComment('pregunta')}
-                        className="text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-2.5 py-1 rounded-lg text-zinc-700 dark:text-zinc-300 transition-colors"
-                      >
-                        ❓ Preguntar
-                      </button>
-                    </div>
+                      {/* SECCIÓN 2: RETROALIMENTACIÓN FORMATIVA Y PRODUCTIVIDAD */}
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/60 pb-2">
+                          <h4 className="text-xs font-black text-zinc-800 dark:text-zinc-200 uppercase tracking-widest flex items-center gap-1.5">
+                            <Award className="h-4.5 w-4.5 text-yellow-500" />
+                            2. Retroalimentación Formativa
+                          </h4>
+                          
+                          {/* Botón de Rúbricas Interactivas */}
+                          <button
+                            onClick={() => setIsRubricOpen(!isRubricOpen)}
+                            disabled={isEvaluated}
+                            className="text-[10px] font-extrabold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2.5 py-1 rounded-lg border border-blue-100 dark:border-blue-900/30 flex items-center gap-1 transition-all hover:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <Award className="h-3.5 w-3.5" />
+                            {isRubricOpen ? 'Ocultar Rúbrica' : 'Evaluar con Rúbrica'}
+                            <ChevronDown className={`h-3 w-3 transition-transform ${isRubricOpen ? 'rotate-180' : ''}`} />
+                          </button>
+                        </div>
 
-                    {/* Textarea de Comentarios y Herramientas integradas */}
-                    <div className="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden bg-white dark:bg-zinc-900 shadow-inner group">
-                      
-                      {/* Textarea */}
-                      <textarea
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                        placeholder="Escribe comentarios constructivos sobre el proceso del alumno. Escribe / para atajos rápidos..."
-                        className="w-full text-xs p-4 bg-transparent focus:outline-none text-zinc-900 dark:text-white min-h-[90px] resize-y"
-                      />
+                        {/* Desplegable de Rúbricas */}
+                        {isRubricOpen && (
+                          <div className="p-4 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 flex flex-col gap-4 transition-all">
+                            <p className="text-[10px] text-zinc-400 font-semibold uppercase tracking-wide">Rúbrica de Evaluación:</p>
+                            {RUBRIC_CRITERIA.map((crit) => (
+                              <div key={crit.key} className="flex flex-col gap-2">
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="text-[10.5px] font-black text-zinc-850 dark:text-zinc-200">{crit.name}</span>
+                                  <span className="h-0.5 flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
+                                </div>
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                  {Object.entries(crit.levels).map(([levelKey, levelInfo]) => {
+                                    const isSelected = rubricSelections[crit.key] === levelKey;
+                                    return (
+                                      <button
+                                        key={levelKey}
+                                        type="button"
+                                        disabled={isEvaluated}
+                                        onClick={() => handleRubricSelect(crit.key, levelKey)}
+                                        title={levelInfo.desc}
+                                        className={`p-3 rounded-2xl text-[9px] text-left border flex flex-col justify-between transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                          isSelected
+                                            ? levelKey === 'avanzado'
+                                              ? 'bg-gradient-to-br from-amber-500 to-yellow-600 border-yellow-600 text-white shadow-md shadow-yellow-500/20 font-black'
+                                              : levelKey === 'logrado'
+                                              ? 'bg-gradient-to-br from-indigo-500 to-purple-600 border-indigo-600 text-white shadow-md shadow-indigo-500/20 font-black'
+                                              : levelKey === 'proceso'
+                                              ? 'bg-gradient-to-br from-sky-500 to-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/20 font-black'
+                                              : 'bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-600 text-white shadow-md shadow-emerald-500/20 font-black'
+                                            : 'bg-white border-zinc-205 hover:border-zinc-350 dark:bg-zinc-900 dark:border-zinc-800 text-zinc-655 dark:text-zinc-300 hover:shadow-xs'
+                                        }`}
+                                      >
+                                        <span className="font-extrabold truncate">{levelInfo.label}</span>
+                                        <span className="text-[8px] leading-tight opacity-80 mt-1 line-clamp-3">{levelInfo.desc}</span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
 
-                      {/* Barra de herramientas de productividad en el pie del Textarea */}
-                      <div className="px-4 py-2.5 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-850 flex items-center justify-between flex-wrap gap-3">
+                        {/* Banco de Comentarios Rápidos */}
+                        <div className="flex flex-wrap gap-1.5">
+                          <button
+                            type="button"
+                            disabled={isEvaluated}
+                            onClick={() => insertQuickComment('felicitacion')}
+                            className="text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-2.5 py-1 rounded-lg text-zinc-700 dark:text-zinc-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            🌟 Felicitar
+                          </button>
+                          <button
+                            type="button"
+                            disabled={isEvaluated}
+                            onClick={() => insertQuickComment('mejora')}
+                            className="text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-2.5 py-1 rounded-lg text-zinc-700 dark:text-zinc-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            💡 Sugerir Mejora
+                          </button>
+                          <button
+                            type="button"
+                            disabled={isEvaluated}
+                            onClick={() => insertQuickComment('pregunta')}
+                            className="text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-2.5 py-1 rounded-lg text-zinc-700 dark:text-zinc-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            ❓ Preguntar
+                          </button>
+                        </div>
+
+                        {/* Textarea de Comentarios y Herramientas integradas */}
+                        <div className="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden bg-white dark:bg-zinc-900 shadow-inner group">
+                          
+                          {/* Textarea */}
+                          <textarea
+                            value={commentText}
+                            disabled={isEvaluated}
+                            onChange={(e) => setCommentText(e.target.value)}
+                            placeholder={isEvaluated ? "Esta entrega ya fue calificada. El área de comentarios está inhabilitada." : "Escribe comentarios constructivos sobre el proceso del alumno. Escribe / para atajos rápidos..."}
+                            className="w-full text-xs p-4 bg-transparent focus:outline-none text-zinc-900 dark:text-white min-h-[90px] resize-y disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+
+                          {/* Barra de herramientas de productividad en el pie del Textarea */}
+                          <div className="px-4 py-2.5 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-850 flex items-center justify-between flex-wrap gap-3">
+                            
+                            {/* IA & Mic Botones */}
+                            <div className="flex gap-2 items-center">
+                              {/* Generar Retroalimentación con IA */}
+                              <button
+                                type="button"
+                                onClick={handleGenerateAIFeedback}
+                                disabled={isGeneratingAI || isEvaluated}
+                                className="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-950/50 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all shadow-sm border border-indigo-100/40 dark:border-indigo-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                                {isGeneratingAI ? (
+                                  <>
+                                    <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                                    Analizando Evidencia...
+                                  </>
+                                ) : (
+                                  <>
+                                    <Wand2 className="h-3.5 w-3.5 text-indigo-500 animate-pulse" />
+                                    Redactar con IA
+                                  </>
+                                )}
+                              </button>
+
+                              {/* Notas de voz */}
+                              <button
+                                type="button"
+                                onClick={toggleRecording}
+                                disabled={isEvaluated}
+                                className={`text-[10px] font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all shadow-sm border disabled:opacity-50 disabled:cursor-not-allowed ${
+                                  isRecording
+                                    ? 'bg-rose-600 border-rose-600 text-white animate-pulse'
+                                    : 'bg-zinc-100 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300'
+                                }`}
+                              >
+                                {isRecording ? (
+                                  <>
+                                    <MicOff className="h-3.5 w-3.5 animate-bounce" />
+                                    Detener ({recordingDuration}s)
+                                  </>
+                                ) : (
+                                  <>
+                                    <Mic className="h-3.5 w-3.5 text-rose-500" />
+                                    Dictar Voz
+                                  </>
+                                )}
+                              </button>
+                            </div>
+
+                            <span className="text-[9px] font-semibold text-zinc-400 uppercase tracking-widest">Retroalimentación Formativa</span>
+                          </div>
+
+                          {/* Simulador de Onda de Voz (solo visible si graba) */}
+                          {isRecording && (
+                            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-white">
+                              <Mic className="h-8 w-8 text-rose-500 animate-ping" />
+                              <div className="flex flex-col items-center">
+                                <span className="text-xs font-bold">Grabando retroalimentación de voz...</span>
+                                <span className="text-[10px] opacity-75 mt-0.5">El audio se transcribirá automáticamente al detener la grabación.</span>
+                              </div>
+                              {/* Onda Animada */}
+                              <div className="flex gap-1 items-end h-8 mt-2">
+                                <div className="w-1 bg-rose-500 rounded-full h-4 animate-[pulse_1s_infinite_100ms]"></div>
+                                <div className="w-1 bg-rose-500 rounded-full h-8 animate-[pulse_1s_infinite_200ms]"></div>
+                                <div className="w-1 bg-rose-500 rounded-full h-6 animate-[pulse_1s_infinite_300ms]"></div>
+                                <div className="w-1 bg-rose-500 rounded-full h-8 animate-[pulse_1s_infinite_400ms]"></div>
+                                <div className="w-1 bg-rose-500 rounded-full h-5 animate-[pulse_1s_infinite_500ms]"></div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* SECCIÓN 3: GAMIFICACIÓN Y DESGLOSE DE XP */}
+                      <div className="flex flex-col gap-3">
+                        <h4 className="text-xs font-black text-zinc-800 dark:text-zinc-200 uppercase tracking-widest flex items-center gap-1.5 border-b border-zinc-100 dark:border-zinc-800/60 pb-2">
+                          <Star className="h-4.5 w-4.5 text-orange-500" />
+                          3. Gamificación con Propósito (Desglose de XP)
+                        </h4>
+
+                        {/* Desglose RPG Sliders */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-zinc-50 dark:bg-zinc-950/40 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-850">
+                          
+                          {/* Pensamiento Científico */}
+                          <div className="flex flex-col gap-1">
+                            <div className="flex justify-between items-center text-[10px] font-bold">
+                              <span className="text-zinc-500 dark:text-zinc-400">🔬 Pensamiento Científico:</span>
+                              <span className="text-indigo-600 dark:text-indigo-400">+{xpBreakdown.scientific} XP</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="0"
+                              max="50"
+                              step="5"
+                              disabled={isEvaluated}
+                              value={xpBreakdown.scientific}
+                              onChange={(e) => setXpBreakdown(prev => ({ ...prev, scientific: parseInt(e.target.value) }))}
+                              className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                            />
+                          </div>
+
+                          {/* Pensamiento Crítico */}
+                          <div className="flex flex-col gap-1">
+                            <div className="flex justify-between items-center text-[10px] font-bold">
+                              <span className="text-zinc-500 dark:text-zinc-400">🧠 Pensamiento Crítico:</span>
+                              <span className="text-purple-600 dark:text-purple-400">+{xpBreakdown.critical} XP</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="0"
+                              max="50"
+                              step="5"
+                              disabled={isEvaluated}
+                              value={xpBreakdown.critical}
+                              onChange={(e) => setXpBreakdown(prev => ({ ...prev, critical: parseInt(e.target.value) }))}
+                              className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                            />
+                          </div>
+
+                          {/* Trabajo Colaborativo */}
+                          <div className="flex flex-col gap-1">
+                            <div className="flex justify-between items-center text-[10px] font-bold">
+                              <span className="text-zinc-500 dark:text-zinc-400">🤝 Trabajo Colaborativo:</span>
+                              <span className="text-emerald-600 dark:text-emerald-400">+{xpBreakdown.collaborative} XP</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="0"
+                              max="50"
+                              step="5"
+                              disabled={isEvaluated}
+                              value={xpBreakdown.collaborative}
+                              onChange={(e) => setXpBreakdown(prev => ({ ...prev, collaborative: parseInt(e.target.value) }))}
+                              className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                            />
+                          </div>
+
+                          {/* Comunicación y Lenguaje */}
+                          <div className="flex flex-col gap-1">
+                            <div className="flex justify-between items-center text-[10px] font-bold">
+                              <span className="text-zinc-500 dark:text-zinc-400">💬 Comunicación y Lenguaje:</span>
+                              <span className="text-pink-600 dark:text-pink-400">+{xpBreakdown.communication} XP</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="0"
+                              max="50"
+                              step="5"
+                              disabled={isEvaluated}
+                              value={xpBreakdown.communication}
+                              onChange={(e) => setXpBreakdown(prev => ({ ...prev, communication: parseInt(e.target.value) }))}
+                              className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-pink-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                            />
+                          </div>
+
+                        </div>
+
+                        {/* Total XP Indicador */}
+                        <div className="flex items-center justify-between text-xs font-black text-zinc-700 dark:text-zinc-300 px-1">
+                          <span>Total de Experiencia Acumulada:</span>
+                          <span className="bg-amber-100/70 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 px-3 py-1 rounded-lg border border-amber-200/20 text-sm">
+                            +{xpBreakdown.scientific + xpBreakdown.critical + xpBreakdown.collaborative + xpBreakdown.communication} XP
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* SECCIÓN 4: ACCIONES DE EVALUACIÓN (BOTONES DE PROGRESIÓN) */}
+                      <div className="border-t border-zinc-100 dark:border-zinc-800 pt-5 flex flex-col gap-4">
+                        <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wide">4. Asignar Nivel de Progresión (Cerrar Calificación)</p>
                         
-                        {/* IA & Mic Botones */}
-                        <div className="flex gap-2 items-center">
-                          {/* Generar Retroalimentación con IA */}
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                          
+                          {/* Botón Requiere Apoyo (needs_revision) */}
                           <button
                             type="button"
-                            onClick={handleGenerateAIFeedback}
-                            disabled={isGeneratingAI}
-                            className="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-950/50 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all shadow-sm border border-indigo-100/40 dark:border-indigo-900/30 disabled:opacity-50"
+                            disabled={isEvaluated}
+                            onClick={() => handleSaveReview('needs_revision')}
+                            className="p-3 border border-rose-200 hover:bg-rose-50 text-rose-600 dark:border-rose-900/30 dark:hover:bg-rose-950/20 rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                           >
-                            {isGeneratingAI ? (
-                              <>
-                                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                                Analizando Evidencia...
-                              </>
-                            ) : (
-                              <>
-                                <Wand2 className="h-3.5 w-3.5 text-indigo-500 animate-pulse" />
-                                Redactar con IA
-                              </>
-                            )}
+                            <AlertCircle className="h-5 w-5 text-rose-500" />
+                            <span className="text-xs font-black">Requiere Apoyo</span>
+                            <span className="text-[8px] opacity-75 font-medium leading-tight">Incompleto / Corregir</span>
                           </button>
 
-                          {/* Notas de voz */}
+                          {/* Botón En Proceso (needs_revision o mantiene submitted) */}
                           <button
                             type="button"
-                            onClick={toggleRecording}
-                            className={`text-[10px] font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all shadow-sm border ${
-                              isRecording
-                                ? 'bg-rose-600 border-rose-600 text-white animate-pulse'
-                                : 'bg-zinc-100 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300'
-                            }`}
+                            disabled={isEvaluated}
+                            onClick={() => handleSaveReview('needs_revision')}
+                            className="p-3 border border-amber-200 hover:bg-amber-50 text-amber-600 dark:border-amber-900/30 dark:hover:bg-amber-950/20 rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                           >
-                            {isRecording ? (
-                              <>
-                                <MicOff className="h-3.5 w-3.5 animate-bounce" />
-                                Detener ({recordingDuration}s)
-                              </>
-                            ) : (
-                              <>
-                                <Mic className="h-3.5 w-3.5 text-rose-500" />
-                                Dictar Voz
-                              </>
-                            )}
+                            <Clock className="h-5 w-5 text-amber-500" />
+                            <span className="text-xs font-black">En Proceso</span>
+                            <span className="text-[8px] opacity-75 font-medium leading-tight">Buen camino / Parcial</span>
                           </button>
+
+                          {/* Botón Logrado (approved) */}
+                          <button
+                            type="button"
+                            disabled={isEvaluated}
+                            onClick={() => handleSaveReview('approved')}
+                            className="p-3 border border-blue-200 hover:bg-blue-50 text-blue-600 dark:border-blue-900/30 dark:hover:bg-blue-950/20 rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                          >
+                            <CheckCircle2 className="h-5 w-5 text-blue-500" />
+                            <span className="text-xs font-black">Logrado</span>
+                            <span className="text-[8px] opacity-75 font-medium leading-tight">Cumple con los objetivos</span>
+                          </button>
+
+                          {/* Botón Avanzado (approved + 20 XP bonus) */}
+                          <button
+                            type="button"
+                            disabled={isEvaluated}
+                            onClick={() => handleSaveReview('approved', 20)}
+                            className="p-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all shadow-md shadow-emerald-600/10 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-emerald-600"
+                          >
+                            <Award className="h-5 w-5 text-emerald-250 animate-bounce" />
+                            <span className="text-xs font-black">Avanzado 🌟</span>
+                            <span className="text-[8px] text-emerald-100 font-medium leading-tight">Sobresaliente (+20 XP)</span>
+                          </button>
+
                         </div>
-
-                        <span className="text-[9px] font-semibold text-zinc-400 uppercase tracking-widest">Retroalimentación Formativa</span>
-                      </div>
-
-                      {/* Simulador de Onda de Voz (solo visible si graba) */}
-                      {isRecording && (
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center gap-3 text-white">
-                          <Mic className="h-8 w-8 text-rose-500 animate-ping" />
-                          <div className="flex flex-col items-center">
-                            <span className="text-xs font-bold">Grabando retroalimentación de voz...</span>
-                            <span className="text-[10px] opacity-75 mt-0.5">El audio se transcribirá automáticamente al detener la grabación.</span>
-                          </div>
-                          {/* Onda Animada */}
-                          <div className="flex gap-1 items-end h-8 mt-2">
-                            <div className="w-1 bg-rose-500 rounded-full h-4 animate-[pulse_1s_infinite_100ms]"></div>
-                            <div className="w-1 bg-rose-500 rounded-full h-8 animate-[pulse_1s_infinite_200ms]"></div>
-                            <div className="w-1 bg-rose-500 rounded-full h-6 animate-[pulse_1s_infinite_300ms]"></div>
-                            <div className="w-1 bg-rose-500 rounded-full h-8 animate-[pulse_1s_infinite_400ms]"></div>
-                            <div className="w-1 bg-rose-500 rounded-full h-5 animate-[pulse_1s_infinite_500ms]"></div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* SECCIÓN 3: GAMIFICACIÓN Y DESGLOSE DE XP */}
-                  <div className="flex flex-col gap-3">
-                    <h4 className="text-xs font-black text-zinc-800 dark:text-zinc-200 uppercase tracking-widest flex items-center gap-1.5 border-b border-zinc-100 dark:border-zinc-800/60 pb-2">
-                      <Star className="h-4.5 w-4.5 text-orange-500" />
-                      3. Gamificación con Propósito (Desglose de XP)
-                    </h4>
-
-                    {/* Desglose RPG Sliders */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-zinc-50 dark:bg-zinc-950/40 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-850">
-                      
-                      {/* Pensamiento Científico */}
-                      <div className="flex flex-col gap-1">
-                        <div className="flex justify-between items-center text-[10px] font-bold">
-                          <span className="text-zinc-500 dark:text-zinc-400">🔬 Pensamiento Científico:</span>
-                          <span className="text-indigo-600 dark:text-indigo-400">+{xpBreakdown.scientific} XP</span>
-                        </div>
-                        <input
-                          type="range"
-                          min="0"
-                          max="50"
-                          step="5"
-                          value={xpBreakdown.scientific}
-                          onChange={(e) => setXpBreakdown(prev => ({ ...prev, scientific: parseInt(e.target.value) }))}
-                          className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-                        />
-                      </div>
-
-                      {/* Pensamiento Crítico */}
-                      <div className="flex flex-col gap-1">
-                        <div className="flex justify-between items-center text-[10px] font-bold">
-                          <span className="text-zinc-500 dark:text-zinc-400">🧠 Pensamiento Crítico:</span>
-                          <span className="text-purple-600 dark:text-purple-400">+{xpBreakdown.critical} XP</span>
-                        </div>
-                        <input
-                          type="range"
-                          min="0"
-                          max="50"
-                          step="5"
-                          value={xpBreakdown.critical}
-                          onChange={(e) => setXpBreakdown(prev => ({ ...prev, critical: parseInt(e.target.value) }))}
-                          className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
-                        />
-                      </div>
-
-                      {/* Trabajo Colaborativo */}
-                      <div className="flex flex-col gap-1">
-                        <div className="flex justify-between items-center text-[10px] font-bold">
-                          <span className="text-zinc-500 dark:text-zinc-400">🤝 Trabajo Colaborativo:</span>
-                          <span className="text-emerald-600 dark:text-emerald-400">+{xpBreakdown.collaborative} XP</span>
-                        </div>
-                        <input
-                          type="range"
-                          min="0"
-                          max="50"
-                          step="5"
-                          value={xpBreakdown.collaborative}
-                          onChange={(e) => setXpBreakdown(prev => ({ ...prev, collaborative: parseInt(e.target.value) }))}
-                          className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                        />
-                      </div>
-
-                      {/* Comunicación y Lenguaje */}
-                      <div className="flex flex-col gap-1">
-                        <div className="flex justify-between items-center text-[10px] font-bold">
-                          <span className="text-zinc-500 dark:text-zinc-400">💬 Comunicación y Lenguaje:</span>
-                          <span className="text-pink-600 dark:text-pink-400">+{xpBreakdown.communication} XP</span>
-                        </div>
-                        <input
-                          type="range"
-                          min="0"
-                          max="50"
-                          step="5"
-                          value={xpBreakdown.communication}
-                          onChange={(e) => setXpBreakdown(prev => ({ ...prev, communication: parseInt(e.target.value) }))}
-                          className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-pink-500"
-                        />
                       </div>
 
                     </div>
-
-                    {/* Total XP Indicador */}
-                    <div className="flex items-center justify-between text-xs font-black text-zinc-700 dark:text-zinc-300 px-1">
-                      <span>Total de Experiencia Acumulada:</span>
-                      <span className="bg-amber-100/70 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 px-3 py-1 rounded-lg border border-amber-200/20 text-sm">
-                        +{xpBreakdown.scientific + xpBreakdown.critical + xpBreakdown.collaborative + xpBreakdown.communication} XP
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* SECCIÓN 4: ACCIONES DE EVALUACIÓN (BOTONES DE PROGRESIÓN) */}
-                  <div className="border-t border-zinc-100 dark:border-zinc-800 pt-5 flex flex-col gap-4">
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wide">4. Asignar Nivel de Progresión (Cerrar Calificación)</p>
-                    
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                      
-                      {/* Botón Requiere Apoyo (needs_revision) */}
-                      <button
-                        type="button"
-                        onClick={() => handleSaveReview('needs_revision')}
-                        className="p-3 border border-rose-200 hover:bg-rose-50 text-rose-600 dark:border-rose-900/30 dark:hover:bg-rose-950/20 rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all"
-                      >
-                        <AlertCircle className="h-5 w-5 text-rose-500" />
-                        <span className="text-xs font-black">Requiere Apoyo</span>
-                        <span className="text-[8px] opacity-75 font-medium leading-tight">Incompleto / Corregir</span>
-                      </button>
-
-                      {/* Botón En Proceso (needs_revision o mantiene submitted) */}
-                      <button
-                        type="button"
-                        onClick={() => handleSaveReview('needs_revision')} // Mapeado a revisión intermedia
-                        className="p-3 border border-amber-200 hover:bg-amber-50 text-amber-600 dark:border-amber-900/30 dark:hover:bg-amber-950/20 rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all"
-                      >
-                        <Clock className="h-5 w-5 text-amber-500" />
-                        <span className="text-xs font-black">En Proceso</span>
-                        <span className="text-[8px] opacity-75 font-medium leading-tight">Buen camino / Parcial</span>
-                      </button>
-
-                      {/* Botón Logrado (approved) */}
-                      <button
-                        type="button"
-                        onClick={() => handleSaveReview('approved')}
-                        className="p-3 border border-blue-200 hover:bg-blue-50 text-blue-600 dark:border-blue-900/30 dark:hover:bg-blue-950/20 rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all"
-                      >
-                        <CheckCircle2 className="h-5 w-5 text-blue-500" />
-                        <span className="text-xs font-black">Logrado</span>
-                        <span className="text-[8px] opacity-75 font-medium leading-tight">Cumple con los objetivos</span>
-                      </button>
-
-                      {/* Botón Avanzado (approved + 20 XP bonus) */}
-                      <button
-                        type="button"
-                        onClick={() => handleSaveReview('approved', 20)}
-                        className="p-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl flex flex-col items-center gap-1.5 text-center transition-all shadow-md shadow-emerald-600/10"
-                      >
-                        <Award className="h-5 w-5 text-emerald-250 animate-bounce" />
-                        <span className="text-xs font-black">Avanzado 🌟</span>
-                        <span className="text-[8px] text-emerald-100 font-medium leading-tight">Sobresaliente (+20 XP)</span>
-                      </button>
-
-                    </div>
-                  </div>
-
-                </div>
+                  );
+                })()}
 
               </div>
             )}

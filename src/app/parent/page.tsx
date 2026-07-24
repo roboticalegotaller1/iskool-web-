@@ -13,7 +13,13 @@ import {
 } from 'lucide-react';
 import { FormattedDate } from '@/components/FormattedDate';
 
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+
 export default function ParentDashboard() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
   const currentStudent = useCurrentStudentProfile();
   const stats = useCurrentStudentStats();
   const avatar = useCurrentStudentAvatar();
@@ -41,9 +47,15 @@ export default function ParentDashboard() {
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  useEffect(() => {
     if (currentStudent?.id) {
       fetchStats();
-      fetchPortfolioItems();
+      fetchPortfolioItems(undefined, currentStudent.id);
       
       subscribeToPortfolioChanges(() => {
         console.log("Parent Dashboard: portfolio update in realtime");
@@ -215,10 +227,28 @@ export default function ParentDashboard() {
                   className="rounded-3xl border border-zinc-200/80 bg-white dark:border-zinc-800/80 dark:bg-zinc-900 overflow-hidden shadow-sm flex flex-col"
                 >
                   {/* Header */}
-                  <div className="px-6 py-4 bg-zinc-50/50 dark:bg-zinc-950/20 border-b border-zinc-200/60 dark:border-zinc-800/60 flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded bg-blue-50 text-[10px] font-bold text-blue-600 dark:bg-blue-950/20 dark:text-blue-400">
-                      {item.subject?.name}
-                    </span>
+                  <div className="px-6 py-4 bg-zinc-50/50 dark:bg-zinc-950/20 border-b border-zinc-200/60 dark:border-zinc-800/60 flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-lg bg-blue-50 text-[10px] font-extrabold text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-200/40 dark:border-blue-800/40">
+                        {item.subject?.name}
+                      </span>
+
+                      {/* Insignia de Estado Formativo */}
+                      {item.status === 'approved' ? (
+                        <span className="px-2.5 py-0.5 rounded-lg bg-emerald-50 text-[10px] font-extrabold text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200/40 dark:border-emerald-800/40 flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3" /> Evaluado & Aprobado
+                        </span>
+                      ) : item.status === 'needs_revision' ? (
+                        <span className="px-2.5 py-0.5 rounded-lg bg-rose-50 text-[10px] font-extrabold text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200/40 dark:border-rose-800/40 flex items-center gap-1">
+                          <AlertTriangle className="h-3 w-3" /> Requiere Ajustes
+                        </span>
+                      ) : (
+                        <span className="px-2.5 py-0.5 rounded-lg bg-amber-50 text-[10px] font-extrabold text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/40 dark:border-amber-800/40 flex items-center gap-1">
+                          <Clock className="h-3 w-3 animate-spin" /> Pendiente de Evaluación
+                        </span>
+                      )}
+                    </div>
+
                     <FormattedDate
                       date={item.created_at}
                       prefix="Entregado el "
@@ -245,7 +275,7 @@ export default function ParentDashboard() {
                       )}
                     </div>
 
-                    {/* Info */}
+                    {/* Info y Alineación NEM */}
                     <div className="md:col-span-3 flex flex-col gap-3">
                       <div>
                         <h3 className="text-sm font-bold text-zinc-950 dark:text-white">{item.title}</h3>
@@ -254,47 +284,69 @@ export default function ParentDashboard() {
                         )}
                       </div>
 
+                      {/* Etiquetas Formativas NEM */}
+                      {((item.campos_formativos && item.campos_formativos.length > 0) || (item.ejes_articuladores && item.ejes_articuladores.length > 0)) && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {item.campos_formativos?.map((campo, idx) => (
+                            <span key={idx} className="px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 text-[9.5px] font-bold text-purple-700 dark:text-purple-300 border border-purple-200/50 dark:border-purple-800/40">
+                              📘 Campo: {campo}
+                            </span>
+                          ))}
+                          {item.ejes_articuladores?.map((eje, idx) => (
+                            <span key={idx} className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/40 text-[9.5px] font-bold text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/40">
+                              🧭 Eje: {eje}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
                       {/* Reflexión del Alumno */}
                       {item.self_reflection && (
-                        <div className="p-3 bg-indigo-50/20 rounded-xl border border-indigo-100/30 text-xs italic text-zinc-600 dark:text-zinc-400">
-                          "<strong>Autoevaluación:</strong> {item.self_reflection}"
+                        <div className="p-3 bg-indigo-50/30 dark:bg-indigo-950/20 rounded-xl border border-indigo-100/50 dark:border-indigo-900/30 text-xs italic text-zinc-700 dark:text-zinc-300">
+                          "<strong>Autoevaluación del alumno:</strong> {item.self_reflection}"
                         </div>
                       )}
                     </div>
                   </div>
 
-                  {/* Feedback y Comentarios */}
+                  {/* Feedback y Retroalimentación Formativa */}
                   <div className="px-6 py-4 bg-zinc-50/50 dark:bg-zinc-950/20 border-t border-zinc-200/60 dark:border-zinc-800/60 flex flex-col gap-4">
                     <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1">
-                      <MessageSquare className="h-4 w-4" />
-                      Retroalimentación escolar ({item.feedbacks?.length || 0})
+                      <MessageSquare className="h-4 w-4 text-blue-500" />
+                      Retroalimentación Formativa Escolar ({item.feedbacks?.length || 0})
                     </h4>
 
-                    {/* Comentarios previos */}
-                    {item.feedbacks && item.feedbacks.length > 0 && (
+                    {/* Comentarios e hilo de retroalimentación */}
+                    {item.feedbacks && item.feedbacks.length > 0 ? (
                       <div className="flex flex-col gap-2.5">
                         {item.feedbacks.map((fb) => {
                           const isTeacher = fb.author_role === 'teacher';
                           return (
-                            <div key={fb.id} className="p-3 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 text-xs flex justify-between items-start gap-4">
+                            <div key={fb.id} className={`p-3.5 rounded-2xl border text-xs flex justify-between items-start gap-4 ${
+                              isTeacher 
+                                ? 'bg-blue-50/40 border-blue-200/60 dark:bg-blue-950/20 dark:border-blue-800/50'
+                                : 'bg-white border-zinc-200 dark:bg-zinc-900 dark:border-zinc-800'
+                            }`}>
                               <div className="flex-1">
-                                <strong className="text-zinc-900 dark:text-white">
-                                  {isTeacher ? 'Maestro' : fb.author_role === 'parent' ? 'Mamá/Papá' : 'Alumno'}:
+                                <strong className={`text-xs ${isTeacher ? 'text-blue-700 dark:text-blue-400 font-black' : 'text-zinc-900 dark:text-white'}`}>
+                                  {isTeacher ? '👨‍🏫 Profesor(a)' : fb.author_role === 'parent' || fb.author_role === 'tutor' ? '🏠 Tutor / Familia' : '👦 Alumno'}:
                                 </strong>
-                                <span className="ml-1 text-zinc-700 dark:text-zinc-300">"{fb.feedback_text}"</span>
+                                <p className="mt-0.5 text-zinc-700 dark:text-zinc-200 leading-relaxed font-medium">"{fb.feedback_text}"</p>
                               </div>
                               <FormattedDate
                                 date={fb.created_at}
                                 options={{ day: 'numeric', month: 'short' }}
-                                className="text-[9px] text-zinc-400"
+                                className="text-[9px] text-zinc-400 shrink-0"
                               />
                             </div>
                           );
                         })}
                       </div>
+                    ) : (
+                      <p className="text-xs text-zinc-400 italic">No hay comentarios ni observaciones registradas aún para esta entrega.</p>
                     )}
 
-                    {/* Formulario de Comentario de Padre de Familia */}
+                    {/* Formulario de Comentario de Padre de Familia / Tutor */}
                     <form onSubmit={(e) => handleCommentSubmit(e, item.id)} className="flex gap-3 items-end mt-2">
                       <div className="flex-1">
                         <textarea
@@ -312,7 +364,7 @@ export default function ParentDashboard() {
                           <button
                             key={emoji}
                             type="button"
-                            onClick={() => addReaction(item.id, 'parent', emoji)}
+                            onClick={() => addReaction(item.id, user?.role === 'tutor' ? 'tutor' : 'parent', emoji)}
                             className="p-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg text-xs"
                           >
                             {emoji}
@@ -323,7 +375,7 @@ export default function ParentDashboard() {
                       <button
                         type="submit"
                         disabled={!parentComment[item.id]}
-                        className="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold disabled:opacity-40 flex items-center gap-1"
+                        className="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold disabled:opacity-40 flex items-center gap-1 shadow-sm transition-all"
                       >
                         <Send className="h-3.5 w-3.5" />
                         Comentar

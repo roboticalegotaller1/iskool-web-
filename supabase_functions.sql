@@ -762,31 +762,33 @@ begin
   
   -- Caso B: Quest completado por aprobación de portafolio
   elsif TG_TABLE_NAME = 'portfolio_items' then
-    if NEW.status = 'approved' and OLD.status != 'approved' and NEW.quest_id is not null then
-      -- Obtener el campo formativo del Quest
-      select q.xp_reward, cf.name
-      into v_xp_reward, v_campo_formativo_name
-      from public.quests q
-      join public.nem_campos_formativos cf on q.campo_formativo_id = cf.id
-      where q.id = NEW.quest_id;
+    if NEW.status = 'approved' and (OLD.status is null or OLD.status != 'approved') then
+      v_xp_reward := 100;
+      
+      if NEW.quest_id is not null then
+        -- Obtener el campo formativo del Quest si existe
+        select coalesce(q.xp_reward, 100), cf.name
+        into v_xp_reward, v_campo_formativo_name
+        from public.quests q
+        left join public.nem_campos_formativos cf on q.campo_formativo_id = cf.id
+        where q.id = NEW.quest_id;
 
-      if found and v_campo_formativo_name is not null then
-        v_xp_reward := coalesce(v_xp_reward, 100); -- Fallback
-        
-        -- 1. Actualizar afinidad elemental
-        if v_campo_formativo_name = 'Lenguajes' then
-          update public.student_stats set stat_lenguajes = stat_lenguajes + v_xp_reward where student_id = NEW.student_id;
-        elsif v_campo_formativo_name = 'Saberes' then
-          update public.student_stats set stat_saberes = stat_saberes + v_xp_reward where student_id = NEW.student_id;
-        elsif v_campo_formativo_name = 'Ética' then
-          update public.student_stats set stat_etica = stat_etica + v_xp_reward where student_id = NEW.student_id;
-        elsif v_campo_formativo_name = 'De lo Humano' then
-          update public.student_stats set stat_de_lo_humano = stat_de_lo_humano + v_xp_reward where student_id = NEW.student_id;
+        if v_campo_formativo_name is not null then
+          -- 1. Actualizar afinidad elemental
+          if v_campo_formativo_name = 'Lenguajes' then
+            update public.student_stats set stat_lenguajes = stat_lenguajes + v_xp_reward where student_id = NEW.student_id;
+          elsif v_campo_formativo_name = 'Saberes' then
+            update public.student_stats set stat_saberes = stat_saberes + v_xp_reward where student_id = NEW.student_id;
+          elsif v_campo_formativo_name = 'Ética' then
+            update public.student_stats set stat_etica = stat_etica + v_xp_reward where student_id = NEW.student_id;
+          elsif v_campo_formativo_name = 'De lo Humano' then
+            update public.student_stats set stat_de_lo_humano = stat_de_lo_humano + v_xp_reward where student_id = NEW.student_id;
+          end if;
         end if;
-
-        -- 2. Asegurar que el XP/Monedas principales se apliquen en la base de datos para aprobación de portafolio
-        perform public.process_reward(NEW.student_id, v_xp_reward, 20, 0, 0);
       end if;
+
+      -- 2. Asegurar que el XP/Monedas principales se apliquen atómicamente en la base de datos para aprobación de portafolio
+      perform public.process_reward(NEW.student_id, coalesce(v_xp_reward, 100), 20, 0, 0);
     end if;
   end if;
   
