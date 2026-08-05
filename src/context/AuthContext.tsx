@@ -31,18 +31,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Check session on load
     const checkSession = async () => {
-      const { data: { session: initialSession } } = await supabase.auth.getSession();
-      setSession(initialSession);
-      setUser(initialSession?.user ? {
-        id: initialSession.user.id,
-        first_name: initialSession.user.user_metadata?.first_name || 'Usuario',
-        last_name: initialSession.user.user_metadata?.last_name || '',
-        role: (initialSession.user.user_metadata?.role || 'student') as any,
-        email: initialSession.user.email || '',
-        created_at: initialSession.user.created_at,
-        updated_at: new Date().toISOString()
-      } : null);
-      setLoading(false);
+      try {
+        const { data: { session: initialSession } } = await supabase.auth.getSession();
+        if (initialSession?.user) {
+          setSession(initialSession);
+          setUser({
+            id: initialSession.user.id,
+            first_name: initialSession.user.user_metadata?.first_name || 'Usuario',
+            last_name: initialSession.user.user_metadata?.last_name || '',
+            role: (initialSession.user.user_metadata?.role || 'student') as any,
+            email: initialSession.user.email || '',
+            created_at: initialSession.user.created_at,
+            updated_at: new Date().toISOString()
+          });
+        }
+      } catch (err) {
+        console.warn("Supabase auth offline fallback:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     checkSession();
@@ -70,62 +77,81 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     const password = 'ISkoolPassword2026!';
     
-    // 1. Try to sign in
-    const signInResult = await supabase.auth.signInWithPassword({ email, password });
-    
-    let userObj: any = null;
-    let sessionObj: any = null;
+    try {
+      // 1. Try to sign in
+      const signInResult = await supabase.auth.signInWithPassword({ email, password });
+      
+      let userObj: any = null;
+      let sessionObj: any = null;
 
-    if (signInResult.error) {
-      if (signInResult.error.message.includes('Invalid login credentials') || 
-          signInResult.error.message.includes('User not found') || 
-          signInResult.error.message.includes('Email not confirmed')) {
-        // Auto-create user
-        const demoUser = getDemoUser(email);
-        const first_name = demoUser ? demoUser.first_name : 'Usuario';
-        const last_name = demoUser ? demoUser.last_name : 'Demo';
-        const role = demoUser ? demoUser.role : 'student';
+      if (signInResult.error) {
+        if (signInResult.error.message.includes('Invalid login credentials') || 
+            signInResult.error.message.includes('User not found') || 
+            signInResult.error.message.includes('Email not confirmed')) {
+          // Auto-create user
+          const demoUser = getDemoUser(email);
+          const first_name = demoUser ? demoUser.first_name : 'Usuario';
+          const last_name = demoUser ? demoUser.last_name : 'Demo';
+          const role = demoUser ? demoUser.role : 'student';
 
-        const signUpResult = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              first_name,
-              last_name,
-              role
+          const signUpResult = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                first_name,
+                last_name,
+                role
+              }
             }
+          });
+
+          if (signUpResult.error) {
+            setLoading(false);
+            return { success: false, error: signUpResult.error.message };
           }
-        });
-
-        if (signUpResult.error) {
+          
+          userObj = signUpResult.data.user;
+          sessionObj = signUpResult.data.session;
+        } else {
+          // Si falla por red (offline) u otro error de Supabase, usaremos el usuario demo local
+          const demoUser = getDemoUser(email);
+          if (demoUser) {
+            setUser(demoUser);
+            setLoading(false);
+            return { success: true };
+          }
           setLoading(false);
-          return { success: false, error: signUpResult.error.message };
+          return { success: false, error: signInResult.error.message };
         }
-        
-        userObj = signUpResult.data.user;
-        sessionObj = signUpResult.data.session;
       } else {
-        setLoading(false);
-        return { success: false, error: signInResult.error.message };
+        userObj = signInResult.data.user;
+        sessionObj = signInResult.data.session;
       }
-    } else {
-      userObj = signInResult.data.user;
-      sessionObj = signInResult.data.session;
-    }
 
-    setSession(sessionObj);
-    setUser(userObj ? {
-      id: userObj.id,
-      first_name: userObj.user_metadata?.first_name || 'Usuario',
-      last_name: userObj.user_metadata?.last_name || '',
-      role: (userObj.user_metadata?.role || 'student') as any,
-      email: userObj.email || '',
-      created_at: userObj.created_at,
-      updated_at: new Date().toISOString()
-    } : null);
-    setLoading(false);
-    return { success: true };
+      setSession(sessionObj);
+      setUser(userObj ? {
+        id: userObj.id,
+        first_name: userObj.user_metadata?.first_name || 'Usuario',
+        last_name: userObj.user_metadata?.last_name || '',
+        role: (userObj.user_metadata?.role || 'student') as any,
+        email: userObj.email || '',
+        created_at: userObj.created_at,
+        updated_at: new Date().toISOString()
+      } : null);
+      setLoading(false);
+      return { success: true };
+    } catch (err: any) {
+      console.warn("Supabase network error, fallback to offline demo user:", err);
+      const demoUser = getDemoUser(email);
+      if (demoUser) {
+        setUser(demoUser);
+        setLoading(false);
+        return { success: true };
+      }
+      setLoading(false);
+      return { success: false, error: err.message || "Error al conectar en modo offline" };
+    }
   };
 
   const logout = async () => {
