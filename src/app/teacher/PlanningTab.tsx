@@ -679,29 +679,65 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       });
     }, 1100);
 
-    // Esperar a que la simulación termine
-    await new Promise(resolve => setTimeout(resolve, 5500));
-
-    // Determinar si usamos Gemini Real u Offline
+    // Step 1: Buscar primero en la bóveda de Obsidian si coincide el tema
     let resultPlanning: any = null;
+    let foundInObsidian = false;
+
+    try {
+      const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}`);
+      if (obsRes.ok) {
+        const obsData = await obsRes.json();
+        if (obsData.found && obsData.planning) {
+          resultPlanning = obsData.planning;
+          foundInObsidian = true;
+          console.log("Planeación encontrada en Obsidian:", obsData.filename);
+        }
+      }
+    } catch (e) {
+      console.warn("No se pudo consultar la bóveda de Obsidian:", e);
+    }
+
+    // Esperar a que la simulación termine visualmente
+    await new Promise(resolve => setTimeout(resolve, 3500));
+
     const currKey = mapSubjectToCurriculumKey(selectedSubject, displaySubjects.find(s => s.id === selectedSubject)?.name || '');
 
-    if (geminiApiKey.trim()) {
-      try {
-        resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey);
-      } catch (err) {
-        console.error("Fallo llamada a Gemini API, usando motor heurístico local", err);
+    // Step 2: Si no estuvo en Obsidian, generar con IA Gemini o Heurístico Local
+    if (!resultPlanning) {
+      if (geminiApiKey.trim()) {
+        try {
+          resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey);
+        } catch (err) {
+          console.error("Fallo llamada a Gemini API, usando motor heurístico local", err);
+          resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
+        }
+      } else {
         resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
       }
-    } else {
-      resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
     }
 
     if (resultPlanning) {
       resultPlanning.subjectId = selectedSubject;
       resultPlanning.subjectName = displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
-      if (selectedSuggestedPda) {
+      if (selectedSuggestedPda && !foundInObsidian) {
         resultPlanning.pda = selectedSuggestedPda;
+      }
+
+      // Step 3: Si fue recién generada (no leída de Obsidian), guardarla automáticamente en el Segundo Cerebro de Obsidian
+      if (!foundInObsidian) {
+        try {
+          await fetch('/api/obsidian', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...resultPlanning,
+              teacherName: `${currentTeacher.first_name} ${currentTeacher.last_name}`
+            })
+          });
+          console.log("Planeación sincronizada con el Segundo Cerebro de Obsidian automáticamente.");
+        } catch (e) {
+          console.warn("No se pudo auto-guardar en Obsidian:", e);
+        }
       }
     }
 
@@ -1418,12 +1454,47 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
           <>
             {/* Barra de Acciones del Documento */}
             <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-2xl p-3 shadow-xs flex justify-between items-center no-print">
-              <span className="text-[10px] text-zinc-400 font-bold flex items-center gap-1.5 px-2">
-                <Edit3 className="h-4 w-4 text-zinc-400" />
-                Haz clic sobre cualquier texto para editar directamente la planeación
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-zinc-400 font-bold flex items-center gap-1.5 px-2">
+                  <Edit3 className="h-4 w-4 text-zinc-400" />
+                  Haz clic sobre cualquier texto para editar directamente la planeación
+                </span>
+                {activePlanning.isFromObsidian && (
+                  <span className="px-2.5 py-1 bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 rounded-full text-[10px] font-black flex items-center gap-1 border border-purple-200/30">
+                    <BookOpen className="h-3 w-3" /> Recuperada de Obsidian
+                  </span>
+                )}
+              </div>
               
               <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      const res = await fetch('/api/obsidian', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          ...activePlanning,
+                          teacherName: `${currentTeacher.first_name} ${currentTeacher.last_name}`
+                        })
+                      });
+                      const data = await res.json();
+                      if (data.success) {
+                        alert(`¡Planeación sincronizada con el Segundo Cerebro de Obsidian!\nArchivo: ${data.filename}`);
+                      } else {
+                        alert(`Error al guardar en Obsidian: ${data.error}`);
+                      }
+                    } catch (err: any) {
+                      alert(`Error de conexión con Obsidian: ${err.message}`);
+                    }
+                  }}
+                  className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-black shadow-sm flex items-center gap-1.5 transition-all"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  Guardar en Obsidian
+                </button>
+
                 <button
                   onClick={handlePrint}
                   className="px-4.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-sm shadow-blue-500/10 flex items-center gap-1.5 transition-all"
