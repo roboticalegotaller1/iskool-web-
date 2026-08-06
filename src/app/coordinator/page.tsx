@@ -29,6 +29,8 @@ export default function CoordinatorDashboard() {
   const createSubject = useSchoolAdminStore(state => state.createSubject);
   const deleteSubject = useSchoolAdminStore(state => state.deleteSubject);
   const registerTeacher = useSchoolAdminStore(state => state.registerTeacher);
+  const updateTeacher = useSchoolAdminStore(state => state.updateTeacher);
+  const deleteTeacher = useSchoolAdminStore(state => state.deleteTeacher);
 
   const setDetailedStudents = (val: DetailedStudent[] | ((prev: DetailedStudent[]) => DetailedStudent[])) => {
     const current = useSchoolAdminStore.getState().detailedStudents;
@@ -40,6 +42,11 @@ export default function CoordinatorDashboard() {
 
   // Gestión de Pestañas
   const [activeTab, setActiveTab] = useState<'students' | 'groups' | 'schedules' | 'settings'>('students');
+
+  // --- ESTADOS DE GESTIÓN DE PROFESORES ---
+  const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false);
+  const [editingTeacher, setEditingTeacher] = useState<UserProfile | null>(null);
+  const [teacherFormData, setTeacherFormData] = useState({ first_name: '', last_name: '', email: '' });
 
   // --- ESTADOS ONBOARDING INTERACTIVO ---
   const [onboardingStep, setOnboardingStep] = useState(1);
@@ -63,6 +70,125 @@ export default function CoordinatorDashboard() {
   const [simulatedDomainName, setSimulatedDomainName] = useState('');
   const [isSimulatingColors, setIsSimulatingColors] = useState(false);
   const [showColorSuccess, setShowColorSuccess] = useState(false);
+
+  // --- FUNCIONES AUXILIARES DE COLOR Y EXTRACTION DE LOGO ---
+  const hslToHex = (hslStr: string) => {
+    if (!hslStr) return '#4f46e5';
+    const parts = hslStr.replace(/%/g, '').split(/\s+/).map(Number);
+    if (parts.length < 3) return '#4f46e5';
+    const h = parts[0] / 360;
+    const s = parts[1] / 100;
+    const l = parts[2] / 100;
+    let r, g, b;
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      const hue2rgb = (pVal: number, qVal: number, tVal: number) => {
+        let t = tVal;
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return pVal + (qVal - pVal) * 6 * t;
+        if (t < 1/2) return qVal;
+        if (t < 2/3) return pVal + (qVal - pVal) * (2/3 - t) * 6;
+        return pVal;
+      };
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+    const toHex = (x: number) => {
+      const hex = Math.round(x * 255).toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  };
+
+  const hexToHsl = (hex: string) => {
+    if (!hex || hex.length < 7) return '250 84% 54%';
+    let r = parseInt(hex.slice(1, 3), 16) / 255;
+    let g = parseInt(hex.slice(3, 5), 16) / 255;
+    let b = parseInt(hex.slice(5, 7), 16) / 255;
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0, l = (max + min) / 2;
+    if (max !== min) {
+      let d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max){
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+  };
+
+  const handleLogoFileUpload = (
+    file: File, 
+    onSuccess: (logoUrl: string, colors?: { primary: string; secondary: string; accent: string }) => void
+  ) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      if (!dataUrl) return;
+
+      const img = new window.Image();
+      img.src = dataUrl;
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            canvas.width = 50;
+            canvas.height = 50;
+            ctx.drawImage(img, 0, 0, 50, 50);
+            const imgData = ctx.getImageData(0, 0, 50, 50).data;
+
+            let totalR = 0, totalG = 0, totalB = 0, count = 0;
+            for (let i = 0; i < imgData.length; i += 16) {
+              const alpha = imgData[i + 3];
+              if (alpha > 128) {
+                totalR += imgData[i];
+                totalG += imgData[i + 1];
+                totalB += imgData[i + 2];
+                count++;
+              }
+            }
+
+            if (count > 0) {
+              const r = (totalR / count) / 255;
+              const g = (totalG / count) / 255;
+              const b = (totalB / count) / 255;
+              const max = Math.max(r, g, b), min = Math.min(r, g, b);
+              let h = 0, s = 0, l = (max + min) / 2;
+              if (max !== min) {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch(max) {
+                  case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                  case g: h = (b - r) / d + 2; break;
+                  case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+              }
+              const primary = `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+              const secondary = `${(Math.round(h * 360) + 40) % 360} ${Math.max(20, Math.round(s * 100) - 20)}% ${Math.max(20, Math.round(l * 100) - 10)}%`;
+              const accent = `${(Math.round(h * 360) + 160) % 360} 75% 45%`;
+
+              onSuccess(dataUrl, { primary, secondary, accent });
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn("Logo color extraction exception:", e);
+        }
+        onSuccess(dataUrl);
+      };
+    };
+    reader.readAsDataURL(file);
+  };
 
 
   // --- FILTROS Y ESTADOS DE ALUMNOS ---
@@ -1203,20 +1329,78 @@ export default function CoordinatorDashboard() {
 
         {/* --- PESTAÑA 4: IDENTIDAD Y CONFIGURACIÓN DE LA ESCUELA --- */}
         {activeTab === 'settings' && (
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 p-6 md:p-8 rounded-3xl shadow-sm flex flex-col gap-6">
-            <div className="border-b border-zinc-100 dark:border-zinc-800 pb-3 flex items-center justify-between">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 p-6 md:p-8 rounded-3xl shadow-sm flex flex-col gap-8">
+            <div className="border-b border-zinc-100 dark:border-zinc-800 pb-4 flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-black text-zinc-900 dark:text-white flex items-center gap-2">
                   <Building2 className="h-5.5 w-5.5 text-brand-primary" />
-                  Identidad Institucional de la Escuela
+                  Identidad Institucional y Configuración del Plantel
                 </h2>
-                <p className="text-xs text-zinc-400 mt-0.5">Define los datos del plantel y la paleta de colores del tema adaptativo.</p>
+                <p className="text-xs text-zinc-400 mt-0.5">Gestión integral del logotipo, paleta de colores del tema, datos generales y plantilla docente.</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              {/* Formulario */}
-              <div className="lg:col-span-8 flex flex-col gap-4">
+              {/* Columna Izquierda: Datos del Plantel + Logotipo + Profesores */}
+              <div className="lg:col-span-8 flex flex-col gap-6">
+                
+                {/* 1. SECCIÓN LOGOTIPO INSTITUCIONAL */}
+                <div className="p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 flex flex-col gap-3">
+                  <span className="text-xs font-black uppercase text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                    <Upload className="h-4 w-4 text-violet-600" />
+                    Logotipo Oficial del Plantel
+                  </span>
+                  
+                  <div className="flex flex-col sm:flex-row items-center gap-5">
+                    <div className="h-20 w-20 rounded-2xl border-2 border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 flex items-center justify-center p-2 overflow-hidden shadow-sm">
+                      {schoolSettings.logoUrl ? (
+                        <img src={schoolSettings.logoUrl} alt="Logo" className="h-full w-full object-contain" />
+                      ) : (
+                        <Building2 className="h-8 w-8 text-zinc-400" />
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-2 flex-1 text-center sm:text-left">
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                        Sube una imagen de tu escuela (.png, .jpg, .svg). Se extraerán automáticamente los colores principales para el tema.
+                      </p>
+                      <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                        <label className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md shadow-violet-500/10 flex items-center gap-1.5">
+                          <Upload className="h-3.5 w-3.5" />
+                          Cargar Nuevo Logotipo
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                handleLogoFileUpload(file, (logoUrl, colors) => {
+                                  saveSchoolSettings({
+                                    ...schoolSettings,
+                                    logoUrl,
+                                    themeColors: colors || schoolSettings.themeColors
+                                  });
+                                  alert('¡Logotipo actualizado y colores extraídos correctamente!');
+                                });
+                              }
+                            }}
+                          />
+                        </label>
+                        {schoolSettings.logoUrl && (
+                          <button
+                            onClick={() => saveSchoolSettings({ ...schoolSettings, logoUrl: '' })}
+                            className="px-3 py-2 border border-zinc-200 dark:border-zinc-800 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-xl text-xs font-bold"
+                          >
+                            Eliminar Logo
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. DATOS GENERALES DEL PLANTEL */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Nombre del Plantel</label>
@@ -1233,7 +1417,7 @@ export default function CoordinatorDashboard() {
                       type="text"
                       value={schoolSettings.cct}
                       onChange={(e) => saveSchoolSettings({ ...schoolSettings, cct: e.target.value })}
-                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none focus:border-brand-primary"
+                      className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none focus:border-brand-primary font-mono"
                     />
                   </div>
                 </div>
@@ -1269,124 +1453,103 @@ export default function CoordinatorDashboard() {
                   />
                 </div>
 
-                {/* Coordinadores */}
-                <div>
-                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Coordinadores del Sistema</label>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {schoolSettings.coordinators.map((c, idx) => (
-                      <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-xs font-bold rounded-lg">
-                        {c}
-                        <button
-                          onClick={() => {
-                            const filtered = schoolSettings.coordinators.filter((_, i) => i !== idx);
-                            saveSchoolSettings({ ...schoolSettings, coordinators: filtered });
-                          }}
-                          className="text-red-500 hover:text-red-750 text-[10px]"
-                        >
-                          ✕
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      id="new-coord-input"
-                      placeholder="Nombre del nuevo coordinador..."
-                      className="flex-1 text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none"
-                      onKeyDown={(e: any) => {
-                        if (e.key === 'Enter' && e.target.value.trim()) {
-                          saveSchoolSettings({
-                            ...schoolSettings,
-                            coordinators: [...schoolSettings.coordinators, e.target.value.trim()]
-                          });
-                          e.target.value = '';
-                        }
-                      }}
-                    />
+                {/* 3. GESTIÓN DE PLANTILLA DOCENTE */}
+                <div className="p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col gap-4">
+                  <div className="flex items-center justify-between border-b pb-2">
+                    <div>
+                      <h3 className="text-xs font-black uppercase text-zinc-800 dark:text-white flex items-center gap-1.5">
+                        <Users className="h-4 w-4 text-violet-600" />
+                        Plantilla Docente de la Escuela ({teachersList.length})
+                      </h3>
+                      <p className="text-[11px] text-zinc-400">Administra los accesos y expedientes de tus profesores.</p>
+                    </div>
                     <button
                       onClick={() => {
-                        const el = document.getElementById('new-coord-input') as HTMLInputElement;
-                        if (el && el.value.trim()) {
-                          saveSchoolSettings({
-                            ...schoolSettings,
-                            coordinators: [...schoolSettings.coordinators, el.value.trim()]
-                          });
-                          el.value = '';
-                        }
+                        setEditingTeacher(null);
+                        setTeacherFormData({ first_name: '', last_name: '', email: '' });
+                        setIsTeacherModalOpen(true);
                       }}
-                      className="px-4 bg-brand-primary text-white rounded-xl text-xs font-bold"
+                      className="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm"
                     >
-                      Añadir
+                      <UserPlus className="h-3.5 w-3.5" />
+                      Dar de Alta Profesor
                     </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {teachersList.map((t) => (
+                      <div key={t.id} className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <div className="h-8 w-8 rounded-full bg-violet-100 dark:bg-violet-950/50 text-violet-600 font-bold flex items-center justify-center text-xs">
+                            {t.first_name?.[0]}{t.last_name?.[0]}
+                          </div>
+                          <div className="flex flex-col text-left leading-tight">
+                            <span className="font-bold text-xs text-zinc-900 dark:text-white">{t.first_name} {t.last_name}</span>
+                            <span className="text-[10px] text-zinc-400">{t.email}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => {
+                              setEditingTeacher(t);
+                              setTeacherFormData({ first_name: t.first_name || '', last_name: t.last_name || '', email: t.email || '' });
+                              setIsTeacherModalOpen(true);
+                            }}
+                            className="p-1.5 text-zinc-400 hover:text-violet-600 rounded-lg hover:bg-zinc-200/50 dark:hover:bg-zinc-800 text-xs"
+                            title="Editar información"
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (confirm(`¿Estás seguro de eliminar al profesor ${t.first_name} ${t.last_name}?`)) {
+                                deleteTeacher(t.id);
+                              }
+                            }}
+                            className="p-1.5 text-zinc-400 hover:text-rose-600 rounded-lg hover:bg-zinc-200/50 dark:hover:bg-zinc-800 text-xs"
+                            title="Dar de baja"
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Profesores */}
-                <div>
-                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Profesores Invitados</label>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {schoolSettings.teachers.map((t, idx) => (
-                      <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-xs font-bold rounded-lg">
-                        {t}
-                        <button
-                          onClick={() => {
-                            const filtered = schoolSettings.teachers.filter((_, i) => i !== idx);
-                            saveSchoolSettings({ ...schoolSettings, teachers: filtered });
-                          }}
-                          className="text-red-500 hover:text-red-750 text-[10px]"
-                        >
-                          ✕
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      id="new-teach-input"
-                      placeholder="Nombre del docente..."
-                      className="flex-1 text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none"
-                      onKeyDown={(e: any) => {
-                        if (e.key === 'Enter' && e.target.value.trim()) {
-                          saveSchoolSettings({
-                            ...schoolSettings,
-                            teachers: [...schoolSettings.teachers, e.target.value.trim()]
-                          });
-                          e.target.value = '';
-                        }
-                      }}
-                    />
-                    <button
-                      onClick={() => {
-                        const el = document.getElementById('new-teach-input') as HTMLInputElement;
-                        if (el && el.value.trim()) {
-                          saveSchoolSettings({
-                            ...schoolSettings,
-                            teachers: [...schoolSettings.teachers, el.value.trim()]
-                          });
-                          el.value = '';
-                        }
-                      }}
-                      className="px-4 bg-brand-primary text-white rounded-xl text-xs font-bold"
-                    >
-                      Añadir
-                    </button>
-                  </div>
-                </div>
               </div>
 
-              {/* Tema de Colores */}
-              <div className="lg:col-span-4 bg-zinc-50 dark:bg-zinc-950 p-6 rounded-3xl border border-zinc-100 dark:border-zinc-850 flex flex-col gap-4">
-                <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest border-b pb-1.5 flex items-center gap-1">
-                  <Sparkles className="h-4 w-4" />
-                  Paleta de Colores Activa
-                </span>
+              {/* Columna Derecha: REVISOR DE PALETA DE COLORES ADAPTATIVO */}
+              <div className="lg:col-span-4 bg-zinc-50 dark:bg-zinc-950 p-6 rounded-3xl border border-zinc-200/80 dark:border-zinc-800 flex flex-col gap-5 sticky top-20">
+                <div className="border-b pb-2 flex items-center justify-between">
+                  <span className="text-xs font-black text-brand-primary uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="h-4 w-4 text-amber-500" />
+                    Revisor de Paleta de Colores
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-violet-100 dark:bg-violet-950 text-violet-600 text-[9px] font-bold">En Vivo</span>
+                </div>
 
-                <div className="flex flex-col gap-3">
+                <p className="text-[11px] text-zinc-400">
+                  Selecciona los colores exactos mediante los selectores interactivos. Toda la plataforma adaptará su tema en tiempo real.
+                </p>
+
+                <div className="flex flex-col gap-4">
+                  {/* Color Primario */}
                   <div>
-                    <label className="text-[9px] font-bold text-zinc-400 uppercase">Color Primario (HSL)</label>
-                    <div className="flex gap-2 items-center mt-1">
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase block mb-1">Color Primario (Botones y Títulos)</label>
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="color"
+                        value={hslToHex(schoolSettings.themeColors.primary)}
+                        onChange={(e) => {
+                          const hsl = hexToHsl(e.target.value);
+                          saveSchoolSettings({
+                            ...schoolSettings,
+                            themeColors: { ...schoolSettings.themeColors, primary: hsl }
+                          });
+                        }}
+                        className="h-9 w-9 rounded-xl border border-zinc-300 dark:border-zinc-700 cursor-pointer overflow-hidden"
+                      />
                       <input
                         type="text"
                         value={schoolSettings.themeColors.primary}
@@ -1395,15 +1558,27 @@ export default function CoordinatorDashboard() {
                           themeColors: { ...schoolSettings.themeColors, primary: e.target.value }
                         })}
                         placeholder="250 84% 54%"
-                        className="flex-1 text-xs p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white font-mono"
+                        className="flex-1 text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white font-mono"
                       />
-                      <span className="h-6 w-6 rounded-full border shadow-sm" style={{ backgroundColor: `hsl(${schoolSettings.themeColors.primary})` }} />
                     </div>
                   </div>
 
+                  {/* Color Secundario */}
                   <div>
-                    <label className="text-[9px] font-bold text-zinc-400 uppercase">Color Secundario (HSL)</label>
-                    <div className="flex gap-2 items-center mt-1">
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase block mb-1">Color Secundario (Fondos y Bordes)</label>
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="color"
+                        value={hslToHex(schoolSettings.themeColors.secondary)}
+                        onChange={(e) => {
+                          const hsl = hexToHsl(e.target.value);
+                          saveSchoolSettings({
+                            ...schoolSettings,
+                            themeColors: { ...schoolSettings.themeColors, secondary: hsl }
+                          });
+                        }}
+                        className="h-9 w-9 rounded-xl border border-zinc-300 dark:border-zinc-700 cursor-pointer overflow-hidden"
+                      />
                       <input
                         type="text"
                         value={schoolSettings.themeColors.secondary}
@@ -1412,15 +1587,27 @@ export default function CoordinatorDashboard() {
                           themeColors: { ...schoolSettings.themeColors, secondary: e.target.value }
                         })}
                         placeholder="221 83% 53%"
-                        className="flex-1 text-xs p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white font-mono"
+                        className="flex-1 text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white font-mono"
                       />
-                      <span className="h-6 w-6 rounded-full border shadow-sm" style={{ backgroundColor: `hsl(${schoolSettings.themeColors.secondary})` }} />
                     </div>
                   </div>
 
+                  {/* Color de Acento */}
                   <div>
-                    <label className="text-[9px] font-bold text-zinc-400 uppercase">Color de Acento (HSL)</label>
-                    <div className="flex gap-2 items-center mt-1">
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase block mb-1">Color de Acento (Destacados y Éxito)</label>
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="color"
+                        value={hslToHex(schoolSettings.themeColors.accent)}
+                        onChange={(e) => {
+                          const hsl = hexToHsl(e.target.value);
+                          saveSchoolSettings({
+                            ...schoolSettings,
+                            themeColors: { ...schoolSettings.themeColors, accent: hsl }
+                          });
+                        }}
+                        className="h-9 w-9 rounded-xl border border-zinc-300 dark:border-zinc-700 cursor-pointer overflow-hidden"
+                      />
                       <input
                         type="text"
                         value={schoolSettings.themeColors.accent}
@@ -1429,14 +1616,29 @@ export default function CoordinatorDashboard() {
                           themeColors: { ...schoolSettings.themeColors, accent: e.target.value }
                         })}
                         placeholder="142 71% 45%"
-                        className="flex-1 text-xs p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white font-mono"
+                        className="flex-1 text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white font-mono"
                       />
-                      <span className="h-6 w-6 rounded-full border shadow-sm" style={{ backgroundColor: `hsl(${schoolSettings.themeColors.accent})` }} />
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-col gap-2">
+                {/* TARJETA DE VISTA PREVIA EN VIVO */}
+                <div className="p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col gap-3 shadow-sm mt-2">
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase">Vista Previa del Tema Adaptativo</span>
+                  <div className="p-3 rounded-xl text-white font-bold text-xs shadow-sm flex items-center justify-between" style={{ backgroundColor: `hsl(${schoolSettings.themeColors.primary})` }}>
+                    <span>Botón Primario</span>
+                    <Sparkles className="h-4 w-4" />
+                  </div>
+                  <div className="p-2.5 rounded-xl border font-semibold text-xs flex items-center justify-between" style={{ borderColor: `hsl(${schoolSettings.themeColors.secondary})`, color: `hsl(${schoolSettings.themeColors.secondary})` }}>
+                    <span>Borde Secundario</span>
+                    <CheckCircle2 className="h-4 w-4" />
+                  </div>
+                  <div className="px-3 py-1.5 rounded-lg text-white font-bold text-[10px] text-center" style={{ backgroundColor: `hsl(${schoolSettings.themeColors.accent})` }}>
+                    Éxito / Acento Destacado
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 mt-2">
                   <button
                     onClick={() => saveSchoolSettings({
                       ...schoolSettings,
@@ -1446,15 +1648,15 @@ export default function CoordinatorDashboard() {
                         accent: '142 71% 45%'
                       }
                     })}
-                    className="w-full py-2 border rounded-xl text-xs font-bold text-zinc-500 hover:bg-zinc-100"
+                    className="w-full py-2.5 border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                   >
-                    Restablecer Colores
+                    Restablecer Colores Predeterminados
                   </button>
                   <button
                     onClick={() => saveSchoolSettings({ ...schoolSettings, isConfigured: false })}
-                    className="w-full py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold"
+                    className="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold transition-colors"
                   >
-                    Volver a Ejecutar Onboarding
+                    Volver a Ejecutar Asistente de Onboarding
                   </button>
                 </div>
               </div>

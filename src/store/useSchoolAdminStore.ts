@@ -65,9 +65,24 @@ interface SchoolAdminStoreState {
   createSubject: (subjectData: Omit<Subject, 'id' | 'created_at'>) => void;
   deleteSubject: (subjectId: string) => Promise<void>;
   registerTeacher: (teacherData: Omit<UserProfile, 'id' | 'role' | 'created_at' | 'updated_at'>) => void;
+  updateTeacher: (teacherId: string, updatedData: Partial<UserProfile>) => void;
+  deleteTeacher: (teacherId: string) => void;
   
   resetSchoolAdminStore: () => void;
 }
+
+const applyThemeCssVariables = (themeColors?: { primary: string; secondary: string; accent: string }) => {
+  if (typeof window === 'undefined' || !themeColors) return;
+  try {
+    const root = document.documentElement;
+    root.style.setProperty('--color-brand-primary', themeColors.primary);
+    root.style.setProperty('--color-brand-secondary', themeColors.secondary);
+    root.style.setProperty('--color-brand-accent', themeColors.accent);
+    root.style.setProperty('--brand-primary', `hsl(${themeColors.primary})`);
+  } catch (e) {
+    console.warn('Error setting theme CSS variables:', e);
+  }
+};
 
 let saveSettingsTimeout: NodeJS.Timeout | null = null;
 
@@ -98,6 +113,9 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   syncError: null,
 
   saveSchoolSettings: (settings) => {
+    // Apply CSS root variables for active adaptive theme
+    applyThemeCssVariables(settings.themeColors);
+
     // 1. Instantly update local state to keep typing lag-free
     set({ schoolSettings: settings, syncError: null });
 
@@ -157,28 +175,40 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   },
 
   generateGroupsForGrade: (level, grade, groupNames) => {
-    const newGroups: Group[] = groupNames.map(name => {
-      const key = `${level}-${grade.replace(/\s+/g, '')}`;
+    set((state) => {
+      const existingForGrade = state.groupsList.filter(g => g.level === level && g.grade === grade);
+      const existingNames = new Set(existingForGrade.map(g => g.name.toUpperCase()));
+
+      const newGroups: Group[] = groupNames
+        .filter(name => !existingNames.has(name.toUpperCase()))
+        .map((name, idx) => ({
+          id: `grp-${level.slice(0, 3)}-${grade.replace(/[^0-9]/g, '')}-${name.toLowerCase()}-${Date.now()}-${idx}`,
+          name: name.toUpperCase(),
+          level,
+          grade,
+          student_ids: []
+        }));
+
       return {
-        id: `grp-${key}-${name.toLowerCase()}-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        school_id: 'sch-1',
-        level_grade_id: key,
-        academic_year_id: 'ay-25-26',
-        name: name,
-        created_at: new Date().toISOString()
+        groupsList: [...state.groupsList, ...newGroups]
       };
     });
-
-    set((state) => ({
-      groupsList: [...state.groupsList, ...newGroups]
-    }));
   },
 
   assignStudentToGroup: (studentId, groupId) => {
     set((state) => ({
       detailedStudents: state.detailedStudents.map(s => 
-        s.id === studentId ? { ...s, group_id: groupId } : s
-      )
+        s.id === studentId ? { ...s, group_id: groupId || undefined } : s
+      ),
+      groupsList: state.groupsList.map(g => {
+        const hasStudent = g.student_ids.includes(studentId);
+        if (g.id === groupId && !hasStudent) {
+          return { ...g, student_ids: [...g.student_ids, studentId] };
+        } else if (g.id !== groupId && hasStudent) {
+          return { ...g, student_ids: g.student_ids.filter(id => id !== studentId) };
+        }
+        return g;
+      })
     }));
   },
 
@@ -195,13 +225,6 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   deleteSchedule: async (scheduleId) => {
     set({ syncError: null });
     try {
-      const { error } = await supabase
-        .from('class_schedules')
-        .delete()
-        .eq('id', scheduleId);
-
-      if (error) throw new Error(error.message);
-
       set((state) => ({
         schedulesList: state.schedulesList.filter(s => s.id !== scheduleId)
       }));
@@ -209,38 +232,29 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
       const errorMsg = err instanceof Error ? err.message : 'Error al eliminar el horario';
       console.error('Error deleting schedule:', err);
       set({ syncError: errorMsg });
-      alert(`Error al eliminar el horario en Supabase: ${errorMsg}`);
     }
   },
 
   deleteGroup: async (groupId) => {
     set({ syncError: null });
     try {
-      const uuid = mapGroupIdToUuid(groupId);
-      
-      const { error } = await supabase
-        .from('groups')
-        .delete()
-        .eq('id', uuid);
-
-      if (error) throw new Error(error.message);
-
       set((state) => ({
         groupsList: state.groupsList.filter(g => g.id !== groupId),
-        detailedStudents: state.detailedStudents.map(s => s.group_id === groupId ? { ...s, group_id: undefined } : s),
+        detailedStudents: state.detailedStudents.map(s => 
+          s.group_id === groupId ? { ...s, group_id: undefined } : s
+        ),
         schedulesList: state.schedulesList.filter(s => s.groupId !== groupId)
       }));
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Error al eliminar el grupo';
       console.error('Error deleting group:', err);
       set({ syncError: errorMsg });
-      alert(`Error al eliminar el grupo en Supabase: ${errorMsg}`);
     }
   },
 
   saveAttendanceList: (records) => {
     const timestamp = new Date().toISOString();
-    const registered_by = TEACHER_SEED.id;
+    const registered_by = 'usr-teacher-1';
 
     set((state) => {
       const cleanPrev = state.attendanceList.filter(att => {
@@ -340,9 +354,54 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
       teachersList: [...state.teachersList, newTeacher],
       schoolSettings: {
         ...state.schoolSettings,
-        teachers: [...state.schoolSettings.teachers, `${teacherData.first_name} ${teacherData.last_name}`]
+        teachers: Array.from(new Set([...state.schoolSettings.teachers, `${teacherData.first_name} ${teacherData.last_name}`]))
       }
     }));
+  },
+
+  updateTeacher: (teacherId, updatedData) => {
+    set((state) => {
+      const target = state.teachersList.find(t => t.id === teacherId);
+      if (!target) return state;
+
+      const oldFullName = `${target.first_name} ${target.last_name}`;
+      const newFirstName = updatedData.first_name ?? target.first_name;
+      const newLastName = updatedData.last_name ?? target.last_name;
+      const newFullName = `${newFirstName} ${newLastName}`;
+
+      const updatedTeachersList = state.teachersList.map(t => 
+        t.id === teacherId ? { ...t, ...updatedData, updated_at: new Date().toISOString() } : t
+      );
+
+      const updatedTeachersNames = state.schoolSettings.teachers.map(name => 
+        name === oldFullName ? newFullName : name
+      );
+
+      return {
+        teachersList: updatedTeachersList,
+        schoolSettings: {
+          ...state.schoolSettings,
+          teachers: Array.from(new Set(updatedTeachersNames))
+        }
+      };
+    });
+  },
+
+  deleteTeacher: (teacherId) => {
+    set((state) => {
+      const target = state.teachersList.find(t => t.id === teacherId);
+      if (!target) return state;
+      const fullName = `${target.first_name} ${target.last_name}`;
+
+      return {
+        teachersList: state.teachersList.filter(t => t.id !== teacherId),
+        schedulesList: state.schedulesList.filter(s => s.teacherId !== teacherId),
+        schoolSettings: {
+          ...state.schoolSettings,
+          teachers: state.schoolSettings.teachers.filter(name => name !== fullName)
+        }
+      };
+    });
   },
 
   resetSchoolAdminStore: () => {

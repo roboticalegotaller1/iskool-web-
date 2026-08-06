@@ -57,14 +57,27 @@ export const Header: React.FC = () => {
     }
     if (studentProfile.level === 'secundaria') return 'Secundaria';
     return 'Preparatoria';
-  };  return (
+  };
+
+  const schoolSettings = useSchoolAdminStore(state => state.schoolSettings);
+
+  return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <GraduationCap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-          <Link href="/" className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            ISkool <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">Académico</span>
+        <div className="flex items-center gap-2.5">
+          {schoolSettings.logoUrl ? (
+            <img 
+              src={schoolSettings.logoUrl} 
+              alt={schoolSettings.name || "Logo Institucional"} 
+              className="h-9 w-9 object-contain rounded-lg"
+            />
+          ) : (
+            <GraduationCap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+          )}
+          <Link href="/" className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5">
+            <span>{schoolSettings.name || 'ISkool'}</span>
+            <span className="text-blue-600 dark:text-blue-400 font-medium text-xs">Académico</span>
           </Link>
         </div>
 
