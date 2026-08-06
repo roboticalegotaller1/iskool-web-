@@ -1930,9 +1930,10 @@ export default function CoordinatorDashboard() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                     {/* Selectores */}
                     <div className="flex flex-col gap-4">
+                      {/* Color Primario */}
                       <div>
                         <label className="text-[10px] font-bold text-zinc-450 uppercase block mb-1">Color Principal (Primario)</label>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 items-center">
                           <input
                             type="text"
                             value={onboardingData.themeColors.primary}
@@ -1944,58 +1945,73 @@ export default function CoordinatorDashboard() {
                           />
                           <input
                             type="color"
+                            value={hslToHex(onboardingData.themeColors.primary)}
                             onChange={(e) => {
-                              // Convertir HEX a HSL simulado rápido
-                              const hex = e.target.value;
-                              let r = parseInt(hex.slice(1, 3), 16) / 255;
-                              let g = parseInt(hex.slice(3, 5), 16) / 255;
-                              let b = parseInt(hex.slice(5, 7), 16) / 255;
-                              let max = Math.max(r, g, b), min = Math.min(r, g, b);
-                              let h = 0, s = 0, l = (max + min) / 2;
-                              if (max !== min) {
-                                let d = max - min;
-                                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-                                switch(max){
-                                  case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                                  case g: h = (b - r) / d + 2; break;
-                                  case b: h = (r - g) / d + 4; break;
-                                }
-                                h /= 6;
-                              }
+                              const hsl = hexToHsl(e.target.value);
                               setOnboardingData({
                                 ...onboardingData,
-                                themeColors: { ...onboardingData.themeColors, primary: `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%` }
+                                themeColors: { ...onboardingData.themeColors, primary: hsl }
                               });
                             }}
-                            className="h-10 w-10 border rounded-lg overflow-hidden cursor-pointer"
+                            className="h-11 w-11 rounded-xl border border-zinc-300 dark:border-zinc-700 cursor-pointer overflow-hidden flex-shrink-0"
                           />
                         </div>
                       </div>
 
+                      {/* Color Secundario */}
                       <div>
-                        <label className="text-[10px] font-bold text-zinc-450 uppercase block mb-1">Color Secundario</label>
-                        <input
-                          type="text"
-                          value={onboardingData.themeColors.secondary}
-                          onChange={(e) => setOnboardingData({
-                            ...onboardingData,
-                            themeColors: { ...onboardingData.themeColors, secondary: e.target.value }
-                          })}
-                          className="w-full text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white font-mono"
-                        />
+                        <label className="text-[10px] font-bold text-zinc-450 uppercase block mb-1">Color Secundario (Bordes/Headers)</label>
+                        <div className="flex gap-2 items-center">
+                          <input
+                            type="text"
+                            value={onboardingData.themeColors.secondary}
+                            onChange={(e) => setOnboardingData({
+                              ...onboardingData,
+                              themeColors: { ...onboardingData.themeColors, secondary: e.target.value }
+                            })}
+                            className="flex-1 text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white font-mono"
+                          />
+                          <input
+                            type="color"
+                            value={hslToHex(onboardingData.themeColors.secondary)}
+                            onChange={(e) => {
+                              const hsl = hexToHsl(e.target.value);
+                              setOnboardingData({
+                                ...onboardingData,
+                                themeColors: { ...onboardingData.themeColors, secondary: hsl }
+                              });
+                            }}
+                            className="h-11 w-11 rounded-xl border border-zinc-300 dark:border-zinc-700 cursor-pointer overflow-hidden flex-shrink-0"
+                          />
+                        </div>
                       </div>
 
+                      {/* Color de Acento */}
                       <div>
-                        <label className="text-[10px] font-bold text-zinc-455 uppercase block mb-1">Color de Acento</label>
-                        <input
-                          type="text"
-                          value={onboardingData.themeColors.accent}
-                          onChange={(e) => setOnboardingData({
-                            ...onboardingData,
-                            themeColors: { ...onboardingData.themeColors, accent: e.target.value }
-                          })}
-                          className="w-full text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white font-mono"
-                        />
+                        <label className="text-[10px] font-bold text-zinc-455 uppercase block mb-1">Color de Acento (Logros/Éxito)</label>
+                        <div className="flex gap-2 items-center">
+                          <input
+                            type="text"
+                            value={onboardingData.themeColors.accent}
+                            onChange={(e) => setOnboardingData({
+                              ...onboardingData,
+                              themeColors: { ...onboardingData.themeColors, accent: e.target.value }
+                            })}
+                            className="flex-1 text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white font-mono"
+                          />
+                          <input
+                            type="color"
+                            value={hslToHex(onboardingData.themeColors.accent)}
+                            onChange={(e) => {
+                              const hsl = hexToHsl(e.target.value);
+                              setOnboardingData({
+                                ...onboardingData,
+                                themeColors: { ...onboardingData.themeColors, accent: hsl }
+                              });
+                            }}
+                            className="h-11 w-11 rounded-xl border border-zinc-300 dark:border-zinc-700 cursor-pointer overflow-hidden flex-shrink-0"
+                          />
+                        </div>
                       </div>
                     </div>
 
