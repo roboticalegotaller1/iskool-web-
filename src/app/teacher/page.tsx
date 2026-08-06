@@ -6,6 +6,7 @@ import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { SUBJECTS_SEED } from '@/store/seeds';
+import { getStudentAvatarUrl } from '@/utils/studentAvatar';
 import { Header } from '@/components/Header';
 import { 
   FileImage, Mic, MicOff, HelpCircle, CheckCircle2, 
@@ -3264,7 +3265,7 @@ export default function TeacherDashboard() {
                 selectedStudent.level === 'secundaria' ? 'border-violet-500' : 'border-orange-500'
               }`}>
                 <img 
-                  src={selectedStudent.photo_url || '/images/students/default.png'} 
+                  src={getStudentAvatarUrl(selectedStudent)} 
                   alt={`${selectedStudent.first_name} ${selectedStudent.last_name_1}`}
                   className="h-full w-full object-cover"
                 />

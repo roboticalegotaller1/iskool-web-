@@ -11,6 +11,7 @@ import {
   X, MapPin, Phone, Mail, User, Activity, Dumbbell, Brain, Shield, ChevronDown, ChevronUp, Coins
 } from 'lucide-react';
 import { DetailedStudent, StudentStats } from '@/types';
+import { getStudentAvatarUrl } from '@/utils/studentAvatar';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useStudentStore, normalizeStudentId } from '@/store/useStudentStore';
@@ -618,7 +619,7 @@ export default function TeacherGrades() {
                 selectedStudent.level === 'secundaria' ? 'border-purple-500' : 'border-amber-500'
               }`}>
                 <img 
-                  src={selectedStudent.photo_url || '/images/students/default.png'} 
+                  src={getStudentAvatarUrl(selectedStudent)} 
                   alt={`${selectedStudent.first_name} ${selectedStudent.last_name_1}`}
                   className="h-full w-full object-cover"
                 />
