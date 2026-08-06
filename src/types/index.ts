@@ -646,8 +646,8 @@ export interface DetailedStudent {
 
   // Campos adicionales del expediente
   pending_payments?: string[];
-  behavior_reports?: { date: string; description: string; reporter: string }[];
-  teacher_notes?: { date: string; note: string; teacher_name: string }[];
+  behavior_reports?: { id?: string; date: string; description: string; reporter: string; parent_reply?: string; replied_at?: string }[];
+  teacher_notes?: { id?: string; date: string; note: string; teacher_name: string; parent_reply?: string; replied_at?: string }[];
 }
 
 /**

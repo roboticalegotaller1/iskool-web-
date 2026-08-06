@@ -24,6 +24,9 @@ export default function CoordinatorDashboard() {
   const updateStudent = useSchoolAdminStore(state => state.updateStudent);
   const addTeacherNote = useSchoolAdminStore(state => state.addTeacherNote);
   const addBehaviorReport = useSchoolAdminStore(state => state.addBehaviorReport);
+  const deleteBehaviorReport = useSchoolAdminStore(state => state.deleteBehaviorReport);
+  const deleteTeacherNote = useSchoolAdminStore(state => state.deleteTeacherNote);
+  const parentMessages = useSchoolAdminStore(state => state.parentMessages);
   const createSchedule = useSchoolAdminStore(state => state.createSchedule);
   const deleteSchedule = useSchoolAdminStore(state => state.deleteSchedule);
   const deleteGroup = useSchoolAdminStore(state => state.deleteGroup);
@@ -2828,15 +2831,56 @@ export default function CoordinatorDashboard() {
 
                       {selectedStudent.behavior_reports && selectedStudent.behavior_reports.length > 0 ? (
                         <div className="space-y-2">
-                          {selectedStudent.behavior_reports.map((r, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-rose-50/80 dark:bg-rose-955/10 border border-rose-200/40 text-[10.5px]">
-                              <div className="flex justify-between font-bold text-rose-700 dark:text-rose-400 mb-1 text-[9.5px]">
-                                <span>Reporta: {r.reporter}</span>
-                                <span>{r.date}</span>
+                          {selectedStudent.behavior_reports.map((r, idx) => {
+                            const matchingMsg = parentMessages.find(m => 
+                              m.student_id === selectedStudent.id && 
+                              (m.subject_name === 'Reporte de Conducta' || m.id.startsWith('msg-brep')) &&
+                              m.parent_reply
+                            );
+                            const tutorReply = r.parent_reply || matchingMsg?.parent_reply;
+                            const hasReplied = Boolean(tutorReply);
+
+                            return (
+                              <div key={idx} className="p-2.5 rounded-xl bg-rose-50/80 dark:bg-rose-955/10 border border-rose-200/40 text-[10.5px] space-y-1.5">
+                                <div className="flex justify-between items-center font-bold text-rose-700 dark:text-rose-400 text-[9.5px]">
+                                  <span>Reporta: {r.reporter}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span>{r.date}</span>
+                                    {hasReplied ? (
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          if (confirm('¿Deseas eliminar este reporte de conducta del expediente? (El tutor ya ha respondido)')) {
+                                            deleteBehaviorReport(selectedStudent.id, idx);
+                                            setSelectedStudent(prev => prev ? { ...prev, behavior_reports: (prev.behavior_reports || []).filter((_, i) => i !== idx) } : null);
+                                          }
+                                        }}
+                                        className="p-1 rounded text-rose-600 hover:text-red-700 hover:bg-rose-200/60 dark:hover:bg-rose-900/60 transition-all cursor-pointer"
+                                        title="Eliminar del expediente (Respuesta del tutor recibida)"
+                                      >
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </button>
+                                    ) : (
+                                      <span className="text-[8.5px] px-1.5 py-0.5 rounded bg-zinc-200/70 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 font-bold" title="Solo se activa eliminar cuando el tutor contesta">
+                                        ⏳ Pendiente
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                <p className="text-zinc-700 dark:text-zinc-300">{r.description}</p>
+                                
+                                {hasReplied ? (
+                                  <div className="mt-1.5 p-2 rounded-lg bg-emerald-50 dark:bg-emerald-955/20 border border-emerald-200/60 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-300 text-[10px] font-medium">
+                                    💬 <strong>Respuesta del Tutor:</strong> "{tutorReply}"
+                                  </div>
+                                ) : (
+                                  <div className="mt-1 text-[9px] text-zinc-400 italic">
+                                    El tutor no ha respondido este reporte todavía. Se mantendrá activo.
+                                  </div>
+                                )}
                               </div>
-                              <p className="text-zinc-700 dark:text-zinc-300">{r.description}</p>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       ) : (
                         <p className="text-xs text-zinc-500 italic">No cuenta con incidencias ni reportes disciplinarios.</p>
@@ -2904,15 +2948,56 @@ export default function CoordinatorDashboard() {
 
                       {selectedStudent.teacher_notes && selectedStudent.teacher_notes.length > 0 ? (
                         <div className="space-y-2">
-                          {selectedStudent.teacher_notes.map((n, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-violet-50/60 dark:bg-violet-955/10 border border-violet-200/30 text-[10.5px]">
-                              <div className="flex justify-between font-bold text-violet-700 dark:text-violet-400 mb-1 text-[9.5px]">
-                                <span>Prof. {n.teacher_name}</span>
-                                <span>{n.date}</span>
+                          {selectedStudent.teacher_notes.map((n, idx) => {
+                            const matchingMsg = parentMessages.find(m => 
+                              m.student_id === selectedStudent.id && 
+                              (m.subject_name === 'Observación Docente' || m.id.startsWith('msg-tnote')) &&
+                              m.parent_reply
+                            );
+                            const tutorReply = n.parent_reply || matchingMsg?.parent_reply;
+                            const hasReplied = Boolean(tutorReply);
+
+                            return (
+                              <div key={idx} className="p-2.5 rounded-xl bg-violet-50/60 dark:bg-violet-955/10 border border-violet-200/30 text-[10.5px] space-y-1.5">
+                                <div className="flex justify-between items-center font-bold text-violet-700 dark:text-violet-400 text-[9.5px]">
+                                  <span>Prof. {n.teacher_name}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span>{n.date}</span>
+                                    {hasReplied ? (
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          if (confirm('¿Deseas eliminar esta nota del docente del expediente? (El tutor ya ha respondido)')) {
+                                            deleteTeacherNote(selectedStudent.id, idx);
+                                            setSelectedStudent(prev => prev ? { ...prev, teacher_notes: (prev.teacher_notes || []).filter((_, i) => i !== idx) } : null);
+                                          }
+                                        }}
+                                        className="p-1 rounded text-violet-600 hover:text-purple-800 hover:bg-violet-200/60 dark:hover:bg-violet-900/60 transition-all cursor-pointer"
+                                        title="Eliminar del expediente (Respuesta del tutor recibida)"
+                                      >
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </button>
+                                    ) : (
+                                      <span className="text-[8.5px] px-1.5 py-0.5 rounded bg-zinc-200/70 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 font-bold" title="Solo se activa eliminar cuando el tutor contesta">
+                                        ⏳ Pendiente
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                <p className="text-zinc-700 dark:text-zinc-300 italic">"{n.note}"</p>
+
+                                {hasReplied ? (
+                                  <div className="mt-1.5 p-2 rounded-lg bg-emerald-50 dark:bg-emerald-955/20 border border-emerald-200/60 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-300 text-[10px] font-medium">
+                                    💬 <strong>Respuesta del Tutor:</strong> "{tutorReply}"
+                                  </div>
+                                ) : (
+                                  <div className="mt-1 text-[9px] text-zinc-400 italic">
+                                    El tutor no ha respondido esta nota todavía. Se mantendrá activa en el expediente.
+                                  </div>
+                                )}
                               </div>
-                              <p className="text-zinc-700 dark:text-zinc-300 italic">"{n.note}"</p>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       ) : (
                         <p className="text-xs text-zinc-500 italic">Sin anotaciones de maestros.</p>

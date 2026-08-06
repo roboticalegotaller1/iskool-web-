@@ -69,8 +69,10 @@ interface SchoolAdminStoreState {
   deleteTeacher: (teacherId: string) => void;
   updateStudentStatus: (studentId: string, status: 'activo' | 'suspendido' | 'baja') => void;
   updateStudent: (studentId: string, updatedData: Partial<DetailedStudent>) => void;
-  addTeacherNote: (studentId: string, note: { date: string; note: string; teacher_name: string }) => void;
-  addBehaviorReport: (studentId: string, report: { date: string; description: string; reporter: string }) => void;
+  addTeacherNote: (studentId: string, note: { id?: string; date: string; note: string; teacher_name: string; parent_reply?: string; replied_at?: string }) => void;
+  addBehaviorReport: (studentId: string, report: { id?: string; date: string; description: string; reporter: string; parent_reply?: string; replied_at?: string }) => void;
+  deleteBehaviorReport: (studentId: string, index: number) => void;
+  deleteTeacherNote: (studentId: string, index: number) => void;
   
   resetSchoolAdminStore: () => void;
 }
@@ -293,6 +295,32 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     });
   },
 
+  deleteBehaviorReport: (studentId, index) => {
+    set((state) => ({
+      detailedStudents: (state.detailedStudents || []).map(s => {
+        if (s.id === studentId) {
+          const reports = [...(s.behavior_reports || [])];
+          reports.splice(index, 1);
+          return { ...s, behavior_reports: reports };
+        }
+        return s;
+      })
+    }));
+  },
+
+  deleteTeacherNote: (studentId, index) => {
+    set((state) => ({
+      detailedStudents: (state.detailedStudents || []).map(s => {
+        if (s.id === studentId) {
+          const notes = [...(s.teacher_notes || [])];
+          notes.splice(index, 1);
+          return { ...s, teacher_notes: notes };
+        }
+        return s;
+      })
+    }));
+  },
+
   generateGroupsForGrade: (level, grade, groupNames) => {
     set((state) => {
       const existingForGrade = state.groupsList.filter(g => g.level === level && g.grade === grade);
@@ -413,19 +441,54 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   },
 
   replyToParentMessage: (messageId, replyText) => {
-    set((state) => ({
-      parentMessages: state.parentMessages.map(msg => {
+    set((state) => {
+      const now = new Date().toISOString();
+      const targetMsg = (state.parentMessages || []).find(m => m.id === messageId);
+      
+      const updatedMessages = (state.parentMessages || []).map(msg => {
         if (msg.id === messageId) {
           return {
             ...msg,
             parent_reply: replyText,
-            replied_at: new Date().toISOString(),
+            replied_at: now,
             is_read: true
           };
         }
         return msg;
-      })
-    }));
+      });
+
+      let updatedStudents = state.detailedStudents || [];
+      if (targetMsg) {
+        updatedStudents = updatedStudents.map(student => {
+          if (student.id !== targetMsg.student_id) return student;
+
+          const updatedReports = (student.behavior_reports || []).map(rep => {
+            if (targetMsg.subject_name === 'Reporte de Conducta' || targetMsg.id.startsWith('msg-brep')) {
+              return { ...rep, parent_reply: replyText, replied_at: now };
+            }
+            return rep;
+          });
+
+          const updatedNotes = (student.teacher_notes || []).map(nt => {
+            if (targetMsg.subject_name === 'Observación Docente' || targetMsg.id.startsWith('msg-tnote')) {
+              return { ...nt, parent_reply: replyText, replied_at: now };
+            }
+            return nt;
+          });
+
+          return {
+            ...student,
+            behavior_reports: updatedReports,
+            teacher_notes: updatedNotes
+          };
+        });
+      }
+
+      return {
+        parentMessages: updatedMessages,
+        detailedStudents: updatedStudents
+      };
+    });
   },
 
   markMessageAsRead: (messageId) => {
