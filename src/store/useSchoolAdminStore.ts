@@ -323,21 +323,115 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
 
   generateGroupsForGrade: (level, grade, groupNames) => {
     set((state) => {
-      const existingForGrade = state.groupsList.filter(g => g.level === level && g.grade === grade);
-      const existingNames = new Set(existingForGrade.map(g => g.name.toUpperCase()));
+      const activeLevelGradeKey = `${level}-${grade.replace(/\s+/g, '')}`;
+      
+      // Buscar grupos existentes para este nivel y grado
+      const existingForGrade = state.groupsList.filter(g => 
+        g.level_grade_id === activeLevelGradeKey || 
+        (g.level === level && g.grade === grade)
+      );
 
-      const newGroups: Group[] = groupNames
-        .filter(name => !existingNames.has(name.toUpperCase()))
-        .map((name, idx) => ({
-          id: `grp-${level.slice(0, 3)}-${grade.replace(/[^0-9]/g, '')}-${name.toLowerCase()}-${Date.now()}-${idx}`,
-          name: name.toUpperCase(),
-          level,
-          grade,
-          student_ids: []
-        }));
+      const existingNamesMap = new Map<string, Group>();
+      existingForGrade.forEach(g => existingNamesMap.set(g.name.toUpperCase(), g));
+
+      const updatedGroupsList = [...state.groupsList];
+
+      // 1. Asegurar que los grupos solicitados existan (ej. 'A' y 'B')
+      groupNames.forEach((name, idx) => {
+        const upperName = name.toUpperCase();
+        if (!existingNamesMap.has(upperName)) {
+          const newGrp: Group = {
+            id: `grp-${level.slice(0, 3)}-${grade.replace(/[^0-9a-zA-Z]/g, '')}-${upperName.toLowerCase()}-${Date.now()}-${idx}`,
+            school_id: 'sch-1',
+            level_grade_id: activeLevelGradeKey,
+            academic_year_id: 'ay-25-26',
+            name: upperName,
+            level,
+            grade,
+            student_ids: [],
+            created_at: new Date().toISOString()
+          };
+          updatedGroupsList.push(newGrp);
+          existingNamesMap.set(upperName, newGrp);
+        } else {
+          // Asegurar que level_grade_id y level/grade estén actualizados
+          const existingGroup = existingNamesMap.get(upperName)!;
+          const gIdx = updatedGroupsList.findIndex(g => g.id === existingGroup.id);
+          if (gIdx !== -1) {
+            updatedGroupsList[gIdx] = {
+              ...updatedGroupsList[gIdx],
+              level_grade_id: activeLevelGradeKey,
+              level,
+              grade
+            };
+            existingNamesMap.set(upperName, updatedGroupsList[gIdx]);
+          }
+        }
+      });
+
+      // Si no es la conformación automática de A y B (ej. creación de grupo C individual)
+      const isAutoAB = groupNames.length === 2 && 
+        groupNames.map(n => n.toUpperCase()).includes('A') && 
+        groupNames.map(n => n.toUpperCase()).includes('B');
+
+      if (!isAutoAB) {
+        return { groupsList: updatedGroupsList };
+      }
+
+      // 2. Conformación e igualación automática de Grupos A y B
+      const groupA = existingNamesMap.get('A');
+      const groupB = existingNamesMap.get('B');
+
+      if (!groupA || !groupB) return { groupsList: updatedGroupsList };
+
+      // Obtener TODOS los alumnos correspondientes a este nivel y grado
+      const gradeStudents = state.detailedStudents.filter(s => {
+        const studentLevel = s.level || (parseInt(s.grade || '1') <= 6 ? 'primaria' : 'secundaria');
+        return studentLevel === level && (s.grade === grade || (!s.grade && grade === '1º'));
+      });
+
+      const studentIdsA: string[] = [];
+      const studentIdsB: string[] = [];
+      const updatedDetailedStudents = [...state.detailedStudents];
+
+      // Distribuir alternadamente 50% / 50% entre Grupo A y Grupo B
+      gradeStudents.forEach((student, index) => {
+        const targetGroup = (index % 2 === 0) ? groupA : groupB;
+        if (index % 2 === 0) {
+          studentIdsA.push(student.id);
+        } else {
+          studentIdsB.push(student.id);
+        }
+
+        const sIdx = updatedDetailedStudents.findIndex(st => st.id === student.id);
+        if (sIdx !== -1) {
+          updatedDetailedStudents[sIdx] = {
+            ...updatedDetailedStudents[sIdx],
+            group_id: targetGroup.id,
+            level,
+            grade
+          };
+        }
+      });
+
+      // Actualizar listas de student_ids en los grupos A y B
+      const finalGroupsList = updatedGroupsList.map(g => {
+        if (g.id === groupA.id) {
+          return { ...g, student_ids: studentIdsA, level_grade_id: activeLevelGradeKey, level, grade };
+        }
+        if (g.id === groupB.id) {
+          return { ...g, student_ids: studentIdsB, level_grade_id: activeLevelGradeKey, level, grade };
+        }
+        // Si hay otros grupos en el mismo grado (ej. C), remover a los alumnos asignados a A o B
+        if (g.level_grade_id === activeLevelGradeKey || (g.level === level && g.grade === grade)) {
+          return { ...g, student_ids: (g.student_ids || []).filter(id => !studentIdsA.includes(id) && !studentIdsB.includes(id)) };
+        }
+        return g;
+      });
 
       return {
-        groupsList: [...state.groupsList, ...newGroups]
+        groupsList: finalGroupsList,
+        detailedStudents: updatedDetailedStudents
       };
     });
   },

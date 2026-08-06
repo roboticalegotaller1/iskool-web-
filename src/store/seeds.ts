@@ -284,10 +284,10 @@ export const STUDENTS_LIST_SEED: UserProfile[] = [
 ];
 
 export const GROUPS_SEED: Group[] = [
-  { id: 'grp-pb-a', school_id: 'sch-1', level_grade_id: 'primaria-1º', academic_year_id: 'ay-25-26', name: 'A', created_at: new Date().toISOString() },
-  { id: 'grp-pa-a', school_id: 'sch-1', level_grade_id: 'primaria-4º', academic_year_id: 'ay-25-26', name: 'A', created_at: new Date().toISOString() },
-  { id: 'grp-sec-a', school_id: 'sch-1', level_grade_id: 'secundaria-2º', academic_year_id: 'ay-25-26', name: 'A', created_at: new Date().toISOString() },
-  { id: 'grp-prep-a', school_id: 'sch-1', level_grade_id: 'preparatoria-4ºSemestre', academic_year_id: 'ay-25-26', name: 'A', created_at: new Date().toISOString() }
+  { id: 'grp-pb-a', school_id: 'sch-1', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-pa-a', school_id: 'sch-1', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-sec-a', school_id: 'sch-1', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-prep-a', school_id: 'sch-1', level_grade_id: 'preparatoria-4ºSemestre', level: 'preparatoria', grade: '4º Semestre', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() }
 ];
 
 export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [

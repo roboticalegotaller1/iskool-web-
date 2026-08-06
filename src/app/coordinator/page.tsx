@@ -459,7 +459,7 @@ export default function CoordinatorDashboard() {
   // Autogenerar grupos A y B
   const handleAutoGroups = () => {
     generateGroupsForGrade(selectedGroupLevel, selectedGroupGrade, ['A', 'B']);
-    alert('Grupos A y B conformados automáticamente.');
+    alert(`Grupos A y B conformados y balanceados al 50% para ${selectedGroupGrade} de ${selectedGroupLevel}.`);
   };
 
   // Crear horario
