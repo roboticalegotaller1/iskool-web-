@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { SUBJECTS_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
@@ -60,13 +60,24 @@ export default function CoordinatorDashboard() {
     address: schoolSettings.address || '',
     phone: schoolSettings.phone || '',
     coordinators: schoolSettings.coordinators || [''],
-    teachers: schoolSettings.teachers || [''],
+    teachers: (teachersList && teachersList.length > 0) ? teachersList.map(t => `${t.first_name} ${t.last_name}`.trim()) : (schoolSettings.teachers || ['']),
     themeColors: schoolSettings.themeColors || {
       primary: '250 84% 54%',
       secondary: '221 83% 53%',
       accent: '142 71% 45%'
     }
   });
+
+  // Mantener sincronizada la lista de profesores registrada en el sistema con el abordaje de onboarding
+  useEffect(() => {
+    if (teachersList && teachersList.length > 0) {
+      const names = teachersList.map(t => `${t.first_name} ${t.last_name}`.trim()).filter(Boolean);
+      setOnboardingData(prev => ({
+        ...prev,
+        teachers: names
+      }));
+    }
+  }, [teachersList]);
 
   const [simulatedDomainName, setSimulatedDomainName] = useState('');
   const [isSimulatingColors, setIsSimulatingColors] = useState(false);
@@ -2100,7 +2111,27 @@ export default function CoordinatorDashboard() {
                         {onboardingData.teachers.map((t, i) => (
                           <span key={i} className="inline-flex items-center gap-1 px-3 py-1 bg-zinc-150 dark:bg-zinc-800 text-xs font-semibold rounded-lg">
                             {t}
-                            <button type="button" onClick={() => setOnboardingData({ ...onboardingData, teachers: onboardingData.teachers.filter((_, idx) => idx !== i) })} className="text-red-500 ml-1">✕</button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const teacherName = t;
+                                const match = teachersList.find(item => 
+                                  `${item.first_name} ${item.last_name}`.trim().toLowerCase() === teacherName.trim().toLowerCase() ||
+                                  item.first_name.trim().toLowerCase() === teacherName.trim().toLowerCase()
+                                );
+                                if (match) {
+                                  deleteTeacher(match.id);
+                                } else {
+                                  setOnboardingData(prev => ({
+                                    ...prev,
+                                    teachers: prev.teachers.filter((_, idx) => idx !== i)
+                                  }));
+                                }
+                              }}
+                              className="text-red-500 hover:text-red-600 ml-1 font-bold cursor-pointer"
+                            >
+                              ✕
+                            </button>
                           </span>
                         ))}
                       </div>
@@ -2116,11 +2147,20 @@ export default function CoordinatorDashboard() {
                           onClick={() => {
                             const el = document.getElementById('onb-teach-input') as HTMLInputElement;
                             if (el && el.value.trim()) {
-                              setOnboardingData({ ...onboardingData, teachers: [...onboardingData.teachers, el.value.trim()] });
+                              const trimmed = el.value.trim();
+                              const parts = trimmed.split(/\s+/);
+                              const firstName = parts[0] || trimmed;
+                              const lastName = parts.slice(1).join(' ') || 'Docente';
+                              registerTeacher({
+                                first_name: firstName,
+                                last_name: lastName,
+                                email: `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}.${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}@iskool.edu.mx`
+                              });
                               el.value = '';
                             }
                           }}
-                          className="px-4 bg-brand-primary text-white rounded-xl text-xs font-bold"
+                          style={{ backgroundColor: 'var(--brand-primary)' }}
+                          className="px-4 text-white rounded-xl text-xs font-bold hover:opacity-90 transition-all shadow-md"
                         >
                           Agregar
                         </button>
