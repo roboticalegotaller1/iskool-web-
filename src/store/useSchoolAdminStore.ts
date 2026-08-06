@@ -407,10 +407,16 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
       if (!target) return state;
       const fullName = `${target.first_name} ${target.last_name}`;
 
+      // Garantiza que las materias, horarios, asistencias, tareas y planeaciones NO se eliminen.
+      // Simplemente desvincula al profesor saliente (teacherId: '') para que un nuevo profesor las herede al ser asignado.
+      const updatedSchedulesList = (state.schedulesList || []).map(s => 
+        s.teacherId === teacherId ? { ...s, teacherId: '' } : s
+      );
+
       const currentTeachers = state.schoolSettings?.teachers || [];
       return {
         teachersList: teachersList.filter(t => t.id !== teacherId),
-        schedulesList: (state.schedulesList || []).filter(s => s.teacherId !== teacherId),
+        schedulesList: updatedSchedulesList,
         schoolSettings: {
           ...state.schoolSettings,
           teachers: currentTeachers.filter(name => name !== fullName)
