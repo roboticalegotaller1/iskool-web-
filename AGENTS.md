@@ -9,3 +9,5 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Si el archivo `package.json` fue modificado en el pull, el agente debe ejecutar `npm install` automáticamente.
 - El agente debe informar y resumir al usuario de inmediato los cambios descargados en su primera respuesta.
 
+# Recordatorios Especiales
+- **Respuesta a comando de recordatorio:** Cuando el usuario escriba en el chat la frase "antigravity dime mis recordatorios", el agente debe recordarle y mencionarle que tienen pendiente trabajar en la función/portal de super usuario.
