@@ -2149,15 +2149,35 @@ export default function CoordinatorDashboard() {
                   if (onboardingStep < 4) {
                     setOnboardingStep(prev => prev + 1);
                   } else {
-                    // Finalizar y Guardar
-                    saveSchoolSettings({
+                    // Capturar valores pendientes en campos de texto antes de finalizar
+                    let finalTeachers = [...onboardingData.teachers];
+                    let finalCoords = [...onboardingData.coordinators];
+
+                    const teachEl = document.getElementById('onb-teach-input') as HTMLInputElement;
+                    if (teachEl && teachEl.value.trim()) {
+                      finalTeachers.push(teachEl.value.trim());
+                      teachEl.value = '';
+                    }
+
+                    const coordEl = document.getElementById('onb-coord-input') as HTMLInputElement;
+                    if (coordEl && coordEl.value.trim()) {
+                      finalCoords.push(coordEl.value.trim());
+                      coordEl.value = '';
+                    }
+
+                    const finalSettings = {
                       ...onboardingData,
+                      teachers: Array.from(new Set(finalTeachers.filter(Boolean))),
+                      coordinators: Array.from(new Set(finalCoords.filter(Boolean))),
                       isConfigured: true
-                    });
-                    alert(`¡Onboarding escolar finalizado!\nPlantel "${onboardingData.name}" configurado correctamente en el sistema.`);
+                    };
+
+                    saveSchoolSettings(finalSettings);
+                    alert(`¡Onboarding escolar finalizado!\nPlantel "${finalSettings.name || 'ISkool'}" configurado correctamente en el sistema.`);
                   }
                 }}
-                className="px-6 py-2.5 bg-brand-primary text-white rounded-full text-xs font-bold hover:opacity-90 transition-all shadow-md shadow-brand-primary/15"
+                style={{ backgroundColor: 'var(--brand-primary)' }}
+                className="px-6 py-2.5 text-white rounded-full text-xs font-bold hover:opacity-90 transition-all shadow-md"
               >
                 {onboardingStep === 4 ? 'Finalizar Configuración' : 'Siguiente Paso'}
               </button>

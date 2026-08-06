@@ -127,8 +127,40 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     // Apply CSS root variables for active adaptive theme
     applyThemeCssVariables(settings.themeColors);
 
+    // Sync any teacher names from settings.teachers into state.teachersList
+    const currentTeachersList = get().teachersList || [];
+    const updatedTeachersList: UserProfile[] = [...currentTeachersList];
+
+    if (settings.teachers && Array.isArray(settings.teachers)) {
+      settings.teachers.forEach((fullName, idx) => {
+        if (!fullName || !fullName.trim()) return;
+        const trimmed = fullName.trim();
+        // Check if teacher already exists in teachersList
+        const exists = updatedTeachersList.some(t => {
+          const tFull = `${t.first_name} ${t.last_name}`.trim().toLowerCase();
+          return tFull === trimmed.toLowerCase() || t.first_name.toLowerCase() === trimmed.toLowerCase();
+        });
+
+        if (!exists) {
+          const parts = trimmed.split(/\s+/);
+          const firstName = parts[0] || trimmed;
+          const lastName = parts.slice(1).join(' ') || 'Docente';
+          const email = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}.${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}@iskool.edu.mx`;
+          updatedTeachersList.push({
+            id: `usr-teacher-onb-${Date.now()}-${idx}`,
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            role: 'teacher',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          });
+        }
+      });
+    }
+
     // 1. Instantly update local state to keep typing lag-free
-    set({ schoolSettings: settings, syncError: null });
+    set({ schoolSettings: settings, teachersList: updatedTeachersList, syncError: null });
 
     // 2. Clear any pending Supabase upsert
     if (saveSettingsTimeout) {
