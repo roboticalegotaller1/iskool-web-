@@ -2743,6 +2743,107 @@ export default function CoordinatorDashboard() {
           </div>
         </div>
       )}
+
+      {/* --- MODAL PARA DAR DE ALTA / EDITAR PROFESOR --- */}
+      {isTeacherModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-full max-w-md rounded-3xl p-6 shadow-2xl flex flex-col gap-5 animate-in zoom-in-95">
+            <div className="flex items-center justify-between border-b pb-3">
+              <h3 className="text-base font-black text-zinc-900 dark:text-white flex items-center gap-2">
+                <UserPlus className="h-5 w-5 text-brand-primary" />
+                {editingTeacher ? 'Editar Información del Profesor' : 'Dar de Alta Nuevo Profesor'}
+              </h3>
+              <button
+                onClick={() => setIsTeacherModalOpen(false)}
+                className="p-1 rounded-full text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!teacherFormData.first_name || !teacherFormData.last_name) {
+                  alert('Favor de llenar los campos obligatorios.');
+                  return;
+                }
+
+                if (editingTeacher) {
+                  updateTeacher(editingTeacher.id, {
+                    first_name: teacherFormData.first_name,
+                    last_name: teacherFormData.last_name,
+                    email: teacherFormData.email || `${teacherFormData.first_name.toLowerCase()}@iskool.edu.mx`
+                  });
+                  alert('¡Información del docente actualizada correctamente!');
+                } else {
+                  registerTeacher({
+                    first_name: teacherFormData.first_name,
+                    last_name: teacherFormData.last_name,
+                    email: teacherFormData.email || `${teacherFormData.first_name.toLowerCase()}@iskool.edu.mx`
+                  });
+                  alert('¡Profesor registrado exitosamente!');
+                }
+
+                setIsTeacherModalOpen(false);
+              }}
+              className="flex flex-col gap-4 text-xs"
+            >
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Nombre(s) *</label>
+                <input
+                  type="text"
+                  required
+                  value={teacherFormData.first_name}
+                  onChange={(e) => setTeacherFormData(prev => ({ ...prev, first_name: e.target.value }))}
+                  placeholder="Ej. Ana María"
+                  className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none focus:border-brand-primary font-bold"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Apellido(s) *</label>
+                <input
+                  type="text"
+                  required
+                  value={teacherFormData.last_name}
+                  onChange={(e) => setTeacherFormData(prev => ({ ...prev, last_name: e.target.value }))}
+                  placeholder="Ej. González Ruiz"
+                  className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none focus:border-brand-primary font-bold"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Correo Electrónico Institucional</label>
+                <input
+                  type="email"
+                  value={teacherFormData.email}
+                  onChange={(e) => setTeacherFormData(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="ana.gonzalez@iskool.edu.mx"
+                  className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white focus:outline-none focus:border-brand-primary"
+                />
+              </div>
+
+              <div className="flex gap-2 justify-end pt-2 border-t mt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsTeacherModalOpen(false)}
+                  className="px-4 py-2 rounded-xl border text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-bold"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  style={{ backgroundColor: 'var(--brand-primary)' }}
+                  className="px-5 py-2 text-white rounded-xl font-bold shadow-md hover:opacity-90 transition-all"
+                >
+                  {editingTeacher ? 'Guardar Cambios' : 'Registrar Docente'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
