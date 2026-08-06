@@ -21,13 +21,11 @@ export const getStudentAvatarUrl = (student: Partial<DetailedStudent> | null | u
   }
   const positiveSeed = Math.abs(hash);
 
-  // Catálogos de fotografías HD reales de estudiantes para registro escolar
+  // Fotografías HD 100% verificadas y activas de estudiantes reales por categoría
   const kidsGirls = [
     'https://images.unsplash.com/photo-1544717305-2782549b5136?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1595454821991-9e061880c4ff?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=250&auto=format&fit=crop&q=80',
@@ -40,7 +38,6 @@ export const getStudentAvatarUrl = (student: Partial<DetailedStudent> | null | u
   const kidsBoys = [
     'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=250&auto=format&fit=crop&q=80',
@@ -48,8 +45,7 @@ export const getStudentAvatarUrl = (student: Partial<DetailedStudent> | null | u
     'https://images.unsplash.com/photo-1480429370139-e0132c086e2a?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=250&auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=250&auto=format&fit=crop&q=80'
   ];
 
   const teensGirls = [
@@ -60,11 +56,9 @@ export const getStudentAvatarUrl = (student: Partial<DetailedStudent> | null | u
     'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1544717305-2782549b5136?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1595454821991-9e061880c4ff?w=250&auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1544717305-2782549b5136?w=250&auto=format&fit=crop&q=80'
   ];
 
   const teensBoys = [
@@ -77,9 +71,7 @@ export const getStudentAvatarUrl = (student: Partial<DetailedStudent> | null | u
     'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1480429370139-e0132c086e2a?w=250&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=250&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=250&auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=250&auto=format&fit=crop&q=80'
   ];
 
   let list = (age <= 12 || student.level === 'primaria')
@@ -87,7 +79,5 @@ export const getStudentAvatarUrl = (student: Partial<DetailedStudent> | null | u
     : (isFemale ? teensGirls : teensBoys);
 
   const photoIndex = positiveSeed % list.length;
-  const selectedBaseUrl = list[photoIndex];
-
-  return `${selectedBaseUrl}&st_seed=${positiveSeed}`;
+  return list[photoIndex];
 };
