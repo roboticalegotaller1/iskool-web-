@@ -1837,13 +1837,47 @@ export default function CoordinatorDashboard() {
 
                       <div className="border-t border-dashed border-zinc-200 dark:border-zinc-800 pt-3">
                         <label className="text-[10px] font-bold text-zinc-450 uppercase block mb-1">Cargar Logotipo Oficial</label>
-                        <div className="p-6 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center justify-center gap-2 text-center hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors cursor-pointer">
+                        <label className="p-6 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center justify-center gap-2 text-center hover:bg-zinc-50 dark:hover:bg-zinc-950 transition-colors cursor-pointer block">
                           <Upload className="h-8 w-8 text-zinc-400" />
                           <div>
-                            <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Sube el logotipo (.png, .jpg)</p>
+                            <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Sube el logotipo (.png, .jpg, .svg)</p>
                             <p className="text-[9.5px] text-zinc-400">Extraeremos el color principal de forma dinámica</p>
                           </div>
-                        </div>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                handleLogoFileUpload(file, (logoUrl, colors) => {
+                                  setOnboardingData(prev => ({
+                                    ...prev,
+                                    logoUrl,
+                                    themeColors: colors || prev.themeColors
+                                  }));
+                                  setShowColorSuccess(true);
+                                });
+                              }
+                            }}
+                          />
+                        </label>
+
+                        {onboardingData.logoUrl && (
+                          <div className="mt-3 p-3 bg-zinc-50 dark:bg-zinc-900 border rounded-xl flex items-center justify-between animate-in fade-in">
+                            <div className="flex items-center gap-3">
+                              <img src={onboardingData.logoUrl} alt="Logo preview" className="h-10 w-10 object-contain rounded-lg border bg-white p-1" />
+                              <span className="text-xs font-bold text-emerald-600">✓ Logotipo cargado y paleta extraída</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setOnboardingData(prev => ({ ...prev, logoUrl: '' }))}
+                              className="text-xs text-rose-500 hover:underline font-bold"
+                            >
+                              Quitar
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
 
