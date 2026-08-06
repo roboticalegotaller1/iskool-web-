@@ -362,17 +362,18 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
       updated_at: new Date().toISOString()
     };
     set((state) => ({
-      teachersList: [...state.teachersList, newTeacher],
+      teachersList: [...(state.teachersList || []), newTeacher],
       schoolSettings: {
         ...state.schoolSettings,
-        teachers: Array.from(new Set([...state.schoolSettings.teachers, `${teacherData.first_name} ${teacherData.last_name}`]))
+        teachers: Array.from(new Set([...(state.schoolSettings?.teachers || []), `${teacherData.first_name} ${teacherData.last_name}`]))
       }
     }));
   },
 
   updateTeacher: (teacherId, updatedData) => {
     set((state) => {
-      const target = state.teachersList.find(t => t.id === teacherId);
+      const teachersList = state.teachersList || [];
+      const target = teachersList.find(t => t.id === teacherId);
       if (!target) return state;
 
       const oldFullName = `${target.first_name} ${target.last_name}`;
@@ -380,11 +381,12 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
       const newLastName = updatedData.last_name ?? target.last_name;
       const newFullName = `${newFirstName} ${newLastName}`;
 
-      const updatedTeachersList = state.teachersList.map(t => 
+      const updatedTeachersList = teachersList.map(t => 
         t.id === teacherId ? { ...t, ...updatedData, updated_at: new Date().toISOString() } : t
       );
 
-      const updatedTeachersNames = state.schoolSettings.teachers.map(name => 
+      const currentTeachers = state.schoolSettings?.teachers || [];
+      const updatedTeachersNames = currentTeachers.map(name => 
         name === oldFullName ? newFullName : name
       );
 
@@ -400,16 +402,18 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
 
   deleteTeacher: (teacherId) => {
     set((state) => {
-      const target = state.teachersList.find(t => t.id === teacherId);
+      const teachersList = state.teachersList || [];
+      const target = teachersList.find(t => t.id === teacherId);
       if (!target) return state;
       const fullName = `${target.first_name} ${target.last_name}`;
 
+      const currentTeachers = state.schoolSettings?.teachers || [];
       return {
-        teachersList: state.teachersList.filter(t => t.id !== teacherId),
-        schedulesList: state.schedulesList.filter(s => s.teacherId !== teacherId),
+        teachersList: teachersList.filter(t => t.id !== teacherId),
+        schedulesList: (state.schedulesList || []).filter(s => s.teacherId !== teacherId),
         schoolSettings: {
           ...state.schoolSettings,
-          teachers: state.schoolSettings.teachers.filter(name => name !== fullName)
+          teachers: currentTeachers.filter(name => name !== fullName)
         }
       };
     });

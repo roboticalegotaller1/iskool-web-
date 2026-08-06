@@ -46,6 +46,7 @@ export default function CoordinatorDashboard() {
   // --- ESTADOS DE GESTIÓN DE PROFESORES ---
   const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false);
   const [editingTeacher, setEditingTeacher] = useState<UserProfile | null>(null);
+  const [teacherToDelete, setTeacherToDelete] = useState<UserProfile | null>(null);
   const [teacherFormData, setTeacherFormData] = useState({ first_name: '', last_name: '', email: '' });
 
   // --- ESTADOS ONBOARDING INTERACTIVO ---
@@ -1507,13 +1508,12 @@ export default function CoordinatorDashboard() {
                             ✏️
                           </button>
                           <button
-                            onClick={() => {
-                              if (confirm(`¿Estás seguro de eliminar al profesor ${t.first_name} ${t.last_name}?`)) {
-                                deleteTeacher(t.id);
-                              }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTeacherToDelete(t);
                             }}
-                            className="p-1.5 text-zinc-400 hover:text-rose-600 rounded-lg hover:bg-zinc-200/50 dark:hover:bg-zinc-800 text-xs"
-                            title="Dar de baja"
+                            className="p-1.5 text-zinc-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 text-xs transition-colors"
+                            title="Dar de baja profesor"
                           >
                             🗑️
                           </button>
@@ -2841,6 +2841,40 @@ export default function CoordinatorDashboard() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL DE CONFIRMACIÓN PARA DAR DE BAJA PROFESOR --- */}
+      {teacherToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-full max-w-sm rounded-3xl p-6 shadow-2xl flex flex-col gap-4 text-center animate-in zoom-in-95">
+            <div className="mx-auto h-12 w-12 rounded-2xl bg-rose-100 dark:bg-rose-950/50 text-rose-600 flex items-center justify-center text-xl font-bold">
+              🗑️
+            </div>
+            <div>
+              <h3 className="text-base font-black text-zinc-900 dark:text-white">¿Dar de baja a este profesor?</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Estás a punto de dar de baja a <strong className="text-zinc-800 dark:text-zinc-200">{teacherToDelete.first_name} {teacherToDelete.last_name}</strong> ({teacherToDelete.email}). Esta acción retirará su acceso a la plataforma.
+              </p>
+            </div>
+            <div className="flex gap-2 justify-center pt-2">
+              <button
+                onClick={() => setTeacherToDelete(null)}
+                className="flex-1 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 text-xs font-bold hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  deleteTeacher(teacherToDelete.id);
+                  setTeacherToDelete(null);
+                }}
+                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-md shadow-rose-500/20 transition-all"
+              >
+                Sí, Dar de Baja
+              </button>
+            </div>
           </div>
         </div>
       )}
