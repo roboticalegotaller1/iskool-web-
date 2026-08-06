@@ -19,6 +19,7 @@ export default function CoordinatorDashboard() {
   const registerStudent = useSchoolAdminStore(state => state.registerStudent);
   const generateGroupsForGrade = useSchoolAdminStore(state => state.generateGroupsForGrade);
   const assignStudentToGroup = useSchoolAdminStore(state => state.assignStudentToGroup);
+  const updateStudentStatus = useSchoolAdminStore(state => state.updateStudentStatus);
   const createSchedule = useSchoolAdminStore(state => state.createSchedule);
   const deleteSchedule = useSchoolAdminStore(state => state.deleteSchedule);
   const deleteGroup = useSchoolAdminStore(state => state.deleteGroup);
@@ -726,27 +727,24 @@ export default function CoordinatorDashboard() {
                               </div>
                             </td>
                             <td className="p-4 text-center">
-                              <div className="flex flex-col gap-1 items-center">
-                                <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${
-                                  student.status === 'activo' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' :
-                                  student.status === 'suspendido' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' :
-                                  'bg-rose-500/10 text-rose-600 dark:text-rose-450'
-                                }`}>
-                                  {student.status}
-                                </span>
-                                <button
-                                  onClick={() => {
-                                    const nextStatus = 
-                                      student.status === 'activo' ? 'suspendido' :
-                                      student.status === 'suspendido' ? 'baja' : 'activo';
-                                    setDetailedStudents(prev => prev.map(s => s.id === student.id ? { ...s, status: nextStatus as any } : s));
-                                  }}
-                                  className="text-[8.5px] font-extrabold text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:underline transition-colors uppercase"
-                                >
-                                  {student.status === 'activo' ? 'Suspender' :
-                                   student.status === 'suspendido' ? 'Baja' : 'Reactivar'}
-                                </button>
-                              </div>
+                              <select
+                                value={student.status}
+                                onChange={(e) => {
+                                  const newStatus = e.target.value as 'activo' | 'suspendido' | 'baja';
+                                  updateStudentStatus(student.id, newStatus);
+                                }}
+                                className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-xl border focus:outline-none cursor-pointer transition-all ${
+                                  student.status === 'activo'
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800'
+                                    : student.status === 'suspendido'
+                                    ? 'bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800'
+                                    : 'bg-rose-50 text-rose-700 border-rose-300 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800'
+                                }`}
+                              >
+                                <option value="activo" className="bg-white dark:bg-zinc-900 text-emerald-600 font-bold">🟢 Activo</option>
+                                <option value="suspendido" className="bg-white dark:bg-zinc-900 text-amber-600 font-bold">🟡 Suspendido</option>
+                                <option value="baja" className="bg-white dark:bg-zinc-900 text-rose-600 font-bold">🔴 Baja</option>
+                              </select>
                             </td>
                           </tr>
                         );
@@ -2644,10 +2642,20 @@ export default function CoordinatorDashboard() {
                       <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">{selectedStudent.previous_school || 'Ninguna'}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-zinc-400 uppercase block">Estado en el Sistema</span>
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase mt-1">
-                        ● {selectedStudent.status}
-                      </span>
+                      <span className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Estado en el Sistema</span>
+                      <select
+                        value={selectedStudent.status}
+                        onChange={(e) => {
+                          const newStatus = e.target.value as 'activo' | 'suspendido' | 'baja';
+                          updateStudentStatus(selectedStudent.id, newStatus);
+                          setSelectedStudent({ ...selectedStudent, status: newStatus });
+                        }}
+                        className="text-xs font-bold p-1.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:border-brand-primary"
+                      >
+                        <option value="activo">🟢 Activo</option>
+                        <option value="suspendido">🟡 Suspendido</option>
+                        <option value="baja">🔴 Baja</option>
+                      </select>
                     </div>
                   </div>
                 </div>

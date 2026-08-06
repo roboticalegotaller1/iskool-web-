@@ -67,6 +67,7 @@ interface SchoolAdminStoreState {
   registerTeacher: (teacherData: Omit<UserProfile, 'id' | 'role' | 'created_at' | 'updated_at'>) => void;
   updateTeacher: (teacherId: string, updatedData: Partial<UserProfile>) => void;
   deleteTeacher: (teacherId: string) => void;
+  updateStudentStatus: (studentId: string, status: 'activo' | 'suspendido' | 'baja') => void;
   
   resetSchoolAdminStore: () => void;
 }
@@ -215,6 +216,14 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     // Inicializar stats y avatar en useStudentStore
     const studentStore = useStudentStore.getState();
     studentStore.initializeNewStudent(newId, studentData.first_name);
+  },
+
+  updateStudentStatus: (studentId, status) => {
+    set((state) => ({
+      detailedStudents: (state.detailedStudents || []).map(s => 
+        s.id === studentId ? { ...s, status } : s
+      )
+    }));
   },
 
   generateGroupsForGrade: (level, grade, groupNames) => {
