@@ -6,9 +6,10 @@ import { Header } from '@/components/Header';
 import { 
   Users, UserPlus, Calendar, Plus, Trash2, Search, Filter, 
   BookOpen, Calculator, Activity, Clock, ShieldAlert, MapPin, 
-  Phone, Mail, CheckCircle2, ChevronRight, User, AlertCircle, Sparkles, X, Heart, Globe, Building2, Upload, RefreshCw
+  Phone, Mail, CheckCircle2, ChevronRight, User, AlertCircle, Sparkles, X, Heart, Globe, Building2, Upload, RefreshCw, Edit3
 } from 'lucide-react';
 import { DetailedStudent, ClassSchedule, Group, SchoolSettings } from '@/types';
+import { getStudentAvatarUrl } from '@/utils/studentAvatar';
 
 export default function CoordinatorDashboard() {
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
@@ -20,6 +21,9 @@ export default function CoordinatorDashboard() {
   const generateGroupsForGrade = useSchoolAdminStore(state => state.generateGroupsForGrade);
   const assignStudentToGroup = useSchoolAdminStore(state => state.assignStudentToGroup);
   const updateStudentStatus = useSchoolAdminStore(state => state.updateStudentStatus);
+  const updateStudent = useSchoolAdminStore(state => state.updateStudent);
+  const addTeacherNote = useSchoolAdminStore(state => state.addTeacherNote);
+  const addBehaviorReport = useSchoolAdminStore(state => state.addBehaviorReport);
   const createSchedule = useSchoolAdminStore(state => state.createSchedule);
   const deleteSchedule = useSchoolAdminStore(state => state.deleteSchedule);
   const deleteGroup = useSchoolAdminStore(state => state.deleteGroup);
@@ -43,6 +47,18 @@ export default function CoordinatorDashboard() {
 
   // Gestión de Pestañas
   const [activeTab, setActiveTab] = useState<'students' | 'groups' | 'schedules' | 'settings'>('students');
+
+  // --- ESTADOS DE GESTIÓN Y EDICIÓN DE ALUMNOS ---
+  const [isEditStudentModalOpen, setIsEditStudentModalOpen] = useState(false);
+  const [editingStudentData, setEditingStudentData] = useState<Partial<DetailedStudent>>({});
+
+  const [showAddNoteForm, setShowAddNoteForm] = useState(false);
+  const [newTeacherNoteText, setNewTeacherNoteText] = useState('');
+  const [newTeacherNoteName, setNewTeacherNoteName] = useState('Israel López');
+
+  const [showAddReportForm, setShowAddReportForm] = useState(false);
+  const [newReportDescription, setNewReportDescription] = useState('');
+  const [newReportReporter, setNewReportReporter] = useState('Coordinación Académica');
 
   // --- ESTADOS DE GESTIÓN DE PROFESORES ---
   const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false);
@@ -690,17 +706,28 @@ export default function CoordinatorDashboard() {
                               <span className="text-zinc-400 block mt-0.5">{student.curp}</span>
                             </td>
                             <td className="p-4">
-                              <button 
-                                onClick={() => setSelectedStudent(student)}
-                                className="font-bold text-zinc-900 dark:text-white text-sm hover:text-violet-600 dark:hover:text-violet-400 hover:underline transition-colors text-left focus:outline-none"
-                              >
-                                {formatStudentName(student)}
-                              </button>
-                              {student.medical_notes && (
-                                <span className="inline-flex items-center gap-0.5 ml-2 bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-400 text-[9px] font-bold px-1.5 py-0.5 rounded border border-red-200/20" title={student.medical_notes}>
-                                  <ShieldAlert className="h-3 w-3" /> Médicos
-                                </span>
-                              )}
+                              <div className="flex items-center gap-3">
+                                <div className="relative h-9 w-9 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-700 flex-shrink-0 shadow-sm bg-zinc-100 dark:bg-zinc-800">
+                                  <img 
+                                    src={getStudentAvatarUrl(student)} 
+                                    alt={formatStudentName(student)} 
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
+                                <div>
+                                  <button 
+                                    onClick={() => setSelectedStudent(student)}
+                                    className="font-bold text-zinc-900 dark:text-white text-sm hover:text-violet-600 dark:hover:text-violet-400 hover:underline transition-colors text-left focus:outline-none block"
+                                  >
+                                    {formatStudentName(student)}
+                                  </button>
+                                  {student.medical_notes && (
+                                    <span className="inline-flex items-center gap-0.5 bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-400 text-[9px] font-bold px-1.5 py-0.5 rounded border border-red-200/20 mt-0.5" title={student.medical_notes}>
+                                      <ShieldAlert className="h-3 w-3" /> Médicos
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
                             </td>
                             <td className="p-4 text-center font-extrabold text-sm">{age} años</td>
                             <td className="p-4 capitalize">
@@ -2561,12 +2588,26 @@ export default function CoordinatorDashboard() {
             
             {/* Cabecera del Modal */}
             <div className="relative p-6 border-b border-zinc-100 dark:border-zinc-850 flex flex-col md:flex-row items-center gap-6 bg-zinc-50/50 dark:bg-zinc-950/20">
-              <button 
-                onClick={() => setSelectedStudent(null)}
-                className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setEditingStudentData(selectedStudent);
+                    setIsEditStudentModalOpen(true);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-50 text-violet-700 hover:bg-violet-100 dark:bg-violet-955/40 dark:text-violet-300 dark:hover:bg-violet-900/50 text-xs font-bold transition-all shadow-sm border border-violet-200/50 cursor-pointer"
+                  title="Editar Expediente"
+                >
+                  <Edit3 className="h-3.5 w-3.5" />
+                  <span>Editar Expediente</span>
+                </button>
+                <button 
+                  onClick={() => setSelectedStudent(null)}
+                  className="p-1.5 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
 
               {/* Foto de Perfil con borde según nivel */}
               <div className={`relative h-24 w-24 rounded-full overflow-hidden border-4 flex-shrink-0 shadow-lg ${
@@ -2574,7 +2615,7 @@ export default function CoordinatorDashboard() {
                 selectedStudent.level === 'secundaria' ? 'border-violet-500' : 'border-orange-500'
               }`}>
                 <img 
-                  src={selectedStudent.photo_url || '/images/students/default.png'} 
+                  src={getStudentAvatarUrl(selectedStudent)} 
                   alt={`${selectedStudent.first_name} ${selectedStudent.last_name_1}`}
                   className="h-full w-full object-cover"
                 />
@@ -2728,7 +2769,63 @@ export default function CoordinatorDashboard() {
 
                     {/* Reportes de Conducta */}
                     <div className="bg-zinc-50/50 dark:bg-zinc-950/10 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-850">
-                      <span className="text-[10px] font-bold text-zinc-400 uppercase block mb-1.5">Reportes de Conducta</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-bold text-zinc-400 uppercase">Reportes de Conducta</span>
+                        <button
+                          type="button"
+                          onClick={() => setShowAddReportForm(!showAddReportForm)}
+                          className="text-[9.5px] font-extrabold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-0.5 cursor-pointer"
+                        >
+                          <Plus className="h-3 w-3" /> Reportar
+                        </button>
+                      </div>
+
+                      {showAddReportForm && (
+                        <div className="p-3 bg-rose-50/60 dark:bg-rose-955/20 border border-rose-200 dark:border-rose-900 rounded-xl mb-3 space-y-2">
+                          <input
+                            type="text"
+                            value={newReportReporter}
+                            onChange={(e) => setNewReportReporter(e.target.value)}
+                            placeholder="Quien reporta (Ej. Coordinación)"
+                            className="w-full text-xs p-2 rounded-lg border border-rose-200 dark:border-rose-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white"
+                          />
+                          <textarea
+                            value={newReportDescription}
+                            onChange={(e) => setNewReportDescription(e.target.value)}
+                            placeholder="Descripción de la incidencia o reporte de conducta..."
+                            className="w-full text-xs p-2 rounded-lg border border-rose-200 dark:border-rose-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white h-16 resize-none"
+                          />
+                          <div className="flex justify-end gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setShowAddReportForm(false)}
+                              className="px-2.5 py-1 text-xs text-zinc-500 hover:underline"
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (newReportDescription.trim()) {
+                                  const report = {
+                                    date: new Date().toISOString().split('T')[0],
+                                    description: newReportDescription.trim(),
+                                    reporter: newReportReporter.trim() || 'Coordinación'
+                                  };
+                                  addBehaviorReport(selectedStudent.id, report);
+                                  setSelectedStudent(prev => prev ? { ...prev, behavior_reports: [report, ...(prev.behavior_reports || [])] } : null);
+                                  setNewReportDescription('');
+                                  setShowAddReportForm(false);
+                                }
+                              }}
+                              className="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shadow-sm"
+                            >
+                              Guardar Reporte
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
                       {selectedStudent.behavior_reports && selectedStudent.behavior_reports.length > 0 ? (
                         <div className="space-y-2">
                           {selectedStudent.behavior_reports.map((r, idx) => (
@@ -2748,7 +2845,63 @@ export default function CoordinatorDashboard() {
 
                     {/* Notas del Profesor */}
                     <div className="bg-zinc-50/50 dark:bg-zinc-950/10 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-850">
-                      <span className="text-[10px] font-bold text-zinc-400 uppercase block mb-1.5">Notas de Profesores</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-bold text-zinc-400 uppercase">Notas de Profesores</span>
+                        <button
+                          type="button"
+                          onClick={() => setShowAddNoteForm(!showAddNoteForm)}
+                          className="text-[9.5px] font-extrabold text-violet-600 dark:text-violet-400 hover:underline flex items-center gap-0.5 cursor-pointer"
+                        >
+                          <Plus className="h-3 w-3" /> Agregar Nota
+                        </button>
+                      </div>
+
+                      {showAddNoteForm && (
+                        <div className="p-3 bg-violet-50/60 dark:bg-violet-955/20 border border-violet-200 dark:border-violet-900 rounded-xl mb-3 space-y-2">
+                          <input
+                            type="text"
+                            value={newTeacherNoteName}
+                            onChange={(e) => setNewTeacherNoteName(e.target.value)}
+                            placeholder="Nombre del Profesor (Ej. Israel López)"
+                            className="w-full text-xs p-2 rounded-lg border border-violet-200 dark:border-violet-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white"
+                          />
+                          <textarea
+                            value={newTeacherNoteText}
+                            onChange={(e) => setNewTeacherNoteText(e.target.value)}
+                            placeholder="Anotación del docente sobre el desempeño o comportamiento..."
+                            className="w-full text-xs p-2 rounded-lg border border-violet-200 dark:border-violet-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white h-16 resize-none"
+                          />
+                          <div className="flex justify-end gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setShowAddNoteForm(false)}
+                              className="px-2.5 py-1 text-xs text-zinc-500 hover:underline"
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (newTeacherNoteText.trim()) {
+                                  const noteObj = {
+                                    date: new Date().toISOString().split('T')[0],
+                                    note: newTeacherNoteText.trim(),
+                                    teacher_name: newTeacherNoteName.trim() || 'Profesor'
+                                  };
+                                  addTeacherNote(selectedStudent.id, noteObj);
+                                  setSelectedStudent(prev => prev ? { ...prev, teacher_notes: [noteObj, ...(prev.teacher_notes || [])] } : null);
+                                  setNewTeacherNoteText('');
+                                  setShowAddNoteForm(false);
+                                }
+                              }}
+                              className="px-3 py-1 bg-violet-600 hover:bg-violet-700 text-white rounded-lg text-xs font-bold shadow-sm"
+                            >
+                              Guardar Nota
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
                       {selectedStudent.teacher_notes && selectedStudent.teacher_notes.length > 0 ? (
                         <div className="space-y-2">
                           {selectedStudent.teacher_notes.map((n, idx) => (
@@ -2906,6 +3059,195 @@ export default function CoordinatorDashboard() {
                   className="px-5 py-2 text-white rounded-xl font-bold shadow-md hover:opacity-90 transition-all"
                 >
                   {editingTeacher ? 'Guardar Cambios' : 'Registrar Docente'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL PARA EDITAR EXPEDIENTE DE ALUMNO --- */}
+      {isEditStudentModalOpen && editingStudentData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-full max-w-2xl rounded-3xl p-6 shadow-2xl flex flex-col gap-4 animate-in zoom-in-95 max-h-[90vh]">
+            <div className="flex items-center justify-between border-b pb-3">
+              <h3 className="text-base font-black text-zinc-900 dark:text-white flex items-center gap-2">
+                <Edit3 className="h-5 w-5 text-violet-500" />
+                Editar Expediente del Alumno
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsEditStudentModalOpen(false)}
+                className="p-1 rounded-full text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!editingStudentData.id) return;
+                updateStudent(editingStudentData.id, editingStudentData);
+                if (selectedStudent && selectedStudent.id === editingStudentData.id) {
+                  setSelectedStudent({ ...selectedStudent, ...editingStudentData } as DetailedStudent);
+                }
+                setIsEditStudentModalOpen(false);
+              }}
+              className="space-y-4 overflow-y-auto pr-1 flex-1 text-xs"
+            >
+              {/* Nombres y Apellidos */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Primer Nombre *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingStudentData.first_name || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, first_name: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Segundo Nombre</label>
+                  <input
+                    type="text"
+                    value={editingStudentData.second_name || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, second_name: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Primer Apellido *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingStudentData.last_name_1 || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, last_name_1: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Segundo Apellido</label>
+                  <input
+                    type="text"
+                    value={editingStudentData.last_name_2 || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, last_name_2: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {/* Datos Escolares y Fecha de Nacimiento */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Fecha de Nacimiento</label>
+                  <input
+                    type="date"
+                    value={editingStudentData.birth_date || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, birth_date: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Género</label>
+                  <select
+                    value={editingStudentData.gender || 'Masculino'}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, gender: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  >
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">CURP</label>
+                  <input
+                    type="text"
+                    value={editingStudentData.curp || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, curp: e.target.value.toUpperCase() })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white uppercase font-mono"
+                  />
+                </div>
+              </div>
+
+              {/* Contacto */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Correo Electrónico</label>
+                  <input
+                    type="email"
+                    value={editingStudentData.email || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, email: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Teléfono</label>
+                  <input
+                    type="text"
+                    value={editingStudentData.phone || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, phone: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {/* Padres / Tutores */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Nombre de la Madre</label>
+                  <input
+                    type="text"
+                    value={editingStudentData.mother_name || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, mother_name: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Nombre del Padre</label>
+                  <input
+                    type="text"
+                    value={editingStudentData.father_name || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, father_name: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {/* Notas Médicas y Académicas */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Alergias / Notas Médicas</label>
+                  <textarea
+                    value={editingStudentData.medical_notes || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, medical_notes: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white h-16 resize-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase block mb-1">Notas de Coordinación Académica</label>
+                  <textarea
+                    value={editingStudentData.academic_notes || ''}
+                    onChange={(e) => setEditingStudentData({ ...editingStudentData, academic_notes: e.target.value })}
+                    className="w-full text-xs p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-900 dark:text-white h-16 resize-none"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setIsEditStudentModalOpen(false)}
+                  className="px-4 py-2 text-xs font-semibold text-zinc-500 hover:underline cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer"
+                >
+                  Guardar Cambios
                 </button>
               </div>
             </form>

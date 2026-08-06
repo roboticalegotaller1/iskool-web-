@@ -971,12 +971,12 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     last_name_2: 'Ruiz',
     birth_date: '2012-05-11',
     curp: 'CARA120511MDFMRN01',
-    enrollment_id: 'MAT-2025-ec-002',
-    gender: 'Femenino',
+    enrollment_id: 'MAT-2025-sec-002',
+    gender: 'Masculino',
     shift: 'matutino',
     status: 'activo',
     previous_school: 'Primaria Benito Juárez',
-    photo_url: '/images/students/c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380c02.png',
+    photo_url: '',
     address: 'Calle Juárez 11, Col. Centro, CDMX',
     phone: '555-123-1001',
     email: 'alejandro.castro1@iskool.edu.mx',
@@ -992,8 +992,14 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     grade: '2º',
     group_id: 'grp-sec-a',
     pending_payments: [],
-    behavior_reports: [],
-    teacher_notes: []
+    behavior_reports: [
+      { date: '2026-05-14', description: 'Participación destacada en la Feria de Ciencias Escolar con reconocimiento del jurado.', reporter: 'Coordinación Académica' },
+      { date: '2026-04-10', description: 'Llegada con 10 minutos de retardo a la primera clase. Se notificó a tutor.', reporter: 'Prof. Roberto Díaz' }
+    ],
+    teacher_notes: [
+      { date: '2026-06-02', note: 'Alejandro demuestra un dominio brillante de álgebra y liderazgo en trabajos en equipo.', teacher_name: 'Israel López' },
+      { date: '2026-05-20', note: 'Entrega puntual de todas las actividades del laboratorio de Ciencias.', teacher_name: 'María Fernández' }
+    ]
   },
   {
     id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380c03',

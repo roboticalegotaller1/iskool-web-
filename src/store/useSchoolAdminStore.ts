@@ -68,6 +68,9 @@ interface SchoolAdminStoreState {
   updateTeacher: (teacherId: string, updatedData: Partial<UserProfile>) => void;
   deleteTeacher: (teacherId: string) => void;
   updateStudentStatus: (studentId: string, status: 'activo' | 'suspendido' | 'baja') => void;
+  updateStudent: (studentId: string, updatedData: Partial<DetailedStudent>) => void;
+  addTeacherNote: (studentId: string, note: { date: string; note: string; teacher_name: string }) => void;
+  addBehaviorReport: (studentId: string, report: { date: string; description: string; reporter: string }) => void;
   
   resetSchoolAdminStore: () => void;
 }
@@ -222,6 +225,30 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     set((state) => ({
       detailedStudents: (state.detailedStudents || []).map(s => 
         s.id === studentId ? { ...s, status } : s
+      )
+    }));
+  },
+
+  updateStudent: (studentId, updatedData) => {
+    set((state) => ({
+      detailedStudents: (state.detailedStudents || []).map(s => 
+        s.id === studentId ? { ...s, ...updatedData } : s
+      )
+    }));
+  },
+
+  addTeacherNote: (studentId, note) => {
+    set((state) => ({
+      detailedStudents: (state.detailedStudents || []).map(s => 
+        s.id === studentId ? { ...s, teacher_notes: [note, ...(s.teacher_notes || [])] } : s
+      )
+    }));
+  },
+
+  addBehaviorReport: (studentId, report) => {
+    set((state) => ({
+      detailedStudents: (state.detailedStudents || []).map(s => 
+        s.id === studentId ? { ...s, behavior_reports: [report, ...(s.behavior_reports || [])] } : s
       )
     }));
   },
