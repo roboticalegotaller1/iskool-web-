@@ -486,9 +486,10 @@ export default function CoordinatorDashboard() {
           <div className="flex gap-1 bg-zinc-100 dark:bg-zinc-950 p-1 rounded-xl border border-zinc-200/45 dark:border-zinc-850 self-stretch md:self-auto">
             <button
               onClick={() => setActiveTab('students')}
+              style={activeTab === 'students' ? { color: 'var(--brand-primary)' } : undefined}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === 'students'
-                  ? 'bg-white dark:bg-zinc-800 text-violet-600 dark:text-violet-400 shadow-sm'
+                  ? 'bg-white dark:bg-zinc-800 shadow-sm'
                   : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
               }`}
             >
@@ -496,9 +497,10 @@ export default function CoordinatorDashboard() {
             </button>
             <button
               onClick={() => setActiveTab('groups')}
+              style={activeTab === 'groups' ? { color: 'var(--brand-primary)' } : undefined}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === 'groups'
-                  ? 'bg-white dark:bg-zinc-800 text-violet-600 dark:text-violet-400 shadow-sm'
+                  ? 'bg-white dark:bg-zinc-800 shadow-sm'
                   : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
               }`}
             >
@@ -506,9 +508,10 @@ export default function CoordinatorDashboard() {
             </button>
             <button
               onClick={() => setActiveTab('schedules')}
+              style={activeTab === 'schedules' ? { color: 'var(--brand-primary)' } : undefined}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === 'schedules'
-                  ? 'bg-white dark:bg-zinc-800 text-brand-primary shadow-sm'
+                  ? 'bg-white dark:bg-zinc-800 shadow-sm'
                   : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
               }`}
             >
@@ -516,9 +519,10 @@ export default function CoordinatorDashboard() {
             </button>
             <button
               onClick={() => setActiveTab('settings')}
+              style={activeTab === 'settings' ? { color: 'var(--brand-primary)' } : undefined}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === 'settings'
-                  ? 'bg-white dark:bg-zinc-800 text-brand-primary shadow-sm'
+                  ? 'bg-white dark:bg-zinc-800 shadow-sm'
                   : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
               }`}
             >
@@ -541,14 +545,14 @@ export default function CoordinatorDashboard() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Buscar por nombre, CURP o matrícula..."
-                    className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-xs focus:outline-none focus:border-violet-500 text-zinc-900 dark:text-white"
+                    className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent text-xs focus:outline-none focus:border-brand-primary text-zinc-900 dark:text-white"
                   />
                 </div>
                 {/* Nivel */}
                 <select
                   value={levelFilter}
                   onChange={(e: any) => setLevelFilter(e.target.value)}
-                  className="p-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-violet-500"
+                  className="p-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-brand-primary"
                 >
                   <option value="all">Todos los Niveles</option>
                   <option value="primaria">Primaria</option>
@@ -559,7 +563,7 @@ export default function CoordinatorDashboard() {
                 <select
                   value={groupFilter}
                   onChange={(e: any) => setGroupFilter(e.target.value)}
-                  className="p-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-violet-500"
+                  className="p-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-brand-primary"
                 >
                   <option value="all">Todos (Con y Sin Grupo)</option>
                   <option value="assigned">Con Grupo Asignado</option>
@@ -570,7 +574,8 @@ export default function CoordinatorDashboard() {
               {/* Botón de Alta */}
               <button
                 onClick={() => setIsRegisterModalOpen(true)}
-                className="w-full md:w-auto px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-violet-500/10"
+                style={{ backgroundColor: 'var(--brand-primary)' }}
+                className="w-full md:w-auto px-5 py-2.5 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md hover:opacity-90"
               >
                 <UserPlus className="h-4.5 w-4.5" />
                 Dar de Alta Alumno
@@ -1469,7 +1474,8 @@ export default function CoordinatorDashboard() {
                         setTeacherFormData({ first_name: '', last_name: '', email: '' });
                         setIsTeacherModalOpen(true);
                       }}
-                      className="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm"
+                      style={{ backgroundColor: 'var(--brand-primary)' }}
+                      className="px-3 py-1.5 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm hover:opacity-90 transition-all"
                     >
                       <UserPlus className="h-3.5 w-3.5" />
                       Dar de Alta Profesor

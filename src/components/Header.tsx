@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useStudentStore, useCurrentStudentStats } from '../store/useStudentStore';
-import { useSchoolAdminStore } from '../store/useSchoolAdminStore';
+import { useSchoolAdminStore, applyThemeCssVariables } from '../store/useSchoolAdminStore';
 import { useGamificationStore } from '../store/useGamificationStore';
 import { usePortfolioStore } from '../store/usePortfolioStore';
 import { Flame, Coins, Trophy, RefreshCw, GraduationCap, Users, User, ArrowRight, LogOut } from 'lucide-react';
@@ -17,6 +17,13 @@ export const Header: React.FC = () => {
   const switchStudent = useStudentStore(state => state.switchStudent);
   const stats = useCurrentStudentStats();
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
+  const schoolSettings = useSchoolAdminStore(state => state.schoolSettings);
+
+  useEffect(() => {
+    if (schoolSettings?.themeColors) {
+      applyThemeCssVariables(schoolSettings.themeColors);
+    }
+  }, [schoolSettings?.themeColors]);
   
   const studentsList = detailedStudents.map(ds => ({
     id: ds.id,
@@ -59,8 +66,6 @@ export const Header: React.FC = () => {
     return 'Preparatoria';
   };
 
-  const schoolSettings = useSchoolAdminStore(state => state.schoolSettings);
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -73,11 +78,11 @@ export const Header: React.FC = () => {
               className="h-9 w-9 object-contain rounded-lg"
             />
           ) : (
-            <GraduationCap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+            <GraduationCap className="h-8 w-8" style={{ color: 'var(--brand-primary)' }} />
           )}
           <Link href="/" className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5">
             <span>{schoolSettings.name || 'ISkool'}</span>
-            <span className="text-blue-600 dark:text-blue-400 font-medium text-xs">Académico</span>
+            <span className="font-medium text-xs" style={{ color: 'var(--brand-primary)' }}>Académico</span>
           </Link>
         </div>
 
@@ -87,16 +92,18 @@ export const Header: React.FC = () => {
             <>
               <Link
                 href="/student"
+                style={pathname === '/student' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
-                  pathname === '/student' ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                  pathname === '/student' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Misiones
               </Link>
               <Link
                 href="/student/portfolio"
+                style={pathname === '/student/portfolio' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
-                  pathname === '/student/portfolio' ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                  pathname === '/student/portfolio' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Mi Portafolio
@@ -108,16 +115,18 @@ export const Header: React.FC = () => {
             <>
               <Link
                 href="/teacher"
+                style={pathname === '/teacher' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
-                  pathname === '/teacher' ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                  pathname === '/teacher' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Revisión de Portafolio
               </Link>
               <Link
                 href="/teacher/grades"
+                style={pathname === '/teacher/grades' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
-                  pathname === '/teacher/grades' ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                  pathname === '/teacher/grades' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Boleta SEP (Formativa)
@@ -128,8 +137,9 @@ export const Header: React.FC = () => {
           {currentRole === 'parent' && (
             <Link
               href="/parent"
+              style={pathname === '/parent' ? { color: 'var(--brand-primary)' } : undefined}
               className={`text-sm font-semibold transition-colors ${
-                pathname === '/parent' ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                pathname === '/parent' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
               Muro de Logros (Hijo)
@@ -139,8 +149,9 @@ export const Header: React.FC = () => {
           {currentRole === 'coordinator' && (
             <Link
               href="/coordinator"
+              style={pathname === '/coordinator' ? { color: 'var(--brand-primary)' } : undefined}
               className={`text-sm font-semibold transition-colors ${
-                pathname === '/coordinator' ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                pathname === '/coordinator' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
               Control de Grupos y Horarios

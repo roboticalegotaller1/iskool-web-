@@ -71,14 +71,25 @@ interface SchoolAdminStoreState {
   resetSchoolAdminStore: () => void;
 }
 
-const applyThemeCssVariables = (themeColors?: { primary: string; secondary: string; accent: string }) => {
+export const applyThemeCssVariables = (themeColors?: { primary: string; secondary: string; accent: string }) => {
   if (typeof window === 'undefined' || !themeColors) return;
   try {
     const root = document.documentElement;
-    root.style.setProperty('--color-brand-primary', themeColors.primary);
-    root.style.setProperty('--color-brand-secondary', themeColors.secondary);
-    root.style.setProperty('--color-brand-accent', themeColors.accent);
+    root.style.setProperty('--color-primary-hsl', themeColors.primary);
+    root.style.setProperty('--color-secondary-hsl', themeColors.secondary);
+    root.style.setProperty('--color-accent-hsl', themeColors.accent);
+
+    root.style.setProperty('--color-primary', `hsl(${themeColors.primary})`);
+    root.style.setProperty('--color-secondary', `hsl(${themeColors.secondary})`);
+    root.style.setProperty('--color-accent', `hsl(${themeColors.accent})`);
+
+    root.style.setProperty('--color-brand-primary', `hsl(${themeColors.primary})`);
+    root.style.setProperty('--color-brand-secondary', `hsl(${themeColors.secondary})`);
+    root.style.setProperty('--color-brand-accent', `hsl(${themeColors.accent})`);
+
     root.style.setProperty('--brand-primary', `hsl(${themeColors.primary})`);
+    root.style.setProperty('--brand-secondary', `hsl(${themeColors.secondary})`);
+    root.style.setProperty('--brand-accent', `hsl(${themeColors.accent})`);
   } catch (e) {
     console.warn('Error setting theme CSS variables:', e);
   }
