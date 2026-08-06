@@ -8,29 +8,54 @@ function cleanString(str: string) {
   return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
 
+function sanitizeFolderName(str: string): string {
+  if (!str) return 'General';
+  const clean = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+  const safe = clean.replace(/[^a-zA-Z0-9\s_-]/g, '').replace(/\s+/g, '_');
+  return safe || 'General';
+}
+
+function getAllMarkdownFiles(dirPath: string): string[] {
+  let results: string[] = [];
+  if (!fs.existsSync(dirPath)) return results;
+  const list = fs.readdirSync(dirPath);
+  for (const file of list) {
+    const filePath = path.join(dirPath, file);
+    const stat = fs.statSync(filePath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllMarkdownFiles(filePath));
+    } else if (file.endsWith('.md')) {
+      results.push(filePath);
+    }
+  }
+  return results;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
+    const levelParam = searchParams.get('level') || '';
+    const gradeParam = searchParams.get('grade') || '';
+    const subjectParam = searchParams.get('subject') || '';
     
     if (!query || !fs.existsSync(OBSIDIAN_VAULT_PATH)) {
       return NextResponse.json({ found: false, note: null });
     }
 
     const cleanQuery = cleanString(query);
-    const queryWords = cleanQuery.split(/\s+/).filter(w => w.length > 3);
+    const queryWords = cleanQuery.split(/\s+/).filter(w => w.length > 2);
 
     const planningsDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones');
     if (!fs.existsSync(planningsDir)) {
       return NextResponse.json({ found: false, note: null });
     }
 
-    const files = fs.readdirSync(planningsDir);
-    let bestMatch: { filename: string; content: string; score: number } | null = null;
+    const allFiles = getAllMarkdownFiles(planningsDir);
+    let bestMatch: { filename: string; filePath: string; content: string; score: number } | null = null;
 
-    for (const file of files) {
-      if (!file.endsWith('.md')) continue;
-      const filePath = path.join(planningsDir, file);
+    for (const filePath of allFiles) {
+      const filename = path.basename(filePath);
       const content = fs.readFileSync(filePath, 'utf8');
       const cleanContent = cleanString(content);
 
@@ -39,15 +64,22 @@ export async function GET(request: NextRequest) {
         if (cleanContent.includes(word)) score += 1;
       });
 
+      // Bonus por coincidencia exacta de nivel, grado o asignatura si están parametrizados
+      if (levelParam && cleanContent.includes(cleanString(levelParam))) score += 2;
+      if (gradeParam && cleanContent.includes(cleanString(gradeParam))) score += 2;
+      if (subjectParam && cleanContent.includes(cleanString(subjectParam))) score += 2;
+
       if (score > 0 && (!bestMatch || score > bestMatch.score)) {
-        bestMatch = { filename: file, content, score };
+        bestMatch = { filename, filePath, content, score };
       }
     }
 
-    if (bestMatch && bestMatch.score >= Math.max(1, Math.floor(queryWords.length * 0.4))) {
+    if (bestMatch && bestMatch.score >= Math.max(1, Math.floor(queryWords.length * 0.3))) {
       const titleMatch = bestMatch.content.match(/# (.*)/);
       const campoMatch = bestMatch.content.match(/\*\*Campo Formativo:\*\* (.*)/);
       const pdaMatch = bestMatch.content.match(/\*\*PDA:\*\* (.*)/);
+      const levelMatch = bestMatch.content.match(/\*\*Nivel \/ Fase:\*\* (.*)/);
+      const subjectMatch = bestMatch.content.match(/\*\*Asignatura:\*\* (.*)/);
       const inicioMatch = bestMatch.content.match(/### Inicio\n([\s\S]*?)(?=### Desarrollo|### Cierre|$)/);
       const desarrolloMatch = bestMatch.content.match(/### Desarrollo\n([\s\S]*?)(?=### Cierre|### Evaluacion|$)/);
       const cierreMatch = bestMatch.content.match(/### Cierre\n([\s\S]*?)(?=### Evaluacion|### Materiales|$)/);
@@ -61,6 +93,8 @@ export async function GET(request: NextRequest) {
         planning: {
           id: 'plan-obsidian-' + Date.now(),
           title: titleMatch ? titleMatch[1].trim() : bestMatch.filename.replace('.md', ''),
+          levelName: levelMatch ? levelMatch[1].trim() : '',
+          subjectName: subjectMatch ? subjectMatch[1].trim() : '',
           campoFormativo: campoMatch ? campoMatch[1].trim() : 'Saberes y Pensamiento Científico',
           ejesArticuladores: ['Pensamiento Crítico', 'Apropiación de las Culturas'],
           pda: pdaMatch ? pdaMatch[1].trim() : query,
@@ -94,18 +128,30 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Bóveda de Obsidian no encontrada' }, { status: 404 });
     }
 
-    const planningsDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones');
-    fs.mkdirSync(planningsDir, { recursive: true });
+    // Clasificación jerárquica: Nivel Escolar -> Grado/Fase -> Materia
+    const levelFolder = sanitizeFolderName(planning.levelName || planning.nivel || 'General');
+    const gradeFolder = sanitizeFolderName(planning.gradeName || planning.grado || planning.fase || 'General');
+    const subjectFolder = sanitizeFolderName(planning.subjectName || planning.asignatura || 'General');
+
+    // Directorio de destino estructurado
+    const targetDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones', levelFolder, gradeFolder, subjectFolder);
+    fs.mkdirSync(targetDir, { recursive: true });
 
     const safeTitle = planning.title.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s_-]/g, '').trim().replace(/\s+/g, '_');
     const filename = `Planeacion_${safeTitle}_${Date.now()}.md`;
-    const filePath = path.join(planningsDir, filename);
+    const filePath = path.join(targetDir, filename);
 
     const timestamp = new Date().toISOString();
+
+    const tagLevel = levelFolder.toLowerCase();
+    const tagGrade = gradeFolder.toLowerCase();
+    const tagSubject = subjectFolder.toLowerCase();
+
     const markdownContent = `---
-tags: [iskool, planeacion_nem, segundo_cerebro]
-asignatura: "${planning.subjectName || ''}"
+tags: [iskool, planeacion_nem, segundo_cerebro, nivel_${tagLevel}, grado_${tagGrade}, materia_${tagSubject}]
 nivel: "${planning.levelName || ''}"
+grado: "${planning.gradeName || planning.grado || ''}"
+asignatura: "${planning.subjectName || ''}"
 campo_formativo: "${planning.campoFormativo || ''}"
 fecha_creacion: "${timestamp}"
 ---
@@ -114,6 +160,7 @@ fecha_creacion: "${timestamp}"
 
 **Docente:** ${planning.teacherName || 'Prof. Israel López'}  
 **Nivel / Fase:** ${planning.levelName || ''}  
+**Grado:** ${planning.gradeName || planning.grado || 'No especificado'}  
 **Asignatura:** ${planning.subjectName || ''}  
 **Campo Formativo:** ${planning.campoFormativo || ''}  
 **Duración:** ${planning.duration || '4 horas'}  
@@ -142,15 +189,19 @@ ${planning.materiales || ''}
 `;
 
     fs.writeFileSync(filePath, markdownContent, 'utf8');
-    console.log(`✅ Planeación guardada en Obsidian: ${filePath}`);
+    console.log(`✅ Planeación guardada en Obsidian estructurada por Nivel/Grado/Materia: ${filePath}`);
 
     return NextResponse.json({
       success: true,
       filename,
-      vaultPath: filePath
+      vaultPath: filePath,
+      levelFolder,
+      gradeFolder,
+      subjectFolder
     });
   } catch (error: any) {
     console.error("Error al guardar en Obsidian:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
+
