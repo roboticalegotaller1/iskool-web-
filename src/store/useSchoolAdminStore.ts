@@ -238,19 +238,59 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   },
 
   addTeacherNote: (studentId, note) => {
-    set((state) => ({
-      detailedStudents: (state.detailedStudents || []).map(s => 
-        s.id === studentId ? { ...s, teacher_notes: [note, ...(s.teacher_notes || [])] } : s
-      )
-    }));
+    set((state) => {
+      const student = (state.detailedStudents || []).find(s => s.id === studentId);
+      const studentName = student ? `${student.first_name} ${student.last_name_1}` : 'El Alumno';
+
+      const notificationMsg: ParentMessage = {
+        id: `msg-tnote-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        parent_id: 'prt-1',
+        student_id: studentId,
+        student_name: studentName,
+        teacher_id: 'tch-1',
+        teacher_name: note.teacher_name || 'Profesor',
+        subject_id: 'sub-general',
+        subject_name: 'Observación Docente',
+        message: `📋 NOTA DE PROFESOR (${note.teacher_name}): "${note.note}"`,
+        sent_at: new Date().toISOString(),
+        is_read: false
+      };
+
+      return {
+        detailedStudents: (state.detailedStudents || []).map(s => 
+          s.id === studentId ? { ...s, teacher_notes: [note, ...(s.teacher_notes || [])] } : s
+        ),
+        parentMessages: [notificationMsg, ...(state.parentMessages || [])]
+      };
+    });
   },
 
   addBehaviorReport: (studentId, report) => {
-    set((state) => ({
-      detailedStudents: (state.detailedStudents || []).map(s => 
-        s.id === studentId ? { ...s, behavior_reports: [report, ...(s.behavior_reports || [])] } : s
-      )
-    }));
+    set((state) => {
+      const student = (state.detailedStudents || []).find(s => s.id === studentId);
+      const studentName = student ? `${student.first_name} ${student.last_name_1}` : 'El Alumno';
+
+      const notificationMsg: ParentMessage = {
+        id: `msg-brep-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        parent_id: 'prt-1',
+        student_id: studentId,
+        student_name: studentName,
+        teacher_id: 'tch-1',
+        teacher_name: report.reporter || 'Coordinación Académica',
+        subject_id: 'sub-behavior',
+        subject_name: 'Reporte de Conducta',
+        message: `⚠️ REPORTE DE CONDUCTA (${report.reporter}): ${report.description}`,
+        sent_at: new Date().toISOString(),
+        is_read: false
+      };
+
+      return {
+        detailedStudents: (state.detailedStudents || []).map(s => 
+          s.id === studentId ? { ...s, behavior_reports: [report, ...(s.behavior_reports || [])] } : s
+        ),
+        parentMessages: [notificationMsg, ...(state.parentMessages || [])]
+      };
+    });
   },
 
   generateGroupsForGrade: (level, grade, groupNames) => {

@@ -196,9 +196,9 @@ export default function ParentDashboard() {
           >
             <Bell className="h-4 w-4" />
             Mensajes y Alertas
-            {parentMessages.filter(m => !m.is_read && m.parent_id === currentParent.id && m.student_id === currentStudent.id).length > 0 && (
+            {parentMessages.filter(m => !m.is_read && (m.student_id === currentStudent?.id || m.parent_id === currentParent.id)).length > 0 && (
               <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-rose-500 text-white font-extrabold text-[9px] flex items-center justify-center animate-pulse border border-white">
-                {parentMessages.filter(m => !m.is_read && m.parent_id === currentParent.id && m.student_id === currentStudent.id).length}
+                {parentMessages.filter(m => !m.is_read && (m.student_id === currentStudent?.id || m.parent_id === currentParent.id)).length}
               </span>
             )}
           </button>
@@ -399,7 +399,7 @@ export default function ParentDashboard() {
               Bandeja de Avisos y Alertas Escolares
             </h2>
 
-            {parentMessages.filter(m => m.parent_id === currentParent.id && m.student_id === currentStudent.id).length === 0 ? (
+            {parentMessages.filter(m => m.student_id === currentStudent?.id || m.parent_id === currentParent.id).length === 0 ? (
               <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-16 text-center flex flex-col items-center justify-center gap-4 shadow-sm">
                 <CheckCircle2 className="h-16 w-16 text-emerald-500" />
                 <div>
@@ -412,7 +412,7 @@ export default function ParentDashboard() {
             ) : (
               <div className="flex flex-col gap-6">
                 {parentMessages
-                  .filter(m => m.parent_id === currentParent.id && m.student_id === currentStudent.id)
+                  .filter(m => m.student_id === currentStudent?.id || m.parent_id === currentParent.id)
                   .map((msg) => {
                     const isNew = !msg.is_read;
                     return (
