@@ -42,4 +42,6 @@ next-env.d.ts
 
 # obsidian test files
 /iskool-docs/
+temp_frames/
+
 

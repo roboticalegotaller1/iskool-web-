@@ -14,6 +14,13 @@ export default function Home() {
             <GraduationCap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <span className="text-xl font-bold tracking-tight">ISkool Académico</span>
           </div>
+          <Link
+            href="/promo"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-500/20 hover:scale-105 transition-all"
+          >
+            <Sparkles className="h-4 w-4 animate-spin text-amber-300" />
+            Presentación para Inversionistas / Vídeo Promo
+          </Link>
         </div>
       </header>
 
@@ -137,32 +144,30 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Tarjeta Super Usuario (Preservada en código, oculta en interfaz) */}
-          {false && (
-            <Link
-              href="/admin"
-              className="group relative flex flex-col justify-between p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-amber-500 hover:shadow-xl hover:shadow-amber-500/5 transition-all dark:border-zinc-800/80 dark:bg-zinc-900/50 dark:hover:border-amber-500"
-            >
-              <div className="flex flex-col gap-4">
-                <div className="p-3 rounded-2xl bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-400 w-fit group-hover:scale-110 transition-transform">
-                  <ShieldAlert className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                    Portal de Super Usuario
-                  </h3>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 leading-normal">
-                    Gestiona las escuelas (colegios), materias y configuraciones globales en una vista interactiva de alto rendimiento.
-                  </p>
-                </div>
+          {/* Tarjeta Super Usuario */}
+          <Link
+            href="/admin"
+            className="group relative flex flex-col justify-between p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-amber-500 hover:shadow-xl hover:shadow-amber-500/5 transition-all dark:border-zinc-800/80 dark:bg-zinc-900/50 dark:hover:border-amber-500"
+          >
+            <div className="flex flex-col gap-4">
+              <div className="p-3 rounded-2xl bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-400 w-fit group-hover:scale-110 transition-transform">
+                <ShieldAlert className="h-6 w-6" />
               </div>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  Portal de Super Usuario
+                </h3>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 leading-normal">
+                  Gestiona las escuelas (colegios), materias y configuraciones globales en una vista interactiva de alto rendimiento.
+                </p>
+              </div>
+            </div>
 
-              <div className="mt-8 flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400">
-                Entrar como Administrador
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
-          )}
+            <div className="mt-8 flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400">
+              Entrar como Administrador
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
 
         </div>
 
