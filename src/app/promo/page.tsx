@@ -221,31 +221,9 @@ const SLIDES: SlideData[] = [
     ],
     features: [],
     portalUrl: "/coordinator"
-  },
-
-
-
-  // SLIDE 11: OUTRO / CLOSING PITCH FOR INVESTORS
-  {
-    id: 11,
-    type: "curtain",
-    portalName: "ISKOOL 2026 · CIERRE DE PRESENTACIÓN",
-    badge: "Oportunidad de Inversión EdTech",
-    title: "El Futuro de la Educación Escolar Empieza Hoy",
-    subtitle: "ISkool es la solución líder que transforma la educación básica y media en México, resolviendo los retos operacionales, docentes y de aprendizaje.",
-    colorTheme: "indigo",
-    metrics: [
-      { label: "Mercado Objetivo LATAM", value: "$12.5 B USD" },
-      { label: "Modelo de Negocio", value: "SaaS Recurrente" },
-      { label: "Retención Objetivo", value: "98%+" }
-    ],
-    features: [
-      { iconName: "Zap", title: "Escalabilidad Rápida", desc: "Arquitectura moderna basada en Next.js, Supabase y IA." },
-      { iconName: "Award", title: "Diferenciador Clave", desc: "Única plataforma 100% integrada con la NEM y Gamificación total." },
-      { iconName: "Star", title: "Únete a la Revolución", desc: "Buscamos aliados estratégicos para llevar ISkool a todo el continente." }
-    ]
   }
 ];
+
 
 export default function PromoPage() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
