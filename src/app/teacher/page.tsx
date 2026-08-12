@@ -17,12 +17,14 @@ import {
   ChevronDown, ChevronUp, RefreshCw, FileCode,
   ZoomIn, ZoomOut, Maximize2, Users, Palette,
   X, MapPin, Phone, Mail, User, AlertTriangle, Bell,
-  Bookmark, Save, Sparkles, Lock
+  Bookmark, Save, Sparkles, Lock, ArrowLeft
 } from 'lucide-react';
 import { FormattedDate } from '@/components/FormattedDate';
 import { DetailedStudent, AttendanceStatus, Attendance, ParentMessage, Quest, QuizQuestion, UserProfile } from '@/types';
 import { PlanningTab } from './PlanningTab';
 import { EmergencyModal } from './EmergencyModal';
+import { TeacherHubCards } from '@/components/TeacherHubCards';
+import { TeacherCommunityView } from '@/components/TeacherCommunityView';
 
 // Catálogo de PDAs por asignatura
 const PDA_CATALOG: Record<string, string[]> = {
@@ -144,8 +146,8 @@ export default function TeacherDashboard() {
   // Estado para el modal de emergencia (SOS)
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
 
-  // Navegación principal del portal del profesor
-  const [currentMenuTab, setCurrentMenuTab] = useState<'evaluation' | 'attendance' | 'tasks' | 'design' | 'planning'>('evaluation');
+  // Navegación principal del portal del profesor (Por defecto: 'hub' - Regla de los 3 Clics de Apple)
+  const [currentMenuTab, setCurrentMenuTab] = useState<'hub' | 'evaluation' | 'attendance' | 'tasks' | 'design' | 'planning' | 'canvas' | 'community'>('hub');
 
   // Realtime toast notification state
   const [realtimeToast, setRealtimeToast] = useState<{ studentName: string; questTitle: string } | null>(null);
@@ -649,85 +651,138 @@ export default function TeacherDashboard() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
         
-        {/* Banner Docente */}
-        <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 bg-white dark:bg-zinc-900 p-6 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 shadow-sm">
-          <div>
-            <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1 rounded-md">
-              {currentMenuTab === 'evaluation' ? 'Módulo de Evaluación Formativa' : 
-               currentMenuTab === 'attendance' ? 'Módulo de Asistencia Diaria' : 
-               currentMenuTab === 'design' ? 'Módulo de Planificación y Diseño' : 
-               currentMenuTab === 'planning' ? 'Planeación Didáctica NEM' : 'Módulo de Avisos y Tareas'}
-            </span>
-            <h1 className="text-2xl font-black text-zinc-950 dark:text-white mt-2">
-              {currentMenuTab === 'evaluation' ? 'Alineación Estructural NEM' :
-               currentMenuTab === 'attendance' ? 'Control de Asistencia de Grupos' :
-               currentMenuTab === 'design' ? 'Diseño y Planeación de Tareas NEM' :
-               currentMenuTab === 'planning' ? 'Generador de Planeación con IA' : 'Seguimiento de Tareas y Alertas a Padres'}
-            </h1>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-              Docente: <strong>{currentTeacher.first_name} {currentTeacher.last_name}</strong> | Colegio Anglo Mexicano
-            </p>
-          </div>
+        {/* VISTA 1: HUB CENTRAL (REGLA DE LOS 3 CLICS DE APPLE) */}
+        {currentMenuTab === 'hub' && (
+          <TeacherHubCards
+            teacherName={`${currentTeacher.first_name || 'Profesor(a)'} ${currentTeacher.last_name || ''}`}
+            onSelectAction={(action) => {
+              if (action === 'classes') setCurrentMenuTab('evaluation');
+              if (action === 'canvas') router.push('/teacher/canvas');
+              if (action === 'community') router.push('/teacher/community');
+            }}
+          />
+        )}
 
-          {/* Menú Principal del Docente y SOS */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
+        {/* VISTAS SECUNDARIAS / SUBMÓDULOS DE TRABAJO */}
+        {currentMenuTab !== 'hub' && (
+          <>
+            {/* Banner Docente con Botón de Regreso al Hub */}
+            <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 bg-white dark:bg-zinc-900 p-6 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 shadow-sm">
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  onClick={() => setCurrentMenuTab('hub')}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-bold text-xs transition-all shadow-sm group mb-1 cursor-pointer"
+                >
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-blue-500" />
+                  <span>Volver al Hub Principal</span>
+                </button>
 
+                <div>
+                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1 rounded-md">
+                    {currentMenuTab === 'canvas' ? '✨ ISkool Canvas IA' :
+                     currentMenuTab === 'community' ? '🌍 Comunidad Docente' :
+                     currentMenuTab === 'evaluation' ? 'Módulo de Evaluación Formativa' : 
+                     currentMenuTab === 'attendance' ? 'Módulo de Asistencia Diaria' : 
+                     currentMenuTab === 'design' ? 'Módulo de Planificación y Diseño' : 
+                     currentMenuTab === 'planning' ? 'Planeación Didáctica NEM' : 'Módulo de Avisos y Tareas'}
+                  </span>
+                  <h1 className="text-2xl font-black text-zinc-950 dark:text-white mt-1">
+                    {currentMenuTab === 'canvas' ? 'Estudio de Creación de Actividades' :
+                     currentMenuTab === 'community' ? 'Red de Recursos Docentes Compartidos' :
+                     currentMenuTab === 'evaluation' ? 'Alineación Estructural NEM' :
+                     currentMenuTab === 'attendance' ? 'Control de Asistencia de Grupos' :
+                     currentMenuTab === 'design' ? 'Diseño y Planeación de Tareas NEM' :
+                     currentMenuTab === 'planning' ? 'Generador de Planeación con IA' : 'Seguimiento de Tareas y Alertas a Padres'}
+                  </h1>
+                </div>
+              </div>
 
+              {/* Pestañas rápidas dentro de Mis Clases */}
+              {(currentMenuTab !== 'canvas' && currentMenuTab !== 'community') && (
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
+                  <div className="flex flex-wrap gap-1 bg-zinc-100 dark:bg-zinc-950 p-1.5 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 w-full xl:w-auto">
+                    <button
+                      onClick={() => setCurrentMenuTab('evaluation')}
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                        currentMenuTab === 'evaluation'
+                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      Evaluación Formativa
+                    </button>
+                    <button
+                      onClick={() => setCurrentMenuTab('design')}
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                        currentMenuTab === 'design'
+                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      Diseño de Tareas
+                    </button>
+                    <button
+                      onClick={() => setCurrentMenuTab('planning')}
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                        currentMenuTab === 'planning'
+                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      Planeación
+                    </button>
+                    <button
+                      onClick={() => setCurrentMenuTab('attendance')}
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                        currentMenuTab === 'attendance'
+                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      Pasar Lista
+                    </button>
+                    <button
+                      onClick={() => setCurrentMenuTab('tasks')}
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                        currentMenuTab === 'tasks'
+                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      Seguimiento
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
-            <div className="flex flex-wrap gap-1 bg-zinc-150 dark:bg-zinc-955 p-1 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 w-full xl:w-auto">
-            <button
-              onClick={() => setCurrentMenuTab('evaluation')}
-              className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
-                currentMenuTab === 'evaluation'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-              }`}
-            >
-              Evaluación Formativa
-            </button>
-            <button
-              onClick={() => setCurrentMenuTab('design')}
-              className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
-                currentMenuTab === 'design'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-              }`}
-            >
-              Diseño de Tareas
-            </button>
-            <button
-              onClick={() => setCurrentMenuTab('planning')}
-              className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
-                currentMenuTab === 'planning'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-              }`}
-            >
-              Planeación
-            </button>
-            <button
-              onClick={() => setCurrentMenuTab('attendance')}
-              className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
-                currentMenuTab === 'attendance'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-              }`}
-            >
-              Pasar Lista
-            </button>
-            <button
-              onClick={() => setCurrentMenuTab('tasks')}
-              className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
-                currentMenuTab === 'tasks'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
-              }`}
-            >
-              Seguimiento de Tareas
-            </button>
-          </div>
-          </div>
-        </div>
+            {/* MÓDULO ISKOOL CANVAS (VISTA PREVIA DE ENTRADA) */}
+            {currentMenuTab === 'canvas' && (
+              <div className="bg-white dark:bg-zinc-900 rounded-3xl p-10 border border-purple-200/60 dark:border-purple-900/40 shadow-xl space-y-6 text-center max-w-4xl mx-auto my-6 animate-fade-in">
+                <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white mx-auto shadow-xl shadow-purple-500/30">
+                  <Palette className="w-10 h-10 text-yellow-300" />
+                </div>
+                <div className="space-y-3">
+                  <span className="text-xs font-black px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border border-purple-300/40">
+                    🎨 ISkool Canvas IA
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                    Estudio de Creación de Actividades Interactivas
+                  </h2>
+                  <p className="text-base text-slate-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
+                    Preparado para el siguiente paso: Creación rápida asistida por IA para Trivias, Memoramas y Retos Gamificados alineados a los PDAs NEM.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* MÓDULO COMUNIDAD DOCENTE (RED SOCIAL DOCENTE) */}
+            {currentMenuTab === 'community' && (
+              <TeacherCommunityView />
+            )}
+          </>
+        )}
 
         {/* MÓDULO DE EVALUACIÓN FORMATIVA */}
         {currentMenuTab === 'evaluation' && (

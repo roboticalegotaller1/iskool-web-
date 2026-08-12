@@ -10,6 +10,7 @@ const OBSIDIAN_VAULT_PATH = 'C:\\Users\\kami-\\Desktop\\2025-2026\\iskool\\obsid
 const FILES_TO_SYNC = [
   'schema.sql',
   'schema_gamification.sql',
+  'schema_community.sql',
   'supabase_functions.sql',
   'src/types/index.ts'
 ];
