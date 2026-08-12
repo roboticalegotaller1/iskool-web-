@@ -12,8 +12,8 @@ import {
   Upload, FileImage, Mic, Timer, Heart, Award, Check
 } from 'lucide-react';
 
-// Dynamically load the PixiCombatCanvas to avoid SSR hydration issues
-const PixiCombatCanvas = dynamic(() => import('./PixiCombatCanvas'), { ssr: false });
+// Dynamically load the PixiCombatView to avoid SSR hydration issues
+const PixiCombatView = dynamic(() => import('./PixiCombatView'), { ssr: false });
 
 // Retro Sound Chiptune Synth Player
 const playChiptuneSound = (type: string) => {
@@ -601,7 +601,7 @@ export default function QuestCardModal() {
             {showCanvas ? (
               // --- GRAPHICAL COMBAT CANVAS VIEW ---
               <div className="relative w-full h-[240px] md:h-[300px] rounded-2xl overflow-hidden border border-amber-600/30 bg-stone-950 shadow-2xl">
-                <PixiCombatCanvas
+                <PixiCombatView
                   combatState={canvasCombatState}
                   volume={1}
                   guildBoss={{

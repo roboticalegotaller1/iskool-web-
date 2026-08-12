@@ -22,7 +22,7 @@ import {
   Play,
   Settings
 } from 'lucide-react';
-import AdminCarouselCanvas, { CarouselItem } from '@/components/AdminCarouselCanvas';
+import AdminCarouselStudio, { CarouselItem } from '@/components/AdminCarouselStudio';
 
 // 1. Colegios (Vista Super Usuario)
 const COLEGIOS_DATA: CarouselItem[] = [
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
         {/* Contenedor del Carrusel PixiJS */}
         <div className="relative w-full">
           
-          <AdminCarouselCanvas
+          <AdminCarouselStudio
             items={items}
             activeIndex={activeIndex}
             onActiveIndexChange={setActiveIndex}

@@ -96,7 +96,12 @@ export const FlashcardsPlayer: React.FC<FlashcardsPlayerProps> = ({
 
               <div className="space-y-4 text-center my-auto">
                 {currentQ.imageUrl && (
-                  <img src={currentQ.imageUrl} alt="Ref visual" className="w-32 h-24 object-cover rounded-2xl mx-auto shadow-md border border-white/20" />
+                  <img 
+                    src={currentQ.imageUrl} 
+                    alt="Ref visual" 
+                    onError={(e) => { e.currentTarget.src = '/images/students/default.png'; }}
+                    className="w-32 h-24 object-cover rounded-2xl mx-auto shadow-md border border-white/20" 
+                  />
                 )}
                 <h3 className="text-xl sm:text-2xl font-black text-white leading-tight">
                   {currentQ.question}

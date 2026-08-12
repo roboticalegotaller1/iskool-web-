@@ -194,7 +194,12 @@ export const MemoramaPlayer: React.FC<MemoramaPlayerProps> = ({
                 {card.isFlipped || card.isMatched ? (
                   <div className="space-y-2">
                     {card.imageUrl && (
-                      <img src={card.imageUrl} alt="Ref visual" className="w-12 h-10 object-cover rounded-lg mx-auto" />
+                      <img 
+                        src={card.imageUrl} 
+                        alt="Ref visual" 
+                        onError={(e) => { e.currentTarget.src = '/images/students/default.png'; }}
+                        className="w-12 h-10 object-cover rounded-lg mx-auto" 
+                      />
                     )}
                     <p className="text-xs font-bold text-slate-900 dark:text-white line-clamp-4">
                       {card.text}

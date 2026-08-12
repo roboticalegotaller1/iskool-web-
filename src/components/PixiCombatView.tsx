@@ -87,7 +87,7 @@ export function getDragonEnemyKey(bossName?: string, enemyType?: string): string
   return 'crimson';
 }
 
-interface PixiCombatCanvasProps {
+interface PixiCombatViewProps {
   combatState: 'idle' | 'attacking' | 'boss_hurt' | 'victory' | 'defeat';
   volume: number;
   guildBoss: {
@@ -116,7 +116,7 @@ const getStudentAvatarUrl = (name: string): string => {
   return '/images/students/default.png';
 };
 
-export default function PixiCombatCanvas({
+export default function PixiCombatView({
   combatState,
   volume,
   guildBoss,
@@ -125,7 +125,7 @@ export default function PixiCombatCanvas({
   playSound,
   onAttackFinish,
   enemyType
-}: PixiCombatCanvasProps) {
+}: PixiCombatViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PIXI.Application | null>(null);
   const [loading, setLoading] = useState(true);

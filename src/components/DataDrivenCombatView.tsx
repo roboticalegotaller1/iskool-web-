@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import { useStudentStore } from '@/store/useStudentStore';
-import { DRAGON_ENEMIES_MAP, getDragonEnemyKey } from './PixiCombatCanvas';
+import { DRAGON_ENEMIES_MAP, getDragonEnemyKey } from './PixiCombatView';
 
 
 export interface RpgEnemyData {
@@ -18,9 +18,11 @@ export interface RpgAttacker {
   student_id: string;
   name: string;
   role: 'Cyber_Marine' | 'Scout_Space' | 'Sage_Cyber' | string;
-  skin_texture_id: string;
-  rpg_action: 'RIFLE_BURST' | 'BLASTER_SHOT' | 'LASER_BEAM' | string;
-  damage: number;
+  xp_contribution?: number;
+  avatar_url?: string;
+  skin_texture_id?: string;
+  rpg_action?: 'RIFLE_BURST' | 'BLASTER_SHOT' | 'LASER_BEAM' | string;
+  damage?: number;
 }
 
 export interface RpgCombatPayload {
@@ -31,7 +33,7 @@ export interface RpgCombatPayload {
   server_calculated_total_damage: number;
 }
 
-interface DataDrivenCombatCanvasProps {
+interface DataDrivenCombatViewProps {
   payload: RpgCombatPayload;
   localStudentId: string;
   combatState: 'idle' | 'attacking' | 'boss_hurt' | 'victory' | 'defeat';
@@ -40,14 +42,14 @@ interface DataDrivenCombatCanvasProps {
   onAttackFinish?: () => void;
 }
 
-export default function DataDrivenCombatCanvas({
+export default function DataDrivenCombatView({
   payload,
   localStudentId,
   combatState,
   volume,
   playSound,
   onAttackFinish
-}: DataDrivenCombatCanvasProps) {
+}: DataDrivenCombatViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PIXI.Application | null>(null);
   const [loading, setLoading] = useState(true);
@@ -160,7 +162,7 @@ export default function DataDrivenCombatCanvas({
       if (!containerRef.current) return;
 
         const attackerSkinUrls = payload.attackers.map(
-          a => `/images/rpg/${a.skin_texture_id.replace('skin_', '')}_sprite.png`
+          a => `/images/rpg/${(a.skin_texture_id || 'skin_marine').replace('skin_', '')}_sprite.png`
         );
         const assetsToLoad = [
           '/images/rpg/combat_bg.png',
@@ -196,7 +198,7 @@ export default function DataDrivenCombatCanvas({
           sparksDragonTex = activeDragonDef.sparkTextureUrl ? (PIXI.Assets.get(activeDragonDef.sparkTextureUrl) || null) : null;
 
           for (const attacker of payload.attackers) {
-            const skinUrl = `/images/rpg/${attacker.skin_texture_id.replace('skin_', '')}_sprite.png`;
+            const skinUrl = `/images/rpg/${(attacker.skin_texture_id || 'skin_marine').replace('skin_', '')}_sprite.png`;
             const tex = PIXI.Assets.get(skinUrl) || bossTex;
             attackerTextures.set(attacker.student_id, tex);
           }

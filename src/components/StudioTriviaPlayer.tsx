@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { CanvasActivityJSON } from '@/types';
+import { StudioActivityJSON } from '@/types';
 import { 
   Trophy, 
   CheckCircle2, 
@@ -15,23 +15,23 @@ import {
   BrainCircuit
 } from 'lucide-react';
 
-interface CanvasTriviaPlayerProps {
-  activity: CanvasActivityJSON;
+interface StudioTriviaPlayerProps {
+  activity: StudioActivityJSON;
   onComplete?: (finalScore: number, totalQuestions: number) => void;
   onClose?: () => void;
 }
 
 import { ErrorBoundary } from './ErrorBoundary';
 
-export const CanvasTriviaPlayer: React.FC<CanvasTriviaPlayerProps> = (props) => {
+export const StudioTriviaPlayer: React.FC<StudioTriviaPlayerProps> = (props) => {
   return (
     <ErrorBoundary>
-      <CanvasTriviaPlayerInner {...props} />
+      <StudioTriviaPlayerInner {...props} />
     </ErrorBoundary>
   );
 };
 
-const CanvasTriviaPlayerInner: React.FC<CanvasTriviaPlayerProps> = ({
+const StudioTriviaPlayerInner: React.FC<StudioTriviaPlayerProps> = ({
   activity,
   onComplete,
   onClose
@@ -169,8 +169,16 @@ const CanvasTriviaPlayerInner: React.FC<CanvasTriviaPlayerProps> = ({
             </div>
           </div>
 
-          {/* Tarjeta de la Pregunta (Estilo Apple / Pergamino Mágico) */}
-          <div className="bg-gradient-to-b from-slate-50 to-white dark:from-zinc-850 dark:to-zinc-900 border border-slate-200/80 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-sm space-y-2">
+          {/* Tarjeta de la Pregunta (Estilo Minimalista) */}
+          <div className="bg-gradient-to-b from-slate-50 to-white dark:from-zinc-850 dark:to-zinc-900 border border-slate-200/80 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-sm space-y-3">
+            {currentQuestion.imageUrl && (
+              <img
+                src={currentQuestion.imageUrl}
+                alt="Referencia pedagógica"
+                onError={(e) => { e.currentTarget.src = '/images/students/default.png'; }}
+                className="w-full max-h-48 object-cover rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm mx-auto"
+              />
+            )}
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-snug">
               {currentQuestion.question}
             </h3>

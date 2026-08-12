@@ -16,19 +16,19 @@ export interface CarouselItem {
   imageUrl?: string; // Base64 data URL or HTTP image url for custom logo upload
 }
 
-interface AdminCarouselCanvasProps {
+interface AdminCarouselStudioProps {
   items: CarouselItem[];
   activeIndex: number;
   onActiveIndexChange: (index: number) => void;
   onCardSelect: (item: CarouselItem) => void;
 }
 
-export default function AdminCarouselCanvas({
+export default function AdminCarouselStudio({
   items,
   activeIndex,
   onActiveIndexChange,
   onCardSelect
-}: AdminCarouselCanvasProps) {
+}: AdminCarouselStudioProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PIXI.Application | null>(null);
   const [loading, setLoading] = useState(true);

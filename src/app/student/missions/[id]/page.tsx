@@ -22,7 +22,7 @@ import CoopInviteWidget from '@/components/CoopInviteWidget';
 import PartyStatus from '@/components/PartyStatus';
 import QuestList from '@/components/QuestList';
 
-const PixiCombatCanvas = dynamic(() => import('@/components/PixiCombatCanvas'), { ssr: false });
+const PixiCombatView = dynamic(() => import('@/components/PixiCombatView'), { ssr: false });
 
 interface MissionPageProps {
   params: Promise<{ id: string }>;
@@ -1240,7 +1240,7 @@ function MissionPageContent({ params }: MissionPageContentProps) {
 
                 {/* Lienzo Gráfico de Combate RPG (PixiJS) */}
                 <div className="w-full h-[220px] md:h-[280px] rounded-2xl overflow-hidden border border-purple-955/30 bg-zinc-900/35 relative">
-                  <PixiCombatCanvas
+                  <PixiCombatView
                     combatState={canvasCombatState}
                     volume={1}
                     guildBoss={{
