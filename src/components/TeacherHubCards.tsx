@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 
 interface TeacherHubCardsProps {
-  onSelectAction: (action: 'classes' | 'canvas' | 'community') => void;
+  onSelectAction: (action: 'classes' | 'studio' | 'community') => void;
   teacherName?: string;
 }
 
@@ -27,11 +27,11 @@ export const TeacherHubCards: React.FC<TeacherHubCardsProps> = ({
 }) => {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-10 animate-fade-in">
-      {/* Saludo y Cabecera del Hub - Estilo Apple Minimalista */}
+      {/* Saludo y Cabecera del Hub - Diseño Minimalista */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200/50 dark:border-blue-800/40 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-wider shadow-sm">
           <Sparkles className="w-3.5 h-3.5 text-blue-500 animate-pulse" />
-          <span>Panel Simplificado • Regla de los 3 Clics</span>
+          <span>Panel Simplificado • Diseño Minimalista</span>
         </div>
         
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -93,13 +93,13 @@ export const TeacherHubCards: React.FC<TeacherHubCardsProps> = ({
           </div>
         </div>
 
-        {/* TARJETA 2: CREAR ACTIVIDAD (HERO CARD - ISKOOL CANVAS) */}
+        {/* TARJETA 2: CREAR ACTIVIDAD (HERO CARD - ESTUDIO ISKOOL) */}
         <Link 
-          href="/teacher/canvas"
-          onClick={() => onSelectAction('canvas')}
+          href="/teacher/studio"
+          onClick={() => onSelectAction('studio')}
           className="group relative bg-gradient-to-b from-purple-600 via-violet-600 to-indigo-700 text-white rounded-3xl p-8 shadow-xl shadow-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/40 border border-purple-400/30 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between overflow-hidden ring-4 ring-purple-500/20"
         >
-          {/* Brillo dinámico estilo Apple */}
+          {/* Brillo dinámico minimalista */}
           <div className="absolute top-0 right-0 -mt-8 -mr-8 w-44 h-44 bg-white/20 rounded-full blur-3xl group-hover:scale-125 transition-transform" />
           
           <div className="space-y-6 relative z-10">
@@ -108,7 +108,7 @@ export const TeacherHubCards: React.FC<TeacherHubCardsProps> = ({
                 <Palette className="w-8 h-8 text-yellow-300" />
               </div>
               <span className="text-xs font-black px-3.5 py-1 rounded-full bg-yellow-400 text-slate-900 shadow-md animate-bounce">
-                ✨ Principal • Canvas IA
+                ✨ Principal • Estudio IA
               </span>
             </div>
 
@@ -124,7 +124,7 @@ export const TeacherHubCards: React.FC<TeacherHubCardsProps> = ({
             <ul className="space-y-2 pt-2 border-t border-white/20">
               <li className="flex items-center gap-2 text-xs font-semibold text-purple-100">
                 <Sparkles className="w-4 h-4 text-yellow-300 shrink-0" />
-                <span>Generador de Trivias & Memoramas IA</span>
+                <span>Generador de 20 Plantillas Interactivas IA</span>
               </li>
               <li className="flex items-center gap-2 text-xs font-semibold text-purple-100">
                 <BrainCircuit className="w-4 h-4 text-yellow-300 shrink-0" />
@@ -134,7 +134,7 @@ export const TeacherHubCards: React.FC<TeacherHubCardsProps> = ({
           </div>
 
           <div className="pt-6 mt-6 border-t border-white/20 flex items-center justify-between text-white font-black text-sm group-hover:translate-x-1 transition-transform relative z-10">
-            <span className="underline decoration-yellow-300 decoration-2 underline-offset-4">Abrir ISkool Canvas</span>
+            <span className="underline decoration-yellow-300 decoration-2 underline-offset-4">Abrir Estudio ISkool</span>
             <div className="w-9 h-9 rounded-full bg-white text-purple-700 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-slate-900 transition-all shadow-md">
               <ArrowRight className="w-5 h-5" />
             </div>

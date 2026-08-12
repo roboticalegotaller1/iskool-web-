@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 import { CommunityActivity, CanvasActivityJSON } from '@/types';
-import { CanvasTriviaPlayer } from './CanvasTriviaPlayer';
+import { ISkoolActivityPlayer } from './ISkoolActivityPlayer';
 import { AssignToClassModal } from './AssignToClassModal';
 import { 
   Heart, 
@@ -177,12 +177,13 @@ export const TeacherCommunityView: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal Reproductor Visual */}
+      {/* Modal Reproductor Visual (Fábrica de Actividades ISkool) */}
       {selectedActivity && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div className="w-full max-w-4xl">
-            <CanvasTriviaPlayer
+            <ISkoolActivityPlayer
               activity={selectedActivity.content_json}
+              templateType={selectedActivity.template_type}
               onClose={() => setSelectedActivity(null)}
             />
           </div>

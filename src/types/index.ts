@@ -736,6 +736,7 @@ export interface CanvasActivityQuestion {
   correctIndex: number; // Índice de la respuesta correcta (0-3)
   imageUrl?: string; // Referencia visual opcional para soporte en múltiples plantillas
 }
+export type StudioActivityQuestion = CanvasActivityQuestion;
 
 /**
  * @interface CanvasActivityJSON
@@ -746,6 +747,7 @@ export interface CanvasActivityJSON {
   description: string;
   questions: CanvasActivityQuestion[];
 }
+export type StudioActivityJSON = CanvasActivityJSON;
 
 /**
  * @interface ISkoolTemplateDefinition

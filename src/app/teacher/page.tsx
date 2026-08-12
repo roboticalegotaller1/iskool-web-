@@ -651,13 +651,13 @@ export default function TeacherDashboard() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
         
-        {/* VISTA 1: HUB CENTRAL (REGLA DE LOS 3 CLICS DE APPLE) */}
+        {/* VISTA 1: HUB CENTRAL (DISEÑO MINIMALISTA DE ISKOOL) */}
         {currentMenuTab === 'hub' && (
           <TeacherHubCards
             teacherName={`${currentTeacher.first_name || 'Profesor(a)'} ${currentTeacher.last_name || ''}`}
             onSelectAction={(action) => {
               if (action === 'classes') setCurrentMenuTab('evaluation');
-              if (action === 'canvas') router.push('/teacher/canvas');
+              if (action === 'studio') router.push('/teacher/studio');
               if (action === 'community') router.push('/teacher/community');
             }}
           />

@@ -57,7 +57,7 @@ export default function TeacherCanvasPage() {
     setIsGenerating(true);
 
     try {
-      const res = await fetch('/api/canvas/generate', {
+      const res = await fetch('/api/studio/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
