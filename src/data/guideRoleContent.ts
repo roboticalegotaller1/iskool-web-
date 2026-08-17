@@ -63,15 +63,16 @@ export const GUIDE_ROLE_DATA: Record<string, RoleGuideData> = {
       },
       {
         stepNumber: 2,
-        title: 'Paso 2: Construir la Secuencia con Bloques',
-        subtitle: 'Dock Rápido y Catálogo Extendido (+)',
-        description: 'Usa la barra lateral izquierda para añadir preguntas clásicas, lecturas o cofres de botín. Haz clic en el botón (+) para desplegar las 16 herramientas avanzadas como simuladores PhET, emparejamientos táctiles o acertijos con candado.',
-        iconName: 'PlusCircle',
-        badgeText: 'Diseño Modular',
-        colorClass: 'from-blue-500 to-cyan-600',
+        title: 'Paso 2: Construir el Flujo de Nodos (Estilo n8n)',
+        subtitle: 'Grafo Visual con Conexión por Flechas',
+        description: 'Arrastra y añade nodos desde el dock o el catálogo (+). Conecta con un solo clic jalando desde el puerto de salida (●) de cualquier nodo hacia el siguiente para trazar el recorrido pedagógico. Cualquier nodo puede ser marcado como Inicio y los nodos sin salida son automáticamente Nodos Finales.',
+        iconName: 'Workflow',
+        badgeText: 'Constructor de Flujo n8n',
+        colorClass: 'from-violet-500 to-purple-600',
         highlights: [
-          'Arrastra y reordena bloques fluidamente en el espacio de trabajo.',
-          'Configura opciones, banco de palabras y explicaciones formativas.',
+          'Jala con el ratón para trazar flechas de conexión directas entre nodos.',
+          'Mueve y organiza libremente los nodos en el tablero 2D interactivo.',
+          'Configura cualquier nodo haciendo clic en "Configurar" para abrir el panel lateral.',
           'Pega URLs de los 50 simuladores web compatibles sin salir del portal.'
         ]
       },

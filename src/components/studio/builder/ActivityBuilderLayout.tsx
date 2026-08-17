@@ -33,6 +33,8 @@ export const ActivityBuilderLayout: React.FC = () => {
     metadata,
     updateMetadata,
     blocks,
+    connections,
+    startNodeId,
     history,
     historyIndex,
     undo,
@@ -261,6 +263,8 @@ export const ActivityBuilderLayout: React.FC = () => {
             <div className="p-4 sm:p-6 max-h-[85vh] overflow-y-auto">
               <StudioFlowPlayer
                 blocks={blocks}
+                connections={connections}
+                startNodeId={startNodeId}
                 metadata={metadata}
                 onClose={() => setIsPreviewOpen(false)}
               />

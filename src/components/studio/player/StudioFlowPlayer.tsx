@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { StudioBlock, ActivityBuilderMetadata } from '@/types/studioBlocks';
+import { StudioBlock, ActivityBuilderMetadata, FlowConnection } from '@/types/studioBlocks';
 import { 
   Sparkles, 
   Trophy, 
@@ -41,11 +41,14 @@ import {
   Unlock,
   Star,
   GitBranch,
-  Music
+  Music,
+  Flag
 } from 'lucide-react';
 
 interface Props {
   blocks: StudioBlock[];
+  connections?: FlowConnection[];
+  startNodeId?: string | null;
   metadata: ActivityBuilderMetadata;
   onClose?: () => void;
   onComplete?: (score: number) => void;
@@ -77,10 +80,15 @@ export function getYouTubeEmbedUrl(url: string, startAtSeconds?: number): string
 
 export const StudioFlowPlayer: React.FC<Props> = ({
   blocks,
+  connections = [],
+  startNodeId,
   metadata,
   onClose,
   onComplete
 }) => {
+  // Determinar nodo inicial del grafo
+  const initialNodeId = startNodeId || blocks.find(b => b.isStartNode)?.id || blocks[0]?.id || null;
+  const [currentNodeId, setCurrentNodeId] = useState<string | null>(initialNodeId);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [accumulatedXp, setAccumulatedXp] = useState(0);
   const [coins, setCoins] = useState(0);
@@ -131,7 +139,10 @@ export const StudioFlowPlayer: React.FC<Props> = ({
   const [spinning, setSpinning] = useState(false);
   const [selectedPrize, setSelectedPrize] = useState<string | null>(null);
 
-  const activeBlock: StudioBlock | undefined = blocks[currentStepIndex];
+  const activeBlock: StudioBlock | undefined = 
+    (currentNodeId ? blocks.find(b => b.id === currentNodeId) : undefined) || 
+    blocks[currentStepIndex] || 
+    blocks[0];
 
   // Sintetizador Web Audio
   const playSound = (type: 'correct' | 'wrong' | 'victory' | 'attack' | 'chest' | 'match' | 'fanfare') => {
@@ -221,18 +232,41 @@ export const StudioFlowPlayer: React.FC<Props> = ({
         playSound('fanfare');
       }
     }
-  }, [currentStepIndex, activeBlock]);
+  }, [currentNodeId, currentStepIndex, activeBlock]);
 
-  // Avanzar al siguiente bloque
+  // Avanzar al siguiente bloque siguiendo el flujo del grafo
   const handleNextStep = (earnedXp: number = 0) => {
-    setAccumulatedXp(prev => prev + earnedXp);
+    const totalXp = accumulatedXp + earnedXp;
+    setAccumulatedXp(totalXp);
 
+    // Si existen conexiones en el grafo, seguir la flecha correspondiente
+    if (connections.length > 0 && activeBlock) {
+      const outgoing = connections.filter(c => c.sourceNodeId === activeBlock.id);
+
+      if (outgoing.length > 0) {
+        // Enlazar al nodo objetivo de la flecha
+        const nextNodeId = outgoing[0].targetNodeId;
+        setCurrentNodeId(nextNodeId);
+        setCurrentStepIndex(prev => prev + 1);
+        return;
+      } else {
+        // No tiene conexión saliente: es un nodo final del juego
+        setIsFinished(true);
+        playSound('victory');
+        if (onComplete) onComplete(totalXp);
+        return;
+      }
+    }
+
+    // Fallback para recorrido lineal
     if (currentStepIndex + 1 < blocks.length) {
+      const nextBlock = blocks[currentStepIndex + 1];
+      setCurrentNodeId(nextBlock.id);
       setCurrentStepIndex(prev => prev + 1);
     } else {
       setIsFinished(true);
       playSound('victory');
-      if (onComplete) onComplete(accumulatedXp + earnedXp);
+      if (onComplete) onComplete(totalXp);
     }
   };
 

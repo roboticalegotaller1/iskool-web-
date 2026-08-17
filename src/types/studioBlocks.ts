@@ -25,6 +25,24 @@ export type StudioBlockType =
   | 'audio_sfx';           // Efectos de sonido o ambientación musical
 
 /**
+ * Posición 2D del nodo en el tablero de flujos estilo n8n
+ */
+export interface FlowNodePosition {
+  x: number;
+  y: number;
+}
+
+/**
+ * Conexión direccional (flecha) entre dos nodos
+ */
+export interface FlowConnection {
+  id: string;
+  sourceNodeId: string;
+  targetNodeId: string;
+  label?: string; // Para bifurcaciones: 'success' | 'failure' | 'next'
+}
+
+/**
  * Interfaz base para cualquier bloque didáctico del espacio de trabajo
  */
 export interface BaseStudioBlock {
@@ -34,6 +52,8 @@ export interface BaseStudioBlock {
   isCollapsed?: boolean;
   badgeLabel?: string;
   connectionTargetId?: string | null;
+  position?: FlowNodePosition;
+  isStartNode?: boolean;
 }
 
 /**

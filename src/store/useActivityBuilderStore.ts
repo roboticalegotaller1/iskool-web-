@@ -4,6 +4,8 @@ import {
   StudioBlock, 
   StudioBlockType, 
   ActivityBuilderMetadata,
+  FlowNodePosition,
+  FlowConnection,
   TextNarrativeBlock,
   QuizQuestionBlock,
   RewardChestBlock,
@@ -27,9 +29,13 @@ interface ActivityBuilderState {
   // Metadatos de la Actividad
   metadata: ActivityBuilderMetadata;
   
-  // Lista de Bloques en el Espacio de Trabajo
+  // Lista de Bloques / Nodos en el Espacio de Trabajo
   blocks: StudioBlock[];
   selectedBlockId: string | null;
+  
+  // Grafo de Conexiones estilo n8n
+  connections: FlowConnection[];
+  startNodeId: string | null;
   
   // Historial para Deshacer / Rehacer (Undo / Redo)
   history: StudioBlock[][];
@@ -38,10 +44,11 @@ interface ActivityBuilderState {
   // Estados de la Interfaz
   isExtendedMenuOpen: boolean;
   isPreviewModalOpen: boolean;
+  isNodeConfigDrawerOpen: boolean;
   zoomLevel: number; // 0.85 a 1.15
   
-  // Acciones sobre Bloques
-  addBlock: (type: StudioBlockType, insertAtIndex?: number) => string;
+  // Acciones sobre Bloques / Nodos
+  addBlock: (type: StudioBlockType, insertAtIndex?: number, customPos?: FlowNodePosition) => string;
   updateBlockData: (id: string, partialData: any) => void;
   updateBlockTitle: (id: string, title: string) => void;
   removeBlock: (id: string) => void;
@@ -50,6 +57,13 @@ interface ActivityBuilderState {
   moveBlock: (id: string, direction: 'up' | 'down') => void;
   toggleCollapseBlock: (id: string) => void;
   setSelectedBlockId: (id: string | null) => void;
+  updateNodePosition: (id: string, position: FlowNodePosition) => void;
+  
+  // Acciones de Grafo y Flujo
+  addConnection: (sourceNodeId: string, targetNodeId: string, label?: string) => void;
+  removeConnection: (connectionId: string) => void;
+  setStartNodeId: (nodeId: string | null) => void;
+  autoLayoutNodes: () => void;
   
   // Acciones de Metadatos
   updateMetadata: (partial: Partial<ActivityBuilderMetadata>) => void;
@@ -61,6 +75,7 @@ interface ActivityBuilderState {
   // Control de UI
   setIsExtendedMenuOpen: (isOpen: boolean) => void;
   setIsPreviewModalOpen: (isOpen: boolean) => void;
+  setIsNodeConfigDrawerOpen: (isOpen: boolean) => void;
   setZoomLevel: (zoom: number) => void;
   
   // Serialización y Plantillas
@@ -82,8 +97,12 @@ const DEFAULT_METADATA: ActivityBuilderMetadata = {
 };
 
 // Generador de bloques por defecto según el tipo
-const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
+const createDefaultBlock = (type: StudioBlockType, index: number = 0): StudioBlock => {
   const id = `blk-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+  const position: FlowNodePosition = {
+    x: 80 + (index * 290),
+    y: 160 + ((index % 2) * 50),
+  };
 
   switch (type) {
     case 'text_narrative':
@@ -92,6 +111,7 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'text_narrative',
         title: 'Instrucción / Narrativa',
         isCollapsed: false,
+        position,
         data: {
           content: '¡Bienvenidos, exploradores del saber! Lean con atención el siguiente desafío para comenzar su aventura.',
           style: 'instruction',
@@ -105,6 +125,7 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'quiz_question',
         title: 'Pregunta de Opción Múltiple',
         isCollapsed: false,
+        position,
         data: {
           question: '¿Cuál es el concepto clave que aprendimos en esta sesión?',
           options: ['Opción A (Respuesta correcta)', 'Opción B', 'Opción C', 'Opción D'],
@@ -120,6 +141,7 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'reward_chest',
         title: 'Cofre de Recompensas',
         isCollapsed: false,
+        position,
         data: {
           xpAmount: 150,
           coinsAmount: 30,
@@ -134,6 +156,7 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'boss_enemy',
         title: 'Encuentro de Combate Pixi',
         isCollapsed: false,
+        position,
         data: {
           bossName: 'Gólem del Olvido',
           spriteKey: 'blood_dragon',
@@ -150,9 +173,11 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'youtube_video',
         title: 'Video Explicativo',
         isCollapsed: false,
+        position,
         data: {
-          videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+          videoUrl: 'https://www.youtube.com/watch?v=wmC0wF8WuqU&t=76s',
           videoTitle: 'Cápsula de Aprendizaje',
+          startAtSeconds: 76,
           mustWatchEntirely: false,
         }
       } as YouTubeVideoBlock;
@@ -161,41 +186,15 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
       return {
         id,
         type: 'external_embed',
-        title: 'Simulador / Iframe Web',
+        title: 'Simulador / Laboratorio Web',
         isCollapsed: false,
+        position,
         data: {
           embedUrl: 'https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_es.html',
-          resourceTitle: 'Simulador Científico Interactivo',
-          instructions: 'Interactúa con los controles del simulador antes de continuar con la siguiente pregunta.',
+          resourceTitle: 'PhET: Fuerzas y Movimiento',
+          instructions: 'Aplica una fuerza de 100 N y observa cómo cambia el vector aceleración.',
         }
       } as ExternalEmbedBlock;
-
-    case 'minigame_action':
-      return {
-        id,
-        type: 'minigame_action',
-        title: 'Minijuego Didáctico',
-        isCollapsed: false,
-        data: {
-          minigameType: 'ruleta',
-          difficulty: 'medium',
-          items: ['Concepto 1', 'Concepto 2', 'Concepto 3', 'Concepto 4'],
-        }
-      } as MinigameActionBlock;
-
-    case 'logic_branch':
-      return {
-        id,
-        type: 'logic_branch',
-        title: 'Condición Pedagógica',
-        isCollapsed: false,
-        data: {
-          condition: 'score_above_percentage',
-          thresholdValue: 70,
-          ifTrueNextBlockId: null,
-          ifFalseNextBlockId: null,
-        }
-      } as LogicBranchBlock;
 
     case 'drag_drop_match':
       return {
@@ -203,14 +202,14 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'drag_drop_match',
         title: 'Emparejamiento / Drag & Drop',
         isCollapsed: false,
+        position,
         data: {
-          instructions: 'Arrastra y conecta cada concepto con su definición correcta.',
+          instructions: 'Conecta cada concepto de la izquierda con su significado correcto a la derecha:',
           pairs: [
-            { left: 'Fuerza', right: 'Interacción que modifica el estado de reposo o movimiento' },
-            { left: 'Inercia', right: 'Propiedad de los cuerpos de resistirse al cambio de movimiento' },
-            { left: 'Masa', right: 'Cantidad de materia que contiene un cuerpo' },
-          ],
-          timeLimitSeconds: 45,
+            { left: 'Fuerza', right: 'Interacción que modifica el movimiento' },
+            { left: 'Inercia', right: 'Resistencia a cambiar de estado' },
+            { left: 'Masa', right: 'Cantidad de materia de un objeto' },
+          ]
         }
       } as DragDropMatchBlock;
 
@@ -218,17 +217,17 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
       return {
         id,
         type: 'ordering_sequence',
-        title: 'Ordenar Secuencia / Cronología',
+        title: 'Secuencia Cronológica',
         isCollapsed: false,
+        position,
         data: {
-          instructions: 'Ordena cronológicamente los siguientes acontecimientos de inicio a fin:',
+          instructions: 'Ordena cronológicamente los acontecimientos históricos:',
           stepsInCorrectOrder: [
-            'Conspiración de Querétaro (Septiembre 1810)',
-            'Grito de Dolores (16 Septiembre 1810)',
-            'Toma de la Alhóndiga de Granaditas (Septiembre 1810)',
-            'Batalla del Monte de las Cruces (Octubre 1810)',
-          ],
-          randomizeStart: true,
+            '1. Conspiración de Querétaro (1810)',
+            '2. Grito de Dolores (16 Sept 1810)',
+            '3. Toma de la Alhóndiga de Granaditas (1810)',
+            '4. Batalla del Monte de las Cruces (1810)'
+          ]
         }
       } as OrderingSequenceBlock;
 
@@ -236,12 +235,13 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
       return {
         id,
         type: 'fill_in_blanks',
-        title: 'Completar Espacios / Texto Mutilado',
+        title: 'Completar Espacios en Blanco',
         isCollapsed: false,
+        position,
         data: {
-          instructions: 'Arrastra o escribe las palabras faltantes para completar el enunciado científico:',
-          textWithBlanks: 'La [gravedad] es la fuerza que atrae a los objetos hacia el centro de la [Tierra] con una aceleración constante.',
-          wordBank: ['gravedad', 'Tierra', 'fricción', 'energía'],
+          instructions: 'Selecciona las palabras correctas para completar el principio científico:',
+          textWithBlanks: 'La [gravedad] es la fuerza que atrae a los cuerpos hacia el centro de la [Tierra].',
+          wordBank: ['gravedad', 'Tierra', 'fricción', 'energía']
         }
       } as FillInBlanksBlock;
 
@@ -249,12 +249,13 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
       return {
         id,
         type: 'open_poll_wordcloud',
-        title: 'Pregunta Abierta & Reflexión IA',
+        title: 'Pregunta Abierta con IA',
         isCollapsed: false,
+        position,
         data: {
-          prompt: 'Explica con tus propias palabras qué sucedería si no existiera la fuerza de fricción en la vida cotidiana.',
-          minWords: 15,
-          aiFeedbackRubric: 'Evalúa coherencia, mención de movimiento continuo y consecuencias en vehículos o caminar.',
+          prompt: '¿Por qué es fundamental la cooperación comunitaria en los proyectos de la Nueva Escuela Mexicana?',
+          minWords: 10,
+          aiFeedbackRubric: 'Evalúa la argumentación del alumno y brinda un consejo pedagógico formativo y positivo.'
         }
       } as OpenPollWordcloudBlock;
 
@@ -264,23 +265,54 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         type: 'secret_code_puzzle',
         title: 'Misterio & Código Secreto',
         isCollapsed: false,
+        position,
         data: {
-          clueText: 'Para abrir el candado de la cripta, descifra la palabra clave: F _ _ _ Z A',
+          clueText: 'Para abrir la bóveda de la ciencia, descifra la palabra de 6 letras: F _ _ _ Z A',
           secretAnswer: 'FUERZA',
-          hintText: 'Pista: Es la magnitud física que medimos en Newtons (N).',
+          hintText: 'Es una magnitud vectorial que medimos en Newtons (N).'
         }
       } as SecretCodePuzzleBlock;
+
+    case 'minigame_action':
+      return {
+        id,
+        type: 'minigame_action',
+        title: 'Minijuego Arcade (Ruleta)',
+        isCollapsed: false,
+        position,
+        data: {
+          minigameType: 'ruleta',
+          difficulty: 'medium',
+          items: ['+50 XP de Sabiduría', 'Poción de Enfoque', 'Gema Legendaria', '+35 Monedas de Oro']
+        }
+      } as MinigameActionBlock;
+
+    case 'logic_branch':
+      return {
+        id,
+        type: 'logic_branch',
+        title: 'Bifurcación Condicional',
+        isCollapsed: false,
+        position,
+        data: {
+          condition: 'score_above_percentage',
+          thresholdValue: 70,
+          ifTrueNextBlockId: null,
+          ifFalseNextBlockId: null
+        }
+      } as LogicBranchBlock;
 
     case 'checkpoint_gate':
       return {
         id,
         type: 'checkpoint_gate',
-        title: 'Punto de Control & Autoevaluación',
+        title: 'Punto de Control Metacognitivo',
         isCollapsed: false,
+        position,
         data: {
-          checkpointTitle: 'Revisión de Saberes Intermedios',
-          reflectionPrompt: '¿Qué tan seguro te sientes aplicando las leyes de Newton en problemas cotidianos?',
-          requiredScorePercent: 70,
+          checkpointTitle: 'Autoevaluación de Aprendizaje',
+          reflectionPrompt: '¿Qué tan seguro te sientes aplicando este concepto en problemas de la vida cotidiana?',
+          requiredScorePercent: 60
         }
       } as CheckpointGateBlock;
 
@@ -288,12 +320,13 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
       return {
         id,
         type: 'badge_certificate',
-        title: 'Diploma de Maestría Académica',
+        title: 'Diploma de Honor Digital',
         isCollapsed: false,
+        position,
         data: {
-          certificateTitle: 'Certificado de Honor en Ciencias',
-          recipientHonor: 'Gran Maestro de la Física y el Movimiento',
-          teacherSignatureName: 'Consejo Docente ISkool',
+          certificateTitle: 'Diploma al Mérito Científico',
+          recipientHonor: 'Gran Maestro de la Física',
+          teacherSignatureName: 'Colegio Anglo Mexicano'
         }
       } as BadgeCertificateBlock;
 
@@ -301,293 +334,457 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
       return {
         id,
         type: 'audio_sfx',
-        title: 'Efecto de Audio / Fanfarria',
+        title: 'Fanfarria de Victoria SFX',
         isCollapsed: false,
+        position,
         data: {
           soundType: 'victory_fanfare',
-          volume: 0.8,
-          autoPlay: true,
+          volume: 80,
+          autoPlay: true
         }
       } as AudioSfxBlock;
+
+    default:
+      return {
+        id,
+        type: 'text_narrative',
+        title: 'Nuevo Bloque Didáctico',
+        isCollapsed: false,
+        position,
+        data: { content: 'Instrucción o contenido pedagógico', style: 'instruction' }
+      } as TextNarrativeBlock;
   }
 };
-
-const INITIAL_BLOCKS: StudioBlock[] = [];
 
 export const useActivityBuilderStore = create<ActivityBuilderState>()(
   persist(
     (set, get) => ({
       metadata: DEFAULT_METADATA,
-      blocks: INITIAL_BLOCKS,
+      blocks: [],
       selectedBlockId: null,
-      history: [INITIAL_BLOCKS],
+      connections: [],
+      startNodeId: null,
+      history: [[]],
       historyIndex: 0,
-  
-  isExtendedMenuOpen: false,
-  isPreviewModalOpen: false,
-  zoomLevel: 1.0,
+      isExtendedMenuOpen: false,
+      isPreviewModalOpen: false,
+      isNodeConfigDrawerOpen: false,
+      zoomLevel: 1.0,
 
-  // Registrar un snapshot en el historial
-  addBlock: (type: StudioBlockType, insertAtIndex?: number) => {
-    const newBlock = createDefaultBlock(type);
-    set((state) => {
-      const newBlocks = [...state.blocks];
-      if (typeof insertAtIndex === 'number' && insertAtIndex >= 0 && insertAtIndex <= newBlocks.length) {
-        newBlocks.splice(insertAtIndex, 0, newBlock);
-      } else {
-        newBlocks.push(newBlock);
-      }
-
-      const updatedHistory = state.history.slice(0, state.historyIndex + 1);
-      updatedHistory.push(newBlocks);
-
-      return {
-        blocks: newBlocks,
-        selectedBlockId: newBlock.id,
-        history: updatedHistory,
-        historyIndex: updatedHistory.length - 1,
-      };
-    });
-    return newBlock.id;
-  },
-
-  updateBlockData: (id: string, partialData: any) => {
-    set((state) => {
-      const newBlocks = state.blocks.map((b) => {
-        if (b.id !== id) return b;
-        return {
-          ...b,
-          data: {
-            ...b.data,
-            ...partialData,
-          },
-        } as StudioBlock;
-      });
-
-      return { blocks: newBlocks };
-    });
-  },
-
-  updateBlockTitle: (id: string, title: string) => {
-    set((state) => ({
-      blocks: state.blocks.map((b) => (b.id === id ? { ...b, title } : b)),
-    }));
-  },
-
-  removeBlock: (id: string) => {
-    set((state) => {
-      const newBlocks = state.blocks.filter((b) => b.id !== id);
-      const updatedHistory = state.history.slice(0, state.historyIndex + 1);
-      updatedHistory.push(newBlocks);
-
-      return {
-        blocks: newBlocks,
-        selectedBlockId: state.selectedBlockId === id ? (newBlocks[0]?.id || null) : state.selectedBlockId,
-        history: updatedHistory,
-        historyIndex: updatedHistory.length - 1,
-      };
-    });
-  },
-
-  duplicateBlock: (id: string) => {
-    set((state) => {
-      const blockToDup = state.blocks.find((b) => b.id === id);
-      if (!blockToDup) return state;
-
-      const idx = state.blocks.findIndex((b) => b.id === id);
-      const duplicated: StudioBlock = {
-        ...blockToDup,
-        id: `blk-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-        title: `${blockToDup.title} (Copia)`,
-        data: JSON.parse(JSON.stringify(blockToDup.data)),
-      };
-
-      const newBlocks = [...state.blocks];
-      newBlocks.splice(idx + 1, 0, duplicated);
-
-      const updatedHistory = state.history.slice(0, state.historyIndex + 1);
-      updatedHistory.push(newBlocks);
-
-      return {
-        blocks: newBlocks,
-        selectedBlockId: duplicated.id,
-        history: updatedHistory,
-        historyIndex: updatedHistory.length - 1,
-      };
-    });
-  },
-
-  reorderBlocks: (activeId: string, overId: string) => {
-    set((state) => {
-      if (activeId === overId) return state;
-      const oldIndex = state.blocks.findIndex((b) => b.id === activeId);
-      const newIndex = state.blocks.findIndex((b) => b.id === overId);
-      if (oldIndex === -1 || newIndex === -1) return state;
-
-      const newBlocks = [...state.blocks];
-      const [movedItem] = newBlocks.splice(oldIndex, 1);
-      newBlocks.splice(newIndex, 0, movedItem);
-
-      const updatedHistory = state.history.slice(0, state.historyIndex + 1);
-      updatedHistory.push(newBlocks);
-
-      return {
-        blocks: newBlocks,
-        history: updatedHistory,
-        historyIndex: updatedHistory.length - 1,
-      };
-    });
-  },
-
-  moveBlock: (id: string, direction: 'up' | 'down') => {
-    set((state) => {
-      const idx = state.blocks.findIndex((b) => b.id === id);
-      if (idx === -1) return state;
-      if (direction === 'up' && idx === 0) return state;
-      if (direction === 'down' && idx === state.blocks.length - 1) return state;
-
-      const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
-      const newBlocks = [...state.blocks];
-      const [item] = newBlocks.splice(idx, 1);
-      newBlocks.splice(targetIdx, 0, item);
-
-      const updatedHistory = state.history.slice(0, state.historyIndex + 1);
-      updatedHistory.push(newBlocks);
-
-      return {
-        blocks: newBlocks,
-        history: updatedHistory,
-        historyIndex: updatedHistory.length - 1,
-      };
-    });
-  },
-
-  toggleCollapseBlock: (id: string) => {
-    set((state) => ({
-      blocks: state.blocks.map((b) => (b.id === id ? { ...b, isCollapsed: !b.isCollapsed } : b)),
-    }));
-  },
-
-  setSelectedBlockId: (id: string | null) => {
-    set({ selectedBlockId: id });
-  },
-
-  updateMetadata: (partial: Partial<ActivityBuilderMetadata>) => {
-    set((state) => ({
-      metadata: { ...state.metadata, ...partial },
-    }));
-  },
-
-  undo: () => {
-    set((state) => {
-      if (state.historyIndex <= 0) return state;
-      const newIdx = state.historyIndex - 1;
-      const prevBlocks = state.history[newIdx];
-      return {
-        blocks: prevBlocks,
-        historyIndex: newIdx,
-        selectedBlockId: prevBlocks[0]?.id || null,
-      };
-    });
-  },
-
-  redo: () => {
-    set((state) => {
-      if (state.historyIndex >= state.history.length - 1) return state;
-      const newIdx = state.historyIndex + 1;
-      const nextBlocks = state.history[newIdx];
-      return {
-        blocks: nextBlocks,
-        historyIndex: newIdx,
-        selectedBlockId: nextBlocks[0]?.id || null,
-      };
-    });
-  },
-
-  setIsExtendedMenuOpen: (isOpen: boolean) => set({ isExtendedMenuOpen: isOpen }),
-  setIsPreviewModalOpen: (isOpen: boolean) => set({ isPreviewModalOpen: isOpen }),
-  setZoomLevel: (zoom: number) => set({ zoomLevel: Math.min(1.2, Math.max(0.8, zoom)) }),
-
-  loadPresetBlocks: (presetBlocks: StudioBlock[], meta?: Partial<ActivityBuilderMetadata>) => {
-    set((state) => {
-      const newHistory = [presetBlocks];
-      return {
-        blocks: presetBlocks,
-        selectedBlockId: presetBlocks[0]?.id || null,
-        metadata: meta ? { ...state.metadata, ...meta } : state.metadata,
-        history: newHistory,
-        historyIndex: 0,
-      };
-    });
-  },
-
-  serializeToActivityJSON: (): StudioActivityJSON => {
-    const state = get();
-    const quizQuestions: any[] = [];
-
-    state.blocks.forEach((block, idx) => {
-      if (block.type === 'quiz_question') {
-        const qData = block.data;
-        quizQuestions.push({
-          question: qData.question,
-          options: qData.options,
-          correctIndex: qData.correctIndex,
-          explanation: qData.explanation,
-          imageUrl: qData.imageUrl,
-        });
-      } else if (block.type === 'text_narrative') {
-        quizQuestions.push({
-          question: `📖 ${block.title}: ${block.data.content}`,
-          options: ['¡Entendido! Continuar', 'Revisar detalles'],
-          correctIndex: 0,
-          explanation: block.data.content,
-        });
-      } else if (block.type === 'reward_chest') {
-        quizQuestions.push({
-          question: `🎁 ${block.title} (+${block.data.xpAmount} XP, +${block.data.coinsAmount} Monedas)`,
-          options: ['¡Reclamar Recompensa! 🏆', 'Continuar la Misión'],
-          correctIndex: 0,
-          explanation: `Has obtenido ${block.data.xpAmount} XP para tu avatar.`,
-        });
-      } else if (block.type === 'boss_enemy') {
-        quizQuestions.push({
-          question: `⚔️ Desafío contra ${block.data.bossName}: ¡Responde rápido para atacar!`,
-          options: ['¡Atacar con Sabiduría!', 'Defenderse', 'Usar Poción', 'Estrategia de Equipo'],
-          correctIndex: 0,
-          explanation: `¡Golpe crítico acertado al ${block.data.bossName}!`,
-        });
-      } else {
-        quizQuestions.push({
-          question: `✨ Módulo Especial: ${block.title}`,
-          options: ['Continuar', 'Explorar'],
-          correctIndex: 0,
-          explanation: 'Actividad interactiva completada.',
-        });
-      }
-    });
-
-    return {
-      title: state.metadata.title,
-      description: state.metadata.description,
-      questions: quizQuestions.length > 0 ? quizQuestions : [
-        {
-          question: '¿Listo para comenzar?',
-          options: ['Sí, empezar', 'Ver instrucciones'],
-          correctIndex: 0,
+      // Añadir bloque / nodo con conexión automática al nodo previo
+      addBlock: (type: StudioBlockType, insertAtIndex?: number, customPos?: FlowNodePosition) => {
+        const state = get();
+        const nextIndex = state.blocks.length;
+        const newBlock = createDefaultBlock(type, nextIndex);
+        
+        if (customPos) {
+          newBlock.position = customPos;
         }
-      ],
-    };
-  },
+
+        // Si es el primer nodo, marcarlo como nodo de inicio
+        if (state.blocks.length === 0) {
+          newBlock.isStartNode = true;
+        }
+
+        let updatedBlocks: StudioBlock[];
+        if (typeof insertAtIndex === 'number' && insertAtIndex >= 0 && insertAtIndex <= state.blocks.length) {
+          updatedBlocks = [...state.blocks];
+          updatedBlocks.splice(insertAtIndex, 0, newBlock);
+        } else {
+          updatedBlocks = [...state.blocks, newBlock];
+        }
+
+        // Conexión automática desde el nodo anterior o el seleccionado
+        let newConnections = [...state.connections];
+        const previousNodeId = state.selectedBlockId || (state.blocks.length > 0 ? state.blocks[state.blocks.length - 1].id : null);
+        
+        if (previousNodeId && previousNodeId !== newBlock.id) {
+          const alreadyConnected = newConnections.some(c => c.sourceNodeId === previousNodeId && c.targetNodeId === newBlock.id);
+          if (!alreadyConnected) {
+            newConnections.push({
+              id: `conn-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+              sourceNodeId: previousNodeId,
+              targetNodeId: newBlock.id,
+            });
+          }
+        }
+
+        const newStartId = state.startNodeId || newBlock.id;
+        const newHistory = state.history.slice(0, state.historyIndex + 1);
+        newHistory.push(updatedBlocks);
+
+        set({
+          blocks: updatedBlocks,
+          connections: newConnections,
+          startNodeId: newStartId,
+          selectedBlockId: newBlock.id,
+          history: newHistory,
+          historyIndex: newHistory.length - 1,
+        });
+
+        return newBlock.id;
+      },
+
+      updateBlockData: (id: string, partialData: any) => {
+        set((state) => {
+          const updatedBlocks = state.blocks.map((block) => {
+            if (block.id !== id) return block;
+            return {
+              ...block,
+              data: {
+                ...block.data,
+                ...partialData,
+              },
+            } as StudioBlock;
+          });
+
+          return { blocks: updatedBlocks };
+        });
+      },
+
+      updateBlockTitle: (id: string, title: string) => {
+        set((state) => ({
+          blocks: state.blocks.map((b) => (b.id === id ? { ...b, title } : b)),
+        }));
+      },
+
+      updateNodePosition: (id: string, position: FlowNodePosition) => {
+        set((state) => ({
+          blocks: state.blocks.map((b) => (b.id === id ? { ...b, position } : b)),
+        }));
+      },
+
+      removeBlock: (id: string) => {
+        set((state) => {
+          const updatedBlocks = state.blocks.filter((b) => b.id !== id);
+          const updatedConnections = state.connections.filter(c => c.sourceNodeId !== id && c.targetNodeId !== id);
+          
+          let nextStartId = state.startNodeId;
+          if (state.startNodeId === id) {
+            nextStartId = updatedBlocks[0]?.id || null;
+            if (updatedBlocks[0]) {
+              updatedBlocks[0].isStartNode = true;
+            }
+          }
+
+          const newHistory = state.history.slice(0, state.historyIndex + 1);
+          newHistory.push(updatedBlocks);
+
+          return {
+            blocks: updatedBlocks,
+            connections: updatedConnections,
+            startNodeId: nextStartId,
+            selectedBlockId: state.selectedBlockId === id ? (updatedBlocks[0]?.id || null) : state.selectedBlockId,
+            history: newHistory,
+            historyIndex: newHistory.length - 1,
+          };
+        });
+      },
+
+      duplicateBlock: (id: string) => {
+        const state = get();
+        const blockToDup = state.blocks.find((b) => b.id === id);
+        if (!blockToDup) return;
+
+        const newId = `blk-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+        const duplicatedBlock: StudioBlock = {
+          ...JSON.parse(JSON.stringify(blockToDup)),
+          id: newId,
+          title: `${blockToDup.title} (Copia)`,
+          isStartNode: false,
+          position: {
+            x: (blockToDup.position?.x || 100) + 60,
+            y: (blockToDup.position?.y || 150) + 60,
+          }
+        };
+
+        const targetIndex = state.blocks.findIndex((b) => b.id === id);
+        const updatedBlocks = [...state.blocks];
+        updatedBlocks.splice(targetIndex + 1, 0, duplicatedBlock);
+
+        // Conectar automáticamente el duplicado desde el original
+        const newConnections = [
+          ...state.connections,
+          {
+            id: `conn-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+            sourceNodeId: id,
+            targetNodeId: newId,
+          }
+        ];
+
+        const newHistory = state.history.slice(0, state.historyIndex + 1);
+        newHistory.push(updatedBlocks);
+
+        set({
+          blocks: updatedBlocks,
+          connections: newConnections,
+          selectedBlockId: newId,
+          history: newHistory,
+          historyIndex: newHistory.length - 1,
+        });
+      },
+
+      reorderBlocks: (activeId: string, overId: string) => {
+        set((state) => {
+          if (activeId === overId) return state;
+
+          const oldIndex = state.blocks.findIndex((b) => b.id === activeId);
+          const newIndex = state.blocks.findIndex((b) => b.id === overId);
+
+          if (oldIndex === -1 || newIndex === -1) return state;
+
+          const updatedBlocks = [...state.blocks];
+          const [movedBlock] = updatedBlocks.splice(oldIndex, 1);
+          updatedBlocks.splice(newIndex, 0, movedBlock);
+
+          const newHistory = state.history.slice(0, state.historyIndex + 1);
+          newHistory.push(updatedBlocks);
+
+          return {
+            blocks: updatedBlocks,
+            history: newHistory,
+            historyIndex: newHistory.length - 1,
+          };
+        });
+      },
+
+      moveBlock: (id: string, direction: 'up' | 'down') => {
+        const state = get();
+        const index = state.blocks.findIndex((b) => b.id === id);
+        if (index === -1) return;
+
+        if (direction === 'up' && index === 0) return;
+        if (direction === 'down' && index === state.blocks.length - 1) return;
+
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+        const updatedBlocks = [...state.blocks];
+        const [moved] = updatedBlocks.splice(index, 1);
+        updatedBlocks.splice(targetIndex, 0, moved);
+
+        const newHistory = state.history.slice(0, state.historyIndex + 1);
+        newHistory.push(updatedBlocks);
+
+        set({
+          blocks: updatedBlocks,
+          history: newHistory,
+          historyIndex: newHistory.length - 1,
+        });
+      },
+
+      toggleCollapseBlock: (id: string) => {
+        set((state) => ({
+          blocks: state.blocks.map((b) =>
+            b.id === id ? { ...b, isCollapsed: !b.isCollapsed } : b
+          ),
+        }));
+      },
+
+      setSelectedBlockId: (id: string | null) => set({ selectedBlockId: id }),
+
+      // Acciones de Grafo y Conexión de Flechas estilo n8n
+      addConnection: (sourceNodeId: string, targetNodeId: string, label?: string) => {
+        if (sourceNodeId === targetNodeId) return; // Evitar auto-conexiones cíclicas triviales
+        set((state) => {
+          // Si ya existe una conexión idéntica, ignorar
+          const exists = state.connections.some(c => c.sourceNodeId === sourceNodeId && c.targetNodeId === targetNodeId);
+          if (exists) return state;
+
+          const newConn: FlowConnection = {
+            id: `conn-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+            sourceNodeId,
+            targetNodeId,
+            label,
+          };
+
+          return { connections: [...state.connections, newConn] };
+        });
+      },
+
+      removeConnection: (connectionId: string) => {
+        set((state) => ({
+          connections: state.connections.filter(c => c.id !== connectionId),
+        }));
+      },
+
+      setStartNodeId: (nodeId: string | null) => {
+        set((state) => ({
+          startNodeId: nodeId,
+          blocks: state.blocks.map(b => ({
+            ...b,
+            isStartNode: b.id === nodeId,
+          })),
+        }));
+      },
+
+      autoLayoutNodes: () => {
+        set((state) => {
+          const updatedBlocks = state.blocks.map((b, idx) => ({
+            ...b,
+            position: {
+              x: 80 + (idx * 290),
+              y: 160 + ((idx % 2) * 50),
+            }
+          }));
+
+          // Reconstruir conexiones lineales ordenadas
+          const newConnections: FlowConnection[] = [];
+          for (let i = 0; i < updatedBlocks.length - 1; i++) {
+            newConnections.push({
+              id: `conn-auto-${i}`,
+              sourceNodeId: updatedBlocks[i].id,
+              targetNodeId: updatedBlocks[i + 1].id,
+            });
+          }
+
+          return {
+            blocks: updatedBlocks,
+            connections: newConnections,
+            startNodeId: updatedBlocks[0]?.id || null,
+          };
+        });
+      },
+
+      updateMetadata: (partial: Partial<ActivityBuilderMetadata>) => {
+        set((state) => ({
+          metadata: {
+            ...state.metadata,
+            ...partial,
+          },
+        }));
+      },
+
+      undo: () => {
+        set((state) => {
+          if (state.historyIndex <= 0) return state;
+          const newIdx = state.historyIndex - 1;
+          const prevBlocks = state.history[newIdx];
+          return {
+            blocks: prevBlocks,
+            historyIndex: newIdx,
+            selectedBlockId: prevBlocks[0]?.id || null,
+          };
+        });
+      },
+
+      redo: () => {
+        set((state) => {
+          if (state.historyIndex >= state.history.length - 1) return state;
+          const newIdx = state.historyIndex + 1;
+          const nextBlocks = state.history[newIdx];
+          return {
+            blocks: nextBlocks,
+            historyIndex: newIdx,
+            selectedBlockId: nextBlocks[0]?.id || null,
+          };
+        });
+      },
+
+      setIsExtendedMenuOpen: (isOpen: boolean) => set({ isExtendedMenuOpen: isOpen }),
+      setIsPreviewModalOpen: (isOpen: boolean) => set({ isPreviewModalOpen: isOpen }),
+      setIsNodeConfigDrawerOpen: (isOpen: boolean) => set({ isNodeConfigDrawerOpen: isOpen }),
+      setZoomLevel: (zoom: number) => set({ zoomLevel: Math.min(1.3, Math.max(0.7, zoom)) }),
+
+      loadPresetBlocks: (presetBlocks: StudioBlock[], meta?: Partial<ActivityBuilderMetadata>) => {
+        // Asignar posiciones y conexiones lineales al preset
+        const positioned = presetBlocks.map((b, idx) => ({
+          ...b,
+          isStartNode: idx === 0,
+          position: b.position || {
+            x: 80 + (idx * 290),
+            y: 160 + ((idx % 2) * 50),
+          }
+        }));
+
+        const presetConnections: FlowConnection[] = [];
+        for (let i = 0; i < positioned.length - 1; i++) {
+          presetConnections.push({
+            id: `conn-preset-${i}`,
+            sourceNodeId: positioned[i].id,
+            targetNodeId: positioned[i + 1].id,
+          });
+        }
+
+        set((state) => ({
+          blocks: positioned,
+          connections: presetConnections,
+          startNodeId: positioned[0]?.id || null,
+          selectedBlockId: positioned[0]?.id || null,
+          metadata: meta ? { ...state.metadata, ...meta } : state.metadata,
+          history: [positioned],
+          historyIndex: 0,
+        }));
+      },
+
+      serializeToActivityJSON: (): StudioActivityJSON => {
+        const state = get();
+        const quizQuestions: any[] = [];
+
+        state.blocks.forEach((block) => {
+          if (block.type === 'quiz_question') {
+            const qData = block.data;
+            quizQuestions.push({
+              question: qData.question,
+              options: qData.options,
+              correctIndex: qData.correctIndex,
+              explanation: qData.explanation,
+              imageUrl: qData.imageUrl,
+            });
+          } else if (block.type === 'text_narrative') {
+            quizQuestions.push({
+              question: `📖 ${block.title}: ${block.data.content}`,
+              options: ['¡Entendido! Continuar', 'Revisar detalles'],
+              correctIndex: 0,
+              explanation: block.data.content,
+            });
+          } else if (block.type === 'reward_chest') {
+            quizQuestions.push({
+              question: `🎁 ${block.title} (+${block.data.xpAmount} XP, +${block.data.coinsAmount} Monedas)`,
+              options: ['¡Reclamar Recompensa! 🏆', 'Continuar la Misión'],
+              correctIndex: 0,
+              explanation: `Has obtenido ${block.data.xpAmount} XP para tu avatar.`,
+            });
+          } else if (block.type === 'boss_enemy') {
+            quizQuestions.push({
+              question: `⚔️ Desafío contra ${block.data.bossName}: ¡Responde rápido para atacar!`,
+              options: ['¡Atacar con Sabiduría!', 'Defenderse', 'Usar Poción', 'Estrategia de Equipo'],
+              correctIndex: 0,
+              explanation: `¡Golpe crítico acertado al ${block.data.bossName}!`,
+            });
+          } else {
+            quizQuestions.push({
+              question: `✨ Módulo Especial: ${block.title}`,
+              options: ['Continuar', 'Explorar'],
+              correctIndex: 0,
+              explanation: 'Actividad interactiva completada.',
+            });
+          }
+        });
+
+        return {
+          title: state.metadata.title,
+          description: state.metadata.description,
+          questions: quizQuestions.length > 0 ? quizQuestions : [
+            {
+              question: '¿Listo para comenzar?',
+              options: ['Sí, empezar', 'Ver instrucciones'],
+              correctIndex: 0,
+            }
+          ],
+        };
+      },
 
       resetWorkspace: () => {
         set({
           metadata: DEFAULT_METADATA,
           blocks: [],
+          connections: [],
+          startNodeId: null,
           selectedBlockId: null,
           history: [[]],
           historyIndex: 0,
           isExtendedMenuOpen: false,
           isPreviewModalOpen: false,
+          isNodeConfigDrawerOpen: false,
           zoomLevel: 1.0,
         });
       },
@@ -597,6 +794,8 @@ export const useActivityBuilderStore = create<ActivityBuilderState>()(
       partialize: (state) => ({
         metadata: state.metadata,
         blocks: state.blocks,
+        connections: state.connections,
+        startNodeId: state.startNodeId,
       }),
     }
   )

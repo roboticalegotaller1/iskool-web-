@@ -35,14 +35,15 @@ import {
   Award
 } from 'lucide-react';
 
-interface Props {
+export interface Props {
   block: StudioBlock;
   index: number;
   totalBlocks: number;
+  isOverlay?: boolean;
 }
 
 // Configuración de estilo e ícono por tipo de bloque
-const BLOCK_META: Record<StudioBlockType, { label: string; icon: any; colorScheme: string; badgeBg: string; glow: string }> = {
+export const BLOCK_META: Record<StudioBlockType, { label: string; icon: any; colorScheme: string; badgeBg: string; glow: string; color?: string }> = {
   text_narrative: {
     label: 'Texto / Narrativa',
     icon: BookOpen,
