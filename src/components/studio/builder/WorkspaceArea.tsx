@@ -82,7 +82,7 @@ export const WorkspaceArea: React.FC = () => {
 
   return (
     <div className="w-full space-y-4">
-      {/* Barra de Modo de Visualización (Flujo de Nodos n8n vs Lista) */}
+      {/* Barra de Modo de Visualización (Flujo de Nodos vs Lista) */}
       <div className="flex items-center justify-between gap-2 px-1">
         <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-zinc-800/90 p-1 rounded-2xl border border-slate-200 dark:border-zinc-750 text-xs shadow-inner">
           <button
@@ -95,7 +95,7 @@ export const WorkspaceArea: React.FC = () => {
             }`}
           >
             <Workflow className="w-3.5 h-3.5" />
-            <span>Constructor de Flujo (Nodos n8n)</span>
+            <span>Constructor de Flujo (Nodos)</span>
           </button>
 
           <button
@@ -124,7 +124,7 @@ export const WorkspaceArea: React.FC = () => {
         )}
       </div>
 
-      {/* Renderizado Condicional: Tablero de Grafo de Nodos n8n vs Lista Vertical */}
+      {/* Renderizado Condicional: Tablero de Grafo de Nodos vs Lista Vertical */}
       {viewMode === 'graph' ? (
         <NodeGraphBoard />
       ) : (

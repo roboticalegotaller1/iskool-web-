@@ -25,7 +25,7 @@ export type StudioBlockType =
   | 'audio_sfx';           // Efectos de sonido o ambientación musical
 
 /**
- * Posición 2D del nodo en el tablero de flujos estilo n8n
+ * Posición 2D del nodo en el tablero de flujos interactivo
  */
 export interface FlowNodePosition {
   x: number;

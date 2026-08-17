@@ -33,7 +33,7 @@ interface ActivityBuilderState {
   blocks: StudioBlock[];
   selectedBlockId: string | null;
   
-  // Grafo de Conexiones estilo n8n
+  // Grafo de Conexiones Visuales
   connections: FlowConnection[];
   startNodeId: string | null;
   
@@ -581,7 +581,7 @@ export const useActivityBuilderStore = create<ActivityBuilderState>()(
 
       setSelectedBlockId: (id: string | null) => set({ selectedBlockId: id }),
 
-      // Acciones de Grafo y Conexión de Flechas estilo n8n
+      // Acciones de Grafo y Conexión de Flechas Direccionales
       addConnection: (sourceNodeId: string, targetNodeId: string, label?: string) => {
         if (sourceNodeId === targetNodeId) return; // Evitar auto-conexiones cíclicas triviales
         set((state) => {

@@ -63,11 +63,11 @@ export const GUIDE_ROLE_DATA: Record<string, RoleGuideData> = {
       },
       {
         stepNumber: 2,
-        title: 'Paso 2: Construir el Flujo de Nodos (Estilo n8n)',
+        title: 'Paso 2: Construir el Flujo de Nodos Didácticos',
         subtitle: 'Grafo Visual con Conexión por Flechas',
         description: 'Arrastra y añade nodos desde el dock o el catálogo (+). Conecta con un solo clic jalando desde el puerto de salida (●) de cualquier nodo hacia el siguiente para trazar el recorrido pedagógico. Cualquier nodo puede ser marcado como Inicio y los nodos sin salida son automáticamente Nodos Finales.',
         iconName: 'Workflow',
-        badgeText: 'Constructor de Flujo n8n',
+        badgeText: 'Constructor de Flujo Visual',
         colorClass: 'from-violet-500 to-purple-600',
         highlights: [
           'Jala con el ratón para trazar flechas de conexión directas entre nodos.',
