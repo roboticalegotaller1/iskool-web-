@@ -10,7 +10,11 @@
     "sync-obsidian": "node sync-obsidian.js"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@supabase/supabase-js": "^2.108.2",
+    "framer-motion": "^13.1.0",
     "lucide-react": "^1.17.0",
     "next": "16.2.9",
     "pixi.js": "^8.19.0",
