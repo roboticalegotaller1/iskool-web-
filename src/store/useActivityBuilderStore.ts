@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { 
   StudioBlock, 
   StudioBlockType, 
@@ -9,8 +10,15 @@ import {
   BossEnemyBlock,
   YouTubeVideoBlock,
   ExternalEmbedBlock,
+  DragDropMatchBlock,
+  OrderingSequenceBlock,
+  FillInBlanksBlock,
+  OpenPollWordcloudBlock,
+  SecretCodePuzzleBlock,
   MinigameActionBlock,
   LogicBranchBlock,
+  CheckpointGateBlock,
+  BadgeCertificateBlock,
   AudioSfxBlock
 } from '@/types/studioBlocks';
 import { StudioActivityJSON } from '@/types';
@@ -189,6 +197,106 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
         }
       } as LogicBranchBlock;
 
+    case 'drag_drop_match':
+      return {
+        id,
+        type: 'drag_drop_match',
+        title: 'Emparejamiento / Drag & Drop',
+        isCollapsed: false,
+        data: {
+          instructions: 'Arrastra y conecta cada concepto con su definición correcta.',
+          pairs: [
+            { left: 'Fuerza', right: 'Interacción que modifica el estado de reposo o movimiento' },
+            { left: 'Inercia', right: 'Propiedad de los cuerpos de resistirse al cambio de movimiento' },
+            { left: 'Masa', right: 'Cantidad de materia que contiene un cuerpo' },
+          ],
+          timeLimitSeconds: 45,
+        }
+      } as DragDropMatchBlock;
+
+    case 'ordering_sequence':
+      return {
+        id,
+        type: 'ordering_sequence',
+        title: 'Ordenar Secuencia / Cronología',
+        isCollapsed: false,
+        data: {
+          instructions: 'Ordena cronológicamente los siguientes acontecimientos de inicio a fin:',
+          stepsInCorrectOrder: [
+            'Conspiración de Querétaro (Septiembre 1810)',
+            'Grito de Dolores (16 Septiembre 1810)',
+            'Toma de la Alhóndiga de Granaditas (Septiembre 1810)',
+            'Batalla del Monte de las Cruces (Octubre 1810)',
+          ],
+          randomizeStart: true,
+        }
+      } as OrderingSequenceBlock;
+
+    case 'fill_in_blanks':
+      return {
+        id,
+        type: 'fill_in_blanks',
+        title: 'Completar Espacios / Texto Mutilado',
+        isCollapsed: false,
+        data: {
+          instructions: 'Arrastra o escribe las palabras faltantes para completar el enunciado científico:',
+          textWithBlanks: 'La [gravedad] es la fuerza que atrae a los objetos hacia el centro de la [Tierra] con una aceleración constante.',
+          wordBank: ['gravedad', 'Tierra', 'fricción', 'energía'],
+        }
+      } as FillInBlanksBlock;
+
+    case 'open_poll_wordcloud':
+      return {
+        id,
+        type: 'open_poll_wordcloud',
+        title: 'Pregunta Abierta & Reflexión IA',
+        isCollapsed: false,
+        data: {
+          prompt: 'Explica con tus propias palabras qué sucedería si no existiera la fuerza de fricción en la vida cotidiana.',
+          minWords: 15,
+          aiFeedbackRubric: 'Evalúa coherencia, mención de movimiento continuo y consecuencias en vehículos o caminar.',
+        }
+      } as OpenPollWordcloudBlock;
+
+    case 'secret_code_puzzle':
+      return {
+        id,
+        type: 'secret_code_puzzle',
+        title: 'Misterio & Código Secreto',
+        isCollapsed: false,
+        data: {
+          clueText: 'Para abrir el candado de la cripta, descifra la palabra clave: F _ _ _ Z A',
+          secretAnswer: 'FUERZA',
+          hintText: 'Pista: Es la magnitud física que medimos en Newtons (N).',
+        }
+      } as SecretCodePuzzleBlock;
+
+    case 'checkpoint_gate':
+      return {
+        id,
+        type: 'checkpoint_gate',
+        title: 'Punto de Control & Autoevaluación',
+        isCollapsed: false,
+        data: {
+          checkpointTitle: 'Revisión de Saberes Intermedios',
+          reflectionPrompt: '¿Qué tan seguro te sientes aplicando las leyes de Newton en problemas cotidianos?',
+          requiredScorePercent: 70,
+        }
+      } as CheckpointGateBlock;
+
+    case 'badge_certificate':
+      return {
+        id,
+        type: 'badge_certificate',
+        title: 'Diploma de Maestría Académica',
+        isCollapsed: false,
+        data: {
+          certificateTitle: 'Certificado de Honor en Ciencias',
+          recipientHonor: 'Gran Maestro de la Física y el Movimiento',
+          teacherSignatureName: 'Consejo Docente ISkool',
+        }
+      } as BadgeCertificateBlock;
+
     case 'audio_sfx':
       return {
         id,
@@ -204,18 +312,16 @@ const createDefaultBlock = (type: StudioBlockType): StudioBlock => {
   }
 };
 
-const INITIAL_BLOCKS: StudioBlock[] = [
-  createDefaultBlock('text_narrative'),
-  createDefaultBlock('quiz_question'),
-  createDefaultBlock('reward_chest')
-];
+const INITIAL_BLOCKS: StudioBlock[] = [];
 
-export const useActivityBuilderStore = create<ActivityBuilderState>((set, get) => ({
-  metadata: DEFAULT_METADATA,
-  blocks: INITIAL_BLOCKS,
-  selectedBlockId: INITIAL_BLOCKS[0].id,
-  history: [INITIAL_BLOCKS],
-  historyIndex: 0,
+export const useActivityBuilderStore = create<ActivityBuilderState>()(
+  persist(
+    (set, get) => ({
+      metadata: DEFAULT_METADATA,
+      blocks: INITIAL_BLOCKS,
+      selectedBlockId: null,
+      history: [INITIAL_BLOCKS],
+      historyIndex: 0,
   
   isExtendedMenuOpen: false,
   isPreviewModalOpen: false,
@@ -473,17 +579,25 @@ export const useActivityBuilderStore = create<ActivityBuilderState>((set, get) =
     };
   },
 
-  resetWorkspace: () => {
-    const initial = [createDefaultBlock('text_narrative'), createDefaultBlock('quiz_question')];
-    set({
-      metadata: DEFAULT_METADATA,
-      blocks: initial,
-      selectedBlockId: initial[0].id,
-      history: [initial],
-      historyIndex: 0,
-      isExtendedMenuOpen: false,
-      isPreviewModalOpen: false,
-      zoomLevel: 1.0,
-    });
-  },
-}));
+      resetWorkspace: () => {
+        set({
+          metadata: DEFAULT_METADATA,
+          blocks: [],
+          selectedBlockId: null,
+          history: [[]],
+          historyIndex: 0,
+          isExtendedMenuOpen: false,
+          isPreviewModalOpen: false,
+          zoomLevel: 1.0,
+        });
+      },
+    }),
+    {
+      name: 'iskool_activity_builder_state',
+      partialize: (state) => ({
+        metadata: state.metadata,
+        blocks: state.blocks,
+      }),
+    }
+  )
+);

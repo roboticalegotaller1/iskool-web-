@@ -4,18 +4,25 @@ import { StudioActivityJSON } from '@/types';
  * Tipos de bloques didácticos soportados en el Taller de Creación
  */
 export type StudioBlockType = 
-  // Herramientas Principales (Barra Lateral Izquierda)
-  | 'text_narrative'     // Instrucción / Fragmento narrativo / Lore
-  | 'quiz_question'      // Pregunta de opción múltiple interactiva
-  | 'reward_chest'       // Recompensas: XP, Monedas de oro, Gemas, Insignias
-  | 'boss_enemy'         // Encuentro de combate contra Boss / Enemigo
+  // Herramientas Principales (Barra Lateral Izquierda - Acceso Rápido)
+  | 'text_narrative'       // Instrucción / Fragmento narrativo / Lore
+  | 'quiz_question'        // Pregunta de opción múltiple interactiva
+  | 'reward_chest'         // Recompensas: XP, Monedas de oro, Gemas, Insignias
+  | 'boss_enemy'           // Encuentro de combate contra Boss / Enemigo Pixi
 
-  // Herramientas Extendidas (Menú [+])
-  | 'youtube_video'      // Video educativo incrustado con marcas de tiempo
-  | 'external_embed'     // Simuladores interactivos (PhET, GeoGebra) o Web
-  | 'minigame_action'    // Minijuego (Ruleta, Memorama, Ahorcado, Candado)
-  | 'logic_branch'       // Ramificación condicional según desempeño
-  | 'audio_sfx';         // Efectos de sonido o ambientación
+  // Herramientas Extendidas LMS (Menú [+])
+  | 'youtube_video'        // Video educativo incrustado con marcas de tiempo
+  | 'external_embed'       // Simuladores interactivos (PhET, GeoGebra, Desmos)
+  | 'drag_drop_match'      // Emparejamiento interactivo (Concepto <-> Definición)
+  | 'ordering_sequence'    // Ordenar secuencia cronológica o algoritmo
+  | 'fill_in_blanks'       // Completar espacios en blanco / Texto mutilado
+  | 'open_poll_wordcloud'  // Pregunta abierta con evaluación formativa de IA
+  | 'secret_code_puzzle'   // Acertijo de escape room / Código secreto
+  | 'minigame_action'      // Minijuego Arcade (Ruleta, Memorama, Ahorcado)
+  | 'logic_branch'         // Ramificación condicional según desempeño
+  | 'checkpoint_gate'      // Punto de control y autoevaluación / Rúbrica
+  | 'badge_certificate'    // Certificado y diploma digital de maestría
+  | 'audio_sfx';           // Efectos de sonido o ambientación musical
 
 /**
  * Interfaz base para cualquier bloque didáctico del espacio de trabajo
@@ -53,7 +60,7 @@ export interface QuizQuestionBlock extends BaseStudioBlock {
     correctIndex: number;
     explanation?: string;
     imageUrl?: string;
-    timeLimitSeconds: number; // 0 = sin límite
+    timeLimitSeconds: number;
   };
 }
 
@@ -114,7 +121,67 @@ export interface ExternalEmbedBlock extends BaseStudioBlock {
 }
 
 /**
- * 7. Bloque de Minijuego
+ * 7. Bloque de Emparejamiento (Drag & Drop Match)
+ */
+export interface DragDropMatchBlock extends BaseStudioBlock {
+  type: 'drag_drop_match';
+  data: {
+    instructions: string;
+    pairs: { left: string; right: string }[];
+    timeLimitSeconds: number;
+  };
+}
+
+/**
+ * 8. Bloque de Ordenar Secuencia / Cronología
+ */
+export interface OrderingSequenceBlock extends BaseStudioBlock {
+  type: 'ordering_sequence';
+  data: {
+    instructions: string;
+    stepsInCorrectOrder: string[];
+    randomizeStart: boolean;
+  };
+}
+
+/**
+ * 9. Bloque de Rellenar Espacios (Fill in Blanks)
+ */
+export interface FillInBlanksBlock extends BaseStudioBlock {
+  type: 'fill_in_blanks';
+  data: {
+    instructions: string;
+    textWithBlanks: string; // ej. "El cura [Miguel Hidalgo] dio el grito en [1810]."
+    wordBank: string[];
+  };
+}
+
+/**
+ * 10. Bloque de Pregunta Abierta y Reflexión
+ */
+export interface OpenPollWordcloudBlock extends BaseStudioBlock {
+  type: 'open_poll_wordcloud';
+  data: {
+    prompt: string;
+    minWords: number;
+    aiFeedbackRubric?: string;
+  };
+}
+
+/**
+ * 11. Bloque de Código Secreto / Acertijo de Escape Room
+ */
+export interface SecretCodePuzzleBlock extends BaseStudioBlock {
+  type: 'secret_code_puzzle';
+  data: {
+    clueText: string;
+    secretAnswer: string;
+    hintText?: string;
+  };
+}
+
+/**
+ * 12. Bloque de Minijuego Arcade
  */
 export interface MinigameActionBlock extends BaseStudioBlock {
   type: 'minigame_action';
@@ -126,7 +193,7 @@ export interface MinigameActionBlock extends BaseStudioBlock {
 }
 
 /**
- * 8. Bloque de Ramificación Lógica
+ * 13. Bloque de Ramificación Lógica Adaptativa
  */
 export interface LogicBranchBlock extends BaseStudioBlock {
   type: 'logic_branch';
@@ -139,13 +206,37 @@ export interface LogicBranchBlock extends BaseStudioBlock {
 }
 
 /**
- * 9. Bloque de Audio / Efecto Sonoro
+ * 14. Bloque de Punto de Control / Checkpoint
+ */
+export interface CheckpointGateBlock extends BaseStudioBlock {
+  type: 'checkpoint_gate';
+  data: {
+    checkpointTitle: string;
+    reflectionPrompt: string;
+    requiredScorePercent: number;
+  };
+}
+
+/**
+ * 15. Bloque de Certificado / Diploma Digital
+ */
+export interface BadgeCertificateBlock extends BaseStudioBlock {
+  type: 'badge_certificate';
+  data: {
+    certificateTitle: string;
+    recipientHonor: string;
+    teacherSignatureName: string;
+  };
+}
+
+/**
+ * 16. Bloque de Audio / Efecto Sonoro
  */
 export interface AudioSfxBlock extends BaseStudioBlock {
   type: 'audio_sfx';
   data: {
     soundType: 'victory_fanfare' | 'battle_drums' | 'mystery_ambient' | 'level_up';
-    volume: number; // 0.1 a 1.0
+    volume: number;
     autoPlay: boolean;
   };
 }
@@ -160,8 +251,15 @@ export type StudioBlock =
   | BossEnemyBlock
   | YouTubeVideoBlock
   | ExternalEmbedBlock
+  | DragDropMatchBlock
+  | OrderingSequenceBlock
+  | FillInBlanksBlock
+  | OpenPollWordcloudBlock
+  | SecretCodePuzzleBlock
   | MinigameActionBlock
   | LogicBranchBlock
+  | CheckpointGateBlock
+  | BadgeCertificateBlock
   | AudioSfxBlock;
 
 /**

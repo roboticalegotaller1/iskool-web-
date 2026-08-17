@@ -5,7 +5,7 @@ import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
 import { SidebarToolbar } from './SidebarToolbar';
 import { WorkspaceArea } from './WorkspaceArea';
 import { ExtendedToolsDrawer } from './ExtendedToolsDrawer';
-import { ISkoolActivityPlayer } from '@/components/ISkoolActivityPlayer';
+import { StudioFlowPlayer } from '../player/StudioFlowPlayer';
 import { AssignToClassModal } from '@/components/AssignToClassModal';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
@@ -131,7 +131,7 @@ export const ActivityBuilderLayout: React.FC = () => {
               type="button"
               onClick={undo}
               disabled={historyIndex <= 0}
-              title="Deshacer acción"
+              title="Deshacer acción (Ctrl+Z)"
               className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 disabled:opacity-30 transition-all cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
@@ -140,10 +140,18 @@ export const ActivityBuilderLayout: React.FC = () => {
               type="button"
               onClick={redo}
               disabled={historyIndex >= history.length - 1}
-              title="Rehacer acción"
+              title="Rehacer acción (Ctrl+Y)"
               className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 disabled:opacity-30 transition-all cursor-pointer"
             >
               <RotateCw className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={resetWorkspace}
+              title="Limpiar y empezar en blanco"
+              className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-all cursor-pointer"
+            >
+              <Trash2 className="w-4 h-4" />
             </button>
           </div>
 
@@ -215,9 +223,13 @@ export const ActivityBuilderLayout: React.FC = () => {
       </header>
 
       {/* Contenido Principal: Sidebar Izquierda + Workspace Central */}
-      <div className="flex flex-col lg:flex-row items-start gap-6">
-        <SidebarToolbar />
-        <WorkspaceArea />
+      <div className="flex flex-col lg:flex-row items-start gap-6 relative">
+        <div className="relative z-30 shrink-0">
+          <SidebarToolbar />
+        </div>
+        <div className="flex-1 w-full min-w-0 relative z-10">
+          <WorkspaceArea />
+        </div>
       </div>
 
       {/* Menú Extendido (+) */}
@@ -246,10 +258,10 @@ export const ActivityBuilderLayout: React.FC = () => {
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto">
-              <ISkoolActivityPlayer
-                activity={serializedData}
-                templateType="custom_builder"
+            <div className="p-4 sm:p-6 max-h-[85vh] overflow-y-auto">
+              <StudioFlowPlayer
+                blocks={blocks}
+                metadata={metadata}
                 onClose={() => setIsPreviewOpen(false)}
               />
             </div>
