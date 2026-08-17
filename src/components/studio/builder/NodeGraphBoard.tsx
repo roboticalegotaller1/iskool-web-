@@ -276,6 +276,7 @@ export const NodeGraphBoard: React.FC = () => {
         {/* Espacio Amplio de Trabajo 2D */}
         <div 
           ref={boardRef}
+          data-board-container="true"
           className="relative transform origin-top-left transition-transform duration-75"
           style={{ 
             width: `${maxNodeX}px`, 

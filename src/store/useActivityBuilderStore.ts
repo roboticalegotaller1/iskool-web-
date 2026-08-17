@@ -41,11 +41,12 @@ interface ActivityBuilderState {
   history: StudioBlock[][];
   historyIndex: number;
   
-  // Estados de la Interfaz
+  // Control de UI & Arrastre
   isExtendedMenuOpen: boolean;
   isPreviewModalOpen: boolean;
   isNodeConfigDrawerOpen: boolean;
   zoomLevel: number; // 0.85 a 1.15
+  draggedNewBlockType: StudioBlockType | null;
   
   // Acciones sobre Bloques / Nodos
   addBlock: (type: StudioBlockType, insertAtIndex?: number, customPos?: FlowNodePosition) => string;
@@ -58,6 +59,7 @@ interface ActivityBuilderState {
   toggleCollapseBlock: (id: string) => void;
   setSelectedBlockId: (id: string | null) => void;
   updateNodePosition: (id: string, position: FlowNodePosition) => void;
+  setDraggedNewBlockType: (type: StudioBlockType | null) => void;
   
   // Acciones de Grafo y Flujo
   addConnection: (sourceNodeId: string, targetNodeId: string, label?: string) => void;
@@ -370,6 +372,9 @@ export const useActivityBuilderStore = create<ActivityBuilderState>()(
       isPreviewModalOpen: false,
       isNodeConfigDrawerOpen: false,
       zoomLevel: 1.0,
+      draggedNewBlockType: null,
+
+      setDraggedNewBlockType: (type: StudioBlockType | null) => set({ draggedNewBlockType: type }),
 
       // Añadir bloque / nodo con conexión automática al nodo previo
       addBlock: (type: StudioBlockType, insertAtIndex?: number, customPos?: FlowNodePosition) => {
