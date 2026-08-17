@@ -8,6 +8,7 @@ import { MemoramaPlayer } from '@/components/games/MemoramaPlayer';
 import { AhorcadoPlayer } from '@/components/games/AhorcadoPlayer';
 import { FlashcardsPlayer } from '@/components/games/FlashcardsPlayer';
 import { GenericGameStub } from '@/components/games/GenericGameStub';
+import { InteractiveUniversalGamePlayer } from '@/components/games/InteractiveUniversalGamePlayer';
 
 interface ISkoolActivityPlayerProps {
   activity: CanvasActivityJSON;
@@ -38,7 +39,7 @@ export const ISkoolActivityPlayer: React.FC<ISkoolActivityPlayerProps> = ({
 
       default:
         return (
-          <GenericGameStub
+          <InteractiveUniversalGamePlayer
             activity={activity}
             templateType={templateType}
             onClose={onClose}

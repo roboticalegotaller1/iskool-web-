@@ -684,7 +684,15 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     let foundInObsidian = false;
 
     try {
-      const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}`);
+      const { data: sessionData } = await supabase.auth.getSession();
+      const authHeaders: Record<string, string> = {};
+      if (sessionData?.session?.access_token) {
+        authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
+      }
+
+      const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}`, {
+        headers: authHeaders
+      });
       if (obsRes.ok) {
         const obsData = await obsRes.json();
         if (obsData.found && obsData.planning) {
@@ -726,9 +734,15 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       // Step 3: Si fue recién generada (no leída de Obsidian), guardarla automáticamente en el Segundo Cerebro de Obsidian
       if (!foundInObsidian) {
         try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+          if (sessionData?.session?.access_token) {
+            headers['Authorization'] = `Bearer ${sessionData.session.access_token}`;
+          }
+
           await fetch('/api/obsidian', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers,
             body: JSON.stringify({
               ...resultPlanning,
               teacherName: `${currentTeacher.first_name} ${currentTeacher.last_name}`
@@ -1471,9 +1485,15 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
                   type="button"
                   onClick={async () => {
                     try {
+                      const { data: sessionData } = await supabase.auth.getSession();
+                      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+                      if (sessionData?.session?.access_token) {
+                        headers['Authorization'] = `Bearer ${sessionData.session.access_token}`;
+                      }
+
                       const res = await fetch('/api/obsidian', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers,
                         body: JSON.stringify({
                           ...activePlanning,
                           teacherName: `${currentTeacher.first_name} ${currentTeacher.last_name}`

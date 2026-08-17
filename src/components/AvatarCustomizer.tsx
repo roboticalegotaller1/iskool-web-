@@ -205,7 +205,12 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
             </h2>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">Modifica el aspecto del explorador de tu perfil</p>
           </div>
-          <button onClick={onClose} className="rounded-full p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 dark:text-zinc-500">
+          <button 
+            type="button"
+            onClick={onClose} 
+            aria-label="Cerrar personalizador de avatar"
+            className="rounded-full p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 dark:text-zinc-500 cursor-pointer"
+          >
             ✕
           </button>
         </div>
@@ -220,6 +225,7 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                 type="text"
                 value={avatar.avatar_name}
                 onChange={(e) => changeAvatar({ avatar_name: e.target.value })}
+                aria-label="Nombre personalizado del Avatar"
                 className="w-full text-center font-bold text-lg bg-transparent border-b border-transparent hover:border-zinc-300 dark:hover:border-zinc-700 focus:border-blue-500 focus:outline-none text-zinc-900 dark:text-white"
                 placeholder="Nombre del Avatar"
               />
@@ -232,8 +238,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
             {/* Tabs */}
             <div className="flex border-b border-zinc-200 dark:border-zinc-800">
               <button
+                type="button"
                 onClick={() => setActiveTab('hair')}
-                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all ${
+                aria-label="Pestaña de personalización de cabello"
+                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'hair'
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                     : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
@@ -243,8 +251,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                 Cabello
               </button>
               <button
+                type="button"
                 onClick={() => setActiveTab('eyes')}
-                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all ${
+                aria-label="Pestaña de personalización de ojos"
+                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'eyes'
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                     : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
@@ -254,8 +264,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                 Ojos
               </button>
               <button
+                type="button"
                 onClick={() => setActiveTab('outfit')}
-                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all ${
+                aria-label="Pestaña de personalización de traje"
+                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'outfit'
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                     : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
@@ -265,8 +277,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                 Traje
               </button>
               <button
+                type="button"
                 onClick={() => setActiveTab('background')}
-                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all ${
+                aria-label="Pestaña de personalización de fondo"
+                className={`flex-1 pb-2 text-xs font-semibold text-center border-b-2 flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'background'
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                     : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
@@ -288,9 +302,11 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                       return (
                         <button
                           key={opt.id}
+                          type="button"
                           disabled={!unlocked}
                           onClick={() => handleSelect('hair', opt.id)}
-                          className={`p-2 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                          aria-label={`Seleccionar estilo de cabello: ${opt.name}`}
+                          className={`p-2 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                             avatar.hair_style === opt.id
                               ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
                               : unlocked
@@ -313,8 +329,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                         {colors.map((color) => (
                           <button
                             key={color.value}
+                            type="button"
                             onClick={() => handleColorSelect('hair', color.value)}
-                            className="h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center transition-transform hover:scale-105"
+                            aria-label={`Seleccionar color de cabello ${color.name}`}
+                            className="h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center transition-transform hover:scale-105 cursor-pointer"
                             style={{ backgroundColor: color.value }}
                             title={color.name}
                           >
@@ -336,9 +354,11 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                     return (
                       <button
                         key={opt.id}
+                        type="button"
                         disabled={!unlocked}
                         onClick={() => handleSelect('eyes', opt.id)}
-                        className={`p-3 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                        aria-label={`Seleccionar estilo de ojos: ${opt.name}`}
+                        className={`p-3 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                           avatar.eyes_style === opt.id
                             ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
                             : unlocked
@@ -364,9 +384,11 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                       return (
                         <button
                           key={opt.id}
+                          type="button"
                           disabled={!unlocked}
                           onClick={() => handleSelect('outfit', opt.id)}
-                          className={`p-2.5 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                          aria-label={`Seleccionar estilo de traje: ${opt.name}`}
+                          className={`p-2.5 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                             avatar.outfit_style === opt.id
                               ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
                               : unlocked
@@ -389,8 +411,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                         {colors.map((color) => (
                           <button
                             key={color.value}
+                            type="button"
                             onClick={() => handleColorSelect('outfit', color.value)}
-                            className="h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center transition-transform hover:scale-105"
+                            aria-label={`Seleccionar color de traje ${color.name}`}
+                            className="h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center transition-transform hover:scale-105 cursor-pointer"
                             style={{ backgroundColor: color.value }}
                             title={color.name}
                           >
@@ -412,9 +436,11 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
                     return (
                       <button
                         key={opt.id}
+                        type="button"
                         disabled={!unlocked}
                         onClick={() => handleSelect('background', opt.id)}
-                        className={`p-3 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 ${
+                        aria-label={`Seleccionar estilo de fondo: ${opt.name}`}
+                        className={`p-3 rounded-xl border text-xs font-medium text-center transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                           avatar.background_style === opt.id
                             ? 'border-blue-500 bg-blue-50/50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 font-bold'
                             : unlocked
@@ -441,8 +467,10 @@ export const AvatarCustomizer: React.FC<AvatarCustomizerProps> = ({ isOpen, onCl
             <span>Desbloquearás más accesorios al subir de nivel.</span>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2 text-sm font-semibold bg-zinc-950 hover:bg-zinc-800 text-white rounded-full transition-all dark:bg-white dark:hover:bg-zinc-200 dark:text-black shadow-md"
+            aria-label="Guardar cambios de personalización del avatar"
+            className="px-5 py-2 text-sm font-semibold bg-zinc-950 hover:bg-zinc-800 text-white rounded-full transition-all dark:bg-white dark:hover:bg-zinc-200 dark:text-black shadow-md cursor-pointer"
           >
             Guardar Cambios
           </button>

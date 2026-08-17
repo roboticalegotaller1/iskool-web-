@@ -1,17 +1,38 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { CanvasActivityJSON } from '@/types';
+import { validateApiAuth } from '@/lib/authValidator';
 
-export async function POST(req: Request) {
+const StudioGenerateSchema = z.object({
+  topic: z.string().trim().min(2, 'El parámetro "topic" debe tener al menos 2 caracteres').max(200, 'El tema es demasiado largo'),
+  ageGroup: z.string().trim().max(100).optional().default('4º Primaria (Saberes y Pensamiento)'),
+  questionCount: z.coerce.number().int().min(1, 'Debe solicitar al menos 1 pregunta').max(20, 'El máximo permitido es 20 preguntas').default(5)
+});
+
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { topic, ageGroup, questionCount } = body;
-
-    if (!topic || typeof topic !== 'string') {
-      return NextResponse.json({ error: 'El parámetro "topic" es requerido.' }, { status: 400 });
+    // 1. Validación de Sesión y Autenticación de Usuario (Docente / Creador)
+    const auth = await validateApiAuth(req);
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        { error: auth.error || 'No autorizado. Se requiere sesión activa para generar actividades.' },
+        { status: 401 }
+      );
     }
 
-    const count = Number(questionCount) || 5;
-    const level = ageGroup || '4º Primaria (Saberes y Pensamiento)';
+    // 2. Sanitización y validación estricta del cuerpo de la petición con Zod
+    const body = await req.json().catch(() => null);
+    const parsedBody = StudioGenerateSchema.safeParse(body);
+
+    if (!parsedBody.success) {
+      return NextResponse.json(
+        { error: parsedBody.error.issues[0]?.message || 'Parámetros de generación inválidos.' },
+        { status: 400 }
+      );
+    }
+
+    const { topic, ageGroup, questionCount: count } = parsedBody.data;
+    const level = ageGroup;
 
     // System prompt estricto configurado según las especificaciones pedagógicas de ISkool
     const systemPrompt = `Eres el motor educativo de ISkool. Genera un JSON estricto para un juego sobre ${topic}. Adapta el vocabulario, la dificultad y el tono pedagógico exactamente para estudiantes de ${level}. Genera ${count} preguntas. CRÍTICO: Las opciones de respuesta incorrectas (distractores) deben ser lógicas, coherentes con el tema y plausibles, no respuestas absurdas.`;

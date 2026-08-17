@@ -87,11 +87,7 @@ const StudioTriviaPlayerInner: React.FC<StudioTriviaPlayerProps> = ({
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 shadow-2xl p-6 sm:p-10 space-y-8 animate-fade-in relative overflow-hidden">
-      
-      {/* Fondo decorativo estilo Apple */}
-      <div className="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
+    <div className="w-full space-y-6 animate-fade-in relative select-none">
 
       {/* Pantalla Final de Resultados */}
       {isFinished ? (

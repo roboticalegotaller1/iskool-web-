@@ -8,7 +8,7 @@ import {
   BookOpen, Calculator, Activity, Clock, ShieldAlert, MapPin, 
   Phone, Mail, CheckCircle2, ChevronRight, User, AlertCircle, Sparkles, X, Heart, Globe, Building2, Upload, RefreshCw, Edit3
 } from 'lucide-react';
-import { DetailedStudent, ClassSchedule, Group, SchoolSettings } from '@/types';
+import { DetailedStudent, ClassSchedule, Group, SchoolSettings, UserProfile } from '@/types';
 import { getStudentAvatarUrl } from '@/utils/studentAvatar';
 
 export default function CoordinatorDashboard() {

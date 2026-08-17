@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { useCoopStore } from '@/store/useCoopStore';
 import CoopInviteWidget from '@/components/CoopInviteWidget';
@@ -555,12 +555,7 @@ function MissionPageContent({ params }: MissionPageContentProps) {
   }
 
   if (!mission) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-white gap-4">
-        <h2 className="text-2xl font-bold text-rose-500">Misión no encontrada</h2>
-        <Link href="/student" className="px-6 py-2 bg-blue-600 rounded-full font-bold text-xs">Volver al mapa</Link>
-      </div>
-    );
+    notFound();
   }
 
   return (

@@ -143,6 +143,12 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
   const [completedActions, setCompletedActions] = useState<string[]>([]);
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [isFormGenerated, setIsFormGenerated] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
 
   const recognitionRef = useRef<any>(null);
 
@@ -168,6 +174,7 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
         const text = event.results[0][0].transcript;
         setTranscriptText(text);
         processEmergencyText(text);
+        showToast('🎙️ Voz procesada y clasificada según protocolo NEM.');
       };
       
       rec.onerror = (event: any) => {
@@ -335,6 +342,7 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
   const handlePresetClick = (presetText: string) => {
     setTranscriptText(presetText);
     processEmergencyText(presetText);
+    showToast('🚨 Preset de emergencia cargado y analizado con éxito.');
   };
 
   // Alternar checklist de acciones
@@ -348,6 +356,7 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
 
   // Descarga / Impresión
   const handlePrint = () => {
+    showToast('📄 Abriendo diálogo de impresión / guardado PDF...');
     window.print();
   };
 
@@ -356,6 +365,14 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-md transition-opacity duration-300 text-left overflow-y-auto">
       
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-6 right-6 z-[999] bg-rose-950/90 text-white px-5 py-3 rounded-2xl shadow-2xl border border-rose-500/50 font-bold text-xs flex items-center gap-2 animate-bounce no-print">
+          <AlertTriangle className="w-4 h-4 text-yellow-300" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* -------------------- INCRUSTAR ESTILOS DE IMPRESIÓN PARA ACTA DE EMERGENCIA -------------------- */}
       <style>{`
         @media print {
@@ -393,7 +410,9 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
             <h3 className="text-sm font-black uppercase tracking-wider">Protocolos de Alerta & Emergencia NEM</h3>
           </div>
           <button 
+            type="button"
             onClick={onClose}
+            aria-label="Cerrar modal de protocolos de emergencia"
             className="p-1.5 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
           >
             <X className="h-5 w-5" />
@@ -420,7 +439,9 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
               </p>
               
               <button
+                type="button"
                 onClick={toggleListening}
+                aria-label={isListening ? 'Detener grabación de voz' : 'Iniciar grabación de voz para reporte'}
                 className={`h-16 w-16 rounded-full flex items-center justify-center transition-all shadow-md ${
                   isListening
                     ? 'bg-rose-600 hover:bg-rose-700 text-white animate-pulse'
@@ -442,8 +463,10 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
                 {VOICE_PRESETS.map((preset, idx) => (
                   <button
                     key={idx}
+                    type="button"
                     onClick={() => handlePresetClick(preset.text)}
-                    className="p-2.5 bg-white border border-zinc-200 hover:border-rose-500/50 dark:bg-zinc-950 dark:border-zinc-800 dark:hover:border-rose-500/50 rounded-xl text-left flex flex-col gap-1 transition-all"
+                    aria-label={`Cargar preset de emergencia: ${preset.title}`}
+                    className="p-2.5 bg-white border border-zinc-200 hover:border-rose-500/50 dark:bg-zinc-950 dark:border-zinc-800 dark:hover:border-rose-500/50 rounded-xl text-left flex flex-col gap-1 transition-all cursor-pointer"
                   >
                     <span>{preset.icon} {preset.title}</span>
                     <span className="text-[8.5px] text-zinc-400 font-semibold line-clamp-1">{preset.text}</span>
@@ -474,6 +497,7 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
                 <select
                   value={selectedStudentId}
                   onChange={(e) => setSelectedStudentId(e.target.value)}
+                  aria-label="Vincular estudiante involucrado en la emergencia"
                   className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-rose-500 font-bold"
                 >
                   <option value="">-- Seleccionar alumno implicado --</option>
@@ -537,8 +561,10 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
                         return (
                           <button
                             key={idx}
+                            type="button"
                             onClick={() => toggleActionItem(action)}
-                            className={`p-3 rounded-xl border text-xs font-semibold text-left flex items-start gap-2.5 transition-all ${
+                            aria-label={`Alternar estado de acción: ${action}`}
+                            className={`p-3 rounded-xl border text-xs font-semibold text-left flex items-start gap-2.5 transition-all cursor-pointer ${
                               isChecked
                                 ? 'bg-emerald-50/60 border-emerald-200 dark:bg-emerald-950/10 dark:border-emerald-900/30 text-emerald-700 dark:text-emerald-400'
                                 : 'bg-white border-zinc-200 dark:bg-zinc-950 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300'
@@ -570,15 +596,19 @@ export function EmergencyModal({ isOpen, onClose, currentTeacher, detailedStuden
                 {/* Acciones del Reporte */}
                 <div className="flex justify-end gap-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
                   <button
+                    type="button"
                     onClick={resetAll}
-                    className="px-4.5 py-2.5 rounded-xl text-xs font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-zinc-750 dark:text-zinc-250 transition-all flex items-center gap-1"
+                    aria-label="Limpiar formulario de reporte de emergencia"
+                    className="px-4.5 py-2.5 rounded-xl text-xs font-bold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-zinc-750 dark:text-zinc-250 transition-all flex items-center gap-1 cursor-pointer"
                   >
                     <RefreshCw className="h-3.5 w-3.5" />
                     Limpiar
                   </button>
                   <button
+                    type="button"
                     onClick={handlePrint}
-                    className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-black shadow-md shadow-rose-500/10 flex items-center gap-1.5 transition-all"
+                    aria-label="Exportar acta oficial de emergencia en PDF o imprimir"
+                    className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-black shadow-md shadow-rose-500/10 flex items-center gap-1.5 transition-all cursor-pointer"
                   >
                     <Download className="h-4 w-4" />
                     Exportar Acta Oficial PDF

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { CommunityActivity } from '@/types';
 import { supabase } from '@/lib/supabaseClient';
 import { 
@@ -36,15 +37,21 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
   onSuccess
 }) => {
   const [selectedGroupId, setSelectedGroupId] = useState<string>(AVAILABLE_GROUPS[0].id);
-  const [xpReward, setXpReward] = useState<number>(50);
+  const [xpReward, setXpReward] = useState<number>(100);
   const [coinsReward, setCoinsReward] = useState<number>(25);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  if (!isOpen || !activity) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isOpen || !activity || !mounted) return null;
 
   const selectedGroup = AVAILABLE_GROUPS.find(g => g.id === selectedGroupId) || AVAILABLE_GROUPS[0];
 
   const handleAssign = async () => {
+    if (isSubmitting) return;
     setIsSubmitting(true);
     try {
       // Intentar persistencia en Supabase (tabla `quests`)
@@ -83,14 +90,14 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
       console.error('Error en asignación a la clase:', err);
       onSuccess(selectedGroup.name);
       onClose();
-    } fontFinally: {
+    } finally {
       setIsSubmitting(false);
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-      <div className="w-full max-w-lg bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 shadow-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-sm flex items-start justify-center p-3 sm:p-4 pt-6 sm:pt-10 overflow-y-auto animate-fade-in">
+      <div className="w-full max-w-lg bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 shadow-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden my-auto sm:my-2">
         
         {/* Fondo sutil decorativo */}
         <div className="absolute top-0 right-0 -mt-10 -mr-10 w-36 h-36 bg-purple-500/10 rounded-full blur-2xl" />
@@ -112,8 +119,11 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-500 dark:text-zinc-400 transition-all"
+            disabled={isSubmitting}
+            aria-label="Cerrar modal de asignación"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-500 dark:text-zinc-400 transition-all disabled:opacity-50"
           >
             <X className="w-4 h-4" />
           </button>
@@ -144,7 +154,16 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
               return (
                 <div
                   key={group.id}
-                  onClick={() => setSelectedGroupId(group.id)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Seleccionar grupo ${group.name}`}
+                  onClick={() => !isSubmitting && setSelectedGroupId(group.id)}
+                  onKeyDown={(e) => {
+                    if ((e.key === 'Enter' || e.key === ' ') && !isSubmitting) {
+                      e.preventDefault();
+                      setSelectedGroupId(group.id);
+                    }
+                  }}
                   className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                     isSelected
                       ? 'bg-purple-50/80 dark:bg-purple-950/40 border-purple-500 text-purple-900 dark:text-purple-100 shadow-sm'
@@ -177,7 +196,8 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
               type="number"
               value={xpReward}
               onChange={e => setXpReward(Number(e.target.value))}
-              className="w-full text-sm font-black bg-transparent text-slate-900 dark:text-white focus:outline-none"
+              disabled={isSubmitting}
+              className="w-full text-sm font-black bg-transparent text-slate-900 dark:text-white focus:outline-none disabled:opacity-50"
             />
           </div>
 
@@ -189,7 +209,8 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
               type="number"
               value={coinsReward}
               onChange={e => setCoinsReward(Number(e.target.value))}
-              className="w-full text-sm font-black bg-transparent text-slate-900 dark:text-white focus:outline-none"
+              disabled={isSubmitting}
+              className="w-full text-sm font-black bg-transparent text-slate-900 dark:text-white focus:outline-none disabled:opacity-50"
             />
           </div>
         </div>
@@ -197,16 +218,20 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
         {/* Botón Masivo de Confirmación en 1 Clic */}
         <div className="pt-2 relative z-10">
           <button
+            type="button"
             onClick={handleAssign}
             disabled={isSubmitting}
+            aria-label="Enviar actividad a los alumnos del grupo"
             className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black text-base shadow-xl shadow-purple-500/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
-            <Rocket className="w-5 h-5 text-yellow-300 animate-pulse" />
-            <span>🚀 Enviar a mis alumnos</span>
+            <Rocket className={`w-5 h-5 text-yellow-300 ${isSubmitting ? 'animate-spin' : 'animate-pulse'}`} />
+            <span>{isSubmitting ? 'Asignando actividad...' : '🚀 Enviar a mis alumnos'}</span>
           </button>
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
+

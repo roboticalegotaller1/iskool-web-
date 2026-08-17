@@ -157,57 +157,63 @@ export default function DataDrivenCombatView({
 
   useEffect(() => {
     let active = true;
+    let cleanupMouse: (() => void) | null = null;
+
+    const attackerSkinUrls = payload.attackers.map(
+      a => `/images/rpg/${(a.skin_texture_id || 'skin_marine').replace('skin_', '')}_sprite.png`
+    );
+    const assetsToLoad = [
+      '/images/rpg/combat_bg.png',
+      '/images/rpg/boss_sprite.png',
+      '/images/rpg/ui/Dragonhpbar.png',
+      '/images/rpg/ui/DragonHpBar2.png',
+      '/images/rpg/ui/DragonHpBar3.png',
+      ...attackerSkinUrls,
+      ...Object.values(DRAGON_ENEMIES_MAP).map(def => def.textureUrl),
+      ...Object.values(DRAGON_ENEMIES_MAP).filter(def => def.sparkTextureUrl).map(def => def.sparkTextureUrl!)
+    ];
 
     async function initPixi() {
       if (!containerRef.current) return;
 
-        const attackerSkinUrls = payload.attackers.map(
-          a => `/images/rpg/${(a.skin_texture_id || 'skin_marine').replace('skin_', '')}_sprite.png`
-        );
-        const assetsToLoad = [
-          '/images/rpg/combat_bg.png',
-          '/images/rpg/boss_sprite.png',
-          '/images/rpg/ui/Dragonhpbar.png',
-          '/images/rpg/ui/DragonHpBar2.png',
-          '/images/rpg/ui/DragonHpBar3.png',
-          ...attackerSkinUrls,
-          ...Object.values(DRAGON_ENEMIES_MAP).map(def => def.textureUrl),
-          ...Object.values(DRAGON_ENEMIES_MAP).filter(def => def.sparkTextureUrl).map(def => def.sparkTextureUrl!)
-        ];
+      let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
+      let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
+      let activeDragonDef = DRAGON_ENEMIES_MAP.blood_dragon;
+      let mainDragonTex: PIXI.Texture;
+      let sparksDragonTex: PIXI.Texture | null = null;
+      const attackerTextures: Map<string, PIXI.Texture> = new Map();
 
-        let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
-        let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
-        let activeDragonDef = DRAGON_ENEMIES_MAP.blood_dragon;
-        let mainDragonTex: PIXI.Texture;
-        let sparksDragonTex: PIXI.Texture | null = null;
-        const attackerTextures: Map<string, PIXI.Texture> = new Map();
+      try {
+        await PIXI.Assets.load(assetsToLoad);
 
-        try {
-          await PIXI.Assets.load(assetsToLoad);
+        bgTex = PIXI.Assets.get('/images/rpg/combat_bg.png');
+        bossTex = PIXI.Assets.get('/images/rpg/boss_sprite.png');
+        
+        hpFrameTex = PIXI.Assets.get('/images/rpg/ui/Dragonhpbar.png');
+        hpFillTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar2.png');
+        hpFillAltTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar3.png');
 
-          bgTex = PIXI.Assets.get('/images/rpg/combat_bg.png');
-          bossTex = PIXI.Assets.get('/images/rpg/boss_sprite.png');
-          
-          hpFrameTex = PIXI.Assets.get('/images/rpg/ui/Dragonhpbar.png');
-          hpFillTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar2.png');
-          hpFillAltTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar3.png');
+        const selectedDragonKey = getDragonEnemyKey(payload.enemy_data.name, payload.enemy_data.skin_id);
+        activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
+        mainDragonTex = PIXI.Assets.get(activeDragonDef.textureUrl) || bossTex;
+        sparksDragonTex = activeDragonDef.sparkTextureUrl ? (PIXI.Assets.get(activeDragonDef.sparkTextureUrl) || null) : null;
 
-          const selectedDragonKey = getDragonEnemyKey(payload.enemy_data.name, payload.enemy_data.skin_id);
-          activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
-          mainDragonTex = PIXI.Assets.get(activeDragonDef.textureUrl) || bossTex;
-          sparksDragonTex = activeDragonDef.sparkTextureUrl ? (PIXI.Assets.get(activeDragonDef.sparkTextureUrl) || null) : null;
-
-          for (const attacker of payload.attackers) {
-            const skinUrl = `/images/rpg/${(attacker.skin_texture_id || 'skin_marine').replace('skin_', '')}_sprite.png`;
-            const tex = PIXI.Assets.get(skinUrl) || bossTex;
-            attackerTextures.set(attacker.student_id, tex);
-          }
-        } catch (e) {
-          console.error("Error al cargar dinámicamente los assets de la misión:", e);
-          return;
+        for (const attacker of payload.attackers) {
+          const skinUrl = `/images/rpg/${(attacker.skin_texture_id || 'skin_marine').replace('skin_', '')}_sprite.png`;
+          const tex = PIXI.Assets.get(skinUrl) || bossTex;
+          attackerTextures.set(attacker.student_id, tex);
         }
+      } catch (e) {
+        console.error("Error al cargar dinámicamente los assets de la misión:", e);
+        return;
+      }
 
-      if (!active) return;
+      if (!active) {
+        try {
+          PIXI.Assets.unload(assetsToLoad);
+        } catch {}
+        return;
+      }
 
       // 2. Inicializar PixiJS Application
       const app = new PIXI.Application();
@@ -220,7 +226,10 @@ export default function DataDrivenCombatView({
       });
 
       if (!active) {
-        app.destroy(true, { children: true });
+        try {
+          app.destroy(true, { children: true, texture: true, textureSource: true });
+          PIXI.Assets.unload(assetsToLoad);
+        } catch {}
         return;
       }
 
@@ -560,6 +569,9 @@ export default function DataDrivenCombatView({
         targetParallax.current.y = (mouseY - 160) * 0.05;
       };
       window.addEventListener('mousemove', handleMouseMove);
+      cleanupMouse = () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+      };
 
       // --- TICKER LOOP (60 FPS) ---
       app.ticker.add((ticker) => {
@@ -788,19 +800,27 @@ export default function DataDrivenCombatView({
           shockwave.drawCircle(laserTargetX + 25, laserTargetY + 62, smokeRadius * 1.15);
         }
       });
-
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-      };
     }
 
     initPixi();
 
     return () => {
       active = false;
+      if (cleanupMouse) cleanupMouse();
       if (appRef.current) {
-        appRef.current.destroy(true, { children: true, texture: true });
+        try {
+          appRef.current.ticker?.stop();
+          appRef.current.stage?.removeChildren();
+          appRef.current.destroy(true, { children: true, texture: true, textureSource: true });
+        } catch (err) {
+          console.warn("Error destruyendo instancia de Pixi:", err);
+        }
         appRef.current = null;
+      }
+      try {
+        PIXI.Assets.unload(assetsToLoad);
+      } catch (err) {
+        console.warn("Error descargando texturas de Pixi:", err);
       }
     };
   }, [payload, localStudentId]);

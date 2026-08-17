@@ -105,6 +105,12 @@ export default function QuestCardModal() {
   const [canvasCombatState, setCanvasCombatState] = useState<'idle' | 'attacking' | 'boss_hurt' | 'victory' | 'defeat'>('idle');
   const [showVictoryBanner, setShowVictoryBanner] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 5000);
+  };
 
   // Local state for Quizzes
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
@@ -250,6 +256,7 @@ export default function QuestCardModal() {
 
   // 1. Enviar respuesta del Quiz
   const handleQuizAnswerSubmit = (optionIdx: number) => {
+    if (isLoading || isAnswerSubmitted) return;
     setSelectedOptionIdx(optionIdx);
     setIsAnswerSubmitted(true);
 
@@ -275,6 +282,7 @@ export default function QuestCardModal() {
 
   // Ir a la siguiente pregunta del Quiz o terminar
   const handleQuizNextQuestion = async () => {
+    if (isLoading) return;
     const questions = (activeQuest.content as any).questions || [];
     
     if (currentQuestionIdx < questions.length - 1) {
@@ -316,8 +324,10 @@ export default function QuestCardModal() {
               });
             }
 
+            showToast(`✨ ¡Desafío completado! Has obtenido +${activeQuest.xp_reward} XP y +${activeQuest.coins_reward} Monedas.`);
           } catch (e) {
             console.warn("Supabase database sync threw an error:", e);
+            showToast('⚠️ Progreso guardado localmente con éxito.');
           }
 
           let result;
@@ -338,6 +348,7 @@ export default function QuestCardModal() {
         await triggerCombatSequence(onFinalize);
       } else {
         setCombatState('defeat');
+        showToast('❌ No has alcanzado el puntaje mínimo. ¡Reintenta el desafío!');
       }
     }
   };
@@ -345,7 +356,7 @@ export default function QuestCardModal() {
   // 2. Enviar evidencia de Portafolio
   const handlePortfolioSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!mockFile || !reflection) return;
+    if (!mockFile || !reflection || isLoading) return;
 
     const onFinalize = async () => {
       try {
@@ -402,8 +413,11 @@ export default function QuestCardModal() {
             }
           }));
         }
+
+        showToast('📜 ¡Evidencia inscrita con éxito en tu Portafolio y recompensas otorgadas!');
       } catch (e) {
         console.warn("Supabase database sync threw an error:", e);
+        showToast('✨ Evidencia guardada en el portafolio local.');
       }
 
       submitPortfolioItem(
@@ -462,6 +476,14 @@ export default function QuestCardModal() {
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-zinc-950/85 backdrop-blur-md transition-all duration-300">
       
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-6 right-6 z-[250] bg-purple-950/90 text-white px-5 py-3 rounded-2xl shadow-2xl border border-amber-500/50 font-bold text-xs flex items-center gap-2 animate-bounce">
+          <Sparkles className="w-4 h-4 text-yellow-300" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* Magic Spellbook / Parchment style RPG Container */}
       <div 
         className="relative w-full max-w-2xl bg-gradient-to-b from-purple-950/90 via-stone-900/95 to-slate-950/95 border-2 border-amber-600/40 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-[0_0_50px_rgba(217,119,6,0.25)] flex flex-col p-6 md:p-8 animate-in fade-in zoom-in-95 duration-200"
@@ -475,9 +497,11 @@ export default function QuestCardModal() {
 
         {/* Modal Close Button */}
         <button 
+          type="button"
           onClick={closeQuestModal}
           disabled={isLoading || showCanvas}
-          className="absolute top-4 right-4 p-2 rounded-full bg-stone-950 border border-amber-700/30 hover:bg-stone-900 text-amber-500 hover:text-amber-400 transition-all shadow disabled:opacity-30 disabled:pointer-events-none"
+          aria-label="Cerrar ventana del desafío"
+          className="absolute top-4 right-4 p-2 rounded-full bg-stone-950 border border-amber-700/30 hover:bg-stone-900 text-amber-500 hover:text-amber-400 transition-all shadow disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
         >
           <X className="h-4 w-4" />
         </button>
@@ -561,8 +585,11 @@ export default function QuestCardModal() {
 
             {/* CTA to start battle */}
             <button
+              type="button"
               onClick={() => setCombatState('active')}
-              className="mt-4 w-full py-4 bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 hover:from-amber-500 hover:to-yellow-500 hover:shadow-[0_0_25px_rgba(245,158,11,0.45)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-350 font-serif font-black text-xs uppercase tracking-widest text-stone-950 rounded-2xl flex items-center justify-center gap-2 border border-amber-500/30"
+              disabled={isLoading}
+              aria-label={activeQuest.type === 'exam' ? 'Enfrentar al jefe del examen' : 'Preparar hechizo del desafío'}
+              className="mt-4 w-full py-4 bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 hover:from-amber-500 hover:to-yellow-500 hover:shadow-[0_0_25px_rgba(245,158,11,0.45)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-350 font-serif font-black text-xs uppercase tracking-widest text-stone-950 rounded-2xl flex items-center justify-center gap-2 border border-amber-500/30 cursor-pointer disabled:opacity-50"
             >
               <Swords className="h-4.5 w-4.5 animate-pulse" />
               {activeQuest.type === 'exam' ? 'ENFRENTAR AL JEFE' : '¡PREPARAR HECHIZO!'}
@@ -693,9 +720,11 @@ export default function QuestCardModal() {
                         return (
                           <button
                             key={idx}
-                            disabled={isAnswerSubmitted}
+                            type="button"
+                            disabled={isAnswerSubmitted || isLoading}
                             onClick={() => handleQuizAnswerSubmit(idx)}
-                            className={`flex items-center gap-3 p-3.5 rounded-xl border text-left font-serif text-xs transition-all ${btnStyle}`}
+                            aria-label={`Opción ${String.fromCharCode(65 + idx)}: ${opt}`}
+                            className={`flex items-center gap-3 p-3.5 rounded-xl border text-left font-serif text-xs transition-all cursor-pointer disabled:cursor-not-allowed ${btnStyle}`}
                           >
                             <span className="h-5 w-5 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center text-[10px] font-black text-amber-500 shrink-0">
                               {String.fromCharCode(65 + idx)}
@@ -731,8 +760,11 @@ export default function QuestCardModal() {
                     {isAnswerSubmitted && (
                       <div className="flex justify-end mt-2">
                         <button
+                          type="button"
                           onClick={handleQuizNextQuestion}
-                          className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 font-serif font-black text-xs flex items-center gap-1.5 shadow"
+                          disabled={isLoading}
+                          aria-label={currentQuestionIdx < ((activeQuest.content as any).questions || []).length - 1 ? 'Ir a la siguiente pregunta' : 'Finalizar aventura y guardar'}
+                          className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 font-serif font-black text-xs flex items-center gap-1.5 shadow cursor-pointer disabled:opacity-50"
                         >
                           {currentQuestionIdx < ((activeQuest.content as any).questions || []).length - 1 ? 'Siguiente Pregunta' : 'Finalizar Aventura'}
                           <ChevronRight className="h-3.5 w-3.5" />
@@ -756,7 +788,9 @@ export default function QuestCardModal() {
                       <button
                         type="button"
                         onClick={() => setShowPortfolioForm(true)}
-                        className="w-full py-4 rounded-xl font-serif font-black text-xs text-stone-950 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 uppercase tracking-widest transition-all duration-200 border border-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
+                        disabled={isLoading}
+                        aria-label="Preparar grimorio escolar y evidencia"
+                        className="w-full py-4 rounded-xl font-serif font-black text-xs text-stone-950 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 uppercase tracking-widest transition-all duration-200 border border-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:opacity-50"
                       >
                         <span>Preparar grimorio escolar</span>
                         <Shield className="h-4 w-4 fill-stone-950 text-stone-950" />
@@ -771,7 +805,8 @@ export default function QuestCardModal() {
                             <button
                               type="button"
                               onClick={() => insertFormat('bold')}
-                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white"
+                              aria-label="Formato negrita"
+                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white cursor-pointer"
                               title="Negrita"
                             >
                               <Bold className="h-3.5 w-3.5" />
@@ -779,7 +814,8 @@ export default function QuestCardModal() {
                             <button
                               type="button"
                               onClick={() => insertFormat('italic')}
-                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white"
+                              aria-label="Formato cursiva"
+                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white cursor-pointer"
                               title="Cursiva"
                             >
                               <Italic className="h-3.5 w-3.5" />
@@ -787,7 +823,8 @@ export default function QuestCardModal() {
                             <button
                               type="button"
                               onClick={() => insertFormat('list')}
-                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white"
+                              aria-label="Formato lista con viñetas"
+                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white cursor-pointer"
                               title="Lista"
                             >
                               <List className="h-3.5 w-3.5" />
@@ -795,7 +832,8 @@ export default function QuestCardModal() {
                             <button
                               type="button"
                               onClick={() => insertFormat('header')}
-                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white"
+                              aria-label="Formato encabezado"
+                              className="p-1 rounded hover:bg-stone-905 text-stone-400 hover:text-white cursor-pointer"
                               title="Título"
                             >
                               <Heading className="h-3.5 w-3.5" />
@@ -807,8 +845,9 @@ export default function QuestCardModal() {
                             value={reflection}
                             onChange={(e) => setReflection(e.target.value)}
                             required
+                            disabled={isLoading}
                             placeholder="Inscribe en este pergamino qué hiciste en la actividad y tu reflexión sobre lo que aprendiste."
-                            className="w-full text-xs p-3 rounded-b-xl border border-stone-850 bg-stone-950 focus:border-amber-500 focus:outline-none min-h-[90px] text-stone-100 font-serif leading-relaxed"
+                            className="w-full text-xs p-3 rounded-b-xl border border-stone-850 bg-stone-950 focus:border-amber-500 focus:outline-none min-h-[90px] text-stone-100 font-serif leading-relaxed disabled:opacity-50"
                           />
                         </div>
 
@@ -826,7 +865,9 @@ export default function QuestCardModal() {
                                   <button
                                     type="button"
                                     onClick={() => simulateFileUpload('image')}
-                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-stone-850 hover:border-stone-800 text-[10px] font-black bg-stone-950 text-stone-400 font-serif"
+                                    disabled={isLoading}
+                                    aria-label="Adjuntar foto o dibujo"
+                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-stone-850 hover:border-stone-800 text-[10px] font-black bg-stone-950 text-stone-400 font-serif cursor-pointer disabled:opacity-50"
                                   >
                                     <FileImage className="h-3.5 w-3.5 text-emerald-400" />
                                     Foto / Dibujo
@@ -836,7 +877,9 @@ export default function QuestCardModal() {
                                   <button
                                     type="button"
                                     onClick={() => simulateFileUpload('audio')}
-                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-stone-850 hover:border-stone-800 text-[10px] font-black bg-stone-950 text-stone-400 font-serif"
+                                    disabled={isLoading}
+                                    aria-label="Grabar o adjuntar audio"
+                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-stone-850 hover:border-stone-800 text-[10px] font-black bg-stone-950 text-stone-400 font-serif cursor-pointer disabled:opacity-50"
                                   >
                                     <Mic className="h-3.5 w-3.5 text-purple-400" />
                                     Grabar Audio
@@ -855,7 +898,9 @@ export default function QuestCardModal() {
                               <button
                                 type="button"
                                 onClick={() => setMockFile(null)}
-                                className="text-[10px] text-red-500 hover:underline font-bold"
+                                disabled={isLoading}
+                                aria-label="Remover archivo adjunto"
+                                className="text-[10px] text-red-500 hover:underline font-bold cursor-pointer disabled:opacity-50"
                               >
                                 Remover
                               </button>
@@ -875,14 +920,15 @@ export default function QuestCardModal() {
                         {/* Launch Attack Button con alto contraste y visibilidad */}
                         <button
                           type="submit"
-                          disabled={!mockFile || !reflection}
+                          disabled={!mockFile || !reflection || isLoading}
+                          aria-label="Lanzar hechizo y guardar evidencia"
                           className={`w-full mt-3 py-3.5 font-serif font-black text-xs uppercase tracking-widest transition-all rounded-xl border ${
-                            !mockFile || !reflection
+                            !mockFile || !reflection || isLoading
                               ? 'bg-stone-900 text-stone-300 border-stone-700 opacity-90 cursor-not-allowed'
                               : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-stone-950 border-amber-400 shadow-lg shadow-amber-500/25 cursor-pointer'
                           }`}
                         >
-                          ¡LANZAR HECHIZO!
+                          {isLoading ? 'INSCRIBIENDO HECHIZO...' : '¡LANZAR HECHIZO!'}
                         </button>
                         {(!mockFile || !reflection) && (
                           <p className="text-[10px] text-amber-300/90 font-sans font-semibold text-center mt-1.5">
@@ -936,8 +982,11 @@ export default function QuestCardModal() {
 
             {/* Close Button */}
             <button
+              type="button"
               onClick={closeQuestModal}
-              className="px-6 py-2.5 bg-stone-900 hover:bg-stone-850 text-stone-200 hover:text-white rounded-xl text-xs font-serif font-bold transition-all border border-stone-800"
+              disabled={isLoading}
+              aria-label="Regresar al mapa de aventuras"
+              className="px-6 py-2.5 bg-stone-900 hover:bg-stone-850 text-stone-200 hover:text-white rounded-xl text-xs font-serif font-bold transition-all border border-stone-800 cursor-pointer disabled:opacity-50"
             >
               Regresar al Mapa
             </button>
@@ -965,6 +1014,7 @@ export default function QuestCardModal() {
 
             <div className="flex gap-3">
               <button
+                type="button"
                 onClick={() => {
                   setCombatState('active');
                   setTimer(30);
@@ -974,13 +1024,18 @@ export default function QuestCardModal() {
                   setCorrectCount(0);
                   setQuizAnswers({});
                 }}
-                className="px-6 py-2.5 bg-gradient-to-r from-red-750 to-rose-750 hover:from-red-650 hover:to-rose-650 text-white rounded-xl text-xs font-serif font-black transition-all"
+                disabled={isLoading}
+                aria-label="Reintentar conjuro del desafío"
+                className="px-6 py-2.5 bg-gradient-to-r from-red-750 to-rose-750 hover:from-red-650 hover:to-rose-650 text-white rounded-xl text-xs font-serif font-black transition-all cursor-pointer disabled:opacity-50"
               >
                 Reintentar Conjuro
               </button>
               <button
+                type="button"
                 onClick={closeQuestModal}
-                className="px-5 py-2.5 bg-stone-900 hover:bg-stone-850 text-stone-400 hover:text-white rounded-xl text-xs font-serif font-bold transition-all border border-stone-800"
+                disabled={isLoading}
+                aria-label="Salir del desafío"
+                className="px-5 py-2.5 bg-stone-900 hover:bg-stone-850 text-stone-400 hover:text-white rounded-xl text-xs font-serif font-bold transition-all border border-stone-800 cursor-pointer disabled:opacity-50"
               >
                 Salir
               </button>

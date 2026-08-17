@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 import { CommunityActivity, CanvasActivityJSON } from '@/types';
 import { ISkoolActivityPlayer } from './ISkoolActivityPlayer';
 import { AssignToClassModal } from './AssignToClassModal';
+import { getIndependenceCommunityActivities } from '@/data/mexicanIndependenceActivities';
 import { 
   Heart, 
   Sparkles, 
@@ -19,7 +21,8 @@ import {
   Search,
   MessageSquare,
   Award,
-  Rocket
+  Rocket,
+  X
 } from 'lucide-react';
 
 export const TeacherCommunityView: React.FC = () => {
@@ -30,7 +33,13 @@ export const TeacherCommunityView: React.FC = () => {
   const [selectedActivity, setSelectedActivity] = useState<CommunityActivity | null>(null);
   const [assigningActivity, setAssigningActivity] = useState<CommunityActivity | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'independencia' | 'quiz' | 'visual' | 'puzzle' | 'challenge'>('all');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const teacherId = user?.id || 'usr-teacher-1';
 
@@ -38,19 +47,27 @@ export const TeacherCommunityView: React.FC = () => {
   const fetchCommunityData = async () => {
     setIsLoading(true);
     try {
-      // 1. Obtener actividades ordenadas por votos
+      const independenceActivities = getIndependenceCommunityActivities();
+
+      // 1. Obtener actividades creadas en la BD
       const { data: activitiesData, error: actError } = await supabase
         .from('community_activities')
         .select('*')
         .order('upvotes', { ascending: false });
 
       if (actError) {
-        console.warn('Supabase fetch error, usando mock data:', actError);
+        console.warn('Supabase fetch error, combinando con mock data:', actError);
         setActivities(getMockCommunityActivities());
       } else if (activitiesData && activitiesData.length > 0) {
-        setActivities(activitiesData as CommunityActivity[]);
+        // Combinar actividades creadas por usuarios en Supabase con el catálogo de 40 de Independencia
+        const dbIds = new Set(activitiesData.map(a => a.id));
+        const combined = [
+          ...(activitiesData as CommunityActivity[]),
+          ...independenceActivities.filter(a => !dbIds.has(a.id))
+        ];
+        combined.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
+        setActivities(combined);
       } else {
-        // Si la tabla está vacía en producción, inyectar plantillas de ejemplo
         setActivities(getMockCommunityActivities());
       }
 
@@ -78,6 +95,18 @@ export const TeacherCommunityView: React.FC = () => {
     fetchCommunityData();
   }, [teacherId]);
 
+  // Bloqueo de scroll en la página de fondo mientras un modal está abierto
+  useEffect(() => {
+    if (selectedActivity || assigningActivity) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedActivity, assigningActivity]);
+
   // Manejador del Voto Antifraude
   const handleVote = async (activity: CommunityActivity) => {
     if (votedActivityIds.has(activity.id)) return;
@@ -97,7 +126,6 @@ export const TeacherCommunityView: React.FC = () => {
         });
 
       if (error) {
-        // Código 23505: Violación de llave primaria (Ya votó previamente)
         if (error.code === '23505') {
           showToast('Ya habías emitido tu voto en esta actividad.');
         } else {
@@ -111,21 +139,71 @@ export const TeacherCommunityView: React.FC = () => {
     }
   };
 
-  // Clonar actividad
-  const handleCloneActivity = (activity: CommunityActivity) => {
-    showToast(`✨ ¡Plantilla "${activity.title}" clonada a tu estudio!`);
-  };
-
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 4000);
   };
 
-  // Filtrado
-  const filteredActivities = activities.filter(act => 
-    act.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    act.template_type.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Conteos dinámicos para las pestañas de filtros
+  const counts = useMemo(() => {
+    const indep = activities.filter(act => 
+      act.id.startsWith('indep-') || 
+      act.title.toLowerCase().includes('independencia') || 
+      act.title.toLowerCase().includes('dolores') || 
+      act.title.toLowerCase().includes('hidalgo') || 
+      act.title.toLowerCase().includes('morelos') || 
+      act.title.toLowerCase().includes('insurgente') ||
+      (act.content_json?.description && act.content_json.description.toLowerCase().includes('independencia'))
+    ).length;
+
+    const quiz = activities.filter(act => ['trivia', 'ruleta', 'ordenamiento'].includes(act.template_type.toLowerCase())).length;
+    const visual = activities.filter(act => ['memorama', 'flashcards', 'rompecabezas', 'mapa_interactivo'].includes(act.template_type.toLowerCase())).length;
+    const puzzle = activities.filter(act => ['ahorcado', 'match', 'sentence_builder', 'escape_room', 'crucigrama', 'word_detective', 'sopa_letras', 'clasificacion'].includes(act.template_type.toLowerCase())).length;
+    const challenge = activities.filter(act => ['carrera_math', 'tf_explosivo', 'simon_says', 'batalla_respuestas', 'treasure_hunt'].includes(act.template_type.toLowerCase())).length;
+
+    return { total: activities.length, indep, quiz, visual, puzzle, challenge };
+  }, [activities]);
+
+  // Filtrado de Actividades
+  const filteredActivities = useMemo(() => {
+    return activities.filter(act => {
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = act.title.toLowerCase().includes(q) ||
+        act.template_type.toLowerCase().includes(q) ||
+        (act.teacher_name && act.teacher_name.toLowerCase().includes(q)) ||
+        (act.content_json?.description && act.content_json.description.toLowerCase().includes(q));
+
+      if (!matchesSearch) return false;
+
+      if (categoryFilter === 'independencia') {
+        return act.id.startsWith('indep-') || 
+          act.title.toLowerCase().includes('independencia') || 
+          act.title.toLowerCase().includes('dolores') || 
+          act.title.toLowerCase().includes('hidalgo') || 
+          act.title.toLowerCase().includes('morelos') || 
+          act.title.toLowerCase().includes('insurgente') ||
+          (act.content_json?.description && act.content_json.description.toLowerCase().includes('independencia'));
+      }
+
+      if (categoryFilter === 'quiz') {
+        return ['trivia', 'ruleta', 'ordenamiento'].includes(act.template_type.toLowerCase());
+      }
+
+      if (categoryFilter === 'visual') {
+        return ['memorama', 'flashcards', 'rompecabezas', 'mapa_interactivo'].includes(act.template_type.toLowerCase());
+      }
+
+      if (categoryFilter === 'puzzle') {
+        return ['ahorcado', 'match', 'sentence_builder', 'escape_room', 'crucigrama', 'word_detective', 'sopa_letras', 'clasificacion'].includes(act.template_type.toLowerCase());
+      }
+
+      if (categoryFilter === 'challenge') {
+        return ['carrera_math', 'tf_explosivo', 'simon_says', 'batalla_respuestas', 'treasure_hunt'].includes(act.template_type.toLowerCase());
+      }
+
+      return true;
+    });
+  }, [activities, searchQuery, categoryFilter]);
 
   return (
     <div className="w-full space-y-8 animate-fade-in">
@@ -149,7 +227,7 @@ export const TeacherCommunityView: React.FC = () => {
             Comunidad Docente
           </h1>
           <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">
-            Explora juegos creados por otros profesores, apóyalos con tu voto y clónalos a tus grupos.
+            Explora más de 40 juegos creados y catalogados por otros profesores, apóyalos con tu voto y clónalos a tus grupos.
           </p>
         </div>
 
@@ -159,17 +237,20 @@ export const TeacherCommunityView: React.FC = () => {
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Buscar actividad..."
+              placeholder="Buscar actividad o tema..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
+              aria-label="Buscar actividad docente en la comunidad"
               className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
 
           <button
+            type="button"
             onClick={fetchCommunityData}
             disabled={isLoading}
-            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 transition-all shadow-sm disabled:opacity-50"
+            aria-label="Actualizar listado de la comunidad docente"
+            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 transition-all shadow-sm disabled:opacity-50 cursor-pointer"
             title="Actualizar comunidad"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-emerald-500' : ''}`} />
@@ -177,17 +258,124 @@ export const TeacherCommunityView: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal Reproductor Visual (Fábrica de Actividades ISkool) */}
-      {selectedActivity && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="w-full max-w-4xl">
-            <ISkoolActivityPlayer
-              activity={selectedActivity.content_json}
-              templateType={selectedActivity.template_type}
-              onClose={() => setSelectedActivity(null)}
-            />
+      {/* Barra de Filtros por Categoría */}
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setCategoryFilter('all')}
+          aria-label="Ver todas las actividades"
+          className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer ${
+            categoryFilter === 'all'
+              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25'
+              : 'bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800 hover:bg-slate-50'
+          }`}
+        >
+          Todas ({counts.total})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCategoryFilter('independencia')}
+          aria-label="Filtrar por Independencia de México"
+          className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+            categoryFilter === 'independencia'
+              ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/25 ring-2 ring-purple-400'
+              : 'bg-white dark:bg-zinc-900 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/60 hover:bg-purple-50 dark:hover:bg-purple-950/40'
+          }`}
+        >
+          <span>🇲🇽 Independencia de México ({counts.indep})</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCategoryFilter('quiz')}
+          aria-label="Filtrar por tipo Quiz"
+          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+            categoryFilter === 'quiz'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+          }`}
+        >
+          Quizzes & Ruletas ({counts.quiz})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCategoryFilter('visual')}
+          aria-label="Filtrar por tipo Visual"
+          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+            categoryFilter === 'visual'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+          }`}
+        >
+          Visuales & Memoramas ({counts.visual})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCategoryFilter('puzzle')}
+          aria-label="Filtrar por tipo Puzzle"
+          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+            categoryFilter === 'puzzle'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+          }`}
+        >
+          Puzzles & Escape Rooms ({counts.puzzle})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCategoryFilter('challenge')}
+          aria-label="Filtrar por tipo Challenge"
+          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+            categoryFilter === 'challenge'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+          }`}
+        >
+          Desafíos & Carreras ({counts.challenge})
+        </button>
+      </div>
+
+      {/* Modal Reproductor Visual (Fábrica de Actividades ISkool) con Portal al Viewport */}
+      {mounted && selectedActivity && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-sm flex items-start justify-center p-3 sm:p-4 pt-6 sm:pt-10 overflow-y-auto animate-fade-in">
+          <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-2xl overflow-hidden animate-scale-in my-auto sm:my-2">
+            {/* Barra Superior Integrada y Compacta */}
+            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 dark:border-zinc-800 bg-slate-50/90 dark:bg-zinc-850/90">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border border-purple-200/50">
+                  {selectedActivity.template_type.toUpperCase()}
+                </span>
+                <h3 className="text-xs font-black text-slate-800 dark:text-zinc-200 line-clamp-1">
+                  {selectedActivity.title}
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedActivity(null)}
+                aria-label="Cerrar reproductor de juego"
+                className="p-1.5 rounded-xl bg-slate-200/80 dark:bg-zinc-750 hover:bg-rose-500 hover:text-white text-slate-600 dark:text-zinc-300 transition-all cursor-pointer shadow-sm"
+                title="Cerrar vista previa"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Contenido de la actividad con tamaño exacto */}
+            <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto">
+              <ISkoolActivityPlayer
+                activity={selectedActivity.content_json}
+                templateType={selectedActivity.template_type}
+                onClose={() => setSelectedActivity(null)}
+              />
+            </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Modal Asignación Rápida a Clase (1 Clic) */}
@@ -209,7 +397,7 @@ export const TeacherCommunityView: React.FC = () => {
       ) : filteredActivities.length === 0 ? (
         <div className="py-16 text-center bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 space-y-3">
           <Globe className="w-12 h-12 text-slate-300 mx-auto" />
-          <p className="text-base font-bold text-slate-700 dark:text-zinc-300">No se encontraron actividades en la comunidad.</p>
+          <p className="text-base font-bold text-slate-700 dark:text-zinc-300">No se encontraron actividades en esta categoría.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -225,62 +413,71 @@ export const TeacherCommunityView: React.FC = () => {
                   {/* Tipo de Plantilla & Votos */}
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-black px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 border border-purple-200/40 uppercase tracking-wider">
-                      🎮 {activity.template_type || 'Trivia IA'}
+                      🎮 {activity.template_type}
                     </span>
 
-                    {/* Botón Votar Antifraude */}
                     <button
+                      type="button"
                       onClick={() => handleVote(activity)}
                       disabled={hasVoted}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm ${
-                        hasVoted
-                          ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200/40 cursor-default'
-                          : 'bg-slate-100 dark:bg-zinc-800 hover:bg-rose-500 hover:text-white text-slate-700 dark:text-zinc-300 border border-slate-200/50 dark:border-zinc-700/50'
+                      aria-label={`Votar por la actividad ${activity.title}`}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black transition-all cursor-pointer ${
+                        hasVoted 
+                          ? 'bg-rose-50 dark:bg-rose-950/80 text-rose-500 border border-rose-200/60' 
+                          : 'bg-slate-100 dark:bg-zinc-800 hover:bg-rose-50 hover:text-rose-500 text-slate-600 dark:text-zinc-300'
                       }`}
+                      title={hasVoted ? 'Ya votaste por este juego' : 'Votar por este juego'}
                     >
                       <Heart className={`w-3.5 h-3.5 ${hasVoted ? 'fill-rose-500 text-rose-500' : ''}`} />
-                      <span>{activity.upvotes}</span>
-                      <span className="text-[10px] opacity-75">{hasVoted ? '(Votado)' : 'Votar'}</span>
+                      <span>{activity.upvotes || 0}</span>
+                      <span className="text-[10px] font-normal text-slate-400">
+                        {hasVoted ? 'Votado' : 'Votar'}
+                      </span>
                     </button>
                   </div>
 
-                  {/* Título & Descripción */}
-                  <div className="space-y-1.5">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
+                  {/* Título & Autor */}
+                  <div>
+                    <h3 className="text-base font-black text-slate-900 dark:text-white line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                       {activity.title}
                     </h3>
-
-                    {/* Badge de Autoría Docente */}
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-zinc-300 bg-slate-100 dark:bg-zinc-800/80 px-2.5 py-1 rounded-xl border border-slate-200/60 dark:border-zinc-700/60 w-fit my-1">
-                      <User className="w-3.5 h-3.5 text-blue-500" />
-                      <span>Autor: Prof. {activity.teacher_name || 'Elena Rostova'}</span>
+                    
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-zinc-400 mt-1.5">
+                      <User className="w-3.5 h-3.5 text-purple-400" />
+                      <span className="font-bold text-slate-700 dark:text-zinc-300">
+                        Autor: {activity.teacher_name || (activity.content_json as any)?.author_name || 'Prof. Elena Rostova'}
+                      </span>
                     </div>
 
-                    <p className="text-xs font-normal text-slate-600 dark:text-zinc-400 line-clamp-3 leading-relaxed">
-                      {activity.content_json?.description || 'Actividad interactiva optimizada para el aprendizaje colaborativo.'}
+                    <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 mt-2">
+                      {activity.content_json?.description || 'Actividad interactiva para reforzar aprendizajes clave en el aula.'}
                     </p>
                   </div>
 
-                  {/* Preguntas badge */}
-                  <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-500 dark:text-zinc-400 pt-1">
+                  {/* Metadata de Preguntas */}
+                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-slate-500 dark:text-zinc-400">
                     <BrainCircuit className="w-3.5 h-3.5 text-purple-500" />
-                    <span>{activity.content_json?.questions?.length || 0} Preguntas Interactivas</span>
+                    <span>{activity.content_json?.questions?.length || 4} Preguntas Interactivas</span>
                   </div>
                 </div>
 
-                {/* Acciones principales: Jugar / Previsualizar & Asignar a Clase en 1 Clic */}
-                <div className="pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+                {/* Acciones de la Tarjeta */}
+                <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 dark:border-zinc-800">
                   <button
+                    type="button"
                     onClick={() => setSelectedActivity(activity)}
-                    className="flex-1 py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20"
+                    aria-label={`Previsualizar y jugar ${activity.title}`}
+                    className="py-2.5 px-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <Play className="w-3.5 h-3.5 fill-white" />
                     <span>Previsualizar</span>
                   </button>
 
                   <button
+                    type="button"
                     onClick={() => setAssigningActivity(activity)}
-                    className="py-2.5 px-3.5 rounded-2xl bg-purple-100 dark:bg-purple-950/80 hover:bg-purple-600 hover:text-white text-purple-700 dark:text-purple-300 font-bold text-xs transition-all flex items-center gap-1.5 border border-purple-200/50 dark:border-purple-800/50 shadow-sm cursor-pointer"
+                    aria-label={`Asignar ${activity.title} a mi clase`}
+                    className="py-2.5 px-3.5 rounded-2xl bg-purple-100 dark:bg-purple-950/80 hover:bg-purple-600 hover:text-white text-purple-700 dark:text-purple-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5 border border-purple-200/50 dark:border-purple-800/50 shadow-sm cursor-pointer"
                     title="Asignar este juego a mis alumnos en 1 clic"
                   >
                     <Rocket className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 group-hover:text-white" />
@@ -299,14 +496,17 @@ export const TeacherCommunityView: React.FC = () => {
 
 // Plantillas de ejemplo por defecto para previsualizar si la BD aún no tiene registros
 function getMockCommunityActivities(): CommunityActivity[] {
-  return [
+  const independenceActivities = getIndependenceCommunityActivities();
+  
+  const baseActivities: CommunityActivity[] = [
     {
       id: 'act-mock-1',
       teacher_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
       title: 'Desafío del Biodigestor Anaeróbico',
       template_type: 'trivia',
-      upvotes: 24,
+      upvotes: 42,
       created_at: new Date().toISOString(),
+      teacher_name: 'Elena Rostova',
       content_json: {
         title: 'Desafío del Biodigestor Anaeróbico',
         description: 'Demuestra tus conocimientos sobre ecotecnias, descomposición de materia orgánica y generación de biogás para la comunidad.',
@@ -334,8 +534,9 @@ function getMockCommunityActivities(): CommunityActivity[] {
       teacher_id: 'usr-teacher-2',
       title: 'La Pizza de Fracciones Equivalentes',
       template_type: 'memorama',
-      upvotes: 18,
+      upvotes: 38,
       created_at: new Date().toISOString(),
+      teacher_name: 'Carlos Mendoza',
       content_json: {
         title: 'La Pizza de Fracciones Equivalentes',
         description: 'Resuelve problemas prácticos dividiendo pizzas y descubriendo fracciones equivalentes.',
@@ -352,25 +553,8 @@ function getMockCommunityActivities(): CommunityActivity[] {
           }
         ]
       }
-    },
-    {
-      id: 'act-mock-3',
-      teacher_id: 'usr-teacher-3',
-      title: 'Leyendas y Relatos Regionales de México',
-      template_type: 'trivia',
-      upvotes: 12,
-      created_at: new Date().toISOString(),
-      content_json: {
-        title: 'Leyendas y Relatos Regionales de México',
-        description: 'Explora la riqueza poética y narrativa de las leyendas tradicionales mexicanas.',
-        questions: [
-          {
-            question: '¿Qué elemento caracteriza a una leyenda frente a un mito tradicional?',
-            options: ['Está basada únicamente en hechos científicos', 'Combina hechos históricos reales con elementos fantásticos', 'Es escrita en lenguaje de código informático', 'No tiene autores ni tradición oral'],
-            correctIndex: 1
-          }
-        ]
-      }
     }
   ];
+
+  return [...independenceActivities, ...baseActivities];
 }

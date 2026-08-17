@@ -241,108 +241,116 @@ export default function PixiCombatView({
     let cleanupMouse: (() => void) | null = null;
     let cleanupCoop: (() => void) | null = null;
 
+    const assetsToLoad = [
+      '/images/rpg/combat_bg.png',
+      '/images/rpg/boss_sprite.png',
+      '/images/rpg/ui/Dragonhpbar.png',
+      '/images/rpg/ui/DragonHpBar2.png',
+      '/images/rpg/ui/DragonHpBar3.png',
+      '/images/students/default.png',
+      '/images/students/elena.png',
+      '/images/students/lucas.png',
+      '/images/students/mateo.png',
+      '/images/students/santi.png',
+      '/images/rpg/santi_sprite.png',
+      '/images/rpg/lucas_sprite.png',
+      '/images/rpg/elena_sprite.png',
+      '/images/caracteres/bruja/bruxa.png',
+      ...Object.values(DRAGON_ENEMIES_MAP).map(def => def.textureUrl),
+      ...Object.values(DRAGON_ENEMIES_MAP).filter(def => def.sparkTextureUrl).map(def => def.sparkTextureUrl!)
+    ];
+
     async function initPixi() {
       if (!containerRef.current) return;
 
       // 1. Preload all textures asynchronously before instantiating PIXI.Sprite
-        const assetsToLoad = [
-          '/images/rpg/combat_bg.png',
-          '/images/rpg/boss_sprite.png',
-          '/images/rpg/ui/Dragonhpbar.png',
-          '/images/rpg/ui/DragonHpBar2.png',
-          '/images/rpg/ui/DragonHpBar3.png',
-          '/images/students/default.png',
-          '/images/students/elena.png',
-          '/images/students/lucas.png',
-          '/images/students/mateo.png',
-          '/images/students/santi.png',
-          '/images/rpg/santi_sprite.png',
-          '/images/rpg/lucas_sprite.png',
-          '/images/rpg/elena_sprite.png',
-          '/images/caracteres/bruja/bruxa.png',
-          ...Object.values(DRAGON_ENEMIES_MAP).map(def => def.textureUrl),
-          ...Object.values(DRAGON_ENEMIES_MAP).filter(def => def.sparkTextureUrl).map(def => def.sparkTextureUrl!)
-        ];
+      let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
+      let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
+      let activeDragonDef: DragonEnemyDef = DRAGON_ENEMIES_MAP.blood_dragon;
+      let mainDragonTex: PIXI.Texture;
+      let sparksDragonTex: PIXI.Texture | null = null;
+      const avatarTextures = new Map<string, PIXI.Texture>();
 
-        let bgTex: PIXI.Texture, bossTex: PIXI.Texture;
-        let hpFrameTex: PIXI.Texture, hpFillTex: PIXI.Texture, hpFillAltTex: PIXI.Texture;
-        let activeDragonDef: DragonEnemyDef = DRAGON_ENEMIES_MAP.blood_dragon;
-        let mainDragonTex: PIXI.Texture;
-        let sparksDragonTex: PIXI.Texture | null = null;
-        const avatarTextures = new Map<string, PIXI.Texture>();
+      try {
+        await PIXI.Assets.load(assetsToLoad);
 
-        try {
-          await PIXI.Assets.load(assetsToLoad);
+        bgTex = PIXI.Assets.get('/images/rpg/combat_bg.png');
+        bossTex = PIXI.Assets.get('/images/rpg/boss_sprite.png');
+        
+        // High fidelity Dragon HP Bar UI Assets
+        hpFrameTex = PIXI.Assets.get('/images/rpg/ui/Dragonhpbar.png');
+        hpFillTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar2.png');
+        hpFillAltTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar3.png');
 
-          bgTex = PIXI.Assets.get('/images/rpg/combat_bg.png');
-          bossTex = PIXI.Assets.get('/images/rpg/boss_sprite.png');
-          
-          // High fidelity Dragon HP Bar UI Assets
-          hpFrameTex = PIXI.Assets.get('/images/rpg/ui/Dragonhpbar.png');
-          hpFillTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar2.png');
-          hpFillAltTex = PIXI.Assets.get('/images/rpg/ui/DragonHpBar3.png');
+        const selectedDragonKey = getDragonEnemyKey(guildBoss.name, enemyType || guildBoss.enemy_type);
+        activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
+        
+        mainDragonTex = PIXI.Assets.get(activeDragonDef.textureUrl) || bossTex;
+        sparksDragonTex = activeDragonDef.sparkTextureUrl ? (PIXI.Assets.get(activeDragonDef.sparkTextureUrl) || null) : null;
 
-          const selectedDragonKey = getDragonEnemyKey(guildBoss.name, enemyType || guildBoss.enemy_type);
-          activeDragonDef = DRAGON_ENEMIES_MAP[selectedDragonKey] || DRAGON_ENEMIES_MAP.blood_dragon;
-          
-          mainDragonTex = PIXI.Assets.get(activeDragonDef.textureUrl) || bossTex;
-          sparksDragonTex = activeDragonDef.sparkTextureUrl ? (PIXI.Assets.get(activeDragonDef.sparkTextureUrl) || null) : null;
+        // Dynamic student avatars
+        avatarTextures.set('default', PIXI.Assets.get('/images/students/default.png'));
+        avatarTextures.set('elena', PIXI.Assets.get('/images/students/elena.png'));
+        avatarTextures.set('lucas', PIXI.Assets.get('/images/students/lucas.png'));
+        avatarTextures.set('mateo', PIXI.Assets.get('/images/students/mateo.png'));
+        avatarTextures.set('santi', PIXI.Assets.get('/images/students/santi.png'));
 
-          // Dynamic student avatars
-          avatarTextures.set('default', PIXI.Assets.get('/images/students/default.png'));
-          avatarTextures.set('elena', PIXI.Assets.get('/images/students/elena.png'));
-          avatarTextures.set('lucas', PIXI.Assets.get('/images/students/lucas.png'));
-          avatarTextures.set('mateo', PIXI.Assets.get('/images/students/mateo.png'));
-          avatarTextures.set('santi', PIXI.Assets.get('/images/students/santi.png'));
-
-          // RPG sprites y Bruxa Helena
-          avatarTextures.set('santi_sprite', PIXI.Assets.get('/images/rpg/santi_sprite.png'));
-          avatarTextures.set('lucas_sprite', PIXI.Assets.get('/images/rpg/lucas_sprite.png'));
-          
-          const rawBruxaTex = PIXI.Assets.get('/images/caracteres/bruja/bruxa.png');
-          if (rawBruxaTex) {
-            try {
-              const frame = new PIXI.Rectangle(100, 0, 100, 100);
-              const croppedBruxaTex = new PIXI.Texture({
-                source: rawBruxaTex.source,
-                frame: frame
-              });
-              avatarTextures.set('elena', croppedBruxaTex);
-              avatarTextures.set('elena_sprite', croppedBruxaTex);
-              avatarTextures.set('helena', croppedBruxaTex);
-              avatarTextures.set('bruxa', croppedBruxaTex);
-            } catch (err) {
-              avatarTextures.set('elena', rawBruxaTex);
-              avatarTextures.set('elena_sprite', rawBruxaTex);
-              avatarTextures.set('helena', rawBruxaTex);
-            }
-          } else {
-            avatarTextures.set('elena_sprite', PIXI.Assets.get('/images/rpg/elena_sprite.png'));
+        // RPG sprites y Bruxa Helena
+        avatarTextures.set('santi_sprite', PIXI.Assets.get('/images/rpg/santi_sprite.png'));
+        avatarTextures.set('lucas_sprite', PIXI.Assets.get('/images/rpg/lucas_sprite.png'));
+        
+        const rawBruxaTex = PIXI.Assets.get('/images/caracteres/bruja/bruxa.png');
+        if (rawBruxaTex) {
+          try {
+            const frame = new PIXI.Rectangle(100, 0, 100, 100);
+            const croppedBruxaTex = new PIXI.Texture({
+              source: rawBruxaTex.source,
+              frame: frame
+            });
+            avatarTextures.set('elena', croppedBruxaTex);
+            avatarTextures.set('elena_sprite', croppedBruxaTex);
+            avatarTextures.set('helena', croppedBruxaTex);
+            avatarTextures.set('bruxa', croppedBruxaTex);
+          } catch (err) {
+            avatarTextures.set('elena', rawBruxaTex);
+            avatarTextures.set('elena_sprite', rawBruxaTex);
+            avatarTextures.set('helena', rawBruxaTex);
           }
-        } catch (e) {
-          console.error("Error preloading combat assets:", e);
-          return;
+        } else {
+          avatarTextures.set('elena_sprite', PIXI.Assets.get('/images/rpg/elena_sprite.png'));
         }
+      } catch (e) {
+        console.error("Error preloading combat assets:", e);
+        return;
+      }
 
-        if (!active) return;
+      if (!active) {
+        try {
+          PIXI.Assets.unload(assetsToLoad);
+        } catch {}
+        return;
+      }
 
-        // 2. Initialize PixiJS Application
-        const app = new PIXI.Application();
-        await app.init({
-          width: 800,
-          height: 320,
-          backgroundAlpha: 0,
-          antialias: true,
-          resolution: window.devicePixelRatio || 1
-        });
+      // 2. Initialize PixiJS Application
+      const app = new PIXI.Application();
+      await app.init({
+        width: 800,
+        height: 320,
+        backgroundAlpha: 0,
+        antialias: true,
+        resolution: window.devicePixelRatio || 1
+      });
 
-        if (!active) {
-          app.destroy(true, { children: true });
-          return;
-        }
+      if (!active) {
+        try {
+          app.destroy(true, { children: true, texture: true, textureSource: true });
+          PIXI.Assets.unload(assetsToLoad);
+        } catch {}
+        return;
+      }
 
-        appRef.current = app;
-        setLoading(false);
+      appRef.current = app;
+      setLoading(false);
         
         // Responsive canvas styles
         app.canvas.style.width = '100%';
@@ -1130,8 +1138,19 @@ export default function PixiCombatView({
       if (cleanupMouse) cleanupMouse();
       if (cleanupCoop) cleanupCoop();
       if (appRef.current) {
-        appRef.current.destroy(true, { children: true, texture: true });
+        try {
+          appRef.current.ticker?.stop();
+          appRef.current.stage?.removeChildren();
+          appRef.current.destroy(true, { children: true, texture: true, textureSource: true });
+        } catch (err) {
+          console.warn("Error destruyendo instancia de Pixi:", err);
+        }
         appRef.current = null;
+      }
+      try {
+        PIXI.Assets.unload(assetsToLoad);
+      } catch (err) {
+        console.warn("Error descargando texturas de Pixi:", err);
       }
     };
   }, []);

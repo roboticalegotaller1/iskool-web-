@@ -83,11 +83,24 @@ export const BruxaPixiSprite: React.FC<BruxaPixiSpriteProps> = ({
 
     return () => {
       cancelAnimationFrame(animFrameId);
+      img.onload = null;
+      img.src = '';
+      if (ctx) {
+        ctx.clearRect(0, 0, width, height);
+      }
+      if (canvas) {
+        canvas.width = 0;
+        canvas.height = 0;
+      }
     };
   }, [width, height]);
 
   return (
-    <div className={`relative inline-flex items-center justify-center filter drop-shadow-[0_6px_12px_rgba(168,85,247,0.8)] overflow-visible ${className}`}>
+    <div 
+      role="img" 
+      aria-label="Animación del personaje Helena Bruxa"
+      className={`relative inline-flex items-center justify-center filter drop-shadow-[0_6px_12px_rgba(168,85,247,0.8)] overflow-visible ${className}`}
+    >
       <canvas ref={canvasRef} className="w-full h-full object-contain" />
     </div>
   );

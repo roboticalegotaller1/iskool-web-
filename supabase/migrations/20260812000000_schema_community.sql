@@ -86,6 +86,7 @@ CREATE OR REPLACE FUNCTION public.handle_activity_vote_change()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public, pg_catalog, pg_temp
 AS $$
 BEGIN
     IF (TG_OP = 'INSERT') THEN

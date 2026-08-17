@@ -235,10 +235,13 @@ export function PetSanctuary() {
                 value={petNameInput}
                 onChange={(e) => setPetNameInput(e.target.value)}
                 maxLength={14}
+                aria-label="Editar nombre de la mascota"
                 className="bg-zinc-900 border border-purple-500/40 text-xs px-2 py-0.5 rounded text-white font-bold focus:outline-none focus:border-purple-400 w-28"
               />
               <button 
+                type="button"
                 onClick={handleSaveName}
+                aria-label="Guardar nuevo nombre de la mascota"
                 className="p-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs flex items-center justify-center cursor-pointer font-bold"
               >
                 <Check className="h-3 w-3" />
@@ -248,10 +251,12 @@ export function PetSanctuary() {
             <>
               <span className="text-xs font-black text-zinc-100">{avatar.pet_name || 'Compañero'}</span>
               <button
+                type="button"
                 onClick={() => {
                   setPetNameInput(avatar.pet_name || '');
                   setIsEditingName(true);
                 }}
+                aria-label="Cambiar nombre de la mascota"
                 className="text-zinc-500 hover:text-purple-400 transition-colors p-0.5 rounded cursor-pointer"
               >
                 <Edit3 className="h-3 w-3" />
@@ -305,6 +310,7 @@ export function PetSanctuary() {
           type="button"
           disabled={isActionLoading || stats.coins < 50}
           onClick={handleFeed}
+          aria-label="Alimentar a la mascota consumiendo 50 galeones"
           className="py-2.5 bg-emerald-700 hover:bg-emerald-650 disabled:opacity-40 disabled:hover:bg-emerald-700 text-white rounded-xl text-[10.5px] font-black flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950/20 transition-all active:scale-95 cursor-pointer border border-emerald-600/35"
         >
           <Coins className="h-3.5 w-3.5 text-yellow-400" />
@@ -315,6 +321,7 @@ export function PetSanctuary() {
           type="button"
           disabled={isActionLoading || (stats.pet_energy ?? 100) < 25}
           onClick={handleTrain}
+          aria-label="Entrenar a la mascota consumiendo 25 de energía"
           className="py-2.5 bg-purple-700 hover:bg-purple-650 disabled:opacity-40 disabled:hover:bg-purple-700 text-white rounded-xl text-[10.5px] font-black flex items-center justify-center gap-1.5 shadow-md shadow-purple-950/20 transition-all active:scale-95 cursor-pointer border border-purple-600/35"
         >
           <Dumbbell className="h-3.5 w-3.5 text-indigo-300" />

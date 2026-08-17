@@ -1,8 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { z } from 'zod';
+import { validateApiAuth } from '@/lib/authValidator';
 
 const OBSIDIAN_VAULT_PATH = 'C:\\Users\\kami-\\Desktop\\2025-2026\\iskool\\obsidean\\brain\\iskool';
+
+const ObsidianQuerySchema = z.object({
+  q: z.string().trim().min(1, 'El parámetro de búsqueda "q" es requerido').max(300),
+  level: z.string().trim().max(100).optional().default(''),
+  grade: z.string().trim().max(100).optional().default(''),
+  subject: z.string().trim().max(100).optional().default('')
+});
+
+const ObsidianPlanningSchema = z.object({
+  title: z.string().trim().min(2, 'El título es obligatorio y debe contener al menos 2 caracteres').max(250),
+  teacherName: z.string().trim().max(150).optional(),
+  levelName: z.string().trim().max(100).optional(),
+  nivel: z.string().trim().max(100).optional(),
+  gradeName: z.string().trim().max(100).optional(),
+  grado: z.string().trim().max(100).optional(),
+  fase: z.string().trim().max(100).optional(),
+  subjectName: z.string().trim().max(150).optional(),
+  asignatura: z.string().trim().max(150).optional(),
+  campoFormativo: z.string().trim().max(200).optional(),
+  ejesArticuladores: z.array(z.string()).optional(),
+  duration: z.string().trim().max(100).optional(),
+  pda: z.string().trim().max(500).optional(),
+  inicio: z.string().trim().max(5000).optional(),
+  desarrollo: z.string().trim().max(5000).optional(),
+  cierre: z.string().trim().max(5000).optional(),
+  evaluacion: z.string().trim().max(5000).optional(),
+  materiales: z.string().trim().max(5000).optional()
+});
 
 function cleanString(str: string) {
   return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -33,13 +63,34 @@ function getAllMarkdownFiles(dirPath: string): string[] {
 
 export async function GET(request: NextRequest) {
   try {
+    // 1. Validación de Sesión y Autenticación
+    const auth = await validateApiAuth(request);
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        { found: false, error: auth.error || 'No autorizado. Se requiere sesión activa.' },
+        { status: 401 }
+      );
+    }
+
+    // 2. Sanitización y validación de parámetros con Zod
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('q') || '';
-    const levelParam = searchParams.get('level') || '';
-    const gradeParam = searchParams.get('grade') || '';
-    const subjectParam = searchParams.get('subject') || '';
+    const parsedQuery = ObsidianQuerySchema.safeParse({
+      q: searchParams.get('q') || '',
+      level: searchParams.get('level') || '',
+      grade: searchParams.get('grade') || '',
+      subject: searchParams.get('subject') || ''
+    });
+
+    if (!parsedQuery.success) {
+      return NextResponse.json(
+        { found: false, error: parsedQuery.error.issues[0]?.message || 'Parámetros inválidos' },
+        { status: 400 }
+      );
+    }
+
+    const { q: query, level: levelParam, grade: gradeParam, subject: subjectParam } = parsedQuery.data;
     
-    if (!query || !fs.existsSync(OBSIDIAN_VAULT_PATH)) {
+    if (!fs.existsSync(OBSIDIAN_VAULT_PATH)) {
       return NextResponse.json({ found: false, note: null });
     }
 
@@ -119,22 +170,46 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const planning = await request.json();
-    if (!planning || !planning.title) {
-      return NextResponse.json({ success: false, error: 'Datos de planeación inválidos' }, { status: 400 });
+    // 1. Validación de Sesión y Autenticación
+    const auth = await validateApiAuth(request);
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        { success: false, error: auth.error || 'No autorizado. Se requiere sesión activa.' },
+        { status: 401 }
+      );
     }
+
+    // 2. Sanitización y validación con Zod
+    const body = await request.json().catch(() => null);
+    const parsedPlanning = ObsidianPlanningSchema.safeParse(body);
+
+    if (!parsedPlanning.success) {
+      return NextResponse.json(
+        { success: false, error: parsedPlanning.error.issues[0]?.message || 'Datos de planeación inválidos' },
+        { status: 400 }
+      );
+    }
+
+    const planning = parsedPlanning.data;
 
     if (!fs.existsSync(OBSIDIAN_VAULT_PATH)) {
       return NextResponse.json({ success: false, error: 'Bóveda de Obsidian no encontrada' }, { status: 404 });
     }
 
-    // Clasificación jerárquica: Nivel Escolar -> Grado/Fase -> Materia
+    // Clasificación jerárquica: Nivel Escolar -> Grado/Fase -> Materia (con protección anti-traversal)
     const levelFolder = sanitizeFolderName(planning.levelName || planning.nivel || 'General');
     const gradeFolder = sanitizeFolderName(planning.gradeName || planning.grado || planning.fase || 'General');
     const subjectFolder = sanitizeFolderName(planning.subjectName || planning.asignatura || 'General');
 
-    // Directorio de destino estructurado
+    // Directorio de destino estructurado dentro del vault
     const targetDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones', levelFolder, gradeFolder, subjectFolder);
+    
+    // Verificación de seguridad de ruta (evita Path Traversal)
+    const resolvedPath = path.resolve(targetDir);
+    if (!resolvedPath.startsWith(path.resolve(OBSIDIAN_VAULT_PATH))) {
+      return NextResponse.json({ success: false, error: 'Ruta no permitida' }, { status: 403 });
+    }
+
     fs.mkdirSync(targetDir, { recursive: true });
 
     const safeTitle = planning.title.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s_-]/g, '').trim().replace(/\s+/g, '_');

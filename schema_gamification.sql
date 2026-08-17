@@ -43,6 +43,30 @@ create table public.student_stats (
 
 alter table public.student_stats enable row level security;
 
+-- Políticas RLS para student_stats (Protección de datos y atributos individuales)
+create policy "Permitir lectura de student_stats a alumnos dueños, docentes y administradores"
+  on public.student_stats for select
+  to authenticated
+  using (
+    auth.uid() = student_id 
+    or exists (
+      select 1 from public.profiles 
+      where profiles.id = auth.uid() 
+        and profiles.role in ('teacher', 'admin', 'director', 'superadmin')
+    )
+  );
+
+create policy "Permitir insercion de student_stats al propio alumno"
+  on public.student_stats for insert
+  to authenticated
+  with check (auth.uid() = student_id);
+
+create policy "Permitir actualizacion de student_stats al propio alumno"
+  on public.student_stats for update
+  to authenticated
+  using (auth.uid() = student_id)
+  with check (auth.uid() = student_id);
+
 -- 2. Student Avatars (Personalización de Avatar y Mascota para Primaria Baja)
 /**
  * @table student_avatars
@@ -73,6 +97,23 @@ create table public.student_avatars (
 
 alter table public.student_avatars enable row level security;
 
+-- Políticas RLS para student_avatars (Visualización comunitaria, mutación exclusiva del dueño)
+create policy "Permitir lectura de student_avatars a usuarios autenticados"
+  on public.student_avatars for select
+  to authenticated
+  using (true);
+
+create policy "Permitir insercion de student_avatars al propio alumno"
+  on public.student_avatars for insert
+  to authenticated
+  with check (auth.uid() = student_id);
+
+create policy "Permitir actualizacion de student_avatars al propio alumno"
+  on public.student_avatars for update
+  to authenticated
+  using (auth.uid() = student_id)
+  with check (auth.uid() = student_id);
+
 -- 3. Badges / Insignias (Catálogo)
 /**
  * @table badges
@@ -92,6 +133,11 @@ create table public.badges (
 
 alter table public.badges enable row level security;
 
+create policy "Permitir lectura de catalogo de insignias a usuarios autenticados"
+  on public.badges for select
+  to authenticated
+  using (true);
+
 -- 4. Student Badges (Relación de insignias obtenidas)
 /**
  * @table student_badges
@@ -108,6 +154,16 @@ create table public.student_badges (
 
 alter table public.student_badges enable row level security;
 
+create policy "Permitir lectura de insignias de alumnos a usuarios autenticados"
+  on public.student_badges for select
+  to authenticated
+  using (true);
+
+create policy "Permitir insercion de insignias al propio alumno"
+  on public.student_badges for insert
+  to authenticated
+  with check (auth.uid() = student_id);
+
 -- 4.5. NEM Catalog Tables (Nueva Escuela Mexicana)
 /**
  * @table nem_campos_formativos
@@ -120,6 +176,11 @@ create table public.nem_campos_formativos (
 );
 
 alter table public.nem_campos_formativos enable row level security;
+
+create policy "Permitir lectura de campos formativos a usuarios autenticados"
+  on public.nem_campos_formativos for select
+  to authenticated
+  using (true);
 
 /**
  * @table nem_pdas
@@ -134,6 +195,11 @@ create table public.nem_pdas (
 );
 
 alter table public.nem_pdas enable row level security;
+
+create policy "Permitir lectura de PDAs a usuarios autenticados"
+  on public.nem_pdas for select
+  to authenticated
+  using (true);
 
 -- 5. Missions / Misiones Académicas (Narrativa de aprendizaje)
 /**
@@ -160,6 +226,11 @@ create table public.missions (
 
 alter table public.missions enable row level security;
 
+create policy "Permitir lectura de misiones a usuarios autenticados"
+  on public.missions for select
+  to authenticated
+  using (true);
+
 -- 6. Quests / Retos (Actividades dentro de una misión)
 /**
  * @table quests
@@ -185,6 +256,11 @@ create table public.quests (
 
 alter table public.quests enable row level security;
 
+create policy "Permitir lectura de retos a usuarios autenticados"
+  on public.quests for select
+  to authenticated
+  using (true);
+
 -- 7. Quest Attempts (Intentos y reintentos - El error como aprendizaje)
 /**
  * @table quest_attempts
@@ -204,6 +280,30 @@ create table public.quest_attempts (
 );
 
 alter table public.quest_attempts enable row level security;
+
+-- Políticas RLS para quest_attempts (Aislamiento de intentos por estudiante)
+create policy "Permitir lectura de intentos al propio alumno, docentes o administradores"
+  on public.quest_attempts for select
+  to authenticated
+  using (
+    auth.uid() = student_id 
+    or exists (
+      select 1 from public.profiles 
+      where profiles.id = auth.uid() 
+        and profiles.role in ('teacher', 'admin', 'director', 'superadmin')
+    )
+  );
+
+create policy "Permitir a estudiantes registrar sus propios intentos"
+  on public.quest_attempts for insert
+  to authenticated
+  with check (auth.uid() = student_id);
+
+create policy "Permitir a estudiantes actualizar sus propios intentos"
+  on public.quest_attempts for update
+  to authenticated
+  using (auth.uid() = student_id)
+  with check (auth.uid() = student_id);
 
 -- 8. Portfolio Items (Portafolio Digital de Evidencias - Seesaw-style)
 /**
@@ -234,6 +334,42 @@ create table public.portfolio_items (
 
 alter table public.portfolio_items enable row level security;
 
+-- Políticas RLS para portfolio_items (Aislamiento de portafolio entre alumnos)
+create policy "Permitir lectura de evidencias al estudiante dueño, docentes o tutores"
+  on public.portfolio_items for select
+  to authenticated
+  using (
+    auth.uid() = student_id 
+    or exists (
+      select 1 from public.profiles 
+      where profiles.id = auth.uid() 
+        and profiles.role in ('teacher', 'admin', 'director', 'superadmin', 'parent')
+    )
+    or peer_review_score is not null
+  );
+
+create policy "Permitir a estudiantes subir sus propias evidencias"
+  on public.portfolio_items for insert
+  to authenticated
+  with check (auth.uid() = student_id);
+
+create policy "Permitir a estudiantes editar sus evidencias o docentes calificar"
+  on public.portfolio_items for update
+  to authenticated
+  using (
+    auth.uid() = student_id 
+    or exists (
+      select 1 from public.profiles 
+      where profiles.id = auth.uid() 
+        and profiles.role in ('teacher', 'admin', 'director', 'superadmin')
+    )
+  );
+
+create policy "Permitir a estudiantes eliminar sus propias evidencias"
+  on public.portfolio_items for delete
+  to authenticated
+  using (auth.uid() = student_id);
+
 -- 9. Portfolio Feedback (Retroalimentación Formativa - Multidireccional)
 /**
  * @table portfolio_feedback
@@ -252,6 +388,28 @@ create table public.portfolio_feedback (
 );
 
 alter table public.portfolio_feedback enable row level security;
+
+-- Políticas RLS para portfolio_feedback
+create policy "Permitir lectura de feedback formativo a usuarios autenticados"
+  on public.portfolio_feedback for select
+  to authenticated
+  using (true);
+
+create policy "Permitir creacion de feedback al autor autenticado"
+  on public.portfolio_feedback for insert
+  to authenticated
+  with check (auth.uid() = author_id);
+
+create policy "Permitir modificacion de feedback al autor original"
+  on public.portfolio_feedback for update
+  to authenticated
+  using (auth.uid() = author_id)
+  with check (auth.uid() = author_id);
+
+create policy "Permitir eliminacion de feedback al autor original"
+  on public.portfolio_feedback for delete
+  to authenticated
+  using (auth.uid() = author_id);
 
 -- Seed inicial de Insignias
 insert into public.badges (name, description, icon_name, category, xp_required) values

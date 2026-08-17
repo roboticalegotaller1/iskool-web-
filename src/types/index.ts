@@ -101,6 +101,10 @@ export interface Group {
   name: string; // e.g., "A", "B"
   created_at: string;
   
+  level?: string;
+  grade?: string;
+  student_ids?: string[];
+
   // Relaciones opcionales cargadas en consultas
   level_grade?: LevelGrade;
   academic_year?: AcademicYear;
@@ -735,6 +739,7 @@ export interface CanvasActivityQuestion {
   options: string[];
   correctIndex: number; // Índice de la respuesta correcta (0-3)
   imageUrl?: string; // Referencia visual opcional para soporte en múltiples plantillas
+  explanation?: string; // Retroalimentación formativa y justificación pedagógica
 }
 export type StudioActivityQuestion = CanvasActivityQuestion;
 

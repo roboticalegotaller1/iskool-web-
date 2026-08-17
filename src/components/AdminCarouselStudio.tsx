@@ -871,7 +871,13 @@ export default function AdminCarouselStudio({
       active = false;
       if (app) {
         if (initialized) {
-          app.destroy(true, { children: true });
+          try {
+            app.ticker?.stop();
+            app.stage?.removeChildren();
+            app.destroy(true, { children: true, texture: true, textureSource: true });
+          } catch (err) {
+            console.warn("Error destruyendo app de Pixi en AdminCarouselStudio:", err);
+          }
         }
       }
     };

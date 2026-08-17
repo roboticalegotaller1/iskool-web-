@@ -80,18 +80,23 @@ export const Header: React.FC = () => {
           ) : (
             <GraduationCap className="h-8 w-8" style={{ color: 'var(--brand-primary)' }} />
           )}
-          <Link href="/" className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5">
+          <Link 
+            href="/" 
+            aria-label="Página de inicio de ISkool Académico"
+            className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5"
+          >
             <span>{schoolSettings.name || 'ISkool'}</span>
             <span className="font-medium text-xs" style={{ color: 'var(--brand-primary)' }}>Académico</span>
           </Link>
         </div>
 
         {/* Navigation by Role */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-6" aria-label="Navegación principal">
           {currentRole === 'student' && (
             <>
               <Link
                 href="/student"
+                aria-label="Ir al mapa de misiones académicas"
                 style={pathname === '/student' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
                   pathname === '/student' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
@@ -101,12 +106,33 @@ export const Header: React.FC = () => {
               </Link>
               <Link
                 href="/student/portfolio"
+                aria-label="Ir a mi portafolio digital de evidencias"
                 style={pathname === '/student/portfolio' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
                   pathname === '/student/portfolio' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Mi Portafolio
+              </Link>
+              <Link
+                href="/student/avatar"
+                aria-label="Personalizar mi avatar y mascota"
+                style={pathname === '/student/avatar' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/student/avatar' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Avatar & Mascota
+              </Link>
+              <Link
+                href="/student/shop"
+                aria-label="Ir a la tienda de artefactos y mejoras"
+                style={pathname === '/student/shop' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/student/shop' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Tienda Mágica
               </Link>
             </>
           )}
@@ -115,21 +141,43 @@ export const Header: React.FC = () => {
             <>
               <Link
                 href="/teacher"
+                aria-label="Ir a planeaciones NEM y revisión de evidencias"
                 style={pathname === '/teacher' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
                   pathname === '/teacher' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
-                Revisión de Portafolio
+                Planeación & Portafolio
+              </Link>
+              <Link
+                href="/teacher/studio"
+                aria-label="Ir al estudio creador de actividades"
+                style={pathname === '/teacher/studio' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/teacher/studio' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Estudio Docente
+              </Link>
+              <Link
+                href="/teacher/community"
+                aria-label="Ir a la comunidad docente"
+                style={pathname === '/teacher/community' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/teacher/community' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Comunidad Docente
               </Link>
               <Link
                 href="/teacher/grades"
+                aria-label="Ir a boleta de calificaciones formativas SEP"
                 style={pathname === '/teacher/grades' ? { color: 'var(--brand-primary)' } : undefined}
                 className={`text-sm font-semibold transition-colors ${
                   pathname === '/teacher/grades' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
-                Boleta SEP (Formativa)
+                Boleta SEP
               </Link>
             </>
           )}
@@ -137,6 +185,7 @@ export const Header: React.FC = () => {
           {currentRole === 'parent' && (
             <Link
               href="/parent"
+              aria-label="Ver muro de evidencias y logros de mi hijo"
               style={pathname === '/parent' ? { color: 'var(--brand-primary)' } : undefined}
               className={`text-sm font-semibold transition-colors ${
                 pathname === '/parent' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
@@ -147,15 +196,28 @@ export const Header: React.FC = () => {
           )}
 
           {currentRole === 'coordinator' && (
-            <Link
-              href="/coordinator"
-              style={pathname === '/coordinator' ? { color: 'var(--brand-primary)' } : undefined}
-              className={`text-sm font-semibold transition-colors ${
-                pathname === '/coordinator' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-              }`}
-            >
-              Control de Grupos y Horarios
-            </Link>
+            <>
+              <Link
+                href="/coordinator"
+                aria-label="Ir a control escolar, grupos y horarios"
+                style={pathname === '/coordinator' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/coordinator' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Control Escolar & Horarios
+              </Link>
+              <Link
+                href="/admin"
+                aria-label="Ir al panel de administración general"
+                style={pathname === '/admin' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/admin' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Panel Administrador
+              </Link>
+            </>
           )}
         </nav>
 
@@ -167,6 +229,7 @@ export const Header: React.FC = () => {
               <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1">Demo:</span>
               <select
                 value={activeStudentId}
+                aria-label="Seleccionar alumno activo para la simulación"
                 onChange={(e) => switchStudent(e.target.value)}
                 className="bg-transparent text-xs font-bold text-zinc-700 dark:text-zinc-200 border-none outline-none cursor-pointer pr-1 focus:ring-0"
               >
@@ -182,17 +245,17 @@ export const Header: React.FC = () => {
           {/* Stats for Student */}
           {currentRole === 'student' && (
             <div className="hidden md:flex items-center gap-3 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 rounded-full text-xs font-semibold">
-              <div className="flex items-center gap-1 text-amber-500">
+              <div className="flex items-center gap-1 text-amber-500" title="Racha de días activos">
                 <Flame className="h-4 w-4 fill-current animate-pulse" />
                 <span>{stats.current_streak} d</span>
               </div>
               <div className="h-3 w-px bg-zinc-300 dark:bg-zinc-700" />
-              <div className="flex items-center gap-1 text-yellow-500">
+              <div className="flex items-center gap-1 text-yellow-500" title="Monedas ganadas">
                 <Coins className="h-4 w-4 fill-current" />
                 <span>{stats.coins}</span>
               </div>
               <div className="h-3 w-px bg-zinc-300 dark:bg-zinc-700" />
-              <div className="flex items-center gap-1 text-blue-500">
+              <div className="flex items-center gap-1 text-blue-500" title="Nivel actual del estudiante">
                 <Trophy className="h-4 w-4" />
                 <span>Nivel {stats.level}</span>
               </div>
@@ -200,9 +263,10 @@ export const Header: React.FC = () => {
           )}
 
           {/* Quick Role Selector */}
-          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg">
+          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg" role="group" aria-label="Cambio rápido de vista por rol">
             <Link
               href="/student"
+              aria-label="Cambiar vista a Alumno"
               className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
                 currentRole === 'student'
                   ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
@@ -213,6 +277,7 @@ export const Header: React.FC = () => {
             </Link>
             <Link
               href="/teacher"
+              aria-label="Cambiar vista a Profesor"
               className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
                 currentRole === 'teacher'
                   ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
@@ -223,6 +288,7 @@ export const Header: React.FC = () => {
             </Link>
             <Link
               href="/parent"
+              aria-label="Cambiar vista a Tutor"
               className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
                 currentRole === 'parent'
                   ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
@@ -233,6 +299,7 @@ export const Header: React.FC = () => {
             </Link>
             <Link
               href="/coordinator"
+              aria-label="Cambiar vista a Coordinador"
               className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
                 currentRole === 'coordinator'
                   ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
@@ -245,7 +312,9 @@ export const Header: React.FC = () => {
 
           {/* Reset Button */}
           <button
+            type="button"
             onClick={() => setIsResetConfirmOpen(true)}
+            aria-label="Reiniciar datos de prueba"
             title="Reiniciar Datos"
             className="p-2 rounded-full text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 transition-colors"
           >
@@ -255,7 +324,9 @@ export const Header: React.FC = () => {
           {/* Logout Button */}
           {user && (
             <button
+              type="button"
               onClick={logout}
+              aria-label="Cerrar sesión de usuario"
               title="Cerrar Sesión"
               className="p-2 rounded-full text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 transition-colors"
             >

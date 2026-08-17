@@ -376,7 +376,9 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
                   {/* Action Button */}
                   {card.isLocked ? (
                     <button
+                      type="button"
                       disabled
+                      aria-label={`Aventura bloqueada: ${card.title}. Requiere nivel ${card.minLevel}.`}
                       className="w-full py-2.5 bg-zinc-900 text-zinc-650 border border-zinc-850 rounded-xl text-xs font-bold flex items-center justify-center gap-2 cursor-not-allowed opacity-50 pointer-events-none"
                     >
                       <Lock className="h-3.5 w-3.5" />
@@ -385,6 +387,7 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
                   ) : (
                     <Link
                       href={`/student/missions/${card.id}`}
+                      aria-label={`Iniciar reto de aventura: ${card.title}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         // Prevent clicking through to center card if the card was not active

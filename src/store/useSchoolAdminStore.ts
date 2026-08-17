@@ -424,7 +424,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
         }
         // Si hay otros grupos en el mismo grado (ej. C), remover a los alumnos asignados a A o B
         if (g.level_grade_id === activeLevelGradeKey || (g.level === level && g.grade === grade)) {
-          return { ...g, student_ids: (g.student_ids || []).filter(id => !studentIdsA.includes(id) && !studentIdsB.includes(id)) };
+          return { ...g, student_ids: (g.student_ids || []).filter((id: string) => !studentIdsA.includes(id) && !studentIdsB.includes(id)) };
         }
         return g;
       });
@@ -442,11 +442,12 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
         s.id === studentId ? { ...s, group_id: groupId || undefined } : s
       ),
       groupsList: state.groupsList.map(g => {
-        const hasStudent = g.student_ids.includes(studentId);
+        const studentIds = g.student_ids || [];
+        const hasStudent = studentIds.includes(studentId);
         if (g.id === groupId && !hasStudent) {
-          return { ...g, student_ids: [...g.student_ids, studentId] };
+          return { ...g, student_ids: [...studentIds, studentId] };
         } else if (g.id !== groupId && hasStudent) {
-          return { ...g, student_ids: g.student_ids.filter(id => id !== studentId) };
+          return { ...g, student_ids: studentIds.filter((id: string) => id !== studentId) };
         }
         return g;
       })

@@ -35,7 +35,7 @@ export const TeacherHubCards: React.FC<TeacherHubCardsProps> = ({
         </div>
         
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-          ¡Hola, <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">{teacherName}</span>! 👋
+          ¡Hola, <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">{teacherName}</span>!
         </h1>
         
         <p className="text-base sm:text-lg font-medium text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">

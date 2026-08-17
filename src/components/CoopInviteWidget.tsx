@@ -14,6 +14,7 @@ export default function CoopInviteWidget({ missionId }: CoopInviteWidgetProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCreateParty = async () => {
+    if (loading) return;
     setLoading(true);
     try {
       await createParty(missionId);
@@ -51,8 +52,10 @@ export default function CoopInviteWidget({ missionId }: CoopInviteWidgetProps) {
 
       {!partyId ? (
         <button
+          type="button"
           onClick={handleCreateParty}
           disabled={loading}
+          aria-label="Crear sala e invitar aliados al combate multijugador"
           className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-indigo-500/10 disabled:opacity-50 select-none cursor-pointer"
         >
           {loading ? (
@@ -73,7 +76,9 @@ export default function CoopInviteWidget({ missionId }: CoopInviteWidgetProps) {
           </div>
 
           <button
+            type="button"
             onClick={handleCopyLink}
+            aria-label="Copiar liga de invitación al portapapeles"
             className={`w-full flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-black transition-all cursor-pointer select-none ${
               copied 
                 ? 'bg-emerald-600 text-white' 

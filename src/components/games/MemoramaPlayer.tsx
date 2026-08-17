@@ -127,7 +127,7 @@ export const MemoramaPlayer: React.FC<MemoramaPlayerProps> = ({
   const totalPairs = activity.questions.length;
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 p-6 sm:p-8 shadow-2xl space-y-6">
+    <div className="w-full space-y-6 animate-fade-in relative select-none">
       
       {/* Header del Memorama */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-zinc-800 pb-4">
