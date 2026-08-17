@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeSync } from "@/components/ThemeSync";
 import { AuthProvider } from "@/context/AuthContext";
+import { GlobalHelpFab } from "@/components/help/GlobalHelpFab";
 
 export const metadata: Metadata = {
   title: "ISkool - Módulo Académico Gamificado",
@@ -23,6 +24,7 @@ export default function RootLayout({
         <ThemeSync />
         <AuthProvider>
           {children}
+          <GlobalHelpFab />
         </AuthProvider>
       </body>
     </html>

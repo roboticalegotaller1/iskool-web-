@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
 import { StudioBlockType } from '@/types/studioBlocks';
@@ -332,6 +333,23 @@ export const ExtendedToolsDrawer: React.FC = () => {
                   {tab.label}
                 </button>
               ))}
+            </div>
+
+            {/* Banner de Acceso al Directorio de 50 Simuladores */}
+            <div className="shrink-0">
+              <Link
+                href="/guide?role=teacher#simuladores"
+                target="_blank"
+                className="p-2 px-3.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/60 text-[11px] text-cyan-900 dark:text-cyan-200 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 transition-all flex items-center justify-between gap-2"
+              >
+                <div className="flex items-center gap-1.5 font-bold">
+                  <Globe className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                  <span>💡 ¿Buscas interactivos para tus clases? Explora nuestro Directorio de 50 Simuladores Web (PhET, GeoGebra, Desmos, NASA).</span>
+                </div>
+                <span className="font-black text-cyan-700 dark:text-cyan-300 shrink-0 flex items-center gap-1">
+                  Ver guía ➔
+                </span>
+              </Link>
             </div>
 
             {/* Cuadrícula de Bloques Interactivos */}

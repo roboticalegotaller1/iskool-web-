@@ -7,7 +7,7 @@ import { useStudentStore, useCurrentStudentStats } from '../store/useStudentStor
 import { useSchoolAdminStore, applyThemeCssVariables } from '../store/useSchoolAdminStore';
 import { useGamificationStore } from '../store/useGamificationStore';
 import { usePortfolioStore } from '../store/usePortfolioStore';
-import { Flame, Coins, Trophy, RefreshCw, GraduationCap, Users, User, ArrowRight, LogOut } from 'lucide-react';
+import { Flame, Coins, Trophy, RefreshCw, GraduationCap, Users, User, ArrowRight, LogOut, HelpCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 export const Header: React.FC = () => {
   const pathname = usePathname();
@@ -70,7 +70,7 @@ export const Header: React.FC = () => {
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 shrink-0 mr-6">
           {schoolSettings.logoUrl ? (
             <img 
               src={schoolSettings.logoUrl} 
@@ -83,10 +83,10 @@ export const Header: React.FC = () => {
           <Link 
             href="/" 
             aria-label="Página de inicio de ISkool Académico"
-            className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5"
+            className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-2"
           >
             <span>{schoolSettings.name || 'ISkool'}</span>
-            <span className="font-medium text-xs" style={{ color: 'var(--brand-primary)' }}>Académico</span>
+            <span className="font-medium text-xs hidden sm:inline" style={{ color: 'var(--brand-primary)' }}>Académico</span>
           </Link>
         </div>
 
@@ -219,6 +219,19 @@ export const Header: React.FC = () => {
               </Link>
             </>
           )}
+
+          {/* Enlace Global a Guía & Ayuda */}
+          <Link
+            href={`/guide${currentRole !== 'none' ? `?role=${currentRole}` : ''}`}
+            aria-label="Ir a la guía y centro de ayuda"
+            style={pathname === '/guide' ? { color: 'var(--brand-primary)' } : undefined}
+            className={`text-sm font-semibold transition-colors flex items-center gap-1 ${
+              pathname === '/guide' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+            }`}
+          >
+            <HelpCircle className="w-4 h-4" />
+            <span>Guía</span>
+          </Link>
         </nav>
 
         {/* Stats & Role Switcher */}
