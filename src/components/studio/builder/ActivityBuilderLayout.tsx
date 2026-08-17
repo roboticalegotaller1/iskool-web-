@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
 import { SidebarToolbar } from './SidebarToolbar';
 import { WorkspaceArea } from './WorkspaceArea';
-import { ExtendedToolsDrawer } from './ExtendedToolsDrawer';
 import { StudioFlowPlayer } from '../player/StudioFlowPlayer';
 import { AssignToClassModal } from '@/components/AssignToClassModal';
 import { supabase } from '@/lib/supabaseClient';
@@ -224,18 +223,15 @@ export const ActivityBuilderLayout: React.FC = () => {
         </div>
       </header>
 
-      {/* Contenido Principal: Sidebar Izquierda + Workspace Central */}
+      {/* Contenido Principal: Panel de Agrupaciones (Izquierda) + Tablero de Trabajo (Central) */}
       <div className="flex flex-col lg:flex-row items-start gap-6 relative">
-        <div className="relative z-30 shrink-0">
+        <div className="w-full lg:w-72 xl:w-80 shrink-0 relative z-30">
           <SidebarToolbar />
         </div>
         <div className="flex-1 w-full min-w-0 relative z-10">
           <WorkspaceArea />
         </div>
       </div>
-
-      {/* Menú Extendido (+) */}
-      <ExtendedToolsDrawer />
 
       {/* Modal de Previsualización en Vivo */}
       {isPreviewOpen && typeof document !== 'undefined' && createPortal(

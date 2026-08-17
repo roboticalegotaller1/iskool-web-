@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
 import { StudioBlockType } from '@/types/studioBlocks';
 import { 
-  Plus, 
   HelpCircle, 
   BookOpen, 
   Sparkles, 
@@ -19,17 +18,16 @@ import {
   Gift,
   Award,
   Zap,
-  ChevronRight,
   ChevronDown,
-  X,
   ListOrdered,
   FileEdit,
   MessageSquare,
   KeyRound,
   ShieldCheck,
-  CheckCircle2,
   Lightbulb,
-  Workflow
+  Workflow,
+  Search,
+  Plus
 } from 'lucide-react';
 
 export interface BlockCategoryItem {
@@ -285,25 +283,30 @@ export const SidebarToolbar: React.FC = () => {
     setDraggedNewBlockType 
   } = useActivityBuilderStore();
 
-  // Estados de acordeón estilo Scratch
-  const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
-  const [expandedCategoryId, setExpandedCategoryId] = useState<string | null>('assessments');
+  // Estados de categorías desplegadas (acordeón múltiple o individual)
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({
+    assessments: true,
+    multimedia: false,
+    gamification: false,
+    pedagogy: false,
+  });
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Estados de Hover Tooltip Enriquecido
   const [hoveredTool, setHoveredTool] = useState<BlockToolItem | null>(null);
   const [hoveredCategory, setHoveredCategory] = useState<BlockCategoryItem | null>(null);
 
-  // Estados de Arrastre Global con el Mouse
+  // Estados de Arrastre Global con el Mouse hacia el tablero
   const [draggingTool, setDraggingTool] = useState<BlockToolItem | null>(null);
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  // 4 Herramientas de Acceso Rápido en el Dock Lateral
-  const quickTools = [
-    SCRATCH_CATEGORIES[0].blocks[0], // Pregunta de Opción Múltiple
-    SCRATCH_CATEGORIES[1].blocks[0], // Instrucción o Lectura
-    SCRATCH_CATEGORIES[2].blocks[0], // Cofre de Recompensas
-    SCRATCH_CATEGORIES[2].blocks[1], // Duelo contra Boss Pixi
-  ];
+  const toggleCategory = (catId: string) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [catId]: !prev[catId]
+    }));
+  };
 
   // Iniciar arrastre con clic sostenido
   const handleMouseDownTool = (e: React.MouseEvent, tool: BlockToolItem) => {
@@ -323,14 +326,18 @@ export const SidebarToolbar: React.FC = () => {
 
     const handleMouseUp = (e: MouseEvent) => {
       if (draggingTool) {
-        // Localizar el tablero de trabajo
+        // Localizar el contenedor del tablero de trabajo
         const targetElement = document.elementFromPoint(e.clientX, e.clientY);
-        const boardElem = targetElement?.closest('[data-node-id], svg, .scroll-smooth') || document.querySelector('.scroll-smooth');
+        const boardElem = targetElement?.closest('[data-board-container="true"], .scroll-smooth') || document.querySelector('[data-board-container="true"]');
 
         if (boardElem) {
           const rect = boardElem.getBoundingClientRect();
-          const dropX = Math.max(40, Math.round(e.clientX - rect.left + (boardElem.scrollLeft || 0)));
-          const dropY = Math.max(40, Math.round(e.clientY - rect.top + (boardElem.scrollTop || 0)));
+          const scrollContainer = document.querySelector('.scroll-smooth');
+          const scrollLeft = scrollContainer ? scrollContainer.scrollLeft : 0;
+          const scrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+
+          const dropX = Math.max(40, Math.round(e.clientX - rect.left + scrollLeft));
+          const dropY = Math.max(40, Math.round(e.clientY - rect.top + scrollTop));
 
           addBlock(draggingTool.type, undefined, { x: dropX, y: dropY });
         } else {
@@ -354,226 +361,144 @@ export const SidebarToolbar: React.FC = () => {
     };
   }, [draggingTool, addBlock, setDraggedNewBlockType]);
 
-  // Métricas acumuladas
-  const totalXp = blocks.reduce((acc, b) => {
-    if (b.type === 'reward_chest') return acc + (b.data.xpAmount || 0);
-    if (b.type === 'quiz_question') return acc + 20;
-    if (b.type === 'boss_enemy') return acc + 50;
-    return acc;
-  }, 0);
+  // Filtrar bloques si hay búsqueda activa
+  const filteredCategories = SCRATCH_CATEGORIES.map(cat => {
+    if (!searchQuery.trim()) return cat;
+    const q = searchQuery.toLowerCase();
+    const matchingBlocks = cat.blocks.filter(b => 
+      b.title.toLowerCase().includes(q) || 
+      b.description.toLowerCase().includes(q) ||
+      b.badge.toLowerCase().includes(q)
+    );
+    return {
+      ...cat,
+      blocks: matchingBlocks
+    };
+  }).filter(cat => cat.blocks.length > 0);
 
   return (
-    <aside className="w-full lg:w-20 shrink-0 select-none flex flex-col items-center gap-3 relative z-40">
-      {/* Dock de Herramientas Visuales */}
-      <div className="relative z-40 w-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 p-2.5 sm:p-3 shadow-lg flex flex-row lg:flex-col items-center justify-between lg:justify-start gap-2.5 overflow-x-auto lg:overflow-visible">
-        
-        {/* Cabecera / Ícono de Paleta */}
-        <div className="hidden lg:flex flex-col items-center gap-1 pb-2 border-b border-slate-100 dark:border-zinc-800 w-full">
-          <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
-            <Layers className="w-4 h-4" />
+    <aside className="w-full bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-4 shadow-xl select-none flex flex-col gap-3 relative z-30">
+      {/* Cabecera del Panel de Bloques */}
+      <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-zinc-800">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-black shadow-xs">
+            <Workflow className="w-4 h-4" />
           </div>
-          <span className="text-[9px] font-black uppercase text-slate-400">
-            Bloques
-          </span>
+          <div>
+            <h3 className="text-xs font-black text-slate-900 dark:text-white">
+              Agrupaciones de Bloques
+            </h3>
+            <p className="text-[10px] text-slate-500 dark:text-zinc-400">
+              Haz clic o arrastra al tablero
+            </p>
+          </div>
         </div>
 
-        {/* 4 Herramientas de Acceso Rápido (con Arrastre & Clic) */}
-        <div className="flex flex-row lg:flex-col items-center gap-2">
-          {quickTools.map((tool) => {
-            const Icon = tool.icon;
-            const isHovered = hoveredTool?.type === tool.type;
-            return (
-              <div 
-                key={tool.type} 
-                className={`relative ${isHovered ? 'z-50' : 'z-10'}`}
-                onMouseEnter={() => setHoveredTool(tool)}
-                onMouseLeave={() => setHoveredTool(null)}
-              >
-                <button
-                  type="button"
-                  onMouseDown={(e) => handleMouseDownTool(e, tool)}
-                  onClick={() => {
-                    if (!draggingTool) addBlock(tool.type);
-                  }}
-                  aria-label={tool.title}
-                  title="Arrastra al tablero o haz clic para añadir"
-                  className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr ${tool.gradient} text-white flex items-center justify-center shadow-md ${tool.glowColor} hover:scale-110 active:scale-95 transition-all transform cursor-grab active:cursor-grabbing group`}
-                >
-                  <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Separador */}
-        <div className="hidden lg:block w-full h-px bg-slate-100 dark:bg-zinc-800 my-1" />
-
-        {/* Botón (+) de Agrupaciones estilo Scratch */}
-        <div className="relative z-20">
-          <button
-            type="button"
-            onClick={() => setIsCategoryDrawerOpen(!isCategoryDrawerOpen)}
-            aria-label="Abrir catálogo de agrupaciones de bloques"
-            title="Abrir menú de bloques estilo Scratch"
-            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shadow-sm hover:scale-110 active:scale-95 transition-all transform cursor-pointer group ${
-              isCategoryDrawerOpen
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30'
-                : 'bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border-2 border-dashed border-purple-400 hover:bg-purple-200 dark:hover:bg-purple-900/50'
-            }`}
-          >
-            <Plus className={`w-5 h-5 transition-transform duration-200 ${isCategoryDrawerOpen ? 'rotate-45' : 'group-hover:rotate-90'}`} />
-          </button>
-        </div>
+        <span className="px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-[10px] border border-purple-200/60 dark:border-purple-800/60">
+          16 Nodos
+        </span>
       </div>
 
-      {/* Indicador de Resumen Rápido de Métricas */}
-      <div className="hidden lg:flex flex-col items-center gap-2 p-2.5 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-slate-200/60 dark:border-zinc-800/60 shadow-sm text-center">
-        <div className="flex flex-col items-center">
-          <span className="text-[10px] font-black text-purple-600 dark:text-purple-400">
-            {blocks.length}
-          </span>
-          <span className="text-[8px] font-black uppercase text-slate-400">
-            Bloques
-          </span>
-        </div>
-        <div className="w-full h-px bg-slate-100 dark:bg-zinc-800" />
-        <div className="flex flex-col items-center">
-          <span className="text-[10px] font-black text-amber-500">
-            +{totalXp}
-          </span>
-          <span className="text-[8px] font-black uppercase text-slate-400">
-            XP Total
-          </span>
-        </div>
+      {/* Buscador Rápido de Bloques */}
+      <div className="relative">
+        <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Buscar bloque (ej. PhET, Quiz, Boss)..."
+          className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 text-xs text-slate-800 dark:text-zinc-200 placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+        />
       </div>
 
-      {/* ================= MENÚ LATERAL DESPLEGABLE ESTILO SCRATCH (AGRUPACIONES) ================= */}
-      <AnimatePresence>
-        {isCategoryDrawerOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: -16, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -16, scale: 0.96 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute left-full top-0 ml-3.5 w-80 sm:w-96 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-2xl z-50 p-4 space-y-3 max-h-[82vh] overflow-y-auto"
-          >
-            {/* Cabecera del Menú */}
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-zinc-800">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 flex items-center justify-center font-black text-xs">
-                  <Workflow className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-xs font-black text-slate-900 dark:text-white">
-                    Agrupaciones de Bloques
-                  </h3>
-                  <p className="text-[10px] text-slate-500 dark:text-zinc-400">
-                    Haz clic o arrastra al tablero para crear nodos.
-                  </p>
-                </div>
-              </div>
+      {/* Lista de Agrupaciones (Acordeón Desplegable / Replegable) */}
+      <div className="space-y-2.5 max-h-[620px] overflow-y-auto pr-1">
+        {filteredCategories.map((cat) => {
+          const isExpanded = expandedCategories[cat.id] || searchQuery.trim().length > 0;
+          const Icon = cat.icon;
 
+          return (
+            <div 
+              key={cat.id}
+              className="rounded-2xl border border-slate-200/90 dark:border-zinc-800 overflow-hidden bg-slate-50/60 dark:bg-zinc-850/50 transition-all"
+            >
+              {/* Cabecera de la Agrupación (Clic despliega / repliega) */}
               <button
                 type="button"
-                onClick={() => setIsCategoryDrawerOpen(false)}
-                className="p-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-rose-500 hover:text-white text-slate-500 transition-colors cursor-pointer"
+                onClick={() => toggleCategory(cat.id)}
+                onMouseEnter={() => setHoveredCategory(cat)}
+                onMouseLeave={() => setHoveredCategory(null)}
+                className={`w-full p-2.5 flex items-center justify-between gap-2 text-left transition-colors cursor-pointer ${
+                  isExpanded ? 'bg-purple-50/80 dark:bg-purple-950/40 text-purple-900 dark:text-purple-200' : 'hover:bg-slate-100/80 dark:hover:bg-zinc-800/60'
+                }`}
               >
-                <X className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className={`w-7 h-7 rounded-xl bg-gradient-to-tr ${cat.color} text-white flex items-center justify-center shrink-0 shadow-sm`}>
+                    <Icon className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-[11px] font-black text-slate-900 dark:text-white truncate">
+                      {cat.name}
+                    </h4>
+                    <span className="text-[9px] font-bold text-slate-500 dark:text-zinc-400">
+                      {cat.badge}
+                    </span>
+                  </div>
+                </div>
+
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-purple-600' : ''}`} />
               </button>
-            </div>
 
-            {/* Lista de Categorías con Acordeón Desplegable / Replegable */}
-            <div className="space-y-2.5">
-              {SCRATCH_CATEGORIES.map((cat) => {
-                const isExpanded = expandedCategoryId === cat.id;
-                const Icon = cat.icon;
-
-                return (
-                  <div 
-                    key={cat.id}
-                    className="rounded-2xl border border-slate-200/90 dark:border-zinc-800 overflow-hidden bg-slate-50/70 dark:bg-zinc-850/60"
+              {/* Lista de Bloques dentro de la Agrupación */}
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.16 }}
+                    className="p-2 space-y-1.5 border-t border-slate-100 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70"
                   >
-                    {/* Botón de la Agrupación (Clic expande / repliega) */}
-                    <button
-                      type="button"
-                      onClick={() => setExpandedCategoryId(isExpanded ? null : cat.id)}
-                      onMouseEnter={() => setHoveredCategory(cat)}
-                      onMouseLeave={() => setHoveredCategory(null)}
-                      className={`w-full p-3 flex items-center justify-between gap-2 text-left transition-colors cursor-pointer ${
-                        isExpanded ? 'bg-purple-50/80 dark:bg-purple-950/40 text-purple-900 dark:text-purple-200' : 'hover:bg-slate-100 dark:hover:bg-zinc-800/80'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <div className={`w-8 h-8 rounded-xl bg-gradient-to-tr ${cat.color} text-white flex items-center justify-center shrink-0 shadow-sm`}>
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <h4 className="text-xs font-black text-slate-900 dark:text-white truncate">
-                            {cat.name}
-                          </h4>
-                          <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400">
-                            {cat.badge}
+                    {cat.blocks.map((tool) => {
+                      const ToolIcon = tool.icon;
+                      return (
+                        <div
+                          key={tool.type}
+                          onMouseDown={(e) => handleMouseDownTool(e, tool)}
+                          onClick={() => {
+                            if (!draggingTool) addBlock(tool.type);
+                          }}
+                          onMouseEnter={() => setHoveredTool(tool)}
+                          onMouseLeave={() => setHoveredTool(null)}
+                          className="group p-2 rounded-xl border border-slate-200/80 dark:border-zinc-800 hover:border-purple-400 dark:hover:border-purple-600 bg-white dark:bg-zinc-850 hover:bg-purple-50 dark:hover:bg-purple-950/40 flex items-center justify-between gap-2 transition-all cursor-grab active:cursor-grabbing hover:scale-[1.01] shadow-2xs"
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${tool.gradient} text-white flex items-center justify-center shrink-0 shadow-xs group-hover:scale-110 transition-transform`}>
+                              <ToolIcon className="w-3.5 h-3.5" />
+                            </div>
+                            <div className="min-w-0">
+                              <h5 className="text-[11px] font-black text-slate-800 dark:text-zinc-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 truncate">
+                                {tool.title}
+                              </h5>
+                              <span className="text-[9px] font-bold text-slate-400 block truncate">
+                                {tool.badge}
+                              </span>
+                            </div>
+                          </div>
+
+                          <span className="text-[10px] font-black text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                            + Añadir
                           </span>
                         </div>
-                      </div>
-
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-purple-600' : ''}`} />
-                    </button>
-
-                    {/* Lista de Bloques dentro de la Agrupación Desplegada */}
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.16 }}
-                          className="p-2 space-y-1.5 border-t border-slate-100 dark:border-zinc-800/80 bg-white/60 dark:bg-zinc-900/60"
-                        >
-                          {cat.blocks.map((tool) => {
-                            const ToolIcon = tool.icon;
-                            return (
-                              <div
-                                key={tool.type}
-                                onMouseDown={(e) => handleMouseDownTool(e, tool)}
-                                onClick={() => {
-                                  if (!draggingTool) addBlock(tool.type);
-                                }}
-                                onMouseEnter={() => setHoveredTool(tool)}
-                                onMouseLeave={() => setHoveredTool(null)}
-                                className="group p-2 rounded-xl border border-slate-200/80 dark:border-zinc-800 hover:border-purple-400 dark:hover:border-purple-600 bg-white dark:bg-zinc-850 hover:bg-purple-50 dark:hover:bg-purple-950/40 flex items-center justify-between gap-2.5 transition-all cursor-grab active:cursor-grabbing hover:scale-[1.01]"
-                              >
-                                <div className="flex items-center gap-2 min-w-0">
-                                  <div className={`w-7 h-7 rounded-lg bg-gradient-to-tr ${tool.gradient} text-white flex items-center justify-center shrink-0 shadow-xs group-hover:scale-110 transition-transform`}>
-                                    <ToolIcon className="w-3.5 h-3.5" />
-                                  </div>
-                                  <div className="min-w-0">
-                                    <h5 className="text-[11px] font-black text-slate-800 dark:text-zinc-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 truncate">
-                                      {tool.title}
-                                    </h5>
-                                    <span className="text-[9px] font-bold text-slate-400 block truncate">
-                                      {tool.badge}
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <span className="text-[10px] font-black text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                                  + Añadir
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          );
+        })}
+      </div>
 
       {/* ================= POPOVER / TOOLTIP ENRIQUECIDO CON EJEMPLOS ================= */}
       <AnimatePresence>
@@ -583,7 +508,7 @@ export const SidebarToolbar: React.FC = () => {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.12 }}
-            className="hidden lg:block fixed left-28 top-28 z-[99999] pointer-events-none w-72 sm:w-80 shadow-2xl rounded-2xl overflow-hidden bg-slate-900/95 dark:bg-zinc-900/95 text-white backdrop-blur-xl border border-slate-700/80 dark:border-zinc-700/80 p-4 space-y-2.5 animate-fade-in"
+            className="hidden lg:block fixed left-[340px] xl:left-[370px] top-28 z-[99999] pointer-events-none w-72 sm:w-80 shadow-2xl rounded-2xl overflow-hidden bg-slate-900/95 dark:bg-zinc-900/95 text-white backdrop-blur-xl border border-slate-700/80 dark:border-zinc-700/80 p-4 space-y-2.5 animate-fade-in"
           >
             {hoveredTool ? (
               <>
@@ -623,7 +548,7 @@ export const SidebarToolbar: React.FC = () => {
                 </div>
 
                 <div className="text-[9px] font-bold text-slate-400 text-center pt-1 border-t border-slate-800">
-                  💡 Haz clic para añadir al final o arrastra con el ratón al tablero.
+                  💡 Haz clic para añadir o arrastra con el ratón al tablero.
                 </div>
               </>
             ) : hoveredCategory ? (
@@ -634,7 +559,7 @@ export const SidebarToolbar: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-[9px] font-black uppercase text-purple-400 tracking-wider block">
-                      Agrupación Scratch
+                      Agrupación de Bloques
                     </span>
                     <h4 className="text-xs font-black text-white">
                       {hoveredCategory.name}
@@ -658,7 +583,7 @@ export const SidebarToolbar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* ================= PREVIEW FLOTANTE MIENTRAS SE ARRASTRA UN BLOQUE AL TABLERO ================= */}
+      {/* ================= PREVIEW FLOTANTE MIENTRAS SE ARRASTRA UN BLOQUE ================= */}
       {draggingTool && (
         <div
           style={{
