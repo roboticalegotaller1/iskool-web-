@@ -31,6 +31,7 @@ const ObsidianPlanningSchema = z.object({
   ejesArticuladores: z.array(z.string()).optional(),
   duration: z.string().trim().max(100).optional(),
   pda: z.string().trim().max(500).optional(),
+  preguntasDetonadoras: z.array(z.string()).optional(),
   inicio: z.string().trim().max(5000).optional(),
   desarrollo: z.string().trim().max(5000).optional(),
   cierre: z.string().trim().max(5000).optional(),
@@ -244,12 +245,13 @@ fecha_creacion: "${timestamp}"
 **Grado:** ${planning.gradeName || planning.grado || 'No especificado'}  
 **Asignatura:** ${planning.subjectName || ''}  
 **Campo Formativo:** ${planning.campoFormativo || ''}  
-**Duración:** ${planning.duration || '4 horas'}  
+**Duración:** ${planning.duration || '2 sesiones de 50 minutos (Total: 100 min)'}  
 **PDA:** ${planning.pda || ''}  
 
 ---
 
-## Secuencia Didáctica NEM
+${planning.preguntasDetonadoras && planning.preguntasDetonadoras.length > 0 ? `## Preguntas Detonadoras para el Salón\n${planning.preguntasDetonadoras.map((p, idx) => `${idx + 1}. ${p}`).join('\n')}\n\n---\n` : ''}
+## Secuencia Didáctica (Dosificación por Bloques de 50 min)
 
 ### Inicio
 ${planning.inicio || ''}
@@ -262,10 +264,10 @@ ${planning.cierre || ''}
 
 ---
 
-### Evaluación Formativa
+### Evaluación Formativa y Rúbrica Analítica
 ${planning.evaluacion || ''}
 
-### Materiales
+### Materiales, Recursos y Evidencias Entregables
 ${planning.materiales || ''}
 `;
 

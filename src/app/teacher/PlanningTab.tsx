@@ -187,6 +187,8 @@ interface PlanningTabProps {
 }
 
 const getPdaMap = (capitalizedTopic: string): Record<string, Record<string, string>> => {
+  const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(capitalizedTopic);
+
   return {
     'preescolar': {
       ecology:   `Fase 2 - Observa con atención elementos de "${capitalizedTopic}" en la naturaleza, describe sus características y propone formas sencillas de cuidarla.`,
@@ -230,7 +232,7 @@ const getPdaMap = (capitalizedTopic: string): Record<string, Record<string, stri
       history:   `Fase 6 - Analiza críticamente "${capitalizedTopic}" desde múltiples perspectivas históricas y sociales, evalúa fuentes primarias y secundarias, y elabora ensayos argumentativos sobre su vigencia.`,
       art:       `Fase 6 - Analiza críticamente manifestaciones de "${capitalizedTopic}" en contextos culturales e históricos diversos, y produce obras originales aplicando principios estéticos y técnicas avanzadas.`,
       tech:      `Fase 6 - Analiza el impacto ético, social y económico de "${capitalizedTopic}" en la vida cotidiana, y desarrolla un prototipo o propuesta tecnológica que responda a una problemática local.`,
-      math:      `Fase 6 - Aplica el pensamiento algebraico y el razonamiento matemático para modelar y resolver situaciones reales vinculadas a "${capitalizedTopic}", justificando procedimientos y resultados.`,
+      math:      isParabola ? `Fase 6 (3º Secundaria) - Modela y resuelve problemas de la vida cotidiana y fenómenos físicos mediante funciones cuadráticas y parábolas (y = ax² + bx + c). Analiza e interpreta las características de la gráfica: vértice, eje de simetría, concavidad e intersecciones cartesianas.` : `Fase 6 - Aplica el pensamiento algebraico y el razonamiento matemático para modelar y resolver situaciones reales vinculadas a "${capitalizedTopic}", justificando procedimientos y resultados.`,
       civics:    `Fase 6 - Analiza críticamente problemáticas sociales vinculadas a "${capitalizedTopic}", evalúa marcos normativos y propone mecanismos ciudadanos de incidencia y cambio colectivo.`,
       language:  `Fase 6 - Analiza textos de distintos géneros discursivos relacionados con "${capitalizedTopic}", evalúa argumentos e intenciones comunicativas, y produce textos propios con rigor y creatividad.`,
       social:    `Fase 6 - Analiza procesos sociales, económicos y geopolíticos relacionados con "${capitalizedTopic}", interpreta indicadores y propone reflexiones fundamentadas sobre sus implicaciones.`,
@@ -523,16 +525,27 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
           }
         }
 
-        // Fallback local: buscar en pdaMap
+        // Fallback local: buscar en pdaMap priorizando el nivel seleccionado
         const localResults: string[] = [];
         const localPdaMap = getPdaMap(inputText);
-        Object.values(localPdaMap).forEach(catMap => {
-          Object.values(catMap).forEach(pdaText => {
-            if (pdaText.toLowerCase().includes(inputText.toLowerCase()) || 
-                queryWords.some(w => pdaText.toLowerCase().includes(w.toLowerCase()))) {
-              localResults.push(pdaText);
-            }
+        
+        // 1. Primero los del nivel seleccionado
+        if (localPdaMap[selectedLevel]) {
+          Object.values(localPdaMap[selectedLevel]).forEach(pdaText => {
+            localResults.push(pdaText);
           });
+        }
+        
+        // 2. Si es necesario, añadir los demás niveles
+        Object.entries(localPdaMap).forEach(([lvl, catMap]) => {
+          if (lvl !== selectedLevel) {
+            Object.values(catMap).forEach(pdaText => {
+              if (pdaText.toLowerCase().includes(inputText.toLowerCase()) || 
+                  queryWords.some(w => pdaText.toLowerCase().includes(w.toLowerCase()))) {
+                localResults.push(pdaText);
+              }
+            });
+          }
         });
 
         const combined = Array.from(new Set([...dbSuggestions, ...localResults]));
@@ -542,10 +555,10 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       } finally {
         setIsLoadingPDAs(false);
       }
-    }, 500);
+    }, 400);
 
     return () => clearTimeout(delayDebounce);
-  }, [inputText]);
+  }, [inputText, selectedLevel]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // --- Estados del Gemini API ---
@@ -785,32 +798,50 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
   // --- Llamada a la API Real de Gemini ---
   const callGeminiAPI = async (promptText: string, level: string, subject: string) => {
-    const levelLabel = level === 'preescolar' ? 'Preescolar (Fase 2)' :
-                       level === 'primaria-baja' ? 'Primaria Baja (1º a 3º Grado)' :
-                       level === 'primaria-alta' ? 'Primaria Alta (4º a 6º Grado)' :
-                       level === 'secundaria' ? 'Secundaria (1º a 3º Grado)' : 'Preparatoria / Bachillerato';
+    // Determinación precisa del nivel y fase NEM
+    const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(promptText);
+    const levelLabel = level === 'secundaria' ? (isParabola ? '3º de Secundaria • Fase 6 (14-15 años)' : 'Secundaria (1º a 3º Grado) • Fase 6') :
+                       level === 'preescolar' ? 'Preescolar • Fase 2' :
+                       level === 'primaria-baja' ? 'Primaria Baja (1º a 3º Grado) • Fase 3' :
+                       level === 'primaria-alta' ? 'Primaria Alta (4º a 6º Grado) • Fase 5' : 'Preparatoria / Bachillerato';
 
-    const subjectLabel = subject === 'matematicas' ? 'Matemáticas / Saberes Científicos' :
-                         subject === 'ciencias' ? 'Ciencias / Saberes y Pensamiento Científico' : 'Lenguajes (Español/Comunicación)';
+    const subjectLabel = subject === 'matematicas' ? 'Matemáticas (Saberes y Pensamiento Científico)' :
+                         subject === 'ciencias' ? 'Ciencias / Física y Química (Saberes y Pensamiento Científico)' : 'Lenguajes (Español y Comunicación)';
 
-    const systemPrompt = `Eres un Asesor Pedagógico Experto de la SEP especializado en la Nueva Escuela Mexicana (NEM).
-Genera una planeación didáctica formal basada en la NEM 2022.
+    const systemPrompt = `Eres un Asesor Pedagógico y Coordinador Académico Nacional de la SEP, experto en la Nueva Escuela Mexicana (NEM 2022) y diseño curricular por competencias.
+Debes generar una planeación didáctica RIGUROSA, CONCRETA, ALTAMENTE PRÁCTICA Y 100% APLICABLE en el aula para un profesor de secundaria o nivel correspondiente.
+
+REGLAS PEDAGÓGICAS ESTRICTAS:
+1. NO uses plantillas genéricas ni frases de relleno como "investigar sobre [tema]" o "realizar actividades". Redacta paso a paso los ejercicios matemáticos, fórmulas, experimentos o dinámicas exactas.
+2. DOSIFICACIÓN TEMPORAL POR SESIONES DE 50 MINUTOS:
+   - Estructura la planeación en bloques exactos de 50 minutos (ej. "2 sesiones de 50 minutos - Total 100 min").
+   - En cada sesión detalla: Inicio (10 min), Desarrollo (30 min) y Cierre (10 min).
+3. PREGUNTAS DETONADORAS: Proporciona 3 a 5 preguntas concretas, retadoras y reflexivas para abrir el debate en clase.
+4. PROCESO DE DESARROLLO DE APRENDIZAJE (PDA): Cita el PDA oficial exacto del programa sintético NEM Fase 6 correspondiente al grado y tema.
+5. EVALUACIÓN FORMATIVA ÚTIL: Define un instrumento real (Rúbrica analítica con niveles Sobresaliente, Satisfactorio y En Proceso) con criterios observables.
+6. MATERIALES Y EVIDENCIA ENTREGABLE: Especifica materiales físicos/digitales y una propuesta clara de producto entregable (desde hoja de trabajo/dictado conceptual hasta proyecto o simulación GeoGebra/PhET).
+
 Nivel educativo: ${levelLabel}.
 Asignatura: ${subjectLabel}.
-Tema/Idea de entrada: ${promptText}.
+Tema solicitado: "${promptText}".
 
-Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente con las siguientes claves:
+Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructura exacta:
 {
-  "title": "Título corto y atractivo para la sesión",
-  "campoFormativo": "Especifica a qué Campo Formativo pertenece (Lenguajes, Saberes y Pensamiento Científico, Ética Naturaleza y Sociedades, o De lo Humano y lo Comunitario)",
-  "ejesArticuladores": ["Lista de hasta 2 ejes articuladores de la NEM vigentes"],
-  "pda": "Proceso de Desarrollo de Aprendizaje (PDA) oficial y formal adaptado a este nivel y tema",
-  "duration": "Ejemplo: 4 horas lectivas",
-  "inicio": "Descripción detallada de actividades iniciales (recuperación de saberes previos, conflicto cognitivo)",
-  "desarrollo": "Descripción detallada de la secuencia de desarrollo (indagación, experimentos, proyectos)",
-  "cierre": "Descripción detallada de actividades de cierre (metacognición, socialización, evaluación formativa)",
-  "evaluacion": "Evidencia evaluable y criterios de evaluación formativa",
-  "materiales": "Lista de recursos y materiales didácticos requeridos"
+  "title": "Título pedagógico formal y atractivo",
+  "campoFormativo": "Saberes y Pensamiento Científico",
+  "ejesArticuladores": ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura"],
+  "pda": "Redacción formal del PDA oficial de la NEM correspondiente a la Fase y grado",
+  "duration": "2 sesiones de 50 minutos (Total: 100 min)",
+  "preguntasDetonadoras": [
+    "Pregunta detonadora 1 para lanzar al salón",
+    "Pregunta detonadora 2 con aplicación real o conflicto cognitivo",
+    "Pregunta detonadora 3 para razonamiento crítico"
+  ],
+  "inicio": "⏱️ INICIO (10 min): Recuperación de saberes previos y planteamiento de la pregunta detonadora central con dinámicas grupales concretas...",
+  "desarrollo": "⏱️ DESARROLLO (30 min): Secuencia de actividades prácticas, tabulación de valores, graficación en plano cartesiano/GeoGebra, modelado de problemas reales paso a paso...",
+  "cierre": "⏱️ CIERRE (10 min): Síntesis grupal, reflexión metacognitiva ('¿Qué aprendimos hoy?') y entrega de evidencia formativa de la sesión...",
+  "evaluacion": "RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):\\n• Criterio 1 (Modelado): Sobresaliente / Satisfactorio / En Proceso\\n• Criterio 2 (Interpretación gráfica): Sobresaliente / Satisfactorio / En Proceso\\n• Instrumento: Lista de cotejo y rúbrica analítica.",
+  "materiales": "MATERIALES: Hojas milimétricas, calculadora científica, simulador web GeoGebra/PhET.\\nEVIDENCIA ENTREGABLE: Hoja de trabajo con tabulación, gráfica y cálculo de vértice/raíces como evidencia formal de clase."
 }`;
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
@@ -820,7 +851,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
       },
       body: JSON.stringify({
         contents: [
-          { parts: [{ text: `${systemPrompt}\n\nGenera la planeación en español con base en la información del tema: "${promptText}"` }] }
+          { parts: [{ text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español para el tema: "${promptText}"` }] }
         ]
       })
     });
@@ -839,20 +870,25 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
 
     return {
       id: 'plan-' + Date.now(),
-      title: parsed.title || 'Planeación Didáctica',
+      title: parsed.title || `Proyecto Didáctico: ${promptText}`,
       subjectId: subject,
       subjectName: subjectLabel,
       levelId: level,
       levelName: levelLabel,
       campoFormativo: parsed.campoFormativo || 'Saberes y Pensamiento Científico',
-      ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico'],
-      pda: parsed.pda || 'PDA General',
-      duration: parsed.duration || '4 horas',
-      inicio: parsed.inicio || 'Actividades de inicio.',
-      desarrollo: parsed.desarrollo || 'Actividades de desarrollo.',
-      cierre: parsed.cierre || 'Actividades de cierre.',
-      evaluacion: parsed.evaluacion || 'Evidencia de aprendizaje.',
-      materiales: parsed.materiales || 'Materiales generales.',
+      ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico', 'Apropiación de las Culturas'],
+      pda: parsed.pda || 'PDA Oficial NEM',
+      duration: parsed.duration || '2 sesiones de 50 minutos (Total: 100 min)',
+      preguntasDetonadoras: Array.isArray(parsed.preguntasDetonadoras) ? parsed.preguntasDetonadoras : [
+        `¿Qué aplicaciones prácticas tiene ${promptText} en nuestro entorno cotidiano?`,
+        `¿Cómo podemos modelar matemáticamente este fenómeno?`,
+        `¿Qué conclusiones podemos obtener a partir del análisis de datos?`
+      ],
+      inicio: parsed.inicio || 'Actividades dosificadas de inicio.',
+      desarrollo: parsed.desarrollo || 'Actividades dosificadas de desarrollo.',
+      cierre: parsed.cierre || 'Actividades dosificadas de cierre.',
+      evaluacion: parsed.evaluacion || 'Rúbrica formativa y evidencias evaluables.',
+      materiales: parsed.materiales || 'Materiales didácticos y productos entregables.',
       createdAt: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
     };
   };
@@ -862,16 +898,78 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
     const searchStr = promptText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const capitalizedTopic = promptText.charAt(0).toUpperCase() + promptText.slice(1).trim();
 
-    // ── 1. Detectar categoría temática ──
+    // ── 1. Detectar categoría temática y casos especializados ──
+    const isParabola   = /parabol|cuadrat|segundo grado|tiro parab/i.test(searchStr);
     const isEcology    = /ecosistem|biodiversid|medio\s?ambiente|planta|animal|clima|contaminac|naturaleza|bosque|agua|suelo|recicl|sustentab|calentamiento/.test(searchStr);
     const isHealth     = /salud|nutricion|alimentac|cuerpo|higiene|enfermedad|ejercicio|deporte|vacuna|primera\s?aid|medicina|covid|pandemia/.test(searchStr);
     const isHistory    = /histori|revolucion|guerra|colonia|independencia|prehispanico|azteca|maya|reform|republica|cultura|civilizac/.test(searchStr);
     const isArt        = /arte|pintura|musica|danza|teatro|literatura|poesia|escultura|dibujo|fotografia|cine|expresion/.test(searchStr);
     const isTech       = /tecnolog|robot|computad|internet|program|codigo|digital|ia\b|inteligencia artificial|red|app|software/.test(searchStr);
-    const isMath       = /fraccion|numero|algebra|ecuacion|geometria|estadistica|probabilidad|calculo|proporcion|porcentaje|vector|trigono/.test(searchStr);
+    const isMath       = isParabola || /fraccion|numero|algebra|ecuacion|geometria|estadistica|probabilidad|calculo|proporcion|porcentaje|vector|trigono/.test(searchStr);
     const isCivics     = /ciudadan|democracia|derecho|justicia|paz|inclusion|diversidad|igualdad|genero|comunidad|convivencia|etica|valor/.test(searchStr);
     const isLanguage   = /poe|leyenda|lectura|escribir|redac|espanol|carta|comunic|texto|narrat|argumen|gramatic|ortografia|sinonimo/.test(searchStr);
     const isSocial     = /geografia|region|pais|mundo|globalizac|economia|comercio|mercado|poblacion|migrac|familia|sociedad/.test(searchStr);
+
+    // Caso Especializado: Parábolas y Funciones Cuadráticas en Secundaria (Fase 6 - 3º de Secundaria)
+    if (isParabola && (level === 'secundaria' || level === 'preparatoria')) {
+      return {
+        id: 'plan-' + Date.now(),
+        title: 'Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)',
+        subjectId: 'matematicas',
+        subjectName: 'Matemáticas (Saberes y Pensamiento Científico)',
+        levelId: level,
+        levelName: '3º de Secundaria • Fase 6 (14-15 años)',
+        campoFormativo: 'Saberes y Pensamiento Científico',
+        ejesArticuladores: ['Pensamiento Crítico', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
+        pda: 'Fase 6 (3º Secundaria) - Modela y resuelve problemas de la vida cotidiana y fenómenos físicos mediante funciones cuadráticas y parábolas (y = ax² + bx + c). Analiza e interpreta las propiedades geométricas de la parábola: vértice (punto máximo o mínimo), eje de simetría, concavidad (orientación del coeficiente "a") e intersecciones con los ejes cartesianos.',
+        duration: '2 sesiones de 50 minutos (Total: 100 min)',
+        preguntasDetonadoras: [
+          '¿Por qué la trayectoria de un chorro de agua de una manguera o el tiro libre de baloncesto traza una curva simétrica y nunca viaja en línea recta?',
+          '¿Qué significado físico tiene el vértice de una parábola cuando lanzamos un cohete o calculamos la ganancia máxima de un producto comercial?',
+          '¿Cómo cambia la abertura y orientación de la parábola si el valor del coeficiente "a" en y = ax² es positivo, negativo o una fracción?',
+          '¿Por qué los puentes colgantes, las antenas receptoras de satélite y los faros de automóviles utilizan formas parabólicas?'
+        ],
+        inicio: '⏱️ SESIÓN 1 (50 min) — INICIO (10 min):\n' +
+                '1. Conflicto Cognitivo Visual: Proyectar o mostrar imágenes de puentes colgantes (Golden Gate), antenas satelitales y tiros libres de basquetbol.\n' +
+                '2. Pregunta Detonadora Central: "¿Por qué el balón sube, se desacelera hasta un punto cumbre y vuelve a descender con la misma curvatura exacta?".\n' +
+                '3. Recuperación de Saberes Previos: Lluvia de ideas guiada sobre el plano cartesiano, pares ordenados (x, y) y la diferencia visual entre una relación lineal (línea recta) y una relación cuadrática (curva).',
+        desarrollo: '⏱️ SESIÓN 1 — DESARROLLO (30 min):\n' +
+                   '1. Taller de Tabulación Comparativa en Parejas: Los alumnos completan una tabla evaluando valores de "x" desde -3 hasta +3 para tres funciones cuadráticas:\n' +
+                   '   • f(x) = x²\n' +
+                   '   • g(x) = 2x² (más estrecha)\n' +
+                   '   • h(x) = -x² (invertida hacia abajo)\n' +
+                   '2. Construcción Gráfica en Papel Milimétrico: Trazar los pares ordenados y unirlos con trazo curvo continuo (sin usar regla recta entre puntos). Identificar y rotular con colores el Vértice V(0,0) y el Eje de Simetría (recta x = 0).\n' +
+                   '3. Modelado de un Problema Real de Tiro Parabólico: Se plantea la función de altura h(t) = -5t² + 20t (altura en metros respecto al tiempo en segundos). En equipos calculan:\n' +
+                   '   • ¿En qué segundo alcanza la altura máxima? (Vértice en t = 2 s, h = 20 metros).\n' +
+                   '   • ¿Cuánto tiempo dura el vuelo total hasta tocar el suelo? (Raíces en t = 0 s y t = 4 s).',
+        cierre: '⏱️ SESIÓN 1 — CIERRE (10 min):\n' +
+                '1. Plenaria y Formalización Matemática: Síntesis colectiva en el pizarrón: definición rigurosa de Vértice, Concavidad (si a > 0 abre hacia arriba y tiene mínimo; si a < 0 abre hacia abajo y tiene máximo), Eje de Simetría y Raíces.\n' +
+                '2. Metacognición en Bitácora: Responder individualmente: "¿Cómo puedo saber si una parábola tiene punto máximo o mínimo con solo ver el signo del coeficiente principal a?".\n' +
+                '3. Entrega de Evidencia: Recolección de la hoja de trabajo formal con la tabulación y la gráfica rotulada.',
+        evaluacion: '📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):\n' +
+                    '• Criterio 1 - Modelado Algebraico y Tabulación:\n' +
+                    '  - Sobresaliente (3 pts): Evalúa correctamente potencias y signos de x de -3 a 3 sin errores.\n' +
+                    '  - Satisfactorio (2 pts): Comete 1 error menor de cálculo pero mantiene el procedimiento lógico.\n' +
+                    '  - En Proceso (1 pt): Muestra dificultad al elevar números negativos al cuadrado (ej. (-2)² = -4).\n' +
+                    '• Criterio 2 - Interpretación y Trazo Gráfico:\n' +
+                    '  - Sobresaliente (3 pts): Traza una curva parabólica suave, ubica con exactitud el vértice y traza el eje de simetría.\n' +
+                    '  - Satisfactorio (2 pts): Grafica los puntos pero el trazo es angulado o confunde el eje de simetría.\n' +
+                    '  - En Proceso (1 pt): Une los puntos con líneas rectas tipo zigzag.\n' +
+                    '• Criterio 3 - Aplicación al Tiro Parabólico:\n' +
+                    '  - Sobresaliente (4 pts): Interpreta el significado físico del vértice como altura máxima y las raíces como inicio y fin del vuelo.\n' +
+                    '  - Satisfactorio (2.5 pts): Obtiene los valores numéricos pero no explica su significado físico.\n' +
+                    '  - En Proceso (1 pt): No logra plantear los valores en la función h(t).\n' +
+                    '• Instrumento: Rúbrica analítica y lista de cotejo coevaluativa de clase.',
+        materiales: '📦 MATERIALES DIDÁCTICOS:\n' +
+                    '• Papel milimétrico tamaño carta, regla de 30 cm, lápices de colores o plumines finos.\n' +
+                    '• Calculadora científica básica o celular con calculadora.\n' +
+                    '• Hojas de trabajo impresas "El Vértice de la Realidad".\n' +
+                    '• Proyector o tabletas con simulador web GeoGebra / PhET (Simulación de Tiro de Proyectiles).\n\n' +
+                    '📄 EVIDENCIA ENTREGABLE DE LA CLASE:\n' +
+                    '• Producto Individual/Parejas: Hoja de trabajo con la tabulación de 3 funciones cuadráticas, gráfica a escala con vértice y eje de simetría rotulados, y la resolución analítica del problema de tiro parabólico.',
+        createdAt: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
+      };
+    }
 
     const campos = {
       'matematicas': 'Saberes y Pensamiento Científico',
@@ -897,64 +995,12 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
     const pdaMap = getPdaMap(capitalizedTopic);
     const pda = pdaMap[level]?.[topicKey] || pdaMap['primaria-alta']['default'];
 
-    // ── 4. Secuencia didáctica diferenciada por tema y nivel ──
+    // ── 4. Secuencia didáctica diferenciada por tema y nivel con bloques de 50 min ──
     const buildSequence = () => {
       const levelShort = level === 'preescolar' ? 'pb' : level === 'primaria-baja' ? 'pb' : level === 'primaria-alta' ? 'pa' : level === 'secundaria' ? 'sec' : 'prep';
       
-      // Actividades de INICIO diferenciadas
       const inicioMap: Record<string, Record<string, string>> = {
         ecology: {
-          pb:   `Salir al patio escolar a observar elementos naturales del entorno. Pedir a los alumnos que recojan una hoja, una piedra o un fragmento de suelo y los coloquen en la mesa. Preguntar: ¿De dónde viene esto? ¿Qué necesita para existir? Registrar sus respuestas en una cartulina colectiva con dibujos.`,
-          pa:   `Mostrar un video corto (3-4 min) con imágenes de "${capitalizedTopic}" en México y el mundo, contrastando ecosistemas sanos y deteriorados. Preguntar: ¿Qué diferencias observas? ¿Qué factores humanos aparecen? Organizar una lluvia de ideas con post-its en la pizarra.`,
-          sec:  `Presentar datos estadísticos reales sobre "${capitalizedTopic}" en México (gráficas de CONABIO o SEMARNAT). Plantear el conflicto cognitivo: ¿Podemos seguir ignorando esta tendencia? Debatir en parejas durante 5 minutos antes de la plenaria.`,
-          prep: `Analizar un artículo científico o reporte de organismos internacionales (IPCC, ONU-Ambiente) sobre "${capitalizedTopic}". Identificar variables, metodología y conclusiones. Discutir en equipos la validez de los datos y sus implicaciones para políticas públicas locales.`
-        },
-        health: {
-          pb:   `Comenzar con un juego de "Simón dice" con hábitos saludables relacionados con "${capitalizedTopic}". Luego mostrar imágenes de hábitos saludables vs. no saludables y pedir que los clasifiquen en el pizarrón.`,
-          pa:   `Aplicar una encuesta rápida anónima sobre hábitos relacionados con "${capitalizedTopic}" en el grupo. Compartir los resultados y analizar: ¿Qué tanto practicamos lo que sabemos? ¿Por qué existe esa brecha?`,
-          sec:  `Analizar estadísticas de salud pública en México relacionadas con "${capitalizedTopic}" (INEGI, Secretaría de Salud). Plantear: ¿Quiénes son más vulnerables y por qué? Introducir el concepto de determinantes sociales de la salud.`,
-          prep: `Revisar un estudio epidemiológico sobre "${capitalizedTopic}" en México. Identificar factores de riesgo, grupos vulnerables e intervenciones documentadas. Debatir la efectividad de las políticas actuales.`
-        },
-        history: {
-          pb:   `Mostrar imágenes de "${capitalizedTopic}" y preguntar qué saben al respecto. Leer en colectivo un texto breve ilustrado sobre el tema. Construir en el pizarrón una "línea de tiempo" sencilla con dibujos.`,
-          pa:   `Presentar una fuente primaria sencilla (imagen, carta o crónica) relacionada con "${capitalizedTopic}". Preguntar: ¿Quién la escribió? ¿Cuándo? ¿Qué nos dice sobre ese momento histórico? Comparar con el presente.`,
-          sec:  `Analizar dos fuentes históricas con perspectivas diferentes sobre "${capitalizedTopic}". Preguntar: ¿Por qué difieren? ¿Cuál es más confiable y por qué? Introducir el concepto de historiografía crítica.`,
-          prep: `Revisar un debate historiográfico actual sobre "${capitalizedTopic}". Identificar las corrientes interpretativas en conflicto y los argumentos de cada postura. Plantear la postura propia con base en evidencia documental.`
-        },
-        art: {
-          pb:   `Mostrar obras visuales, fragmentos musicales o movimientos de danza relacionados con "${capitalizedTopic}". Pedir que describan qué sienten al verlos/escucharlos. Realizar una creación libre inicial con materiales de su elección.`,
-          pa:   `Presentar obras de artistas mexicanos y mundiales vinculadas a "${capitalizedTopic}". Analizar: técnica, contexto histórico, propósito. Debatir qué quería comunicar el artista y si lo logra.`,
-          sec:  `Analizar críticamente una obra o movimiento relacionado con "${capitalizedTopic}" desde dimensiones estéticas, históricas y culturales. Comparar con expresiones contemporáneas. Debatir el papel del arte en la transformación social.`,
-          prep: `Revisar teorías estéticas aplicadas a "${capitalizedTopic}". Analizar una obra canónica y una de vanguardia. Discutir: ¿Qué define el valor artístico? ¿Qué papel juega el contexto sociopolítico?`
-        },
-        tech: {
-          pb:   `Mostrar objetos tecnológicos cotidianos relacionados con "${capitalizedTopic}" y preguntar: ¿Cómo funcionan? ¿Quién los inventó? ¿Cómo cambiarían nuestra vida sin ellos? Hacer un dibujo de "cómo se vería el mundo sin esta tecnología".`,
-          pa:   `Ver un video sobre aplicaciones actuales de "${capitalizedTopic}" en distintos sectores (medicina, educación, ambiente). Preguntar: ¿Qué problemas resuelve? ¿Cuáles genera? Organizar un debate de pros y contras.`,
-          sec:  `Explorar casos reales del impacto de "${capitalizedTopic}" en la sociedad (positivos y negativos). Analizar dilemas éticos: privacidad, brecha digital, desempleo. Diseñar un código ético básico para su uso responsable.`,
-          prep: `Analizar tendencias tecnológicas de "${capitalizedTopic}" con fuentes académicas y empresariales. Evaluar impacto social, económico y ambiental. Plantear un modelo de innovación responsable con metodología de design thinking.`
-        },
-        math: {
-          pb:   `Presentar un problema real y cotidiano que requiera usar "${capitalizedTopic}" (compartir materiales, medir el salón, contar objetos). Pedir que lo resuelvan con material concreto antes de explicar el concepto formal.`,
-          pa:   `Plantear un desafío matemático contextualizado (presupuesto escolar, recetas de cocina, datos estadísticos del grupo) que involucre "${capitalizedTopic}". Permitir que lo intenten en parejas sin instrucción previa para activar conocimientos previos.`,
-          sec:  `Presentar una situación real (financiera, científica o social) que no pueda resolverse sin aplicar "${capitalizedTopic}". Preguntar: ¿Qué herramientas matemáticas necesitamos? ¿Cómo formalizamos el problema?`,
-          prep: `Revisar la historia y aplicaciones de "${capitalizedTopic}" en ciencias, ingeniería o economía. Plantear un problema abierto sin solución única para que los equipos propongan modelos distintos y los defiendan.`
-        },
-        civics: {
-          pb:   `Comenzar con un juego de roles donde los alumnos simulan situaciones de convivencia escolar relacionadas con "${capitalizedTopic}". Reflexionar: ¿Qué sintieron? ¿Qué cambiarían? Construir acuerdos colectivos de grupo.`,
-          pa:   `Presentar una noticia o caso real donde se vulnera o se ejerce "${capitalizedTopic}". Analizar: ¿A quién afecta? ¿Qué instituciones intervienen? ¿Qué podrían hacer los ciudadanos?`,
-          sec:  `Analizar un caso jurídico o social relacionado con "${capitalizedTopic}" en México. Revisar el marco legal (Constitución, tratados internacionales). Debatir: ¿La ley es suficiente? ¿Qué falta en la práctica?`,
-          prep: `Revisar un conflicto social vigente vinculado a "${capitalizedTopic}" desde perspectivas filosóficas, jurídicas y sociológicas. Analizar mecanismos de participación ciudadana disponibles y sus limitaciones estructurales.`
-        },
-        language: {
-          pb:   `Escuchar o leer en voz alta un texto breve y atractivo relacionado con "${capitalizedTopic}". Preguntar: ¿Qué entendieron? ¿Qué palabra les llamó la atención? ¿Cómo les hizo sentir? Completar un organizador gráfico sencillo.`,
-          pa:   `Presentar dos textos sobre "${capitalizedTopic}" con propósitos diferentes (informativo y narrativo). Identificar diferencias de estructura, tono y vocabulario. Debatir cuál es más convincente y por qué.`,
-          sec:  `Analizar un texto argumentativo o de opinión sobre "${capitalizedTopic}". Identificar tesis, argumentos, contraargumentos y falacias. Evaluar la solidez del razonamiento y la eficacia comunicativa del autor.`,
-          prep: `Revisar textos académicos y periodísticos sobre "${capitalizedTopic}" comparando registros, géneros y posicionamientos ideológicos. Analizar cómo el lenguaje construye realidades y moldea opinión pública.`
-        },
-        social: {
-          pb:   `Mostrar un mapa de México o del mundo señalando zonas relacionadas con "${capitalizedTopic}". Preguntar: ¿Conocen estos lugares? ¿Qué hay ahí? Ubicar en un mapa en blanco los elementos identificados.`,
-          pa:   `Analizar datos demográficos, económicos o geográficos de "${capitalizedTopic}" en México usando tablas y mapas. Identificar patrones y desigualdades. Preguntar: ¿Por qué existen estas diferencias entre regiones?`,
-          sec:  `Revisar indicadores socioeconómicos (IDH, GINI, PIB) relacionados con "${capitalizedTopic}" a nivel estatal y nacional. Analizar causas estructurales de las desigualdades observadas y su relación con políticas públicas.`,
           prep: `Analizar procesos globales de "${capitalizedTopic}" desde perspectivas de sistemas-mundo, geopolítica e interdependencia. Evaluar teorías explicativas y proponer marcos interpretativos propios con base en datos.`
         },
         default: {
@@ -1771,11 +1817,31 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
                 />
               </div>
 
-              {/* II. Secuencia Didáctica */}
+              {/* II. Preguntas Detonadoras para el Aula */}
+              {activePlanning.preguntasDetonadoras && activePlanning.preguntasDetonadoras.length > 0 && (
+                <div className="mb-6 bg-gradient-to-br from-blue-50/70 to-indigo-50/50 dark:from-blue-950/30 dark:to-indigo-950/20 p-5 rounded-2xl border border-blue-200/60 dark:border-blue-900/40 flex flex-col gap-2.5 print-avoid-break">
+                  <span className="text-[10px] text-blue-700 dark:text-blue-300 font-black uppercase tracking-wider flex items-center gap-1.5">
+                    <HelpCircle className="h-4 w-4 text-blue-600" />
+                    II. Preguntas Detonadoras para el Salón (Apertura y Conflicto Cognitivo)
+                  </span>
+                  <ul className="space-y-2 text-xs text-zinc-850 dark:text-zinc-150 font-medium pl-1">
+                    {activePlanning.preguntasDetonadoras.map((preg: string, pIdx: number) => (
+                      <li key={pIdx} className="flex items-start gap-2.5">
+                        <span className="flex items-center justify-center h-4.5 w-4.5 rounded-full bg-blue-600 text-white font-black text-[10px] shrink-0 mt-0.5">
+                          {pIdx + 1}
+                        </span>
+                        <span className="leading-snug">{preg}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* III. Secuencia Didáctica */}
               <div className="mb-6 flex flex-col gap-4">
                 <span className="text-[10px] text-zinc-950 dark:text-white font-black uppercase tracking-wider border-b border-zinc-150 dark:border-zinc-850 pb-1.5 flex items-center gap-1">
                   <Activity className="h-4 w-4" />
-                  II. Secuencia Didáctica (Metodología de Proyectos)
+                  III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
                 </span>
 
                 {/* Inicio */}
@@ -1809,11 +1875,11 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
                 </div>
               </div>
 
-              {/* III. Evaluación Formativa y Evidencias */}
+              {/* IV. Evaluación Formativa y Evidencias */}
               <div className="mb-6 flex flex-col gap-2.5 print-avoid-break">
                 <span className="text-[10px] text-zinc-950 dark:text-white font-black uppercase tracking-wider border-b border-zinc-150 dark:border-zinc-850 pb-1.5 flex items-center gap-1">
                   <CheckCircle2 className="h-4 w-4" />
-                  III. Evaluación Formativa y Evidencia Sugerida
+                  IV. Evaluación Formativa, Criterios y Rúbrica Analítica
                 </span>
                 <div className="pl-2">
                   <EditableField
@@ -1824,11 +1890,11 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
                 </div>
               </div>
 
-              {/* IV. Materiales y Recursos Didácticos */}
+              {/* V. Materiales y Recursos Didácticos */}
               <div className="mb-8 flex flex-col gap-2.5 print-avoid-break">
                 <span className="text-[10px] text-zinc-950 dark:text-white font-black uppercase tracking-wider border-b border-zinc-150 dark:border-zinc-850 pb-1.5 flex items-center gap-1">
                   <FileText className="h-4 w-4" />
-                  IV. Materiales y Recursos Didácticos
+                  V. Materiales, Recursos y Evidencias Entregables de la Clase
                 </span>
                 <div className="pl-2">
                   <EditableField
