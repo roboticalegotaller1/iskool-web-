@@ -1625,41 +1625,69 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
             {/* Contenedor Imprimible */}
             <div 
               id="nem-print-container" 
-              className="print-page bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl p-8 sm:p-12 shadow-sm text-left relative text-zinc-800 dark:text-zinc-100 font-sans"
+              className="print-page bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl p-6 sm:p-8 shadow-sm text-left relative text-zinc-800 dark:text-zinc-100 font-sans"
             >
               {/* Estilos CSS Locales e Incrustados para Impresión */}
               <style>{`
+                @page {
+                  size: letter portrait;
+                  margin: 10mm 12mm 10mm 12mm;
+                }
                 @media print {
+                  /* Reset total del HTML y BODY para que no haya margen superior en blanco */
+                  html, body {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    background: #ffffff !important;
+                    height: auto !important;
+                    min-height: 0 !important;
+                    overflow: visible !important;
+                  }
+
+                  /* Ocultar elementos no imprimibles */
+                  .no-print, header, nav, aside, footer, button {
+                    display: none !important;
+                  }
+
+                  /* Eliminar contextos de posición relativa y padding de todos los contenedores padre */
+                  #__next, main, div, section, article {
+                    position: static !important;
+                    transform: none !important;
+                    filter: none !important;
+                    margin-top: 0 !important;
+                    padding-top: 0 !important;
+                  }
+
                   body * {
                     visibility: hidden;
                   }
+
                   #nem-print-container, #nem-print-container * {
                     visibility: visible !important;
                   }
+
                   #nem-print-container {
                     position: absolute !important;
                     left: 0 !important;
                     top: 0 !important;
+                    right: 0 !important;
                     width: 100% !important;
                     max-width: 100% !important;
                     margin: 0 !important;
-                    padding: 16px 28px !important;
+                    padding: 0 !important;
                     border: none !important;
                     box-shadow: none !important;
-                    background: white !important;
-                    color: black !important;
+                    background: #ffffff !important;
+                    color: #000000 !important;
                     overflow: visible !important;
-                    font-size: 11pt !important;
-                    line-height: 1.45 !important;
-                  }
-                  .no-print {
-                    display: none !important;
+                    font-size: 10pt !important;
+                    line-height: 1.4 !important;
                   }
                   .print-badge {
                     border: 1px solid #d4d4d8 !important;
                     background: #f4f4f5 !important;
                     color: #18181b !important;
-                    padding: 3px 8px !important;
+                    padding: 2px 7px !important;
                     border-radius: 9999px !important;
                     display: inline-flex !important;
                     align-items: center !important;
@@ -1667,7 +1695,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                     margin: 2px !important;
                     white-space: normal !important;
                     word-break: break-word !important;
-                    font-size: 8.5pt !important;
+                    font-size: 8pt !important;
                     font-weight: 700 !important;
                     max-width: 100% !important;
                   }
@@ -1693,10 +1721,10 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                   .print-metadata-grid {
                     display: grid !important;
                     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-                    gap: 12px !important;
+                    gap: 10px !important;
                     background: #fafafa !important;
                     border: 1px solid #e4e4e7 !important;
-                    padding: 12px 16px !important;
+                    padding: 10px 14px !important;
                     border-radius: 8px !important;
                   }
                   textarea, .editable-field-wrap {
@@ -1719,7 +1747,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                   .print-section {
                     page-break-inside: avoid !important;
                     break-inside: avoid !important;
-                    margin-bottom: 14px !important;
+                    margin-bottom: 12px !important;
                     overflow: visible !important;
                   }
                   * {
@@ -1732,7 +1760,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
               `}</style>
 
               {/* Membrete Oficial */}
-              <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 border-b-2 border-double border-zinc-200 dark:border-zinc-800 pb-6 mb-6">
+              <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 border-b-2 border-double border-zinc-200 dark:border-zinc-800 pb-5 mb-5">
                 <div className="text-center sm:text-left flex flex-col gap-1">
                   <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest leading-none">Secretaría de Educación Pública</span>
                   <h2 className="text-lg font-black tracking-tight text-zinc-950 dark:text-white leading-tight">COLEGIO ANGLO MEXICANO</h2>
@@ -1740,13 +1768,14 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 </div>
                 
                 {/* Sello Escolar */}
-                <div className="h-14 w-14 rounded-full border-2 border-dashed border-zinc-300 dark:border-zinc-700 flex items-center justify-center text-[9px] font-black text-zinc-400 text-center uppercase leading-none p-1 flex-shrink-0">
-                  Sello<br />Escolar
+                <div className="h-16 w-16 rounded-full border-2 border-dashed border-zinc-300 dark:border-zinc-700 flex flex-col items-center justify-center text-[8.5px] font-black text-zinc-400 text-center uppercase leading-tight p-1 flex-shrink-0 tracking-wider">
+                  <span>Sello</span>
+                  <span>Escolar</span>
                 </div>
               </div>
 
               {/* Título de la Sesión (Auto-ajustable en múltiples líneas para títulos largos) */}
-              <div className="mb-6 flex flex-col gap-1.5 print-section">
+              <div className="mb-5 flex flex-col gap-1.5 print-section">
                 <span className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Título del Proyecto Didáctico</span>
                 {/* Pantalla: Textarea auto-expandible */}
                 <textarea
