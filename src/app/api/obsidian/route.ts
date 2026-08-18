@@ -68,6 +68,20 @@ function getAllMarkdownFiles(dirPath: string): string[] {
   return results;
 }
 
+function formatSpanishDateInLetters(dateInput?: string | Date): string {
+  const d = dateInput ? (typeof dateInput === 'string' && dateInput.includes('de') ? null : new Date(dateInput)) : new Date();
+  if (!d || isNaN(d.getTime())) {
+    if (typeof dateInput === 'string' && dateInput.length > 0) return dateInput;
+    return formatSpanishDateInLetters(new Date());
+  }
+  const day = d.getDate();
+  const months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  return `${day} de ${months[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
 export async function GET(request: NextRequest) {
   try {
     // 1. Validación de Sesión y Autenticación
@@ -132,17 +146,55 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    if (bestMatch && bestMatch.score >= Math.max(1, Math.floor(queryWords.length * 0.3))) {
-      const titleMatch = bestMatch.content.match(/# (.*)/);
-      const campoMatch = bestMatch.content.match(/\*\*Campo Formativo:\*\* (.*)/);
-      const pdaMatch = bestMatch.content.match(/\*\*PDA:\*\* (.*)/);
-      const levelMatch = bestMatch.content.match(/\*\*Nivel \/ Fase:\*\* (.*)/);
-      const subjectMatch = bestMatch.content.match(/\*\*Asignatura:\*\* (.*)/);
-      const inicioMatch = bestMatch.content.match(/### Inicio\n([\s\S]*?)(?=### Desarrollo|### Cierre|$)/);
-      const desarrolloMatch = bestMatch.content.match(/### Desarrollo\n([\s\S]*?)(?=### Cierre|### Evaluacion|$)/);
-      const cierreMatch = bestMatch.content.match(/### Cierre\n([\s\S]*?)(?=### Evaluacion|### Materiales|$)/);
-      const evalMatch = bestMatch.content.match(/### Evaluación Formativa\n([\s\S]*?)(?=### Materiales|$)/);
-      const matMatch = bestMatch.content.match(/### Materiales\n([\s\S]*?)$/);
+    if (bestMatch && bestMatch.score >= Math.max(1, Math.floor(queryWords.length * 0.25))) {
+      const rawContent = bestMatch.content;
+      
+      // Extracción YAML Frontmatter si existe
+      const titleYaml = rawContent.match(/^title:\s*"?(.*?)"?$/m);
+      const titleMd = rawContent.match(/^#\s*(?:Planeación Didáctica:\s*)?(.*)$/m);
+      const title = titleYaml ? titleYaml[1].trim() : (titleMd ? titleMd[1].trim() : bestMatch.filename.replace('.md', ''));
+
+      const campoYaml = rawContent.match(/^campo_formativo:\s*"?(.*?)"?$/m);
+      const campoMd = rawContent.match(/\*\*Campo Formativo:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
+      const campoFormativo = campoYaml ? campoYaml[1].trim() : (campoMd ? campoMd[1].trim() : 'Saberes y Pensamiento Científico');
+
+      const levelYaml = rawContent.match(/^grado:\s*"?(.*?)"?$/m) || rawContent.match(/^nivel:\s*"?(.*?)"?$/m) || rawContent.match(/^fase:\s*"?(.*?)"?$/m);
+      const levelMd = rawContent.match(/\*\*Nivel \/ Fase:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Grado:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
+      const levelName = levelYaml ? levelYaml[1].trim() : (levelMd ? levelMd[1].trim() : 'Fase 6');
+
+      const subjectYaml = rawContent.match(/^disciplina:\s*"?(.*?)"?$/m) || rawContent.match(/^asignatura:\s*"?(.*?)"?$/m);
+      const subjectMd = rawContent.match(/\*\*Disciplina \/ Materia:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Asignatura:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
+      const subjectName = subjectYaml ? subjectYaml[1].trim() : (subjectMd ? subjectMd[1].trim() : 'Matemáticas');
+
+      const pdaBlock = rawContent.match(/## 🎯 Proceso de Desarrollo de Aprendizaje[\s\S]*?```(?:text)?\n([\s\S]*?)```/);
+      const pdaMd = rawContent.match(/\*\*PDA:\*\*\s*(.*)/);
+      const pda = pdaBlock ? pdaBlock[1].trim() : (pdaMd ? pdaMd[1].trim() : query);
+
+      const durationYaml = rawContent.match(/^temporalidad:\s*"?(.*?)"?$/m);
+      const durationMd = rawContent.match(/\*\*Duración:\*\*\s*(.*)/);
+      const duration = durationYaml ? durationYaml[1].trim() : (durationMd ? durationMd[1].trim() : '2 semanas (10 sesiones de 50 min)');
+
+      // Preguntas detonadoras
+      const preguntasBlock = rawContent.match(/## ❓ Preguntas Detonadoras[\s\S]*?\n([\s\S]*?)(?=\n##|$)/);
+      const preguntas: string[] = [];
+      if (preguntasBlock) {
+        const lines = preguntasBlock[1].split('\n');
+        for (const l of lines) {
+          const cleanL = l.replace(/^[-*•\d.]+\s*/, '').replace(/^\*\*/, '').replace(/\*\*$/, '').trim();
+          if (cleanL.length > 5) preguntas.push(cleanL);
+        }
+      }
+
+      // Secuencia didáctica
+      const inicioMatch = rawContent.match(/(?:### 🚀 Sesiones 1 y 2|### Inicio)[\s\S]*?\n([\s\S]*?)(?=### 🔬|### Desarrollo|### Cierre|$)/);
+      const desarrolloMatch = rawContent.match(/(?:### 🔬 Sesiones 3 a 7|### Desarrollo)[\s\S]*?\n([\s\S]*?)(?=### 🏁|### Cierre|## 📊|$)/);
+      const cierreMatch = rawContent.match(/(?:### 🏁 Sesiones 8 a 10|### Cierre)[\s\S]*?\n([\s\S]*?)(?=## 📊|## 📦|$)/);
+      const evalMatch = rawContent.match(/(?:## 📊 Rúbrica Analítica|### Evaluación Formativa)[\s\S]*?\n([\s\S]*?)(?=## 📦|## 🔗|$)/);
+      const matMatch = rawContent.match(/(?:## 📦 Materiales, Recursos|### Materiales)[\s\S]*?\n([\s\S]*?)(?=## 🔗|$)/);
+
+      // Fecha en letras
+      const createdMatch = rawContent.match(/created_at:\s*"?(.*?)"?$/m) || rawContent.match(/fecha_creacion:\s*"?(.*?)"?$/m);
+      const createdAt = formatSpanishDateInLetters(createdMatch ? createdMatch[1] : new Date());
 
       return NextResponse.json({
         found: true,
@@ -150,19 +202,23 @@ export async function GET(request: NextRequest) {
         filename: bestMatch.filename,
         planning: {
           id: 'plan-obsidian-' + Date.now(),
-          title: titleMatch ? titleMatch[1].trim() : bestMatch.filename.replace('.md', ''),
-          levelName: levelMatch ? levelMatch[1].trim() : '',
-          subjectName: subjectMatch ? subjectMatch[1].trim() : '',
-          campoFormativo: campoMatch ? campoMatch[1].trim() : 'Saberes y Pensamiento Científico',
-          ejesArticuladores: ['Pensamiento Crítico', 'Apropiación de las Culturas'],
-          pda: pdaMatch ? pdaMatch[1].trim() : query,
-          duration: '4 horas lectivas',
+          title,
+          levelName,
+          subjectName,
+          campoFormativo,
+          ejesArticuladores: ['Pensamiento Crítico', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
+          pda,
+          duration,
+          preguntasDetonadoras: preguntas.length > 0 ? preguntas : [
+            `¿Cómo aplicamos ${title} en situaciones de la vida real?`,
+            `¿Qué implicaciones tiene este aprendizaje en nuestra comunidad?`
+          ],
           inicio: inicioMatch ? inicioMatch[1].trim() : 'Actividades de inicio recuperadas desde Obsidian.',
           desarrollo: desarrolloMatch ? desarrolloMatch[1].trim() : 'Actividades de desarrollo recuperadas desde Obsidian.',
           cierre: cierreMatch ? cierreMatch[1].trim() : 'Actividades de cierre recuperadas desde Obsidian.',
           evaluacion: evalMatch ? evalMatch[1].trim() : 'Evaluación formativa recuperada desde Obsidian.',
           materiales: matMatch ? matMatch[1].trim() : 'Materiales registrados en nota de Obsidian.',
-          createdAt: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' }),
+          createdAt,
           isFromObsidian: true
         }
       });
@@ -223,7 +279,7 @@ export async function POST(request: NextRequest) {
     const filename = `Planeacion_${safeTitle}_${Date.now()}.md`;
     const filePath = path.join(targetDir, filename);
 
-    const timestamp = new Date().toISOString();
+    const formattedSpanishDate = formatSpanishDateInLetters(new Date());
 
     const tagLevel = levelFolder.toLowerCase();
     const tagGrade = gradeFolder.toLowerCase();
@@ -235,18 +291,21 @@ nivel: "${planning.levelName || ''}"
 grado: "${planning.gradeName || planning.grado || ''}"
 asignatura: "${planning.subjectName || ''}"
 campo_formativo: "${planning.campoFormativo || ''}"
-fecha_creacion: "${timestamp}"
+fecha_creacion: "${formattedSpanishDate}"
+created_at: "${formattedSpanishDate}"
+updated_at: "${formattedSpanishDate}"
 ---
 
 # ${planning.title}
 
-**Docente:** ${planning.teacherName || 'Prof. Israel López'}  
+**Docente:** ${planning.teacherName || 'Prof. Israel López Ángeles'}  
 **Nivel / Fase:** ${planning.levelName || ''}  
 **Grado:** ${planning.gradeName || planning.grado || 'No especificado'}  
 **Asignatura:** ${planning.subjectName || ''}  
 **Campo Formativo:** ${planning.campoFormativo || ''}  
 **Duración:** ${planning.duration || '2 sesiones de 50 minutos (Total: 100 min)'}  
 **PDA:** ${planning.pda || ''}  
+**Fecha:** ${formattedSpanishDate}
 
 ---
 

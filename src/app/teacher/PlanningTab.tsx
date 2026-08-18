@@ -18,6 +18,20 @@ import { supabase } from '@/lib/supabaseClient';
 // BASE DE DATOS CURRICULAR DE LA NEM 2022
 // ==========================================
 
+export function formatSpanishDateInLetters(dateInput?: string | Date): string {
+  const d = dateInput ? (typeof dateInput === 'string' && dateInput.includes('de') ? null : new Date(dateInput)) : new Date();
+  if (!d || isNaN(d.getTime())) {
+    if (typeof dateInput === 'string' && dateInput.length > 0) return dateInput;
+    return formatSpanishDateInLetters(new Date());
+  }
+  const day = d.getDate();
+  const months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  return `${day} de ${months[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
 interface NemContent {
   campoFormativo: string;
   ejesArticuladores: string[];
@@ -702,41 +716,37 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     let resultPlanning: any = null;
     let foundInObsidian = false;
 
-    // Step 1: Si NO es Israel López, buscar primero en la bóveda de Obsidian si coincide el tema
-    // Para el Prof. Israel López Ángeles: Bypass activado -> Generación directa con Gemini AI
-    if (!isIsraelLopez) {
-      try {
-        const { data: sessionData } = await supabase.auth.getSession();
-        const authHeaders: Record<string, string> = {};
-        if (sessionData?.session?.access_token) {
-          authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
-        }
-
-        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}`, {
-          headers: authHeaders
-        });
-        if (obsRes.ok) {
-          const obsData = await obsRes.json();
-          if (obsData.found && obsData.planning) {
-            resultPlanning = obsData.planning;
-            foundInObsidian = true;
-            console.log("Planeación encontrada en Obsidian:", obsData.filename);
-          }
-        }
-      } catch (e) {
-        console.warn("No se pudo consultar la bóveda de Obsidian:", e);
+    // Step 1: Consultar prioritariamente la bóveda local de Obsidian (Vault-First / Cache-First)
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const authHeaders: Record<string, string> = {};
+      if (sessionData?.session?.access_token) {
+        authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
       }
-    } else {
-      console.log("⚡ [Super Usuario Activo]: Prof. Israel López Ángeles -> Bypass Obsidian activado. Generando directamente con Gemini AI.");
+
+      const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(selectedSubject)}`, {
+        headers: authHeaders
+      });
+      if (obsRes.ok) {
+        const obsData = await obsRes.json();
+        if (obsData.found && obsData.planning) {
+          resultPlanning = obsData.planning;
+          foundInObsidian = true;
+          console.log("📚 [Obsidian Vault]: Planeación existente recuperada con éxito:", obsData.filename);
+        }
+      }
+    } catch (e) {
+      console.warn("Aviso de consulta a Obsidian:", e);
     }
 
     // Esperar a que la simulación termine visualmente
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     const currKey = mapSubjectToCurriculumKey(selectedSubject, displaySubjects.find(s => s.id === selectedSubject)?.name || '');
 
-    // Step 2: Si no estuvo en Obsidian (o para Israel López), generar con IA Gemini o Heurístico Local
+    // Step 2: Si NO existe en Obsidian, activar motor de Inteligencia Artificial (Gemini AI / Heurístico NEM 2024)
     if (!resultPlanning) {
+      console.log("🤖 [IA NEM 2024]: Planeación no encontrada en Obsidian. Generando con Inteligencia Artificial...");
       if (geminiApiKey.trim()) {
         try {
           resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey);
@@ -889,7 +899,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       cierre: parsed.cierre || 'Actividades dosificadas de cierre.',
       evaluacion: parsed.evaluacion || 'Rúbrica formativa y evidencias evaluables.',
       materiales: parsed.materiales || 'Materiales didácticos y productos entregables.',
-      createdAt: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
+      createdAt: formatSpanishDateInLetters(new Date())
     };
   };
 
@@ -1155,7 +1165,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       cierre,
       evaluacion: evalMap[topicKey] || evalMap['default'],
       materiales: materialesMap[topicKey] || materialesMap['default'],
-      createdAt: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
+      createdAt: formatSpanishDateInLetters(new Date())
     };
   };
 
@@ -1631,23 +1641,63 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                     left: 0 !important;
                     top: 0 !important;
                     width: 100% !important;
+                    max-width: 100% !important;
                     margin: 0 !important;
-                    padding: 12px 24px !important;
+                    padding: 16px 28px !important;
                     border: none !important;
                     box-shadow: none !important;
                     background: white !important;
                     color: black !important;
                     overflow: visible !important;
+                    font-size: 11pt !important;
+                    line-height: 1.45 !important;
                   }
                   .no-print {
                     display: none !important;
                   }
                   .print-badge {
-                    border: 1px solid #ccc !important;
-                    background: #f5f5f5 !important;
+                    border: 1px solid #d4d4d8 !important;
+                    background: #f4f4f5 !important;
+                    color: #18181b !important;
+                    padding: 3px 8px !important;
+                    border-radius: 9999px !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 4px !important;
+                    margin: 2px !important;
+                    white-space: normal !important;
+                    word-break: break-word !important;
+                    font-size: 8.5pt !important;
+                    font-weight: 700 !important;
+                    max-width: 100% !important;
+                  }
+                  .print-hide-input, .print-hide-textarea {
+                    display: none !important;
+                  }
+                  .print-show-text {
+                    display: block !important;
+                    overflow: visible !important;
+                    height: auto !important;
+                    max-height: none !important;
+                    white-space: pre-wrap !important;
+                    word-break: break-word !important;
+                    overflow-wrap: break-word !important;
                     color: black !important;
-                    padding: 2px 6px !important;
-                    border-radius: 4px !important;
+                  }
+                  .print-show-inline {
+                    display: inline !important;
+                    word-break: break-word !important;
+                    overflow-wrap: break-word !important;
+                    color: black !important;
+                  }
+                  .print-metadata-grid {
+                    display: grid !important;
+                    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                    gap: 12px !important;
+                    background: #fafafa !important;
+                    border: 1px solid #e4e4e7 !important;
+                    padding: 12px 16px !important;
+                    border-radius: 8px !important;
                   }
                   textarea, .editable-field-wrap {
                     border: none !important;
@@ -1658,6 +1708,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                     max-height: none !important;
                     white-space: pre-wrap !important;
                     word-break: break-word !important;
+                    overflow-wrap: break-word !important;
                     display: block !important;
                     width: 100% !important;
                   }
@@ -1668,24 +1719,14 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                   .print-section {
                     page-break-inside: avoid !important;
                     break-inside: avoid !important;
-                    margin-bottom: 16px !important;
+                    margin-bottom: 14px !important;
                     overflow: visible !important;
-                  }
-                  .print-hide-textarea {
-                    display: none !important;
-                  }
-                  .print-show-text {
-                    display: block !important;
-                    overflow: visible !important;
-                    height: auto !important;
-                    max-height: none !important;
-                    white-space: pre-wrap !important;
-                    word-break: break-word !important;
-                    color: black !important;
                   }
                   * {
                     overflow: visible !important;
                     max-height: none !important;
+                    word-break: break-word !important;
+                    overflow-wrap: break-word !important;
                   }
                 }
               `}</style>
@@ -1704,52 +1745,70 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 </div>
               </div>
 
-              {/* Título de la Sesión */}
-              <div className="mb-6 flex flex-col gap-1.5">
+              {/* Título de la Sesión (Auto-ajustable en múltiples líneas para títulos largos) */}
+              <div className="mb-6 flex flex-col gap-1.5 print-section">
                 <span className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Título del Proyecto Didáctico</span>
-                <input
-                  type="text"
+                {/* Pantalla: Textarea auto-expandible */}
+                <textarea
                   value={activePlanning.title}
                   onChange={(e) => updateActivePlanningField('title', e.target.value)}
-                  className="w-full text-xl font-black text-zinc-950 dark:text-white border-b border-transparent hover:border-zinc-200 focus:border-blue-500 outline-none pb-1.5 focus:px-2 rounded"
+                  rows={2}
+                  className="w-full text-xl sm:text-2xl font-black text-zinc-950 dark:text-white border-b border-transparent hover:border-zinc-200 focus:border-blue-500 outline-none pb-1.5 focus:px-2 rounded resize-none overflow-hidden leading-snug break-words print-hide-textarea"
                 />
+                {/* Impresión / PDF: Elemento de texto con ajuste de línea completo sin recortes */}
+                <h1 className="print-show-text hidden text-xl font-black text-zinc-950 dark:text-white leading-snug break-words">
+                  {activePlanning.title}
+                </h1>
               </div>
 
               {/* Tabla de Metadatos Didácticos */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-5 bg-zinc-50/50 dark:bg-zinc-950/20 p-5 rounded-2xl border border-zinc-150 dark:border-zinc-850 mb-6 font-semibold text-xs leading-normal">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-zinc-50/70 dark:bg-zinc-950/20 p-5 rounded-2xl border border-zinc-150 dark:border-zinc-850 mb-6 font-semibold text-xs leading-normal print-metadata-grid">
                 <div className="flex flex-col gap-1">
-                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider">Docente Titular</span>
-                  <span className="text-zinc-850 dark:text-zinc-200">{currentTeacher.first_name} {currentTeacher.last_name}</span>
+                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider font-bold">Docente Titular</span>
+                  <span className="text-zinc-850 dark:text-zinc-200 break-words">{currentTeacher.first_name} {currentTeacher.last_name}</span>
                 </div>
                 
                 <div className="flex flex-col gap-1">
-                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider">Nivel / Fase</span>
-                  <span className="text-zinc-850 dark:text-zinc-200">{activePlanning.levelName}</span>
+                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider font-bold">Nivel / Fase</span>
+                  <span className="text-zinc-850 dark:text-zinc-200 break-words">{activePlanning.levelName}</span>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider">Asignatura</span>
-                  <span className="text-zinc-850 dark:text-zinc-200">{activePlanning.subjectName}</span>
+                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider font-bold">Asignatura</span>
+                  <span className="text-zinc-850 dark:text-zinc-200 break-words">{activePlanning.subjectName}</span>
                 </div>
 
                 <div className="flex flex-col gap-1 md:col-span-2">
-                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider">Campo Formativo (NEM)</span>
+                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider font-bold">Campo Formativo (NEM)</span>
                   <input
                     type="text"
                     value={activePlanning.campoFormativo}
                     onChange={(e) => updateActivePlanningField('campoFormativo', e.target.value)}
-                    className="bg-transparent text-zinc-850 dark:text-zinc-200 border-b border-transparent hover:border-zinc-200 focus:border-blue-500 outline-none w-full"
+                    className="bg-transparent text-zinc-850 dark:text-zinc-200 border-b border-transparent hover:border-zinc-200 focus:border-blue-500 outline-none w-full print-hide-input"
                   />
+                  <span className="print-show-inline hidden text-zinc-850 dark:text-zinc-200 break-words font-semibold">
+                    {activePlanning.campoFormativo}
+                  </span>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider">Duración Estimada</span>
+                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider font-bold">Duración Estimada</span>
                   <input
                     type="text"
                     value={activePlanning.duration}
                     onChange={(e) => updateActivePlanningField('duration', e.target.value)}
-                    className="bg-transparent text-zinc-850 dark:text-zinc-200 border-b border-transparent hover:border-zinc-200 focus:border-blue-500 outline-none w-full"
+                    className="bg-transparent text-zinc-850 dark:text-zinc-200 border-b border-transparent hover:border-zinc-200 focus:border-blue-500 outline-none w-full print-hide-input"
                   />
+                  <span className="print-show-inline hidden text-zinc-850 dark:text-zinc-200 break-words font-semibold">
+                    {activePlanning.duration}
+                  </span>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] text-zinc-400 uppercase tracking-wider font-bold">Fecha de Elaboración</span>
+                  <span className="text-zinc-850 dark:text-zinc-200 font-semibold break-words">
+                    {formatSpanishDateInLetters(activePlanning.createdAt)}
+                  </span>
                 </div>
               </div>
 
@@ -1923,7 +1982,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
               {/* Pie de página de impresión */}
               <div className="absolute bottom-4 right-8 left-8 flex justify-between text-[8.5px] text-zinc-400 font-mono no-print">
                 <span>Generado vía ISkool IA</span>
-                <span>Fecha: {activePlanning.createdAt}</span>
+                <span>Fecha: {formatSpanishDateInLetters(activePlanning.createdAt)}</span>
               </div>
 
             </div>

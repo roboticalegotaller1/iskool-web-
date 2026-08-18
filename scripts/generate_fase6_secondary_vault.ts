@@ -16,6 +16,15 @@ const ALL_F6_PLANNINGS: NodeMetadataF6[] = [
 const OBSIDIAN_VAULT_ROOT = 'C:\\Users\\kami-\\Desktop\\2025-2026\\iskool\\obsidean\\brain\\iskool';
 const TARGET_DIR = path.join(OBSIDIAN_VAULT_ROOT, 'planeaciones', 'Secundaria_Fase_6_NEM2024');
 
+function getSpanishDateInLetters(date: Date = new Date()): string {
+  const day = date.getDate();
+  const months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  return `${day} de ${months[date.getMonth()]} de ${date.getFullYear()}`;
+}
+
 function sanitizeFilename(name: string): string {
   return name
     .replace(/[\\/:*?"<>|]/g, '')
@@ -25,7 +34,7 @@ function sanitizeFilename(name: string): string {
 
 function generateMarkdownContent(node: NodeMetadataF6): string {
   const sanitizeTitle = sanitizeFilename(node.tituloProyecto);
-  const nowStr = new Date().toISOString().split('T')[0];
+  const nowStr = getSpanishDateInLetters();
 
   return `---
 id: "${node.id}"
@@ -137,7 +146,7 @@ graph LR
 }
 
 function generateMasterIndex(plannings: NodeMetadataF6[]): string {
-  const nowStr = new Date().toISOString().split('T')[0];
+  const nowStr = getSpanishDateInLetters();
 
   const lenguajes = plannings.filter(p => p.campo === 'Lenguajes');
   const saberes = plannings.filter(p => p.campo === 'Saberes y Pensamiento Científico');
