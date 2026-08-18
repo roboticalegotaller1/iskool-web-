@@ -3,6 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
 import { validateApiAuth } from '@/lib/authValidator';
+import { exec } from 'child_process';
+import util from 'util';
+
+const execPromise = util.promisify(exec);
 
 const OBSIDIAN_VAULT_PATH = 'C:\\Users\\kami-\\Desktop\\2025-2026\\iskool\\obsidean\\brain\\iskool';
 
@@ -31,7 +35,9 @@ const ObsidianPlanningSchema = z.object({
   desarrollo: z.string().trim().max(5000).optional(),
   cierre: z.string().trim().max(5000).optional(),
   evaluacion: z.string().trim().max(5000).optional(),
-  materiales: z.string().trim().max(5000).optional()
+  materiales: z.string().trim().max(5000).optional(),
+  syncGit: z.boolean().optional(),
+  isSuperUser: z.boolean().optional()
 });
 
 function cleanString(str: string) {
@@ -266,13 +272,41 @@ ${planning.materiales || ''}
     fs.writeFileSync(filePath, markdownContent, 'utf8');
     console.log(`✅ Planeación guardada en Obsidian estructurada por Nivel/Grado/Materia: ${filePath}`);
 
+    // Sincronización Automática con Git (Commit & Push al repositorio remoto del Segundo Cerebro)
+    let gitSyncStatus = 'skipped';
+    let gitMessage = '';
+    const isIsrael = (planning.teacherName || '').toLowerCase().includes('israel') || Boolean(planning.isSuperUser);
+
+    if (planning.syncGit || isIsrael) {
+      try {
+        const safeCommitTitle = planning.title.replace(/["`$]/g, '').trim();
+        const commitMsg = `feat(planeacion): ${safeCommitTitle} - ${planning.teacherName || 'Prof. Israel López Ángeles'} (Gemini NEM)`;
+        
+        await execPromise(`git -C "${OBSIDIAN_VAULT_PATH}" add -A`);
+        await execPromise(`git -C "${OBSIDIAN_VAULT_PATH}" commit -m "${commitMsg}"`).catch((e) => {
+          // Si no hay cambios nuevos para commitear, no es un error crítico
+          console.log('Git commit notice:', e.message);
+        });
+        await execPromise(`git -C "${OBSIDIAN_VAULT_PATH}" push origin main`);
+        gitSyncStatus = 'synced_and_pushed';
+        gitMessage = 'Sincronizado y publicado en GitHub (Bóveda Obsidian)';
+        console.log(`🚀 [Git Auto-Push]: Planeación "${planning.title}" sincronizada y enviada a GitHub.`);
+      } catch (gitErr: any) {
+        gitSyncStatus = 'local_only';
+        gitMessage = `Guardado localmente. Git remoto: ${gitErr?.message || 'Pendiente de sincronizar'}`;
+        console.warn('Aviso Git Obsidian:', gitErr?.message || gitErr);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       filename,
       vaultPath: filePath,
       levelFolder,
       gradeFolder,
-      subjectFolder
+      subjectFolder,
+      gitSyncStatus,
+      gitMessage
     });
   } catch (error: any) {
     console.error("Error al guardar en Obsidian:", error);

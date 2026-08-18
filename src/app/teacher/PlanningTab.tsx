@@ -658,6 +658,13 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     setApiSettingsOpen(false);
   };
 
+  const teacherFullName = `${currentTeacher?.first_name || ''} ${currentTeacher?.last_name || ''}`.trim();
+  const isIsraelLopez = 
+    teacherFullName.toLowerCase().includes('israel') ||
+    (currentTeacher?.email || '').toLowerCase().includes('israel') ||
+    currentTeacher?.id === 'usr-teacher-1' ||
+    currentTeacher?.id === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55';
+
   // --- Generador Didáctico de Planeación ---
   const handleGenerate = async () => {
     if (!inputText.trim() && !uploadedFile) {
@@ -677,40 +684,45 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
         clearInterval(interval);
         return prev;
       });
-    }, 1100);
+    }, 1000);
 
-    // Step 1: Buscar primero en la bóveda de Obsidian si coincide el tema
     let resultPlanning: any = null;
     let foundInObsidian = false;
 
-    try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const authHeaders: Record<string, string> = {};
-      if (sessionData?.session?.access_token) {
-        authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
-      }
-
-      const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}`, {
-        headers: authHeaders
-      });
-      if (obsRes.ok) {
-        const obsData = await obsRes.json();
-        if (obsData.found && obsData.planning) {
-          resultPlanning = obsData.planning;
-          foundInObsidian = true;
-          console.log("Planeación encontrada en Obsidian:", obsData.filename);
+    // Step 1: Si NO es Israel López, buscar primero en la bóveda de Obsidian si coincide el tema
+    // Para el Prof. Israel López Ángeles: Bypass activado -> Generación directa con Gemini AI
+    if (!isIsraelLopez) {
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const authHeaders: Record<string, string> = {};
+        if (sessionData?.session?.access_token) {
+          authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
         }
+
+        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}`, {
+          headers: authHeaders
+        });
+        if (obsRes.ok) {
+          const obsData = await obsRes.json();
+          if (obsData.found && obsData.planning) {
+            resultPlanning = obsData.planning;
+            foundInObsidian = true;
+            console.log("Planeación encontrada en Obsidian:", obsData.filename);
+          }
+        }
+      } catch (e) {
+        console.warn("No se pudo consultar la bóveda de Obsidian:", e);
       }
-    } catch (e) {
-      console.warn("No se pudo consultar la bóveda de Obsidian:", e);
+    } else {
+      console.log("⚡ [Super Usuario Activo]: Prof. Israel López Ángeles -> Bypass Obsidian activado. Generando directamente con Gemini AI.");
     }
 
     // Esperar a que la simulación termine visualmente
-    await new Promise(resolve => setTimeout(resolve, 3500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     const currKey = mapSubjectToCurriculumKey(selectedSubject, displaySubjects.find(s => s.id === selectedSubject)?.name || '');
 
-    // Step 2: Si no estuvo en Obsidian, generar con IA Gemini o Heurístico Local
+    // Step 2: Si no estuvo en Obsidian (o para Israel López), generar con IA Gemini o Heurístico Local
     if (!resultPlanning) {
       if (geminiApiKey.trim()) {
         try {
@@ -731,27 +743,34 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
         resultPlanning.pda = selectedSuggestedPda;
       }
 
-      // Step 3: Si fue recién generada (no leída de Obsidian), guardarla automáticamente en el Segundo Cerebro de Obsidian
-      if (!foundInObsidian) {
-        try {
-          const { data: sessionData } = await supabase.auth.getSession();
-          const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-          if (sessionData?.session?.access_token) {
-            headers['Authorization'] = `Bearer ${sessionData.session.access_token}`;
-          }
-
-          await fetch('/api/obsidian', {
-            method: 'POST',
-            headers,
-            body: JSON.stringify({
-              ...resultPlanning,
-              teacherName: `${currentTeacher.first_name} ${currentTeacher.last_name}`
-            })
-          });
-          console.log("Planeación sincronizada con el Segundo Cerebro de Obsidian automáticamente.");
-        } catch (e) {
-          console.warn("No se pudo auto-guardar en Obsidian:", e);
+      // Step 3: Guardar automáticamente en el Segundo Cerebro de Obsidian Y Auto-Push a Git
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (sessionData?.session?.access_token) {
+          headers['Authorization'] = `Bearer ${sessionData.session.access_token}`;
         }
+
+        const obsSaveRes = await fetch('/api/obsidian', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            ...resultPlanning,
+            teacherName: isIsraelLopez ? 'Prof. Israel López Ángeles' : `${currentTeacher.first_name} ${currentTeacher.last_name}`,
+            syncGit: isIsraelLopez || true,
+            isSuperUser: isIsraelLopez
+          })
+        });
+
+        if (obsSaveRes.ok) {
+          const obsData = await obsSaveRes.json();
+          if (obsData.gitSyncStatus === 'synced_and_pushed') {
+            console.log("🚀 Planeación guardada en Obsidian local y sincronizada automáticamente en Git.");
+            resultPlanning.gitSynced = true;
+          }
+        }
+      } catch (e) {
+        console.warn("No se pudo auto-guardar en Obsidian/Git:", e);
       }
     }
 
@@ -1170,6 +1189,28 @@ Debes responder ÚNICAMENTE con un objeto JSON válido, estructurado exactamente
       {/* -------------------- COLUMNA IZQUIERDA: INPUTS (lg:col-span-4) -------------------- */}
       <div className="lg:col-span-4 flex flex-col gap-5 bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 rounded-3xl p-5 shadow-sm text-left no-print">
         
+        {/* Banner de Derechos Únicos / Super Usuario: Prof. Israel López Ángeles */}
+        {isIsraelLopez && (
+          <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 p-3.5 rounded-2xl text-white shadow-md shadow-purple-500/20 space-y-1.5 animate-fade-in">
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-[10px] font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <Sparkles className="h-3 w-3 text-yellow-300" />
+                Super Usuario Creador
+              </span>
+              <span className="text-[9px] font-mono text-purple-200 bg-black/20 px-1.5 py-0.5 rounded-md">
+                Población Masiva
+              </span>
+            </div>
+            <h4 className="text-xs font-black">
+              Prof. Israel López Ángeles
+            </h4>
+            <div className="text-[10px] text-purple-100 leading-snug space-y-0.5">
+              <p>⚡ <strong>Bypass Bóveda:</strong> Directo a consulta y generación con Gemini AI.</p>
+              <p>🚀 <strong>Auto-Sincronización:</strong> Guardado en Obsidian y Auto-Push a Git.</p>
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-between items-center border-b border-zinc-100 dark:border-zinc-800 pb-3">
           <h3 className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
             <Wand2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
