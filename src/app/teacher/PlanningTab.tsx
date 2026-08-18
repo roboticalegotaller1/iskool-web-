@@ -1759,16 +1759,6 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 }
               `}</style>
 
-              {/* Encabezado Superior Institucional (Fecha Oficial con Mes en Letras y Nombre del Sistema) */}
-              <div className="flex justify-between items-center text-[9.5px] font-mono text-zinc-500 border-b border-zinc-200/80 dark:border-zinc-800 pb-2 mb-4 print-section">
-                <span className="font-bold text-zinc-700 dark:text-zinc-300">
-                  {formatSpanishDateInLetters(activePlanning.createdAt)}
-                </span>
-                <span className="font-semibold text-zinc-600 dark:text-zinc-400">
-                  ISkool — Módulo Académico Gamificado
-                </span>
-              </div>
-
               {/* Membrete Oficial */}
               <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 border-b-2 border-double border-zinc-200 dark:border-zinc-800 pb-5 mb-5 print-section">
                 <div className="text-center sm:text-left flex flex-col gap-1">
@@ -1777,17 +1767,10 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                   <p className="text-[10.5px] font-medium text-zinc-500">Módulo Académico Gamificado • Planeación Didáctica NEM</p>
                 </div>
                 
-                <div className="flex items-center gap-4">
-                  <div className="text-right flex flex-col text-[9px] font-semibold text-zinc-500">
-                    <span className="text-[8px] uppercase tracking-wider text-zinc-400 font-bold">Fecha de Elaboración</span>
-                    <span className="text-zinc-800 dark:text-zinc-200 font-bold">{formatSpanishDateInLetters(activePlanning.createdAt)}</span>
-                  </div>
-
-                  {/* Sello Escolar */}
-                  <div className="h-16 w-16 rounded-full border-2 border-dashed border-zinc-300 dark:border-zinc-700 flex flex-col items-center justify-center text-[8.5px] font-black text-zinc-400 text-center uppercase leading-tight p-1 flex-shrink-0 tracking-wider">
-                    <span>Sello</span>
-                    <span>Escolar</span>
-                  </div>
+                {/* Sello Escolar */}
+                <div className="h-16 w-16 rounded-full border-2 border-dashed border-zinc-300 dark:border-zinc-700 flex flex-col items-center justify-center text-[8.5px] font-black text-zinc-400 text-center uppercase leading-tight p-1 flex-shrink-0 tracking-wider">
+                  <span>Sello</span>
+                  <span>Escolar</span>
                 </div>
               </div>
 
