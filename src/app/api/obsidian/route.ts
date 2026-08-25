@@ -82,6 +82,52 @@ function formatSpanishDateInLetters(dateInput?: string | Date): string {
   return `${day} de ${months[d.getMonth()]} de ${d.getFullYear()}`;
 }
 
+interface CachedNodeMeta {
+  filePath: string;
+  filename: string;
+  cleanFilename: string;
+  cleanPath: string;
+  cleanTopic: string;
+  cleanPda: string;
+}
+
+let vaultIndexCache: CachedNodeMeta[] | null = null;
+let lastIndexTime = 0;
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutos
+
+function getOrBuildVaultIndex(planningsDir: string): CachedNodeMeta[] {
+  const now = Date.now();
+  if (vaultIndexCache && (now - lastIndexTime) < CACHE_TTL_MS) {
+    return vaultIndexCache;
+  }
+
+  const allFiles = getAllMarkdownFiles(planningsDir);
+  const newIndex: CachedNodeMeta[] = [];
+
+  for (const filePath of allFiles) {
+    const filename = path.basename(filePath);
+    const cleanFilename = cleanString(filename);
+    const cleanPath = cleanString(filePath);
+
+    // Extracción ultrarrápida de tema/pda desde el nombre o metadatos de ruta
+    let cleanTopic = cleanFilename.replace(/^planeacion_/, '').replace(/\.md$/, '').replace(/_/g, ' ');
+    let cleanPda = '';
+
+    newIndex.push({
+      filePath,
+      filename,
+      cleanFilename,
+      cleanPath,
+      cleanTopic,
+      cleanPda
+    });
+  }
+
+  vaultIndexCache = newIndex;
+  lastIndexTime = now;
+  return newIndex;
+}
+
 export async function GET(request: NextRequest) {
   try {
     // 1. Validación de Sesión y Autenticación
@@ -116,66 +162,105 @@ export async function GET(request: NextRequest) {
     }
 
     const cleanQuery = cleanString(query);
-    const queryWords = cleanQuery.split(/\s+/).filter(w => w.length > 2);
+    let queryWords = cleanQuery.split(/[\s,;+-_/]+/).filter(w => w.length >= 2);
+
+    // Expansión semántica para términos matemáticos y científicos
+    if (/(?:x\^?\{?2\}?|x²|x2|cuadrat)/i.test(query)) {
+      queryWords.push('cuadratica', 'cuadraticas', 'algebra');
+    }
+    if (/(?:pi|π|circulo|circunf)/i.test(query)) {
+      queryWords.push('circunferencia', 'circulo', 'pi');
+    }
+    if (/(?:pitagoras|trigono)/i.test(query)) {
+      queryWords.push('pitagoras', 'triangulo', 'trigonometria');
+    }
+    if (/(?:ph|acido|base)/i.test(query)) {
+      queryWords.push('acidos', 'bases', 'neutralizacion');
+    }
 
     const planningsDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones');
     if (!fs.existsSync(planningsDir)) {
       return NextResponse.json({ found: false, note: null });
     }
 
-    const allFiles = getAllMarkdownFiles(planningsDir);
-    let bestMatch: { filename: string; filePath: string; content: string; score: number } | null = null;
+    const allIndexed = getOrBuildVaultIndex(planningsDir);
 
-    for (const filePath of allFiles) {
-      const filename = path.basename(filePath);
-      const content = fs.readFileSync(filePath, 'utf8');
-      const cleanContent = cleanString(content);
+    // Filtrado por parámetros de nivel, grado y materia
+    let candidateNodes = allIndexed;
+    if (levelParam) {
+      const cleanLevel = cleanString(levelParam);
+      const filtered = candidateNodes.filter(n => n.cleanPath.includes(cleanLevel));
+      if (filtered.length > 0) candidateNodes = filtered;
+    }
+    if (gradeParam) {
+      const cleanGrade = cleanString(gradeParam);
+      const filtered = candidateNodes.filter(n => n.cleanPath.includes(cleanGrade));
+      if (filtered.length > 0) candidateNodes = filtered;
+    }
+    if (subjectParam) {
+      const cleanSub = cleanString(subjectParam);
+      const filtered = candidateNodes.filter(n => n.cleanPath.includes(cleanSub));
+      if (filtered.length > 0) candidateNodes = filtered;
+    }
 
+    let bestMatchNode: CachedNodeMeta | null = null;
+    let bestScore = 0;
+
+    for (const node of candidateNodes) {
       let score = 0;
       queryWords.forEach(word => {
-        if (cleanContent.includes(word)) score += 1;
+        if (node.cleanFilename.includes(word)) score += 4;
+        else if (node.cleanTopic.includes(word)) score += 3;
+        else if (node.cleanPath.includes(word)) score += 2;
       });
 
-      // Bonus por coincidencia exacta de nivel, grado o asignatura si están parametrizados
-      if (levelParam && cleanContent.includes(cleanString(levelParam))) score += 2;
-      if (gradeParam && cleanContent.includes(cleanString(gradeParam))) score += 2;
-      if (subjectParam && cleanContent.includes(cleanString(subjectParam))) score += 2;
+      if (levelParam && node.cleanPath.includes(cleanString(levelParam))) score += 2;
+      if (gradeParam && node.cleanPath.includes(cleanString(gradeParam))) score += 2;
+      if (subjectParam && node.cleanPath.includes(cleanString(subjectParam))) score += 2;
 
-      if (score > 0 && (!bestMatch || score > bestMatch.score)) {
-        bestMatch = { filename, filePath, content, score };
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatchNode = node;
       }
     }
 
-    if (bestMatch && bestMatch.score >= Math.max(1, Math.floor(queryWords.length * 0.25))) {
-      const rawContent = bestMatch.content;
+    // Si encontramos una nota coincidente, leemos y parseamos sus secciones completas
+    if (bestMatchNode && bestScore >= 1) {
+      const rawContent = fs.readFileSync(bestMatchNode.filePath, 'utf8');
       
-      // Extracción YAML Frontmatter si existe
-      const titleYaml = rawContent.match(/^title:\s*"?(.*?)"?$/m);
-      const titleMd = rawContent.match(/^#\s*(?:Planeación Didáctica:\s*)?(.*)$/m);
-      const title = titleYaml ? titleYaml[1].trim() : (titleMd ? titleMd[1].trim() : bestMatch.filename.replace('.md', ''));
+      // Extracción de título
+      const titleYaml = rawContent.match(/^tema:\s*"?(.*?)"?$/m) || rawContent.match(/^title:\s*"?(.*?)"?$/m);
+      const titleMd = rawContent.match(/^#\s*(?:📚\s*)?(?:Proyecto Didáctico Integral:\s*)?(?:Planeación Didáctica:\s*)?(.*)$/m);
+      const title = titleYaml ? titleYaml[1].trim() : (titleMd ? titleMd[1].trim() : bestMatchNode.filename.replace('.md', '').replace(/^Planeacion_/, ''));
 
+      // Extracción de Campo Formativo
       const campoYaml = rawContent.match(/^campo_formativo:\s*"?(.*?)"?$/m);
       const campoMd = rawContent.match(/\*\*Campo Formativo:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
       const campoFormativo = campoYaml ? campoYaml[1].trim() : (campoMd ? campoMd[1].trim() : 'Saberes y Pensamiento Científico');
 
+      // Extracción de Grado y Nivel
       const levelYaml = rawContent.match(/^grado:\s*"?(.*?)"?$/m) || rawContent.match(/^nivel:\s*"?(.*?)"?$/m) || rawContent.match(/^fase:\s*"?(.*?)"?$/m);
       const levelMd = rawContent.match(/\*\*Nivel \/ Fase:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Grado:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
       const levelName = levelYaml ? levelYaml[1].trim() : (levelMd ? levelMd[1].trim() : 'Fase 6');
 
-      const subjectYaml = rawContent.match(/^disciplina:\s*"?(.*?)"?$/m) || rawContent.match(/^asignatura:\s*"?(.*?)"?$/m);
-      const subjectMd = rawContent.match(/\*\*Disciplina \/ Materia:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Asignatura:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
+      // Extracción de Asignatura
+      const subjectYaml = rawContent.match(/^materia:\s*"?(.*?)"?$/m) || rawContent.match(/^disciplina:\s*"?(.*?)"?$/m) || rawContent.match(/^asignatura:\s*"?(.*?)"?$/m);
+      const subjectMd = rawContent.match(/\*\*Asignatura \/ Disciplina:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Disciplina \/ Materia:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
       const subjectName = subjectYaml ? subjectYaml[1].trim() : (subjectMd ? subjectMd[1].trim() : 'Matemáticas');
 
+      // Extracción de PDA
+      const pdaQuote = rawContent.match(/## 🎯 (?:I\.\s*)?Proceso de Desarrollo de Aprendizaje[\s\S]*?>\s*\*\*"?([\s\S]*?)"?\*\*/);
       const pdaBlock = rawContent.match(/## 🎯 Proceso de Desarrollo de Aprendizaje[\s\S]*?```(?:text)?\n([\s\S]*?)```/);
       const pdaMd = rawContent.match(/\*\*PDA:\*\*\s*(.*)/);
-      const pda = pdaBlock ? pdaBlock[1].trim() : (pdaMd ? pdaMd[1].trim() : query);
+      const pda = pdaQuote ? pdaQuote[1].trim() : (pdaBlock ? pdaBlock[1].trim() : (pdaMd ? pdaMd[1].trim() : query));
 
-      const durationYaml = rawContent.match(/^temporalidad:\s*"?(.*?)"?$/m);
-      const durationMd = rawContent.match(/\*\*Duración:\*\*\s*(.*)/);
-      const duration = durationYaml ? durationYaml[1].trim() : (durationMd ? durationMd[1].trim() : '2 semanas (10 sesiones de 50 min)');
+      // Extracción de Duración
+      const durationYaml = rawContent.match(/^duracion:\s*"?(.*?)"?$/m) || rawContent.match(/^temporalidad:\s*"?(.*?)"?$/m);
+      const durationMd = rawContent.match(/\*\*Temporalidad:\*\*\s*(.*)/) || rawContent.match(/\*\*Duración:\*\*\s*(.*)/);
+      const duration = durationYaml ? durationYaml[1].trim() : (durationMd ? durationMd[1].trim() : '10 sesiones de 50 min (500 min)');
 
       // Preguntas detonadoras
-      const preguntasBlock = rawContent.match(/## ❓ Preguntas Detonadoras[\s\S]*?\n([\s\S]*?)(?=\n##|$)/);
+      const preguntasBlock = rawContent.match(/## ❓ (?:II\.\s*)?Preguntas Detonadoras[\s\S]*?\n([\s\S]*?)(?=\n---|\n##|$)/);
       const preguntas: string[] = [];
       if (preguntasBlock) {
         const lines = preguntasBlock[1].split('\n');
@@ -185,39 +270,39 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      // Secuencia didáctica
-      const inicioMatch = rawContent.match(/(?:### 🚀 Sesiones 1 y 2|### Inicio)[\s\S]*?\n([\s\S]*?)(?=### 🔬|### Desarrollo|### Cierre|$)/);
-      const desarrolloMatch = rawContent.match(/(?:### 🔬 Sesiones 3 a 7|### Desarrollo)[\s\S]*?\n([\s\S]*?)(?=### 🏁|### Cierre|## 📊|$)/);
-      const cierreMatch = rawContent.match(/(?:### 🏁 Sesiones 8 a 10|### Cierre)[\s\S]*?\n([\s\S]*?)(?=## 📊|## 📦|$)/);
-      const evalMatch = rawContent.match(/(?:## 📊 Rúbrica Analítica|### Evaluación Formativa)[\s\S]*?\n([\s\S]*?)(?=## 📦|## 🔗|$)/);
-      const matMatch = rawContent.match(/(?:## 📦 Materiales, Recursos|### Materiales)[\s\S]*?\n([\s\S]*?)(?=## 🔗|$)/);
+      // Secuencia didáctica estructurada
+      const fase1Match = rawContent.match(/(?:### 📌 FASE 1|### 🚀 Sesiones 1 y 2|### Inicio)[\s\S]*?\n([\s\S]*?)(?=### 🔬 FASE 2|### 🔬|### Desarrollo|$)/);
+      const fase2Match = rawContent.match(/(?:### 🔬 FASE 2|### 💡 FASE 3|### 🔬 Sesiones 3 a 7|### Desarrollo)[\s\S]*?\n([\s\S]*?)(?=### 🌟 FASE 4|### 🏁|### Cierre|## 📋|## 📊|$)/);
+      const fase3Match = rawContent.match(/(?:### 🌟 FASE 4|### 🏁 Sesiones 8 a 10|### Cierre)[\s\S]*?\n([\s\S]*?)(?=## 📋|## 📊|## 📦|$)/);
+      const evalMatch = rawContent.match(/(?:## 📋 IV\.\s*Evaluación Formativa|## 📊 Rúbrica Analítica|### Evaluación Formativa)[\s\S]*?\n([\s\S]*?)(?=## 📦|## 🔗|$)/);
+      const matMatch = rawContent.match(/(?:## 📦 V\.\s*Materiales|## 📦 Materiales, Recursos|### Materiales)[\s\S]*?\n([\s\S]*?)(?=## 🔗|$)/);
 
-      // Fecha en letras
-      const createdMatch = rawContent.match(/created_at:\s*"?(.*?)"?$/m) || rawContent.match(/fecha_creacion:\s*"?(.*?)"?$/m);
+      // Fecha en formato texto español
+      const createdMatch = rawContent.match(/fecha_creacion:\s*"?(.*?)"?$/m) || rawContent.match(/created_at:\s*"?(.*?)"?$/m);
       const createdAt = formatSpanishDateInLetters(createdMatch ? createdMatch[1] : new Date());
 
       return NextResponse.json({
         found: true,
         source: 'obsidian',
-        filename: bestMatch.filename,
+        filename: bestMatchNode.filename,
         planning: {
           id: 'plan-obsidian-' + Date.now(),
           title,
           levelName,
           subjectName,
           campoFormativo,
-          ejesArticuladores: ['Pensamiento Crítico', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
+          ejesArticuladores: ['Pensamiento Crítico', 'Interculturalidad Crítica', 'Inclusión', 'Vida Saludable'],
           pda,
           duration,
           preguntasDetonadoras: preguntas.length > 0 ? preguntas : [
-            `¿Cómo aplicamos ${title} en situaciones de la vida real?`,
-            `¿Qué implicaciones tiene este aprendizaje en nuestra comunidad?`
+            `¿Cómo aplicamos el contenido de ${title} para resolver problemáticas de nuestra comunidad?`,
+            `¿De qué manera fomentamos la equidad, el diálogo y el cuidado del entorno en nuestro proyecto?`
           ],
-          inicio: inicioMatch ? inicioMatch[1].trim() : 'Actividades de inicio recuperadas desde Obsidian.',
-          desarrollo: desarrolloMatch ? desarrolloMatch[1].trim() : 'Actividades de desarrollo recuperadas desde Obsidian.',
-          cierre: cierreMatch ? cierreMatch[1].trim() : 'Actividades de cierre recuperadas desde Obsidian.',
-          evaluacion: evalMatch ? evalMatch[1].trim() : 'Evaluación formativa recuperada desde Obsidian.',
-          materiales: matMatch ? matMatch[1].trim() : 'Materiales registrados en nota de Obsidian.',
+          inicio: fase1Match ? fase1Match[1].trim() : 'FASE 1: Identificación de la problemática y recuperación de saberes comunitarios (100 min).',
+          desarrollo: fase2Match ? fase2Match[1].trim() : 'FASE 2 & 3: Indagación, experimentación científica y diseño del producto tangible (300 min).',
+          cierre: fase3Match ? fase3Match[1].trim() : 'FASE 4: Presentación pública comunitaria, metacognición y rúbrica analítica formativa (100 min).',
+          evaluacion: evalMatch ? evalMatch[1].trim() : 'Rúbrica Analítica NEM: Sobresaliente (3.5 - 4.0), Satisfactorio (2.5 - 3.4), En Proceso (1.0 - 2.4).',
+          materiales: matMatch ? matMatch[1].trim() : 'Libros de texto gratuitos SEP 2024, material de experimentación, hojas recicladas y recursos multimedia.',
           createdAt,
           isFromObsidian: true
         }
