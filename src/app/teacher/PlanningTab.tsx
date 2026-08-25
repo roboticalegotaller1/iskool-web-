@@ -214,7 +214,8 @@ const getPdaMap = (capitalizedTopic: string): Record<string, Record<string, stri
   const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(capitalizedTopic);
   const isAdditionOrSubtraction = /suma|resta|agregar|quitar|conteo|numero|agrupacion|reagrupa/i.test(capitalizedTopic);
   const isGeometry = /figura|cuerpo|geometric|tangram|plano|cara|arista/i.test(capitalizedTopic);
-  const isReading = /lectura|cuento|escribir|nombre|poema|rima|dictado|fabula|instructivo/i.test(capitalizedTopic);
+  const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(capitalizedTopic);
+  const isReading = /lectura|cuento|escribir|nombre|poema|rima|dictado|fabula|instructivo|carta|epistol|mensaje|buzon|correo/i.test(capitalizedTopic);
   const isScience = /planta|animal|cuerpo|sentido|higiene|agua|ecosistem|materia|salud/i.test(capitalizedTopic);
   const isCivicsLocal = /comunidad|acuerdo|convivencia|familia|derecho|paz|tradicion|historia/i.test(capitalizedTopic);
 
@@ -239,7 +240,7 @@ const getPdaMap = (capitalizedTopic: string): Record<string, Record<string, stri
       tech:      `Fase 3 (1º y 2º Primaria) - Identifica usos cotidianos de herramientas y materiales en "${capitalizedTopic}", construyendo artefactos sencillos con material reciclable.`,
       math:      isAdditionOrSubtraction ? `Fase 3 (1º y 2º Primaria) - Construcción de la noción de suma y resta: Resuelve problemas vinculados a su contexto que implican agregar, quitar, juntar, comparar y completar cantidades mediante material concreto (fichas base 10, semillas, taparroscas), recta numérica y cálculo mental con números de hasta dos y tres cifras.` : isGeometry ? `Fase 3 (1º y 2º Primaria) - Figuras geométricas y sus características: Manipula objetos del entorno y construye composiciones geométricas y tangram identificando lados rectos y curvos.` : `Fase 3 (1º y 2º Primaria) - Estudio de los números: Cuenta, lee, escribe y representa colecciones vinculadas a "${capitalizedTopic}" mediante valor posicional (centenas, decenas y unidades) y resolución de problemas cotidianos.`,
       civics:    `Fase 3 (1º y 2º Primaria) - Construye normas y acuerdos de convivencia en el aula inspirados en "${capitalizedTopic}", fomentando el diálogo, la inclusión y la cultura de paz.`,
-      language:  isReading ? `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta textos breves, cuentos, coplas, instructivos y descripciones sobre "${capitalizedTopic}"; aplica la correspondencia grafofonética, el dictado colectivo y signos de puntuación básicos.` : `Fase 3 (1º y 2º Primaria) - Lenguajes: Describe de forma oral y escrita objetos, personas y eventos relacionados con "${capitalizedTopic}" mediante el dibujo y la escritura autónoma.`,
+      language:  isEpistolar ? `Fase 3 (1º y 2º Primaria) - Lenguajes (Producción y lectura de textos epistolares): Reconoce la estructura de la carta (lugar, fecha, destinatario, saludo, cuerpo, despedida, firma y remitente), escribe cartas a familiares y compañeros con propósitos reales y utiliza el buzón escolar para la entrega de correspondencia comunitaria.` : isReading ? `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta textos breves, cuentos, coplas, instructivos y descripciones sobre "${capitalizedTopic}"; aplica la correspondencia grafofonética, el dictado colectivo y signos de puntuación básicos.` : `Fase 3 (1º y 2º Primaria) - Lenguajes: Describe de forma oral y escrita objetos, personas y eventos relacionados con "${capitalizedTopic}" mediante el dibujo y la escritura autónoma.`,
       social:    `Fase 3 (1º y 2º Primaria) - Identifica los cambios y tradiciones de su localidad relacionados con "${capitalizedTopic}" a través de entrevistas familiares y cartografía infantil.`,
       default:   `Fase 3 (1º y 2º Primaria) - Identifica y describe con sus palabras las principales características de "${capitalizedTopic}" en su contexto escolar y comunitario, registrando sus observaciones con material manipulativo y gráfico.`
     },
@@ -303,20 +304,22 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     .filter(s => s.teacherId === normalizedTeacherId)
     .map(s => s.subjectId);
     
-  const filteredSubjects = subjectsList.filter(sub => teacherSubjectIds.includes(sub.id));
-  
-  // Fallback: If empty, load all school subjects
-  const displaySubjects = filteredSubjects.length > 0 ? filteredSubjects : subjectsList;
+  // En el generador curricular NEM 2024, el docente puede planear para cualquier asignatura del currículo
+  const displaySubjects = subjectsList.length > 0 ? subjectsList : (filteredSubjects.length > 0 ? filteredSubjects : [
+    { id: 'sub-span', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Español / Lenguajes', sep_code: 'ESP-NEM', created_at: new Date().toISOString() },
+    { id: 'sub-math', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Matemáticas', sep_code: 'MAT-NEM', created_at: new Date().toISOString() },
+    { id: 'sub-sci', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Ciencias Naturales', sep_code: 'CIE-NEM', created_at: new Date().toISOString() }
+  ]);
 
   // Helper to map subject ID/name to curriculum database category keys
   const mapSubjectToCurriculumKey = (subjectId: string, subjectName: string): 'matematicas' | 'ciencias' | 'lenguajes' => {
-    const cleanId = subjectId.toLowerCase();
-    const cleanName = subjectName.toLowerCase();
+    const cleanId = (subjectId || '').toLowerCase();
+    const cleanName = (subjectName || '').toLowerCase();
     
     if (cleanId.includes('math') || cleanId.includes('matemat') || cleanName.includes('matemat')) {
       return 'matematicas';
     }
-    if (cleanId.includes('sci') || cleanId.includes('cienc') || cleanName.includes('cienc') || cleanName.includes('quim') || cleanName.includes('fisic') || cleanName.includes('biolog')) {
+    if (cleanId.includes('sci') || cleanId.includes('cienc') || cleanName.includes('cienc') || cleanName.includes('quim') || cleanName.includes('fisic') || cleanName.includes('biolog') || cleanName.includes('natural')) {
       return 'ciencias';
     }
     return 'lenguajes';
@@ -743,6 +746,8 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
     let resultPlanning: any = null;
     let foundInObsidian = false;
+    const currentSubjectObj = displaySubjects.find(s => s.id === selectedSubject);
+    const currKey = mapSubjectToCurriculumKey(selectedSubject, currentSubjectObj?.name || '');
 
     // Step 1: Consultar prioritariamente la bóveda local de Obsidian (Vault-First / Cache-First) salvo si está activo el Bypass
     if (!bypassVault) {
@@ -753,7 +758,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
           authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
         }
 
-        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(selectedSubject)}`, {
+        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(currKey)}`, {
           headers: authHeaders
         });
         if (obsRes.ok) {
@@ -773,8 +778,6 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
     // Esperar a que la simulación termine visualmente
     await new Promise(resolve => setTimeout(resolve, 1500));
-
-    const currKey = mapSubjectToCurriculumKey(selectedSubject, displaySubjects.find(s => s.id === selectedSubject)?.name || '');
 
     // Step 2: Si NO existe en Obsidian o está activado el Bypass, activar motor de Inteligencia Artificial (Gemini AI / Heurístico NEM 2024)
     if (!resultPlanning) {
@@ -917,7 +920,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           subjectName: subjectLabel,
           levelId: level,
           levelName: levelLabel,
-          campoFormativo: parsed.campoFormativo || 'Saberes y Pensamiento Científico',
+          campoFormativo: parsed.campoFormativo || (subject === 'lenguajes' ? 'Lenguajes' : 'Saberes y Pensamiento Científico'),
           ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable'],
           pda: parsed.pda || fallbackPdas[0]?.pda || 'PDA Oficial NEM',
           pdasArticulados: fallbackPdas,
@@ -963,13 +966,15 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       'lenguajes':   'Español / Lenguajes (Lenguajes)'
     };
 
-    const isMath = subject === 'matematicas' || /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram|carta/i.test(promptText);
-    const isScience = subject === 'ciencias' || /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(promptText);
-    const campo = isMath || isScience ? 'Saberes y Pensamiento Científico' : 'Lenguajes';
+    const isLanguage = subject === 'lenguajes' || (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(promptText));
+    const isMath = subject === 'matematicas' || (!subject && !isLanguage && /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(promptText));
+    const isScience = subject === 'ciencias' || (!subject && !isLanguage && !isMath && /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(promptText));
+    const campo = isLanguage ? 'Lenguajes' : (isMath || isScience ? 'Saberes y Pensamiento Científico' : 'Lenguajes');
     const ejes = ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'];
 
     const pdaMap = getPdaMap(capitalizedTopic);
-    const pda = pdaMap[level]?.[isMath ? 'math' : isScience ? 'ecology' : 'language'] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
+    const pdaKey = isLanguage ? 'language' : isMath ? 'math' : isScience ? 'ecology' : 'default';
+    const pda = pdaMap[level]?.[pdaKey] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
 
     const sesiones10 = generateChronometer10Sessions(level, subject, promptText);
     const pdasArticulados = getArticulatedPdas(level, subject, promptText);

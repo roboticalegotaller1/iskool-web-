@@ -265,7 +265,8 @@ export async function GET(request: NextRequest) {
       // Extracción de Campo Formativo
       const campoYaml = rawContent.match(/^campo_formativo:\s*"?(.*?)"?$/m);
       const campoMd = rawContent.match(/\*\*Campo Formativo:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
-      const campoFormativo = campoYaml ? campoYaml[1].trim() : (campoMd ? campoMd[1].trim() : 'Saberes y Pensamiento Científico');
+      const isEspPath = bestMatchNode.cleanPath.includes('espanol') || bestMatchNode.cleanPath.includes('lenguajes');
+      const campoFormativo = campoYaml ? campoYaml[1].trim() : (campoMd ? campoMd[1].trim() : (isEspPath ? 'Lenguajes' : 'Saberes y Pensamiento Científico'));
 
       // Extracción de Grado y Nivel
       const levelYaml = rawContent.match(/^grado:\s*"?(.*?)"?$/m) || rawContent.match(/^nivel:\s*"?(.*?)"?$/m) || rawContent.match(/^fase:\s*"?(.*?)"?$/m);
@@ -275,7 +276,7 @@ export async function GET(request: NextRequest) {
       // Extracción de Asignatura
       const subjectYaml = rawContent.match(/^materia:\s*"?(.*?)"?$/m) || rawContent.match(/^disciplina:\s*"?(.*?)"?$/m) || rawContent.match(/^asignatura:\s*"?(.*?)"?$/m);
       const subjectMd = rawContent.match(/\*\*Asignatura \/ Disciplina:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Disciplina \/ Materia:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
-      const subjectName = subjectYaml ? subjectYaml[1].trim() : (subjectMd ? subjectMd[1].trim() : 'Matemáticas');
+      const subjectName = subjectYaml ? subjectYaml[1].trim() : (subjectMd ? subjectMd[1].trim() : (campoFormativo.includes('Lenguajes') ? 'Español' : 'Matemáticas'));
 
       // Extracción de PDA
       const pdaYaml = rawContent.match(/PDA:\s*"([\s\S]*?)"/);
@@ -312,7 +313,8 @@ export async function GET(request: NextRequest) {
       const createdAt = formatSpanishDateInLetters(createdMatch ? createdMatch[1] : new Date());
 
       const normLevel = levelParam || 'primaria-baja';
-      const normSubject = subjectParam || 'matematicas';
+      const cleanSub = cleanString(subjectParam || subjectName || campoFormativo);
+      const normSubject = (cleanSub.includes('leng') || cleanSub.includes('esp')) ? 'lenguajes' : (cleanSub.includes('cien') || cleanSub.includes('medio')) ? 'ciencias' : 'matematicas';
       const sesiones10 = generateChronometer10Sessions(normLevel, normSubject, title);
       const pdasArticulados = getArticulatedPdas(normLevel, normSubject, title);
       const proyectoIntegrador = generateFinalProjectProposal(normLevel, normSubject, title);
