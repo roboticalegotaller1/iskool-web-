@@ -3,6 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
 import { validateApiAuth } from '@/lib/authValidator';
+import { 
+  generateChronometer10Sessions, 
+  getArticulatedPdas, 
+  generateFinalProjectProposal 
+} from '@/lib/curriculumEngine';
 import { exec } from 'child_process';
 import util from 'util';
 
@@ -306,6 +311,12 @@ export async function GET(request: NextRequest) {
       const createdMatch = rawContent.match(/fecha_creacion:\s*"?(.*?)"?$/m) || rawContent.match(/created_at:\s*"?(.*?)"?$/m);
       const createdAt = formatSpanishDateInLetters(createdMatch ? createdMatch[1] : new Date());
 
+      const normLevel = levelParam || 'primaria-baja';
+      const normSubject = subjectParam || 'matematicas';
+      const sesiones10 = generateChronometer10Sessions(normLevel, normSubject, title);
+      const pdasArticulados = getArticulatedPdas(normLevel, normSubject, title);
+      const proyectoIntegrador = generateFinalProjectProposal(normLevel, normSubject, title);
+
       return NextResponse.json({
         found: true,
         source: 'obsidian',
@@ -316,18 +327,22 @@ export async function GET(request: NextRequest) {
           levelName,
           subjectName,
           campoFormativo,
-          ejesArticuladores: ['Pensamiento Crítico', 'Interculturalidad Crítica', 'Inclusión', 'Vida Saludable'],
+          ejesArticuladores: ['Pensamiento Crítico', 'Interculturalidad Crítica', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
           pda,
-          duration,
+          pdasArticulados,
+          duration: '10 sesiones de 50 minutos (Total: 500 min)',
           preguntasDetonadoras: preguntas.length > 0 ? preguntas : [
-            `¿Cómo aplicamos el contenido de ${title} para resolver problemáticas de nuestra comunidad?`,
-            `¿De qué manera fomentamos la equidad, el diálogo y el cuidado del entorno en nuestro proyecto?`
+            `¿Cómo aplicamos el contenido de "${title}" para resolver problemáticas de nuestra comunidad?`,
+            `¿De qué manera fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
+            `¿Qué producto tangible compartiremos con la comunidad escolar al término de las 10 sesiones?`
           ],
-          inicio: fase1Match ? fase1Match[1].trim() : 'FASE 1: Identificación de la problemática y recuperación de saberes comunitarios (100 min).',
-          desarrollo: fase2Match ? fase2Match[1].trim() : 'FASE 2 & 3: Indagación, experimentación científica y diseño del producto tangible (300 min).',
-          cierre: fase3Match ? fase3Match[1].trim() : 'FASE 4: Presentación pública comunitaria, metacognición y rúbrica analítica formativa (100 min).',
-          evaluacion: evalMatch ? evalMatch[1].trim() : 'Rúbrica Analítica NEM: Sobresaliente (3.5 - 4.0), Satisfactorio (2.5 - 3.4), En Proceso (1.0 - 2.4).',
-          materiales: matMatch ? matMatch[1].trim() : 'Libros de texto gratuitos SEP 2024, material de experimentación, hojas recicladas y recursos multimedia.',
+          sesiones: sesiones10,
+          proyectoIntegrador,
+          inicio: fase1Match ? fase1Match[1].trim() : sesiones10[0].actividadInicio + '\n' + sesiones10[0].actividadDesarrollo + '\n' + sesiones10[0].actividadCierre,
+          desarrollo: fase2Match ? fase2Match[1].trim() : sesiones10.slice(1, 8).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+          cierre: fase3Match ? fase3Match[1].trim() : sesiones10.slice(8, 10).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+          evaluacion: evalMatch ? evalMatch[1].trim() : `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
+          materiales: matMatch ? matMatch[1].trim() : `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
           createdAt,
           isFromObsidian: true
         }

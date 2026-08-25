@@ -6,13 +6,23 @@ import {
   Scale, Globe, Palette, Download, Save, Trash2, Plus, 
   ChevronRight, Image, FileDown, CheckCircle2, Wand2, Eye, 
   RefreshCw, Settings, Check, HelpCircle, Edit3, Lock,
-  ChevronDown, ChevronLeft, Shield, Award, Compass, Swords, Info
+  ChevronDown, ChevronLeft, Shield, Award, Compass, Swords, Info,
+  Clock, Layers, Target, BookMarked, CheckSquare, Calendar, Bookmark, FolderCheck
 } from 'lucide-react';
 import { UserProfile, Subject, ClassSchedule, Group, Quest } from '@/types';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePlanningStore } from '@/store/usePlanningStore';
 import { supabase } from '@/lib/supabaseClient';
+import { 
+  generateChronometer10Sessions, 
+  getArticulatedPdas, 
+  generateFinalProjectProposal, 
+  getSepBookForSession, 
+  SessionPlanItem, 
+  ArticulatedPda, 
+  FinalProjectProposal 
+} from '@/lib/curriculumEngine';
 
 // ==========================================
 // BASE DE DATOS CURRICULAR DE LA NEM 2022
@@ -830,28 +840,36 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
   // --- Llamada a la API Real de Gemini ---
   const callGeminiAPI = async (promptText: string, level: string, subject: string) => {
-    // Determinación precisa del nivel y fase NEM
     const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(promptText);
-    const levelLabel = level === 'secundaria' ? (isParabola ? '3º de Secundaria • Fase 6 (14-15 años)' : 'Secundaria (1º a 3º Grado) • Fase 6') :
-                       level === 'preescolar' ? 'Preescolar • Fase 2' :
-                       level === 'primaria-baja' ? 'Primaria Baja (1º a 3º Grado) • Fase 3' :
-                       level === 'primaria-alta' ? 'Primaria Alta (4º a 6º Grado) • Fase 5' : 'Preparatoria / Bachillerato';
+    const levelNames: Record<string, string> = {
+      'preescolar': 'Preescolar (Fase 2: 1º a 3º)',
+      'primaria-baja': 'Primaria Baja (Fase 3: 1º y 2º Grado)',
+      'primaria-media': 'Primaria Media (Fase 4: 3º y 4º Grado)',
+      'primaria-alta': 'Primaria Alta (Fase 5: 5º y 6º Grado)',
+      'secundaria': isParabola ? '3º de Secundaria • Fase 6 (14-15 años)' : 'Secundaria (1º a 3º Grado) • Fase 6',
+      'preparatoria': 'Preparatoria / Bachillerato General'
+    };
 
+    const levelLabel = levelNames[level] || 'Nivel Educativo';
     const subjectLabel = subject === 'matematicas' ? 'Matemáticas (Saberes y Pensamiento Científico)' :
                          subject === 'ciencias' ? 'Ciencias / Física y Química (Saberes y Pensamiento Científico)' : 'Lenguajes (Español y Comunicación)';
 
-    const systemPrompt = `Eres un Asesor Pedagógico y Coordinador Académico Nacional de la SEP, experto en la Nueva Escuela Mexicana (NEM 2022) y diseño curricular por competencias.
-Debes generar una planeación didáctica RIGUROSA, CONCRETA, ALTAMENTE PRÁCTICA Y 100% APLICABLE en el aula para un profesor de secundaria o nivel correspondiente.
+    const systemPrompt = `Eres un Asesor Pedagógico y Coordinador Académico Nacional de la SEP, experto en la Nueva Escuela Mexicana (NEM 2024) y diseño curricular por proyectos comunitarios.
+Debes generar una planeación didáctica RIGUROSA, CONCRETA, ALTAMENTE PRÁCTICA Y 100% APLICABLE en el aula para un profesor.
 
-REGLAS PEDAGÓGICAS ESTRICTAS:
-1. NO uses plantillas genéricas ni frases de relleno como "investigar sobre [tema]" o "realizar actividades". Redacta paso a paso los ejercicios matemáticos, fórmulas, experimentos o dinámicas exactas.
-2. DOSIFICACIÓN TEMPORAL POR SESIONES DE 50 MINUTOS:
-   - Estructura la planeación en bloques exactos de 50 minutos (ej. "2 sesiones de 50 minutos - Total 100 min").
-   - En cada sesión detalla: Inicio (10 min), Desarrollo (30 min) y Cierre (10 min).
-3. PREGUNTAS DETONADORAS: Proporciona 3 a 5 preguntas concretas, retadoras y reflexivas para abrir el debate en clase.
-4. PROCESO DE DESARROLLO DE APRENDIZAJE (PDA): Cita el PDA oficial exacto del programa sintético NEM Fase 6 correspondiente al grado y tema.
-5. EVALUACIÓN FORMATIVA ÚTIL: Define un instrumento real (Rúbrica analítica con niveles Sobresaliente, Satisfactorio y En Proceso) con criterios observables.
-6. MATERIALES Y EVIDENCIA ENTREGABLE: Especifica materiales físicos/digitales y una propuesta clara de producto entregable (desde hoja de trabajo/dictado conceptual hasta proyecto o simulación GeoGebra/PhET).
+REGLAS PEDAGÓGICAS ESTRICTAS (NEM 2024):
+1. DOSIFICACIÓN EXACTA EN 10 SESIONES DE 50 MINUTOS (Total: 500 min):
+   - Detalla INDIVIDUALMENTE cada una de las 10 sesiones (Sesión 1 a 10).
+   - En cada sesión especifica:
+     • Minutero exacto: Inicio (10 min), Desarrollo (30 min) y Cierre (10 min).
+     • Preguntas detonadoras/clave (2 preguntas por sesión).
+     • Libro de texto gratuito oficial de la SEP y página exacta (ej. "Nuestros Saberes 2º Grado, págs. 48-52" o correspondiente al nivel/fase).
+     • Materiales manipulables y recursos.
+     • Entregable parcial de la sesión (producto tangible).
+2. ARTICULACIÓN CURRICULAR (PDAs ENLAZADOS):
+   - Proporciona el PDA Principal y al menos 2 a 3 PDAs Articulados de otros campos formativos (Lenguajes, Saberes y Pensamiento Científico, Ética, Naturaleza y Sociedades, De lo Humano y lo Comunitario).
+3. PROPUESTA DE PROYECTO FINAL INTEGRADOR:
+   - Título formal, problemática comunitaria real, propósito, entregable final tangible y rúbrica analítica cualitativa de 3 niveles (Sobresaliente, Satisfactorio, En Proceso).
 
 Nivel educativo: ${levelLabel}.
 Asignatura: ${subjectLabel}.
@@ -859,335 +877,128 @@ Tema solicitado: "${promptText}".
 
 Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructura exacta:
 {
-  "title": "Título pedagógico formal y atractivo",
+  "title": "Título pedagógico formal y motivador",
   "campoFormativo": "Saberes y Pensamiento Científico",
-  "ejesArticuladores": ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura"],
+  "ejesArticuladores": ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura", "Inclusión"],
   "pda": "Redacción formal del PDA oficial de la NEM correspondiente a la Fase y grado",
-  "duration": "2 sesiones de 50 minutos (Total: 100 min)",
+  "duration": "10 sesiones de 50 minutos (Total: 500 min)",
   "preguntasDetonadoras": [
-    "Pregunta detonadora 1 para lanzar al salón",
-    "Pregunta detonadora 2 con aplicación real o conflicto cognitivo",
-    "Pregunta detonadora 3 para razonamiento crítico"
-  ],
-  "inicio": "⏱️ INICIO (10 min): Recuperación de saberes previos y planteamiento de la pregunta detonadora central con dinámicas grupales concretas...",
-  "desarrollo": "⏱️ DESARROLLO (30 min): Secuencia de actividades prácticas, tabulación de valores, graficación en plano cartesiano/GeoGebra, modelado de problemas reales paso a paso...",
-  "cierre": "⏱️ CIERRE (10 min): Síntesis grupal, reflexión metacognitiva ('¿Qué aprendimos hoy?') y entrega de evidencia formativa de la sesión...",
-  "evaluacion": "RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):\\n• Criterio 1 (Modelado): Sobresaliente / Satisfactorio / En Proceso\\n• Criterio 2 (Interpretación gráfica): Sobresaliente / Satisfactorio / En Proceso\\n• Instrumento: Lista de cotejo y rúbrica analítica.",
-  "materiales": "MATERIALES: Hojas milimétricas, calculadora científica, simulador web GeoGebra/PhET.\\nEVIDENCIA ENTREGABLE: Hoja de trabajo con tabulación, gráfica y cálculo de vértice/raíces como evidencia formal de clase."
+    "Pregunta detonadora 1",
+    "Pregunta detonadora 2",
+    "Pregunta detonadora 3"
+  ]
 }`;
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contents: [
-          { parts: [{ text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español para el tema: "${promptText}"` }] }
-        ]
-      })
-    });
+    const fallbackSessions = generateChronometer10Sessions(level, subject, promptText);
+    const fallbackPdas = getArticulatedPdas(level, subject, promptText);
+    const fallbackProject = generateFinalProjectProposal(level, subject, promptText);
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            { parts: [{ text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español para el tema: "${promptText}"` }] }
+          ]
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(text);
+
+        return {
+          id: 'plan-' + Date.now(),
+          title: parsed.title || `Proyecto Didáctico: ${promptText} — ${levelLabel}`,
+          subjectId: subject,
+          subjectName: subjectLabel,
+          levelId: level,
+          levelName: levelLabel,
+          campoFormativo: parsed.campoFormativo || 'Saberes y Pensamiento Científico',
+          ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable'],
+          pda: parsed.pda || fallbackPdas[0]?.pda || 'PDA Oficial NEM',
+          pdasArticulados: fallbackPdas,
+          duration: '10 sesiones de 50 minutos (Total: 500 min)',
+          preguntasDetonadoras: Array.isArray(parsed.preguntasDetonadoras) ? parsed.preguntasDetonadoras : [
+            `¿Cómo aplicamos el contenido de "${promptText}" para resolver problemáticas en nuestra comunidad?`,
+            `¿De qué forma colaboramos en equipo para construir soluciones tangibles y creativas?`,
+            `¿Qué aprendizajes compartiremos en la feria escolar comunitaria?`
+          ],
+          sesiones: fallbackSessions,
+          proyectoIntegrador: fallbackProject,
+          inicio: fallbackSessions[0].actividadInicio + '\n' + fallbackSessions[0].actividadDesarrollo + '\n' + fallbackSessions[0].actividadCierre,
+          desarrollo: fallbackSessions.slice(1, 8).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+          cierre: fallbackSessions.slice(8, 10).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+          evaluacion: `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${fallbackProject.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${fallbackProject.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${fallbackProject.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${fallbackProject.rubrica.criterio1.enProceso}\n• ${fallbackProject.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${fallbackProject.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${fallbackProject.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${fallbackProject.rubrica.criterio2.enProceso}\n• ${fallbackProject.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${fallbackProject.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${fallbackProject.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${fallbackProject.rubrica.criterio3.enProceso}`,
+          materiales: `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${fallbackProject.productoFinal}`,
+          createdAt: formatSpanishDateInLetters(new Date())
+        };
+      }
+    } catch (err) {
+      console.warn("Fallo llamada a Gemini API, usando generador curricular integral", err);
     }
 
-    const data = await response.json();
-    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    
-    // Limpiar posibles bloques de código markdown que añaden los LLMs
-    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-    
-    const parsed = JSON.parse(text);
-
-    return {
-      id: 'plan-' + Date.now(),
-      title: parsed.title || `Proyecto Didáctico: ${promptText}`,
-      subjectId: subject,
-      subjectName: subjectLabel,
-      levelId: level,
-      levelName: levelLabel,
-      campoFormativo: parsed.campoFormativo || 'Saberes y Pensamiento Científico',
-      ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico', 'Apropiación de las Culturas'],
-      pda: parsed.pda || 'PDA Oficial NEM',
-      duration: parsed.duration || '2 sesiones de 50 minutos (Total: 100 min)',
-      preguntasDetonadoras: Array.isArray(parsed.preguntasDetonadoras) ? parsed.preguntasDetonadoras : [
-        `¿Qué aplicaciones prácticas tiene ${promptText} en nuestro entorno cotidiano?`,
-        `¿Cómo podemos modelar matemáticamente este fenómeno?`,
-        `¿Qué conclusiones podemos obtener a partir del análisis de datos?`
-      ],
-      inicio: parsed.inicio || 'Actividades dosificadas de inicio.',
-      desarrollo: parsed.desarrollo || 'Actividades dosificadas de desarrollo.',
-      cierre: parsed.cierre || 'Actividades dosificadas de cierre.',
-      evaluacion: parsed.evaluacion || 'Rúbrica formativa y evidencias evaluables.',
-      materiales: parsed.materiales || 'Materiales didácticos y productos entregables.',
-      createdAt: formatSpanishDateInLetters(new Date())
-    };
+    return generateLocalNEMPlanning(promptText, level, subject);
   };
 
-  // --- Generador Heurístico Local ---
-  const generateLocalNEMPlanning = (promptText: string, level: string, subject: string) => {
-    const searchStr = promptText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  // --- Generador Heurístico Local Integral (NEM 2024) ---
+  const generateLocalNEMPlanning = (promptText: string, level: string, subject: string): CompleteNEMPlanning => {
     const capitalizedTopic = promptText.charAt(0).toUpperCase() + promptText.slice(1).trim();
 
-    // ── 1. Detectar categoría temática y casos especializados ──
-    const isParabola   = /parabol|cuadrat|segundo grado|tiro parab/i.test(searchStr);
-    const isEcology    = /ecosistem|biodiversid|medio\s?ambiente|planta|animal|clima|contaminac|naturaleza|bosque|agua|suelo|recicl|sustentab|calentamiento/.test(searchStr);
-    const isHealth     = /salud|nutricion|alimentac|cuerpo|higiene|enfermedad|ejercicio|deporte|vacuna|primera\s?aid|medicina|covid|pandemia/.test(searchStr);
-    const isHistory    = /histori|revolucion|guerra|colonia|independencia|prehispanico|azteca|maya|reform|republica|cultura|civilizac/.test(searchStr);
-    const isArt        = /arte|pintura|musica|danza|teatro|literatura|poesia|escultura|dibujo|fotografia|cine|expresion/.test(searchStr);
-    const isTech       = /tecnolog|robot|computad|internet|program|codigo|digital|ia\b|inteligencia artificial|red|app|software/.test(searchStr);
-    const isMath       = isParabola || /fraccion|numero|algebra|ecuacion|geometria|estadistica|probabilidad|calculo|proporcion|porcentaje|vector|trigono/.test(searchStr);
-    const isCivics     = /ciudadan|democracia|derecho|justicia|paz|inclusion|diversidad|igualdad|genero|comunidad|convivencia|etica|valor/.test(searchStr);
-    const isLanguage   = /poe|leyenda|lectura|escribir|redac|espanol|carta|comunic|texto|narrat|argumen|gramatic|ortografia|sinonimo/.test(searchStr);
-    const isSocial     = /geografia|region|pais|mundo|globalizac|economia|comercio|mercado|poblacion|migrac|familia|sociedad/.test(searchStr);
-
-    // Caso Especializado: Parábolas y Funciones Cuadráticas en Secundaria (Fase 6 - 3º de Secundaria)
-    if (isParabola && (level === 'secundaria' || level === 'preparatoria')) {
-      return {
-        id: 'plan-' + Date.now(),
-        title: 'Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)',
-        subjectId: 'matematicas',
-        subjectName: 'Matemáticas (Saberes y Pensamiento Científico)',
-        levelId: level,
-        levelName: '3º de Secundaria • Fase 6 (14-15 años)',
-        campoFormativo: 'Saberes y Pensamiento Científico',
-        ejesArticuladores: ['Pensamiento Crítico', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
-        pda: 'Fase 6 (3º Secundaria) - Modela y resuelve problemas de la vida cotidiana y fenómenos físicos mediante funciones cuadráticas y parábolas (y = ax² + bx + c). Analiza e interpreta las propiedades geométricas de la parábola: vértice (punto máximo o mínimo), eje de simetría, concavidad (orientación del coeficiente "a") e intersecciones con los ejes cartesianos.',
-        duration: '2 sesiones de 50 minutos (Total: 100 min)',
-        preguntasDetonadoras: [
-          '¿Por qué la trayectoria de un chorro de agua de una manguera o el tiro libre de baloncesto traza una curva simétrica y nunca viaja en línea recta?',
-          '¿Qué significado físico tiene el vértice de una parábola cuando lanzamos un cohete o calculamos la ganancia máxima de un producto comercial?',
-          '¿Cómo cambia la abertura y orientación de la parábola si el valor del coeficiente "a" en y = ax² es positivo, negativo o una fracción?',
-          '¿Por qué los puentes colgantes, las antenas receptoras de satélite y los faros de automóviles utilizan formas parabólicas?'
-        ],
-        inicio: '⏱️ SESIÓN 1 (50 min) — INICIO (10 min):\n' +
-                '1. Conflicto Cognitivo Visual: Proyectar o mostrar imágenes de puentes colgantes (Golden Gate), antenas satelitales y tiros libres de basquetbol.\n' +
-                '2. Pregunta Detonadora Central: "¿Por qué el balón sube, se desacelera hasta un punto cumbre y vuelve a descender con la misma curvatura exacta?".\n' +
-                '3. Recuperación de Saberes Previos: Lluvia de ideas guiada sobre el plano cartesiano, pares ordenados (x, y) y la diferencia visual entre una relación lineal (línea recta) y una relación cuadrática (curva).',
-        desarrollo: '⏱️ SESIÓN 1 — DESARROLLO (30 min):\n' +
-                   '1. Taller de Tabulación Comparativa en Parejas: Los alumnos completan una tabla evaluando valores de "x" desde -3 hasta +3 para tres funciones cuadráticas:\n' +
-                   '   • f(x) = x²\n' +
-                   '   • g(x) = 2x² (más estrecha)\n' +
-                   '   • h(x) = -x² (invertida hacia abajo)\n' +
-                   '2. Construcción Gráfica en Papel Milimétrico: Trazar los pares ordenados y unirlos con trazo curvo continuo (sin usar regla recta entre puntos). Identificar y rotular con colores el Vértice V(0,0) y el Eje de Simetría (recta x = 0).\n' +
-                   '3. Modelado de un Problema Real de Tiro Parabólico: Se plantea la función de altura h(t) = -5t² + 20t (altura en metros respecto al tiempo en segundos). En equipos calculan:\n' +
-                   '   • ¿En qué segundo alcanza la altura máxima? (Vértice en t = 2 s, h = 20 metros).\n' +
-                   '   • ¿Cuánto tiempo dura el vuelo total hasta tocar el suelo? (Raíces en t = 0 s y t = 4 s).',
-        cierre: '⏱️ SESIÓN 1 — CIERRE (10 min):\n' +
-                '1. Plenaria y Formalización Matemática: Síntesis colectiva en el pizarrón: definición rigurosa de Vértice, Concavidad (si a > 0 abre hacia arriba y tiene mínimo; si a < 0 abre hacia abajo y tiene máximo), Eje de Simetría y Raíces.\n' +
-                '2. Metacognición en Bitácora: Responder individualmente: "¿Cómo puedo saber si una parábola tiene punto máximo o mínimo con solo ver el signo del coeficiente principal a?".\n' +
-                '3. Entrega de Evidencia: Recolección de la hoja de trabajo formal con la tabulación y la gráfica rotulada.',
-        evaluacion: '📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):\n' +
-                    '• Criterio 1 - Modelado Algebraico y Tabulación:\n' +
-                    '  - Sobresaliente (3 pts): Evalúa correctamente potencias y signos de x de -3 a 3 sin errores.\n' +
-                    '  - Satisfactorio (2 pts): Comete 1 error menor de cálculo pero mantiene el procedimiento lógico.\n' +
-                    '  - En Proceso (1 pt): Muestra dificultad al elevar números negativos al cuadrado (ej. (-2)² = -4).\n' +
-                    '• Criterio 2 - Interpretación y Trazo Gráfico:\n' +
-                    '  - Sobresaliente (3 pts): Traza una curva parabólica suave, ubica con exactitud el vértice y traza el eje de simetría.\n' +
-                    '  - Satisfactorio (2 pts): Grafica los puntos pero el trazo es angulado o confunde el eje de simetría.\n' +
-                    '  - En Proceso (1 pt): Une los puntos con líneas rectas tipo zigzag.\n' +
-                    '• Criterio 3 - Aplicación al Tiro Parabólico:\n' +
-                    '  - Sobresaliente (4 pts): Interpreta el significado físico del vértice como altura máxima y las raíces como inicio y fin del vuelo.\n' +
-                    '  - Satisfactorio (2.5 pts): Obtiene los valores numéricos pero no explica su significado físico.\n' +
-                    '  - En Proceso (1 pt): No logra plantear los valores en la función h(t).\n' +
-                    '• Instrumento: Rúbrica analítica y lista de cotejo coevaluativa de clase.',
-        materiales: '📦 MATERIALES DIDÁCTICOS:\n' +
-                    '• Papel milimétrico tamaño carta, regla de 30 cm, lápices de colores o plumines finos.\n' +
-                    '• Calculadora científica básica o celular con calculadora.\n' +
-                    '• Hojas de trabajo impresas "El Vértice de la Realidad".\n' +
-                    '• Proyector o tabletas con simulador web GeoGebra / PhET (Simulación de Tiro de Proyectiles).\n\n' +
-                    '📄 EVIDENCIA ENTREGABLE DE LA CLASE:\n' +
-                    '• Producto Individual/Parejas: Hoja de trabajo con la tabulación de 3 funciones cuadráticas, gráfica a escala con vértice y eje de simetría rotulados, y la resolución analítica del problema de tiro parabólico.',
-        createdAt: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
-      };
-    }
-
-    const campos = {
-      'matematicas': 'Saberes y Pensamiento Científico',
-      'ciencias':    isEcology ? 'Ética, Naturaleza y Sociedades' : 'Saberes y Pensamiento Científico',
-      'lenguajes':   'Lenguajes'
-    };
-    const campo = campos[subject as keyof typeof campos] || (isHistory || isCivics ? 'Ética, Naturaleza y Sociedades' : isArt || isLanguage ? 'Lenguajes' : 'De lo Humano y lo Comunitario');
-
-    // ── 2. Generar ejes articuladores según tema ──
-    let ejes: string[] = [];
-    if (isEcology)    ejes = ['Vida Saludable', 'Pensamiento Crítico'];
-    else if (isHealth) ejes = ['Vida Saludable', 'Inclusión'];
-    else if (isHistory) ejes = ['Interculturalidad Crítica', 'Pensamiento Crítico'];
-    else if (isArt)   ejes = ['Artes y Experiencias Estéticas', 'Inclusión'];
-    else if (isTech)  ejes = ['Pensamiento Crítico', 'Igualdad de Género'];
-    else if (isCivics) ejes = ['Inclusión', 'Vida Saludable'];
-    else if (isMath)  ejes = ['Pensamiento Crítico', 'Igualdad de Género'];
-    else if (isLanguage) ejes = ['Apropiación de las Culturas a través de la Lectura y la Escritura', 'Pensamiento Crítico'];
-    else if (isSocial) ejes = ['Interculturalidad Crítica', 'Pensamiento Crítico'];
-    else               ejes = ['Pensamiento Crítico', 'Vida Saludable'];
-
-    const topicKey = isEcology ? 'ecology' : isHealth ? 'health' : isHistory ? 'history' : isArt ? 'art' : isTech ? 'tech' : isMath ? 'math' : isCivics ? 'civics' : isLanguage ? 'language' : isSocial ? 'social' : 'default';
-    const pdaMap = getPdaMap(capitalizedTopic);
-    const pda = pdaMap[level]?.[topicKey] || pdaMap['primaria-alta']['default'];
-
-    // ── 4. Secuencia didáctica diferenciada por tema y nivel con bloques de 50 min ──
-    const buildSequence = () => {
-      const levelShort = level === 'preescolar' ? 'pb' : level === 'primaria-baja' ? 'pb' : level === 'primaria-alta' ? 'pa' : level === 'secundaria' ? 'sec' : 'prep';
-      
-      const inicioMap: Record<string, Record<string, string>> = {
-        ecology: {
-          prep: `Analizar procesos globales de "${capitalizedTopic}" desde perspectivas de sistemas-mundo, geopolítica e interdependencia. Evaluar teorías explicativas y proponer marcos interpretativos propios con base en datos.`
-        },
-        default: {
-          pb:   `Iniciar con una actividad lúdica de exploración libre relacionada con "${capitalizedTopic}". Los alumnos comparten lo que ya saben en una lluvia de ideas colectiva dibujada en el pizarrón. Se plantea la pregunta central: ¿Qué queremos aprender sobre este tema?`,
-          pa:   `Presentar un caso o situación provocadora relacionada con "${capitalizedTopic}" que genere curiosidad y preguntas. Los alumnos registran sus saberes previos y sus dudas en tarjetas de colores y las clasifican en el pizarrón.`,
-          sec:  `Presentar un conflicto cognitivo real sobre "${capitalizedTopic}" con datos, imágenes o testimonios contradictorios. Los alumnos debaten en equipos sus interpretaciones previas antes de iniciar la investigación sistemática.`,
-          prep: `Revisar distintas perspectivas teóricas sobre "${capitalizedTopic}" y plantear preguntas de investigación abierta. Los equipos proponen hipótesis iniciales y diseñan un protocolo básico para contrastarlas.`
-        }
-      };
-
-      const desarrolloMap: Record<string, Record<string, string>> = {
-        ecology: {
-          pb:   `Salir al patio o huerto escolar para realizar una exploración guiada de "${capitalizedTopic}". En equipos de 3, registrar observaciones en una "bitácora de explorador" con dibujos y descripciones. Al regresar, construir un mural colectivo con sus hallazgos y rotularlo con conceptos clave aprendidos.`,
-          pa:   `En equipos, diseñar y ejecutar una "auditoría ambiental" de la escuela relacionada con "${capitalizedTopic}". Recolectar datos reales (residuos, consumo de agua, uso de energía), analizarlos en tablas y elaborar un informe con propuestas de mejora para presentar a las autoridades escolares.`,
-          sec:  `Investigar un estudio de caso local o regional sobre "${capitalizedTopic}" usando fuentes científicas. Analizar causas, consecuencias e impactos en distintos actores sociales. En equipos, diseñar un proyecto de intervención comunitaria con fases, responsables e indicadores de éxito medibles.`,
-          prep: `Diseñar una investigación de campo sobre "${capitalizedTopic}" con metodología mixta (datos cuantitativos + entrevistas). Aplicar herramientas de análisis ambiental, sistematizar resultados y elaborar un reporte académico con propuestas de política pública basadas en evidencia.`
-        },
-        health: {
-          pb:   `Elaborar en equipos un "Semáforo de la Salud" sobre "${capitalizedTopic}" con tarjetas de colores (verde: hábito saludable, rojo: perjudicial). Crear un folleto ilustrado con consejos para compartir con sus familias.`,
-          pa:   `Diseñar y aplicar una encuesta en la escuela sobre hábitos relacionados con "${capitalizedTopic}". Tabular resultados, elaborar gráficas y redactar conclusiones. Preparar una campaña de sensibilización con carteles, trípticos o videos cortos.`,
-          sec:  `Investigar factores de riesgo y protección de "${capitalizedTopic}" en adolescentes mexicanos. Analizar estadísticas oficiales, revisar programas de prevención existentes y evaluar su efectividad. Diseñar una propuesta de intervención escolar con estrategias basadas en evidencia.`,
-          prep: `Realizar una revisión sistemática de literatura científica sobre "${capitalizedTopic}". Analizar ensayos clínicos, revisiones Cochrane y metaanálisis. Diseñar un protocolo de intervención con indicadores de impacto y propuesta de evaluación de efectividad.`
-        },
-        history: {
-          pb:   `Construir en equipos una "caja de recuerdos" sobre "${capitalizedTopic}" con imágenes, objetos representativos y textos breves. Dramatizar un momento clave del tema con personajes creados por el grupo.`,
-          pa:   `Analizar en equipos fuentes primarias y secundarias sobre "${capitalizedTopic}" (mapas, fotografías, documentos, testimonios). Elaborar una línea del tiempo detallada con causas, consecuencias y conexiones con el presente. Redactar un texto de síntesis histórica con vocabulario específico.`,
-          sec:  `Comparar interpretaciones historiográficas sobre "${capitalizedTopic}" de distintas corrientes y épocas. Analizar el papel de los distintos actores sociales (elite, pueblo, mujeres, minorías). Redactar un ensayo argumentativo con postura personal sustentada en evidencia.`,
-          prep: `Desarrollar una investigación historiográfica sobre "${capitalizedTopic}" consultando fuentes primarias digitalizadas (AGN, Hemeroteca Nacional). Aplicar análisis histórico crítico, identificar sesgos y construir una interpretación propia fundamentada con aparato crítico formal.`
-        },
-        art: {
-          pb:   `Explorar materiales y técnicas relacionadas con "${capitalizedTopic}" mediante talleres de experimentación libre. Crear una obra colectiva usando técnicas descubiertas. Exhibirla en el salón explicando el proceso creativo con palabras propias.`,
-          pa:   `Investigar artistas o movimientos vinculados a "${capitalizedTopic}" en México y el mundo. Analizar obras representativas en cuanto a técnica, simbolismo y contexto. Crear una obra original inspirada en lo aprendido y preparar una cédula artística para su exposición.`,
-          sec:  `Desarrollar un proyecto artístico relacionado con "${capitalizedTopic}" integrando referentes históricos y culturales. Explorar técnicas avanzadas, documentar el proceso creativo en un portafolio y presentar la obra en una muestra colectiva con análisis crítico.`,
-          prep: `Desarrollar un proyecto artístico conceptual sobre "${capitalizedTopic}" con sustento teórico en filosofía estética o teoría del arte contemporáneo. Documentar investigación, proceso y reflexión crítica en un dossier académico. Presentar en formato de muestra pública con articulación discursiva.`
-        },
-        tech: {
-          pb:   `Construir un artefacto sencillo relacionado con "${capitalizedTopic}" usando materiales reciclados. Documentar el proceso con dibujos y describir para qué sirve y cómo funciona. Compartir en exposición grupal.`,
-          pa:   `Diseñar en equipo un proyecto tecnológico que aplique principios de "${capitalizedTopic}" para resolver un problema real de la escuela. Crear un prototipo funcional o una maqueta, documentar las etapas del proceso y presentarlo al grupo.`,
-          sec:  `Desarrollar un prototipo funcional relacionado con "${capitalizedTopic}" usando herramientas digitales o de fabricación disponibles. Documentar metodología (design thinking o scrum), pruebas, ajustes y resultados. Evaluar impacto social y sostenibilidad del diseño.`,
-          prep: `Diseñar una solución tecnológica compleja vinculada a "${capitalizedTopic}" aplicando metodologías de innovación (lean startup, design thinking). Desarrollar prototipo, plan de negocio o política tecnológica, evaluar viabilidad y presentar ante audiencia externa simulada.`
-        },
-        math: {
-          pb:   `Resolver en equipos una secuencia de problemas concretos sobre "${capitalizedTopic}" usando materiales manipulables (ábacos, fichas, regletas). Representar las soluciones gráficamente. Crear un "libro de problemas" con situaciones inventadas por el propio grupo.`,
-          pa:   `Aplicar conceptos de "${capitalizedTopic}" en un proyecto de investigación estadística del grupo (encuestas, mediciones, datos escolares). Construir gráficas, calcular medidas y redactar conclusiones en un reporte. Presentar resultados a otro grupo.`,
-          sec:  `Modelar situaciones económicas, físicas o sociales reales usando "${capitalizedTopic}". Resolver problemas abiertos en equipo, comparar distintos métodos de solución y evaluar cuál es más eficiente. Elaborar un reporte técnico con procedimientos, gráficas y justificaciones.`,
-          prep: `Aplicar herramientas avanzadas de "${capitalizedTopic}" para modelar un fenómeno real (financiero, demográfico, físico). Utilizar software matemático o de graficación. Elaborar un reporte con marco teórico, desarrollo y análisis crítico de resultados obtenidos.`
-        },
-        civics: {
-          pb:   `Simular una asamblea escolar sobre un problema real del aula relacionado con "${capitalizedTopic}". Elegir representantes, debatir propuestas y tomar decisiones colectivas. Redactar acuerdos y compromisos grupales en una "Constitución del Salón".`,
-          pa:   `Investigar un caso real de ejercicio o vulneración de "${capitalizedTopic}" en México o su comunidad. Analizar causas, actores implicados e instituciones responsables. Diseñar una campaña de sensibilización escolar con propuestas concretas de cambio.`,
-          sec:  `Analizar un caso jurídico real relacionado con "${capitalizedTopic}" usando el marco constitucional mexicano. Simular un juicio oral: fiscal, defensa, juez y testigos. Redactar un veredicto fundamentado y reflexionar sobre la brecha entre ley y práctica social.`,
-          prep: `Diseñar un proyecto de incidencia ciudadana sobre "${capitalizedTopic}" que incluya diagnóstico participativo, propuesta de política pública, estrategia de comunicación y plan de evaluación de impacto. Presentarlo ante audiencia real o simulada de tomadores de decisiones.`
-        },
-        language: {
-          pb:   `Crear en equipos un texto corto relacionado con "${capitalizedTopic}" (cuento, carta o instructivo). Ilustrarlo, compartirlo con el grupo y comentar lo que más gustó. Compilar las producciones en una antología colectiva del salón.`,
-          pa:   `Producir en equipos un texto de distinto género sobre "${capitalizedTopic}" (reportaje, cuento, poema, artículo de opinión). Revisar borradores con retroalimentación entre pares usando criterios de evaluación acordados. Publicar la versión final en el periódico mural escolar.`,
-          sec:  `Analizar textos de distintos géneros sobre "${capitalizedTopic}" identificando argumentación, retórica e intención comunicativa. Producir un texto argumentativo complejo con estructura formal, tesis sustentada y contraargumentos. Participar en un debate moderado sobre el tema.`,
-          prep: `Investigar cómo se ha abordado "${capitalizedTopic}" en distintos géneros y épocas literarias o periodísticas. Analizar recursos retóricos y posicionamientos ideológicos. Producir un ensayo académico con aparato crítico formal o un texto creativo con intención transformadora.`
-        },
-        social: {
-          pb:   `Elaborar en equipos un mapa de su comunidad o región identificando elementos relacionados con "${capitalizedTopic}". Investigar datos básicos y crear una ficha informativa ilustrada. Compartir en exposición grupal.`,
-          pa:   `Investigar características socioeconómicas y geográficas de "${capitalizedTopic}" en distintas regiones de México. Comparar indicadores, elaborar mapas temáticos y gráficas. Redactar un informe con análisis de causas y propuestas de desarrollo local.`,
-          sec:  `Analizar datos estadísticos y geoespaciales sobre "${capitalizedTopic}" usando fuentes oficiales (INEGI, CONAPO). Identificar desigualdades regionales, factores históricos y políticas públicas vigentes. Elaborar un estudio de caso regional fundamentado con evidencia.`,
-          prep: `Analizar "${capitalizedTopic}" desde perspectivas teóricas interdisciplinares (geografía crítica, economía política, sociología). Revisar indicadores internacionales, modelar escenarios futuros y proponer estrategias de desarrollo sustentable con base en evidencia comparada.`
-        },
-        default: {
-          pb:   `En equipos de 3 alumnos, explorar "${capitalizedTopic}" usando distintas fuentes (libros, imágenes, material concreto). Organizar la información en un mapa mental ilustrado. Cada equipo comparte sus hallazgos con el grupo y construyen juntos una síntesis colectiva en el pizarrón.`,
-          pa:   `Investigar en equipos los aspectos más importantes de "${capitalizedTopic}" usando diversas fuentes. Sistematizar la información en un organizador gráfico (cuadro comparativo, esquema o infografía). Elaborar un producto comunicativo (tríptico, póster o presentación) para compartir con otros grupos.`,
-          sec:  `Desarrollar en equipos un proyecto de investigación sobre "${capitalizedTopic}" con pregunta de investigación propia, metodología definida y fuentes académicas. Analizar los datos obtenidos, elaborar conclusiones fundamentadas y presentarlas ante el grupo en formato académico.`,
-          prep: `Diseñar y ejecutar un proyecto de investigación sobre "${capitalizedTopic}" con sustento teórico y metodológico. Recopilar y analizar datos de fuentes primarias y secundarias. Elaborar un producto de divulgación académica (artículo, ensayo, póster científico) con aparato crítico formal.`
-        }
-      };
-
-      const cierreMap: Record<string, Record<string, string>> = {
-        ecology: {
-          pb:   `Presentar en plenaria el mural elaborado. Cada equipo explica qué aprendió sobre "${capitalizedTopic}" y qué puede hacer en casa para cuidar el ambiente. Escribir en tarjetas individuales un compromiso concreto y pegarlo en el "árbol de compromisos" del salón.`,
-          pa:   `Presentar los informes de auditoría ambiental ante el grupo y comentar las propuestas. Elegir colectivamente las 3 más viables para implementar en la escuela. Reflexionar en bitácora: ¿Qué aprendí sobre mi relación con "${capitalizedTopic}"? ¿Qué voy a cambiar?`,
-          sec:  `Presentar los proyectos de intervención en un "Foro Escolar por el Ambiente". Recibir retroalimentación de compañeros y docente con base en rúbrica. Debatir: ¿Qué obstáculos enfrenta la acción ambiental? ¿Cómo se supera la inacción? Autoevaluación escrita.`,
-          prep: `Presentar el reporte de investigación en formato de congreso académico simulado. Responder preguntas del auditorio y recibir retroalimentación técnica. Reflexionar: ¿Cómo cambia este estudio la forma en que comprendo "${capitalizedTopic}"? ¿Qué líneas de investigación quedan abiertas?`
-        },
-        default: {
-          pb:   `Ronda de socialización: cada equipo comparte lo más importante que aprendió sobre "${capitalizedTopic}". Construir juntos una "Nube de saberes" en el pizarrón. Completar individualmente la ficha: "Antes pensaba... Ahora sé que... Todavía me pregunto..."`,
-          pa:   `Presentar los productos elaborados al grupo. Coevaluar con rúbrica acordada previamente. Reflexionar individualmente en la bitácora: ¿Qué fue lo más difícil? ¿Qué cambió en mi forma de pensar sobre "${capitalizedTopic}"? Compartir una conclusión oral con el grupo.`,
-          sec:  `Llevar a cabo una plenaria académica donde cada equipo defiende sus hallazgos sobre "${capitalizedTopic}" y responde preguntas. Coevaluar con criterios acordados. Redactar individualmente una reflexión crítica de media página sobre el aprendizaje más significativo.`,
-          prep: `Presentar los proyectos en formato académico y responder cuestionamientos del grupo y del docente. Autoevaluación con rúbrica de investigación. Redactar una reflexión escrita sobre cómo el estudio de "${capitalizedTopic}" transforma la comprensión de la realidad y abre nuevas preguntas.`
-        }
-      };
-
-      const inicio    = (inicioMap[topicKey]    || inicioMap['default'])[levelShort];
-      const desarrollo = (desarrolloMap[topicKey] || desarrolloMap['default'])[levelShort];
-      const cierre    = (cierreMap[topicKey]     || cierreMap['default'])[levelShort];
-
-      return { inicio, desarrollo, cierre };
-    };
-
-    const { inicio, desarrollo, cierre } = buildSequence();
-
-    // ── 5. Evaluación y materiales diferenciados ──
-    const evalMap: Record<string, string> = {
-      ecology:   `Bitácora de exploración o auditoría ambiental con datos reales, propuesta de acción fundamentada sobre "${capitalizedTopic}", y reflexión individual sobre el compromiso ambiental personal.`,
-      health:    `Producto de campaña de salud relacionada con "${capitalizedTopic}" (tríptico, cartel, video), encuesta con análisis estadístico y propuesta de intervención evaluada por rúbrica.`,
-      history:   `Ensayo o análisis histórico sobre "${capitalizedTopic}" con citas de fuentes primarias y secundarias, línea del tiempo argumentada y reflexión sobre su vigencia actual.`,
-      art:       `Obra artística original vinculada a "${capitalizedTopic}" con cédula de presentación, portafolio de proceso creativo y análisis crítico de referentes trabajados.`,
-      tech:      `Prototipo funcional o propuesta tecnológica relacionada con "${capitalizedTopic}", documentación del proceso (diseño, prueba, ajuste) y reflexión ética sobre el impacto social.`,
-      math:      `Reporte de resolución de problemas sobre "${capitalizedTopic}" con distintos procedimientos, representaciones gráficas y justificación de la eficiencia de cada método.`,
-      civics:    `Producto de incidencia ciudadana sobre "${capitalizedTopic}" (campaña, propuesta, juicio simulado), reflexión sobre la responsabilidad cívica personal y coevaluación del trabajo colaborativo.`,
-      language:  `Texto producido sobre "${capitalizedTopic}" en el género trabajado, con evidencia de revisión y mejora, presentado ante audiencia real o simulada y evaluado con rúbrica de escritura.`,
-      social:    `Informe geográfico-social con mapas temáticos, análisis de indicadores y propuesta de desarrollo relacionada con "${capitalizedTopic}", evaluado con rúbrica de investigación social.`,
-      default:   `Producto final del proyecto de investigación sobre "${capitalizedTopic}" (infografía, reporte, presentación), reflexión escrita metacognitiva y coevaluación del desempeño en equipo.`
-    };
-
-    const materialesMap: Record<string, string> = {
-      ecology:   `Material de campo (lupas, bolsas de plástico, fichas de registro), fuentes de datos ambientales (CONABIO, SEMARNAT), cartulinas, marcadores y recursos reciclados para prototipos.`,
-      health:    `Estadísticas de salud (INEGI, SSA), cartulinas para campaña, colores, acceso a internet, encuestas impresas y material para elaborar productos comunicativos.`,
-      history:   `Fuentes primarias digitalizadas o impresas, atlas histórico, línea del tiempo en papel bond, colores y recursos audiovisuales (video documental o fotografías de época).`,
-      art:       `Materiales de la técnica trabajada (pinceles, pinturas, arcilla, instrumentos), reproducciones de obras de referencia, portafolios y fichas de análisis artístico.`,
-      tech:      `Materiales de construcción (cartón, cables, sensores básicos) o dispositivos digitales, guía de diseño, fichas de documentación del proceso y recursos de investigación.`,
-      math:      `Material manipulable específico al tema (ábacos, regletas, fichas, dados), papel milimétrico, calculadora, software de graficación (opcional) y hojas de problemas contextualizados.`,
-      civics:    `Constitución Política de los Estados Unidos Mexicanos, noticias de prensa, materiales para debate (tarjetas de roles, reglamento de asamblea) y recursos para la campaña de sensibilización.`,
-      language:  `Textos modelo de distintos géneros relacionados con "${capitalizedTopic}", diccionario, guías de escritura, material para publicación (periódico mural, blog escolar) y rúbricas de evaluación.`,
-      social:    `Mapas temáticos, atlas geográfico, bases de datos de INEGI y CONAPO, computadoras con acceso a internet, papel bond y marcadores para elaborar infografías y cartografía.`,
-      default:   `Libros de texto "Nuestros Saberes" y fuentes complementarias sobre "${capitalizedTopic}", cartulinas, marcadores, acceso a internet para investigación y materiales de presentación.`
-    };
-
-    const levelNames = {
+    const levelNames: Record<string, string> = {
       'preescolar':     'Preescolar (Fase 2: 1º a 3º)',
-      'primaria-baja':  'Primaria Baja (1º y 2º Grado) • Fase 3',
-      'primaria-media': 'Primaria Media (3º y 4º Grado) • Fase 4',
-      'primaria-alta':  'Primaria Alta (5º y 6º Grado) • Fase 5',
-      'secundaria':     'Secundaria (1º a 3º Grado) • Fase 6',
-      'preparatoria':   'Preparatoria / Bachillerato'
+      'primaria-baja':  'Primaria Baja (Fase 3: 1º y 2º Grado)',
+      'primaria-media': 'Primaria Media (Fase 4: 3º y 4º Grado)',
+      'primaria-alta':  'Primaria Alta (Fase 5: 5º y 6º Grado)',
+      'secundaria':     'Secundaria (Fase 6: 1º a 3º Grado)',
+      'preparatoria':   'Preparatoria / Bachillerato General'
     };
 
-    const subjectNames = {
+    const subjectNames: Record<string, string> = {
       'matematicas': 'Matemáticas (Saberes y Pensamiento Científico)',
-      'ciencias':    'Ciencias y Conocimiento del Medio (Saberes y Pensamiento Científico)',
-      'lenguajes':   'Español / Lenguajes'
+      'ciencias':    'Ciencias Naturales y Conocimiento del Medio (Saberes y Pensamiento Científico)',
+      'lenguajes':   'Español / Lenguajes (Lenguajes)'
     };
+
+    const isMath = subject === 'matematicas' || /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram|carta/i.test(promptText);
+    const isScience = subject === 'ciencias' || /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(promptText);
+    const campo = isMath || isScience ? 'Saberes y Pensamiento Científico' : 'Lenguajes';
+    const ejes = ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'];
+
+    const pdaMap = getPdaMap(capitalizedTopic);
+    const pda = pdaMap[level]?.[isMath ? 'math' : isScience ? 'ecology' : 'language'] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
+
+    const sesiones10 = generateChronometer10Sessions(level, subject, promptText);
+    const pdasArticulados = getArticulatedPdas(level, subject, promptText);
+    const proyectoIntegrador = generateFinalProjectProposal(level, subject, promptText);
 
     return {
       id: 'plan-' + Date.now(),
-      title: `Proyecto didáctico: ${capitalizedTopic} — ${levelNames[level as keyof typeof levelNames] || level}`,
+      title: `Proyecto didáctico: ${capitalizedTopic} — ${levelNames[level] || level}`,
       subjectId: subject,
-      subjectName: subjectNames[subject as keyof typeof subjectNames] || 'Asignatura',
+      subjectName: subjectNames[subject] || 'Asignatura',
       levelId: level,
-      levelName: levelNames[level as keyof typeof levelNames] || 'Nivel Educativo',
+      levelName: levelNames[level] || 'Nivel Educativo',
       campoFormativo: campo,
       ejesArticuladores: ejes,
       pda,
-      duration: level === 'preparatoria' ? '6 horas lectivas (10 sesiones de 50 min)' : level === 'secundaria' ? '5 horas lectivas (10 sesiones de 50 min)' : '10 sesiones de 50 minutos (Total: 500 min)',
-      inicio,
-      desarrollo,
-      cierre,
-      evaluacion: evalMap[topicKey] || evalMap['default'],
-      materiales: materialesMap[topicKey] || materialesMap['default'],
+      pdasArticulados,
+      duration: '10 sesiones de 50 minutos (Total: 500 min)',
+      preguntasDetonadoras: [
+        `¿Cómo aplicamos el contenido de "${capitalizedTopic}" para resolver problemáticas de nuestra comunidad?`,
+        `¿De qué manera fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
+        `¿Qué producto tangible compartiremos con la comunidad escolar al término de las 10 sesiones?`
+      ],
+      sesiones: sesiones10,
+      proyectoIntegrador,
+      inicio: sesiones10[0].actividadInicio + '\n' + sesiones10[0].actividadDesarrollo + '\n' + sesiones10[0].actividadCierre,
+      desarrollo: sesiones10.slice(1, 8).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+      cierre: sesiones10.slice(8, 10).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+      evaluacion: `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
+      materiales: `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
       createdAt: formatSpanishDateInLetters(new Date())
     };
   };
@@ -1938,10 +1749,10 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
               </div>
 
               {/* I. Proceso de Desarrollo de Aprendizaje (PDA) */}
-              <div className="mb-6 border-l-4 border-blue-600 pl-4 py-0.5 flex flex-col gap-1.5">
-                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-wider flex items-center gap-1">
+              <div className="mb-6 border-l-4 border-blue-600 pl-4 py-0.5 flex flex-col gap-1.5 print-avoid-break">
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-wider flex items-center gap-1.5">
                   <Brain className="h-4 w-4" />
-                  I. Proceso de Desarrollo de Aprendizaje (PDA)
+                  I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
                 </span>
                 <EditableField
                   value={activePlanning.pda}
@@ -1950,12 +1761,69 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 />
               </div>
 
-              {/* II. Preguntas Detonadoras para el Aula */}
+              {/* II. Articulación Curricular (PDAs Transversales y Enlazados) */}
+              {activePlanning.pdasArticulados && activePlanning.pdasArticulados.length > 0 && (
+                <div className="mb-6 bg-gradient-to-br from-indigo-50/70 via-purple-50/40 to-blue-50/50 dark:from-indigo-950/30 dark:via-purple-950/20 dark:to-blue-950/30 p-5 rounded-2xl border border-indigo-200/60 dark:border-indigo-900/40 flex flex-col gap-3 print-avoid-break">
+                  <span className="text-[10px] text-indigo-700 dark:text-indigo-300 font-black uppercase tracking-wider flex items-center gap-1.5">
+                    <Layers className="h-4 w-4 text-indigo-600" />
+                    II. Articulación Curricular (PDAs Enlazados y Transversales)
+                  </span>
+                  <div className="grid grid-cols-1 gap-2.5">
+                    {activePlanning.pdasArticulados.map((item: ArticulatedPda, pIdx: number) => (
+                      <div key={pIdx} className="bg-white/80 dark:bg-zinc-900/80 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/40 flex flex-col gap-1 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="px-2 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-black text-[9.5px]">
+                            {item.campoFormativo}
+                          </span>
+                          <span className="text-[9px] font-bold text-zinc-400">Vinculación Interdisciplinaria</span>
+                        </div>
+                        <p className="font-semibold text-zinc-800 dark:text-zinc-200 leading-snug mt-0.5">{item.pda}</p>
+                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 italic">🎯 {item.relacion}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* III. Propuesta del Proyecto Final Integrador */}
+              {activePlanning.proyectoIntegrador && (
+                <div className="mb-6 bg-amber-50/50 dark:bg-amber-950/20 p-5 rounded-2xl border border-amber-200/60 dark:border-amber-900/40 flex flex-col gap-3 print-avoid-break">
+                  <span className="text-[10px] text-amber-800 dark:text-amber-300 font-black uppercase tracking-wider flex items-center gap-1.5">
+                    <Target className="h-4 w-4 text-amber-600" />
+                    III. Propuesta de Proyecto Final Integrador (NEM 2024)
+                  </span>
+                  <div className="flex flex-col gap-2 text-xs">
+                    <div className="flex flex-col">
+                      <span className="text-[9px] font-bold text-amber-900/70 dark:text-amber-400 uppercase">Título del Proyecto Comunitario</span>
+                      <span className="font-black text-sm text-zinc-950 dark:text-white">{activePlanning.proyectoIntegrador.titulo}</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                      <div className="bg-white/90 dark:bg-zinc-900/90 p-3 rounded-xl border border-amber-150 dark:border-amber-900/30">
+                        <span className="text-[9px] font-black text-amber-700 uppercase block mb-0.5">Problemática Comunitaria</span>
+                        <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{activePlanning.proyectoIntegrador.problematicaComunitaria}</p>
+                      </div>
+                      <div className="bg-white/90 dark:bg-zinc-900/90 p-3 rounded-xl border border-amber-150 dark:border-amber-900/30">
+                        <span className="text-[9px] font-black text-amber-700 uppercase block mb-0.5">Propósito Formativo</span>
+                        <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{activePlanning.proyectoIntegrador.proposito}</p>
+                      </div>
+                    </div>
+                    <div className="bg-amber-100/60 dark:bg-amber-900/30 p-3 rounded-xl border border-amber-200/80 dark:border-amber-800/40 flex items-start gap-2.5 mt-1">
+                      <FolderCheck className="h-5 w-5 text-amber-700 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-[9.5px] font-black uppercase tracking-wide text-amber-900 dark:text-amber-200 block">Producto Final Entregable</span>
+                        <p className="text-zinc-800 dark:text-zinc-200 font-semibold leading-snug">{activePlanning.proyectoIntegrador.productoFinal}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* IV. Preguntas Detonadoras para el Aula */}
               {activePlanning.preguntasDetonadoras && activePlanning.preguntasDetonadoras.length > 0 && (
                 <div className="mb-6 bg-gradient-to-br from-blue-50/70 to-indigo-50/50 dark:from-blue-950/30 dark:to-indigo-950/20 p-5 rounded-2xl border border-blue-200/60 dark:border-blue-900/40 flex flex-col gap-2.5 print-avoid-break">
                   <span className="text-[10px] text-blue-700 dark:text-blue-300 font-black uppercase tracking-wider flex items-center gap-1.5">
                     <HelpCircle className="h-4 w-4 text-blue-600" />
-                    II. Preguntas Detonadoras para el Salón (Apertura y Conflicto Cognitivo)
+                    IV. Preguntas Detonadoras para el Salón (Apertura y Conflicto Cognitivo)
                   </span>
                   <ul className="space-y-2 text-xs text-zinc-850 dark:text-zinc-150 font-medium pl-1">
                     {activePlanning.preguntasDetonadoras.map((preg: string, pIdx: number) => (
@@ -1970,49 +1838,147 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 </div>
               )}
 
-              {/* III. Secuencia Didáctica */}
-              <div className="mb-6 flex flex-col gap-4">
-                <span className="text-[10px] text-zinc-950 dark:text-white font-black uppercase tracking-wider border-b border-zinc-150 dark:border-zinc-850 pb-1.5 flex items-center gap-1">
-                  <Activity className="h-4 w-4" />
-                  III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
-                </span>
-
-                {/* Inicio */}
-                <div className="flex flex-col gap-1.5 pl-2 print-avoid-break">
-                  <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wide">Inicio (Anticipación / Lluvia de ideas)</span>
-                  <EditableField
-                    value={activePlanning.inicio}
-                    onChange={(val) => updateActivePlanningField('inicio', val)}
-                    placeholder="Actividades de inicio..."
-                  />
+              {/* V. Dosificación Cronometrada de las 10 Sesiones (50 min c/u) */}
+              <div className="mb-8 flex flex-col gap-4">
+                <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
+                  <span className="text-[11px] text-zinc-950 dark:text-white font-black uppercase tracking-wider flex items-center gap-1.5">
+                    <Clock className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
+                    V. Dosificación Cronometrada en 10 Sesiones de 50 minutos (Total: 500 min)
+                  </span>
+                  <span className="px-3 py-1 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 rounded-full text-[10px] font-black border border-blue-200/50">
+                    2 Semanas Lectivas (50 min/día)
+                  </span>
                 </div>
 
-                {/* Desarrollo */}
-                <div className="flex flex-col gap-1.5 pl-2 print-avoid-break">
-                  <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wide">Desarrollo (Indagación / Aplicación práctica)</span>
-                  <EditableField
-                    value={activePlanning.desarrollo}
-                    onChange={(val) => updateActivePlanningField('desarrollo', val)}
-                    placeholder="Actividades de desarrollo..."
-                  />
-                </div>
+                {/* Renderizado de las 10 Sesiones Individuales */}
+                {activePlanning.sesiones && activePlanning.sesiones.length > 0 ? (
+                  <div className="flex flex-col gap-4">
+                    {activePlanning.sesiones.map((sesion: SessionPlanItem, sIdx: number) => (
+                      <div 
+                        key={sIdx}
+                        className="p-4.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-xs flex flex-col gap-3 print-avoid-break"
+                      >
+                        {/* Header de la Sesión */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/80 pb-2.5">
+                          <div className="flex items-center gap-2">
+                            <span className="h-6 w-6 rounded-lg bg-blue-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0">
+                              {sesion.numero}
+                            </span>
+                            <h4 className="text-xs font-black text-zinc-900 dark:text-white leading-tight">
+                              Sesión {sesion.numero}: {sesion.titulo}
+                            </h4>
+                          </div>
 
-                {/* Cierre */}
-                <div className="flex flex-col gap-1.5 pl-2 print-avoid-break">
-                  <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wide">Cierre (Reflexión / Metacognición)</span>
-                  <EditableField
-                    value={activePlanning.cierre}
-                    onChange={(val) => updateActivePlanningField('cierre', val)}
-                    placeholder="Actividades de cierre..."
-                  />
-                </div>
+                          {/* Insignias de Minutero */}
+                          <div className="flex items-center gap-1.5 text-[9px] font-bold">
+                            <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50">
+                              🟢 Inicio: {sesion.tiempos?.inicio || '10 min'}
+                            </span>
+                            <span className="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200/50">
+                              🔵 Desarrollo: {sesion.tiempos?.desarrollo || '30 min'}
+                            </span>
+                            <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200/50">
+                              🟠 Cierre: {sesion.tiempos?.cierre || '10 min'}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Actividades Desglosadas por Tiempo */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+                          <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-150 dark:border-zinc-850">
+                            <span className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase block mb-1">
+                              🟢 Inicio (10 min) — Activación
+                            </span>
+                            <p className="text-zinc-700 dark:text-zinc-300">{sesion.actividadInicio}</p>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-150 dark:border-zinc-850">
+                            <span className="text-[9px] font-black text-blue-600 dark:text-blue-400 uppercase block mb-1">
+                              🔵 Desarrollo (30 min) — Construcción
+                            </span>
+                            <p className="text-zinc-700 dark:text-zinc-300">{sesion.actividadDesarrollo}</p>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-150 dark:border-zinc-850">
+                            <span className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase block mb-1">
+                              🟠 Cierre (10 min) — Síntesis
+                            </span>
+                            <p className="text-zinc-700 dark:text-zinc-300">{sesion.actividadCierre}</p>
+                          </div>
+                        </div>
+
+                        {/* Preguntas Detonadoras de la Sesión */}
+                        {sesion.preguntasClave && sesion.preguntasClave.length > 0 && (
+                          <div className="bg-blue-50/40 dark:bg-blue-950/20 p-2.5 rounded-xl border border-blue-100 dark:border-blue-900/30 text-[11px] text-zinc-700 dark:text-zinc-300">
+                            <span className="font-black text-[9px] text-blue-700 dark:text-blue-300 uppercase block mb-1">
+                              ❓ Preguntas Clave de la Sesión:
+                            </span>
+                            <ul className="list-disc list-inside space-y-0.5">
+                              {sesion.preguntasClave.map((q, qIdx) => (
+                                <li key={qIdx}>{q}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Referencia a Libros de la SEP y Entregable */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-[11px] pt-1">
+                          <div className="flex items-start gap-2 bg-purple-50/50 dark:bg-purple-950/20 p-2 rounded-xl border border-purple-100 dark:border-purple-900/30">
+                            <BookMarked className="h-4 w-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-[9px] text-purple-700 dark:text-purple-300 uppercase block">Libro de Texto Oficial SEP:</span>
+                              <span className="font-bold text-zinc-850 dark:text-zinc-150">{sesion.libroSep?.titulo}</span>
+                              <span className="text-purple-600 dark:text-purple-400 font-extrabold ml-1">({sesion.libroSep?.paginas})</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2 bg-emerald-50/50 dark:bg-emerald-950/20 p-2 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
+                            <CheckSquare className="h-4 w-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-[9px] text-emerald-700 dark:text-emerald-300 uppercase block">Entregable Parcial de la Sesión:</span>
+                              <span className="font-semibold text-zinc-800 dark:text-zinc-200">{sesion.entregableSesion}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  /* Fallback clásico para planeaciones previas */
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-1.5 pl-2 print-avoid-break">
+                      <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wide">Inicio (Anticipación / Lluvia de ideas)</span>
+                      <EditableField
+                        value={activePlanning.inicio}
+                        onChange={(val) => updateActivePlanningField('inicio', val)}
+                        placeholder="Actividades de inicio..."
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5 pl-2 print-avoid-break">
+                      <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wide">Desarrollo (Indagación / Aplicación práctica)</span>
+                      <EditableField
+                        value={activePlanning.desarrollo}
+                        onChange={(val) => updateActivePlanningField('desarrollo', val)}
+                        placeholder="Actividades de desarrollo..."
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5 pl-2 print-avoid-break">
+                      <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wide">Cierre (Reflexión / Metacognición)</span>
+                      <EditableField
+                        value={activePlanning.cierre}
+                        onChange={(val) => updateActivePlanningField('cierre', val)}
+                        placeholder="Actividades de cierre..."
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* IV. Evaluación Formativa y Evidencias */}
+              {/* VI. Evaluación Formativa y Rúbrica Analítica de 3 Niveles */}
               <div className="mb-6 flex flex-col gap-2.5 print-avoid-break">
                 <span className="text-[10px] text-zinc-950 dark:text-white font-black uppercase tracking-wider border-b border-zinc-150 dark:border-zinc-850 pb-1.5 flex items-center gap-1">
-                  <CheckCircle2 className="h-4 w-4" />
-                  IV. Evaluación Formativa, Criterios y Rúbrica Analítica
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  VI. Evaluación Formativa, Criterios y Rúbrica Analítica (3 Niveles NEM)
                 </span>
                 <div className="pl-2">
                   <EditableField
@@ -2023,11 +1989,11 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 </div>
               </div>
 
-              {/* V. Materiales y Recursos Didácticos */}
+              {/* VII. Materiales y Recursos Didácticos */}
               <div className="mb-8 flex flex-col gap-2.5 print-avoid-break">
                 <span className="text-[10px] text-zinc-950 dark:text-white font-black uppercase tracking-wider border-b border-zinc-150 dark:border-zinc-850 pb-1.5 flex items-center gap-1">
-                  <FileText className="h-4 w-4" />
-                  V. Materiales, Recursos y Evidencias Entregables de la Clase
+                  <FileText className="h-4 w-4 text-blue-600" />
+                  VII. Materiales, Recursos y Evidencias Entregables Globales
                 </span>
                 <div className="pl-2">
                   <EditableField
