@@ -185,21 +185,45 @@ export async function GET(request: NextRequest) {
 
     const allIndexed = getOrBuildVaultIndex(planningsDir);
 
-    // Filtrado por parámetros de nivel, grado y materia
+    // Filtrado inteligente por parámetros de nivel, grado y materia
     let candidateNodes = allIndexed;
     if (levelParam) {
       const cleanLevel = cleanString(levelParam);
-      const filtered = candidateNodes.filter(n => n.cleanPath.includes(cleanLevel));
+      let levelKeywords: string[] = [cleanLevel];
+      if (cleanLevel.includes('baja') || cleanLevel.includes('fase 3') || cleanLevel.includes('fase_3')) {
+        levelKeywords = ['primaria_fase_3', 'fase_3', '1er_grado', '2do_grado', 'primaria baja'];
+      } else if (cleanLevel.includes('media') || cleanLevel.includes('fase 4') || cleanLevel.includes('fase_4')) {
+        levelKeywords = ['primaria_fase_4', 'fase_4', '3er_grado', '4to_grado'];
+      } else if (cleanLevel.includes('alta') || cleanLevel.includes('fase 5') || cleanLevel.includes('fase_5')) {
+        levelKeywords = ['primaria_fase_5', 'fase_5', '5to_grado', '6to_grado', 'primaria alta'];
+      } else if (cleanLevel.includes('secundaria') || cleanLevel.includes('fase 6') || cleanLevel.includes('fase_6')) {
+        levelKeywords = ['secundaria', 'fase_6'];
+      } else if (cleanLevel.includes('preescolar') || cleanLevel.includes('fase 2') || cleanLevel.includes('fase_2')) {
+        levelKeywords = ['preescolar', 'fase_2'];
+      }
+
+      const filtered = candidateNodes.filter(n => levelKeywords.some(kw => n.cleanPath.includes(kw)));
       if (filtered.length > 0) candidateNodes = filtered;
     }
+
     if (gradeParam) {
       const cleanGrade = cleanString(gradeParam);
       const filtered = candidateNodes.filter(n => n.cleanPath.includes(cleanGrade));
       if (filtered.length > 0) candidateNodes = filtered;
     }
+
     if (subjectParam) {
       const cleanSub = cleanString(subjectParam);
-      const filtered = candidateNodes.filter(n => n.cleanPath.includes(cleanSub));
+      let subKeywords = [cleanSub];
+      if (cleanSub.includes('mat')) subKeywords.push('matematicas', 'mat');
+      if (cleanSub.includes('cien') || cleanSub.includes('medio')) subKeywords.push('conocimiento_del_medio', 'ciencias', 'cie', 'bio', 'fis', 'qui');
+      if (cleanSub.includes('esp') || cleanSub.includes('leng')) subKeywords.push('espanol', 'lenguajes', 'esp');
+      if (cleanSub.includes('art')) subKeywords.push('artes', 'art');
+      if (cleanSub.includes('civ') || cleanSub.includes('form')) subKeywords.push('formacion_civica_y_etica', 'civ');
+      if (cleanSub.includes('fisic') || cleanSub.includes('deport')) subKeywords.push('educacion_fisica', 'fis');
+      if (cleanSub.includes('socio') || cleanSub.includes('tutor')) subKeywords.push('educacion_socioemocional', 'tutoria', 'tut');
+
+      const filtered = candidateNodes.filter(n => subKeywords.some(kw => n.cleanPath.includes(kw)));
       if (filtered.length > 0) candidateNodes = filtered;
     }
 
@@ -241,7 +265,7 @@ export async function GET(request: NextRequest) {
       // Extracción de Grado y Nivel
       const levelYaml = rawContent.match(/^grado:\s*"?(.*?)"?$/m) || rawContent.match(/^nivel:\s*"?(.*?)"?$/m) || rawContent.match(/^fase:\s*"?(.*?)"?$/m);
       const levelMd = rawContent.match(/\*\*Nivel \/ Fase:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m) || rawContent.match(/\*\*Grado:\*\*\s*(?:\[\[)?(.*?)(?:\]\])?$/m);
-      const levelName = levelYaml ? levelYaml[1].trim() : (levelMd ? levelMd[1].trim() : 'Fase 6');
+      const levelName = levelYaml ? levelYaml[1].trim() : (levelMd ? levelMd[1].trim() : 'Fase 3');
 
       // Extracción de Asignatura
       const subjectYaml = rawContent.match(/^materia:\s*"?(.*?)"?$/m) || rawContent.match(/^disciplina:\s*"?(.*?)"?$/m) || rawContent.match(/^asignatura:\s*"?(.*?)"?$/m);
@@ -249,10 +273,11 @@ export async function GET(request: NextRequest) {
       const subjectName = subjectYaml ? subjectYaml[1].trim() : (subjectMd ? subjectMd[1].trim() : 'Matemáticas');
 
       // Extracción de PDA
+      const pdaYaml = rawContent.match(/PDA:\s*"([\s\S]*?)"/);
       const pdaQuote = rawContent.match(/## 🎯 (?:I\.\s*)?Proceso de Desarrollo de Aprendizaje[\s\S]*?>\s*\*\*"?([\s\S]*?)"?\*\*/);
-      const pdaBlock = rawContent.match(/## 🎯 Proceso de Desarrollo de Aprendizaje[\s\S]*?```(?:text)?\n([\s\S]*?)```/);
+      const pdaBlock = rawContent.match(/## 🎯 Proceso de Desarrollo de Aprendizaje[\s\S]*?```(?:yaml|text)?\n(?:PDA:\s*"?)?([\s\S]*?)"?\s*```/);
       const pdaMd = rawContent.match(/\*\*PDA:\*\*\s*(.*)/);
-      const pda = pdaQuote ? pdaQuote[1].trim() : (pdaBlock ? pdaBlock[1].trim() : (pdaMd ? pdaMd[1].trim() : query));
+      const pda = pdaYaml ? pdaYaml[1].trim() : (pdaQuote ? pdaQuote[1].trim() : (pdaBlock ? pdaBlock[1].trim() : (pdaMd ? pdaMd[1].trim() : query)));
 
       // Extracción de Duración
       const durationYaml = rawContent.match(/^duracion:\s*"?(.*?)"?$/m) || rawContent.match(/^temporalidad:\s*"?(.*?)"?$/m);
@@ -260,7 +285,7 @@ export async function GET(request: NextRequest) {
       const duration = durationYaml ? durationYaml[1].trim() : (durationMd ? durationMd[1].trim() : '10 sesiones de 50 min (500 min)');
 
       // Preguntas detonadoras
-      const preguntasBlock = rawContent.match(/## ❓ (?:II\.\s*)?Preguntas Detonadoras[\s\S]*?\n([\s\S]*?)(?=\n---|\n##|$)/);
+      const preguntasBlock = rawContent.match(/## ❓ (?:II\.\s*)?Preguntas Detonadoras[\s\S]*?\n([\s\S]*?)(?=\n---|\n##|$)/) || rawContent.match(/### Preguntas Detonadoras[\s\S]*?\n([\s\S]*?)(?=\n---|\n##|$)/);
       const preguntas: string[] = [];
       if (preguntasBlock) {
         const lines = preguntasBlock[1].split('\n');
@@ -271,11 +296,11 @@ export async function GET(request: NextRequest) {
       }
 
       // Secuencia didáctica estructurada
-      const fase1Match = rawContent.match(/(?:### 📌 FASE 1|### 🚀 Sesiones 1 y 2|### Inicio)[\s\S]*?\n([\s\S]*?)(?=### 🔬 FASE 2|### 🔬|### Desarrollo|$)/);
-      const fase2Match = rawContent.match(/(?:### 🔬 FASE 2|### 💡 FASE 3|### 🔬 Sesiones 3 a 7|### Desarrollo)[\s\S]*?\n([\s\S]*?)(?=### 🌟 FASE 4|### 🏁|### Cierre|## 📋|## 📊|$)/);
-      const fase3Match = rawContent.match(/(?:### 🌟 FASE 4|### 🏁 Sesiones 8 a 10|### Cierre)[\s\S]*?\n([\s\S]*?)(?=## 📋|## 📊|## 📦|$)/);
-      const evalMatch = rawContent.match(/(?:## 📋 IV\.\s*Evaluación Formativa|## 📊 Rúbrica Analítica|### Evaluación Formativa)[\s\S]*?\n([\s\S]*?)(?=## 📦|## 🔗|$)/);
-      const matMatch = rawContent.match(/(?:## 📦 V\.\s*Materiales|## 📦 Materiales, Recursos|### Materiales)[\s\S]*?\n([\s\S]*?)(?=## 🔗|$)/);
+      const fase1Match = rawContent.match(/(?:### 📌 SESIÓN 1|### 📌 FASE 1|### 🚀 Sesiones 1 y 2|### Inicio)[\s\S]*?\n([\s\S]*?)(?=### 📌 SESIÓN 3|### 🔬 FASE 2|### 🔬|### Desarrollo|$)/);
+      const fase2Match = rawContent.match(/(?:### 📌 SESIÓN 3|### 📌 SESIÓN 4|### 🔬 FASE 2|### 💡 FASE 3|### 🔬 Sesiones 3 a 7|### Desarrollo)[\s\S]*?\n([\s\S]*?)(?=### 📌 SESIÓN 8|### 📌 SESIÓN 9|### 🌟 FASE 4|### 🏁|### Cierre|## 📋|## 📊|$)/);
+      const fase3Match = rawContent.match(/(?:### 📌 SESIÓN 9|### 📌 SESIÓN 10|### 🌟 FASE 4|### 🏁 Sesiones 8 a 10|### Cierre)[\s\S]*?\n([\s\S]*?)(?=## 📋|## 📊|## 📦|$)/);
+      const evalMatch = rawContent.match(/(?:## 📊 IV\.\s*Rúbrica Analítica|## 📋 IV\.\s*Evaluación Formativa|## 📊 Rúbrica Analítica|### Evaluación Formativa)[\s\S]*?\n([\s\S]*?)(?=## 📦|## 🔗|$)/);
+      const matMatch = rawContent.match(/(?:## 📦 V\.\s*Recursos|## 📦 V\.\s*Materiales|## 📦 Materiales, Recursos|### Materiales)[\s\S]*?\n([\s\S]*?)(?=## 🔗|$)/);
 
       // Fecha en formato texto español
       const createdMatch = rawContent.match(/fecha_creacion:\s*"?(.*?)"?$/m) || rawContent.match(/created_at:\s*"?(.*?)"?$/m);
