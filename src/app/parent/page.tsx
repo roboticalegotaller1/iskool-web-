@@ -15,6 +15,7 @@ import { FormattedDate } from '@/components/FormattedDate';
 
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ParentDashboard() {
   const { user, loading } = useAuth();
@@ -174,34 +175,44 @@ export default function ParentDashboard() {
         </div>
 
         {/* Tab switcher de Padres */}
-        <div className="flex gap-2 bg-zinc-150 dark:bg-zinc-900 p-1 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/80 mb-8 max-w-md">
-          <button
-            onClick={() => setCurrentTab('achievements')}
-            className={`flex-1 py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 ${
-              currentTab === 'achievements'
-                ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                : 'text-zinc-550 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
-            }`}
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between mb-8">
+          <div className="flex gap-2 bg-zinc-150 dark:bg-zinc-900 p-1 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/80 w-full sm:w-auto max-w-md">
+            <button
+              onClick={() => setCurrentTab('achievements')}
+              className={`flex-1 py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 ${
+                currentTab === 'achievements'
+                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                  : 'text-zinc-550 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+              }`}
+            >
+              <Trophy className="h-4 w-4" />
+              Muro de Logros
+            </button>
+            <button
+              onClick={() => setCurrentTab('messages')}
+              className={`flex-1 py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 relative ${
+                currentTab === 'messages'
+                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                  : 'text-zinc-550 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+              }`}
+            >
+              <Bell className="h-4 w-4" />
+              Mensajes y Alertas
+              {parentMessages.filter(m => !m.is_read && (m.student_id === currentStudent?.id || m.parent_id === currentParent.id)).length > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-rose-500 text-white font-extrabold text-[9px] flex items-center justify-center animate-pulse border border-white">
+                  {parentMessages.filter(m => !m.is_read && (m.student_id === currentStudent?.id || m.parent_id === currentParent.id)).length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          <Link
+            href="/parent/financial"
+            className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-bold text-xs py-3 px-4 rounded-2xl transition-all shadow-sm"
           >
-            <Trophy className="h-4 w-4" />
-            Muro de Logros
-          </button>
-          <button
-            onClick={() => setCurrentTab('messages')}
-            className={`flex-1 py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 relative ${
-              currentTab === 'messages'
-                ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                : 'text-zinc-550 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
-            }`}
-          >
-            <Bell className="h-4 w-4" />
-            Mensajes y Alertas
-            {parentMessages.filter(m => !m.is_read && (m.student_id === currentStudent?.id || m.parent_id === currentParent.id)).length > 0 && (
-              <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-rose-500 text-white font-extrabold text-[9px] flex items-center justify-center animate-pulse border border-white">
-                {parentMessages.filter(m => !m.is_read && (m.student_id === currentStudent?.id || m.parent_id === currentParent.id)).length}
-              </span>
-            )}
-          </button>
+            <Landmark className="w-4 h-4 text-blue-300" />
+            <span>Estado de Cuenta y Pagos</span>
+          </Link>
         </div>
 
         {currentTab === 'achievements' && (
