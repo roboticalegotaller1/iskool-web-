@@ -798,17 +798,17 @@ export function generateChronometerSessions(
         materiales: ['Libro de texto gratuito SEP', 'Material manipulable o cartulinas', 'Bitácora escolar'],
         entregable: `🏆 Evidencia Integradora: Ficha de trabajo y producto demostrativo completado sobre "${capitalizedTopic}".`
       };
-    } else if (count <= 10) {
-      // Muestreo proporcional a lo largo del arco pedagógico (Apertura -> Desarrollo -> Cierre)
-      const tplIndex = i === 0 ? 0 : i === count - 1 ? 9 : Math.min(8, Math.max(1, Math.round((i / (count - 1)) * 9)));
-      baseTpl = masterPool[tplIndex];
     } else {
-      // Más de 10 sesiones: expansión con fases de profundización e investigación aplicada
-      const tplIndex = i === 0 ? 0 : i === count - 1 ? 9 : Math.min(8, Math.max(1, (i % 8) + 1));
-      const phaseTpl = masterPool[tplIndex];
+      const poolLen = masterPool.length;
+      const tplIndex = i === 0 
+        ? 0 
+        : i === count - 1 
+          ? poolLen - 1 
+          : Math.min(poolLen - 2, Math.max(1, Math.round((i / (count - 1)) * (poolLen - 1))));
+      const phaseTpl = masterPool[tplIndex] || masterPool[0];
       baseTpl = {
         ...phaseTpl,
-        titulo: i >= 10 ? `${phaseTpl.titulo} (Fase de Profundización y Taller Práctico - Parte ${Math.floor(i / 10) + 1})` : phaseTpl.titulo
+        titulo: i >= poolLen ? `${phaseTpl.titulo} (Fase de Profundización y Taller Práctico - Parte ${Math.floor(i / poolLen) + 1})` : phaseTpl.titulo
       };
     }
 
@@ -1267,4 +1267,34 @@ export function generateFinalProjectProposal(level: string, subject: string, top
       }
     };
   }
+}
+
+/**
+ * Formateador oficial de fechas en letras en español (ej. "25 de agosto de 2026")
+ */
+export function formatSpanishDateInLetters(dateInput?: string | Date): string {
+  if (!dateInput) {
+    return formatSpanishDateInLetters(new Date());
+  }
+
+  let date: Date;
+  if (typeof dateInput === 'string') {
+    date = new Date(dateInput);
+    if (isNaN(date.getTime())) {
+      date = new Date();
+    }
+  } else {
+    date = dateInput;
+  }
+
+  const months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} de ${month} de ${year}`;
 }
