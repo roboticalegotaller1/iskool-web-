@@ -1,87 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_3er_grado, materia_matematicas, fase4_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matemáticas"
-grado: "3º de Primaria"
-nivel: "Primaria (Fase 4)"
-tema: "Suma y resta con algoritmos convencionales y reagrupamiento"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_media, materia_matematicas, grado_3_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:46:24.062Z"
+nivel: "primaria-media"
+fase_nem: "Fase 4"
+grado: "3º de Primaria"
+asignatura: "Matemáticas"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental
+# 📚 Proyecto Didáctico Integral: Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 4)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 3º de Primaria • Fase 4 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Matemáticas
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Pensamiento Crítico • Inclusión
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 4 (3º Primaria) - Resuelve problemas de suma y resta con números naturales hasta tres cifras con algoritmo convencional y agrupamientos. Aplica cálculo mental rápido y resuelve sumas/restas de fracciones de igual denominador.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Por qué en 402 - 178 reagrupamos centenas en decenas y unidades?**
-
-2. **¿Cómo calculamos mentalmente el cambio de un billete de $200?**
-
-3. **¿Cómo comprobamos una resta sumando sustraendo y diferencia?**
-
-4. **¿Cuánto es 2/8 + 3/8 de una pizza?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (3º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matemáticas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-Desafío de cálculo mental rápido de sumas y restas de centenas completas.
+```yaml
+PDA: "Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" para divulgar en el aula y la escuela."
+```
 
-### 🔬 Desarrollo (30 minutos)
-Resolución de problemas de compraventa con restas de transformación con ceros intermedios y comprobación mediante suma inversa. Suma de fracciones homogéneas.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Media - Fase 4):**
+- *PDA:* Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" para divulgar en el aula y la escuela.
+- *Vínculo formativo:* Comprensión lectora analítica, redacción en párrafos estructurados y uso correcto de signos de puntuación.
 
-### 💡 Cierre (10 minutos)
-Plenaria con explicación de estrategias de reagrupamiento en el pizarrón.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Resuelve situaciones problemáticas vinculadas a "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" mediante operaciones básicas, fracciones, cálculo de áreas y experimentos sencillos.
+- *Vínculo formativo:* Razonamiento lógico-matemático, análisis de datos en tablas y pensamiento indagatorio.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza la diversidad natural y sociocultural de su entidad en torno a "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental", valorando la justicia y los derechos de todos.
+- *Vínculo formativo:* Conocimiento del entorno regional, cuidado del medio ambiente y participación cívica.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-### Criterios de Evaluación y Niveles de Logro
-• **Criterio 1:** Dominio del algoritmo de suma y resta con reagrupamiento
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
-
-• **Criterio 2:** Agilidad en estrategias de cálculo mental de 3 cifras
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
-
-• **Criterio 3:** Comprobación de operaciones y suma de fracciones de igual denominador
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña estrategias cooperativas para prevenir riesgos y resolver conflictos escolares al trabajar proyectos sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental".
+- *Vínculo formativo:* Toma de decisiones consensuadas, vida saludable y bienestar socioemocional.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-Notas de compra simuladas, hojas de cálculo cuadriculadas.
+**Problemática Situada:**  
+Los estudiantes requieren fortalecer el razonamiento lógico-matemático aplicado a situaciones de la vida real relacionadas con "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" para resolver retos del entorno.
 
-### Evidencia de Aprendizaje Entregable
-**Problemario de Caja Registradora con Comprobaciones Inversas.**
+**Propósito del Proyecto:**  
+Aplicar conceptos matemáticos, cálculo y modelación para diseñar soluciones cuantitativas y juegos didácticos interactivos.
+
+**Impacto Social y Transformador:**  
+Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y relevante para toda la comunidad escolar.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase4_NEM|Índice Maestro de Primaria Fase 4]]
-- [[../../00_Indice_Maestro_Primaria_Fase4_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 119 a la 122) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 144 a la 147) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 69 a la 72) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 128 a la 131) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 153 a la 156) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 78 a la 81) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 137 a la 140) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 162 a la 165) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 87 a la 90) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Cajeros Expertos: Suma, Resta con Transformación y Cálculo Mental" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 146 a la 149) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Precisión en Procedimientos y Cálculos Matemáticos** | Aplica algoritmos y razonamiento lógico sin errores, justificando con claridad cada paso de la solución. | Resuelve los problemas matemáticos correctamente con procedimientos comprensibles. | Presenta errores constantes de cálculo o dificultad para elegir la operación adecuada. |
+| **Diseño y Funcionalidad del Material Manipulable** | El material didáctico es innovador, resistente, estético y facilita la comprensión inmediata del concepto. | El material es funcional y permite resolver los retos de forma ordenada. | El material es frágil o confuso para los usuarios. |
+| **Conducción de la Estación y Mediación Lúdica** | Guía con paciencia, entusiasmo y claridad pedagógica a los participantes de su estación en la feria. | Explica las reglas del juego y acompaña a los participantes con amabilidad. | Muestra dificultad para explicar la dinámica o desinterés en la atención de su estación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

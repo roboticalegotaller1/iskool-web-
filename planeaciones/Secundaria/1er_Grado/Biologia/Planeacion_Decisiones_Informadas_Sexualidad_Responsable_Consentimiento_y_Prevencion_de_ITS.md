@@ -1,83 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_1er_grado, materia_biologia, fase6_secundaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Biología"
-grado: "1º de Secundaria"
-nivel: "Secundaria (Fase 6)"
-tema: "Salud sexual y reproductiva (prevención de ITS y embarazo adolescente)"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_biologia, grado_1_de_secundaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T05:03:06.929Z"
+nivel: "secundaria"
+fase_nem: "Fase 6"
+grado: "1º de Secundaria"
+asignatura: "Biología"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS
+# 📚 Proyecto Didáctico Integral: Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS
 
-> [!INFO] **Ficha Técnica NEM 2022**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 1º de Secundaria • Fase 6
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura:** Biología
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Vida Saludable • Igualdad de Género • Pensamiento Crítico
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA)
-
-> **Fase 6 (1º Secundaria) - Compara la efectividad de los métodos anticonceptivos y de barrera, analiza la importancia del consentimiento, el autocuidado y la toma de decisiones informada para prevenir infecciones de transmisión sexual (ITS) y embarazos no planificados en la adolescencia.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Apertura y Conflicto Cognitivo)
-
-1. **¿Cuál es la diferencia entre sexualidad, sexo biológico, género y afectividad?**
-
-2. **¿Por qué el condón (masculino y femenino) es el ÚNICO método que brinda doble protección (embarazo e ITS como VIH y VPH)?**
-
-3. **¿Cómo influye la presión social y los mitos en la toma de decisiones sobre la sexualidad adolescente?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (1º de Secundaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Biología  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Buzón anónimo de preguntas sobre sexualidad y mitos populares.
-2. Pregunta detonadora: "¿Por qué la información científica y laica es el mejor escudo para nuestro proyecto de vida?".
-3. Desmitificación de creencias erróneas sobre métodos anticonceptivos.
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Métodos Anticonceptivos: Clasificar en hormonales, de barrera, naturales y quirúrgicos evaluando su porcentaje de efectividad.
-2. Demostración práctica del uso correcto del condón con modelo anatómico.
-3. Análisis de situaciones de consentimiento y asertividad para decir "NO" ante presiones de pareja.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Puesta en común de conclusiones éticas y de autocuidado.
-2. Metacognición: "¿A qué instituciones de salud pública puedo acudir para recibir orientación confidencial y gratuita?".
-3. Entrega de evidencia: Matriz comparativa de métodos anticonceptivos.
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios):
-• Criterio 1: Conocimiento científico de métodos anticonceptivos y prevención de ITS.
-• Criterio 2: Valoración ética del consentimiento y la equidad de género.
-• Criterio 3: Claridad del plan de autocuidado en el proyecto de vida.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-Muestrario de métodos anticonceptivos didácticos, modelos anatómicos, trípticos de la Secretaría de Salud.
+**Problemática Situada:**  
+Necesidad de fomentar la curiosidad científica, la indagación sistemática y la aplicación de saberes escolares para entender y transformar fenómenos relacionados con "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS".
 
-### Evidencia Entregable de la Clase (Producto Tangible)
-> 📄 **Guía de Salud Sexual Integral y Prevención "Decido con Responsabilidad".**
+**Propósito del Proyecto:**  
+Diseñar y ejecutar una investigación experimental y de campo que culmine en prototipos funcionales y propuestas sustentables para la comunidad.
+
+**Impacto Social y Transformador:**  
+Promueve el pensamiento científico, la resolución de problemas locales y la participación ciudadana informada.
 
 ---
 
-## 🔗 Nodos Relacionados y Conexiones en el Segundo Cerebro
-- [[00_Indice_Maestro_Secundaria_NEM|Índice Maestro de Secundaria]]
-- Tag: #saberes_y_pensamiento_cientifico | #biologia | #1er_grado
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 155 a la 158) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 106 a la 109) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 161 a la 164) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 112 a la 115) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 167 a la 170) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 118 a la 121) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 173 a la 176) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 124 a la 127) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Decisiones Informadas: Sexualidad Responsable, Consentimiento y Prevención de ITS"?
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 179 a la 182) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 130 a la 133) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Metodología de Indagación y Rigor Conceptual** | Plantea hipótesis claras, registra datos experimentales con precisión y formula conclusiones sólidas basadas en evidencia. | Sigue los pasos del método experimental y presenta resultados ordenados. | El registro de datos es incompleto o las conclusiones carecen de sustento. |
+| **Calidad del Prototipo y Presentación Visual** | El prototipo es funcional, seguro, creativo y está acompañado de infografías científicas de alta calidad. | El prototipo funciona adecuadamente y los apoyos visuales son claros. | El prototipo no funciona o la presentación visual es descuidada. |
+| **Divulgación Científica y Comunicación Oral** | Comunica conceptos científicos complejos con sencillez, elocuencia y dominio ante audiencias diversas. | Explica su experimento con claridad y vocabulario científico adecuado. | Dificultad para explicar el funcionamiento o la utilidad de su investigación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

@@ -1,127 +1,228 @@
 ---
-tags: [iskool, planeacion_nem_serie2, segundo_cerebro, fase4, campo_etica_naturaleza_y_sociedades, grado_3er_grado, materia_geografia_historia, metodologia_aprendizaje_servicio_con_innovacion_social_y_solidaria, contexto_comunidad_escolar_multicultural_y_migrante, codiseno_2026]
-id_planeacion: "SERIE2-F4-GEO-3ER-V10045"
-serie: "Serie 2 - Innovación y Codiseño Curricular"
-campo_formativo: "Ética, Naturaleza y Sociedades"
-materia: "Geografia_Historia"
-grado: "3º de Primaria"
-nivel: "Primaria Fase 4"
-tema: "Representaciones cartográficas de la localidad y cuidado de ecosistemas"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_geografia_historia, grado_3_de_primaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-metodologia: "Aprendizaje Servicio con Innovación Social y Solidaria"
-contexto_comunitario: "Comunidad Escolar Multicultural y Migrante"
-problematica_situada: "Integración inclusiva de familias en tránsito, cultura de paz y erradicación de toda forma de discriminación."
-ejes_articuladores: ["Vida Saludable", "Pensamiento Crítico", "Interculturalidad Crítica"]
-duracion: "10 sesiones de 50 minutos (Total: 500 min)"
-fecha_creacion: "2026-08-24T21:49:54.075Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "3º de Primaria"
+asignatura: "Geografia_Historia"
+campo_formativo: "Ética, Naturaleza y Sociedades"
+tema: "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Instalación del huerto escolar agroecológico con sistema de riego por goteo casero, compostero y guía comunitaria ilustrada de cuidado ambiental."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# 🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)
+# 📚 Proyecto Didáctico Integral: 🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)
 
-> [!INFO] **Ficha Técnica Oficial NEM 2024 • Serie 2 de Codiseño ISkool**
-> - **Docente Titular / Super Usuario:** [[Prof. Israel López Ángeles]] (`usr-teacher-israel`)
-> - **Nivel y Fase Curricular:** 3º de Primaria • Primaria Fase 4
-> - **Campo Formativo:** Ética, Naturaleza y Sociedades
-> - **Asignatura / Disciplina:** Geografia Historia
-> - **Metodología Activa:** Aprendizaje Servicio con Innovación Social y Solidaria
-> - **Contexto Territorial:** Comunidad Escolar Multicultural y Migrante (Reto Central: *Integración inclusiva de familias en tránsito, cultura de paz y erradicación de toda forma de discriminación.*)
-> - **Ejes Articuladores SEP:** Vida Saludable • Pensamiento Crítico • Interculturalidad Crítica
-> - **Temporalidad del Bloque:** 10 sesiones de 50 min (500 minutos de trabajo situado)
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
-
-> **"Elabora croquis y mapas con puntos cardinales de la localidad, reconociendo las interdependencias de los componentes vivos y no vivos para la sustentabilidad."**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (3º de Primaria)  
+> **Campo Formativo:** Ética, Naturaleza y Sociedades  
+> **Asignatura:** Geografia_Historia  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Instalación del huerto escolar agroecológico con sistema de riego por goteo casero, compostero y guía comunitaria ilustrada de cuidado ambiental.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ❓ II. Preguntas Detonadoras y Conflicto Cognitivo Innovador
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-1. **¿Cómo podemos transformar el estudio de *"Representaciones cartográficas de la localidad y cuidado de ecosistemas"* en una solución práctica para atender el reto de: *Integración inclusiva de familias en tránsito, cultura de paz y erradicación de toda forma de discriminación.*?**
-2. **¿Qué tecnologías accesibles, modelos experimentales o saberes locales podemos integrar para investigar con rigor científico y humanista?**
-3. **¿De qué manera nuestro equipo colaborativo puede promover la equidad de género, la inclusión y la sustentabilidad en cada fase del proyecto?**
-4. **¿Cuál es el impacto a largo plazo de nuestra propuesta en el bienestar de la comunidad escolar y barrial?**
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)", sustentando sus argumentos en fuentes confiables."
+```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-## ⏱️ III. Secuencia Didáctica Oficial en 10 Sesiones de 50 Minutos (Estructura de 4 Fases)
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
 
-### 📌 FASE 1: Diagnóstico Situado y Encuadre Cognitivo (Sesiones 1 y 2 - 100 min)
-- **Sesión 1: Apertura del Desafío y Planteamiento Situado (50 min)**
-  - *Inicio (10 min):* Presentación del caso detonador en el entorno Comunidad Escolar Multicultural y Migrante. El Prof. Israel López Ángeles contextualiza la problemática con imágenes y datos de campo.
-  - *Desarrollo (30 min):* Debate abierto en asamblea escolar sobre *"Integración inclusiva de familias en tránsito, cultura de paz y erradicación de toda forma de discriminación."*. Conformación de equipos de trabajo con roles asignados (coordinación, bitácora, materiales, divulgación).
-  - *Cierre (10 min):* Registro de la meta de aprendizaje individual y colectiva en el cuaderno de proyectos.
-- **Sesión 2: Mapeo Conceptual y Rescate de Saberes Previos (50 min)**
-  - *Inicio (10 min):* Dinámica de preguntas cruzadas entre equipos sobre conceptos clave de *"Representaciones cartográficas de la localidad y cuidado de ecosistemas"*.
-  - *Desarrollo (30 min):* Construcción de un esquema visual colaborativo en papel o pizarra digital relacionando el PDA con la vida cotidiana.
-  - *Cierre (10 min):* Acuerdos de indagación y lista de insumos para la fase experimental.
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
 
-### 🔬 FASE 2: Indagación Crítica, Modelado y Experimentación (Sesiones 3 a 5 - 150 min)
-- **Sesión 3: Protocolo de Investigación y Recolección de Datos (50 min)**
-  - *Inicio (10 min):* Definición de variables o categorías de análisis documental y de campo.
-  - *Desarrollo (30 min):* Consulta guiada en libros de texto SEP, artículos de divulgación o entrevistas con personas de la comunidad.
-  - *Cierre (10 min):* Validación de fuentes y organización de fichas de síntesis informativa.
-- **Sesión 4: Laboratorio Práctico / Experimentación y Prototipado (50 min)**
-  - *Inicio (10 min):* Normas de seguridad y verificación de materiales didácticos disponibles.
-  - *Desarrollo (30 min):* Realización de experimentos, mediciones matemáticas, cálculos o modelado concreto enfocado en *"Representaciones cartográficas de la localidad y cuidado de ecosistemas"*.
-  - *Cierre (10 min):* Registro de observaciones y tablas comparativas en la bitácora de ciencias.
-- **Sesión 5: Análisis Interdisciplinario y Síntesis Crítica (50 min)**
-  - *Inicio (10 min):* Articulación del proyecto con los ejes rectores: *Vida Saludable y Pensamiento Crítico y Interculturalidad Crítica*.
-  - *Desarrollo (30 min):* Discusión en mesas redondas para interpretar los resultados y formular alternativas sustentables.
-  - *Cierre (10 min):* Redacción del informe técnico preliminar por equipo.
-
-### 💡 FASE 3: Integración Tecnológica, Creación y Elaboración del Entregable (Sesiones 6 a 8 - 150 min)
-- **Sesión 6: Bocetaje y Diseño del Producto Tangible (50 min)**
-  - *Inicio (10 min):* Revisión de los estándares de calidad de la rúbrica formativa analítica.
-  - *Desarrollo (30 min):* Taller creativo: modelado, estructuración o redacción del primer prototipo de: *Cartografía social y mapa digital de riesgos, recursos y zonas de seguridad*.
-  - *Cierre (10 min):* Sesión de coevaluación intermedia con retroalimentación formativa constructiva.
-- **Sesión 7: Producción, Ensamblaje y Pulido del Entregable (50 min)**
-  - *Inicio (10 min):* Incorporación de mejoras sugeridas por pares y por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Fabricación final, edición de textos o ensamblado técnico del producto.
-  - *Cierre (10 min):* Control de calidad pedagógico y verificación del cumplimiento del PDA oficial.
-- **Sesión 8: Ensayo de Presentación y Estrategia de Comunicación (50 min)**
-  - *Inicio (10 min):* Diseño del guion expositivo y distribución de turnos de voz.
-  - *Desarrollo (30 min):* Ensayo general de la socialización ante el grupo, afinando lenguaje técnico y apoyos visuales.
-  - *Cierre (10 min):* Autovaloración del nivel de preparación del equipo.
-
-### 🌟 FASE 4: Socialización Comunitaria, Rúbrica Analítica y Compromisos (Sesiones 9 y 10 - 100 min)
-- **Sesión 9: Exposición y Diálogo Abierto con la Comunidad Escolar (50 min)**
-  - *Inicio (10 min):* Instalación de la muestra interactiva y bienvenida por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Demostración pública de los proyectos ante compañeros, docentes y padres de familia.
-  - *Cierre (10 min):* Espacio de preguntas, reflexiones compartidas y felicitaciones entre la comunidad.
-- **Sesión 10: Metacognición, Evaluación Formativa y Transformación Social (50 min)**
-  - *Inicio (10 min):* Cuestionario metacognitivo individual: "¿Cómo mejoró mi comprensión del entorno y qué habilidades desarrollé?".
-  - *Desarrollo (30 min):* Aplicación de la Rúbrica Analítica Formativa y valoración global del aprendizaje.
-  - *Cierre (10 min):* Firma del pacto comunitario de sustentabilidad y archivo de evidencias en el Segundo Cerebro.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📋 IV. Rúbrica Analítica Formativa (Criterios Oficiales NEM)
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Criterio Curricular NEM | Nivel Sobresaliente (3.5 - 4.0 pts) | Nivel Satisfactorio (2.5 - 3.4 pts) | Nivel En Proceso (1.0 - 2.4 pts) |
+**Problemática Situada:**  
+Desperdicio de recursos naturales en la escuela y falta de conciencia sobre la soberanía alimentaria y la conservación de la biodiversidad local.
+
+**Propósito del Proyecto:**  
+Diseñar e implementar un sistema sustentable de cultivo escolar y captación/reúso de agua mediante la indagación científica comunitaria.
+
+**Impacto Social y Transformador:**  
+Fomenta la educación ambiental práctica, produce alimentos sanos para el comedor escolar y reduce la huella ecológica de la institución.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre 🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 94 a la 97) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 51 a la 54) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 100 a la 103) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 57 a la 60) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 106 a la 109) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 63 a la 66) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula 🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante) con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 112 a la 115) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 69 a la 72) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 118 a la 121) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "🚀 Proyecto de Codiseño Comunitario: Representaciones cartográficas de la localidad y cuidado de ecosistemas - Modalidad Innovadora 45 (Comunidad Escolar Multicultural y Migrante)" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 75 a la 78) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Apropiación del PDA Oficial** | Aplica con solvencia y rigor teórico el contenido *"Representaciones cartográficas de la localidad y cuidado de ecosistemas"*, integrando conceptos clave y explicaciones fundamentadas. | Comprende y explica los elementos esenciales del PDA con adecuado nivel de detalle. | Identifica nociones generales del contenido pero requiere apoyo para su explicación sistemática. |
-| **Pertinencia Situada (Comunidad Escolar Multicultural y Migrante)** | Diseña respuestas innovadoras que atienden directamente el desafío *"Integración inclusiva de familias en tránsito, cultura de paz y erradicación de toda forma de discriminación."*, demostrando conciencia social y ecológica. | Vincula de manera correcta el proyecto con las condiciones de su comunidad o escuela. | Hace mención al contexto de forma aislada sin articularlo a la propuesta técnica. |
-| **Calidad del Entregable (Cartografía social y mapa digital de riesgos, recursos y zonas de seguridad)** | El entregable es riguroso, funcional, estéticamente cuidado y comunica con gran claridad su propósito transformador. | El entregable cumple los requisitos técnicos y didácticos solicitados en la planeación. | El entregable presenta inconsistencias o se encuentra parcialmente incompleto. |
-| **Trabajo Colaborativo y Valores Éticos** | Fomenta la inclusión activa, el diálogo empático, la equidad de género y el compromiso solidario en todo momento. | Colabora de forma armónica en las tareas del equipo respetando acuerdos. | Muestra dificultad para coordinarse con sus pares o cumplir con sus responsabilidades asignadas. |
+| **Indagación Científica y Comprensión Biológica** | Explica detalladamente los ciclos biológicos, necesidades de las plantas y métodos de conservación del agua con base en experimentos. | Identifica las partes de las plantas y los cuidados del huerto con claridad. | Muestra confusión sobre los factores bióticos y abióticos necesarios para el cultivo. |
+| **Implementación Técnica del Huerto y Riego** | Construye camas de siembra sustentables y un sistema de riego por goteo funcional con materiales reciclados. | Participa activamente en la siembra y armado del compostero escolar con orden. | Muestra desinterés en el mantenimiento de las plantas o el armado del prototipo. |
+| **Compromiso Comunitario y Divulgación Ecológica** | Diseña infografías de alto impacto y sensibiliza activamente a la comunidad escolar sobre el cuidado del agua. | Comparte información sobre el cuidado del huerto con compañeros de otros grupos. | Participa pasivamente en las actividades de difusión ambiental. |
 
 ---
 
-## 📦 V. Recursos, Materiales y Entregable Tangible
-
-### 🛠️ Materiales y Recursos Didácticos
-- Libros de Texto Gratuitos (SEP 2024), plataformas de consulta digital y guías metodológicas.
-- Materiales de experimentación, reciclaje y papelería: cartón, madera reciclada, componentes sencillos, pinturas no tóxicas.
-- Dispositivos de registro: cámara, grabadora de voz, proyector audiovisual y herramientas de software libre.
-
-### 📄 Producto Tangible Entregable
-> **Cartografía social y mapa digital de riesgos, recursos y zonas de seguridad** aplicado a la atención situada de: *Integración inclusiva de familias en tránsito, cultura de paz y erradicación de toda forma de discriminación.*.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Instalación del huerto escolar agroecológico con sistema de riego por goteo casero, compostero y guía comunitaria ilustrada de cuidado ambiental.**.
 
 ---
-
-## 🔗 Nodos Relacionados y Conexiones en el Segundo Cerebro
-- [[00_Indice_Maestro_Primaria_Fase_4|Índice Maestro Primaria Fase 4]]
-- [[Prof_Israel_Lopez_Angeles|Perfil del Docente Titular: Prof. Israel López Ángeles]]
-- Etiquetas: #etica_naturaleza_y_sociedades • #geografia_historia • #3er_grado • #aprendizaje_servicio_con_innovacion_social_y_solidaria • #codiseno_2026
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

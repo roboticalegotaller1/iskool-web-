@@ -1,127 +1,228 @@
 ---
-tags: [iskool, planeacion_nem_serie2, segundo_cerebro, fase4, campo_lenguajes, grado_3er_grado, materia_artes, metodologia_aprendizaje_basado_en_problemas_con_pensamiento_critico_y_bioetica, contexto_zona_costera_y_de_humedales, codiseno_2026]
-id_planeacion: "SERIE2-F4-ART-3ER-V10009"
-serie: "Serie 2 - Innovación y Codiseño Curricular"
-campo_formativo: "Lenguajes"
-materia: "Artes"
-grado: "3º de Primaria"
-nivel: "Primaria Fase 4"
-tema: "Reconocimiento y reflexión sobre elementos de los lenguajes artísticos"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_media, materia_artes, grado_3_de_primaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-metodologia: "Aprendizaje Basado en Problemas con Pensamiento Crítico y Bioética"
-contexto_comunitario: "Zona Costera y de Humedales"
-problematica_situada: "Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático."
-ejes_articuladores: ["Vida Saludable", "Pensamiento Crítico", "Interculturalidad Crítica"]
-duracion: "10 sesiones de 50 minutos (Total: 500 min)"
-fecha_creacion: "2026-08-24T21:49:54.027Z"
+nivel: "primaria-media"
+fase_nem: "Fase 4"
+grado: "3º de Primaria"
+asignatura: "Artes"
+campo_formativo: "Lenguajes"
+tema: "🚀 Proyecto de Codiseño Comunitario: Reconocimiento y reflexión sobre elementos de los lenguajes artísticos - Modalidad Innovadora 9 (Zona Costera y de Humedales)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# 🚀 Proyecto de Codiseño Comunitario: Reconocimiento y reflexión sobre elementos de los lenguajes artísticos - Modalidad Innovadora 9 (Zona Costera y de Humedales)
+# 📚 Proyecto Didáctico Integral: 🚀 Proyecto de Codiseño Comunitario: Reconocimiento y reflexión sobre elementos de los lenguajes artísticos - Modalidad Innovadora 9 (Zona Costera y de Humedales)
 
-> [!INFO] **Ficha Técnica Oficial NEM 2024 • Serie 2 de Codiseño ISkool**
-> - **Docente Titular / Super Usuario:** [[Prof. Israel López Ángeles]] (`usr-teacher-israel`)
-> - **Nivel y Fase Curricular:** 3º de Primaria • Primaria Fase 4
-> - **Campo Formativo:** Lenguajes
-> - **Asignatura / Disciplina:** Artes
-> - **Metodología Activa:** Aprendizaje Basado en Problemas con Pensamiento Crítico y Bioética
-> - **Contexto Territorial:** Zona Costera y de Humedales (Reto Central: *Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático.*)
-> - **Ejes Articuladores SEP:** Vida Saludable • Pensamiento Crítico • Interculturalidad Crítica
-> - **Temporalidad del Bloque:** 10 sesiones de 50 min (500 minutos de trabajo situado)
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
-
-> **"Realiza recreaciones con dibujos, cómics y flip-books a partir de manifestaciones culturales, comparando formas, colores, sonidos y movimientos de su comunidad."**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (3º de Primaria)  
+> **Campo Formativo:** Lenguajes  
+> **Asignatura:** Artes  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ❓ II. Preguntas Detonadoras y Conflicto Cognitivo Innovador
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-1. **¿Cómo podemos transformar el estudio de *"Reconocimiento y reflexión sobre elementos de los lenguajes artísticos"* en una solución práctica para atender el reto de: *Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático.*?**
-2. **¿Qué tecnologías accesibles, modelos experimentales o saberes locales podemos integrar para investigar con rigor científico y humanista?**
-3. **¿De qué manera nuestro equipo colaborativo puede promover la equidad de género, la inclusión y la sustentabilidad en cada fase del proyecto?**
-4. **¿Cuál es el impacto a largo plazo de nuestra propuesta en el bienestar de la comunidad escolar y barrial?**
+```yaml
+PDA: "Produce y lee textos epistolares (cartas personales y formales) dirigidas a familiares, docentes y compañeros, reconociendo la estructura canónica (lugar, fecha, saludo, cuerpo, despedida y firma)."
+```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Español):**
+- *PDA:* Produce y lee textos epistolares (cartas personales y formales) dirigidas a familiares, docentes y compañeros, reconociendo la estructura canónica (lugar, fecha, saludo, cuerpo, despedida y firma).
+- *Vínculo formativo:* Desarrollo de la escritura autónoma, correspondencia grafofonética y expresión de afectos e ideas con propósito comunicativo real.
 
-## ⏱️ III. Secuencia Didáctica Oficial en 10 Sesiones de 50 Minutos (Estructura de 4 Fases)
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Organiza datos numéricos, códigos postales, fechas en el calendario y conteo de piezas postales depositadas en el buzón escolar.
+- *Vínculo formativo:* Uso del calendario, secuencias temporales, numeración y clasificación de correspondencia.
 
-### 📌 FASE 1: Diagnóstico Situado y Encuadre Cognitivo (Sesiones 1 y 2 - 100 min)
-- **Sesión 1: Apertura del Desafío y Planteamiento Situado (50 min)**
-  - *Inicio (10 min):* Presentación del caso detonador en el entorno Zona Costera y de Humedales. El Prof. Israel López Ángeles contextualiza la problemática con imágenes y datos de campo.
-  - *Desarrollo (30 min):* Debate abierto en asamblea escolar sobre *"Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático."*. Conformación de equipos de trabajo con roles asignados (coordinación, bitácora, materiales, divulgación).
-  - *Cierre (10 min):* Registro de la meta de aprendizaje individual y colectiva en el cuaderno de proyectos.
-- **Sesión 2: Mapeo Conceptual y Rescate de Saberes Previos (50 min)**
-  - *Inicio (10 min):* Dinámica de preguntas cruzadas entre equipos sobre conceptos clave de *"Reconocimiento y reflexión sobre elementos de los lenguajes artísticos"*.
-  - *Desarrollo (30 min):* Construcción de un esquema visual colaborativo en papel o pizarra digital relacionando el PDA con la vida cotidiana.
-  - *Cierre (10 min):* Acuerdos de indagación y lista de insumos para la fase experimental.
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Reconoce el papel histórico de los medios de comunicación escrita y los servicios postales en la cohesión de las familias y pueblos de México.
+- *Vínculo formativo:* Apreciación del patrimonio cultural, respeto a la privacidad de la correspondencia y convivencia pacífica.
 
-### 🔬 FASE 2: Indagación Crítica, Modelado y Experimentación (Sesiones 3 a 5 - 150 min)
-- **Sesión 3: Protocolo de Investigación y Recolección de Datos (50 min)**
-  - *Inicio (10 min):* Definición de variables o categorías de análisis documental y de campo.
-  - *Desarrollo (30 min):* Consulta guiada en libros de texto SEP, artículos de divulgación o entrevistas con personas de la comunidad.
-  - *Cierre (10 min):* Validación de fuentes y organización de fichas de síntesis informativa.
-- **Sesión 4: Laboratorio Práctico / Experimentación y Prototipado (50 min)**
-  - *Inicio (10 min):* Normas de seguridad y verificación de materiales didácticos disponibles.
-  - *Desarrollo (30 min):* Realización de experimentos, mediciones matemáticas, cálculos o modelado concreto enfocado en *"Reconocimiento y reflexión sobre elementos de los lenguajes artísticos"*.
-  - *Cierre (10 min):* Registro de observaciones y tablas comparativas en la bitácora de ciencias.
-- **Sesión 5: Análisis Interdisciplinario y Síntesis Crítica (50 min)**
-  - *Inicio (10 min):* Articulación del proyecto con los ejes rectores: *Vida Saludable y Pensamiento Crítico y Interculturalidad Crítica*.
-  - *Desarrollo (30 min):* Discusión en mesas redondas para interpretar los resultados y formular alternativas sustentables.
-  - *Cierre (10 min):* Redacción del informe técnico preliminar por equipo.
-
-### 💡 FASE 3: Integración Tecnológica, Creación y Elaboración del Entregable (Sesiones 6 a 8 - 150 min)
-- **Sesión 6: Bocetaje y Diseño del Producto Tangible (50 min)**
-  - *Inicio (10 min):* Revisión de los estándares de calidad de la rúbrica formativa analítica.
-  - *Desarrollo (30 min):* Taller creativo: modelado, estructuración o redacción del primer prototipo de: *Guía de campo ilustrada y herbario digital interactivo con fichas botánicas*.
-  - *Cierre (10 min):* Sesión de coevaluación intermedia con retroalimentación formativa constructiva.
-- **Sesión 7: Producción, Ensamblaje y Pulido del Entregable (50 min)**
-  - *Inicio (10 min):* Incorporación de mejoras sugeridas por pares y por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Fabricación final, edición de textos o ensamblado técnico del producto.
-  - *Cierre (10 min):* Control de calidad pedagógico y verificación del cumplimiento del PDA oficial.
-- **Sesión 8: Ensayo de Presentación y Estrategia de Comunicación (50 min)**
-  - *Inicio (10 min):* Diseño del guion expositivo y distribución de turnos de voz.
-  - *Desarrollo (30 min):* Ensayo general de la socialización ante el grupo, afinando lenguaje técnico y apoyos visuales.
-  - *Cierre (10 min):* Autovaloración del nivel de preparación del equipo.
-
-### 🌟 FASE 4: Socialización Comunitaria, Rúbrica Analítica y Compromisos (Sesiones 9 y 10 - 100 min)
-- **Sesión 9: Exposición y Diálogo Abierto con la Comunidad Escolar (50 min)**
-  - *Inicio (10 min):* Instalación de la muestra interactiva y bienvenida por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Demostración pública de los proyectos ante compañeros, docentes y padres de familia.
-  - *Cierre (10 min):* Espacio de preguntas, reflexiones compartidas y felicitaciones entre la comunidad.
-- **Sesión 10: Metacognición, Evaluación Formativa y Transformación Social (50 min)**
-  - *Inicio (10 min):* Cuestionario metacognitivo individual: "¿Cómo mejoró mi comprensión del entorno y qué habilidades desarrollé?".
-  - *Desarrollo (30 min):* Aplicación de la Rúbrica Analítica Formativa y valoración global del aprendizaje.
-  - *Cierre (10 min):* Firma del pacto comunitario de sustentabilidad y archivo de evidencias en el Segundo Cerebro.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Expresa emociones, agradecimientos y acuerdos de resolución pacífica de conflictos a través de mensajes escritos en el buzón del aula.
+- *Vínculo formativo:* Fortalecimiento de la empatía, los lazos afectivos intergeneracionales y la autorregulación emocional.
 
 ---
 
-## 📋 IV. Rúbrica Analítica Formativa (Criterios Oficiales NEM)
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Criterio Curricular NEM | Nivel Sobresaliente (3.5 - 4.0 pts) | Nivel Satisfactorio (2.5 - 3.4 pts) | Nivel En Proceso (1.0 - 2.4 pts) |
+**Problemática Situada:**  
+En el contexto escolar actual, la comunicación digital inmediata ha desplazado la correspondencia escrita, provocando que las niñas y niños desconozcan la función social de la carta formal e informal, sus componentes estructurales (fecha, lugar, destinatario, saludo, cuerpo, despedida, firma y remitente) y el valor de expresar afecto, agradecimiento o peticiones ciudadanas mediante la palabra escrita.
+
+**Propósito del Proyecto:**  
+Que las y los estudiantes desarrollen competencias comunicativas integrales de lectoescritura con sentido social real, elaboren cartas personalizadas para miembros de la comunidad escolar y sus familias, y diseñen un buzón postal funcional para dinamizar la correspondencia en la escuela.
+
+**Impacto Social y Transformador:**  
+Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, rescata el patrimonio cultural de la correspondencia postal mexicana, fomenta la empatía y la resolución pacífica de conflictos mediante el diálogo escrito, y estimula la lectoescritura con propósito comunitario.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Apertura del Reto: ¿Cómo viaja un mensaje? El origen de las cartas y el oficio del cartero
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Carta Viajera". El docente muestra sobres postales antiguos con timbres y plantea el misterio: "¿Cómo se comunicaban las familias antes del teléfono celular?". Lluvia de ideas en el pizarrón.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Proyección de imágenes de carteros y buzones históricos. En equipos de 4, los alumnos analizan ejemplos reales de cartas y reflexionan sobre a quién les gustaría escribirle (abuelos, amigos, autoridades escolares). Registran en papel bond sus saberes previos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común. Cada equipo elige a quién dirigirá su mensaje de agradecimiento o amistad. Registro individual en bitácora: "¿Qué mensaje importante quiero enviar al mundo?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué una carta escrita a mano transmite emociones más profundas que un mensaje de texto digital?  
+  2. ¿Qué personas en nuestra comunidad merecen recibir una carta de agradecimiento o felicitación?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 67 a la 70) — *Saberes integrados y formación ética*
+- **📦 Materiales:** Ejemplos de cartas reales y sobres postales, Papel bond blanco, Plumones de colores, Bitácora escolar
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial "El valor de la correspondencia escrita" y lista de posibles destinatarios.
+
+### 📌 SESIÓN 2 (50 minutos): Exploración en Libros SEP: Las partes esenciales de una carta (Lugar, Fecha, Destinatario y Saludo)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Ruleta de preguntas sobre la sesión previa y apertura del libro de texto gratuito de la SEP. Identificación visual de la cabecera epistolar.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada en el libro de texto oficial de la SEP. Los alumnos identifican y encierran con color rojo: 1) Lugar y Fecha, 2) Nombre del Destinatario, y 3) Saludo afectuoso o formal. En parejas practican la escritura de 3 saludos diferentes.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica "El Saludo Ideal": Cada pareja lee su saludo favorito. Retroalimentación inmediata sobre el uso de mayúsculas y dos puntos (:).
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué es indispensable poner la fecha y el lugar en el encabezado de una carta?  
+  2. ¿Qué diferencia existe entre saludar a un amigo cercano ("¡Hola, querido Mateo!") y a la directora de la escuela ("Estimada Directora")?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 30 a la 33) — *Mapas temáticos, relieve y regiones geográficas*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Marcatextos de colores, Cuaderno del alumno, Pizarrón
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Esquema rotulado con las partes del encabezado y plantilla de práctica de saludos formales e informales.
+
+### 📌 SESIÓN 3 (50 minutos): El Cuerpo de la Carta: Expresión de ideas, anécdotas y sentimientos con claridad
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación "El Teléfono Descompuesto de las Emociones". Reflexión sobre cómo evitar confusiones al escribir lo que sentimos y pensamos.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Taller de redacción del cuerpo del mensaje. Los alumnos organizan sus ideas respondiendo a 3 preguntas: 1) ¿Por qué te escribo?, 2) ¿Qué anécdota o noticia quiero contarte?, y 3) ¿Qué deseo preguntarte? Escriben su primer borrador manuscrito en hojas de raya.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Lectura en voz baja en parejas para verificar que el mensaje se entienda con claridad. Autoevaluación del párrafo principal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo redactamos nuestras vivencias para que la persona que lea la carta se emocione o sonría?  
+  2. ¿Qué signos de puntuación nos ayudan a separar las ideas y que el texto no se sienta amontonado?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 73 a la 76) — *Saberes integrados y formación ética*
+- **📦 Materiales:** Hojas de trabajo pautadas, Lápiz y goma, Tarjetas de conectores textuales (además, también, por eso)
+- **📄 Entregable de la Sesión:** 📄 Borrador Parcial #1: Redacción manuscrita del cuerpo de la carta con al menos dos párrafos organizados.
+
+### 📌 SESIÓN 4 (50 minutos): Despedida, Firma y Posdata: El cierre afectuoso y formal del texto epistolar
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Lectura compartida de distintas despedidas de cartas literarias famosas ("Con todo mi cariño", "Atentamente", "Se despide tu amigo").
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Los alumnos completan el cierre de su carta agregando una despedida adecuada a su destinatario, su firma o nombre completo y una Posdata (P.D.) con un detalle especial o sorpresa. Ensamblan el borrador completo (encabezado + cuerpo + cierre).
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Exposición mural de cartas modelo en el salón. Felicitación colectiva por completar el primer texto integral.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Para qué se utiliza la Posdata (P.D.) y en qué momento es útil agregarla?  
+  2. ¿Qué tipo de despedida transmite respeto y cuál transmite cariño familiar?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 36 a la 39) — *Mapas temáticos, relieve y regiones geográficas*
+- **📦 Materiales:** Cuaderno de trabajo, Tiras de papel con fórmulas de despedida, Lápiz y colores
+- **📄 Entregable de la Sesión:** 📄 Borrador Completo #1: Carta íntegra con sus 6 componentes (Lugar/Fecha, Destinatario, Saludo, Cuerpo, Despedida y Firma).
+
+### 📌 SESIÓN 5 (50 minutos): El Arte del Sobre Postal: Rotulación de Remitente, Destinatario, Código Postal y Estampillas
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de sobres postales y explicación de la regla de oro: ¿Dónde va el Remitente (quien envía) y dónde el Destinatario (quien recibe)?
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Taller de diseño y rotulación de sobres. Los alumnos elaboran o decoran su propio sobre tamaño carta. Escriben con letra clara el nombre y domicilio escolar del destinatario al frente y sus propios datos al reverso. Crean y colorean una estampilla postal artística con un símbolo escolar.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Revisión cruzada en parejas: "¿El cartero sabrá exactamente a qué salón o persona llevar este sobre?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué sucedería si intercambiamos de lugar el remitente y el destinatario en un sobre postal?  
+  2. ¿Por qué las estampillas postales tienen ilustraciones culturales y artísticas de nuestro país?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 79 a la 82) — *Saberes integrados y formación ética*
+- **📦 Materiales:** Sobres de papel bond o manila, Hojas de colores y pegamento, Plumines finos, Sellos decorativos
+- **📄 Entregable de la Sesión:** 📄 Producto Parcial: Sobre postal rotulado correctamente con datos de remitente/destinatario y estampilla original diseñada.
+
+### 📌 SESIÓN 6 (50 minutos): Construcción del Buzón Comunitario: Trabajo manual colaborativo con cartón reciclado
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización de comisiones de trabajo para el montaje del gran "Buzón Postal de la Escuela" (diseño, pintura, rotulación y ranura de depósito).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo colaborativo en estaciones: 1) Pintura y forrado de la caja con color rojo/azul institucional, 2) Creación del letrero "Buzón Escolar de la Amistad", 3) Rotulación de instrucciones de uso para la comunidad escolar, y 4) Elaboración de banderines decorativos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Instalación simbólica del buzón en el aula. Prueba de depósito de los primeros mensajes de muestra.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo logramos que el buzón sea visible, resistente y llamativo para toda la comunidad escolar?  
+  2. ¿Qué valores como el respeto y la confidencialidad debemos cuidar al manejar la correspondencia ajena?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 42 a la 45) — *Mapas temáticos, relieve y regiones geográficas*
+- **📦 Materiales:** Caja de cartón grande reciclada, Pinturas acrílicas no tóxicas, pinceles y papel kraft, Tijeras y cinta adhesiva
+- **📄 Entregable de la Sesión:** 📦 Producto Colectivo: Buzón postal comunitario terminado, rotulado y funcional para la recolección de cartas.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Corrección Epistolar: Coevaluación con "Lentes de Revisor" y Cuidado Ortográfico
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica "Los Lentes del Revisor". Explicación de la lista de cotejo: mayúsculas al inicio, puntos finales, claridad y caligrafía legible.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Intercambio de borradores entre compañeros. Con notas adhesivas suaves (post-its), cada revisor señala 2 aspectos hermosos del mensaje y 1 sugerencia para mejorar la ortografía o el trazo de las letras. El docente acompaña a quienes requieran apoyo.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución afectuosa de cartas con comentarios positivos: "Tu carta me hizo sonreír porque...".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué revisar nuestro texto con ayuda de un compañero hace que el mensaje final sea mucho más claro y emotivo?  
+  2. ¿Qué palabras corregimos para que nuestro destinatario entienda todo sin dificultad?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 85 a la 88) — *Saberes integrados y formación ética*
+- **📦 Materiales:** Lista de cotejo de coevaluación, Notas adhesivas de colores, Borradores de las cartas
+- **📄 Entregable de la Sesión:** 📄 Ficha de Coevaluación: Lista de cotejo completada con retroalimentación entre pares y observaciones del docente.
+
+### 📌 SESIÓN 8 (50 minutos): Versión Final Manuscrita: Caligrafía cuidada en papel carta, ensobrado y sellado postal
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación del papel especial para la versión final y recordatorio del cuidado en los márgenes, sangría y limpieza.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de escritura de la versión final en papel membretado artesanalmente. Los alumnos aplican todas las correcciones, agregan ilustraciones en los márgenes, doblan la carta en tres partes iguales, la introducen en su sobre y la sellan con un sticker o sello postal.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ceremonia de sellado: Cada alumno muestra su sobre cerrado listo para depositarlo en el buzón comunitario.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo influye una presentación limpia, ordenada y con bonita letra en la persona que va a recibir nuestra carta?  
+  2. ¿Qué emoción sientes al tener en tus manos tu carta lista para ser entregada?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 48 a la 51) — *Mapas temáticos, relieve y regiones geográficas*
+- **📦 Materiales:** Papel especial o decorado para cartas, Lápices de colores y plumas de gel, Sobres terminados, Sellos adhesivos
+- **📄 Entregable de la Sesión:** 📄 Producto Final Individual: Carta definitiva corregida, manuscrita, doblada, ensobrada y sellada.
+
+### 📌 SESIÓN 9 (50 minutos): El Oficio del Cartero: Ensayo de rutas de reparto postal, gorras y organización de la entrega
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Asignación de roles para la jornada comunitaria: carteros infantiles, clasificadores de correspondencia, recepcionistas y voceros.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Los alumnos elaboran gorras y bolsos de cartero con cartulina y estambre. Simulan el circuito postal: 1) Recolección en el buzón, 2) Clasificación por salones o destinatarios, 3) Ensayo de las palabras de entrega ("¡Buenas noticias! Traigo correspondencia para...").
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ajuste de tiempos y protocolos de respeto para la entrega formal en la escuela.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué responsabilidad tiene un cartero al custodiar y entregar a tiempo los mensajes de las personas?  
+  2. ¿Cómo debemos presentarnos amablemente al entregar una carta a un profesor, compañero o padre de familia?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 91 a la 94) — *Saberes integrados y formación ética*
+- **📦 Materiales:** Cartulinas azules o verdes para gorras de cartero, Bolsas de tela o papel kraft, Estambre y tijeras
+- **📄 Entregable de la Sesión:** 📄 Guion de Entrega Postal y distintivos de carteros elaborados por el equipo.
+
+### 📌 SESIÓN 10 (50 minutos): Jornada del Cartero Escolar: Entrega de correspondencia comunitaria, lectura en voz alta y evaluación
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Palabras de bienvenida a la "Jornada del Cartero Comunitario". Apertura solemne del buzón postal ante la comunidad escolar.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Recorrido de los carteros infantiles entregando las cartas en los salones y a familiares invitados. Momento de lectura compartida: quienes deseen leen fragmentos de sus cartas recibidas en el círculo de diálogo.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica formativa de 3 niveles. Firma del "Mural de la Amistad Epistolar" y reflexión sobre lo aprendido.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué caras pusieron las personas al recibir sus cartas escritas con tanto cariño y esfuerzo?  
+  2. ¿Cómo transformó este proyecto nuestra forma de comunicarnos y convivir en la escuela?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 54 a la 57) — *Mapas temáticos, relieve y regiones geográficas*
+- **📦 Materiales:** Buzón con cartas listas, Rúbricas analíticas impresas, Mural de firmas y compromisos comunitarios
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Registro de entrega de cartas, lectura compartida comunitaria y rúbrica analítica formativa evaluada.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Apropiación del PDA Oficial** | Aplica con solvencia y rigor teórico el contenido *"Reconocimiento y reflexión sobre elementos de los lenguajes artísticos"*, integrando conceptos clave y explicaciones fundamentadas. | Comprende y explica los elementos esenciales del PDA con adecuado nivel de detalle. | Identifica nociones generales del contenido pero requiere apoyo para su explicación sistemática. |
-| **Pertinencia Situada (Zona Costera y de Humedales)** | Diseña respuestas innovadoras que atienden directamente el desafío *"Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático."*, demostrando conciencia social y ecológica. | Vincula de manera correcta el proyecto con las condiciones de su comunidad o escuela. | Hace mención al contexto de forma aislada sin articularlo a la propuesta técnica. |
-| **Calidad del Entregable (Guía de campo ilustrada y herbario digital interactivo con fichas botánicas)** | El entregable es riguroso, funcional, estéticamente cuidado y comunica con gran claridad su propósito transformador. | El entregable cumple los requisitos técnicos y didácticos solicitados en la planeación. | El entregable presenta inconsistencias o se encuentra parcialmente incompleto. |
-| **Trabajo Colaborativo y Valores Éticos** | Fomenta la inclusión activa, el diálogo empático, la equidad de género y el compromiso solidario en todo momento. | Colabora de forma armónica en las tareas del equipo respetando acuerdos. | Muestra dificultad para coordinarse con sus pares o cumplir con sus responsabilidades asignadas. |
+| **Estructura Epistolar y Calidad del Mensaje Escrito** | La carta incluye con absoluta claridad y precisión sus 6 partes (fecha/lugar, destinatario, saludo, cuerpo en párrafos organizados, despedida y firma), con excelente caligrafía y ortografía. | La carta contiene la mayoría de los elementos de la estructura epistolar con redacción comprensible y pocas faltas ortográficas. | El texto carece de encabezado o despedida, las ideas están desordenadas o presenta dificultades notables en la escritura autónoma. |
+| **Diseño del Sobre, Estampilla y Rotulación Postal** | El sobre está impecablemente rotulado con remitente y destinatario en las posiciones correctas, incluye código postal y una estampilla artística original y creativa. | El sobre contiene los datos principales de remitente y destinatario con buena presentación general. | El sobre confunde el remitente con el destinatario o carece de datos indispensables para la entrega postal. |
+| **Participación en la Jornada del Buzón Comunitario** | Participa con entusiasmo y empatía en la construcción del buzón, asume con responsabilidad su rol de cartero y lee con elocuencia y respeto ante la comunidad. | Colabora adecuadamente en el montaje del buzón y entrega su correspondencia a tiempo con amabilidad. | Muestra poco interés en la entrega comunitaria o dificultad para integrarse en las actividades del equipo. |
 
 ---
 
-## 📦 V. Recursos, Materiales y Entregable Tangible
-
-### 🛠️ Materiales y Recursos Didácticos
-- Libros de Texto Gratuitos (SEP 2024), plataformas de consulta digital y guías metodológicas.
-- Materiales de experimentación, reciclaje y papelería: cartón, madera reciclada, componentes sencillos, pinturas no tóxicas.
-- Dispositivos de registro: cámara, grabadora de voz, proyector audiovisual y herramientas de software libre.
-
-### 📄 Producto Tangible Entregable
-> **Guía de campo ilustrada y herbario digital interactivo con fichas botánicas** aplicado a la atención situada de: *Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático.*.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.**.
 
 ---
-
-## 🔗 Nodos Relacionados y Conexiones en el Segundo Cerebro
-- [[00_Indice_Maestro_Primaria_Fase_4|Índice Maestro Primaria Fase 4]]
-- [[Prof_Israel_Lopez_Angeles|Perfil del Docente Titular: Prof. Israel López Ángeles]]
-- Etiquetas: #lenguajes • #artes • #3er_grado • #aprendizaje_basado_en_problemas_con_pensamiento_critico_y_bioetica • #codiseno_2026
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

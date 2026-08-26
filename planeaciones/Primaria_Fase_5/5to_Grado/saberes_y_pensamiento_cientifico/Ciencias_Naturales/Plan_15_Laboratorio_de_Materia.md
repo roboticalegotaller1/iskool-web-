@@ -1,91 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_5to_grado, materia_ciencias_naturales, fase5_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Ciencias Naturales"
-grado: "5º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Propiedades de los materiales: dureza, flexibilidad, permeabilidad y caracterización de gases"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_ciencias_naturales, grado_5_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.755Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "5º de Primaria"
+asignatura: "Ciencias Naturales"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana
+# 📚 Proyecto Didáctico Integral: Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 5º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Ciencias Naturales
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Pensamiento Crítico • Vida Saludable
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (5º Primaria) - Experimenta con diversos materiales las propiedades de dureza -resistencia que tiene al rayado y el corte en su superficie-, flexibilidad -cambio de forma al doblarse sin romperse- y permeabilidad -paso de un líquido a través de él sin que se altere su composición-. Relaciona las propiedades de dureza, flexibilidad y permeabilidad de los materiales con su uso, para la satisfacción de algunas necesidades; toma decisiones sobre cuál es el más adecuado y de las consecuencias de su uso excesivo para el medio ambiente. Diseña y construye objetos con base en las propiedades de dureza, flexibilidad y permeabilidad de algunos materiales (vidrio, papel, cartón, plástico, unicel o metales).**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Por qué los impermeables se fabrican de plástico y no de tela de algodón, mientras los zapatos deportivos necesitan ser flexibles y transpirables?**
-
-2. **¿Cuál es la diferencia física entre que un material sea "duro" (difícil de rayar) vs que sea "tenaz" (difícil de romper)?**
-
-3. **¿Por qué el uso excesivo de plásticos y unicel desechables tarda cientos de años en degradarse contaminando los océanos?**
-
-4. **¿Cómo influye la permeabilidad del suelo en la recarga de los mantos acuíferos subterráneos de nuestra ciudad?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (5º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Ciencias Naturales  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Desafío "El Material Misterioso": El docente presenta 4 objetos (un pedazo de madera, una lámina de foami, un trozo de vidrio templado y una bolsa de tela) y pide a un alumno vendado que intente rayarlos con una moneda o doblarlos.
-2. Pregunta detonadora: "¿Qué propiedad hace que cada uno sirva para un propósito diferente?".
-3. Definición rigurosa de Dureza (Escala de Mohs simple), Flexibilidad y Permeabilidad.
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Circuito de 3 Estaciones de Experimentación en Equipos de 4:
-   • Estación 1 (Test de Dureza al Rayado): Rayar muestras de madera, gis, metal, plástico y vidrio con una uña, una moneda de cobre y un clavo de hierro.
-   • Estación 2 (Test de Flexibilidad y Elasticidad): Medir cuántos grados se dobla una regla de madera, una de plástico y una de metal antes de deformarse o romperse.
-   • Estación 3 (Test de Permeabilidad al Agua): Verter 20 ml de agua sobre papel filtro, tela de algodón, plástico de bolsa y unicel, midiendo el volumen filtrado en probetas.
-2. Registro de Datos en Matriz de Selección de Materiales:
-   • Diseñan un contenedor ecológico para alimentos seleccionando el material óptimo considerando su impacto ambiental.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Puesta en común de resultados de laboratorio y discusión sobre la crisis de microplásticos.
-2. Metacognición en bitácora: "¿Qué material de un solo uso puedo sustituir en mi casa por uno reutilizable?".
-3. Entrega de evidencia: Tabla de propiedades experimentales y justificación del contenedor ecológico.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Experimentación y Medición de Propiedades (Sobresaliente [3.5 pts]: Aplica pruebas de dureza, flexibilidad y permeabilidad con rigor metodológico y control de variables | Satisfactorio [2.5 pts]: Realiza las pruebas con registro básico | En Proceso [1.5 pts]: Realiza pruebas sin seguir el método).
-• Criterio 2 - Relación Propiedad-Uso y Medio Ambiente (Sobresaliente [3.5 pts]: Justifica la selección de materiales según su función y propone alternativas biodegradables | Satisfactorio [2.5 pts]: Relaciona uso y propiedad | En Proceso [1.5 pts]: No fundamenta la elección del material).
-• Criterio 3 - Seguridad y Manejo en el Laboratorio (Sobresaliente [3 pts]: Maneja materiales con pulcritud, cuidado y orden en equipo | Satisfactorio [2 pts]: Cumple normas básicas | En Proceso [1 pt]: Desorden en mesas).
-• Instrumento: Rúbrica de laboratorio de física y química de materiales.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-• Muestras de materiales: trozos de madera, plástico, unicel, cartón, tela de algodón, vidrio, esponja y metal.
-• Monedas, clavos, reglas graduadas, embudos, probetas y agua con colorante.
-• Formato de bitácora de laboratorio.
+**Problemática Situada:**  
+Necesidad de fomentar la curiosidad científica, la indagación sistemática y la aplicación de saberes escolares para entender y transformar fenómenos relacionados con "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
 
-### Evidencia de Aprendizaje Entregable
-**Reporte de Práctica Experimental "Matriz de Propiedades Mecánicas de los Materiales y Diseño de Empaque Sustentable".**
+**Propósito del Proyecto:**  
+Diseñar y ejecutar una investigación experimental y de campo que culmine en prototipos funcionales y propuestas sustentables para la comunidad.
+
+**Impacto Social y Transformador:**  
+Promueve el pensamiento científico, la resolución de problemas locales y la participación ciudadana informada.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 175 a la 178) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 128 a la 131) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 181 a la 184) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 134 a la 137) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 187 a la 190) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 140 a la 143) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 193 a la 196) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 146 a la 149) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 199 a la 202) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Laboratorio de Materia: Dureza, Flexibilidad y Permeabilidad en la Vida Cotidiana" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 152 a la 155) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Metodología de Indagación y Rigor Conceptual** | Plantea hipótesis claras, registra datos experimentales con precisión y formula conclusiones sólidas basadas en evidencia. | Sigue los pasos del método experimental y presenta resultados ordenados. | El registro de datos es incompleto o las conclusiones carecen de sustento. |
+| **Calidad del Prototipo y Presentación Visual** | El prototipo es funcional, seguro, creativo y está acompañado de infografías científicas de alta calidad. | El prototipo funciona adecuadamente y los apoyos visuales son claros. | El prototipo no funciona o la presentación visual es descuidada. |
+| **Divulgación Científica y Comunicación Oral** | Comunica conceptos científicos complejos con sencillez, elocuencia y dominio ante audiencias diversas. | Explica su experimento con claridad y vocabulario científico adecuado. | Dificultad para explicar el funcionamiento o la utilidad de su investigación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

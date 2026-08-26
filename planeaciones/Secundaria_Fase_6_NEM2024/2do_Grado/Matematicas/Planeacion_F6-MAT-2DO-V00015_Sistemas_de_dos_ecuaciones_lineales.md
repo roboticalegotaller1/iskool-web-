@@ -1,126 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, fase6, campo_saberes_y_pensamiento_cientifico, grado_2do_grado, materia_matematicas, metodologia_aprendizaje_basado_en_proyectos_comunitarios_abpc_, contexto_altiplano_central]
-id_planeacion: "F6-MAT-2DO-V00015"
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matematicas"
-grado: "2º de Secundaria"
-nivel: "Secundaria Fase 6 NEM2024"
-tema: "Sistemas de dos ecuaciones lineales con dos incógnitas"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_matematicas, grado_2_de_secundaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-metodologia: "Aprendizaje Basado en Proyectos Comunitarios (ABPC)"
-contexto_comunitario: "Altiplano Central"
-problematica_situada: "Cosecha de agua de lluvia, huertos escolares verticales y soberanía alimentaria con cultivos de amaranto y nopal."
-ejes_articuladores: ["Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
-duracion: "10 sesiones de 50 minutos (Total: 500 min)"
-fecha_creacion: "2026-08-24T20:08:06.844Z"
+nivel: "secundaria"
+fase_nem: "Fase 6"
+grado: "2º de Secundaria"
+asignatura: "Matematicas"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
 # 📚 Proyecto Didáctico Integral: Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)
 
-> [!INFO] **Ficha Técnica Oficial NEM 2024 • ISkool Academic System**
-> - **Docente Titular / Super Usuario:** [[Prof. Israel López Ángeles]] (`usr-teacher-israel`)
-> - **Nivel y Fase Curricular:** 2º de Secundaria • Secundaria Fase 6 NEM2024
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Disciplina:** Matematicas
-> - **Metodología Sociocrítica:** Aprendizaje Basado en Proyectos Comunitarios (ABPC)
-> - **Contexto de Aplicación:** Altiplano Central (Enfoque: *Cosecha de agua de lluvia, huertos escolares verticales y soberanía alimentaria con cultivos de amaranto y nopal.*)
-> - **Ejes Articuladores SEP:** Vida Saludable • Apropiación de las Culturas a través de la Lectura y la Escritura
-> - **Temporalidad:** 10 sesiones de 50 min (500 minutos lectivos)
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (2º de Secundaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matematicas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-> **"Modela y soluciona sistemas de 2x2 por métodos algebraicos (sustitución, igualación, reducción) y gráficos para resolver problemas reales."**
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
+```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
 
-## ❓ II. Preguntas Detonadoras y Conflicto Cognitivo Situado
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
 
-1. **¿De qué manera el contenido de *"Sistemas de dos ecuaciones lineales con dos incógnitas"* impacta directamente en nuestra vida diaria y en los retos de nuestro entorno (Altiplano Central)?**
-2. **¿Qué saberes previos de nuestras familias y comunidad podemos rescatar para comprender mejor esta problemática?**
-3. **¿Cómo podemos utilizar el pensamiento crítico y la colaboración para diseñar una solución tangible que transforme nuestra escuela?**
-4. **¿Por qué es fundamental que nuestras propuestas respeten los principios de equidad, inclusión y sustentabilidad comunitaria?**
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
 
----
-
-## ⏱️ III. Secuencia Didáctica Oficial (Desglose en 10 Sesiones de 50 Minutos)
-
-### 📌 FASE 1: Identificación del Problema y Recuperación de Saberes (Sesiones 1 y 2 - 100 min)
-- **Sesión 1: Apertura y Encuadre Cognitivo (50 min)**
-  - *Inicio (10 min):* Presentación de la situación problemática en el contexto Altiplano Central. El docente Prof. Israel López Ángeles plantea las preguntas detonadoras.
-  - *Desarrollo (30 min):* Lluvia de ideas estructurada y debate guiado sobre experiencias comunitarias vinculadas a: *Cosecha de agua de lluvia, huertos escolares verticales y soberanía alimentaria con cultivos de amaranto y nopal.*. Organización de equipos de trabajo colaborativo heterogéneos.
-  - *Cierre (10 min):* Registro de expectativas y formulación del propósito colectivo en el cuaderno de trabajo.
-- **Sesión 2: Diagnóstico y Registro de Saberes Previos (50 min)**
-  - *Inicio (10 min):* Lectura compartida de un texto informativo/crítico relacionado con el PDA.
-  - *Desarrollo (30 min):* Elaboración de un mapa conceptual grupal con los conceptos clave de *"Sistemas de dos ecuaciones lineales con dos incógnitas"*.
-  - *Cierre (10 min):* Puesta en común y asignación de roles para la fase de indagación.
-
-### 🔬 FASE 2: Indagación, Experimentación y Recolección de Evidencias (Sesiones 3 a 5 - 150 min)
-- **Sesión 3: Búsqueda y Análisis Crítico de Fuentes (50 min)**
-  - *Inicio (10 min):* Definición de preguntas específicas de investigación por equipo.
-  - *Desarrollo (30 min):* Consulta de fuentes impresas, digitales o testimonios orales comunitarios. Registro en fichas de trabajo.
-  - *Cierre (10 min):* Coevaluación del avance de investigación con lista de cotejo.
-- **Sesión 4: Trabajo Experimental / Modelado / Taller Práctico (50 min)**
-  - *Inicio (10 min):* Preparación de materiales y normas de seguridad en el aula o laboratorio.
-  - *Desarrollo (30 min):* Ejecución de dinámicas prácticas, cálculos, experimentos o redacción de borradores orientados al PDA.
-  - *Cierre (10 min):* Sistematización de datos obtenidos y análisis de regularidades o patrones.
-- **Sesión 5: Discusión y Vinculación Interdisciplinar (50 min)**
-  - *Inicio (10 min):* Conexión del tema con los ejes articuladores: *Vida Saludable, Apropiación de las Culturas a través de la Lectura y la Escritura*.
-  - *Desarrollo (30 min):* Mesa de trabajo para relacionar los hallazgos con el contexto socioambiental y los derechos humanos.
-  - *Cierre (10 min):* Elaboración de conclusiones preliminares por escrito.
-
-### 💡 FASE 3: Integración, Creación y Elaboración del Producto (Sesiones 6 a 8 - 150 min)
-- **Sesión 6: Diseño y Bocetaje del Entregable (50 min)**
-  - *Inicio (10 min):* Presentación de criterios de calidad y rúbrica analítica del entregable final.
-  - *Desarrollo (30 min):* Taller creativo en equipos: diseño del primer prototipo o borrador de: *Folleto tríptico de prevención y campaña de sensibilización escolar*.
-  - *Cierre (10 min):* Retroalimentación formativa inmediata entre pares ("Dos estrellas y un deseo").
-- **Sesión 7: Producción y Consolidación del Trabajo (50 min)**
-  - *Inicio (10 min):* Ajuste de detalles a partir de la retroalimentación recibida.
-  - *Desarrollo (30 min):* Fabricación final, redacción pulida, maquetación o ensayo de la presentación.
-  - *Cierre (10 min):* Verificación de cumplimiento de estándares del PDA oficial.
-- **Sesión 8: Ensayo y Preparación de la Divulgación (50 min)**
-  - *Inicio (10 min):* Organización del espacio de exposición en el aula o patio escolar.
-  - *Desarrollo (30 min):* Ensayo general de presentaciones orales, modulación de voz y manejo de recursos gráficos.
-  - *Cierre (10 min):* Autoevaluación individual del desempeño en el equipo.
-
-### 🌟 FASE 4: Socialización Comunitaria y Evaluación Formativa (Sesiones 9 y 10 - 100 min)
-- **Sesión 9: Presentación Pública y Diálogo Comunitario (50 min)**
-  - *Inicio (10 min):* Bienvenida e introducción del evento de presentación por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Exposición de los proyectos terminados ante la comunidad escolar y padres de familia.
-  - *Cierre (10 min):* Sesión de preguntas, comentarios y diálogo reflexivo con los asistentes.
-- **Sesión 10: Metacognición, Evaluación Integral y Compromisos (50 min)**
-  - *Inicio (10 min):* Dinámica de reflexión individual: "¿Qué aprendí, cómo lo aprendí y para qué me sirve en mi comunidad?".
-  - *Desarrollo (30 min):* Aplicación de la Rúbrica Analítica Formativa y valoración del impacto del producto en el entorno.
-  - *Cierre (10 min):* Firma del mural de compromisos ciudadanos y entrega formal de evidencias al docente.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
 
 ---
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Criterio Curricular NEM | Nivel Sobresaliente (3.5 - 4.0 pts) | Nivel Satisfactorio (2.5 - 3.4 pts) | Nivel En Proceso (1.0 - 2.4 pts) |
+**Problemática Situada:**  
+Los estudiantes requieren fortalecer el razonamiento lógico-matemático aplicado a situaciones de la vida real relacionadas con "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)" para resolver retos del entorno.
+
+**Propósito del Proyecto:**  
+Aplicar conceptos matemáticos, cálculo y modelación para diseñar soluciones cuantitativas y juegos didácticos interactivos.
+
+**Impacto Social y Transformador:**  
+Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y relevante para toda la comunidad escolar.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 139 a la 142) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 90 a la 93) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 145 a la 148) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 96 a la 99) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 151 a la 154) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 102 a la 105) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 157 a la 160) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 108 a la 111) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Sistemas de dos ecuaciones lineales con dos incógnitas - Variante 15 (Altiplano Central)"?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 163 a la 166) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 114 a la 117) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Dominio del PDA Oficial** | Demuestra comprensión profunda y aplicación autónoma del contenido *"Sistemas de dos ecuaciones lineales con dos incógnitas"*, argumentando con solvencia técnica. | Comprende las ideas esenciales del PDA y las aplica correctamente con guía del docente. | Muestra nociones iniciales del tema pero requiere apoyo continuo para estructurar sus explicaciones. |
-| **Vinculación Situada (Altiplano Central)** | Conecta de forma crítica y original el aprendizaje con la problemática *"Cosecha de agua de lluvia, huertos escolares verticales y soberanía alimentaria con cultivos de amaranto y nopal."*, proponiendo mejoras viables. | Relaciona adecuadamente el tema con situaciones de su entorno escolar o familiar. | Describe el contexto de forma superficial sin conectar plenamente con el tema de estudio. |
-| **Calidad del Entregable Tangible** | El producto (*Folleto tríptico de prevención y campaña de sensibilización escolar*) es impecable, creativo, riguroso y comunica con impacto a la comunidad. | El producto cumple con la mayoría de los requerimientos formales y comunica con claridad el mensaje. | El producto está incompleto o carece de elementos clave de presentación y contenido. |
-| **Colaboración y Ética Ciudadana** | Ejerce liderazgo positivo, escucha activa, respeto a la diversidad y compromiso solidario en el equipo. | Participa activamente en su equipo respetando los acuerdos y turnos de trabajo. | Presenta dificultades para integrarse al trabajo colaborativo o respetar normas de convivencia. |
+| **Precisión en Procedimientos y Cálculos Matemáticos** | Aplica algoritmos y razonamiento lógico sin errores, justificando con claridad cada paso de la solución. | Resuelve los problemas matemáticos correctamente con procedimientos comprensibles. | Presenta errores constantes de cálculo o dificultad para elegir la operación adecuada. |
+| **Diseño y Funcionalidad del Material Manipulable** | El material didáctico es innovador, resistente, estético y facilita la comprensión inmediata del concepto. | El material es funcional y permite resolver los retos de forma ordenada. | El material es frágil o confuso para los usuarios. |
+| **Conducción de la Estación y Mediación Lúdica** | Guía con paciencia, entusiasmo y claridad pedagógica a los participantes de su estación en la feria. | Explica las reglas del juego y acompaña a los participantes con amabilidad. | Muestra dificultad para explicar la dinámica o desinterés en la atención de su estación. |
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Tangibles
-
-### 🛠️ Materiales y Recursos Didácticos
-- Libros de Texto Gratuitos (SEP / NEM 2024), fuentes digitales confiables y ficheros didácticos.
-- Materiales manipulables y de papelería: cartulinas, plumones, reglas graduadas, tijeras, pegamento, hojas recicladas.
-- Recursos tecnológicos: proyector, bocina bluetooth, dispositivos para consulta de fuentes y grabación de audio.
-
-### 📄 Producto Tangible Entregable
-> **Folleto tríptico de prevención y campaña de sensibilización escolar** enfocado en la resolución situada de: *Cosecha de agua de lluvia, huertos escolares verticales y soberanía alimentaria con cultivos de amaranto y nopal.*.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.**.
 
 ---
-
-## 🔗 Nodos Relacionados y Segundo Cerebro
-- [[00_Indice_Maestro_Secundaria_Fase_6_NEM2024|Índice Maestro Secundaria Fase 6 NEM2024]]
-- [[Prof_Israel_Lopez_Angeles|Perfil del Docente Titular: Prof. Israel López Ángeles]]
-- Etiquetas: #saberes_y_pensamiento_cientifico • #matematicas • #2do_grado • #aprendizaje_basado_en_proyectos_comunitarios_abpc_
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

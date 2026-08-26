@@ -1,127 +1,228 @@
 ---
-tags: [iskool, planeacion_nem_serie2, segundo_cerebro, fase6, campo_etica_naturaleza_y_sociedades, grado_2do_grado, materia_formacion_civica, metodologia_aprendizaje_basado_en_problemas_con_pensamiento_critico_y_bioetica, contexto_zona_lacustre_y_de_riberas, codiseno_2026]
-id_planeacion: "SERIE2-F6-FOR-2DO-V10020"
-serie: "Serie 2 - Innovación y Codiseño Curricular"
-campo_formativo: "Ética, Naturaleza y Sociedades"
-materia: "Formacion_Civica"
-grado: "2º de Secundaria"
-nivel: "Secundaria Fase 6 NEM2024"
-tema: "Cultura de paz y resolución no violenta de conflictos sociales"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_formacion_civica, grado_2_de_secundaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-metodologia: "Aprendizaje Basado en Problemas con Pensamiento Crítico y Bioética"
-contexto_comunitario: "Zona Lacustre y de Riberas"
-problematica_situada: "Saneamiento de cuerpos de agua, agricultura en chinampas y preservación de la biodiversidad acuática."
-ejes_articuladores: ["Artes y Experiencias Estéticas", "Pensamiento Crítico", "Inclusión"]
-duracion: "10 sesiones de 50 minutos (Total: 500 min)"
-fecha_creacion: "2026-08-24T21:50:23.277Z"
+nivel: "secundaria"
+fase_nem: "Fase 6"
+grado: "2º de Secundaria"
+asignatura: "Formacion_Civica"
+campo_formativo: "Ética, Naturaleza y Sociedades"
+tema: "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# 🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)
+# 📚 Proyecto Didáctico Integral: 🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)
 
-> [!INFO] **Ficha Técnica Oficial NEM 2024 • Serie 2 de Codiseño ISkool**
-> - **Docente Titular / Super Usuario:** [[Prof. Israel López Ángeles]] (`usr-teacher-israel`)
-> - **Nivel y Fase Curricular:** 2º de Secundaria • Secundaria Fase 6 NEM2024
-> - **Campo Formativo:** Ética, Naturaleza y Sociedades
-> - **Asignatura / Disciplina:** Formacion Civica
-> - **Metodología Activa:** Aprendizaje Basado en Problemas con Pensamiento Crítico y Bioética
-> - **Contexto Territorial:** Zona Lacustre y de Riberas (Reto Central: *Saneamiento de cuerpos de agua, agricultura en chinampas y preservación de la biodiversidad acuática.*)
-> - **Ejes Articuladores SEP:** Artes y Experiencias Estéticas • Pensamiento Crítico • Inclusión
-> - **Temporalidad del Bloque:** 10 sesiones de 50 min (500 minutos de trabajo situado)
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
-
-> **"Propone estrategias de mediación comunitaria y diálogo asertivo para transformar conflictos sociales y erradicar la violencia escolar."**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (2º de Secundaria)  
+> **Campo Formativo:** Ética, Naturaleza y Sociedades  
+> **Asignatura:** Formacion_Civica  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ❓ II. Preguntas Detonadoras y Conflicto Cognitivo Innovador
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-1. **¿Cómo podemos transformar el estudio de *"Cultura de paz y resolución no violenta de conflictos sociales"* en una solución práctica para atender el reto de: *Saneamiento de cuerpos de agua, agricultura en chinampas y preservación de la biodiversidad acuática.*?**
-2. **¿Qué tecnologías accesibles, modelos experimentales o saberes locales podemos integrar para investigar con rigor científico y humanista?**
-3. **¿De qué manera nuestro equipo colaborativo puede promover la equidad de género, la inclusión y la sustentabilidad en cada fase del proyecto?**
-4. **¿Cuál es el impacto a largo plazo de nuestra propuesta en el bienestar de la comunidad escolar y barrial?**
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
+```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
 
-## ⏱️ III. Secuencia Didáctica Oficial en 10 Sesiones de 50 Minutos (Estructura de 4 Fases)
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
 
-### 📌 FASE 1: Diagnóstico Situado y Encuadre Cognitivo (Sesiones 1 y 2 - 100 min)
-- **Sesión 1: Apertura del Desafío y Planteamiento Situado (50 min)**
-  - *Inicio (10 min):* Presentación del caso detonador en el entorno Zona Lacustre y de Riberas. El Prof. Israel López Ángeles contextualiza la problemática con imágenes y datos de campo.
-  - *Desarrollo (30 min):* Debate abierto en asamblea escolar sobre *"Saneamiento de cuerpos de agua, agricultura en chinampas y preservación de la biodiversidad acuática."*. Conformación de equipos de trabajo con roles asignados (coordinación, bitácora, materiales, divulgación).
-  - *Cierre (10 min):* Registro de la meta de aprendizaje individual y colectiva en el cuaderno de proyectos.
-- **Sesión 2: Mapeo Conceptual y Rescate de Saberes Previos (50 min)**
-  - *Inicio (10 min):* Dinámica de preguntas cruzadas entre equipos sobre conceptos clave de *"Cultura de paz y resolución no violenta de conflictos sociales"*.
-  - *Desarrollo (30 min):* Construcción de un esquema visual colaborativo en papel o pizarra digital relacionando el PDA con la vida cotidiana.
-  - *Cierre (10 min):* Acuerdos de indagación y lista de insumos para la fase experimental.
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
 
-### 🔬 FASE 2: Indagación Crítica, Modelado y Experimentación (Sesiones 3 a 5 - 150 min)
-- **Sesión 3: Protocolo de Investigación y Recolección de Datos (50 min)**
-  - *Inicio (10 min):* Definición de variables o categorías de análisis documental y de campo.
-  - *Desarrollo (30 min):* Consulta guiada en libros de texto SEP, artículos de divulgación o entrevistas con personas de la comunidad.
-  - *Cierre (10 min):* Validación de fuentes y organización de fichas de síntesis informativa.
-- **Sesión 4: Laboratorio Práctico / Experimentación y Prototipado (50 min)**
-  - *Inicio (10 min):* Normas de seguridad y verificación de materiales didácticos disponibles.
-  - *Desarrollo (30 min):* Realización de experimentos, mediciones matemáticas, cálculos o modelado concreto enfocado en *"Cultura de paz y resolución no violenta de conflictos sociales"*.
-  - *Cierre (10 min):* Registro de observaciones y tablas comparativas en la bitácora de ciencias.
-- **Sesión 5: Análisis Interdisciplinario y Síntesis Crítica (50 min)**
-  - *Inicio (10 min):* Articulación del proyecto con los ejes rectores: *Artes y Experiencias Estéticas y Pensamiento Crítico y Inclusión*.
-  - *Desarrollo (30 min):* Discusión en mesas redondas para interpretar los resultados y formular alternativas sustentables.
-  - *Cierre (10 min):* Redacción del informe técnico preliminar por equipo.
-
-### 💡 FASE 3: Integración Tecnológica, Creación y Elaboración del Entregable (Sesiones 6 a 8 - 150 min)
-- **Sesión 6: Bocetaje y Diseño del Producto Tangible (50 min)**
-  - *Inicio (10 min):* Revisión de los estándares de calidad de la rúbrica formativa analítica.
-  - *Desarrollo (30 min):* Taller creativo: modelado, estructuración o redacción del primer prototipo de: *Campaña comunitaria multiplataforma con carteles infográficos y spots de audio*.
-  - *Cierre (10 min):* Sesión de coevaluación intermedia con retroalimentación formativa constructiva.
-- **Sesión 7: Producción, Ensamblaje y Pulido del Entregable (50 min)**
-  - *Inicio (10 min):* Incorporación de mejoras sugeridas por pares y por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Fabricación final, edición de textos o ensamblado técnico del producto.
-  - *Cierre (10 min):* Control de calidad pedagógico y verificación del cumplimiento del PDA oficial.
-- **Sesión 8: Ensayo de Presentación y Estrategia de Comunicación (50 min)**
-  - *Inicio (10 min):* Diseño del guion expositivo y distribución de turnos de voz.
-  - *Desarrollo (30 min):* Ensayo general de la socialización ante el grupo, afinando lenguaje técnico y apoyos visuales.
-  - *Cierre (10 min):* Autovaloración del nivel de preparación del equipo.
-
-### 🌟 FASE 4: Socialización Comunitaria, Rúbrica Analítica y Compromisos (Sesiones 9 y 10 - 100 min)
-- **Sesión 9: Exposición y Diálogo Abierto con la Comunidad Escolar (50 min)**
-  - *Inicio (10 min):* Instalación de la muestra interactiva y bienvenida por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Demostración pública de los proyectos ante compañeros, docentes y padres de familia.
-  - *Cierre (10 min):* Espacio de preguntas, reflexiones compartidas y felicitaciones entre la comunidad.
-- **Sesión 10: Metacognición, Evaluación Formativa y Transformación Social (50 min)**
-  - *Inicio (10 min):* Cuestionario metacognitivo individual: "¿Cómo mejoró mi comprensión del entorno y qué habilidades desarrollé?".
-  - *Desarrollo (30 min):* Aplicación de la Rúbrica Analítica Formativa y valoración global del aprendizaje.
-  - *Cierre (10 min):* Firma del pacto comunitario de sustentabilidad y archivo de evidencias en el Segundo Cerebro.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
 
 ---
 
-## 📋 IV. Rúbrica Analítica Formativa (Criterios Oficiales NEM)
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Criterio Curricular NEM | Nivel Sobresaliente (3.5 - 4.0 pts) | Nivel Satisfactorio (2.5 - 3.4 pts) | Nivel En Proceso (1.0 - 2.4 pts) |
+**Problemática Situada:**  
+Necesidad de fomentar la curiosidad científica, la indagación sistemática y la aplicación de saberes escolares para entender y transformar fenómenos relacionados con "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)".
+
+**Propósito del Proyecto:**  
+Diseñar y ejecutar una investigación experimental y de campo que culmine en prototipos funcionales y propuestas sustentables para la comunidad.
+
+**Impacto Social y Transformador:**  
+Promueve el pensamiento científico, la resolución de problemas locales y la participación ciudadana informada.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 49 a la 52) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 70 a la 73) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 55 a la 58) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 76 a la 79) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 61 a la 64) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 82 a la 85) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 67 a la 70) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 88 a la 91) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "🚀 Proyecto de Codiseño Comunitario: Cultura de paz y resolución no violenta de conflictos sociales - Modalidad Innovadora 20 (Zona Lacustre y de Riberas)"?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 73 a la 76) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 94 a la 97) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Apropiación del PDA Oficial** | Aplica con solvencia y rigor teórico el contenido *"Cultura de paz y resolución no violenta de conflictos sociales"*, integrando conceptos clave y explicaciones fundamentadas. | Comprende y explica los elementos esenciales del PDA con adecuado nivel de detalle. | Identifica nociones generales del contenido pero requiere apoyo para su explicación sistemática. |
-| **Pertinencia Situada (Zona Lacustre y de Riberas)** | Diseña respuestas innovadoras que atienden directamente el desafío *"Saneamiento de cuerpos de agua, agricultura en chinampas y preservación de la biodiversidad acuática."*, demostrando conciencia social y ecológica. | Vincula de manera correcta el proyecto con las condiciones de su comunidad o escuela. | Hace mención al contexto de forma aislada sin articularlo a la propuesta técnica. |
-| **Calidad del Entregable (Campaña comunitaria multiplataforma con carteles infográficos y spots de audio)** | El entregable es riguroso, funcional, estéticamente cuidado y comunica con gran claridad su propósito transformador. | El entregable cumple los requisitos técnicos y didácticos solicitados en la planeación. | El entregable presenta inconsistencias o se encuentra parcialmente incompleto. |
-| **Trabajo Colaborativo y Valores Éticos** | Fomenta la inclusión activa, el diálogo empático, la equidad de género y el compromiso solidario en todo momento. | Colabora de forma armónica en las tareas del equipo respetando acuerdos. | Muestra dificultad para coordinarse con sus pares o cumplir con sus responsabilidades asignadas. |
+| **Metodología de Indagación y Rigor Conceptual** | Plantea hipótesis claras, registra datos experimentales con precisión y formula conclusiones sólidas basadas en evidencia. | Sigue los pasos del método experimental y presenta resultados ordenados. | El registro de datos es incompleto o las conclusiones carecen de sustento. |
+| **Calidad del Prototipo y Presentación Visual** | El prototipo es funcional, seguro, creativo y está acompañado de infografías científicas de alta calidad. | El prototipo funciona adecuadamente y los apoyos visuales son claros. | El prototipo no funciona o la presentación visual es descuidada. |
+| **Divulgación Científica y Comunicación Oral** | Comunica conceptos científicos complejos con sencillez, elocuencia y dominio ante audiencias diversas. | Explica su experimento con claridad y vocabulario científico adecuado. | Dificultad para explicar el funcionamiento o la utilidad de su investigación. |
 
 ---
 
-## 📦 V. Recursos, Materiales y Entregable Tangible
-
-### 🛠️ Materiales y Recursos Didácticos
-- Libros de Texto Gratuitos (SEP 2024), plataformas de consulta digital y guías metodológicas.
-- Materiales de experimentación, reciclaje y papelería: cartón, madera reciclada, componentes sencillos, pinturas no tóxicas.
-- Dispositivos de registro: cámara, grabadora de voz, proyector audiovisual y herramientas de software libre.
-
-### 📄 Producto Tangible Entregable
-> **Campaña comunitaria multiplataforma con carteles infográficos y spots de audio** aplicado a la atención situada de: *Saneamiento de cuerpos de agua, agricultura en chinampas y preservación de la biodiversidad acuática.*.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.**.
 
 ---
-
-## 🔗 Nodos Relacionados y Conexiones en el Segundo Cerebro
-- [[00_Indice_Maestro_Secundaria_Fase_6_NEM2024|Índice Maestro Secundaria Fase 6 NEM2024]]
-- [[Prof_Israel_Lopez_Angeles|Perfil del Docente Titular: Prof. Israel López Ángeles]]
-- Etiquetas: #etica_naturaleza_y_sociedades • #formacion_civica • #2do_grado • #aprendizaje_basado_en_problemas_con_pensamiento_critico_y_bioetica • #codiseno_2026
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

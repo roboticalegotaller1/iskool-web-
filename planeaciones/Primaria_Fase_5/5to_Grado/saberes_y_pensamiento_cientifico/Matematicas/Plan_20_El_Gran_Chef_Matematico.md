@@ -1,91 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_5to_grado, materia_matematicas, fase5_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matemáticas"
-grado: "5º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Suma y resta de fracciones con diferente denominador y números decimales"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_matematicas, grado_5_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.767Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "5º de Primaria"
+asignatura: "Matemáticas"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar
+# 📚 Proyecto Didáctico Integral: El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 5º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Matemáticas
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Pensamiento Crítico • Inclusión
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (5º Primaria) - Propone y resuelve situaciones problemáticas que implican sumas y restas con números decimales utilizando el algoritmo convencional y fracciones con diferentes denominadores. Utiliza, explica y comprueba sus estrategias para calcular mentalmente sumas y restas de dos números múltiplos de 100 y dos fracciones cuyos denominadores son múltiplos.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Por qué NO podemos sumar directamente los numeradores de $1/2 + 2/3$ sin antes convertirlas a un denominador común?**
-
-2. **¿Cómo calculamos la cantidad total de ingredientes si una receta pide $3/4$ kg de harina, $1/2$ kg de azúcar y $0.250$ kg de mantequilla?**
-
-3. **¿Por qué al sumar o restar números decimales es una regla sagrada alinear verticalmente el punto decimal?**
-
-4. **¿Qué trucos de cálculo mental nos permiten resolver $1,500 - 800$ o $1/2 - 1/4$ en menos de 5 segundos?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (5º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matemáticas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Dilema del Restaurante: El docente plantea: "Un cocinero tiene $1/2$ litro de leche en una jarra y le agrega $1/3$ de litro de otra jarra. Si dice que tiene $2/5$ de litro en total... ¿está en lo correcto o cometió un error grave?".
-2. Pregunta detonadora: "¿Por qué $2/5$ es menor que $1/2$? ¿Cómo encontramos un tamaño de rebanada común (denominador) para poder sumarlas?".
-3. Representación visual con tiras de fracciones de colores.
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Algoritmos de Fracciones y Decimales en Parejas:
-   • Método del Mínimo Común Múltiplo (MCM) y Productos Cruzados:
-     $$rac{1}{2} + rac{2}{3} = rac{3 + 4}{6} = rac{7}{6} = 1rac{1}{6}$$
-   • Resolución de problemas de compras en el mercado con números decimales con pesos y centavos ($145.50 + 89.75 - 50.00$).
-2. Laboratorio de Cálculo Mental Rápido:
-   • Rondas de cálculo con fracciones de denominadores múltiplos ($1/2 + 1/4 = 3/4$, $3/4 - 1/8 = 5/8$).
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Plenaria: Explicación en el pizarrón de la comprobación mediante operaciones inversas (Restar para comprobar la suma).
-2. Metacognición: "¿Qué método me resulta más fácil para encontrar el común denominador?".
-3. Entrega de evidencia: Menú de recetas resueltas con algoritmos formales y comprobaciones.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Dominio de Suma y Resta de Fracciones con Diferente Denominador (Sobresaliente [3.5 pts]: Convierte a común denominador y simplifica resultados a fracciones mixtas con precisión | Satisfactorio [2.5 pts]: Aplica el algoritmo pero omite simplificar | En Proceso [1.5 pts]: Suma numeradores y denominadores directamente).
-• Criterio 2 - Algoritmo y Alineación de Decimales (Sobresaliente [3.5 pts]: Alinea el punto decimal y opera con precisión de centésimos y milésimos | Satisfactorio [2.5 pts]: Resuelve con errores menores | En Proceso [1.5 pts]: Desalinea el punto decimal).
-• Criterio 3 - Estrategias de Cálculo Mental y Comprobación (Sobresaliente [3 pts]: Aplica estrategias mentales ágiles y comprueba con operaciones inversas | Satisfactorio [2 pts]: Comprueba con apoyo | En Proceso [1 pt]: No comprueba).
-• Instrumento: Rúbrica de operaciones fraccionarias y cálculo numérico.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-• Tiras de fracciones didácticas fraccionables.
-• Tarjetas de recetas de cocina con medidas en fracciones y decimales.
-• Hojas de trabajo impresas "El Recetario Fraccionario".
+**Problemática Situada:**  
+Los estudiantes suelen concebir las fracciones de forma abstracta y descontextualizada, dificultando la comprensión del concepto de entero, medios, cuartos, octavos y su aplicación en la vida diaria.
 
-### Evidencia de Aprendizaje Entregable
-**Problemario Resuelto "El Chef Matemático: Balance de Ingredientes en Fracciones y Decimales".**
+**Propósito del Proyecto:**  
+Comprender las fracciones como partes de la unidad y operadores de reparto equitativo mediante la simulación lúdica de una panadería comunitaria y la elaboración de recetas fraccionarias.
+
+**Impacto Social y Transformador:**  
+Promueve la justicia distributiva, la equidad en el reparto de alimentos y la aplicación práctica de las matemáticas en la economía del hogar.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 162 a la 165) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 87 a la 90) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 140 a la 143) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 171 a la 174) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 96 a la 99) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 149 a la 152) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 180 a la 183) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 105 a la 108) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 158 a la 161) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "El Gran Chef Matemático: Operaciones con Fracciones y Decimales en la Cocina Escolar" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 189 a la 192) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Modelado y Representación Gráfica de Fracciones** | Representa con exactitud fracciones propias, impropias y equivalentes usando material concreto, rectas numéricas y dibujos a escala. | Identifica y representa medios, cuartos y octavos correctamente en figuras geométricas. | Confunde el numerador con el denominador o divide enteros en partes desiguales. |
+| **Resolución de Problemas de Reparto y Equivalencias** | Resuelve problemas complejos de suma y comparación de fracciones con distintos métodos y justifica con elocuencia su razonamiento. | Resuelve problemas sencillos de reparto fraccionario con apoyo de material manipulable. | Presenta dificultades para calcular repartos básicos o identificar equivalencias simples. |
+| **Atención en la Estación Demostrativa y Trabajo en Equipo** | Explica con claridad y entusiasmo los retos de fracciones a los visitantes de la feria gastronómica con gran empatía y solvencia. | Colabora en la atención de la estación y demuestra los modelos fraccionarios adecuadamente. | Participa con timidez o no logra explicar el funcionamiento de sus modelos manipulables. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

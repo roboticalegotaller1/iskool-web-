@@ -1,93 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_lenguajes, grado_5to_grado, materia_espanol, fase5_primaria]
-campo_formativo: "Lenguajes"
-materia: "Español"
-grado: "5º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Lectura y análisis de mitos y leyendas, para su disfrute y valoración"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_espanol, grado_5_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.742Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "5º de Primaria"
+asignatura: "Español"
+campo_formativo: "Lenguajes"
+tema: "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas
+# 📚 Proyecto Didáctico Integral: Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 5º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Lenguajes
-> - **Asignatura / Área:** Español
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Apropiación de las Culturas a través de la Lectura y la Escritura • Interculturalidad Crítica • Artes y Experiencias Estéticas
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (5º Primaria) - Lee mitos y leyendas de México e identifica las características y funciones de cada tipo de texto. Investiga sobre el origen de los mitos y leyendas leídos. Identifica elementos de realidad y fantasía tanto en mitos como en leyendas. Indaga, con las personas adultas mayores de su comunidad, para conocer los mitos y leyendas que forman parte de la cultura de su región. Escenifica un mito o leyenda de su interés frente a público. Reflexiona sobre la riqueza cultural que encierran los mitos y las leyendas.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Cuál es la diferencia fundamental entre un MITO (que explica el origen del cosmos, los dioses y el mundo) y una LEYENDA (que mezcla hechos históricos reales con sucesos sobrenaturales en un lugar concreto)?**
-
-2. **¿Por qué leyendas como la de "La Llorona", "El Callejón del Beso" o "Los Volcanes Popocatépetl e Iztaccíhuatl" siguen vivas tras cientos de años?**
-
-3. **¿Qué relatos sobrenaturales o misteriosos cuentan los ancianos de tu comunidad sobre cerros, ríos o casas antiguas?**
-
-4. **¿Cómo podemos caracterizar a los personajes míticos usando máscaras y teatro de sombras?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (5º de Primaria)  
+> **Campo Formativo:** Lenguajes  
+> **Asignatura:** Español  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Narración a Oscuras con Linterna: El docente narra con efectos de sonido el mito prehispánico del Quinto Sol o la leyenda maya del pájaro Dziú.
-2. Pregunta detonadora: "¿Qué parte de esta historia busca explicar la realidad de la naturaleza y qué parte pertenece a la magia y la fantasía?".
-3. Cuadro de doble entrada en pizarrón: Mitos cosmogónicos vs Leyendas urbanas y rurales.
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Compilación y Análisis en Equipos de 4:
-   • Cada equipo selecciona una leyenda de su estado o región de México.
-   • Completan la Ficha de Deconstrucción Narrativa:
-     - Elementos reales e históricos (época virreinal, lugares geográficos exactos).
-     - Elementos fantásticos (apariciones, transformaciones, magia).
-     - Valores o moralejas comunitarias (respeto a la naturaleza, prudencia, lealtad).
-2. Adaptación a Guion para Teatro de Sombras o Títeres:
-   • Transforman la leyenda en un libreto corto con diálogos y acotaciones escénicas.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Muestra Relámpago de Títeres de Papel: Representación de 1 minuto de una escena cumbre de cada leyenda.
-2. Metacognición: "¿Por qué los mitos y leyendas son el tesoro de la memoria oral de los pueblos?".
-3. Entrega de evidencia: Ficha de análisis y libreto dramatizado.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
+
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
+
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Diferenciación entre Mito, Leyenda, Realidad y Fantasía (Sobresaliente [3.5 pts]: Distingue con total claridad los elementos cosmogónicos, históricos y fantásticos | Satisfactorio [2.5 pts]: Identifica diferencias básicas | En Proceso [1.5 pts]: Confunde mitos con cuentos ordinarios).
-• Criterio 2 - Indagación Comunitaria y Rescate Oral (Sobresaliente [3.5 pts]: Recopila relatos con adultos mayores con respeto y detalle testimonial | Satisfactorio [2.5 pts]: Registra historias de fuentes impresas | En Proceso [1.5 pts]: Información mínima sin contexto).
-• Criterio 3 - Representación Teatral y Expresión Artística (Sobresaliente [3 pts]: Crea escenografía y modula voces con creatividad y dinamismo | Satisfactorio [2 pts]: Representación sencilla | En Proceso [1 pt]: Lectura plana).
-• Instrumento: Rúbrica de análisis de tradición oral y puesta en escena.
+**Problemática Situada:**  
+Se ha detectado una pérdida paulatina de la tradición oral comunitaria y un escaso hábito de creación literaria autónoma en la infancia, lo que limita el desarrollo de la imaginación y la comprensión lectora.
 
----
+**Propósito del Proyecto:**  
+Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa (inicio, desarrollo, nudo y desenlace).
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
-
-### Materiales y Recursos Didácticos
-• Textos de mitos prehispánicos y leyendas coloniales de México.
-• Cartoncillo negro, palitos de madera, papel celofán de colores y linternas para teatro de sombras.
-• Formato de libreto teatral impreso.
-
-### Evidencia de Aprendizaje Entregable
-**Compendio Ilustrado de Leyendas Regionales con Guion de Adaptación Teatral.**
+**Impacto Social y Transformador:**  
+Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 50 a la 53) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 105 a la 108) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 56 a la 59) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 111 a la 114) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 62 a la 65) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 117 a la 120) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 68 a la 71) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 123 a la 126) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 74 a la 77) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Misterios del Mayab y Anáhuac: Antología y Escenificación de Mitos y Leyendas" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 129 a la 132) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Estructura Narrativa y Creatividad Literaria** | Desarrolla una trama original con personajes bien caracterizados, conflicto claro y desenlace creativo, empleando conectores temporales y adjetivos descriptivos. | El relato presenta inicio, desarrollo y final comprensibles, aunque la descripción de personajes es básica. | La narración no tiene una secuencia lógica clara o queda inconclusa. |
+| **Confección del Libro Cartonero y Expresión Plástica** | El libro cartonero está sólidamente encuadernado, con portadas artísticas llamativas e ilustraciones que enriquecen profundamente el texto. | El libro cartonero cumple con los requisitos de armado e ilustración con limpieza y orden. | El encuadernado es frágil o las ilustraciones carecen de relación con el texto. |
+| **Socialización y Lectura en Atril** | Lee con fluidez, modulación de voz adecuada y expresión corporal que cautiva a la audiencia en la tertulia literaria. | Realiza su lectura en voz alta con claridad y volumen audible ante el público. | Muestra inseguridad o tono de voz inaudible durante la presentación oral. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

@@ -1,87 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_4to_grado, materia_matematicas, fase4_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matemáticas"
-grado: "4º de Primaria"
-nivel: "Primaria (Fase 4)"
-tema: "Cuerpos geométricos: prismas rectos y desarrollo plano del cubo"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_media, materia_matematicas, grado_4_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:46:24.072Z"
+nivel: "primaria-media"
+fase_nem: "Fase 4"
+grado: "4º de Primaria"
+asignatura: "Matemáticas"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado
+# 📚 Proyecto Didáctico Integral: Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 4)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 4º de Primaria • Fase 4 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Matemáticas
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Pensamiento Crítico • Artes y Experiencias Estéticas
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 4 (4º Primaria) - Reconoce y describe prismas rectos (caras, aristas, vértices) y desarrollos planos, en particular el cubo. Construye y clasifica cuadriláteros por lados, ángulos y diagonales con instrumentos geométricos.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Cuántas caras, vértices y aristas tiene un cubo y qué patrones planos lo forman?**
-
-2. **¿Cuál es la diferencia entre un rombo, un rectángulo y un trapecio?**
-
-3. **¿Cómo se cruzan las diagonales de un cuadrado frente a las de un romboide?**
-
-4. **¿Cómo armamos un cuerpo tridimensional a partir de una plantilla plana con pestañas?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (4º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matemáticas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-Desafío de los 11 desarrollos planos del cubo: identificar cuáles cierran y cuáles se enciman.
+```yaml
+PDA: "Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" para divulgar en el aula y la escuela."
+```
 
-### 🔬 Desarrollo (30 minutos)
-Trazar con regla y compás el desarrollo plano del cubo y armarlo. Clasificar cuadriláteros midiendo lados, ángulos internos y trazando diagonales con transportador.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Media - Fase 4):**
+- *PDA:* Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" para divulgar en el aula y la escuela.
+- *Vínculo formativo:* Comprensión lectora analítica, redacción en párrafos estructurados y uso correcto de signos de puntuación.
 
-### 💡 Cierre (10 minutos)
-Exhibición de la Ciudad Geométrica de cuerpos armados. Metacognición.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Resuelve situaciones problemáticas vinculadas a "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" mediante operaciones básicas, fracciones, cálculo de áreas y experimentos sencillos.
+- *Vínculo formativo:* Razonamiento lógico-matemático, análisis de datos en tablas y pensamiento indagatorio.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza la diversidad natural y sociocultural de su entidad en torno a "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado", valorando la justicia y los derechos de todos.
+- *Vínculo formativo:* Conocimiento del entorno regional, cuidado del medio ambiente y participación cívica.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-### Criterios de Evaluación y Niveles de Logro
-• **Criterio 1:** Trazo y ensamble preciso de desarrollos planos con pestañas
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
-
-• **Criterio 2:** Clasificación de cuadriláteros por lados, ángulos y diagonales
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
-
-• **Criterio 3:** Conteo riguroso de caras, aristas y vértices en poliedros
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña estrategias cooperativas para prevenir riesgos y resolver conflictos escolares al trabajar proyectos sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado".
+- *Vínculo formativo:* Toma de decisiones consensuadas, vida saludable y bienestar socioemocional.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-Cartulinas brístol, reglas, escuadras, transportadores, tijeras y pegamento.
+**Problemática Situada:**  
+Los estudiantes requieren fortalecer el razonamiento lógico-matemático aplicado a situaciones de la vida real relacionadas con "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" para resolver retos del entorno.
 
-### Evidencia de Aprendizaje Entregable
-**Cubo y Prisma Recto Armados con Memoria de Diagonales y Ángulos.**
+**Propósito del Proyecto:**  
+Aplicar conceptos matemáticos, cálculo y modelación para diseñar soluciones cuantitativas y juegos didácticos interactivos.
+
+**Impacto Social y Transformador:**  
+Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y relevante para toda la comunidad escolar.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase4_NEM|Índice Maestro de Primaria Fase 4]]
-- [[../../00_Indice_Maestro_Primaria_Fase4_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 117 a la 120) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 142 a la 145) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 67 a la 70) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 126 a la 129) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 151 a la 154) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 76 a la 79) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 135 a la 138) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 160 a la 163) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 85 a la 88) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Arquitectos del Espacio: Prismas Rectos, Cuadriláteros y el Cubo Desplegado" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 144 a la 147) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Precisión en Procedimientos y Cálculos Matemáticos** | Aplica algoritmos y razonamiento lógico sin errores, justificando con claridad cada paso de la solución. | Resuelve los problemas matemáticos correctamente con procedimientos comprensibles. | Presenta errores constantes de cálculo o dificultad para elegir la operación adecuada. |
+| **Diseño y Funcionalidad del Material Manipulable** | El material didáctico es innovador, resistente, estético y facilita la comprensión inmediata del concepto. | El material es funcional y permite resolver los retos de forma ordenada. | El material es frágil o confuso para los usuarios. |
+| **Conducción de la Estación y Mediación Lúdica** | Guía con paciencia, entusiasmo y claridad pedagógica a los participantes de su estación en la feria. | Explica las reglas del juego y acompaña a los participantes con amabilidad. | Muestra dificultad para explicar la dinámica o desinterés en la atención de su estación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

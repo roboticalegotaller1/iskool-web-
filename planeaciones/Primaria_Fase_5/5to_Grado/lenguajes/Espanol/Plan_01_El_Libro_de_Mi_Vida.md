@@ -1,94 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_lenguajes, grado_5to_grado, materia_espanol, fase5_primaria]
-campo_formativo: "Lenguajes"
-materia: "Español"
-grado: "5º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Narración de sucesos autobiográficos"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_espanol, grado_5_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.695Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "5º de Primaria"
+asignatura: "Español"
+campo_formativo: "Lenguajes"
+tema: "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia
+# 📚 Proyecto Didáctico Integral: El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 5º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Lenguajes
-> - **Asignatura / Área:** Español
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Apropiación de las Culturas a través de la Lectura y la Escritura • Inclusión
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (5º Primaria) - Lee textos autobiográficos y reflexiona sobre las razones por las que suelen estar narrados en primera persona del singular. Determina los sucesos autobiográficos que desea narrar y los organiza lógicamente, resaltando los aspectos más significativos. Escribe la narración de los hechos autobiográficos, haciendo uso de comas, puntos y seguido, puntos y aparte y dos puntos, para dar claridad y orden a las ideas. Describe personas, lugares y hechos a través del uso de reiteraciones, frases adjetivas, símiles e imágenes, y mantiene la referencia a los mismos en toda la narración por medio de pronombres y sinónimos.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Por qué al escribir sobre nuestros propios recuerdos usamos verbos en primera persona del singular (yo viví, yo sentí, yo aprendí)?**
-
-2. **¿Cuál es el recuerdo más significativo de tu infancia que te ayudó a ser la persona que eres hoy?**
-
-3. **¿Cómo ayudan los puntos, comas y dos puntos a que un lector sienta la emoción de nuestra historia sin perder el hilo de las ideas?**
-
-4. **¿Qué adjetivos y comparaciones poéticas (símiles) podemos usar para describir a un ser querido de forma inolvidable?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (5º de Primaria)  
+> **Campo Formativo:** Lenguajes  
+> **Asignatura:** Español  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Dinámica de la "Caja de los Recuerdos": El docente muestra 3 objetos personales de su infancia (un boleto antiguo, una fotografía gastada y un juguete pequeño) y comparte una anécdota breve de 2 minutos destacando la emoción que le produce.
-2. Pregunta detonadora: "¿Si tuvieran que elegir un solo momento de sus vidas para contárselo a alguien que no los conoce, cuál sería y por qué?".
-3. Activación de saberes previos: Identificación de la voz narrativa en primera persona ("Yo") vs tercera persona ("Él/Ella") en dos textos cortos proyectados en el pizarrón.
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Cronología Personal en Equipos de Pares:
-   • Los alumnos dibujan en su cuaderno su "Línea del Tiempo Emocional" seleccionando 4 acontecimientos clave (ej. mi primer día de escuela, un viaje familiar, cuando superé un miedo, una fiesta comunitaria).
-2. Taller de Redacción con Recursos Estilísticos y Puntuación:
-   • Redactan el primer borrador del capítulo 1 de su autobiografía aplicando:
-     - Signos de puntuación normativos: coma enumerativa, punto y seguido para separar ideas, punto y aparte para cambiar de momento.
-     - Frases adjetivas y símiles: "Sus ojos brillaban como luceros de bengala", "Aquella tarde calurosa y silenciosa como un desierto".
-     - Uso de pronombres y sinónimos para evitar repetir palabras como "mi mamá", "luego", "después".
-3. Rondas de Colectivo Literario: Lectura en parejas para revisar fluidez y ortografía con la técnica "2 halagos y 1 sugerencia de puntuación".
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Plenaria: 3 alumnos voluntarios leen un párrafo emotivo de su borrador al grupo desde el atril del aula.
-2. Reflexión metacognitiva en bitácora: "¿Qué descubrí sobre mí mismo al poner en palabras un recuerdo del pasado?".
-3. Entrega de evidencia: Línea del tiempo estructurada y primer borrador corregido con rúbrica de autorrevisión.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
+
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
+
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Voz Narrativa y Estructura Autobiográfica (Sobresaliente [3.5 pts]: Narra en primera persona con coherencia temporal y selección profunda de hechos significativos | Satisfactorio [2.5 pts]: Narra en primera persona con saltos temporales menores | En Proceso [1.5 pts]: Mezcla voces narrativas o relata hechos aislados sin hilo conductor).
-• Criterio 2 - Uso de Signos de Puntuación y Recursos Estilísticos (Sobresaliente [3.5 pts]: Aplica correctamente comas, puntos y dos puntos, e integra símiles y frases adjetivas ricas | Satisfactorio [2.5 pts]: Aplica puntos y comas básicos con pocos adjetivos | En Proceso [1.5 pts]: Omite puntuación básica dificultando la lectura).
-• Criterio 3 - Coevaluación y Sentido Comunitario (Sobresaliente [3 pts]: Brinda y recibe retroalimentación constructiva con respeto y empatía | Satisfactorio [2 pts]: Participa en la coevaluación de manera básica | En Proceso [1 pt]: Dificultad para recibir sugerencias de mejora).
-• Instrumento: Rúbrica formativa analítica y lista de cotejo de borradores literarios.
+**Problemática Situada:**  
+Falta de medios impresos o digitales escolares donde las niñas y niños puedan comunicar hallazgos, opiniones fundamentadas y propuestas de mejora sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia" para la comunidad.
 
----
+**Propósito del Proyecto:**  
+Desarrollar habilidades de investigación documental, redacción de textos informativos y argumentativos, y diseño editorial para socializar el tema de "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
-
-### Materiales y Recursos Didácticos
-• Cuaderno de trabajo y hojas opalina para el libro final.
-• Fotografías o dibujos representativos de su historia personal.
-• Guía de conectores temporales (al principio, mientras tanto, finalmente, por consiguiente).
-• Marcadores de colores y notas adhesivas para coevaluación.
-
-### Evidencia de Aprendizaje Entregable
-**Capítulo 1 ilustrado de la autobiografía personal "El Libro de Mi Vida", con uso explícito de primera persona, puntuación adecuada y frases adjetivas.**
+**Impacto Social y Transformador:**  
+Democratiza la información en la escuela, estimula el pensamiento crítico y la libertad de expresión responsable entre las familias.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 49 a la 52) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 104 a la 107) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 55 a la 58) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 110 a la 113) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 61 a la 64) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 116 a la 119) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 67 a la 70) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 122 a la 125) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 73 a la 76) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "El Libro de Mi Vida: Crónicas, Emociones y Memorias de la Infancia" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 128 a la 131) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Calidad de Redacción, Coherencia y Ortografía** | Textos con excelente cohesión, riqueza de vocabulario, sin faltas ortográficas y adaptados al público lector. | Textos claros y comprensibles con adecuada estructura de párrafos. | Textos con oraciones inconclusas o frecuentes errores ortográficos. |
+| **Diseño Editorial y Apoyos Visuales** | Diseño atractivo, jerarquía visual impecable con títulos llamativos, fotografías y esquemas pertinentes. | Distribución ordenada del contenido e imágenes ilustrativas adecuadas. | Diseño desorganizado o imágenes sin relación con el tema central. |
+| **Exposición y Diálogo con la Comunidad** | Presenta la gaceta con elocuencia, responde preguntas con seguridad y promueve el diálogo crítico. | Explica su artículo con claridad ante sus compañeros y docentes. | Dificultad para resumir oralmente las ideas principales de su texto. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

@@ -1,214 +1,228 @@
 ---
-title: "Proyecto Didáctico: Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_baja, materia_espanol, grado_1_de_primaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-nivel: "Primaria Baja (Fase 3)"
+nivel: "primaria-baja"
 fase_nem: "Fase 3"
 grado: "1º de Primaria"
+asignatura: "Espanol"
 campo_formativo: "Lenguajes"
-materia: "Espanol"
-tema: "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles"
-codigo_curricular: "F3-ESP-1ER-V00010"
-metodologia: "STEAM con Enfoque de Indagación Lúdica y Manipulativa"
-contexto_comunitario: "Rural y Milpa"
-problematica_situada: "Conteo de semillas de maíz y frijol, cuidado de los huertos escolares y respeto a los animales del campo."
+tema: "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"
 duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
-ejes_articuladores: ["Artes y Experiencias Estéticas", "Pensamiento Crítico"]
-producto_entregable: "Feria de juegos matemáticos tradicionales con dados, taparroscas y tableros"
-created_at: "2026-08-24"
-updated_at: "2026-08-24"
-tags:
-  - iskool
-  - planeacion_docente
-  - nem_2024
-  - fase_3
-  - 1er_grado
-  - espanol
-  - profesor_israel_lopez
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# 📚 Proyecto Didáctico Integral: Lectura compartida en voz alta de cuentos, coplas y rimas infantiles
+# 📚 Proyecto Didáctico Integral: Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)
 
 > **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
-> **Nivel y Fase Educativa:** Educación Primaria Baja • Fase 3 (1º de Primaria)  
+> **Nivel y Fase:** PRIMARIA-BAJA • Fase 3 (1º de Primaria)  
 > **Campo Formativo:** Lenguajes  
-> **Disciplina / Asignatura:** Espanol  
-> **Metodología Sociocrítica:** STEAM con Enfoque de Indagación Lúdica y Manipulativa  
-> **Ejes Articuladores:** Artes y Experiencias Estéticas • Pensamiento Crítico  
-> **Temporalidad:** 10 sesiones de 50 minutos (2 semanas lectivas)  
-> **Producto Central Integrador:** *Feria de juegos matemáticos tradicionales con dados, taparroscas y tableros*  
+> **Asignatura:** Espanol  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
 ```yaml
-PDA: "Reconoce que se lee de izquierda a derecha y de arriba abajo; sigue la lectura en voz alta que hace el docente, expresa sus emociones sobre las historias y anticipa contenidos a partir de ilustraciones."
+PDA: "Registra y resume información sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" a través de la escritura autónoma, el dibujo y el dictado al docente para compartir con la comunidad."
 ```
+
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Baja - Fase 3):**
+- *PDA:* Registra y resume información sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" a través de la escritura autónoma, el dibujo y el dictado al docente para compartir con la comunidad.
+- *Vínculo formativo:* Alfabetización inicial, comunicación clara de procedimientos y expresión de ideas con propósito social.
+
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Utiliza material concreto, dibujos y símbolos para representar cantidades, medidas y patrones vinculados a "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)".
+- *Vínculo formativo:* Fundamentación lógica, conteo, medición y resolución de problemas prácticos cotidianos.
+
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Reconoce el impacto de las acciones individuales y colectivas en relación con "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" en su entorno escolar y familiar.
+- *Vínculo formativo:* Compromiso ciudadano, cuidado del entorno y convivencia pacífica.
+
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Participa en juegos y actividades colaborativas relacionadas con "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)", respetando acuerdos y turnos de participación.
+- *Vínculo formativo:* Trabajo en equipo, empatía y autorregulación emocional.
 
 ---
 
-## 🏘️ II. Diagnóstico Comunitario y Situación Problemática
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-En la comunidad escolar (Rural y Milpa), los estudiantes de 1º de Primaria han observado un reto cotidiano: Conteo de semillas de maíz y frijol, cuidado de los huertos escolares y respeto a los animales del campo.. A través del abordaje del tema "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles", los alumnos se involucrarán de forma activa y lúdica aplicando la metodología de STEAM con Enfoque de Indagación Lúdica y Manipulativa, logrando una experiencia formativa significativa que culminará en el desarrollo de un producto tangible: Feria de juegos matemáticos tradicionales con dados, taparroscas y tableros.
+**Problemática Situada:**  
+Se ha detectado una pérdida paulatina de la tradición oral comunitaria y un escaso hábito de creación literaria autónoma en la infancia, lo que limita el desarrollo de la imaginación y la comprensión lectora.
 
-### Preguntas Detonadoras del Proyecto:
-1. ¿De qué manera el aprendizaje de **Lectura compartida en voz alta de cuentos, coplas y rimas infantiles** nos ayuda a comprender mejor el mundo que nos rodea y convivir en armonía?
-2. ¿Cómo podemos resolver juntos el reto comunitario: *Conteo de semillas de maíz y frijol, cuidado de los huertos escolares y respeto a los animales del campo.* usando material concreto y la creatividad del grupo?
-3. ¿Por qué es importante colaborar en equipo con respeto, empatía y alegría en cada juego y actividad?
+**Propósito del Proyecto:**  
+Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa (inicio, desarrollo, nudo y desenlace).
+
+**Impacto Social y Transformador:**  
+Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.
 
 ---
 
 ## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
 
-### 📌 SESIÓN 1 (50 min): 1. Pregunta curiosa y exploración sensorial del fenómeno
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º y 2º Grado (Págs. 51 a la 54) — *Producción de textos, cartas personales y dictado colectivo*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)".
 
-### 📌 SESIÓN 2 (50 min): 1. Pregunta curiosa y exploración sensorial del fenómeno
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 2º Grado (Págs. 22 a la 25) — *Estructura de la carta, signos de puntuación y remitente/destinatario*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
-### 📌 SESIÓN 3 (50 min): 2. Experimentación con materiales concretos, conteo y registro gráfico
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 1º y 2º Grado (Págs. 31 a la 34) — *Cuentos, textos epistolares y narraciones infantiles*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
-### 📌 SESIÓN 4 (50 min): 2. Experimentación con materiales concretos, conteo y registro gráfico
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 2º Grado (Págs. 88 a la 91) — *Correspondencia escolar, cartas a la comunidad y buzón postal*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
-### 📌 SESIÓN 5 (50 min): 2. Experimentación con materiales concretos, conteo y registro gráfico
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º y 2º Grado (Págs. 63 a la 66) — *Producción de textos, cartas personales y dictado colectivo*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
-### 📌 SESIÓN 6 (50 min): 3. Construcción de modelos, figuras y artefactos sencillos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 2º Grado (Págs. 34 a la 37) — *Estructura de la carta, signos de puntuación y remitente/destinatario*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria) con la vida comunitaria.
 
-### 📌 SESIÓN 7 (50 min): 3. Construcción de modelos, figuras y artefactos sencillos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 1º y 2º Grado (Págs. 43 a la 46) — *Cuentos, textos epistolares y narraciones infantiles*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
-### 📌 SESIÓN 8 (50 min): 3. Construcción de modelos, figuras y artefactos sencillos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 2º Grado (Págs. 100 a la 103) — *Correspondencia escolar, cartas a la comunidad y buzón postal*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
-### 📌 SESIÓN 9 (50 min): 4. Explicación con nuestras palabras y feria de descubrimientos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º y 2º Grado (Págs. 75 a la 78) — *Producción de textos, cartas personales y dictado colectivo*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
-### 📌 SESIÓN 10 (50 min): 4. Explicación con nuestras palabras y feria de descubrimientos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre lectura compartida en voz alta de cuentos, coplas y rimas infantiles y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Rural y Milpa): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 2º Grado (Págs. 46 a la 49) — *Estructura de la carta, signos de puntuación y remitente/destinatario*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 
 ---
 
-## 📊 IV. Rúbrica Analítica de Evaluación Formativa
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
 
 | Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Dominio Conceptual y Aplicación:** *Lectura compartida en voz alta de cuentos, coplas y rimas infantiles* | Demuestra comprensión profunda del PDA; manipula con destreza el material concreto y resuelve situaciones problemáticas con autonomía y creatividad. | Comprende las ideas esenciales del contenido; utiliza el material manipulativo de forma adecuada con apoyo ocasional del docente. | Muestra dificultad para relacionar el material concreto con el concepto; requiere acompañamiento docente continuo. |
-| **Pensamiento Crítico y Resolución de Retos** | Propone soluciones creativas ante retos cotidianos; explica con sus propias palabras sus procedimientos y formula preguntas curiosas. | Resuelve retos siguiendo las pautas dadas; explica de forma básica cómo llegó al resultado o descubrimiento. | Se limita a repetir procedimientos sin reflexionar sobre el significado o resultado de la actividad. |
-| **Colaboración, Empatía y Producto Entregable** | Trabaja con gran entusiasmo y solidaridad en su equipo; cuida los materiales del aula y completa con excelencia el producto: *Feria de juegos matemáticos tradicionales con dados, taparroscas y tableros*. | Participa activamente en su equipo respetando turnos; entrega su producto en tiempo y forma mostrando dedicación. | Presenta dificultad para colaborar en equipo o concluir su producto; requiere mediación docente para regular su participación. |
+| **Estructura Narrativa y Creatividad Literaria** | Desarrolla una trama original con personajes bien caracterizados, conflicto claro y desenlace creativo, empleando conectores temporales y adjetivos descriptivos. | El relato presenta inicio, desarrollo y final comprensibles, aunque la descripción de personajes es básica. | La narración no tiene una secuencia lógica clara o queda inconclusa. |
+| **Confección del Libro Cartonero y Expresión Plástica** | El libro cartonero está sólidamente encuadernado, con portadas artísticas llamativas e ilustraciones que enriquecen profundamente el texto. | El libro cartonero cumple con los requisitos de armado e ilustración con limpieza y orden. | El encuadernado es frágil o las ilustraciones carecen de relación con el texto. |
+| **Socialización y Lectura en Atril** | Lee con fluidez, modulación de voz adecuada y expresión corporal que cautiva a la audiencia en la tertulia literaria. | Realiza su lectura en voz alta con claridad y volumen audible ante el público. | Muestra inseguridad o tono de voz inaudible durante la presentación oral. |
 
 ---
 
-## 📦 V. Recursos, Materiales y Evidencias Tangibles
-
-- **Materiales Didácticos Manipulativos:** Fichas de colores (decenas y unidades), taparroscas, semillas, regletas Cuisenaire, tangram de madera/plástico, máquina de sumar, balanza de dos platos, dados, tarjetas numéricas y alfabéticas.
-- **Materiales Gráficos y de Arte:** Papel bond, cartulinas de colores, plastilina no tóxica, crayolas, tijeras de punta redonda, pegamento lavable, revistas para recortar y recipientes reciclados.
-- **Instrumentos de Evaluación Docente:** Lista de cotejo de observación directa, rúbrica analítica formativa, diario de campo del docente y semáforo de autoevaluación infantil.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.**.
 
 ---
-
-*Planeación generada y sincronizada automáticamente para el ecosistema educativo ISkool NEM 2024.*
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

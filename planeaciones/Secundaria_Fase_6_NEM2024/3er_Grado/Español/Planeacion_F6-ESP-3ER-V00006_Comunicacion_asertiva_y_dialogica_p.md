@@ -1,126 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, fase6, campo_lenguajes, grado_3er_grado, materia_espanol, metodologia_aprendizaje_basado_en_proyectos_comunitarios_abpc_, contexto_zona_montanosa_y_boscosa]
-id_planeacion: "F6-ESP-3ER-V00006"
-campo_formativo: "Lenguajes"
-materia: "Español"
-grado: "3º de Secundaria"
-nivel: "Secundaria Fase 6 NEM2024"
-tema: "Comunicación asertiva y dialógica para erradicar la violencia"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_espanol, grado_3_de_secundaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-metodologia: "Aprendizaje Basado en Proyectos Comunitarios (ABPC)"
-contexto_comunitario: "Zona Montañosa y Boscosa"
-problematica_situada: "Prevención de incendios forestales, reforestación con especies endémicas y protección de cuencas hidrológicas."
-ejes_articuladores: ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
-duracion: "10 sesiones de 50 minutos (Total: 500 min)"
-fecha_creacion: "2026-08-24T20:08:06.832Z"
+nivel: "secundaria"
+fase_nem: "Fase 6"
+grado: "3º de Secundaria"
+asignatura: "Español"
+campo_formativo: "Lenguajes"
+tema: "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
 # 📚 Proyecto Didáctico Integral: Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)
 
-> [!INFO] **Ficha Técnica Oficial NEM 2024 • ISkool Academic System**
-> - **Docente Titular / Super Usuario:** [[Prof. Israel López Ángeles]] (`usr-teacher-israel`)
-> - **Nivel y Fase Curricular:** 3º de Secundaria • Secundaria Fase 6 NEM2024
-> - **Campo Formativo:** Lenguajes
-> - **Asignatura / Disciplina:** Español
-> - **Metodología Sociocrítica:** Aprendizaje Basado en Proyectos Comunitarios (ABPC)
-> - **Contexto de Aplicación:** Zona Montañosa y Boscosa (Enfoque: *Prevención de incendios forestales, reforestación con especies endémicas y protección de cuencas hidrológicas.*)
-> - **Ejes Articuladores SEP:** Pensamiento Crítico • Apropiación de las Culturas a través de la Lectura y la Escritura
-> - **Temporalidad:** 10 sesiones de 50 min (500 minutos lectivos)
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (3º de Secundaria)  
+> **Campo Formativo:** Lenguajes  
+> **Asignatura:** Español  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-> **"Diseña y difunde textos informativos y proyectos colectivos que sensibilicen sobre la erradicación de la violencia escolar y de género en la comunidad."**
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
+```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
 
-## ❓ II. Preguntas Detonadoras y Conflicto Cognitivo Situado
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
 
-1. **¿De qué manera el contenido de *"Comunicación asertiva y dialógica para erradicar la violencia"* impacta directamente en nuestra vida diaria y en los retos de nuestro entorno (Zona Montañosa y Boscosa)?**
-2. **¿Qué saberes previos de nuestras familias y comunidad podemos rescatar para comprender mejor esta problemática?**
-3. **¿Cómo podemos utilizar el pensamiento crítico y la colaboración para diseñar una solución tangible que transforme nuestra escuela?**
-4. **¿Por qué es fundamental que nuestras propuestas respeten los principios de equidad, inclusión y sustentabilidad comunitaria?**
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
 
----
-
-## ⏱️ III. Secuencia Didáctica Oficial (Desglose en 10 Sesiones de 50 Minutos)
-
-### 📌 FASE 1: Identificación del Problema y Recuperación de Saberes (Sesiones 1 y 2 - 100 min)
-- **Sesión 1: Apertura y Encuadre Cognitivo (50 min)**
-  - *Inicio (10 min):* Presentación de la situación problemática en el contexto Zona Montañosa y Boscosa. El docente Prof. Israel López Ángeles plantea las preguntas detonadoras.
-  - *Desarrollo (30 min):* Lluvia de ideas estructurada y debate guiado sobre experiencias comunitarias vinculadas a: *Prevención de incendios forestales, reforestación con especies endémicas y protección de cuencas hidrológicas.*. Organización de equipos de trabajo colaborativo heterogéneos.
-  - *Cierre (10 min):* Registro de expectativas y formulación del propósito colectivo en el cuaderno de trabajo.
-- **Sesión 2: Diagnóstico y Registro de Saberes Previos (50 min)**
-  - *Inicio (10 min):* Lectura compartida de un texto informativo/crítico relacionado con el PDA.
-  - *Desarrollo (30 min):* Elaboración de un mapa conceptual grupal con los conceptos clave de *"Comunicación asertiva y dialógica para erradicar la violencia"*.
-  - *Cierre (10 min):* Puesta en común y asignación de roles para la fase de indagación.
-
-### 🔬 FASE 2: Indagación, Experimentación y Recolección de Evidencias (Sesiones 3 a 5 - 150 min)
-- **Sesión 3: Búsqueda y Análisis Crítico de Fuentes (50 min)**
-  - *Inicio (10 min):* Definición de preguntas específicas de investigación por equipo.
-  - *Desarrollo (30 min):* Consulta de fuentes impresas, digitales o testimonios orales comunitarios. Registro en fichas de trabajo.
-  - *Cierre (10 min):* Coevaluación del avance de investigación con lista de cotejo.
-- **Sesión 4: Trabajo Experimental / Modelado / Taller Práctico (50 min)**
-  - *Inicio (10 min):* Preparación de materiales y normas de seguridad en el aula o laboratorio.
-  - *Desarrollo (30 min):* Ejecución de dinámicas prácticas, cálculos, experimentos o redacción de borradores orientados al PDA.
-  - *Cierre (10 min):* Sistematización de datos obtenidos y análisis de regularidades o patrones.
-- **Sesión 5: Discusión y Vinculación Interdisciplinar (50 min)**
-  - *Inicio (10 min):* Conexión del tema con los ejes articuladores: *Pensamiento Crítico, Apropiación de las Culturas a través de la Lectura y la Escritura*.
-  - *Desarrollo (30 min):* Mesa de trabajo para relacionar los hallazgos con el contexto socioambiental y los derechos humanos.
-  - *Cierre (10 min):* Elaboración de conclusiones preliminares por escrito.
-
-### 💡 FASE 3: Integración, Creación y Elaboración del Producto (Sesiones 6 a 8 - 150 min)
-- **Sesión 6: Diseño y Bocetaje del Entregable (50 min)**
-  - *Inicio (10 min):* Presentación de criterios de calidad y rúbrica analítica del entregable final.
-  - *Desarrollo (30 min):* Taller creativo en equipos: diseño del primer prototipo o borrador de: *Antología ilustrada de crónicas, relatos orales y ensayos reflexivos*.
-  - *Cierre (10 min):* Retroalimentación formativa inmediata entre pares ("Dos estrellas y un deseo").
-- **Sesión 7: Producción y Consolidación del Trabajo (50 min)**
-  - *Inicio (10 min):* Ajuste de detalles a partir de la retroalimentación recibida.
-  - *Desarrollo (30 min):* Fabricación final, redacción pulida, maquetación o ensayo de la presentación.
-  - *Cierre (10 min):* Verificación de cumplimiento de estándares del PDA oficial.
-- **Sesión 8: Ensayo y Preparación de la Divulgación (50 min)**
-  - *Inicio (10 min):* Organización del espacio de exposición en el aula o patio escolar.
-  - *Desarrollo (30 min):* Ensayo general de presentaciones orales, modulación de voz y manejo de recursos gráficos.
-  - *Cierre (10 min):* Autoevaluación individual del desempeño en el equipo.
-
-### 🌟 FASE 4: Socialización Comunitaria y Evaluación Formativa (Sesiones 9 y 10 - 100 min)
-- **Sesión 9: Presentación Pública y Diálogo Comunitario (50 min)**
-  - *Inicio (10 min):* Bienvenida e introducción del evento de presentación por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Exposición de los proyectos terminados ante la comunidad escolar y padres de familia.
-  - *Cierre (10 min):* Sesión de preguntas, comentarios y diálogo reflexivo con los asistentes.
-- **Sesión 10: Metacognición, Evaluación Integral y Compromisos (50 min)**
-  - *Inicio (10 min):* Dinámica de reflexión individual: "¿Qué aprendí, cómo lo aprendí y para qué me sirve en mi comunidad?".
-  - *Desarrollo (30 min):* Aplicación de la Rúbrica Analítica Formativa y valoración del impacto del producto en el entorno.
-  - *Cierre (10 min):* Firma del mural de compromisos ciudadanos y entrega formal de evidencias al docente.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
 
 ---
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Criterio Curricular NEM | Nivel Sobresaliente (3.5 - 4.0 pts) | Nivel Satisfactorio (2.5 - 3.4 pts) | Nivel En Proceso (1.0 - 2.4 pts) |
+**Problemática Situada:**  
+Falta de medios impresos o digitales escolares donde las niñas y niños puedan comunicar hallazgos, opiniones fundamentadas y propuestas de mejora sobre "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)" para la comunidad.
+
+**Propósito del Proyecto:**  
+Desarrollar habilidades de investigación documental, redacción de textos informativos y argumentativos, y diseño editorial para socializar el tema de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)".
+
+**Impacto Social y Transformador:**  
+Democratiza la información en la escuela, estimula el pensamiento crítico y la libertad de expresión responsable entre las familias.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 55 a la 58) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 80 a la 83) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 61 a la 64) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 86 a la 89) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 67 a la 70) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 92 a la 95) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 73 a la 76) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 98 a la 101) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Comunicación asertiva y dialógica para erradicar la violencia - Variante 6 (Zona Montañosa y Boscosa)"?
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 79 a la 82) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 104 a la 107) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Dominio del PDA Oficial** | Demuestra comprensión profunda y aplicación autónoma del contenido *"Comunicación asertiva y dialógica para erradicar la violencia"*, argumentando con solvencia técnica. | Comprende las ideas esenciales del PDA y las aplica correctamente con guía del docente. | Muestra nociones iniciales del tema pero requiere apoyo continuo para estructurar sus explicaciones. |
-| **Vinculación Situada (Zona Montañosa y Boscosa)** | Conecta de forma crítica y original el aprendizaje con la problemática *"Prevención de incendios forestales, reforestación con especies endémicas y protección de cuencas hidrológicas."*, proponiendo mejoras viables. | Relaciona adecuadamente el tema con situaciones de su entorno escolar o familiar. | Describe el contexto de forma superficial sin conectar plenamente con el tema de estudio. |
-| **Calidad del Entregable Tangible** | El producto (*Antología ilustrada de crónicas, relatos orales y ensayos reflexivos*) es impecable, creativo, riguroso y comunica con impacto a la comunidad. | El producto cumple con la mayoría de los requerimientos formales y comunica con claridad el mensaje. | El producto está incompleto o carece de elementos clave de presentación y contenido. |
-| **Colaboración y Ética Ciudadana** | Ejerce liderazgo positivo, escucha activa, respeto a la diversidad y compromiso solidario en el equipo. | Participa activamente en su equipo respetando los acuerdos y turnos de trabajo. | Presenta dificultades para integrarse al trabajo colaborativo o respetar normas de convivencia. |
+| **Calidad de Redacción, Coherencia y Ortografía** | Textos con excelente cohesión, riqueza de vocabulario, sin faltas ortográficas y adaptados al público lector. | Textos claros y comprensibles con adecuada estructura de párrafos. | Textos con oraciones inconclusas o frecuentes errores ortográficos. |
+| **Diseño Editorial y Apoyos Visuales** | Diseño atractivo, jerarquía visual impecable con títulos llamativos, fotografías y esquemas pertinentes. | Distribución ordenada del contenido e imágenes ilustrativas adecuadas. | Diseño desorganizado o imágenes sin relación con el tema central. |
+| **Exposición y Diálogo con la Comunidad** | Presenta la gaceta con elocuencia, responde preguntas con seguridad y promueve el diálogo crítico. | Explica su artículo con claridad ante sus compañeros y docentes. | Dificultad para resumir oralmente las ideas principales de su texto. |
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Tangibles
-
-### 🛠️ Materiales y Recursos Didácticos
-- Libros de Texto Gratuitos (SEP / NEM 2024), fuentes digitales confiables y ficheros didácticos.
-- Materiales manipulables y de papelería: cartulinas, plumones, reglas graduadas, tijeras, pegamento, hojas recicladas.
-- Recursos tecnológicos: proyector, bocina bluetooth, dispositivos para consulta de fuentes y grabación de audio.
-
-### 📄 Producto Tangible Entregable
-> **Antología ilustrada de crónicas, relatos orales y ensayos reflexivos** enfocado en la resolución situada de: *Prevención de incendios forestales, reforestación con especies endémicas y protección de cuencas hidrológicas.*.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos.**.
 
 ---
-
-## 🔗 Nodos Relacionados y Segundo Cerebro
-- [[00_Indice_Maestro_Secundaria_Fase_6_NEM2024|Índice Maestro Secundaria Fase 6 NEM2024]]
-- [[Prof_Israel_Lopez_Angeles|Perfil del Docente Titular: Prof. Israel López Ángeles]]
-- Etiquetas: #lenguajes • #espanol • #3er_grado • #aprendizaje_basado_en_proyectos_comunitarios_abpc_
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

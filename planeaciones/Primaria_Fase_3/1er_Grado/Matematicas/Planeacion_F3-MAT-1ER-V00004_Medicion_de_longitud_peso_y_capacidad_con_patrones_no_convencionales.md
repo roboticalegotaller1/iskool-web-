@@ -1,214 +1,228 @@
 ---
-title: "Proyecto Didáctico: Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_media, materia_matematicas, grado_1_de_primaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-nivel: "Primaria Baja (Fase 3)"
-fase_nem: "Fase 3"
+nivel: "primaria-media"
+fase_nem: "Fase 4"
 grado: "1º de Primaria"
+asignatura: "Matematicas"
 campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matematicas"
-tema: "Medición de longitud, peso y capacidad con patrones no convencionales"
-codigo_curricular: "F3-MAT-1ER-V00004"
-metodologia: "Aprendizaje Servicio (AS Infantil)"
-contexto_comunitario: "Costero y Ribereño"
-problematica_situada: "Conteo de conchas y caracoles, protección de tortugas marinas y limpieza de la playa escolar."
+tema: "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"
 duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
-ejes_articuladores: ["Artes y Experiencias Estéticas", "Pensamiento Crítico"]
-producto_entregable: "Balanza rústica y registro pictográfico de pesos y medidas de objetos del salón"
-created_at: "2026-08-24"
-updated_at: "2026-08-24"
-tags:
-  - iskool
-  - planeacion_docente
-  - nem_2024
-  - fase_3
-  - 1er_grado
-  - matematicas
-  - profesor_israel_lopez
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# 📚 Proyecto Didáctico Integral: Medición de longitud, peso y capacidad con patrones no convencionales
+# 📚 Proyecto Didáctico Integral: Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)
 
 > **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
-> **Nivel y Fase Educativa:** Educación Primaria Baja • Fase 3 (1º de Primaria)  
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (1º de Primaria)  
 > **Campo Formativo:** Saberes y Pensamiento Científico  
-> **Disciplina / Asignatura:** Matematicas  
-> **Metodología Sociocrítica:** Aprendizaje Servicio (AS Infantil)  
-> **Ejes Articuladores:** Artes y Experiencias Estéticas • Pensamiento Crítico  
-> **Temporalidad:** 10 sesiones de 50 minutos (2 semanas lectivas)  
-> **Producto Central Integrador:** *Balanza rústica y registro pictográfico de pesos y medidas de objetos del salón*  
+> **Asignatura:** Matematicas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
 ```yaml
-PDA: "Estima, mide, compara y ordena longitudes y distancias, pesos y capacidades con el uso de intermediarios no convencionales (pasos, cuartas, listones, clips, recipientes de arena y agua); explica en su lengua materna y en español los resultados obtenidos."
+PDA: "Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" para divulgar en el aula y la escuela."
 ```
+
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Media - Fase 4):**
+- *PDA:* Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" para divulgar en el aula y la escuela.
+- *Vínculo formativo:* Comprensión lectora analítica, redacción en párrafos estructurados y uso correcto de signos de puntuación.
+
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Resuelve situaciones problemáticas vinculadas a "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" mediante operaciones básicas, fracciones, cálculo de áreas y experimentos sencillos.
+- *Vínculo formativo:* Razonamiento lógico-matemático, análisis de datos en tablas y pensamiento indagatorio.
+
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza la diversidad natural y sociocultural de su entidad en torno a "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)", valorando la justicia y los derechos de todos.
+- *Vínculo formativo:* Conocimiento del entorno regional, cuidado del medio ambiente y participación cívica.
+
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña estrategias cooperativas para prevenir riesgos y resolver conflictos escolares al trabajar proyectos sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)".
+- *Vínculo formativo:* Toma de decisiones consensuadas, vida saludable y bienestar socioemocional.
 
 ---
 
-## 🏘️ II. Diagnóstico Comunitario y Situación Problemática
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-En la comunidad escolar (Costero y Ribereño), los estudiantes de 1º de Primaria han observado un reto cotidiano: Conteo de conchas y caracoles, protección de tortugas marinas y limpieza de la playa escolar.. A través del abordaje del tema "Medición de longitud, peso y capacidad con patrones no convencionales", los alumnos se involucrarán de forma activa y lúdica aplicando la metodología de Aprendizaje Servicio (AS Infantil), logrando una experiencia formativa significativa que culminará en el desarrollo de un producto tangible: Balanza rústica y registro pictográfico de pesos y medidas de objetos del salón.
+**Problemática Situada:**  
+Los estudiantes requieren fortalecer el razonamiento lógico-matemático aplicado a situaciones de la vida real relacionadas con "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" para resolver retos del entorno.
 
-### Preguntas Detonadoras del Proyecto:
-1. ¿De qué manera el aprendizaje de **Medición de longitud, peso y capacidad con patrones no convencionales** nos ayuda a comprender mejor el mundo que nos rodea y convivir en armonía?
-2. ¿Cómo podemos resolver juntos el reto comunitario: *Conteo de conchas y caracoles, protección de tortugas marinas y limpieza de la playa escolar.* usando material concreto y la creatividad del grupo?
-3. ¿Por qué es importante colaborar en equipo con respeto, empatía y alegría en cada juego y actividad?
+**Propósito del Proyecto:**  
+Aplicar conceptos matemáticos, cálculo y modelación para diseñar soluciones cuantitativas y juegos didácticos interactivos.
+
+**Impacto Social y Transformador:**  
+Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y relevante para toda la comunidad escolar.
 
 ---
 
 ## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
 
-### 📌 SESIÓN 1 (50 min): 1. Punto de partida: Miramos lo que necesita nuestra escuela o salón
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 137 a la 140) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)".
 
-### 📌 SESIÓN 2 (50 min): 1. Punto de partida: Miramos lo que necesita nuestra escuela o salón
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 62 a la 65) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
-### 📌 SESIÓN 3 (50 min): 2. Organización del plan de ayuda con apoyo de la maestra o maestro
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 121 a la 124) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
-### 📌 SESIÓN 4 (50 min): 2. Organización del plan de ayuda con apoyo de la maestra o maestro
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 146 a la 149) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
-### 📌 SESIÓN 5 (50 min): 2. Organización del plan de ayuda con apoyo de la maestra o maestro
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 71 a la 74) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
-### 📌 SESIÓN 6 (50 min): 3. Manos a la obra: Realizamos la acción solidaria en la escuela
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 130 a la 133) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria) con la vida comunitaria.
 
-### 📌 SESIÓN 7 (50 min): 3. Manos a la obra: Realizamos la acción solidaria en la escuela
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 155 a la 158) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
-### 📌 SESIÓN 8 (50 min): 3. Manos a la obra: Realizamos la acción solidaria en la escuela
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 80 a la 83) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
-### 📌 SESIÓN 9 (50 min): 4. Celebración del aprendizaje y agradecimientos colectivos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 139 a la 142) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
-### 📌 SESIÓN 10 (50 min): 4. Celebración del aprendizaje y agradecimientos colectivos
-- **⏱️ Inicio (10 min):**
-  - Recuperación lúdica de saberes previos con material concreto, dinámicas de movimiento, ronda o pregunta detonadora: *"¿Qué sabemos sobre medición de longitud, peso y capacidad con patrones no convencionales y cómo lo usamos en nuestra casa o escuela?"*.
-  - Organización del salón en parejas o equipos colaborativos mixtos ("Pequeños Investigadores") y presentación del objetivo lúdico de la sesión.
-- **🔬 Desarrollo (30 min):**
-  - **Actividad Situada Principal:** Exploración manipulativa guiada utilizando materiales didácticos concretos (regletas Cuisenaire, fichas de colores de decenas y unidades, máquina de sumar, tangram, títeres o tarjetas ilustradas).
-  - Modelado y resolución colectiva de problemas contextualizados a la comunidad (Costero y Ribereño): los alumnos registran sus descubrimientos en su libreta con dibujos, tablas de conteo o textos breves.
-  - Dinámica interactiva: estaciones de aprendizaje lúdico donde cada equipo prueba hipótesis, experimenta y colabora activamente.
-- **🌟 Cierre (10 min):**
-  - Puesta en común en semicírculo: cada equipo comparte un hallazgo o solución al reto del día.
-  - Reflexión metacognitiva infantil: *"¿Qué aprendí hoy jugando?", "¿Qué fue lo más fácil y en qué necesité ayuda de mi compañero?"*.
-  - Registro en el semáforo de autoevaluación y resguardo ordenado del material concreto.
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Medición de longitud, peso y capacidad con patrones no convencionales (1º de Primaria)" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 164 a la 167) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 
 ---
 
-## 📊 IV. Rúbrica Analítica de Evaluación Formativa
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
 
 | Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Dominio Conceptual y Aplicación:** *Medición de longitud, peso y capacidad con patrones no convencionales* | Demuestra comprensión profunda del PDA; manipula con destreza el material concreto y resuelve situaciones problemáticas con autonomía y creatividad. | Comprende las ideas esenciales del contenido; utiliza el material manipulativo de forma adecuada con apoyo ocasional del docente. | Muestra dificultad para relacionar el material concreto con el concepto; requiere acompañamiento docente continuo. |
-| **Pensamiento Crítico y Resolución de Retos** | Propone soluciones creativas ante retos cotidianos; explica con sus propias palabras sus procedimientos y formula preguntas curiosas. | Resuelve retos siguiendo las pautas dadas; explica de forma básica cómo llegó al resultado o descubrimiento. | Se limita a repetir procedimientos sin reflexionar sobre el significado o resultado de la actividad. |
-| **Colaboración, Empatía y Producto Entregable** | Trabaja con gran entusiasmo y solidaridad en su equipo; cuida los materiales del aula y completa con excelencia el producto: *Balanza rústica y registro pictográfico de pesos y medidas de objetos del salón*. | Participa activamente en su equipo respetando turnos; entrega su producto en tiempo y forma mostrando dedicación. | Presenta dificultad para colaborar en equipo o concluir su producto; requiere mediación docente para regular su participación. |
+| **Precisión en Procedimientos y Cálculos Matemáticos** | Aplica algoritmos y razonamiento lógico sin errores, justificando con claridad cada paso de la solución. | Resuelve los problemas matemáticos correctamente con procedimientos comprensibles. | Presenta errores constantes de cálculo o dificultad para elegir la operación adecuada. |
+| **Diseño y Funcionalidad del Material Manipulable** | El material didáctico es innovador, resistente, estético y facilita la comprensión inmediata del concepto. | El material es funcional y permite resolver los retos de forma ordenada. | El material es frágil o confuso para los usuarios. |
+| **Conducción de la Estación y Mediación Lúdica** | Guía con paciencia, entusiasmo y claridad pedagógica a los participantes de su estación en la feria. | Explica las reglas del juego y acompaña a los participantes con amabilidad. | Muestra dificultad para explicar la dinámica o desinterés en la atención de su estación. |
 
 ---
 
-## 📦 V. Recursos, Materiales y Evidencias Tangibles
-
-- **Materiales Didácticos Manipulativos:** Fichas de colores (decenas y unidades), taparroscas, semillas, regletas Cuisenaire, tangram de madera/plástico, máquina de sumar, balanza de dos platos, dados, tarjetas numéricas y alfabéticas.
-- **Materiales Gráficos y de Arte:** Papel bond, cartulinas de colores, plastilina no tóxica, crayolas, tijeras de punta redonda, pegamento lavable, revistas para recortar y recipientes reciclados.
-- **Instrumentos de Evaluación Docente:** Lista de cotejo de observación directa, rúbrica analítica formativa, diario de campo del docente y semáforo de autoevaluación infantil.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.**.
 
 ---
-
-*Planeación generada y sincronizada automáticamente para el ecosistema educativo ISkool NEM 2024.*
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

@@ -1,90 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_etica_naturaleza_y_sociedades, grado_6to_grado, materia_geografia, fase5_primaria]
-campo_formativo: "Ética, Naturaleza y Sociedades"
-materia: "Geografía / Formación Cívica"
-grado: "6º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Migración interna y externa: causas, consecuencias y derechos humanos"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_geografia_formacion_civica, grado_6_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.791Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "6º de Primaria"
+asignatura: "Geografía / Formación Cívica"
+campo_formativo: "Ética, Naturaleza y Sociedades"
+tema: "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos
+# 📚 Proyecto Didáctico Integral: Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 6º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Ética, Naturaleza y Sociedades
-> - **Asignatura / Área:** Geografía / Formación Cívica
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Inclusión • Pensamiento Crítico • Interculturalidad Crítica
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (6º Primaria) - Reconoce los flujos migratorios en los que hay mayor cantidad de emigrantes en el mundo, identificando países de origen y de destino. Explica causas y consecuencias sociales, culturales, económicas, políticas y ambientales de la migración, en casos específicos en el mundo, mediante el análisis de noticias, documentales y testimonios de migrantes internacionales. Ubica en mapas, las rutas que siguen los migrantes, desde su lugar de origen, hasta su destino. Dialoga acerca de cómo se sienten las personas al ser obligadas a abandonar su lugar de origen, dejando atrás su patrimonio y su forma de vida. Dialoga y elabora juicios éticos acerca de los derechos de las personas migrantes.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Cuáles son las causas forzadas (pobreza extrema, sequías por cambio climático, violencia, guerras) que obligan a familias enteras a dejar su patria?**
-
-2. **¿Cuáles son las principales rutas migratorias del mundo (Centroamérica hacia México-EE.UU., África hacia Europa, Medio Oriente)?**
-
-3. **¿Por qué NINGÚN ser humano es ilegal y cuáles son los tratados internacionales que protegen a los niños migrantes y refugiados?**
-
-4. **¿Cómo podemos erradicar la discriminación y la xenofobia hacia las personas migrantes que transitan o se establecen en nuestra comunidad?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (6º de Primaria)  
+> **Campo Formativo:** Ética, Naturaleza y Sociedades  
+> **Asignatura:** Geografía / Formación Cívica  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Dinámica de Empatía "La Maleta del Migrante": El docente muestra una mochila pequeña y pregunta: "Si tuvieran que abandonar su casa en 10 minutos para caminar miles de kilómetros hacia un país desconocido... ¿qué 3 cosas indispensables empacarían?".
-2. Pregunta detonadora: "¿Por qué migrar es un derecho humano y no un delito?".
-3. Definición de conceptos: Emigrante, Inmigrante, Refugiado, Asilado y Derechos Humanos Universales.
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Mapeo y Testimonios en Equipos de 4:
-   • Análisis Cartográfico: Trazan en un planisferio los grandes corredores migratorios globales y la ruta de tránsito por México hacia la frontera norte.
-   • Análisis Testimonial: Leen testimonios reales de niñas y niños migrantes en albergues humanitarios.
-   • Identifican los peligros del trayecto (trata de personas, extorsión, desierto, barreras burocráticas).
-2. Redacción de la "Declaración Escolar de Solidaridad y Acogida al Migrante".
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Plenaria: Construcción colectiva del "Mural de la Hospitalidad sin Fronteras".
-2. Metacognición: "¿Cómo me gustaría que me trataran a mí y a mi familia si tuviéramos que migrar a otro país?".
-3. Entrega de evidencia: Planisferio de flujos migratorios y manifiesto de derechos humanos.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Comprensión Geográfica y Causas Multifactoriales (Sobresaliente [3.5 pts]: Identifica rutas, países de origen/destino y causas económicas, bélicas y climáticas con rigor | Satisfactorio [2.5 pts]: Ubica rutas con causas generales | En Proceso [1.5 pts]: Confunde países o conceptos migratorios).
-• Criterio 2 - Juicio Ético y Defensa de los Derechos Humanos (Sobresaliente [3.5 pts]: Argumenta con solidez los tratados de protección a refugiados y la no discriminación | Satisfactorio [2.5 pts]: Expresa empatía básica | En Proceso [1.5 pts]: Reproduce prejuicios xenófobos).
-• Criterio 3 - Expresión Cartográfica y Empatía Testimonial (Sobresaliente [3 pts]: Planisferio con simbología impecable y propuesta de acogida humanitaria | Satisfactorio [2 pts]: Mapa completo | En Proceso [1 pt]: Mapa incompleto).
-• Instrumento: Rúbrica de geografía humana y derechos internacionales.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-• Planisferios del mundo con división política y mapa de la República Mexicana.
-• Testimonios adaptados de ACNUR y UNICEF sobre niñez en movilidad.
-• Plumones y gises para el Mural de la Hospitalidad.
+**Problemática Situada:**  
+Necesidad de fomentar la curiosidad científica, la indagación sistemática y la aplicación de saberes escolares para entender y transformar fenómenos relacionados con "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
 
-### Evidencia de Aprendizaje Entregable
-**Planisferio Temático de Rutas Migratorias Globales y Manifiesto de Derechos Humanos de las Personas en Movilidad.**
+**Propósito del Proyecto:**  
+Diseñar y ejecutar una investigación experimental y de campo que culmine en prototipos funcionales y propuestas sustentables para la comunidad.
+
+**Impacto Social y Transformador:**  
+Promueve el pensamiento científico, la resolución de problemas locales y la participación ciudadana informada.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 47 a la 50) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 96 a la 99) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 53 a la 56) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 102 a la 105) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 59 a la 62) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 108 a la 111) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 65 a la 68) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 114 a la 117) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 71 a la 74) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Caminos de Esperanza: Geografía de la Migración, Empatía y Protección de los Derechos Humanos" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 120 a la 123) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Metodología de Indagación y Rigor Conceptual** | Plantea hipótesis claras, registra datos experimentales con precisión y formula conclusiones sólidas basadas en evidencia. | Sigue los pasos del método experimental y presenta resultados ordenados. | El registro de datos es incompleto o las conclusiones carecen de sustento. |
+| **Calidad del Prototipo y Presentación Visual** | El prototipo es funcional, seguro, creativo y está acompañado de infografías científicas de alta calidad. | El prototipo funciona adecuadamente y los apoyos visuales son claros. | El prototipo no funciona o la presentación visual es descuidada. |
+| **Divulgación Científica y Comunicación Oral** | Comunica conceptos científicos complejos con sencillez, elocuencia y dominio ante audiencias diversas. | Explica su experimento con claridad y vocabulario científico adecuado. | Dificultad para explicar el funcionamiento o la utilidad de su investigación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

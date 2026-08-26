@@ -1,91 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_5to_grado, materia_ciencias_naturales, fase5_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Ciencias Naturales"
-grado: "5º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Alimentación saludable: características de la dieta correcta y riesgos de los ultraprocesados"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_ciencias_naturales, grado_5_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.753Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "5º de Primaria"
+asignatura: "Ciencias Naturales"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas
+# 📚 Proyecto Didáctico Integral: El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 5º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Ciencias Naturales
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Vida Saludable • Pensamiento Crítico
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (5º Primaria) - Explica las características de la dieta correcta: variada, completa, equilibrada, inocua, suficiente, y las contrasta con sus hábitos de alimentación para tomar decisiones en beneficio de su salud. Indaga posibles riesgos de los hábitos de alimentación personales y familiares, como diabetes, hipertensión, colesterol elevado, entre otros; propone posibles cambios en su alimentación a partir de las alternativas que están disponibles en su localidad y en las prácticas de higiene relacionadas con la preparación y consumo de alimentos. Describe de dónde provienen y cómo se producen o procesan los alimentos que consume y los beneficios nutrimentales que estos tienen; diseña distintos menús basados en las características de la dieta correcta.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Qué significan exactamente los 5 pilares de una dieta correcta: Completa, Equilibrada, Variada, Suficiente e Inocua?**
-
-2. **¿Por qué la milpa mexicana (maíz, frijol, calabaza, chile y quelites) es reconocida mundialmente como uno de los sistemas alimentarios más nutritivos y sustentables?**
-
-3. **¿Cómo provocan las bebidas azucaradas y las frituras ultraprocesadas la resistencia a la insulina y la diabetes infantil?**
-
-4. **¿Qué podemos comprar en el tianguis o mercado local por el mismo dinero que gastamos en una bolsa de papas fritas y un refresco?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (5º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Ciencias Naturales  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Desafío "La Báscula del Azúcar Oculto": El docente coloca frente al grupo una botella de néctar comercial de 500 ml, una bolsa de galletas rellenas y un refresco, al lado de montoncitos de cucharadas de azúcar real que contienen (ej. 14 cucharadas para el refresco).
-2. Pregunta detonadora: "¿Si supiéramos que estamos comiendo 14 cucharadas de azúcar en 5 minutos, nos la comeríamos? ¿Por qué la industria oculta estos ingredientes con saborizantes y colorantes?".
-3. Activación de conocimientos sobre el Plato del Bien Comer y la Jarra del Buen Beber.
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Auditoría de Desayunos Escolares en Equipos:
-   • Los alumnos analizan lo que desayunaron durante los últimos 3 días clasificando en 4 cuadrantes: Alimentos Frescos, Mínimamente Procesados, Procesados y Ultraprocesados.
-   • Identifican carencias de fibra, micronutrientes y exceso de sodio y grasas trans.
-2. Diseño del Menú de la Milpa Saludable y Económico:
-   • Diseñan un menú escolar semanal completo (Desayuno, Colación y Comida) utilizando ingredientes de la región a bajo costo (tlacoyos de frijol con nopales, agua fresca de limón con chía, fruta de temporada con chile piquín casero).
-3. Elaboración del Decálogo de Inocuidad e Higiene en la Cocina Familiar.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Presentación de Menús Saludables por equipos en el "Restaurante de la Salud Escolar".
-2. Metacognición: "¿Qué alimento chatarra puedo eliminar voluntariamente de mi dieta a partir de hoy?".
-3. Entrega de evidencia: Menú semanal equilibrado con tabla de costos y beneficios nutrimentales.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Dominio de las Características de la Dieta Correcta (Sobresaliente [3.5 pts]: Diseña menús que cumplen al 100% con los 5 criterios de la dieta correcta y la Jarra del Buen Beber | Satisfactorio [2.5 pts]: Menú balanceado con detalles menores | En Proceso [1.5 pts]: Incluye alimentos ultraprocesados o carece de variedad).
-• Criterio 2 - Análisis Crítico de Riesgos a la Salud (Sobresaliente [3.5 pts]: Argumenta con solvencia la relación entre ultraprocesados, diabetes, hipertensión y caries | Satisfactorio [2.5 pts]: Reconoce que la chatarra daña la salud | En Proceso [1.5 pts]: Desconoce el impacto metabólico de los azúcares).
-• Criterio 3 - Rescate de Alimentos Locales y Economía Familiar (Sobresaliente [3 pts]: Propone ingredientes de temporada accesibles basados en la milpa | Satisfactorio [2 pts]: Propone ingredientes comunes | En Proceso [1 pt]: Opciones costosas o inaccesibles).
-• Instrumento: Rúbrica de educación nutricional y salud preventiva.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-• Empaques con sellos de advertencia NOM-051.
-• Guías impresas del Plato del Bien Comer y la Dieta de la Milpa (Secretaría de Salud).
-• Báscula gramera y bolsas con sal y azúcar para demostración.
+**Problemática Situada:**  
+Necesidad de fomentar la curiosidad científica, la indagación sistemática y la aplicación de saberes escolares para entender y transformar fenómenos relacionados con "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
 
-### Evidencia de Aprendizaje Entregable
-**Guía Menú Semanal Ilustrado "La Cocina de la Milpa: Saludable, Rica y Económica".**
+**Propósito del Proyecto:**  
+Diseñar y ejecutar una investigación experimental y de campo que culmine en prototipos funcionales y propuestas sustentables para la comunidad.
+
+**Impacto Social y Transformador:**  
+Promueve el pensamiento científico, la resolución de problemas locales y la participación ciudadana informada.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 174 a la 177) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 127 a la 130) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 180 a la 183) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 133 a la 136) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 186 a la 189) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 139 a la 142) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 192 a la 195) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 145 a la 148) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 198 a la 201) — *Biodigestores, huellas ecológicas y energías renovables*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "El Plato del Buen Comer y la Dieta de la Milpa: Nutrición Consciente contra Enfermedades Crónicas" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 151 a la 154) — *Sistemas del cuerpo humano, biodiversidad y energías limpias*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Metodología de Indagación y Rigor Conceptual** | Plantea hipótesis claras, registra datos experimentales con precisión y formula conclusiones sólidas basadas en evidencia. | Sigue los pasos del método experimental y presenta resultados ordenados. | El registro de datos es incompleto o las conclusiones carecen de sustento. |
+| **Calidad del Prototipo y Presentación Visual** | El prototipo es funcional, seguro, creativo y está acompañado de infografías científicas de alta calidad. | El prototipo funciona adecuadamente y los apoyos visuales son claros. | El prototipo no funciona o la presentación visual es descuidada. |
+| **Divulgación Científica y Comunicación Oral** | Comunica conceptos científicos complejos con sencillez, elocuencia y dominio ante audiencias diversas. | Explica su experimento con claridad y vocabulario científico adecuado. | Dificultad para explicar el funcionamiento o la utilidad de su investigación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

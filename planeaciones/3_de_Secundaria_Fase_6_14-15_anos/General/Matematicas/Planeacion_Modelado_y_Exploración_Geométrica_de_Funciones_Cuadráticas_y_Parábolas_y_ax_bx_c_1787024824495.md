@@ -1,81 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, nivel_3_de_secundaria_fase_6_14-15_anos, grado_general, materia_matematicas]
-nivel: "3º de Secundaria • Fase 6 (14-15 años)"
-grado: ""
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_matematicas, grado_no_especificado]
+docente: "Prof. Israel López Ángeles"
+nivel: "secundaria"
+fase_nem: "Fase 6"
+grado: "No especificado"
 asignatura: "Matemáticas"
 campo_formativo: "Saberes y Pensamiento Científico"
-fecha_creacion: "18 de agosto de 2026"T03:47:04.495Z"
+tema: "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)
+# 📚 Proyecto Didáctico Integral: Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)
 
-**Docente:** Prof. Israel López Ángeles  
-**Nivel / Fase:** 3º de Secundaria • Fase 6 (14-15 años)  
-**Grado:** No especificado  
-**Asignatura:** Matemáticas  
-**Campo Formativo:** Saberes y Pensamiento Científico  
-**Duración:** 2 sesiones de 50 minutos (Total: 100 min)  
-**PDA:** Fase 6 (3º Secundaria) - Modela y resuelve problemas de la vida cotidiana y fenómenos físicos mediante funciones cuadráticas y parábolas (y = ax² + bx + c). Analiza e interpreta las características de la gráfica: vértice, eje de simetría, concavidad e intersecciones cartesianas.  
-
----
-
-## Preguntas Detonadoras para el Salón
-1. ¿Por qué la trayectoria de un chorro de agua de una manguera o el tiro libre de baloncesto traza una curva simétrica y nunca viaja en línea recta?
-2. ¿Qué significado físico tiene el vértice de una parábola cuando lanzamos un cohete o calculamos la ganancia máxima de un producto comercial?
-3. ¿Cómo cambia la abertura y orientación de la parábola si el valor del coeficiente "a" en y = ax² es positivo, negativo o una fracción?
-4. ¿Por qué los puentes colgantes, las antenas receptoras de satélite y los faros de automóviles utilizan formas parabólicas?
-
----
-
-## Secuencia Didáctica (Dosificación por Bloques de 50 min)
-
-### Inicio
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Conflicto Cognitivo Visual: Proyectar o mostrar imágenes de puentes colgantes (Golden Gate), antenas satelitales y tiros libres de basquetbol.
-2. Pregunta Detonadora Central: "¿Por qué el balón sube, se desacelera hasta un punto cumbre y vuelve a descender con la misma curvatura exacta?".
-3. Recuperación de Saberes Previos: Lluvia de ideas guiada sobre el plano cartesiano, pares ordenados (x, y) y la diferencia visual entre una relación lineal (línea recta) y una relación cuadrática (curva).
-
-### Desarrollo
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Tabulación Comparativa en Parejas: Los alumnos completan una tabla evaluando valores de "x" desde -3 hasta +3 para tres funciones cuadráticas:
-   • f(x) = x²
-   • g(x) = 2x² (más estrecha)
-   • h(x) = -x² (invertida hacia abajo)
-2. Construcción Gráfica en Papel Milimétrico: Trazar los pares ordenados y unirlos con trazo curvo continuo (sin usar regla recta entre puntos). Identificar y rotular con colores el Vértice V(0,0) y el Eje de Simetría (recta x = 0).
-3. Modelado de un Problema Real de Tiro Parabólico: Se plantea la función de altura h(t) = -5t² + 20t (altura en metros respecto al tiempo en segundos). En equipos calculan:
-   • ¿En qué segundo alcanza la altura máxima? (Vértice en t = 2 s, h = 20 metros).
-   • ¿Cuánto tiempo dura el vuelo total hasta tocar el suelo? (Raíces en t = 0 s y t = 4 s).
-
-### Cierre
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Plenaria y Formalización Matemática: Síntesis colectiva en el pizarrón: definición rigurosa de Vértice, Concavidad (si a > 0 abre hacia arriba y tiene mínimo; si a < 0 abre hacia abajo y tiene máximo), Eje de Simetría y Raíces.
-2. Metacognición en Bitácora: Responder individualmente: "¿Cómo puedo saber si una parábola tiene punto máximo o mínimo con solo ver el signo del coeficiente principal a?".
-3. Entrega de Evidencia: Recolección de la hoja de trabajo formal con la tabulación y la gráfica rotulada.
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (No especificado)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matemáticas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-### Evaluación Formativa y Rúbrica Analítica
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Modelado Algebraico y Tabulación:
-  - Sobresaliente (3 pts): Evalúa correctamente potencias y signos de x de -3 a 3 sin errores.
-  - Satisfactorio (2 pts): Comete 1 error menor de cálculo pero mantiene el procedimiento lógico.
-  - En Proceso (1 pt): Muestra dificultad al elevar números negativos al cuadrado (ej. (-2)² = -4).
-• Criterio 2 - Interpretación y Trazo Gráfico:
-  - Sobresaliente (3 pts): Traza una curva parabólica suave, ubica con exactitud el vértice y traza el eje de simetría.
-  - Satisfactorio (2 pts): Grafica los puntos pero el trazo es angulado o confunde el eje de simetría.
-  - En Proceso (1 pt): Une los puntos con líneas rectas tipo zigzag.
-• Criterio 3 - Aplicación al Tiro Parabólico:
-  - Sobresaliente (4 pts): Interpreta el significado físico del vértice como altura máxima y las raíces como inicio y fin del vuelo.
-  - Satisfactorio (2.5 pts): Obtiene los valores numéricos pero no explica su significado físico.
-  - En Proceso (1 pt): No logra plantear los valores en la función h(t).
-• Instrumento: Rúbrica analítica y lista de cotejo coevaluativa de clase.
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### Materiales, Recursos y Evidencias Entregables
-📦 MATERIALES DIDÁCTICOS:
-• Papel milimétrico tamaño carta, regla de 30 cm, lápices de colores o plumines finos.
-• Calculadora científica básica o celular con calculadora.
-• Hojas de trabajo impresas "El Vértice de la Realidad".
-• Proyector o tabletas con simulador web GeoGebra / PhET (Simulación de Tiro de Proyectiles).
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
+```
 
-📄 EVIDENCIA ENTREGABLE DE LA CLASE:
-• Producto Individual/Parejas: Hoja de trabajo con la tabulación de 3 funciones cuadráticas, gráfica a escala con vértice y eje de simetría rotulados, y la resolución analítica del problema de tiro parabólico.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
+
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
+
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
+
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
+
+---
+
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
+
+**Problemática Situada:**  
+Los estudiantes requieren fortalecer el razonamiento lógico-matemático aplicado a situaciones de la vida real relacionadas con "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)" para resolver retos del entorno.
+
+**Propósito del Proyecto:**  
+Aplicar conceptos matemáticos, cálculo y modelación para diseñar soluciones cuantitativas y juegos didácticos interactivos.
+
+**Impacto Social y Transformador:**  
+Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y relevante para toda la comunidad escolar.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 142 a la 145) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 93 a la 96) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 148 a la 151) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 99 a la 102) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 154 a la 157) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 105 a la 108) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 160 a la 163) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 111 a la 114) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Modelado y Exploración Geométrica de Funciones Cuadráticas y Parábolas (y = ax² + bx + c)"?
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 166 a la 169) — *Modelación algebraica y resolución de problemas situados*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 117 a la 120) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Precisión en Procedimientos y Cálculos Matemáticos** | Aplica algoritmos y razonamiento lógico sin errores, justificando con claridad cada paso de la solución. | Resuelve los problemas matemáticos correctamente con procedimientos comprensibles. | Presenta errores constantes de cálculo o dificultad para elegir la operación adecuada. |
+| **Diseño y Funcionalidad del Material Manipulable** | El material didáctico es innovador, resistente, estético y facilita la comprensión inmediata del concepto. | El material es funcional y permite resolver los retos de forma ordenada. | El material es frágil o confuso para los usuarios. |
+| **Conducción de la Estación y Mediación Lúdica** | Guía con paciencia, entusiasmo y claridad pedagógica a los participantes de su estación en la feria. | Explica las reglas del juego y acompaña a los participantes con amabilidad. | Muestra dificultad para explicar la dinámica o desinterés en la atención de su estación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria de Retos y Juegos Matemáticos con estaciones interactivas, modelos manipulables y guía de resolución de problemas elaborada por los estudiantes.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

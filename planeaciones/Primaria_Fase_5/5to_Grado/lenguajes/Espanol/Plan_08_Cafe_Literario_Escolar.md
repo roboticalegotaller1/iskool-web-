@@ -1,92 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_lenguajes, grado_5to_grado, materia_espanol, fase5_primaria]
-campo_formativo: "Lenguajes"
-materia: "Español"
-grado: "5º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Análisis de cuentos y poemas para su disfrute y comprensión"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_espanol, grado_5_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.740Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "5º de Primaria"
+asignatura: "Español"
+campo_formativo: "Lenguajes"
+tema: "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos
+# 📚 Proyecto Didáctico Integral: Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 5º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Lenguajes
-> - **Asignatura / Área:** Español
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Artes y Experiencias Estéticas • Apropiación de las Culturas a través de la Lectura y la Escritura
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (5º Primaria) - Lee y selecciona cuentos y poemas mexicanos a partir de sus intereses y gustos, y comparte los motivos de su elección. Analiza cuentos y poemas, y expresa oralmente sus interpretaciones de estos. Distingue las características tanto de cuentos como de poemas. Organiza y participa en un recital literario en el que lee en voz alta cuentos y poemas para la comunidad escolar. Crea poemas y cuentos en colectivo a partir de historias propias, familiares o populares.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Qué distingue la estructura de un poema (versos, estrofas, rima, ritmo) de la estructura narrativa de un cuento (inicio, nudo, desenlace)?**
-
-2. **¿Cómo logran autores mexicanos como Octavio Paz, Rosario Castellanos o Amado Nervo hacernos sentir tristeza, asombro o alegría con pocas palabras?**
-
-3. **¿Qué recursos de la voz (volumen, pausas, énfasis, entonación) debemos dominar para recitar un poema frente a un público?**
-
-4. **¿Cómo podemos transformar una anécdota familiar divertida en un cuento de ficción emocionante?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (5º de Primaria)  
+> **Campo Formativo:** Lenguajes  
+> **Asignatura:** Español  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Ambientación de Café Literario: Música suave de guitarra mexicana y lectura en voz alta por el docente del poema "La higuera" de Juana de Ibarbourou o fragmentos de Nezahualcóyotl.
-2. Pregunta detonadora: "¿Qué imágenes vinieron a su mente al escuchar estos versos? ¿Qué diferencia sintieron con respecto a la lectura de una noticia?".
-3. Contrastación en tabla comparativa: Cuento (prosa, personajes, trama) vs Poema (verso, musicalidad, metáfora).
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Creación Poética y Narrativa en Equipos:
-   • Los alumnos eligen trabajar en un Poema Colectivo en cuartetas (rimas AABB o ABAB) o un Microcuento de tradición popular.
-   • Aplican figuras retóricas:
-     - Metáforas ("El sol es una moneda de oro en el cielo").
-     - Personificación ("El viento silba canciones entre los árboles").
-2. Laboratorio de Expresión Oral y Modulación:
-   • Ensayos en parejas de lectura en atril marcando pausas con signos de puntuación, modulando tonos graves y agudos y proyectando la voz sin gritar.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Mini-Recital "Micrófono de Oro": 3 parejas presentan su creación poética al grupo recibiendo ovación y retroalimentación cálida.
-2. Metacognición: "¿Qué emoción fue la más fácil y cuál la más difícil de expresar en verso?".
-3. Entrega de evidencia: Manuscrito ilustrado del poema o cuento colectivo.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Comprensión y Creación Literaria (Sobresaliente [3.5 pts]: Construye textos con dominio de rima, métrica y metáforas originales | Satisfactorio [2.5 pts]: Texto coherente con rimas sencillas | En Proceso [1.5 pts]: Dificultad para estructurar versos o tramas).
-• Criterio 2 - Expresión y Modulación Oral en Recital (Sobresaliente [3.5 pts]: Proyección de voz, dicción impecable, pausas emotivas y contacto visual | Satisfactorio [2.5 pts]: Lectura fluida con modulación básica | En Proceso [1.5 pts]: Lectura monótona o inaudible).
-• Criterio 3 - Trabajo Colectivo y Apreciación Estética (Sobresaliente [3 pts]: Colabora armónicamente y valora la producción de sus compañeros | Satisfactorio [2 pts]: Participa con apoyo | En Proceso [1 pt]: Trabajo individualista).
-• Instrumento: Rúbrica de expresión estética y declamación poética.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-• Antologías de poesía y cuentos mexicanos infantiles.
-• Hojas pergamino o cartulinas decoradas.
-• Atril o soporte de lectura y micrófono simulado.
+**Problemática Situada:**  
+Se ha detectado una pérdida paulatina de la tradición oral comunitaria y un escaso hábito de creación literaria autónoma en la infancia, lo que limita el desarrollo de la imaginación y la comprensión lectora.
 
-### Evidencia de Aprendizaje Entregable
-**Página ilustrada para la "Antología Poética del Grupo 5º" y participación activa en el Recital Literario.**
+**Propósito del Proyecto:**  
+Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa (inicio, desarrollo, nudo y desenlace).
+
+**Impacto Social y Transformador:**  
+Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 52 a la 55) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 107 a la 110) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 58 a la 61) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 113 a la 116) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 64 a la 67) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 119 a la 122) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 70 a la 73) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 125 a la 128) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 76 a la 79) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Café Literario Escolar: Recital y Antología de Cuentos y Poemas Mexicanos" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 131 a la 134) — *Periódico escolar digital y mesas redondas*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Estructura Narrativa y Creatividad Literaria** | Desarrolla una trama original con personajes bien caracterizados, conflicto claro y desenlace creativo, empleando conectores temporales y adjetivos descriptivos. | El relato presenta inicio, desarrollo y final comprensibles, aunque la descripción de personajes es básica. | La narración no tiene una secuencia lógica clara o queda inconclusa. |
+| **Confección del Libro Cartonero y Expresión Plástica** | El libro cartonero está sólidamente encuadernado, con portadas artísticas llamativas e ilustraciones que enriquecen profundamente el texto. | El libro cartonero cumple con los requisitos de armado e ilustración con limpieza y orden. | El encuadernado es frágil o las ilustraciones carecen de relación con el texto. |
+| **Socialización y Lectura en Atril** | Lee con fluidez, modulación de voz adecuada y expresión corporal que cautiva a la audiencia en la tertulia literaria. | Realiza su lectura en voz alta con claridad y volumen audible ante el público. | Muestra inseguridad o tono de voz inaudible durante la presentación oral. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

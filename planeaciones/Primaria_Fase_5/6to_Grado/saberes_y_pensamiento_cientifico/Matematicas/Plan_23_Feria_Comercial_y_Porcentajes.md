@@ -1,96 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_6to_grado, materia_matematicas, fase5_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matemáticas"
-grado: "6º de Primaria"
-nivel: "Primaria (Fase 5)"
-tema: "Relaciones de proporcionalidad, valor unitario y cálculo de porcentajes (50%, 25%, 10%, 1%)"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_alta, materia_matematicas, grado_6_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:32:32.773Z"
+nivel: "primaria-alta"
+fase_nem: "Fase 5"
+grado: "6º de Primaria"
+asignatura: "Matemáticas"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado
+# 📚 Proyecto Didáctico Integral: Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 5)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 6º de Primaria • Fase 5 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Matemáticas
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Pensamiento Crítico • Inclusión
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 5 (6º Primaria) - A partir de situaciones problemáticas de proporcionalidad vinculadas a diferentes contextos, determina valores faltantes en las que en ocasiones se conoce el valor unitario y en otras no. Resuelve situaciones problemáticas vinculadas a diferentes contextos que implican comparar razones expresadas con dos números naturales y con una fracción. Utiliza, explica y comprueba sus estrategias para calcular mentalmente los porcentajes: 50%, 25%, 10% y 1%, de un número natural. Resuelve situaciones problemáticas vinculadas a diferentes contextos que implican calcular el tanto por ciento de una cantidad o el porcentaje que representa una cantidad de otra.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Qué significa que una tienda ofrezca el "50% de descuento más 10% adicional"? ¿Es lo mismo que el 60% directo?**
-
-2. **¿Por qué calcular el 10% de cualquier número solo requiere recorrer el punto decimal un lugar a la izquierda ($10\% \text{ de } 450 = 45$)?**
-
-3. **¿Cómo calculamos el 16% de IVA en las compras de productos y servicios?**
-
-4. **¿Cómo determinamos qué oferta conviene más: 3 paquetes de galletas por $45 pesos o 4 paquetes por $56 pesos usando el valor unitario?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-ALTA • Fase 5 (6º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matemáticas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-⏱️ SESIÓN 1 (50 min) — INICIO (10 min):
-1. Simulación "El Buen Fin Escolar": El docente muestra carteles con ofertas reales: "Tenis de $800 con 25% de descuento" y "Mochila de $500 con 50% de rebaja".
-2. Pregunta detonadora: "¿Cuánto dinero nos ahorramos en cada producto y cuánto pagaremos en caja?".
-3. Equivalencia de porcentajes clave:
-   - $50\% = 1/2 = 0.5$ (dividir entre 2)
-   - $25\% = 1/4 = 0.25$ (dividir entre 4)
-   - $10\% = 1/10 = 0.10$ (dividir entre 10)
-   - $1\% = 1/100 = 0.01$ (dividir entre 100).
+```yaml
+PDA: "Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado", sustentando sus argumentos en fuentes confiables."
+```
 
-### 🔬 Desarrollo (30 minutos)
-⏱️ SESIÓN 1 — DESARROLLO (30 min):
-1. Taller de Mercado Matemático en Equipos de 4:
-   • Estación A (Estrategias de Cálculo Mental Rápido):
-     - Para calcular el 15% de $600: $10\% (60) + 5\% (30) = 90$.
-     - Para calcular el 26% de $800: $25\% (200) + 1\% (8) = 208$.
-   • Estación B (Tablas de Proporcionalidad Directa y Valor Unitario):
-     - Llenar tablas de rendimiento de combustible (km/litro), recetas a escala para 10, 50 y 100 personas y costos unitarios.
-2. Resolución del Reto "El Mejor Comprador": Comparar 4 productos y justificar la compra más inteligente.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Alta - Fase 5):**
+- *PDA:* Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado", sustentando sus argumentos en fuentes confiables.
+- *Vínculo formativo:* Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.
 
-### 💡 Cierre (10 minutos)
-⏱️ SESIÓN 1 — CIERRE (10 min):
-1. Ronda de Desafíos Relámpago de Porcentajes Mentales.
-2. Metacognición: "¿Cómo me ayuda el cálculo de porcentajes a no ser engañado por publicidad falsa?".
-3. Entrega de evidencia: Tabla de cálculo mental de porcentajes y análisis de ofertas comerciales.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado".
+- *Vínculo formativo:* Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.
+
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado" a nivel nacional y global.
+- *Vínculo formativo:* Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.
+
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado".
+- *Vínculo formativo:* Liderazgo transformador, resiliencia comunitaria y cultura de paz.
 
 ---
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-📋 RÚBRICA FORMATIVA ANALÍTICA (3 Criterios de Evaluación):
-• Criterio 1 - Cálculo Mental y Estratégico de Porcentajes (Sobresaliente [3.5 pts]: Calcula mentalmente 50%, 25%, 10% y 1% y los combina con agilidad | Satisfactorio [2.5 pts]: Calcula con procedimientos escritos | En Proceso [1.5 pts]: Confunde porcentajes con números enteros).
-• Criterio 2 - Determinación de Valor Unitario y Proporcionalidad (Sobresaliente [3.5 pts]: Encuentra valores faltantes en tablas de variación proporcional y compara razones | Satisfactorio [2.5 pts]: Resuelve con apoyo | En Proceso [1.5 pts]: No identifica el valor unitario).
-• Criterio 3 - Aplicación a Finanzas del Consumidor Crítico (Sobresaliente [3 pts]: Aplica descuentos, IVA y compras razonadas con análisis crítico | Satisfactorio [2 pts]: Resuelve problemas estándar | En Proceso [1 pt]: Dificultad para interpretar problemas).
-• Instrumento: Rúbrica de proporcionalidad y educación financiera.
+**Problemática Situada:**  
+Se ha detectado una pérdida paulatina de la tradición oral comunitaria y un escaso hábito de creación literaria autónoma en la infancia, lo que limita el desarrollo de la imaginación y la comprensión lectora.
 
----
+**Propósito del Proyecto:**  
+Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa (inicio, desarrollo, nudo y desenlace).
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
-
-### Materiales y Recursos Didácticos
-• Folletos publicitarios y notas de compra reales.
-• Tarjetas de cálculo mental de porcentajes.
-• Hojas de tablas de proporcionalidad.
-
-### Evidencia de Aprendizaje Entregable
-**Guía del Consumidor Inteligente: Análisis de Ofertas, Cálculo de IVA y Descuentos con Porcentajes.**
+**Impacto Social y Transformador:**  
+Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase5_NEM|Índice Maestro de Primaria Fase 5]]
-- [[../../00_Indice_Maestro_Primaria_Fase5_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 131 a la 134) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 162 a la 165) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 87 a la 90) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 140 a la 143) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 171 a la 174) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 96 a la 99) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 149 a la 152) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 180 a la 183) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 105 a la 108) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Feria Comercial y Porcentajes: Descuentos, IVA y Razones Matemáticas en el Mercado" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 158 a la 161) — *Modelación matemática y finanzas comunitarias*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Estructura Narrativa y Creatividad Literaria** | Desarrolla una trama original con personajes bien caracterizados, conflicto claro y desenlace creativo, empleando conectores temporales y adjetivos descriptivos. | El relato presenta inicio, desarrollo y final comprensibles, aunque la descripción de personajes es básica. | La narración no tiene una secuencia lógica clara o queda inconclusa. |
+| **Confección del Libro Cartonero y Expresión Plástica** | El libro cartonero está sólidamente encuadernado, con portadas artísticas llamativas e ilustraciones que enriquecen profundamente el texto. | El libro cartonero cumple con los requisitos de armado e ilustración con limpieza y orden. | El encuadernado es frágil o las ilustraciones carecen de relación con el texto. |
+| **Socialización y Lectura en Atril** | Lee con fluidez, modulación de voz adecuada y expresión corporal que cautiva a la audiencia en la tertulia literaria. | Realiza su lectura en voz alta con claridad y volumen audible ante el público. | Muestra inseguridad o tono de voz inaudible durante la presentación oral. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

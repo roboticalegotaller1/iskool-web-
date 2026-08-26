@@ -1,109 +1,228 @@
 ---
-id: "f6-sab-01"
-folio: "SEC-F6-T051"
-title: "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"
-tema_numero: 51
-tema_titulo: "Expresión de fracciones como decimales y de decimales como fracciones"
-nivel: "Secundaria"
-fase: "Fase 6"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_general, grado_1_de_secundaria]
+docente: "Prof. Israel López Ángeles"
+nivel: "secundaria"
+fase_nem: "Fase 6"
 grado: "1º de Secundaria"
+asignatura: "General"
 campo_formativo: "Saberes y Pensamiento Científico"
-disciplina: "Matemáticas"
-profesor: "Prof. Israel López Ángeles"
-profesor_id: "usr-teacher-1"
-profesor_email: "israel.lopez@iskool.edu.mx"
-ciclo_escolar: "2025-2026"
-temporalidad: "2 semanas (10 sesiones de 50 min)"
-metodologia_nem: "Aprendizaje Basado en Indagación (STEAM)"
-ejes_articuladores:
-  - "[[Pensamiento Crítico]]"
-  - "[[Inclusión]]"
-tags:
-  - planeacion_docente
-  - iskool
-  - secundaria_fase6
-  - nem_2024
-  - saberes_y_pensamiento_cientifico
-  - matem_ticas
-created_at: "18 de agosto de 2026"
-updated_at: "18 de agosto de 2026"
-synced_iskool_db: true
+tema: "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Planeación Didáctica: El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio
+# 📚 Proyecto Didáctico Integral: El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio
 
-> [!INFO] Ficha Técnica y Curricular (NEM 2024 - Fase 6)
-> - **Docente Titular:** [[Prof. Israel López Ángeles]] (`usr-teacher-1`)
-> - **Nivel y Fase:** Educación Secundaria — [[Fase 6 (1º, 2º y 3º de Secundaria)]]
-> - **Grado:** **1º de Secundaria**
-> - **Campo Formativo:** [[Saberes y Pensamiento Científico]]
-> - **Disciplina / Materia:** [[Matemáticas]]
-> - **Contenido Sintético Oficial SEP 2024:** *Expresión de fracciones como decimales y de decimales como fracciones*
-> - **MOC General:** [[00_Indice_Maestro_Secundaria_Fase6_NEM2024]]
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (1º de Secundaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** General  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## 🎯 Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
-```text
-Fase 6 (1º Secundaria) - Usa diversas estrategias al convertir números fraccionarios a decimales y viceversa, distinguiendo decimales finitos, periódicos puros y periódicos mixtos mediante algoritmos algebraicos.
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
+
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
 ```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
 
-## ❓ Preguntas Detonadoras e Indagación Crítica
-- **¿Por qué al dividir $1 \div 3$ obtenemos $0.333...$ infinito mientras que $1 \div 4$ da $0.25$ exacto?**
-- **¿Cómo transformamos un número decimal periódico como $0.\overline{7}$ o $1.2\overline{45}$ en su fracción irreducible exacta usando ecuaciones?**
-- **¿Cómo ayuda el redondeo y truncamiento en las transacciones comerciales diarias?**
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
 
-## 📋 Secuencia Didáctica Detallada (10 Sesiones de 50 Minutos)
-
-```mermaid
-graph LR
-  A[Fase 1: Indagación y Saberes Previos] --> B[Fase 2: Experimentación y Modelado]
-  B --> C[Fase 3: Prototipado y Análisis Crítico]
-  C --> D[Fase 4: Comunicación y Evaluación Auténtica]
-```
-
-### 🚀 Sesiones 1 y 2: Indagación, Diagnóstico y Recuperación de Saberes
-- **Inicio (15 min):** Desafío de la calculadora: Dividir fracciones unitarias y clasificar los patrones de sus cifras decimales.
-- **Desarrollo (30 min):** Planteamiento del reto integrador, conformación de equipos colaborativos y delimitación del alcance del proyecto.
-- **Cierre (5 min):** Registro en la bitácora individual de metas de aprendizaje.
-
-### 🔬 Sesiones 3 a 7: Desarrollo Metodológico, Trabajo Experimental y Producción
-- **Inicio (10 min):** Reactivación de compromisos y revisión del cronograma de trabajo.
-- **Desarrollo (35 min):** Taller de Algoritmos de Conversión: Resolver conversiones algebraicas multiplicando por potencias de 10 para eliminar periodos decimales y simplificar fracciones por MCD.
-- **Cierre (5 min):** Coevaluación intermedia mediante lista de cotejo y retroalimentación entre pares.
-
-### 🏁 Sesiones 8 a 10: Integración, Socialización Comunitaria y Evaluación
-- **Inicio (10 min):** Ensayos de presentación y ajuste final de entregables.
-- **Desarrollo (30 min):** Rally de velocidad mental y resolución de problemas financieros reales.
-- **Cierre (10 min):** Metacognición grupal, balance de impacto social y firma del acta de entrega de proyectos.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
 
 ---
 
-## 📊 Rúbrica Analítica de Evaluación Formativa y Auténtica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Nivel de Desempeño | Criterios Curriculares y Evidencias Observables | Ponderación |
-| :--- | :--- | :---: |
-| **Excelente (10)** | Conversión precisa de fracciones a decimales finitos y periódicos con fundamentación teórica sólida, rigurosa y aplicación práctica contextualizada. | 40% |
-| **Satisfactorio (8-9)** | Aplicación del método algebraico para convertir decimales periódicos a fracciones de manera autónoma, estructurada y con calidad metodológica. | 35% |
-| **En Proceso (6-7)** | Simplificación de fracciones a su forma irreducible con apoyo docente y áreas de mejora identificadas. | 25% |
+**Problemática Situada:**  
+Los estudiantes suelen concebir las fracciones de forma abstracta y descontextualizada, dificultando la comprensión del concepto de entero, medios, cuartos, octavos y su aplicación en la vida diaria.
 
----
+**Propósito del Proyecto:**  
+Comprender las fracciones como partes de la unidad y operadores de reparto equitativo mediante la simulación lúdica de una panadería comunitaria y la elaboración de recetas fraccionarias.
 
-## 📦 Materiales, Recursos Didácticos y Entregable Final
-
-- **Materiales y Recursos:** Calculadoras científicas, hojas cuadriculadas, fichas de dominó fraccionario.
-- **Entregable Principal:** `Problemario Resuelto y Fichero Técnico "Del Decimal Periódico a la Fracción Exacta".`
-- **Instrumentos de Evaluación:** Rúbrica analítica, bitácora de coevaluación entre pares, lista de verificación de entregables.
+**Impacto Social y Transformador:**  
+Promueve la justicia distributiva, la equidad en el reparto de alimentos y la aplicación práctica de las matemáticas en la economía del hogar.
 
 ---
 
-## 🔗 Enlaces Bidireccionales (Obsidian Knowledge Graph)
-- [[00_Indice_Maestro_Secundaria_Fase6_NEM2024]]
-- [[Saberes y Pensamiento Científico]]
-- [[Matemáticas]]
-- [[Secundaria_1er_Grado]]
-- [[Prof_Israel_Lopez_Angeles]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 48 a la 51) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 69 a la 72) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 54 a la 57) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 75 a la 78) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 60 a la 63) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 81 a la 84) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 66 a la 69) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 87 a la 90) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio"?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 72 a la 75) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 93 a la 96) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Modelado y Representación Gráfica de Fracciones** | Representa con exactitud fracciones propias, impropias y equivalentes usando material concreto, rectas numéricas y dibujos a escala. | Identifica y representa medios, cuartos y octavos correctamente en figuras geométricas. | Confunde el numerador con el denominador o divide enteros en partes desiguales. |
+| **Resolución de Problemas de Reparto y Equivalencias** | Resuelve problemas complejos de suma y comparación de fracciones con distintos métodos y justifica con elocuencia su razonamiento. | Resuelve problemas sencillos de reparto fraccionario con apoyo de material manipulable. | Presenta dificultades para calcular repartos básicos o identificar equivalencias simples. |
+| **Atención en la Estación Demostrativa y Trabajo en Equipo** | Explica con claridad y entusiasmo los retos de fracciones a los visitantes de la feria gastronómica con gran empatía y solvencia. | Colabora en la atención de la estación y demuestra los modelos fraccionarios adecuadamente. | Participa con timidez o no logra explicar el funcionamiento de sus modelos manipulables. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

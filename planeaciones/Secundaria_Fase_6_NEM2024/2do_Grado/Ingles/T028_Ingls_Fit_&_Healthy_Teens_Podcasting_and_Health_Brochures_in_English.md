@@ -1,108 +1,228 @@
 ---
-id: "f6-len-28"
-folio: "SEC-F6-T028"
-title: "Fit & Healthy Teens: Podcasting and Health Brochures in English"
-tema_numero: 28
-tema_titulo: "Mensajes en inglés para promover una vida saludable y el deporte"
-nivel: "Secundaria"
-fase: "Fase 6"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_secundaria, materia_general, grado_2_de_secundaria]
+docente: "Prof. Israel López Ángeles"
+nivel: "secundaria"
+fase_nem: "Fase 6"
 grado: "2º de Secundaria"
-campo_formativo: "Lenguajes"
-disciplina: "Inglés"
-profesor: "Prof. Israel López Ángeles"
-profesor_id: "usr-teacher-1"
-profesor_email: "israel.lopez@iskool.edu.mx"
-ciclo_escolar: "2025-2026"
-temporalidad: "2 semanas (10 sesiones de 50 min)"
-metodologia_nem: "Aprendizaje Basado en Proyectos Comunitarios"
-ejes_articuladores:
-  - "[[Vida Saludable]]"
-  - "[[Pensamiento Crítico]]"
-tags:
-  - planeacion_docente
-  - iskool
-  - secundaria_fase6
-  - nem_2024
-  - lenguajes
-  - ingl_s
-created_at: "18 de agosto de 2026"
-updated_at: "18 de agosto de 2026"
-synced_iskool_db: true
+asignatura: "General"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Fit & Healthy Teens: Podcasting and Health Brochures in English"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Planeación Didáctica: Fit & Healthy Teens: Podcasting and Health Brochures in English
+# 📚 Proyecto Didáctico Integral: Fit & Healthy Teens: Podcasting and Health Brochures in English
 
-> [!INFO] Ficha Técnica y Curricular (NEM 2024 - Fase 6)
-> - **Docente Titular:** [[Prof. Israel López Ángeles]] (`usr-teacher-1`)
-> - **Nivel y Fase:** Educación Secundaria — [[Fase 6 (1º, 2º y 3º de Secundaria)]]
-> - **Grado:** **2º de Secundaria**
-> - **Campo Formativo:** [[Lenguajes]]
-> - **Disciplina / Materia:** [[Inglés]]
-> - **Contenido Sintético Oficial SEP 2024:** *Mensajes en inglés para promover una vida saludable y el deporte*
-> - **MOC General:** [[00_Indice_Maestro_Secundaria_Fase6_NEM2024]]
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (2º de Secundaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** General  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## 🎯 Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
-```text
-Fase 6 (2º Secundaria) - Investiga en fuentes en inglés sobre nutrición y deporte para construir un folleto informativo y un guion de podcast difundido en medios escolares.
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
+
+```yaml
+PDA: "Modela situaciones y fenómenos reales relacionados con "Fit & Healthy Teens: Podcasting and Health Brochures in English" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
 ```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Saberes y Pensamiento Científico (Secundaria - Fase 6):**
+- *PDA:* Modela situaciones y fenómenos reales relacionados con "Fit & Healthy Teens: Podcasting and Health Brochures in English" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.
+- *Vínculo formativo:* Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.
 
-## ❓ Preguntas Detonadoras e Indagación Crítica
-- **What are the best habits for physical and mental health in teenage years?**
-- **How do we give healthy advice using imperatives and conditionals in English?**
+**2. Lenguajes (Español / Lengua Extranjera):**
+- *PDA:* Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "Fit & Healthy Teens: Podcasting and Health Brochures in English" con rigor metodológico y citas textuales.
+- *Vínculo formativo:* Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "Fit & Healthy Teens: Podcasting and Health Brochures in English".
+- *Vínculo formativo:* Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.
 
-## 📋 Secuencia Didáctica Detallada (10 Sesiones de 50 Minutos)
-
-```mermaid
-graph LR
-  A[Fase 1: Indagación y Saberes Previos] --> B[Fase 2: Experimentación y Modelado]
-  B --> C[Fase 3: Prototipado y Análisis Crítico]
-  C --> D[Fase 4: Comunicación y Evaluación Auténtica]
-```
-
-### 🚀 Sesiones 1 y 2: Indagación, Diagnóstico y Recuperación de Saberes
-- **Inicio (15 min):** Análisis de infografías de salud de la OMS y CDC en inglés.
-- **Desarrollo (30 min):** Planteamiento del reto integrador, conformación de equipos colaborativos y delimitación del alcance del proyecto.
-- **Cierre (5 min):** Registro en la bitácora individual de metas de aprendizaje.
-
-### 🔬 Sesiones 3 a 7: Desarrollo Metodológico, Trabajo Experimental y Producción
-- **Inicio (10 min):** Reactivación de compromisos y revisión del cronograma de trabajo.
-- **Desarrollo (35 min):** Producción de Folleto y Podcast: Redactar una guía de nutrición juvenil con recomendaciones usando "If you exercise daily, you will feel..." y grabar un audio de 1 minuto.
-- **Cierre (5 min):** Coevaluación intermedia mediante lista de cotejo y retroalimentación entre pares.
-
-### 🏁 Sesiones 8 a 10: Integración, Socialización Comunitaria y Evaluación
-- **Inicio (10 min):** Ensayos de presentación y ajuste final de entregables.
-- **Desarrollo (30 min):** Escucha de podcasts de salud en el aula y autoevaluación.
-- **Cierre (10 min):** Metacognición grupal, balance de impacto social y firma del acta de entrega de proyectos.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "Fit & Healthy Teens: Podcasting and Health Brochures in English".
+- *Vínculo formativo:* Innovación técnica, vocación productiva, salud integral y proyecto de vida.
 
 ---
 
-## 📊 Rúbrica Analítica de Evaluación Formativa y Auténtica
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Nivel de Desempeño | Criterios Curriculares y Evidencias Observables | Ponderación |
-| :--- | :--- | :---: |
-| **Excelente (10)** | Uso del primer condicional y vocabulario de salud con fundamentación teórica sólida, rigurosa y aplicación práctica contextualizada. | 40% |
-| **Satisfactorio (8-9)** | Diseño gráfico claro en el folleto de manera autónoma, estructurada y con calidad metodológica. | 35% |
-| **En Proceso (6-7)** | Claridad vocal en la grabación del podcast con apoyo docente y áreas de mejora identificadas. | 25% |
+**Problemática Situada:**  
+Necesidad de fomentar la curiosidad científica, la indagación sistemática y la aplicación de saberes escolares para entender y transformar fenómenos relacionados con "Fit & Healthy Teens: Podcasting and Health Brochures in English".
 
----
+**Propósito del Proyecto:**  
+Diseñar y ejecutar una investigación experimental y de campo que culmine en prototipos funcionales y propuestas sustentables para la comunidad.
 
-## 📦 Materiales, Recursos Didácticos y Entregable Final
-
-- **Materiales y Recursos:** Cartulinas, micrófonos para celular, plantillas de folletos.
-- **Entregable Principal:** `Folleto Tríptico y Episodio de Podcast "Healthy Living Guide for Teens".`
-- **Instrumentos de Evaluación:** Rúbrica analítica, bitácora de coevaluación entre pares, lista de verificación de entregables.
+**Impacto Social y Transformador:**  
+Promueve el pensamiento científico, la resolución de problemas locales y la participación ciudadana informada.
 
 ---
 
-## 🔗 Enlaces Bidireccionales (Obsidian Knowledge Graph)
-- [[00_Indice_Maestro_Secundaria_Fase6_NEM2024]]
-- [[Lenguajes]]
-- [[Inglés]]
-- [[Secundaria_2do_Grado]]
-- [[Prof_Israel_Lopez_Angeles]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "Fit & Healthy Teens: Podcasting and Health Brochures in English"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Fit & Healthy Teens: Podcasting and Health Brochures in English"?  
+  2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 48 a la 51) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
+- **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
+
+### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Fit & Healthy Teens: Podcasting and Health Brochures in English"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 69 a la 72) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Fit & Healthy Teens: Podcasting and Health Brochures in English"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 54 a la 57) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Fit & Healthy Teens: Podcasting and Health Brochures in English"?  
+  2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 75 a la 78) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
+- **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
+
+### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 60 a la 63) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+  2. ¿Qué correlación existe entre las variables analizadas?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 81 a la 84) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
+- **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
+
+### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Fit & Healthy Teens: Podcasting and Health Brochures in English". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Fit & Healthy Teens: Podcasting and Health Brochures in English"?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 66 a la 69) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Fit & Healthy Teens: Podcasting and Health Brochures in English". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Fit & Healthy Teens: Podcasting and Health Brochures in English"?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 87 a la 90) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Fit & Healthy Teens: Podcasting and Health Brochures in English". Coevaluación con rúbrica técnica.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+  2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Fit & Healthy Teens: Podcasting and Health Brochures in English"?
+- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 72 a la 75) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
+- **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
+
+### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+  2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
+- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 93 a la 96) — *Historia crítica de México, derechos humanos y soberanía*
+- **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
+- **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Metodología de Indagación y Rigor Conceptual** | Plantea hipótesis claras, registra datos experimentales con precisión y formula conclusiones sólidas basadas en evidencia. | Sigue los pasos del método experimental y presenta resultados ordenados. | El registro de datos es incompleto o las conclusiones carecen de sustento. |
+| **Calidad del Prototipo y Presentación Visual** | El prototipo es funcional, seguro, creativo y está acompañado de infografías científicas de alta calidad. | El prototipo funciona adecuadamente y los apoyos visuales son claros. | El prototipo no funciona o la presentación visual es descuidada. |
+| **Divulgación Científica y Comunicación Oral** | Comunica conceptos científicos complejos con sencillez, elocuencia y dominio ante audiencias diversas. | Explica su experimento con claridad y vocabulario científico adecuado. | Dificultad para explicar el funcionamiento o la utilidad de su investigación. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Muestra Científica Escolar con experimentos en vivo, prototipos demostrativos, infografías explicativas y bitácoras de campo detalladas.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

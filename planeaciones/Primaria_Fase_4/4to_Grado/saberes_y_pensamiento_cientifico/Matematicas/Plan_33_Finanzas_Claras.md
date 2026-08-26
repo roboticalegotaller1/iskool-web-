@@ -1,87 +1,228 @@
 ---
-tags: [iskool, planeacion_nem, segundo_cerebro, campo_saberes_y_pensamiento_cientifico, grado_4to_grado, materia_matematicas, fase4_primaria]
-campo_formativo: "Saberes y Pensamiento Científico"
-materia: "Matemáticas"
-grado: "4º de Primaria"
-nivel: "Primaria (Fase 4)"
-tema: "Suma y resta de decimales y fracciones con diferente denominador"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_media, materia_matematicas, grado_4_de_primaria]
 docente: "Prof. Israel López Ángeles"
-fecha_creacion: "18 de agosto de 2026"T18:46:24.064Z"
+nivel: "primaria-media"
+fase_nem: "Fase 4"
+grado: "4º de Primaria"
+asignatura: "Matemáticas"
+campo_formativo: "Saberes y Pensamiento Científico"
+tema: "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos
+# 📚 Proyecto Didáctico Integral: Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos
 
-> [!INFO] **Ficha Técnica NEM 2024 (Fase 4)**
-> - **Docente Titular:** Prof. Israel López Ángeles
-> - **Nivel / Fase:** 4º de Primaria • Fase 4 (Primaria)
-> - **Campo Formativo:** Saberes y Pensamiento Científico
-> - **Asignatura / Área:** Matemáticas
-> - **Duración Estimada:** 2 sesiones de 50 minutos (Total: 100 min)
-> - **Ejes Articuladores:** Pensamiento Crítico • Inclusión
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP)
-
-> **Fase 4 (4º Primaria) - Resuelve problemas de suma y resta con números hasta cuatro cifras y decimales hasta centésimos alineando el punto. Resuelve sumas y restas de fracciones con diferente denominador (tercios, quintos, sextos, décimos) mediante equivalencias.**
-
----
-
-## ❓ II. Preguntas Detonadoras para el Salón (Conflicto Cognitivo y Apertura)
-
-1. **¿Por qué para sumar 1/2 + 1/4 debemos convertir el medio en dos cuartos (2/4 + 1/4 = 3/4)?**
-
-2. **¿Cómo alineamos los centavos verticalmente en sumas decimales?**
-
-3. **¿Por qué nunca se suman los denominadores directamente?**
-
-4. **¿Cómo calculamos el cambio exacto con monedas de centavos?**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (4º de Primaria)  
+> **Campo Formativo:** Saberes y Pensamiento Científico  
+> **Asignatura:** Matemáticas  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ⏱️ III. Secuencia Didáctica (Dosificación en Bloques de 50 minutos)
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-### 📌 Inicio (10 minutos)
-Demostración gráfica de fracciones equivalentes con tiras de papel (1/3 = 2/6).
+```yaml
+PDA: "Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" para divulgar en el aula y la escuela."
+```
 
-### 🔬 Desarrollo (30 minutos)
-Taller de Fracciones Heterogéneas y Decimales: Sumar y restar fracciones convirtiendo al mínimo común denominador y resolver facturas comerciales con punto decimal.
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Media - Fase 4):**
+- *PDA:* Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" para divulgar en el aula y la escuela.
+- *Vínculo formativo:* Comprensión lectora analítica, redacción en párrafos estructurados y uso correcto de signos de puntuación.
 
-### 💡 Cierre (10 minutos)
-Socialización de métodos de conversión fraccionaria y verificación de cálculos.
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Resuelve situaciones problemáticas vinculadas a "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" mediante operaciones básicas, fracciones, cálculo de áreas y experimentos sencillos.
+- *Vínculo formativo:* Razonamiento lógico-matemático, análisis de datos en tablas y pensamiento indagatorio.
 
----
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza la diversidad natural y sociocultural de su entidad en torno a "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos", valorando la justicia y los derechos de todos.
+- *Vínculo formativo:* Conocimiento del entorno regional, cuidado del medio ambiente y participación cívica.
 
-## 📋 IV. Evaluación Formativa y Rúbrica Analítica
-
-### Criterios de Evaluación y Niveles de Logro
-• **Criterio 1:** Suma y resta de fracciones mediante conversión a común denominador
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
-
-• **Criterio 2:** Operaciones con números decimales con alineación del punto decimal
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
-
-• **Criterio 3:** Resolución de situaciones de compra y presupuesto real
-  - *Sobresaliente (3.5 - 3 pts):* Demuestra dominio integral y autónomo.
-  - *Satisfactorio (2.5 - 2 pts):* Aplica los conceptos con orientación básica.
-  - *En Proceso (1.5 - 1 pt):* Requiere mediación y acompañamiento docente.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña estrategias cooperativas para prevenir riesgos y resolver conflictos escolares al trabajar proyectos sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos".
+- *Vínculo formativo:* Toma de decisiones consensuadas, vida saludable y bienestar socioemocional.
 
 ---
 
-## 📦 V. Materiales, Recursos y Evidencias Entregables
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-### Materiales y Recursos Didácticos
-Tiras de fracciones, hojas de problemas contextualizados, regla.
+**Problemática Situada:**  
+Los estudiantes suelen concebir las fracciones de forma abstracta y descontextualizada, dificultando la comprensión del concepto de entero, medios, cuartos, octavos y su aplicación en la vida diaria.
 
-### Evidencia de Aprendizaje Entregable
-**Problemario Financiero "Operaciones con Fracciones Equivalentes y Decimales".**
+**Propósito del Proyecto:**  
+Comprender las fracciones como partes de la unidad y operadores de reparto equitativo mediante la simulación lúdica de una panadería comunitaria y la elaboración de recetas fraccionarias.
+
+**Impacto Social y Transformador:**  
+Promueve la justicia distributiva, la equidad en el reparto de alimentos y la aplicación práctica de las matemáticas en la economía del hogar.
 
 ---
 
-## 🔗 VI. Conexiones en el Grafo del Segundo Cerebro (Obsidian Wikilinks)
-- [[00_Indice_Maestro_Primaria_Fase4_NEM|Índice Maestro de Primaria Fase 4]]
-- [[../../00_Indice_Maestro_Primaria_Fase4_NEM|MOC Segundo Cerebro ISkool]]
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 61 a la 64) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 120 a la 123) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 145 a la 148) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 70 a la 73) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 129 a la 132) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 154 a la 157) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 79 a la 82) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 138 a la 141) — *Cálculo de áreas, perímetros y presupuestos*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 163 a la 166) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Finanzas Claras: Fracciones Equivalentes y Operaciones Decimales con Centavos" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 88 a la 91) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
+| :--- | :--- | :--- | :--- |
+| **Modelado y Representación Gráfica de Fracciones** | Representa con exactitud fracciones propias, impropias y equivalentes usando material concreto, rectas numéricas y dibujos a escala. | Identifica y representa medios, cuartos y octavos correctamente en figuras geométricas. | Confunde el numerador con el denominador o divide enteros en partes desiguales. |
+| **Resolución de Problemas de Reparto y Equivalencias** | Resuelve problemas complejos de suma y comparación de fracciones con distintos métodos y justifica con elocuencia su razonamiento. | Resuelve problemas sencillos de reparto fraccionario con apoyo de material manipulable. | Presenta dificultades para calcular repartos básicos o identificar equivalencias simples. |
+| **Atención en la Estación Demostrativa y Trabajo en Equipo** | Explica con claridad y entusiasmo los retos de fracciones a los visitantes de la feria gastronómica con gran empatía y solvencia. | Colabora en la atención de la estación y demuestra los modelos fraccionarios adecuadamente. | Participa con timidez o no logra explicar el funcionamiento de sus modelos manipulables. |
+
+---
+
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado y estación de retos de equivalencias.**.
+
+---
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*

@@ -1,127 +1,228 @@
 ---
-tags: [iskool, planeacion_nem_serie2, segundo_cerebro, fase4, campo_lenguajes, grado_3er_grado, materia_espanol, metodologia_aprendizaje_basado_en_problemas_con_pensamiento_critico_y_bioetica, contexto_zona_costera_y_de_humedales, codiseno_2026]
-id_planeacion: "SERIE2-F4-ESP-3ER-V10001"
-serie: "Serie 2 - Innovación y Codiseño Curricular"
-campo_formativo: "Lenguajes"
-materia: "Español"
-grado: "3º de Primaria"
-nivel: "Primaria Fase 4"
-tema: "Narración de sucesos del pasado y del presente"
+tags: [iskool, planeacion_nem, segundo_cerebro, boveda_curricular, nivel_primaria_media, materia_espanol, grado_3_de_primaria]
 docente: "Prof. Israel López Ángeles"
-docente_email: "israel.lopez@iskool.edu.mx"
-metodologia: "Aprendizaje Basado en Problemas con Pensamiento Crítico y Bioética"
-contexto_comunitario: "Zona Costera y de Humedales"
-problematica_situada: "Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático."
-ejes_articuladores: ["Inclusión", "Igualdad de Género", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
-duracion: "10 sesiones de 50 minutos (Total: 500 min)"
-fecha_creacion: "2026-08-24T21:49:54.014Z"
+nivel: "primaria-media"
+fase_nem: "Fase 4"
+grado: "3º de Primaria"
+asignatura: "Español"
+campo_formativo: "Lenguajes"
+tema: "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)"
+duracion: "10 sesiones de 50 minutos (Total: 500 min / 2 semanas lectivas)"
+ejes_articuladores: ["Pensamiento Crítico", "Inclusión", "Vida Saludable", "Apropiación de las Culturas a través de la Lectura y la Escritura"]
+producto_integrador: "Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos."
+fecha_elaboracion: "25 de agosto de 2026"
+created_at: "25 de agosto de 2026"
+updated_at: "25 de agosto de 2026"
 ---
 
-# 🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)
+# 📚 Proyecto Didáctico Integral: 🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)
 
-> [!INFO] **Ficha Técnica Oficial NEM 2024 • Serie 2 de Codiseño ISkool**
-> - **Docente Titular / Super Usuario:** [[Prof. Israel López Ángeles]] (`usr-teacher-israel`)
-> - **Nivel y Fase Curricular:** 3º de Primaria • Primaria Fase 4
-> - **Campo Formativo:** Lenguajes
-> - **Asignatura / Disciplina:** Español
-> - **Metodología Activa:** Aprendizaje Basado en Problemas con Pensamiento Crítico y Bioética
-> - **Contexto Territorial:** Zona Costera y de Humedales (Reto Central: *Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático.*)
-> - **Ejes Articuladores SEP:** Inclusión • Igualdad de Género • Apropiación de las Culturas a través de la Lectura y la Escritura
-> - **Temporalidad del Bloque:** 10 sesiones de 50 min (500 minutos de trabajo situado)
-
----
-
-## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Oficial SEP 2024)
-
-> **"Identifica y comprende la función y las características principales de la narración; reconoce y usa estructuras narrativas (lineal, circular, in media res), estableciendo relaciones causa-efecto y utilizando el punto y seguido en párrafos."**
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (3º de Primaria)  
+> **Campo Formativo:** Lenguajes  
+> **Asignatura:** Español  
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
+> **Producto Central Integrador:** *Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos.*  
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
 
 ---
 
-## ❓ II. Preguntas Detonadoras y Conflicto Cognitivo Innovador
+## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
-1. **¿Cómo podemos transformar el estudio de *"Narración de sucesos del pasado y del presente"* en una solución práctica para atender el reto de: *Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático.*?**
-2. **¿Qué tecnologías accesibles, modelos experimentales o saberes locales podemos integrar para investigar con rigor científico y humanista?**
-3. **¿De qué manera nuestro equipo colaborativo puede promover la equidad de género, la inclusión y la sustentabilidad en cada fase del proyecto?**
-4. **¿Cuál es el impacto a largo plazo de nuestra propuesta en el bienestar de la comunidad escolar y barrial?**
+```yaml
+PDA: "Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" para divulgar en el aula y la escuela."
+```
 
----
+### 🔗 Articulación Curricular con otros Campos Formativos:
+**1. Lenguajes (Primaria Media - Fase 4):**
+- *PDA:* Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" para divulgar en el aula y la escuela.
+- *Vínculo formativo:* Comprensión lectora analítica, redacción en párrafos estructurados y uso correcto de signos de puntuación.
 
-## ⏱️ III. Secuencia Didáctica Oficial en 10 Sesiones de 50 Minutos (Estructura de 4 Fases)
+**2. Saberes y Pensamiento Científico:**
+- *PDA:* Resuelve situaciones problemáticas vinculadas a "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" mediante operaciones básicas, fracciones, cálculo de áreas y experimentos sencillos.
+- *Vínculo formativo:* Razonamiento lógico-matemático, análisis de datos en tablas y pensamiento indagatorio.
 
-### 📌 FASE 1: Diagnóstico Situado y Encuadre Cognitivo (Sesiones 1 y 2 - 100 min)
-- **Sesión 1: Apertura del Desafío y Planteamiento Situado (50 min)**
-  - *Inicio (10 min):* Presentación del caso detonador en el entorno Zona Costera y de Humedales. El Prof. Israel López Ángeles contextualiza la problemática con imágenes y datos de campo.
-  - *Desarrollo (30 min):* Debate abierto en asamblea escolar sobre *"Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático."*. Conformación de equipos de trabajo con roles asignados (coordinación, bitácora, materiales, divulgación).
-  - *Cierre (10 min):* Registro de la meta de aprendizaje individual y colectiva en el cuaderno de proyectos.
-- **Sesión 2: Mapeo Conceptual y Rescate de Saberes Previos (50 min)**
-  - *Inicio (10 min):* Dinámica de preguntas cruzadas entre equipos sobre conceptos clave de *"Narración de sucesos del pasado y del presente"*.
-  - *Desarrollo (30 min):* Construcción de un esquema visual colaborativo en papel o pizarra digital relacionando el PDA con la vida cotidiana.
-  - *Cierre (10 min):* Acuerdos de indagación y lista de insumos para la fase experimental.
+**3. Ética, Naturaleza y Sociedades:**
+- *PDA:* Analiza la diversidad natural y sociocultural de su entidad en torno a "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)", valorando la justicia y los derechos de todos.
+- *Vínculo formativo:* Conocimiento del entorno regional, cuidado del medio ambiente y participación cívica.
 
-### 🔬 FASE 2: Indagación Crítica, Modelado y Experimentación (Sesiones 3 a 5 - 150 min)
-- **Sesión 3: Protocolo de Investigación y Recolección de Datos (50 min)**
-  - *Inicio (10 min):* Definición de variables o categorías de análisis documental y de campo.
-  - *Desarrollo (30 min):* Consulta guiada en libros de texto SEP, artículos de divulgación o entrevistas con personas de la comunidad.
-  - *Cierre (10 min):* Validación de fuentes y organización de fichas de síntesis informativa.
-- **Sesión 4: Laboratorio Práctico / Experimentación y Prototipado (50 min)**
-  - *Inicio (10 min):* Normas de seguridad y verificación de materiales didácticos disponibles.
-  - *Desarrollo (30 min):* Realización de experimentos, mediciones matemáticas, cálculos o modelado concreto enfocado en *"Narración de sucesos del pasado y del presente"*.
-  - *Cierre (10 min):* Registro de observaciones y tablas comparativas en la bitácora de ciencias.
-- **Sesión 5: Análisis Interdisciplinario y Síntesis Crítica (50 min)**
-  - *Inicio (10 min):* Articulación del proyecto con los ejes rectores: *Inclusión y Igualdad de Género y Apropiación de las Culturas a través de la Lectura y la Escritura*.
-  - *Desarrollo (30 min):* Discusión en mesas redondas para interpretar los resultados y formular alternativas sustentables.
-  - *Cierre (10 min):* Redacción del informe técnico preliminar por equipo.
-
-### 💡 FASE 3: Integración Tecnológica, Creación y Elaboración del Entregable (Sesiones 6 a 8 - 150 min)
-- **Sesión 6: Bocetaje y Diseño del Producto Tangible (50 min)**
-  - *Inicio (10 min):* Revisión de los estándares de calidad de la rúbrica formativa analítica.
-  - *Desarrollo (30 min):* Taller creativo: modelado, estructuración o redacción del primer prototipo de: *Gaceta escolar de investigación científica y fanzine literario comunitario*.
-  - *Cierre (10 min):* Sesión de coevaluación intermedia con retroalimentación formativa constructiva.
-- **Sesión 7: Producción, Ensamblaje y Pulido del Entregable (50 min)**
-  - *Inicio (10 min):* Incorporación de mejoras sugeridas por pares y por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Fabricación final, edición de textos o ensamblado técnico del producto.
-  - *Cierre (10 min):* Control de calidad pedagógico y verificación del cumplimiento del PDA oficial.
-- **Sesión 8: Ensayo de Presentación y Estrategia de Comunicación (50 min)**
-  - *Inicio (10 min):* Diseño del guion expositivo y distribución de turnos de voz.
-  - *Desarrollo (30 min):* Ensayo general de la socialización ante el grupo, afinando lenguaje técnico y apoyos visuales.
-  - *Cierre (10 min):* Autovaloración del nivel de preparación del equipo.
-
-### 🌟 FASE 4: Socialización Comunitaria, Rúbrica Analítica y Compromisos (Sesiones 9 y 10 - 100 min)
-- **Sesión 9: Exposición y Diálogo Abierto con la Comunidad Escolar (50 min)**
-  - *Inicio (10 min):* Instalación de la muestra interactiva y bienvenida por el Prof. Israel López Ángeles.
-  - *Desarrollo (30 min):* Demostración pública de los proyectos ante compañeros, docentes y padres de familia.
-  - *Cierre (10 min):* Espacio de preguntas, reflexiones compartidas y felicitaciones entre la comunidad.
-- **Sesión 10: Metacognición, Evaluación Formativa y Transformación Social (50 min)**
-  - *Inicio (10 min):* Cuestionario metacognitivo individual: "¿Cómo mejoró mi comprensión del entorno y qué habilidades desarrollé?".
-  - *Desarrollo (30 min):* Aplicación de la Rúbrica Analítica Formativa y valoración global del aprendizaje.
-  - *Cierre (10 min):* Firma del pacto comunitario de sustentabilidad y archivo de evidencias en el Segundo Cerebro.
+**4. De lo Humano y lo Comunitario:**
+- *PDA:* Diseña estrategias cooperativas para prevenir riesgos y resolver conflictos escolares al trabajar proyectos sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)".
+- *Vínculo formativo:* Toma de decisiones consensuadas, vida saludable y bienestar socioemocional.
 
 ---
 
-## 📋 IV. Rúbrica Analítica Formativa (Criterios Oficiales NEM)
+## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-| Criterio Curricular NEM | Nivel Sobresaliente (3.5 - 4.0 pts) | Nivel Satisfactorio (2.5 - 3.4 pts) | Nivel En Proceso (1.0 - 2.4 pts) |
+**Problemática Situada:**  
+Falta de medios impresos o digitales escolares donde las niñas y niños puedan comunicar hallazgos, opiniones fundamentadas y propuestas de mejora sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" para la comunidad.
+
+**Propósito del Proyecto:**  
+Desarrollar habilidades de investigación documental, redacción de textos informativos y argumentativos, y diseño editorial para socializar el tema de "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)".
+
+**Impacto Social y Transformador:**  
+Democratiza la información en la escuela, estimula el pensamiento crítico y la libertad de expresión responsable entre las familias.
+
+---
+
+## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
+
+### 📌 SESIÓN 1 (50 minutos): Planteamiento del Reto Comunitario y Activación de Saberes sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)"
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" y elabora su primer registro diagnóstico.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre 🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)?".
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)"?  
+  2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 92 a la 95) — *Elaboración de revistas científicas, correspondencia y debates*
+- **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)".
+
+### 📌 SESIÓN 2 (50 minutos): Indagación Conceptual y Exploración Guiada en Libros de Texto SEP
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Breve retroalimentación mediante ruleta de preguntas rápidas y apertura del libro de texto gratuito de la SEP.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)"?  
+  2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 33 a la 36) — *Estructura textual, ortografía y redacción formal*
+- **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
+
+### 📌 SESIÓN 3 (50 minutos): Modelación Práctica y Estaciones de Trabajo Concreto / Experimental
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
+  2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 50 a la 53) — *Lecturas de divulgación, leyendas y textos expositivos*
+- **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
+
+### 📌 SESIÓN 4 (50 minutos): Resolución de Problemas Situados en el Contexto Escolar y Comunitario
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)".
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)"?  
+  2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 101 a la 104) — *Elaboración de revistas científicas, correspondencia y debates*
+- **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
+
+### 📌 SESIÓN 5 (50 minutos): Organización de Información y Diseño del Primer Borrador del Proyecto
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Presentación de la estructura del producto integrador intermedio y revisión de los criterios de calidad.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué información clave no puede faltar en nuestro producto sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)"?  
+  2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 42 a la 45) — *Estructura textual, ortografía y redacción formal*
+- **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
+- **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
+
+### 📌 SESIÓN 6 (50 minutos): Profundización Curricular y Vinculación Interdisciplinaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Actividad integradora que combina "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
+  2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 59 a la 62) — *Lecturas de divulgación, leyendas y textos expositivos*
+- **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
+- **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula 🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales) con la vida comunitaria.
+
+### 📌 SESIÓN 7 (50 minutos): Taller de Coevaluación entre Pares y Retroalimentación Formativa
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Explicación de la rúbrica analítica y de la importancia de la crítica constructiva entre compañeros basada en el respeto mutuo.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Dinámica de intercambio de proyectos entre equipos ("Taller de Galería"). Cada equipo revisa el trabajo de otro equipo con una lista de cotejo constructiva.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Devolución de los trabajos con comentarios amables y claros para orientar la mejora.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
+  2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 110 a la 113) — *Elaboración de revistas científicas, correspondencia y debates*
+- **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
+- **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
+
+### 📌 SESIÓN 8 (50 minutos): Ajuste, Corrección y Elaboración del Producto Final Tangible
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Revisión de las sugerencias recibidas en la coevaluación y asignación de tareas específicas para la versión definitiva.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
+  2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 51 a la 54) — *Estructura textual, ortografía y redacción formal*
+- **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
+- **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
+
+### 📌 SESIÓN 9 (50 minutos): Ensayo General y Preparación de la Socialización Comunitaria
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Organización del espacio del aula o patio escolar para la muestra pedagógica. Establecimiento de tiempos y turnos de presentación.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cómo podemos explicar conceptos de "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" de manera sencilla para que cualquiera los entienda?  
+  2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 68 a la 71) — *Lecturas de divulgación, leyendas y textos expositivos*
+- **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
+- **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
+
+### 📌 SESIÓN 10 (50 minutos): Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos
+- **⏱️ Inicio (10 min):**  
+  ⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.
+- **🔬 Desarrollo (30 min):**  
+  ⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)".
+- **🌟 Cierre (10 min):**  
+  ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.
+- **❓ Preguntas Clave de la Sesión:**  
+  1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
+  2. ¿Cómo vas a seguir utilizando este conocimiento sobre "🚀 Proyecto de Codiseño Comunitario: Narración de sucesos del pasado y del presente - Modalidad Innovadora 1 (Zona Costera y de Humedales)" en tu vida diaria?
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 119 a la 122) — *Elaboración de revistas científicas, correspondencia y debates*
+- **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
+- **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
+
+---
+
+## 📊 IV. Rúbrica Analítica Formativa de Evaluación (NEM 2024)
+
+| Criterio Pedagógico | Nivel Sobresaliente (3 pts) | Nivel Satisfactorio (2 pts) | Nivel En Proceso (1 pt) |
 | :--- | :--- | :--- | :--- |
-| **Apropiación del PDA Oficial** | Aplica con solvencia y rigor teórico el contenido *"Narración de sucesos del pasado y del presente"*, integrando conceptos clave y explicaciones fundamentadas. | Comprende y explica los elementos esenciales del PDA con adecuado nivel de detalle. | Identifica nociones generales del contenido pero requiere apoyo para su explicación sistemática. |
-| **Pertinencia Situada (Zona Costera y de Humedales)** | Diseña respuestas innovadoras que atienden directamente el desafío *"Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático."*, demostrando conciencia social y ecológica. | Vincula de manera correcta el proyecto con las condiciones de su comunidad o escuela. | Hace mención al contexto de forma aislada sin articularlo a la propuesta técnica. |
-| **Calidad del Entregable (Gaceta escolar de investigación científica y fanzine literario comunitario)** | El entregable es riguroso, funcional, estéticamente cuidado y comunica con gran claridad su propósito transformador. | El entregable cumple los requisitos técnicos y didácticos solicitados en la planeación. | El entregable presenta inconsistencias o se encuentra parcialmente incompleto. |
-| **Trabajo Colaborativo y Valores Éticos** | Fomenta la inclusión activa, el diálogo empático, la equidad de género y el compromiso solidario en todo momento. | Colabora de forma armónica en las tareas del equipo respetando acuerdos. | Muestra dificultad para coordinarse con sus pares o cumplir con sus responsabilidades asignadas. |
+| **Calidad de Redacción, Coherencia y Ortografía** | Textos con excelente cohesión, riqueza de vocabulario, sin faltas ortográficas y adaptados al público lector. | Textos claros y comprensibles con adecuada estructura de párrafos. | Textos con oraciones inconclusas o frecuentes errores ortográficos. |
+| **Diseño Editorial y Apoyos Visuales** | Diseño atractivo, jerarquía visual impecable con títulos llamativos, fotografías y esquemas pertinentes. | Distribución ordenada del contenido e imágenes ilustrativas adecuadas. | Diseño desorganizado o imágenes sin relación con el tema central. |
+| **Exposición y Diálogo con la Comunidad** | Presenta la gaceta con elocuencia, responde preguntas con seguridad y promueve el diálogo crítico. | Explica su artículo con claridad ante sus compañeros y docentes. | Dificultad para resumir oralmente las ideas principales de su texto. |
 
 ---
 
-## 📦 V. Recursos, Materiales y Entregable Tangible
-
-### 🛠️ Materiales y Recursos Didácticos
-- Libros de Texto Gratuitos (SEP 2024), plataformas de consulta digital y guías metodológicas.
-- Materiales de experimentación, reciclaje y papelería: cartón, madera reciclada, componentes sencillos, pinturas no tóxicas.
-- Dispositivos de registro: cámara, grabadora de voz, proyector audiovisual y herramientas de software libre.
-
-### 📄 Producto Tangible Entregable
-> **Gaceta escolar de investigación científica y fanzine literario comunitario** aplicado a la atención situada de: *Protección de arrecifes, reforestación de manglares y gestión del agua potable ante el impacto del cambio climático.*.
+## 🛠️ V. Recursos y Materiales Didácticos
+- Libros de Texto Gratuitos Oficiales de la SEP asignados con páginas y dinámicas.
+- Materiales manipulables y de indagación escolar.
+- Evidencia final del proyecto: **Edición especial de la "Gaceta Escolar Comunitaria" en formato físico y mural interactivo, con entrevistas, infografías y artículos de opinión redactados por los alumnos.**.
 
 ---
-
-## 🔗 Nodos Relacionados y Conexiones en el Segundo Cerebro
-- [[00_Indice_Maestro_Primaria_Fase_4|Índice Maestro Primaria Fase 4]]
-- [[Prof_Israel_Lopez_Angeles|Perfil del Docente Titular: Prof. Israel López Ángeles]]
-- Etiquetas: #lenguajes • #espanol • #3er_grado • #aprendizaje_basado_en_problemas_con_pensamiento_critico_y_bioetica • #codiseno_2026
+*Documento Curricular Oficial generado para ISkool • Bóveda Central de Conocimiento.*
