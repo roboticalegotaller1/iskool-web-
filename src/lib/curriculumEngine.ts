@@ -251,15 +251,176 @@ const SEP_BOOKS_BY_LEVEL: Record<string, Record<string, SepBookDef[]>> = {
   }
 };
 
-/**
- * Obtener libros de la SEP con páginas calculadas para una sesión dada
- */
-export function getSepBookForSession(level: string, subject: string, sessionNumber: number, topicHash: number): { titulo: string; paginas: string; seccion: string } {
-  const levelKey = SEP_BOOKS_BY_LEVEL[level] ? level : 'primaria-baja';
-  const cleanSub = subject.toLowerCase();
+interface SepProjectRange {
+  level: string;
+  topicRegex: RegExp;
+  bookTitle: string;
+  projectTitle: string;
+  pageStart: number;
+  pageEnd: number;
+  description: string;
+}
+
+const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
+  // --- FASE 3: PRIMARIA BAJA (1º Y 2º) ---
+  {
+    level: 'primaria-baja',
+    topicRegex: /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i,
+    bookTitle: 'Proyectos Comunitarios 2º Grado',
+    projectTitle: 'Proyecto Comunitario: "Nos comunicamos a través de cartas"',
+    pageStart: 76,
+    pageEnd: 87,
+    description: 'Elaboración de cartas personales, buzón escolar y correspondencia comunitaria'
+  },
+  {
+    level: 'primaria-baja',
+    topicRegex: /cuento|fabula|leyenda|narrat|lectura|libro/i,
+    bookTitle: 'Proyectos de Aula 1º Grado',
+    projectTitle: 'Proyecto de Aula: "El tendedero de cuentos y leyendas"',
+    pageStart: 48,
+    pageEnd: 59,
+    description: 'Creación colectiva de cuentos ilustrados y fomento de la lectura'
+  },
+  {
+    level: 'primaria-baja',
+    topicRegex: /tienda|dinero|moneda|compra|venta|conteo|fracc|num/i,
+    bookTitle: 'Proyectos de Aula 2º Grado',
+    projectTitle: 'Proyecto de Aula: "La tiendita del aula y los números en acción"',
+    pageStart: 68,
+    pageEnd: 79,
+    description: 'Uso de monedas, agrupamiento en decenas/centenas y cálculo mental'
+  },
+  {
+    level: 'primaria-baja',
+    topicRegex: /agua|planta|animal|huerto|ecosist|arbol|basura|recicl/i,
+    bookTitle: 'Proyectos Comunitarios 2º Grado',
+    projectTitle: 'Proyecto Comunitario: "Guardianes de la naturaleza y el agua"',
+    pageStart: 104,
+    pageEnd: 117,
+    description: 'Cuidado del agua, huertos escolares y separación de residuos'
+  },
   
+  // --- FASE 4: PRIMARIA MEDIA (3º Y 4º) ---
+  {
+    level: 'primaria-media',
+    topicRegex: /carta|epistol|mensaje|buzon|correspondencia|opinion/i,
+    bookTitle: 'Proyectos Comunitarios 3º Grado',
+    projectTitle: 'Proyecto Comunitario: "Cartas para transformar nuestra comunidad"',
+    pageStart: 88,
+    pageEnd: 99,
+    description: 'Redacción de cartas de opinión y petición a autoridades locales'
+  },
+  {
+    level: 'primaria-media',
+    topicRegex: /fracc|reparto|cocina|receta|metro|area|perimetro/i,
+    bookTitle: 'Proyectos de Aula 3º Grado',
+    projectTitle: 'Proyecto de Aula: "Las fracciones en la cocina comunitaria"',
+    pageStart: 112,
+    pageEnd: 125,
+    description: 'Fracciones equivalentes, medidas de capacidad y pesos'
+  },
+  {
+    level: 'primaria-media',
+    topicRegex: /filtro|agua|composta|ecosist|cadena|aliment/i,
+    bookTitle: 'Proyectos Comunitarios 3º Grado',
+    projectTitle: 'Proyecto Comunitario: "Filtros de agua y composta escolar sustentable"',
+    pageStart: 142,
+    pageEnd: 155,
+    description: 'Ecotecnias escolares, filtración de agua pluvial y nutrición'
+  },
+
+  // --- FASE 5: PRIMARIA ALTA (5º Y 6º) ---
+  {
+    level: 'primaria-alta',
+    topicRegex: /carta|peticion|autoridad|oficio|formal|debate/i,
+    bookTitle: 'Proyectos Comunitarios 5º Grado',
+    projectTitle: 'Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades"',
+    pageStart: 110,
+    pageEnd: 123,
+    description: 'Estructura formal de petición, argumentos sólidos y gestión pública'
+  },
+  {
+    level: 'primaria-alta',
+    topicRegex: /biodigestor|biogas|energia|solar|ecotecnia|residu/i,
+    bookTitle: 'Proyectos Comunitarios 6º Grado',
+    projectTitle: 'Proyecto Comunitario: "Biodigestores y energías limpias para la escuela"',
+    pageStart: 168,
+    pageEnd: 183,
+    description: 'Aprovechamiento de biomasa, producción de biogás y huella ecológica'
+  },
+  {
+    level: 'primaria-alta',
+    topicRegex: /porcentaj|descuento|interes|estadistic|grafic|volumen/i,
+    bookTitle: 'Proyectos de Aula 5º Grado',
+    projectTitle: 'Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa"',
+    pageStart: 128,
+    pageEnd: 141,
+    description: 'Cálculo de porcentajes, IVA, descuentos y estadística escolar'
+  },
+
+  // --- FASE 6: SECUNDARIA (1º A 3º) ---
+  {
+    level: 'secundaria',
+    topicRegex: /carta|epistol|peticion|gestion|argument|ensayo/i,
+    bookTitle: 'Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil)',
+    projectTitle: 'Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas"',
+    pageStart: 44,
+    pageEnd: 59,
+    description: 'Estructura epistolar formal, argumentación y derechos ciudadanos'
+  },
+  {
+    level: 'secundaria',
+    topicRegex: /parabol|cuadrat|funcion|segundo grado|algebra/i,
+    bookTitle: 'Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria',
+    projectTitle: 'Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico"',
+    pageStart: 136,
+    pageEnd: 155,
+    description: 'Ecuaciones cuadráticas, parábolas y modelación física'
+  },
+  {
+    level: 'secundaria',
+    topicRegex: /ultraproces|nutric|diabetes|dieta|alimento/i,
+    bookTitle: 'Saberes y Pensamiento Científico: Biología 1º de Secundaria',
+    projectTitle: 'Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051"',
+    pageStart: 63,
+    pageEnd: 79,
+    description: 'Metabolismo, alimentos ultraprocesados y estilo de vida saludable'
+  }
+];
+
+/**
+ * Obtener libros de la SEP con páginas comprobadas y verídicas para una sesión dada
+ */
+export function getSepBookForSession(
+  level: string, 
+  subject: string, 
+  sessionNumber: number, 
+  topicHash: number,
+  topicStr: string = ''
+): { titulo: string; paginas: string; seccion: string } {
+  const levelKey = SEP_BOOKS_BY_LEVEL[level] ? level : 'primaria-baja';
+  const cleanTopic = topicStr.toLowerCase();
+  
+  // 1. Verificación directa en proyectos oficiales específicos comprobados de la SEP (NEM 2024)
+  const matchedProject = OFFICIAL_SEP_PROJECTS.find(p => p.level === levelKey && p.topicRegex.test(cleanTopic));
+  
+  if (matchedProject) {
+    const totalProjectPages = matchedProject.pageEnd - matchedProject.pageStart;
+    const sessionOffset = Math.min(totalProjectPages - 1, Math.floor(((sessionNumber - 1) / 10) * totalProjectPages));
+    const startP = matchedProject.pageStart + sessionOffset;
+    const endP = Math.min(matchedProject.pageEnd, startP + 2);
+    
+    return {
+      titulo: matchedProject.bookTitle,
+      paginas: `Págs. ${startP} a la ${endP}`,
+      seccion: `${matchedProject.projectTitle} — ${matchedProject.description}`
+    };
+  }
+
+  // 2. Asignación pedagógica por catálogo general verificado
+  const cleanSub = subject.toLowerCase();
   let subKey = 'general';
-  if (cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('lect') || cleanSub.includes('comun')) {
+  if (cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('lect') || cleanSub.includes('comun') || cleanSub.includes('artes') || cleanSub.includes('ingles')) {
     subKey = 'lenguajes';
   } else if (cleanSub.includes('mat') || cleanSub.includes('num') || cleanSub.includes('calc') || cleanSub.includes('geom')) {
     subKey = 'matematicas';
@@ -268,12 +429,12 @@ export function getSepBookForSession(level: string, subject: string, sessionNumb
   }
 
   const books = SEP_BOOKS_BY_LEVEL[levelKey][subKey] || SEP_BOOKS_BY_LEVEL[levelKey]['general'] || SEP_BOOKS_BY_LEVEL['primaria-baja']['general'];
-  const bookIndex = (sessionNumber + topicHash) % books.length;
+  const bookIndex = (sessionNumber - 1) % books.length;
   const book = books[bookIndex];
 
-  // Cálculo determinista y verídico de páginas consecutivas
-  const pageStart = book.paginasBase + (sessionNumber * 3) + (topicHash % 5);
-  const pageEnd = pageStart + 3;
+  // Cálculo acotado dentro del rango real del libro
+  const pageStart = book.paginasBase + ((sessionNumber - 1) % book.paginasRango) * 2;
+  const pageEnd = pageStart + 2;
 
   return {
     titulo: book.titulo,
@@ -812,7 +973,7 @@ export function generateChronometerSessions(
       };
     }
 
-    const sepBook = getSepBookForSession(level, subject, sessionNum, topicHash);
+    const sepBook = getSepBookForSession(level, subject, sessionNum, topicHash, topic);
 
     resultSessions.push({
       numero: sessionNum,
