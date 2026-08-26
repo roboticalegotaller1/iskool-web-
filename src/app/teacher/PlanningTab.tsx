@@ -1475,48 +1475,18 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                   <Edit3 className="h-4 w-4 text-zinc-400" />
                   Haz clic sobre cualquier texto para editar directamente la planeación
                 </span>
-                {activePlanning.isFromObsidian && (
+                {activePlanning.isFromObsidian ? (
                   <span className="px-2.5 py-1 bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 rounded-full text-[10px] font-black flex items-center gap-1 border border-purple-200/30">
-                    <BookOpen className="h-3 w-3" /> Recuperada de Obsidian
+                    <BookOpen className="h-3 w-3" /> Recuperada de Bóveda Obsidian
+                  </span>
+                ) : (
+                  <span className="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 rounded-full text-[10px] font-black flex items-center gap-1 border border-emerald-200/30">
+                    <CheckCircle2 className="h-3 w-3" /> Auto-guardado en Bóveda Obsidian
                   </span>
                 )}
               </div>
               
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={async () => {
-                    try {
-                      const { data: sessionData } = await supabase.auth.getSession();
-                      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-                      if (sessionData?.session?.access_token) {
-                        headers['Authorization'] = `Bearer ${sessionData.session.access_token}`;
-                      }
-
-                      const res = await fetch('/api/obsidian', {
-                        method: 'POST',
-                        headers,
-                        body: JSON.stringify({
-                          ...activePlanning,
-                          teacherName: `${currentTeacher.first_name} ${currentTeacher.last_name}`
-                        })
-                      });
-                      const data = await res.json();
-                      if (data.success) {
-                        alert(`¡Planeación sincronizada con el Segundo Cerebro de Obsidian!\nArchivo: ${data.filename}`);
-                      } else {
-                        alert(`Error al guardar en Obsidian: ${data.error}`);
-                      }
-                    } catch (err: any) {
-                      alert(`Error de conexión con Obsidian: ${err.message}`);
-                    }
-                  }}
-                  className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-black shadow-sm flex items-center gap-1.5 transition-all"
-                >
-                  <BookOpen className="h-3.5 w-3.5" />
-                  Guardar en Obsidian
-                </button>
-
                 <button
                   onClick={handlePrint}
                   className="px-4.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-sm shadow-blue-500/10 flex items-center gap-1.5 transition-all"
