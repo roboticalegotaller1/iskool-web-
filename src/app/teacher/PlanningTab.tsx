@@ -694,12 +694,13 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       setImagePreview(null);
     }
 
-    // Auto-rellenar input con el nombre del archivo estilizado
+    // Auto-rellenar input con el nombre del archivo solo si es un nombre descriptivo (no un nombre genérico de cámara)
     const cleanName = file.name
       .replace(/\.[^/.]+$/, "") // Quitar extensión
       .replace(/[_-]/g, " ");   // Reemplazar guiones por espacios
     
-    if (!inputText) {
+    const isGenericFileName = /^(IMG|photo|foto|image|whatsapp|captura|screenshot|scan|doc|file|[0-9_\-\s]+$)/i.test(cleanName);
+    if (!inputText && !isGenericFileName) {
       setInputText(cleanName);
     }
   };
@@ -734,7 +735,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   // --- Generador Didáctico de Planeación ---
   const handleGenerate = async () => {
     if (!inputText.trim() && !uploadedFile) {
-      alert("Por favor introduce una idea, palabra clave o sube un archivo.");
+      alert("Por favor introduce una idea, palabra clave o sube una fotografía o documento.");
       return;
     }
 
@@ -757,8 +758,8 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     const currentSubjectObj = displaySubjects.find(s => s.id === selectedSubject);
     const currKey = mapSubjectToCurriculumKey(selectedSubject, currentSubjectObj?.name || '');
 
-    // Step 1: Consultar prioritariamente la Bóveda Curricular (Vault-First / Cache-First) salvo si está activo el Bypass
-    if (!bypassVault) {
+    // Step 1: Si hay texto específico y NO hay imagen nueva para analizar, consultar prioritariamente la Bóveda Curricular
+    if (!bypassVault && inputText.trim() && !imagePreview) {
       try {
         const { data: sessionData } = await supabase.auth.getSession();
         const authHeaders: Record<string, string> = {};
@@ -780,19 +781,21 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       } catch (e) {
         console.warn("Aviso de consulta a Bóveda Curricular:", e);
       }
+    } else if (imagePreview) {
+      console.log("📸 [Análisis Multimodal]: Procesando imagen adjunta con Inteligencia Artificial Pedagógica...");
     } else {
-      console.log("⚡ [Modo Innovación IA]: Bypass activado. Generando nueva variación pedagógica...");
+      console.log("⚡ [Modo Innovación IA]: Bypass activado. Generando nueva propuesta pedagógica...");
     }
 
     // Esperar a que la simulación termine visualmente
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Step 2: Si NO existe en Bóveda o está activado el Bypass, activar motor de Inteligencia Artificial Pedagógica
+    // Step 2: Si NO existe en Bóveda o se subió una imagen, activar motor de Inteligencia Artificial Pedagógica
     if (!resultPlanning) {
-      console.log(`🤖 [IA NEM 2024]: Generando nueva planeación didáctica enriquecida (${sessionCount} sesiones)...`);
+      console.log(`🤖 [IA NEM 2024]: Generando nueva planeación didáctica (${sessionCount} sesiones)...`);
       if (aiApiKey.trim()) {
         try {
-          resultPlanning = await callAiService(inputText, selectedLevel, currKey, sessionCount);
+          resultPlanning = await callAiService(inputText, selectedLevel, currKey, sessionCount, imagePreview);
         } catch (err) {
           console.error("Fallo llamada al servicio de IA, usando motor pedagógico local", err);
           resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount);
@@ -807,6 +810,12 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       resultPlanning.subjectName = displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
       if (selectedSuggestedPda && !foundInVault) {
         resultPlanning.pda = selectedSuggestedPda;
+      }
+
+      // Proponer y actualizar el nombre en la interfaz si el usuario subió imagen o no tenía título descriptivo
+      if (resultPlanning.title && (!inputText.trim() || /^(IMG|photo|foto|image|whatsapp|captura|screenshot|scan|doc|file|[0-9_\-\s]+$)/i.test(inputText.trim()))) {
+        const cleanTitleDisplay = resultPlanning.title.replace(/^(Proyecto Didáctico:|Planeación:|📚 Proyecto Didáctico Integral:)\s*/i, '').trim();
+        setInputText(cleanTitleDisplay);
       }
 
       // Step 3: Guardar automáticamente en la Bóveda Curricular y Sincronización Remota
@@ -849,8 +858,14 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     setActivePlanning(resultPlanning);
   };
 
-  // --- Llamada al Servicio de Inteligencia Artificial Pedagógica ---
-  const callAiService = async (promptText: string, level: string, subject: string, totalSessions: number = 10) => {
+  // --- Llamada al Servicio de Inteligencia Artificial Pedagógica (con Soporte Multimodal para Fotos y Libros) ---
+  const callAiService = async (
+    promptText: string, 
+    level: string, 
+    subject: string, 
+    totalSessions: number = 10,
+    imageBase64?: string | null
+  ) => {
     const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
     const durationStr = `${count} ${count === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${count * 50} min)`;
     const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(promptText);
@@ -867,34 +882,41 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     const subjectLabel = subject === 'matematicas' ? 'Matemáticas (Saberes y Pensamiento Científico)' :
                          subject === 'ciencias' ? 'Ciencias / Física y Química (Saberes y Pensamiento Científico)' : 'Lenguajes (Español y Comunicación)';
 
-    const systemPrompt = `Eres un Asesor Pedagógico y Coordinador Académico Nacional de la SEP, experto en la Nueva Escuela Mexicana (NEM 2024) y diseño curricular por proyectos comunitarios.
+    const systemPrompt = `Eres un Asesor Pedagógico y Diseñador Curricular Nacional de la SEP, experto en la Nueva Escuela Mexicana (NEM 2024).
 Debes generar una planeación didáctica RIGUROSA, CONCRETA, ALTAMENTE PRÁCTICA Y 100% APLICABLE en el aula para un profesor.
+
+${imageBase64 ? `📸 INSTRUCCIÓN MULTIMODAL VISUAL:
+Se adjunta una imagen o fotografía subida por el docente (página de libro de texto SEP, apunte, ejercicio, diagrama o foto de pizarrón).
+1. ANALIZA MINUCIOSAMENTE el contenido visual, los textos, fórmulas, diagramas y conceptos presentes en la imagen.
+2. Identifica con precisión el TEMA CENTRAL y propón un TÍTULO PEDAGÓGICO FORMAL, INSPIRADOR Y MOTIVADOR para el proyecto didáctico (en "title", ej. "La Magia de la Fotosíntesis y la Vida Comunitaria", "Explorando las Ecuaciones Cuadráticas en la Arquitectura").
+3. Escribe en "detectedTopic" el tema pedagógico exacto detectado en la imagen.
+4. Identifica y redacta el Proceso de Desarrollo de Aprendizaje (PDA) oficial y riguroso de la NEM 2024 correspondiente a la Fase y Grado indicados.` : ''}
 
 REGLAS PEDAGÓGICAS ESTRICTAS (NEM 2024):
 1. DOSIFICACIÓN EXACTA EN ${count} SESIONES DE 50 MINUTOS (Total: ${count * 50} min):
-   - Detalla INDIVIDUALMENTE cada una de las ${count} sesiones (Sesión 1 a ${count}).
-   - En cada sesión especifica:
+   - Cada sesión debe incluir:
      • Minutero exacto: Inicio (10 min), Desarrollo (30 min) y Cierre (10 min).
      • Preguntas detonadoras/clave (2 preguntas por sesión).
      • Libro de texto gratuito oficial de la SEP y página exacta (ej. "Nuestros Saberes 2º Grado, págs. 48-52" o correspondiente al nivel/fase).
      • Materiales manipulables y recursos.
      • Entregable parcial de la sesión (producto tangible).
 2. ARTICULACIÓN CURRICULAR (PDAs ENLAZADOS):
-   - Proporciona el PDA Principal y al menos 2 a 3 PDAs Articulados de otros campos formativos (Lenguajes, Saberes y Pensamiento Científico, Ética, Naturaleza y Sociedades, De lo Humano y lo Comunitario).
+   - Proporciona el PDA Principal y al menos 2 a 3 PDAs Articulados de otros campos formativos.
 3. PROPUESTA DE PROYECTO FINAL INTEGRADOR:
    - Título formal, problemática comunitaria real, propósito, entregable final tangible y rúbrica analítica cualitativa de 3 niveles (Sobresaliente, Satisfactorio, En Proceso).
 
 Nivel educativo: ${levelLabel}.
 Asignatura: ${subjectLabel}.
-Tema solicitado: "${promptText}".
+Tema/Instrucción del docente: "${promptText || 'Identificar y planificar a partir de la imagen adjunta'}".
 Número de sesiones solicitadas: ${count}.
 
 Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructura exacta:
 {
-  "title": "Título pedagógico formal y motivador",
+  "title": "Título pedagógico formal y motivador del proyecto",
+  "detectedTopic": "Tema educativo central detectado",
   "campoFormativo": "Saberes y Pensamiento Científico",
-  "ejesArticuladores": ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura", "Inclusión"],
-  "pda": "Redacción formal del PDA oficial de la NEM correspondiente a la Fase y grado",
+  "ejesArticuladores": ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura", "Inclusión", "Vida Saludable"],
+  "pda": "Redacción formal del PDA oficial de la NEM 2024 correspondiente a la Fase y grado",
   "duration": "${durationStr}",
   "preguntasDetonadoras": [
     "Pregunta detonadora 1",
@@ -903,9 +925,23 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
   ]
 }`;
 
-    const fallbackSessions = generateChronometerSessions(level, subject, promptText, count);
-    const fallbackPdas = getArticulatedPdas(level, subject, promptText);
-    const fallbackProject = generateFinalProjectProposal(level, subject, promptText);
+    // Construir partes del contenido (incluyendo imagen base64 si existe)
+    const requestParts: any[] = [];
+    
+    if (imageBase64 && imageBase64.startsWith('data:')) {
+      const [header, data] = imageBase64.split(';base64,');
+      const mimeType = header.replace('data:', '') || 'image/jpeg';
+      requestParts.push({
+        inline_data: {
+          mime_type: mimeType,
+          data: data
+        }
+      });
+    }
+
+    requestParts.push({
+      text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español con ${count} sesiones exactas.`
+    });
 
     try {
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${aiApiKey}`, {
@@ -913,7 +949,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [
-            { parts: [{ text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español para el tema: "${promptText}" con ${count} sesiones exactas.` }] }
+            { parts: requestParts }
           ]
         })
       });
@@ -924,9 +960,16 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         text = text.replace(/```json/g, '').replace(/```/g, '').trim();
         const parsed = JSON.parse(text);
 
+        const effectiveTopic = parsed.detectedTopic || promptText || parsed.title || 'Tema Curricular Situado';
+        const fallbackSessions = generateChronometerSessions(level, subject, effectiveTopic, count);
+        const fallbackPdas = getArticulatedPdas(level, subject, effectiveTopic);
+        const fallbackProject = generateFinalProjectProposal(level, subject, effectiveTopic);
+
+        const proposedTitle = parsed.title || `Proyecto Didáctico: ${effectiveTopic} — ${levelLabel}`;
+
         return {
           id: 'plan-' + Date.now(),
-          title: parsed.title || `Proyecto Didáctico: ${promptText} — ${levelLabel}`,
+          title: proposedTitle,
           subjectId: subject,
           subjectName: subjectLabel,
           levelId: level,
@@ -937,7 +980,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           pdasArticulados: fallbackPdas,
           duration: durationStr,
           preguntasDetonadoras: Array.isArray(parsed.preguntasDetonadoras) ? parsed.preguntasDetonadoras : [
-            `¿Cómo aplicamos el contenido de "${promptText}" para resolver problemáticas en nuestra comunidad?`,
+            `¿Cómo aplicamos el contenido de "${effectiveTopic}" para resolver problemáticas en nuestra comunidad?`,
             `¿De qué forma colaboramos en equipo para construir soluciones tangibles y creativas?`,
             `¿Qué aprendizajes compartiremos en la muestra comunitaria final?`
           ],
@@ -966,7 +1009,22 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
   const generateLocalNEMPlanning = (promptText: string, level: string, subject: string, totalSessions: number = 10): CompleteNEMPlanning => {
     const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
     const durationStr = `${count} ${count === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${count * 50} min)`;
-    const capitalizedTopic = promptText.charAt(0).toUpperCase() + promptText.slice(1).trim();
+    
+    // Si el texto es genérico (de cámara o vacío), asignar un tema situado auténtico según la materia y nivel
+    const isGeneric = !promptText.trim() || /^(IMG|photo|foto|image|whatsapp|captura|screenshot|scan|doc|file|[0-9_\-\s]+$)/i.test(promptText.trim());
+    
+    let effectiveTopic = promptText.trim();
+    if (isGeneric) {
+      if (subject === 'matematicas') {
+        effectiveTopic = level.includes('secundaria') ? 'Modelación y Exploración de Funciones Cuadráticas' : 'Fracciones y Pensamiento Numérico con Material Concreto';
+      } else if (subject === 'ciencias') {
+        effectiveTopic = level.includes('secundaria') ? 'Indagación Científica y Fenómenos Químicos del Entorno' : 'Ecosistemas Locales y Conservación Ambiental';
+      } else {
+        effectiveTopic = level.includes('secundaria') ? 'Textos Argumentativos y Expresión Dialéctica' : 'Narración y Creación de Cuentos Colectivos';
+      }
+    }
+
+    const capitalizedTopic = effectiveTopic.charAt(0).toUpperCase() + effectiveTopic.slice(1).trim();
 
     const levelNames: Record<string, string> = {
       'preescolar':     'Preescolar (Fase 2: 1º a 3º)',
@@ -983,9 +1041,9 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       'lenguajes':   'Español / Lenguajes (Lenguajes)'
     };
 
-    const isLanguage = subject === 'lenguajes' || (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(promptText));
-    const isMath = subject === 'matematicas' || (!subject && !isLanguage && /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(promptText));
-    const isScience = subject === 'ciencias' || (!subject && !isLanguage && !isMath && /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(promptText));
+    const isLanguage = subject === 'lenguajes' || (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(effectiveTopic));
+    const isMath = subject === 'matematicas' || (!subject && !isLanguage && /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(effectiveTopic));
+    const isScience = subject === 'ciencias' || (!subject && !isLanguage && !isMath && /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(effectiveTopic));
     const campo = isLanguage ? 'Lenguajes' : (isMath || isScience ? 'Saberes y Pensamiento Científico' : 'Lenguajes');
     const ejes = ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'];
 
@@ -993,9 +1051,9 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
     const pdaKey = isLanguage ? 'language' : isMath ? 'math' : isScience ? 'ecology' : 'default';
     const pda = pdaMap[level]?.[pdaKey] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
 
-    const sesionesList = generateChronometerSessions(level, subject, promptText, count);
-    const pdasArticulados = getArticulatedPdas(level, subject, promptText);
-    const proyectoIntegrador = generateFinalProjectProposal(level, subject, promptText);
+    const sesionesList = generateChronometerSessions(level, subject, effectiveTopic, count);
+    const pdasArticulados = getArticulatedPdas(level, subject, effectiveTopic);
+    const proyectoIntegrador = generateFinalProjectProposal(level, subject, effectiveTopic);
 
     return {
       id: 'plan-' + Date.now(),
