@@ -209,13 +209,16 @@ export function getSepBookForSession(level: string, subject: string, sessionNumb
 }
 
 /**
- * Generador de las 10 Sesiones Individuales con Minutero (10/30/10 min) y Entregables
+ * Generador Dinámico de Sesiones Individuales con Minutero (10/30/10 min), Libros SEP y Entregables
+ * Genera de forma exacta el número de sesiones solicitado por el docente (1 a 30 sesiones).
  */
-export function generateChronometer10Sessions(
+export function generateChronometerSessions(
   level: string,
   subject: string,
-  topic: string
+  topic: string,
+  totalSessions: number = 10
 ): SessionPlanItem[] {
+  const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
   const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1).trim();
   const topicLower = topic.toLowerCase();
   const topicHash = Math.abs(topic.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0));
@@ -226,161 +229,142 @@ export function generateChronometer10Sessions(
   const cleanSub = subject.toLowerCase();
   const isLanguageSubject = cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('comun') || (!cleanSub.includes('mat') && !cleanSub.includes('cien') && (isEpistolar || isCuento || isPoesia));
 
-  // 1. Plantilla Especializada: Cartas y Textos Epistolares (Lenguajes / Español)
-  if (isLanguageSubject && isEpistolar) {
-    const epistolarSessions = [
-      {
-        num: 1,
-        titulo: `Apertura del Reto: ¿Cómo viaja un mensaje? El origen de las cartas y el oficio del cartero`,
-        inicio: `⏱️ INICIO (10 min): Dinámica detonadora "La Carta Viajera". El docente muestra sobres postales antiguos con timbres y plantea el misterio: "¿Cómo se comunicaban las familias antes del teléfono celular?". Lluvia de ideas en el pizarrón.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Proyección de imágenes de carteros y buzones históricos. En equipos de 4, los alumnos analizan ejemplos reales de cartas y reflexionan sobre a quién les gustaría escribirle (abuelos, amigos, autoridades escolares). Registran en papel bond sus saberes previos.`,
-        cierre: `⏱️ CIERRE (10 min): Puesta en común. Cada equipo elige a quién dirigirá su mensaje de agradecimiento o amistad. Registro individual en bitácora: "¿Qué mensaje importante quiero enviar al mundo?".`,
-        preguntas: [
-          `¿Por qué una carta escrita a mano transmite emociones más profundas que un mensaje de texto digital?`,
-          `¿Qué personas en nuestra comunidad merecen recibir una carta de agradecimiento o felicitación?`
-        ],
-        materiales: ['Ejemplos de cartas reales y sobres postales', 'Papel bond blanco', 'Plumones de colores', 'Bitácora escolar'],
-        entregable: `📄 Ficha de Trabajo #1: Diagnóstico inicial "El valor de la correspondencia escrita" y lista de posibles destinatarios.`
-      },
-      {
-        num: 2,
-        titulo: `Exploración en Libros SEP: Las partes esenciales de una carta (Lugar, Fecha, Destinatario y Saludo)`,
-        inicio: `⏱️ INICIO (10 min): Ruleta de preguntas sobre la sesión previa y apertura del libro de texto gratuito de la SEP. Identificación visual de la cabecera epistolar.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Lectura guiada en el libro de texto oficial de la SEP. Los alumnos identifican y encierran con color rojo: 1) Lugar y Fecha, 2) Nombre del Destinatario, y 3) Saludo afectuoso o formal. En parejas practican la escritura de 3 saludos diferentes.`,
-        cierre: `⏱️ CIERRE (10 min): Dinámica "El Saludo Ideal": Cada pareja lee su saludo favorito. Retroalimentación inmediata sobre el uso de mayúsculas y dos puntos (:).`,
-        preguntas: [
-          `¿Por qué es indispensable poner la fecha y el lugar en el encabezado de una carta?`,
-          `¿Qué diferencia existe entre saludar a un amigo cercano ("¡Hola, querido Mateo!") y a la directora de la escuela ("Estimada Directora")?`
-        ],
-        materiales: ['Libro de texto gratuito SEP asignado', 'Marcatextos de colores', 'Cuaderno del alumno', 'Pizarrón'],
-        entregable: `📄 Ficha de Trabajo #2: Esquema rotulado con las partes del encabezado y plantilla de práctica de saludos formales e informales.`
-      },
-      {
-        num: 3,
-        titulo: `El Cuerpo de la Carta: Expresión de ideas, anécdotas y sentimientos con claridad`,
-        inicio: `⏱️ INICIO (10 min): Activación "El Teléfono Descompuesto de las Emociones". Reflexión sobre cómo evitar confusiones al escribir lo que sentimos y pensamos.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Taller de redacción del cuerpo del mensaje. Los alumnos organizan sus ideas respondiendo a 3 preguntas: 1) ¿Por qué te escribo?, 2) ¿Qué anécdota o noticia quiero contarte?, y 3) ¿Qué deseo preguntarte? Escriben su primer borrador manuscrito en hojas de raya.`,
-        cierre: `⏱️ CIERRE (10 min): Lectura en voz baja en parejas para verificar que el mensaje se entienda con claridad. Autoevaluación del párrafo principal.`,
-        preguntas: [
-          `¿Cómo redactamos nuestras vivencias para que la persona que lea la carta se emocione o sonría?`,
-          `¿Qué signos de puntuación nos ayudan a separar las ideas y que el texto no se sienta amontonado?`
-        ],
-        materiales: ['Hojas de trabajo pautadas', 'Lápiz y goma', 'Tarjetas de conectores textuales (además, también, por eso)'],
-        entregable: `📄 Borrador Parcial #1: Redacción manuscrita del cuerpo de la carta con al menos dos párrafos organizados.`
-      },
-      {
-        num: 4,
-        titulo: `Despedida, Firma y Posdata: El cierre afectuoso y formal del texto epistolar`,
-        inicio: `⏱️ INICIO (10 min): Lectura compartida de distintas despedidas de cartas literarias famosas ("Con todo mi cariño", "Atentamente", "Se despide tu amigo").`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Los alumnos completan el cierre de su carta agregando una despedida adecuada a su destinatario, su firma o nombre completo y una Posdata (P.D.) con un detalle especial o sorpresa. Ensamblan el borrador completo (encabezado + cuerpo + cierre).`,
-        cierre: `⏱️ CIERRE (10 min): Exposición mural de cartas modelo en el salón. Felicitación colectiva por completar el primer texto integral.`,
-        preguntas: [
-          `¿Para qué se utiliza la Posdata (P.D.) y en qué momento es útil agregarla?`,
-          `¿Qué tipo de despedida transmite respeto y cuál transmite cariño familiar?`
-        ],
-        materiales: ['Cuaderno de trabajo', 'Tiras de papel con fórmulas de despedida', 'Lápiz y colores'],
-        entregable: `📄 Borrador Completo #1: Carta íntegra con sus 6 componentes (Lugar/Fecha, Destinatario, Saludo, Cuerpo, Despedida y Firma).`
-      },
-      {
-        num: 5,
-        titulo: `El Arte del Sobre Postal: Rotulación de Remitente, Destinatario, Código Postal y Estampillas`,
-        inicio: `⏱️ INICIO (10 min): Presentación de sobres postales y explicación de la regla de oro: ¿Dónde va el Remitente (quien envía) y dónde el Destinatario (quien recibe)?`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Taller de diseño y rotulación de sobres. Los alumnos elaboran o decoran su propio sobre tamaño carta. Escriben con letra clara el nombre y domicilio escolar del destinatario al frente y sus propios datos al reverso. Crean y colorean una estampilla postal artística con un símbolo escolar.`,
-        cierre: `⏱️ CIERRE (10 min): Revisión cruzada en parejas: "¿El cartero sabrá exactamente a qué salón o persona llevar este sobre?".`,
-        preguntas: [
-          `¿Qué sucedería si intercambiamos de lugar el remitente y el destinatario en un sobre postal?`,
-          `¿Por qué las estampillas postales tienen ilustraciones culturales y artísticas de nuestro país?`
-        ],
-        materiales: ['Sobres de papel bond o manila', 'Hojas de colores y pegamento', 'Plumines finos', 'Sellos decorativos'],
-        entregable: `📄 Producto Parcial: Sobre postal rotulado correctamente con datos de remitente/destinatario y estampilla original diseñada.`
-      },
-      {
-        num: 6,
-        titulo: `Construcción del Buzón Comunitario: Trabajo manual colaborativo con cartón reciclado`,
-        inicio: `⏱️ INICIO (10 min): Organización de comisiones de trabajo para el montaje del gran "Buzón Postal de la Escuela" (diseño, pintura, rotulación y ranura de depósito).`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Trabajo colaborativo en estaciones: 1) Pintura y forrado de la caja con color rojo/azul institucional, 2) Creación del letrero "Buzón Escolar de la Amistad", 3) Rotulación de instrucciones de uso para la comunidad escolar, y 4) Elaboración de banderines decorativos.`,
-        cierre: `⏱️ CIERRE (10 min): Instalación simbólica del buzón en el aula. Prueba de depósito de los primeros mensajes de muestra.`,
-        preguntas: [
-          `¿Cómo logramos que el buzón sea visible, resistente y llamativo para toda la comunidad escolar?`,
-          `¿Qué valores como el respeto y la confidencialidad debemos cuidar al manejar la correspondencia ajena?`
-        ],
-        materiales: ['Caja de cartón grande reciclada', 'Pinturas acrílicas no tóxicas, pinceles y papel kraft', 'Tijeras y cinta adhesiva'],
-        entregable: `📦 Producto Colectivo: Buzón postal comunitario terminado, rotulado y funcional para la recolección de cartas.`
-      },
-      {
-        num: 7,
-        titulo: `Taller de Corrección Epistolar: Coevaluación con "Lentes de Revisor" y Cuidado Ortográfico`,
-        inicio: `⏱️ INICIO (10 min): Dinámica "Los Lentes del Revisor". Explicación de la lista de cotejo: mayúsculas al inicio, puntos finales, claridad y caligrafía legible.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Intercambio de borradores entre compañeros. Con notas adhesivas suaves (post-its), cada revisor señala 2 aspectos hermosos del mensaje y 1 sugerencia para mejorar la ortografía o el trazo de las letras. El docente acompaña a quienes requieran apoyo.`,
-        cierre: `⏱️ CIERRE (10 min): Devolución afectuosa de cartas con comentarios positivos: "Tu carta me hizo sonreír porque...".`,
-        preguntas: [
-          `¿Por qué revisar nuestro texto con ayuda de un compañero hace que el mensaje final sea mucho más claro y emotivo?`,
-          `¿Qué palabras corregimos para que nuestro destinatario entienda todo sin dificultad?`
-        ],
-        materiales: ['Lista de cotejo de coevaluación', 'Notas adhesivas de colores', 'Borradores de las cartas'],
-        entregable: `📄 Ficha de Coevaluación: Lista de cotejo completada con retroalimentación entre pares y observaciones del docente.`
-      },
-      {
-        num: 8,
-        titulo: `Versión Final Manuscrita: Caligrafía cuidada en papel carta, ensobrado y sellado postal`,
-        inicio: `⏱️ INICIO (10 min): Presentación del papel especial para la versión final y recordatorio del cuidado en los márgenes, sangría y limpieza.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Sesión intensiva de escritura de la versión final en papel membretado artesanalmente. Los alumnos aplican todas las correcciones, agregan ilustraciones en los márgenes, doblan la carta en tres partes iguales, la introducen en su sobre y la sellan con un sticker o sello postal.`,
-        cierre: `⏱️ CIERRE (10 min): Ceremonia de sellado: Cada alumno muestra su sobre cerrado listo para depositarlo en el buzón comunitario.`,
-        preguntas: [
-          `¿Cómo influye una presentación limpia, ordenada y con bonita letra en la persona que va a recibir nuestra carta?`,
-          `¿Qué emoción sientes al tener en tus manos tu carta lista para ser entregada?`
-        ],
-        materiales: ['Papel especial o decorado para cartas', 'Lápices de colores y plumas de gel', 'Sobres terminados', 'Sellos adhesivos'],
-        entregable: `📄 Producto Final Individual: Carta definitiva corregida, manuscrita, doblada, ensobrada y sellada.`
-      },
-      {
-        num: 9,
-        titulo: `El Oficio del Cartero: Ensayo de rutas de reparto postal, gorras y organización de la entrega`,
-        inicio: `⏱️ INICIO (10 min): Asignación de roles para la jornada comunitaria: carteros infantiles, clasificadores de correspondencia, recepcionistas y voceros.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Los alumnos elaboran gorras y bolsos de cartero con cartulina y estambre. Simulan el circuito postal: 1) Recolección en el buzón, 2) Clasificación por salones o destinatarios, 3) Ensayo de las palabras de entrega ("¡Buenas noticias! Traigo correspondencia para...").`,
-        cierre: `⏱️ CIERRE (10 min): Ajuste de tiempos y protocolos de respeto para la entrega formal en la escuela.`,
-        preguntas: [
-          `¿Qué responsabilidad tiene un cartero al custodiar y entregar a tiempo los mensajes de las personas?`,
-          `¿Cómo debemos presentarnos amablemente al entregar una carta a un profesor, compañero o padre de familia?`
-        ],
-        materiales: ['Cartulinas azules o verdes para gorras de cartero', 'Bolsas de tela o papel kraft', 'Estambre y tijeras'],
-        entregable: `📄 Guion de Entrega Postal y distintivos de carteros elaborados por el equipo.`
-      },
-      {
-        num: 10,
-        titulo: `Jornada del Cartero Escolar: Entrega de correspondencia comunitaria, lectura en voz alta y evaluación`,
-        inicio: `⏱️ INICIO (10 min): Palabras de bienvenida a la "Jornada del Cartero Comunitario". Apertura solemne del buzón postal ante la comunidad escolar.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Recorrido de los carteros infantiles entregando las cartas en los salones y a familiares invitados. Momento de lectura compartida: quienes deseen leen fragmentos de sus cartas recibidas en el círculo de diálogo.`,
-        cierre: `⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica formativa de 3 niveles. Firma del "Mural de la Amistad Epistolar" y reflexión sobre lo aprendido.`,
-        preguntas: [
-          `¿Qué caras pusieron las personas al recibir sus cartas escritas con tanto cariño y esfuerzo?`,
-          `¿Cómo transformó este proyecto nuestra forma de comunicarnos y convivir en la escuela?`
-        ],
-        materiales: ['Buzón con cartas listas', 'Rúbricas analíticas impresas', 'Mural de firmas y compromisos comunitarios'],
-        entregable: `🏆 Evidencia Final Integradora: Registro de entrega de cartas, lectura compartida comunitaria y rúbrica analítica formativa evaluada.`
-      }
-    ];
+  // 1. Plantilla Maestra Especializada: Cartas y Textos Epistolares (Lenguajes / Español)
+  const epistolarTemplates = [
+    {
+      num: 1,
+      titulo: `Apertura del Reto: ¿Cómo viaja un mensaje? El origen de las cartas y el oficio del cartero`,
+      inicio: `⏱️ INICIO (10 min): Dinámica detonadora "La Carta Viajera". El docente muestra sobres postales antiguos con timbres y plantea el misterio: "¿Cómo se comunicaban las familias antes del teléfono celular?". Lluvia de ideas en el pizarrón.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Proyección de imágenes de carteros y buzones históricos. En equipos de 4, los alumnos analizan ejemplos reales de cartas y reflexionan sobre a quién les gustaría escribirle (abuelos, amigos, autoridades escolares). Registran en papel bond sus saberes previos.`,
+      cierre: `⏱️ CIERRE (10 min): Puesta en común. Cada equipo elige a quién dirigirá su mensaje de agradecimiento o amistad. Registro individual en bitácora: "¿Qué mensaje importante quiero enviar al mundo?".`,
+      preguntas: [
+        `¿Por qué una carta escrita a mano transmite emociones más profundas que un mensaje de texto digital?`,
+        `¿Qué personas en nuestra comunidad merecen recibir una carta de agradecimiento o felicitación?`
+      ],
+      materiales: ['Ejemplos de cartas reales y sobres postales', 'Papel bond blanco', 'Plumones de colores', 'Bitácora escolar'],
+      entregable: `📄 Ficha de Trabajo #1: Diagnóstico inicial "El valor de la correspondencia escrita" y lista de posibles destinatarios.`
+    },
+    {
+      num: 2,
+      titulo: `Exploración en Libros SEP: Las partes esenciales de una carta (Lugar, Fecha, Destinatario y Saludo)`,
+      inicio: `⏱️ INICIO (10 min): Ruleta de preguntas sobre la sesión previa y apertura del libro de texto gratuito de la SEP. Identificación visual de la cabecera epistolar.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Lectura guiada en el libro de texto oficial de la SEP. Los alumnos identifican y encierran con color rojo: 1) Lugar y Fecha, 2) Nombre del Destinatario, y 3) Saludo afectuoso o formal. En parejas practican la escritura de 3 saludos diferentes.`,
+      cierre: `⏱️ CIERRE (10 min): Dinámica "El Saludo Ideal": Cada pareja lee su saludo favorito. Retroalimentación inmediata sobre el uso de mayúsculas y dos puntos (:).`,
+      preguntas: [
+        `¿Por qué es indispensable poner la fecha y el lugar en el encabezado de una carta?`,
+        `¿Qué diferencia existe entre saludar a un amigo cercano ("¡Hola, querido Mateo!") y a la directora de la escuela ("Estimada Directora")?`
+      ],
+      materiales: ['Libro de texto gratuito SEP asignado', 'Marcatextos de colores', 'Cuaderno del alumno', 'Pizarrón'],
+      entregable: `📄 Ficha de Trabajo #2: Esquema rotulado con las partes del encabezado y plantilla de práctica de saludos formales e informales.`
+    },
+    {
+      num: 3,
+      titulo: `El Cuerpo de la Carta: Expresión de ideas, anécdotas y sentimientos con claridad`,
+      inicio: `⏱️ INICIO (10 min): Activación "El Teléfono Descompuesto de las Emociones". Reflexión sobre cómo evitar confusiones al escribir lo que sentimos y pensamos.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Taller de redacción del cuerpo del mensaje. Los alumnos organizan sus ideas respondiendo a 3 preguntas: 1) ¿Por qué te escribo?, 2) ¿Qué anécdota o noticia quiero contarte?, y 3) ¿Qué deseo preguntarte? Escriben su primer borrador manuscrito en hojas de raya.`,
+      cierre: `⏱️ CIERRE (10 min): Lectura en voz baja en parejas para verificar que el mensaje se entienda con claridad. Autoevaluación del párrafo principal.`,
+      preguntas: [
+        `¿Cómo redactamos nuestras vivencias para que la persona que lea la carta se emocione o sonría?`,
+        `¿Qué signos de puntuación nos ayudan a separar las ideas y que el texto no se sienta amontonado?`
+      ],
+      materiales: ['Hojas de trabajo pautadas', 'Lápiz y goma', 'Tarjetas de conectores textuales (además, también, por eso)'],
+      entregable: `📄 Borrador Parcial #1: Redacción manuscrita del cuerpo de la carta con al menos dos párrafos organizados.`
+    },
+    {
+      num: 4,
+      titulo: `Despedida, Firma y Posdata: El cierre afectuoso y formal del texto epistolar`,
+      inicio: `⏱️ INICIO (10 min): Lectura compartida de distintas despedidas de cartas literarias famosas ("Con todo mi cariño", "Atentamente", "Se despide tu amigo").`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Los alumnos completan el cierre de su carta agregando una despedida adecuada a su destinatario, su firma o nombre completo y una Posdata (P.D.) con un detalle especial o sorpresa. Ensamblan el borrador completo (encabezado + cuerpo + cierre).`,
+      cierre: `⏱️ CIERRE (10 min): Exposición mural de cartas modelo en el salón. Felicitación colectiva por completar el primer texto integral.`,
+      preguntas: [
+        `¿Para qué se utiliza la Posdata (P.D.) y en qué momento es útil agregarla?`,
+        `¿Qué tipo de despedida transmite respeto y cuál transmite cariño familiar?`
+      ],
+      materiales: ['Cuaderno de trabajo', 'Tiras de papel con fórmulas de despedida', 'Lápiz y colores'],
+      entregable: `📄 Borrador Completo #1: Carta íntegra con sus 6 componentes (Lugar/Fecha, Destinatario, Saludo, Cuerpo, Despedida y Firma).`
+    },
+    {
+      num: 5,
+      titulo: `El Arte del Sobre Postal: Rotulación de Remitente, Destinatario, Código Postal y Estampillas`,
+      inicio: `⏱️ INICIO (10 min): Presentación de sobres postales y explicación de la regla de oro: ¿Dónde va el Remitente (quien envía) y dónde el Destinatario (quien recibe)?`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Taller de diseño y rotulación de sobres. Los alumnos elaboran o decoran su propio sobre tamaño carta. Escriben con letra clara el nombre y domicilio escolar del destinatario al frente y sus propios datos al reverso. Crean y colorean una estampilla postal artística con un símbolo escolar.`,
+      cierre: `⏱️ CIERRE (10 min): Revisión cruzada en parejas: "¿El cartero sabrá exactamente a qué salón o persona llevar este sobre?".`,
+      preguntas: [
+        `¿Qué sucedería si intercambiamos de lugar el remitente y el destinatario en un sobre postal?`,
+        `¿Por qué las estampillas postales tienen ilustraciones culturales y artísticas de nuestro país?`
+      ],
+      materiales: ['Sobres de papel bond o manila', 'Hojas de colores y pegamento', 'Plumines finos', 'Sellos decorativos'],
+      entregable: `📄 Producto Parcial: Sobre postal rotulado correctamente con datos de remitente/destinatario y estampilla original diseñada.`
+    },
+    {
+      num: 6,
+      titulo: `Construcción del Buzón Comunitario: Trabajo manual colaborativo con cartón reciclado`,
+      inicio: `⏱️ INICIO (10 min): Organización de comisiones de trabajo para el montaje del gran "Buzón Postal de la Escuela" (diseño, pintura, rotulación y ranura de depósito).`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo colaborativo en estaciones: 1) Pintura y forrado de la caja con color rojo/azul institucional, 2) Creación del letrero "Buzón Escolar de la Amistad", 3) Rotulación de instrucciones de uso para la comunidad escolar, y 4) Elaboración de banderines decorativos.`,
+      cierre: `⏱️ CIERRE (10 min): Instalación simbólica del buzón en el aula. Prueba de depósito de los primeros mensajes de muestra.`,
+      preguntas: [
+        `¿Cómo logramos que el buzón sea visible, resistente y llamativo para toda la comunidad escolar?`,
+        `¿Qué valores como el respeto y la confidencialidad debemos cuidar al manejar la correspondencia ajena?`
+      ],
+      materiales: ['Caja de cartón grande reciclada', 'Pinturas acrílicas no tóxicas, pinceles y papel kraft', 'Tijeras y cinta adhesiva'],
+      entregable: `📦 Producto Colectivo: Buzón postal comunitario terminado, rotulado y funcional para la recolección de cartas.`
+    },
+    {
+      num: 7,
+      titulo: `Taller de Corrección Epistolar: Coevaluación con "Lentes de Revisor" y Cuidado Ortográfico`,
+      inicio: `⏱️ INICIO (10 min): Dinámica "Los Lentes del Revisor". Explicación de la lista de cotejo: mayúsculas al inicio, puntos finales, claridad y caligrafía legible.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Intercambio de borradores entre compañeros. Con notas adhesivas suaves (post-its), cada revisor señala 2 aspectos hermosos del mensaje y 1 sugerencia para mejorar la ortografía o el trazo de las letras. El docente acompaña a quienes requieran apoyo.`,
+      cierre: `⏱️ CIERRE (10 min): Devolución afectuosa de cartas con comentarios positivos: "Tu carta me hizo sonreír porque...".`,
+      preguntas: [
+        `¿Por qué revisar nuestro texto con ayuda de un compañero hace que el mensaje final sea mucho más claro y emotivo?`,
+        `¿Qué palabras corregimos para que nuestro destinatario entienda todo sin dificultad?`
+      ],
+      materiales: ['Lista de cotejo de coevaluación', 'Notas adhesivas de colores', 'Borradores de las cartas'],
+      entregable: `📄 Ficha de Coevaluación: Lista de cotejo completada con retroalimentación entre pares y observaciones del docente.`
+    },
+    {
+      num: 8,
+      titulo: `Versión Final Manuscrita: Caligrafía cuidada en papel carta, ensobrado y sellado postal`,
+      inicio: `⏱️ INICIO (10 min): Presentación del papel especial para la versión final y recordatorio del cuidado en los márgenes, sangría y limpieza.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Sesión intensiva de escritura de la versión final en papel membretado artesanalmente. Los alumnos aplican todas las correcciones, agregan ilustraciones en los márgenes, doblan la carta en tres partes iguales, la introducen en su sobre y la sellan con un sticker o sello postal.`,
+      cierre: `⏱️ CIERRE (10 min): Ceremonia de sellado: Cada alumno muestra su sobre cerrado listo para depositarlo en el buzón comunitario.`,
+      preguntas: [
+        `¿Cómo influye una presentación limpia, ordenada y con bonita letra en la persona que va a recibir nuestra carta?`,
+        `¿Qué emoción sientes al tener en tus manos tu carta lista para ser entregada?`
+      ],
+      materiales: ['Papel especial o decorado para cartas', 'Lápices de colores y plumas de gel', 'Sobres terminados', 'Sellos adhesivos'],
+      entregable: `📄 Producto Final Individual: Carta definitiva corregida, manuscrita, doblada, ensobrada y sellada.`
+    },
+    {
+      num: 9,
+      titulo: `El Oficio del Cartero: Ensayo de rutas de reparto postal, gorras y organización de la entrega`,
+      inicio: `⏱️ INICIO (10 min): Asignación de roles para la jornada comunitaria: carteros infantiles, clasificadores de correspondencia, recepcionistas y voceros.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Los alumnos elaboran gorras y bolsos de cartero con cartulina y estambre. Simulan el circuito postal: 1) Recolección en el buzón, 2) Clasificación por salones o destinatarios, 3) Ensayo de las palabras de entrega ("¡Buenas noticias! Traigo correspondencia para...").`,
+      cierre: `⏱️ CIERRE (10 min): Ajuste de tiempos y protocolos de respeto para la entrega formal en la escuela.`,
+      preguntas: [
+        `¿Qué responsabilidad tiene un cartero al custodiar y entregar a tiempo los mensajes de las personas?`,
+        `¿Cómo debemos presentarnos amablemente al entregar una carta a un profesor, compañero o padre de familia?`
+      ],
+      materiales: ['Cartulinas azules o verdes para gorras de cartero', 'Bolsas de tela o papel kraft', 'Estambre y tijeras'],
+      entregable: `📄 Guion de Entrega Postal y distintivos de carteros elaborados por el equipo.`
+    },
+    {
+      num: 10,
+      titulo: `Jornada del Cartero Escolar: Entrega de correspondencia comunitaria, lectura en voz alta y evaluación`,
+      inicio: `⏱️ INICIO (10 min): Palabras de bienvenida a la "Jornada del Cartero Comunitario". Apertura solemne del buzón postal ante la comunidad escolar.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Recorrido de los carteros infantiles entregando las cartas en los salones y a familiares invitados. Momento de lectura compartida: quienes deseen leen fragmentos de sus cartas recibidas en el círculo de diálogo.`,
+      cierre: `⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica formativa de 3 niveles. Firma del "Mural de la Amistad Epistolar" y reflexión sobre lo aprendido.`,
+      preguntas: [
+        `¿Qué caras pusieron las personas al recibir sus cartas escritas con tanto cariño y esfuerzo?`,
+        `¿Cómo transformó este proyecto nuestra forma de comunicarnos y convivir en la escuela?`
+      ],
+      materiales: ['Buzón con cartas listas', 'Rúbricas analíticas impresas', 'Mural de firmas y compromisos comunitarios'],
+      entregable: `🏆 Evidencia Final Integradora: Registro de entrega de cartas, lectura compartida comunitaria y rúbrica analítica formativa evaluada.`
+    }
+  ];
 
-    return epistolarSessions.map(tpl => {
-      const sepBook = getSepBookForSession(level, 'lenguajes', tpl.num, topicHash);
-      return {
-        numero: tpl.num,
-        titulo: tpl.titulo,
-        duracionTotal: '50 minutos',
-        tiempos: { inicio: '10 min', desarrollo: '30 min', cierre: '10 min' },
-        actividadInicio: tpl.inicio,
-        actividadDesarrollo: tpl.desarrollo,
-        actividadCierre: tpl.cierre,
-        preguntasClave: tpl.preguntas,
-        libroSep: sepBook,
-        materiales: tpl.materiales,
-        entregableSesion: tpl.entregable
-      };
-    });
-  }
-
-  // 2. Plantilla General Dinámica Adaptada al Nivel y Asignatura
-  const genericSessions = [
+  // 2. Plantilla Maestra General (NEM 2024)
+  const genericTemplates = [
     {
       num: 1,
       titulo: `Planteamiento del Reto Comunitario y Activación de Saberes sobre "${capitalizedTopic}"`,
@@ -513,22 +497,73 @@ export function generateChronometer10Sessions(
     }
   ];
 
-  return genericSessions.map(tpl => {
-    const sepBook = getSepBookForSession(level, subject, tpl.num, topicHash);
-    return {
-      numero: tpl.num,
-      titulo: tpl.titulo,
+  const masterPool = isLanguageSubject && isEpistolar ? epistolarTemplates : genericTemplates;
+
+  // Construcción de la secuencia exacta de "count" sesiones
+  const resultSessions: SessionPlanItem[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const sessionNum = i + 1;
+    let baseTpl: (typeof masterPool)[0];
+
+    if (count === 1) {
+      // 1 sesión integrada
+      baseTpl = {
+        num: 1,
+        titulo: `Sesión Integradora: Reto, Indagación y Aplicación Práctica sobre "${capitalizedTopic}"`,
+        inicio: `⏱️ INICIO (10 min): Activación del conflicto cognitivo y planteamiento del reto comunitario sobre "${capitalizedTopic}". Lluvia de ideas y saberes previos.`,
+        desarrollo: `⏱️ DESARROLLO (30 min): Exploración guiada en libros SEP, modelado práctico en equipos y elaboración del producto o artefacto tangible de aprendizaje.`,
+        cierre: `⏱️ CIERRE (10 min): Socialización exprés en plenaria, autoevaluación formativa con rúbrica y registro de conclusiones en bitácora.`,
+        preguntas: [
+          `¿Cómo resolvemos el reto central de "${capitalizedTopic}" con los saberes adquiridos hoy?`,
+          `¿Qué aprendizaje clave compartiré con mi familia al llegar a casa?`
+        ],
+        materiales: ['Libro de texto gratuito SEP', 'Material manipulable o cartulinas', 'Bitácora escolar'],
+        entregable: `🏆 Evidencia Integradora: Ficha de trabajo y producto demostrativo completado sobre "${capitalizedTopic}".`
+      };
+    } else if (count <= 10) {
+      // Muestreo proporcional a lo largo del arco pedagógico (Apertura -> Desarrollo -> Cierre)
+      const tplIndex = i === 0 ? 0 : i === count - 1 ? 9 : Math.min(8, Math.max(1, Math.round((i / (count - 1)) * 9)));
+      baseTpl = masterPool[tplIndex];
+    } else {
+      // Más de 10 sesiones: expansión con fases de profundización e investigación aplicada
+      const tplIndex = i === 0 ? 0 : i === count - 1 ? 9 : Math.min(8, Math.max(1, (i % 8) + 1));
+      const phaseTpl = masterPool[tplIndex];
+      baseTpl = {
+        ...phaseTpl,
+        titulo: i >= 10 ? `${phaseTpl.titulo} (Fase de Profundización y Taller Práctico - Parte ${Math.floor(i / 10) + 1})` : phaseTpl.titulo
+      };
+    }
+
+    const sepBook = getSepBookForSession(level, subject, sessionNum, topicHash);
+
+    resultSessions.push({
+      numero: sessionNum,
+      titulo: baseTpl.titulo,
       duracionTotal: '50 minutos',
       tiempos: { inicio: '10 min', desarrollo: '30 min', cierre: '10 min' },
-      actividadInicio: tpl.inicio,
-      actividadDesarrollo: tpl.desarrollo,
-      actividadCierre: tpl.cierre,
-      preguntasClave: tpl.preguntas,
+      actividadInicio: baseTpl.inicio,
+      actividadDesarrollo: baseTpl.desarrollo,
+      actividadCierre: baseTpl.cierre,
+      preguntasClave: baseTpl.preguntas,
       libroSep: sepBook,
-      materiales: tpl.materiales,
-      entregableSesion: tpl.entregable
-    };
-  });
+      materiales: baseTpl.materiales,
+      entregableSesion: baseTpl.entregable
+    });
+  }
+
+  return resultSessions;
+}
+
+/**
+ * Alias de compatibilidad para 10 sesiones
+ */
+export function generateChronometer10Sessions(
+  level: string,
+  subject: string,
+  topic: string
+): SessionPlanItem[] {
+  return generateChronometerSessions(level, subject, topic, 10);
 }
 
 /**

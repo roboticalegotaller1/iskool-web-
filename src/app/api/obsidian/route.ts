@@ -4,6 +4,7 @@ import path from 'path';
 import { z } from 'zod';
 import { validateApiAuth } from '@/lib/authValidator';
 import { 
+  generateChronometerSessions,
   generateChronometer10Sessions, 
   getArticulatedPdas, 
   generateFinalProjectProposal 
@@ -19,7 +20,8 @@ const ObsidianQuerySchema = z.object({
   q: z.string().trim().min(1, 'El parámetro de búsqueda "q" es requerido').max(300),
   level: z.string().trim().max(100).optional().default(''),
   grade: z.string().trim().max(100).optional().default(''),
-  subject: z.string().trim().max(100).optional().default('')
+  subject: z.string().trim().max(100).optional().default(''),
+  sessions: z.string().trim().max(10).optional().default('10')
 });
 
 const ObsidianPlanningSchema = z.object({
@@ -160,7 +162,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { q: query, level: levelParam, grade: gradeParam, subject: subjectParam } = parsedQuery.data;
+    const { q: query, level: levelParam, grade: gradeParam, subject: subjectParam, sessions: sessionsParam } = parsedQuery.data;
+    const sessionCount = parseInt(sessionsParam || '10', 10) || 10;
     
     if (!fs.existsSync(OBSIDIAN_VAULT_PATH)) {
       return NextResponse.json({ found: false, note: null });
@@ -315,9 +318,10 @@ export async function GET(request: NextRequest) {
       const normLevel = levelParam || 'primaria-baja';
       const cleanSub = cleanString(subjectParam || subjectName || campoFormativo);
       const normSubject = (cleanSub.includes('leng') || cleanSub.includes('esp')) ? 'lenguajes' : (cleanSub.includes('cien') || cleanSub.includes('medio')) ? 'ciencias' : 'matematicas';
-      const sesiones10 = generateChronometer10Sessions(normLevel, normSubject, title);
+      const sesionesList = generateChronometerSessions(normLevel, normSubject, title, sessionCount);
       const pdasArticulados = getArticulatedPdas(normLevel, normSubject, title);
       const proyectoIntegrador = generateFinalProjectProposal(normLevel, normSubject, title);
+      const durationStr = `${sessionCount} ${sessionCount === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${sessionCount * 50} min)`;
 
       return NextResponse.json({
         found: true,
@@ -332,17 +336,17 @@ export async function GET(request: NextRequest) {
           ejesArticuladores: ['Pensamiento Crítico', 'Interculturalidad Crítica', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
           pda,
           pdasArticulados,
-          duration: '10 sesiones de 50 minutos (Total: 500 min)',
+          duration: durationStr,
           preguntasDetonadoras: preguntas.length > 0 ? preguntas : [
             `¿Cómo aplicamos el contenido de "${title}" para resolver problemáticas de nuestra comunidad?`,
             `¿De qué manera fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
-            `¿Qué producto tangible compartiremos con la comunidad escolar al término de las 10 sesiones?`
+            `¿Qué producto tangible compartiremos con la comunidad escolar al término de las ${sessionCount} sesiones?`
           ],
-          sesiones: sesiones10,
+          sesiones: sesionesList,
           proyectoIntegrador,
-          inicio: fase1Match ? fase1Match[1].trim() : sesiones10[0].actividadInicio + '\n' + sesiones10[0].actividadDesarrollo + '\n' + sesiones10[0].actividadCierre,
-          desarrollo: fase2Match ? fase2Match[1].trim() : sesiones10.slice(1, 8).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
-          cierre: fase3Match ? fase3Match[1].trim() : sesiones10.slice(8, 10).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+          inicio: fase1Match ? fase1Match[1].trim() : sesionesList[0]?.actividadInicio + '\n' + sesionesList[0]?.actividadDesarrollo + '\n' + sesionesList[0]?.actividadCierre,
+          desarrollo: fase2Match ? fase2Match[1].trim() : (sesionesList.length > 2 ? sesionesList.slice(1, -1).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n') : (sesionesList[1] ? `📌 SESIÓN ${sesionesList[1].numero}: ${sesionesList[1].titulo}\n${sesionesList[1].actividadDesarrollo}` : 'Desarrollo en sesión única.')),
+          cierre: fase3Match ? fase3Match[1].trim() : (sesionesList.length > 1 ? `📌 SESIÓN FINAL ${sesionesList[sesionesList.length - 1].numero} (${sesionesList[sesionesList.length - 1].duracionTotal}): ${sesionesList[sesionesList.length - 1].titulo}\n${sesionesList[sesionesList.length - 1].actividadInicio}\n${sesionesList[sesionesList.length - 1].actividadDesarrollo}\n${sesionesList[sesionesList.length - 1].actividadCierre}\n📖 Libro SEP: ${sesionesList[sesionesList.length - 1].libroSep.titulo}, ${sesionesList[sesionesList.length - 1].libroSep.paginas}\n📄 Entregable: ${sesionesList[sesionesList.length - 1].entregableSesion}` : sesionesList[0]?.actividadCierre || ''),
           evaluacion: evalMatch ? evalMatch[1].trim() : `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
           materiales: matMatch ? matMatch[1].trim() : `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
           createdAt,

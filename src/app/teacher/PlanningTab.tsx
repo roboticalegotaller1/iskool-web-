@@ -15,6 +15,7 @@ import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePlanningStore } from '@/store/usePlanningStore';
 import { supabase } from '@/lib/supabaseClient';
 import { 
+  generateChronometerSessions,
   generateChronometer10Sessions, 
   getArticulatedPdas, 
   generateFinalProjectProposal, 
@@ -525,8 +526,9 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
   // --- Estados de Entrada ---
   const [inputText, setInputText] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState('primaria-alta');
+  const [selectedLevel, setSelectedLevel] = useState('primaria-baja');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [sessionCount, setSessionCount] = useState<number>(10);
   const [pdaSuggestions, setPdaSuggestions] = useState<string[]>([]);
   const [isLoadingPDAs, setIsLoadingPDAs] = useState(false);
   const [selectedSuggestedPda, setSelectedSuggestedPda] = useState('');
@@ -758,7 +760,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
           authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
         }
 
-        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(currKey)}`, {
+        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(currKey)}&sessions=${encodeURIComponent(sessionCount.toString())}`, {
           headers: authHeaders
         });
         if (obsRes.ok) {
@@ -781,16 +783,16 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
     // Step 2: Si NO existe en Obsidian o está activado el Bypass, activar motor de Inteligencia Artificial (Gemini AI / Heurístico NEM 2024)
     if (!resultPlanning) {
-      console.log("🤖 [IA NEM 2024]: Generando nueva planeación didáctica enriquecida...");
+      console.log(`🤖 [IA NEM 2024]: Generando nueva planeación didáctica enriquecida (${sessionCount} sesiones)...`);
       if (geminiApiKey.trim()) {
         try {
-          resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey);
+          resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey, sessionCount);
         } catch (err) {
           console.error("Fallo llamada a Gemini API, usando motor heurístico local", err);
-          resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
+          resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount);
         }
       } else {
-        resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey);
+        resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount);
       }
     }
 
@@ -842,7 +844,9 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   };
 
   // --- Llamada a la API Real de Gemini ---
-  const callGeminiAPI = async (promptText: string, level: string, subject: string) => {
+  const callGeminiAPI = async (promptText: string, level: string, subject: string, totalSessions: number = 10) => {
+    const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
+    const durationStr = `${count} ${count === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${count * 50} min)`;
     const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(promptText);
     const levelNames: Record<string, string> = {
       'preescolar': 'Preescolar (Fase 2: 1º a 3º)',
@@ -861,8 +865,8 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 Debes generar una planeación didáctica RIGUROSA, CONCRETA, ALTAMENTE PRÁCTICA Y 100% APLICABLE en el aula para un profesor.
 
 REGLAS PEDAGÓGICAS ESTRICTAS (NEM 2024):
-1. DOSIFICACIÓN EXACTA EN 10 SESIONES DE 50 MINUTOS (Total: 500 min):
-   - Detalla INDIVIDUALMENTE cada una de las 10 sesiones (Sesión 1 a 10).
+1. DOSIFICACIÓN EXACTA EN ${count} SESIONES DE 50 MINUTOS (Total: ${count * 50} min):
+   - Detalla INDIVIDUALMENTE cada una de las ${count} sesiones (Sesión 1 a ${count}).
    - En cada sesión especifica:
      • Minutero exacto: Inicio (10 min), Desarrollo (30 min) y Cierre (10 min).
      • Preguntas detonadoras/clave (2 preguntas por sesión).
@@ -877,6 +881,7 @@ REGLAS PEDAGÓGICAS ESTRICTAS (NEM 2024):
 Nivel educativo: ${levelLabel}.
 Asignatura: ${subjectLabel}.
 Tema solicitado: "${promptText}".
+Número de sesiones solicitadas: ${count}.
 
 Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructura exacta:
 {
@@ -884,7 +889,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
   "campoFormativo": "Saberes y Pensamiento Científico",
   "ejesArticuladores": ["Pensamiento Crítico", "Apropiación de las Culturas a través de la Lectura y la Escritura", "Inclusión"],
   "pda": "Redacción formal del PDA oficial de la NEM correspondiente a la Fase y grado",
-  "duration": "10 sesiones de 50 minutos (Total: 500 min)",
+  "duration": "${durationStr}",
   "preguntasDetonadoras": [
     "Pregunta detonadora 1",
     "Pregunta detonadora 2",
@@ -892,7 +897,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
   ]
 }`;
 
-    const fallbackSessions = generateChronometer10Sessions(level, subject, promptText);
+    const fallbackSessions = generateChronometerSessions(level, subject, promptText, count);
     const fallbackPdas = getArticulatedPdas(level, subject, promptText);
     const fallbackProject = generateFinalProjectProposal(level, subject, promptText);
 
@@ -902,7 +907,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [
-            { parts: [{ text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español para el tema: "${promptText}"` }] }
+            { parts: [{ text: `${systemPrompt}\n\nGenera la planeación didáctica completa en español para el tema: "${promptText}" con ${count} sesiones exactas.` }] }
           ]
         })
       });
@@ -924,17 +929,21 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable'],
           pda: parsed.pda || fallbackPdas[0]?.pda || 'PDA Oficial NEM',
           pdasArticulados: fallbackPdas,
-          duration: '10 sesiones de 50 minutos (Total: 500 min)',
+          duration: durationStr,
           preguntasDetonadoras: Array.isArray(parsed.preguntasDetonadoras) ? parsed.preguntasDetonadoras : [
             `¿Cómo aplicamos el contenido de "${promptText}" para resolver problemáticas en nuestra comunidad?`,
             `¿De qué forma colaboramos en equipo para construir soluciones tangibles y creativas?`,
-            `¿Qué aprendizajes compartiremos en la feria escolar comunitaria?`
+            `¿Qué aprendizajes compartiremos en la muestra comunitaria final?`
           ],
           sesiones: fallbackSessions,
           proyectoIntegrador: fallbackProject,
-          inicio: fallbackSessions[0].actividadInicio + '\n' + fallbackSessions[0].actividadDesarrollo + '\n' + fallbackSessions[0].actividadCierre,
-          desarrollo: fallbackSessions.slice(1, 8).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
-          cierre: fallbackSessions.slice(8, 10).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+          inicio: fallbackSessions[0]?.actividadInicio + '\n' + fallbackSessions[0]?.actividadDesarrollo + '\n' + fallbackSessions[0]?.actividadCierre,
+          desarrollo: fallbackSessions.length > 2
+            ? fallbackSessions.slice(1, -1).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n')
+            : (fallbackSessions[1] ? `📌 SESIÓN ${fallbackSessions[1].numero}: ${fallbackSessions[1].titulo}\n${fallbackSessions[1].actividadDesarrollo}` : 'Desarrollo en sesión única.'),
+          cierre: fallbackSessions.length > 1
+            ? `📌 SESIÓN FINAL ${fallbackSessions[fallbackSessions.length - 1].numero} (${fallbackSessions[fallbackSessions.length - 1].duracionTotal}): ${fallbackSessions[fallbackSessions.length - 1].titulo}\n${fallbackSessions[fallbackSessions.length - 1].actividadInicio}\n${fallbackSessions[fallbackSessions.length - 1].actividadDesarrollo}\n${fallbackSessions[fallbackSessions.length - 1].actividadCierre}\n📖 Libro SEP: ${fallbackSessions[fallbackSessions.length - 1].libroSep.titulo}, ${fallbackSessions[fallbackSessions.length - 1].libroSep.paginas}\n📄 Entregable: ${fallbackSessions[fallbackSessions.length - 1].entregableSesion}`
+            : fallbackSessions[0]?.actividadCierre || '',
           evaluacion: `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${fallbackProject.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${fallbackProject.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${fallbackProject.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${fallbackProject.rubrica.criterio1.enProceso}\n• ${fallbackProject.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${fallbackProject.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${fallbackProject.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${fallbackProject.rubrica.criterio2.enProceso}\n• ${fallbackProject.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${fallbackProject.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${fallbackProject.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${fallbackProject.rubrica.criterio3.enProceso}`,
           materiales: `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${fallbackProject.productoFinal}`,
           createdAt: formatSpanishDateInLetters(new Date())
@@ -944,11 +953,13 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       console.warn("Fallo llamada a Gemini API, usando generador curricular integral", err);
     }
 
-    return generateLocalNEMPlanning(promptText, level, subject);
+    return generateLocalNEMPlanning(promptText, level, subject, count);
   };
 
   // --- Generador Heurístico Local Integral (NEM 2024) ---
-  const generateLocalNEMPlanning = (promptText: string, level: string, subject: string): CompleteNEMPlanning => {
+  const generateLocalNEMPlanning = (promptText: string, level: string, subject: string, totalSessions: number = 10): CompleteNEMPlanning => {
+    const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
+    const durationStr = `${count} ${count === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${count * 50} min)`;
     const capitalizedTopic = promptText.charAt(0).toUpperCase() + promptText.slice(1).trim();
 
     const levelNames: Record<string, string> = {
@@ -976,7 +987,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
     const pdaKey = isLanguage ? 'language' : isMath ? 'math' : isScience ? 'ecology' : 'default';
     const pda = pdaMap[level]?.[pdaKey] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
 
-    const sesiones10 = generateChronometer10Sessions(level, subject, promptText);
+    const sesionesList = generateChronometerSessions(level, subject, promptText, count);
     const pdasArticulados = getArticulatedPdas(level, subject, promptText);
     const proyectoIntegrador = generateFinalProjectProposal(level, subject, promptText);
 
@@ -991,17 +1002,21 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       ejesArticuladores: ejes,
       pda,
       pdasArticulados,
-      duration: '10 sesiones de 50 minutos (Total: 500 min)',
+      duration: durationStr,
       preguntasDetonadoras: [
         `¿Cómo aplicamos el contenido de "${capitalizedTopic}" para resolver problemáticas de nuestra comunidad?`,
         `¿De qué manera fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
-        `¿Qué producto tangible compartiremos con la comunidad escolar al término de las 10 sesiones?`
+        `¿Qué producto tangible compartiremos con la comunidad escolar al término de las ${count} sesiones?`
       ],
-      sesiones: sesiones10,
+      sesiones: sesionesList,
       proyectoIntegrador,
-      inicio: sesiones10[0].actividadInicio + '\n' + sesiones10[0].actividadDesarrollo + '\n' + sesiones10[0].actividadCierre,
-      desarrollo: sesiones10.slice(1, 8).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
-      cierre: sesiones10.slice(8, 10).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n'),
+      inicio: sesionesList[0]?.actividadInicio + '\n' + sesionesList[0]?.actividadDesarrollo + '\n' + sesionesList[0]?.actividadCierre,
+      desarrollo: sesionesList.length > 2
+        ? sesionesList.slice(1, -1).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n')
+        : (sesionesList[1] ? `📌 SESIÓN ${sesionesList[1].numero}: ${sesionesList[1].titulo}\n${sesionesList[1].actividadDesarrollo}` : 'Desarrollo en sesión única.'),
+      cierre: sesionesList.length > 1
+        ? `📌 SESIÓN FINAL ${sesionesList[sesionesList.length - 1].numero} (${sesionesList[sesionesList.length - 1].duracionTotal}): ${sesionesList[sesionesList.length - 1].titulo}\n${sesionesList[sesionesList.length - 1].actividadInicio}\n${sesionesList[sesionesList.length - 1].actividadDesarrollo}\n${sesionesList[sesionesList.length - 1].actividadCierre}\n📖 Libro SEP: ${sesionesList[sesionesList.length - 1].libroSep.titulo}, ${sesionesList[sesionesList.length - 1].libroSep.paginas}\n📄 Entregable: ${sesionesList[sesionesList.length - 1].entregableSesion}`
+        : sesionesList[0]?.actividadCierre || '',
       evaluacion: `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
       materiales: `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
       createdAt: formatSpanishDateInLetters(new Date())
@@ -1177,8 +1192,55 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           </div>
         </div>
 
+        {/* Configuración de Número de Sesiones Propuestas */}
+        <div className="flex flex-col gap-2 p-3 rounded-xl border border-blue-200/60 dark:border-blue-900/40 bg-gradient-to-r from-blue-50/50 to-indigo-50/40 dark:from-blue-950/20 dark:to-indigo-950/20 text-xs">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+              <label className="text-[10px] font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">
+                Número de Sesiones Disponibles
+              </label>
+            </div>
+            <span className="px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-black text-[9.5px]">
+              {sessionCount} {sessionCount === 1 ? 'sesión' : 'sesiones'} • {sessionCount * 50} min ({Math.ceil(sessionCount / 5)} sem)
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="relative flex items-center">
+              <input
+                type="number"
+                min={1}
+                max={30}
+                value={sessionCount}
+                onChange={(e) => setSessionCount(Math.max(1, Math.min(30, parseInt(e.target.value, 10) || 1)))}
+                className="w-20 p-2 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-black text-sm focus:outline-none focus:border-blue-500 shadow-xs"
+              />
+              <span className="absolute -bottom-3.5 left-1 text-[8.5px] font-semibold text-zinc-400">1 - 30 max</span>
+            </div>
+
+            {/* Pastillas de Selección Rápida */}
+            <div className="flex flex-wrap gap-1 flex-1 pl-1">
+              {[2, 3, 5, 8, 10, 12, 15, 20].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => setSessionCount(preset)}
+                  className={`px-2 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                    sessionCount === preset
+                      ? 'bg-blue-600 text-white shadow-xs scale-105'
+                      : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:border-blue-400'
+                  }`}
+                >
+                  {preset} {preset === 1 ? 'sesión' : 'ses'}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Toggle Bypass Bóveda / Forzar Nueva Variante IA */}
-        <div className="flex items-center justify-between p-2.5 rounded-xl border border-blue-200/60 dark:border-blue-900/40 bg-blue-50/40 dark:bg-blue-950/20 text-xs">
+        <div className="flex items-center justify-between p-2.5 rounded-xl border border-blue-200/60 dark:border-blue-900/40 bg-blue-50/40 dark:bg-blue-950/20 text-xs mt-1">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 animate-pulse" />
             <div>
@@ -1843,19 +1905,19 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 </div>
               )}
 
-              {/* V. Dosificación Cronometrada de las 10 Sesiones (50 min c/u) */}
+              {/* V. Dosificación Cronometrada de las Sesiones */}
               <div className="mb-8 flex flex-col gap-4">
                 <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
                   <span className="text-[11px] text-zinc-950 dark:text-white font-black uppercase tracking-wider flex items-center gap-1.5">
                     <Clock className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
-                    V. Dosificación Cronometrada en 10 Sesiones de 50 minutos (Total: 500 min)
+                    V. Dosificación Cronometrada en {activePlanning.sesiones?.length || sessionCount} {activePlanning.sesiones?.length === 1 ? 'Sesión' : 'Sesiones'} de 50 minutos (Total: {(activePlanning.sesiones?.length || sessionCount) * 50} min)
                   </span>
                   <span className="px-3 py-1 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 rounded-full text-[10px] font-black border border-blue-200/50">
-                    2 Semanas Lectivas (50 min/día)
+                    {(activePlanning.sesiones?.length || sessionCount) <= 5 ? '1 Semana' : `${Math.ceil((activePlanning.sesiones?.length || sessionCount) / 5)} Semanas`} Lectivas (50 min/sesión)
                   </span>
                 </div>
 
-                {/* Renderizado de las 10 Sesiones Individuales */}
+                {/* Renderizado de las Sesiones Individuales */}
                 {activePlanning.sesiones && activePlanning.sesiones.length > 0 ? (
                   <div className="flex flex-col gap-4">
                     {activePlanning.sesiones.map((sesion: SessionPlanItem, sIdx: number) => (
