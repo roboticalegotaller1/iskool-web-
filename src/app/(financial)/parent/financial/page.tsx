@@ -195,10 +195,10 @@ export default function ParentFinancialStatementPage() {
 
   const handleExportPdf = () => {
     setIsExporting(true);
+    window.open('/parent/financial/statement/print', '_blank');
     setTimeout(() => {
       setIsExporting(false);
-      alert('Se ha generado y descargado su Estado de Cuenta Oficial en formato PDF.');
-    }, 1200);
+    }, 1000);
   };
 
   const handleDownloadXml = (payment: PaymentRecord) => {
@@ -209,7 +209,10 @@ export default function ParentFinancialStatementPage() {
   };
 
   const handleDownloadPdf = (payment: PaymentRecord) => {
-    alert(`Descargando representación impresa en PDF de la factura fiscal para el comprobante ${payment.receiptNumber}...`);
+    window.open(
+      `/api/billing/invoice/pdf?receipt_id=${payment.receiptNumber}&uuid=${payment.cfdiUuid || ''}&rfc=${taxData.rfc}&tax_name=${encodeURIComponent(taxData.taxName)}&amount=${payment.amount}&concept=${encodeURIComponent(payment.concept)}&payment_method=${encodeURIComponent(payment.paymentMethod)}`,
+      '_blank'
+    );
   };
 
   const handleSaveTaxForm = async (e: React.FormEvent) => {
