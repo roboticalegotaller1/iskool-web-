@@ -1481,15 +1481,6 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                   <Edit3 className="h-4 w-4 text-zinc-400" />
                   Haz clic sobre cualquier texto para editar directamente la planeación
                 </span>
-                {activePlanning.isFromObsidian ? (
-                  <span className="px-2.5 py-1 bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 rounded-full text-[10px] font-black flex items-center gap-1 border border-purple-200/30">
-                    <BookOpen className="h-3 w-3" /> Recuperada de Bóveda Obsidian
-                  </span>
-                ) : (
-                  <span className="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 rounded-full text-[10px] font-black flex items-center gap-1 border border-emerald-200/30">
-                    <CheckCircle2 className="h-3 w-3" /> Auto-guardado en Bóveda Obsidian
-                  </span>
-                )}
               </div>
               
               <div className="flex gap-2">
