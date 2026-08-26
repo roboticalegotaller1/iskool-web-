@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { SUBJECTS_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
 import { 
   Users, UserPlus, Calendar, Plus, Trash2, Search, Filter, 
   BookOpen, Calculator, Activity, Clock, ShieldAlert, MapPin, 
-  Phone, Mail, CheckCircle2, ChevronRight, User, AlertCircle, Sparkles, X, Heart, Globe, Building2, Upload, RefreshCw, Edit3
+  Phone, Mail, CheckCircle2, ChevronRight, User, AlertCircle, Sparkles, X, Heart, Globe, Building2, Upload, RefreshCw, Edit3,
+  Landmark
 } from 'lucide-react';
 import { DetailedStudent, ClassSchedule, Group, SchoolSettings, UserProfile } from '@/types';
 import { getStudentAvatarUrl } from '@/utils/studentAvatar';
@@ -560,6 +562,13 @@ export default function CoordinatorDashboard() {
             >
               Identidad de Escuela
             </button>
+            <Link
+              href="/coordinator/billing"
+              className="px-4 py-2 rounded-lg text-xs font-bold transition-all bg-blue-700 hover:bg-blue-600 text-white flex items-center gap-1.5 shadow-sm"
+            >
+              <Landmark className="w-3.5 h-3.5" />
+              <span>Cobranza y Pagos</span>
+            </Link>
           </div>
         </div>
 
