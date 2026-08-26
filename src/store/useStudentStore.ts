@@ -68,16 +68,28 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
     const student = STUDENTS_LIST_SEED.find(s => s.id === studentId);
     const email = student?.email;
     if (email) {
-      await supabase.auth.signInWithPassword({ email, password: 'ISkoolPassword2026!' });
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password: 'ISkoolPassword2026!' });
+        if (error && (error.message?.includes('JWT') || error.message?.includes('future'))) {
+          await supabase.auth.signOut().catch(() => {});
+        }
+      } catch (authErr) {
+        console.warn('Silent auth fallback for switchStudent:', authErr);
+      }
+
       // Fetch stats to sync
-      const response = await supabase.from('student_stats').select('*');
-      if (response && response.data && response.data.length > 0) {
-        set((state) => ({
-          allStats: {
-            ...state.allStats,
-            [studentId]: response.data[0]
-          }
-        }));
+      try {
+        const response = await supabase.from('student_stats').select('*');
+        if (response && response.data && response.data.length > 0) {
+          set((state) => ({
+            allStats: {
+              ...state.allStats,
+              [studentId]: response.data[0]
+            }
+          }));
+        }
+      } catch (statErr) {
+        console.warn("Could not sync stats from Supabase:", statErr);
       }
 
       // Fetch avatar to sync
@@ -95,7 +107,7 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
           }));
         }
       } catch (err) {
-        console.error('Error fetching student avatar:', err);
+        console.warn('Could not sync avatar from Supabase:', err);
       }
     }
   },
@@ -923,7 +935,14 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       // We load all stats and filter/match them locally to avoid DB errors.
       const query = supabase.from('student_stats').select('*');
       const response = await query;
-      if (response.error) throw new Error(response.error.message);
+      
+      if (response.error) {
+        if (response.error.message?.includes('JWT') || response.error.message?.includes('future')) {
+          console.warn('Clock skew or JWT issue detected in fetchStats, resetting invalid token:', response.error.message);
+          supabase.auth.signOut().catch(() => {});
+        }
+        throw new Error(response.error.message);
+      }
       
       const statsList = response.data || [];
       const statsMap = { ...get().allStats };
@@ -936,7 +955,7 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       });
       set({ allStats: statsMap });
     } catch (err: any) {
-      console.error('Error fetching student stats:', err.message);
+      console.warn('Utilizando estadísticas locales cacheadas (Aviso Supabase):', err.message);
     } finally {
       set({ isLoadingStats: false });
     }

@@ -739,7 +739,12 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     set({ isLoadingMissions: true });
     try {
       const response = await supabase.from('missions').select('*, quests(*)');
-      if (response.error) throw new Error(response.error.message);
+      if (response.error) {
+        if (response.error.message?.includes('JWT') || response.error.message?.includes('future')) {
+          supabase.auth.signOut().catch(() => {});
+        }
+        throw new Error(response.error.message);
+      }
       
       const missionsWithSortedQuests = (response.data || []).map((m) => {
         const mission = m as Mission & { quests?: Quest[] };
@@ -752,7 +757,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
       set({ missionsList: missionsWithSortedQuests });
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : String(err);
-      console.error('Error fetching missions:', errorMsg);
+      console.warn('Utilizando misiones locales cacheadas (Aviso Supabase):', errorMsg);
     } finally {
       set({ isLoadingMissions: false, isInitialized: true });
     }

@@ -32,7 +32,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Check session on load
     const checkSession = async () => {
       try {
-        const { data: { session: initialSession } } = await supabase.auth.getSession();
+        const { data, error } = await supabase.auth.getSession();
+        if (error && (error.message?.includes('JWT') || error.message?.includes('future'))) {
+          console.warn("Stale or skewed JWT detected on startup, clearing session:", error.message);
+          await supabase.auth.signOut().catch(() => {});
+        }
+        const initialSession = data?.session;
         if (initialSession?.user) {
           setSession(initialSession);
           setUser({
