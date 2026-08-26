@@ -77,7 +77,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 91 a la 94) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 110 a la 112) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)".
 
@@ -91,7 +91,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 48 a la 51) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 111 a la 113) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 97 a la 100) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 112 a la 114) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 54 a la 57) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 113 a la 115) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 103 a la 106) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 115 a la 117) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 60 a la 63) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 116 a la 118) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 109 a la 112) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 117 a la 119) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 66 a la 69) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 119 a la 121) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 115 a la 118) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 120 a la 122) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Cambios en la comunidad a través del tiempo, oficios y tradiciones (2º de Primaria)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 72 a la 75) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 121 a la 123) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

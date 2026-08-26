@@ -77,7 +77,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 67 a la 70) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 44 a la 46) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 52 a la 55) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 45 a la 47) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 73 a la 76) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 47 a la 49) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 58 a la 61) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 48 a la 50) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 79 a la 82) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 50 a la 52) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 64 a la 67) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 51 a la 53) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 85 a la 88) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 53 a la 55) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 70 a la 73) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 54 a la 56) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 91 a la 94) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 56 a la 58) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 76 a la 79) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 57 a la 59) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

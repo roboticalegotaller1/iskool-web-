@@ -77,7 +77,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 139 a la 142) — *Modelación algebraica y resolución de problemas situados*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 84 a la 86) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 90 a la 93) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 138 a la 140) — *Modelación algebraica y resolución de problemas situados*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 145 a la 148) — *Modelación algebraica y resolución de problemas situados*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 88 a la 90) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 96 a la 99) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 142 a la 144) — *Modelación algebraica y resolución de problemas situados*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 151 a la 154) — *Modelación algebraica y resolución de problemas situados*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 92 a la 94) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 102 a la 105) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 146 a la 148) — *Modelación algebraica y resolución de problemas situados*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?
-- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 157 a la 160) — *Modelación algebraica y resolución de problemas situados*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 96 a la 98) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 108 a la 111) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 150 a la 152) — *Modelación algebraica y resolución de problemas situados*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Teorema de Pitágoras y trigonometría básica - Variante 16 (Fronterizo e Intercultural)"?
-- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 163 a la 166) — *Modelación algebraica y resolución de problemas situados*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 84 a la 86) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria) (Págs. 114 a la 117) — *Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad*
+- **📖 Libro de Texto SEP:** Colección Ximhai / Sk’asolil Matemáticas Secundaria (Págs. 138 a la 140) — *Modelación algebraica y resolución de problemas situados*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

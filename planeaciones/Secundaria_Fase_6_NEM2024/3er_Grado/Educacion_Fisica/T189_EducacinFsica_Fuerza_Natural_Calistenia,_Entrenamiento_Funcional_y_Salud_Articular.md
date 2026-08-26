@@ -77,7 +77,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 49 a la 52) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 136 a la 138) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 70 a la 73) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 137 a la 139) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 55 a la 58) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 139 a la 141) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 76 a la 79) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 141 a la 143) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 61 a la 64) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 143 a la 145) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 82 a la 85) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 145 a la 147) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 67 a la 70) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 147 a la 149) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 88 a la 91) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 149 a la 151) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Fuerza Natural: Calistenia, Entrenamiento Funcional y Salud Articular"?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 73 a la 76) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 151 a la 153) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 94 a la 97) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria (Págs. 153 a la 155) — *Proyecto Científico: "Modelación de funciones cuadráticas y tiro parabólico" — Ecuaciones cuadráticas, parábolas y modelación física*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

@@ -77,7 +77,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 82 a la 85) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 168 a la 170) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)".
 
@@ -91,7 +91,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 135 a la 138) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 169 a la 171) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 166 a la 169) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 171 a la 173) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 91 a la 94) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 172 a la 174) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 144 a la 147) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 174 a la 176) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 175 a la 178) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 175 a la 177) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 100 a la 103) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 177 a la 179) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 153 a la 156) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 178 a la 180) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 184 a la 187) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 180 a la 182) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Cuidado del agua y biodigestores — Primaria Alta (4º a 6º Grado)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 109 a la 112) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 6º Grado (Págs. 181 a la 183) — *Proyecto Comunitario: "Biodigestores y energías limpias para la escuela" — Aprovechamiento de biomasa, producción de biogás y huella ecológica*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

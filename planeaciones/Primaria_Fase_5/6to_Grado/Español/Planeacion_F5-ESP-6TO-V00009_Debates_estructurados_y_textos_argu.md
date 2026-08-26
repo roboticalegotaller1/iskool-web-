@@ -77,7 +77,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 103 a la 106) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 110 a la 112) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)".
 
@@ -91,7 +91,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 54 a la 57) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 111 a la 113) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 109 a la 112) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 112 a la 114) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 60 a la 63) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 113 a la 115) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 115 a la 118) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 115 a la 117) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 66 a la 69) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 116 a la 118) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 121 a la 124) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 117 a la 119) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 72 a la 75) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 119 a la 121) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 127 a la 130) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 120 a la 122) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Debates estructurados y textos argumentativos con rigor crítico - Variante 9 (Urbano Metropolitano)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 78 a la 81) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 121 a la 123) — *Proyecto Comunitario: "Cartas de petición ciudadana a las autoridades" — Estructura formal de petición, argumentos sólidos y gestión pública*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

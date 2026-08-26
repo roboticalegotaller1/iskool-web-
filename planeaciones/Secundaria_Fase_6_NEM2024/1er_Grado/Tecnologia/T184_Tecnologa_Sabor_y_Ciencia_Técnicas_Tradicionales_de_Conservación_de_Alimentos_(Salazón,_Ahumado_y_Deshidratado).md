@@ -77,7 +77,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 67 a la 70) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 63 a la 65) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 52 a la 55) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 64 a la 66) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 73 a la 76) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 66 a la 68) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 58 a la 61) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 67 a la 69) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 79 a la 82) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 69 a la 71) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 64 a la 67) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 71 a la 73) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 85 a la 88) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 72 a la 74) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 70 a la 73) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 74 a la 76) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Sabor y Ciencia: Técnicas Tradicionales de Conservación de Alimentos (Salazón, Ahumado y Deshidratado)"?
-- **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 91 a la 94) — *Historia crítica de México, derechos humanos y soberanía*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 75 a la 77) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 76 a la 79) — *Tecnología, proyectos productivos, educación socioemocional y salud*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Biología 1º de Secundaria (Págs. 77 a la 79) — *Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051" — Metabolismo, alimentos ultraprocesados y estilo de vida saludable*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

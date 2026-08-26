@@ -77,7 +77,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 67 a la 70) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 38 a la 40) — *Lecturas de divulgación, leyendas y textos expositivos*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar".
 
@@ -91,7 +91,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 30 a la 33) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 88 a la 90) — *Elaboración de revistas científicas, correspondencia y debates*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 73 a la 76) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 28 a la 30) — *Estructura textual, ortografía y redacción formal*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 36 a la 39) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 44 a la 46) — *Lecturas de divulgación, leyendas y textos expositivos*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 79 a la 82) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 94 a la 96) — *Elaboración de revistas científicas, correspondencia y debates*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 42 a la 45) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 34 a la 36) — *Estructura textual, ortografía y redacción formal*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 85 a la 88) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 38 a la 40) — *Lecturas de divulgación, leyendas y textos expositivos*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 48 a la 51) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 4º Grado (Págs. 100 a la 102) — *Elaboración de revistas científicas, correspondencia y debates*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 91 a la 94) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 28 a la 30) — *Estructura textual, ortografía y redacción formal*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Urbanismo Lúdico: Maquetas e Intervenciones Artísticas en el Patio Escolar" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 54 a la 57) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 3º y 4º Grado (Págs. 44 a la 46) — *Lecturas de divulgación, leyendas y textos expositivos*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

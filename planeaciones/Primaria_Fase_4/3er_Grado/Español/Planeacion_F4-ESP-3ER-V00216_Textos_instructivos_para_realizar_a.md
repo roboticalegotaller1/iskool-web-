@@ -77,7 +77,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 101 a la 104) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 46 a la 48) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)".
 
@@ -91,7 +91,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 52 a la 55) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 100 a la 102) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 107 a la 110) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 50 a la 52) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 58 a la 61) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 104 a la 106) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 113 a la 116) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 54 a la 56) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 64 a la 67) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 108 a la 110) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 119 a la 122) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 46 a la 48) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 70 a la 73) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 112 a la 114) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 125 a la 128) — *Periódico escolar digital y mesas redondas*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 50 a la 52) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Textos instructivos para realizar actividades escolares y juegos - Variante 216 (Fronterizo e Intercultural)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 76 a la 79) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 100 a la 102) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

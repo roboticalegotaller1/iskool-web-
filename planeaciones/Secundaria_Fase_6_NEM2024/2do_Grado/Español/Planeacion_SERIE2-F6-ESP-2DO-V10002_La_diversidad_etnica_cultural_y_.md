@@ -77,7 +77,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 58 a la 61) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 52 a la 54) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 83 a la 86) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 76 a la 78) — *Crítica literaria, arte contemporáneo y medios de comunicación*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 64 a la 67) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 56 a la 58) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 89 a la 92) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 80 a la 82) — *Crítica literaria, arte contemporáneo y medios de comunicación*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 70 a la 73) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 60 a la 62) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 95 a la 98) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 84 a la 86) — *Crítica literaria, arte contemporáneo y medios de comunicación*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?
-- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 76 a la 79) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 64 a la 66) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 101 a la 104) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 76 a la 78) — *Crítica literaria, arte contemporáneo y medios de comunicación*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "🚀 Proyecto de Codiseño Comunitario: La diversidad étnica, cultural y lingüística a favor de una sociedad intercultural - Modalidad Innovadora 2 (Entorno Industrial y Tecnológico)"?
-- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 82 a la 85) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
+- **📖 Libro de Texto SEP:** Lenguajes: Español 1º, 2º y 3º Secundaria (Págs. 52 a la 54) — *Textos argumentativos, cartas formales y de petición, ensayos y debates*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Democratiza la información en la escuela, estimula el pensamiento crítico y la
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 107 a la 110) — *Crítica literaria, arte contemporáneo y medios de comunicación*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes Secundaria (Págs. 80 a la 82) — *Crítica literaria, arte contemporáneo y medios de comunicación*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

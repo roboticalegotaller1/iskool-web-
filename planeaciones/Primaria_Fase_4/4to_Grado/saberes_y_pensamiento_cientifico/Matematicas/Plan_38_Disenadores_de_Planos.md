@@ -77,7 +77,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 61 a la 64) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 112 a la 114) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas".
 
@@ -91,7 +91,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 120 a la 123) — *Cálculo de áreas, perímetros y presupuestos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 113 a la 115) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 145 a la 148) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 114 a la 116) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 70 a la 73) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 115 a la 117) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 129 a la 132) — *Cálculo de áreas, perímetros y presupuestos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 117 a la 119) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 154 a la 157) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 118 a la 120) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 79 a la 82) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 119 a la 121) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 138 a la 141) — *Cálculo de áreas, perímetros y presupuestos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 121 a la 123) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Proyectos Escolares 4º Grado (Págs. 163 a la 166) — *Tablas de doble entrada, gráficas de barras y encuestas*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 122 a la 124) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Diseñadores de Planos: Perímetro (Contorno) vs Área (Superficie) en Cuadrículas" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 3º y 4º Grado (Págs. 88 a la 91) — *Fracciones, algoritmos convencionales y cuerpos geométricos*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 123 a la 125) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

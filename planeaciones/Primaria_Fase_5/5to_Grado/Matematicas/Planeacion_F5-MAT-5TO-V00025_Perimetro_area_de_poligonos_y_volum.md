@@ -77,7 +77,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 161 a la 164) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 128 a la 130) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)".
 
@@ -91,7 +91,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 86 a la 89) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 129 a la 131) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 139 a la 142) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 130 a la 132) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 170 a la 173) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 131 a la 133) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 95 a la 98) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 133 a la 135) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 148 a la 151) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 134 a la 136) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 179 a la 182) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 135 a la 137) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 104 a la 107) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 137 a la 139) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 157 a la 160) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 138 a la 140) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Perímetro, área de polígonos y volumen de prismas rectos - Variante 25 (Urbano Metropolitano)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 188 a la 191) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 5º Grado (Págs. 139 a la 141) — *Proyecto de Aula: "Finanzas comunitarias y porcentajes en la cooperativa" — Cálculo de porcentajes, IVA, descuentos y estadística escolar*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

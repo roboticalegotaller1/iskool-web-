@@ -77,7 +77,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 1º y 2º Grado (Págs. 51 a la 54) — *Producción de textos, cartas personales y dictado colectivo*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 48 a la 50) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)".
 
@@ -91,7 +91,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 2º Grado (Págs. 22 a la 25) — *Estructura de la carta, signos de puntuación y remitente/destinatario*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 49 a la 51) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 1º y 2º Grado (Págs. 31 a la 34) — *Cuentos, textos epistolares y narraciones infantiles*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 50 a la 52) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 2º Grado (Págs. 88 a la 91) — *Correspondencia escolar, cartas a la comunidad y buzón postal*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 51 a la 53) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 1º y 2º Grado (Págs. 63 a la 66) — *Producción de textos, cartas personales y dictado colectivo*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 52 a la 54) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 2º Grado (Págs. 34 a la 37) — *Estructura de la carta, signos de puntuación y remitente/destinatario*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 53 a la 55) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Múltiples Lenguajes 1º y 2º Grado (Págs. 43 a la 46) — *Cuentos, textos epistolares y narraciones infantiles*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 54 a la 56) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 2º Grado (Págs. 100 a la 103) — *Correspondencia escolar, cartas a la comunidad y buzón postal*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 55 a la 57) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 1º y 2º Grado (Págs. 75 a la 78) — *Producción de textos, cartas personales y dictado colectivo*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 56 a la 58) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Lectura compartida en voz alta de cuentos, coplas y rimas infantiles (1º de Primaria)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 2º Grado (Págs. 46 a la 49) — *Estructura de la carta, signos de puntuación y remitente/destinatario*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 1º Grado (Págs. 57 a la 59) — *Proyecto de Aula: "El tendedero de cuentos y leyendas" — Creación colectiva de cuentos ilustrados y fomento de la lectura*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

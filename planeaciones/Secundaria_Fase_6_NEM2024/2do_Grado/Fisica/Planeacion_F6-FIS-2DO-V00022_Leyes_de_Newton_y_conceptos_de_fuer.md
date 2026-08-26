@@ -77,7 +77,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 103 a la 106) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 96 a la 98) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 158 a la 161) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 150 a la 152) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 109 a la 112) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 100 a la 102) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 164 a la 167) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 154 a la 156) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 115 a la 118) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 104 a la 106) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 170 a la 173) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 158 a la 160) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 121 a la 124) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 108 a la 110) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 176 a la 179) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 162 a la 164) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Leyes de Newton y conceptos de fuerza, velocidad y aceleración - Variante 22 (Zona Montañosa y Boscosa)"?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 127 a la 130) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 96 a la 98) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 182 a la 185) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 150 a la 152) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

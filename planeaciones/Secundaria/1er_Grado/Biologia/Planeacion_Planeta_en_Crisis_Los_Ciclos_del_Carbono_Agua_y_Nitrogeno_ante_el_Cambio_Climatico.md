@@ -77,7 +77,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?  
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 153 a la 156) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 96 a la 98) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
@@ -91,7 +91,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 104 a la 107) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 150 a la 152) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -105,7 +105,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 159 a la 162) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 100 a la 102) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -119,7 +119,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?  
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 110 a la 113) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 154 a la 156) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
@@ -133,7 +133,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 165 a la 168) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 104 a la 106) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -147,7 +147,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
   2. ¿Qué correlación existe entre las variables analizadas?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 116 a la 119) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 158 a la 160) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
@@ -161,7 +161,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 171 a la 174) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 108 a la 110) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -175,7 +175,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 122 a la 125) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 162 a la 164) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -189,7 +189,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Planeta en Crisis: Los Ciclos del Carbono, Agua y Nitrógeno ante el Cambio Climático"?
-- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 177 a la 180) — *Indagación experimental en laboratorio y proyectos STEM*
+- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 96 a la 98) — *Leyes de Newton, energía, enlace químico, genética y evolución*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
@@ -203,7 +203,7 @@ Fomenta la educación ambiental práctica, produce alimentos sanos para el comed
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
-- **📖 Libro de Texto SEP:** Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología) (Págs. 128 a la 131) — *Leyes de Newton, energía, enlace químico, genética y evolución*
+- **📖 Libro de Texto SEP:** Proyectos de Ciencias Naturales Secundaria (Págs. 150 a la 152) — *Indagación experimental en laboratorio y proyectos STEM*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados
 - **📄 Entregable de la Sesión:** 🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.
 

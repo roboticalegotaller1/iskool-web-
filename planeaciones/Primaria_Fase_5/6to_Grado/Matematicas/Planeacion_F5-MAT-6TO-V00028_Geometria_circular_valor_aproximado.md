@@ -77,7 +77,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 134 a la 137) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 78 a la 80) — *Porcentajes, números decimales, volumen y proporcionalidad*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)".
 
@@ -91,7 +91,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 165 a la 168) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 130 a la 132) — *Modelación matemática y finanzas comunitarias*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 90 a la 93) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 160 a la 162) — *Estadística comunitaria, media, moda y gráficas circulares*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 143 a la 146) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 84 a la 86) — *Porcentajes, números decimales, volumen y proporcionalidad*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 174 a la 177) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 136 a la 138) — *Modelación matemática y finanzas comunitarias*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 99 a la 102) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 166 a la 168) — *Estadística comunitaria, media, moda y gráficas circulares*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño) con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 152 a la 155) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 90 a la 92) — *Porcentajes, números decimales, volumen y proporcionalidad*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 183 a la 186) — *Estadística comunitaria, media, moda y gráficas circulares*
+- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 142 a la 144) — *Modelación matemática y finanzas comunitarias*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 108 a la 111) — *Porcentajes, números decimales, volumen y proporcionalidad*
+- **📖 Libro de Texto SEP:** Proyectos Comunitarios 5º Grado (Págs. 156 a la 158) — *Estadística comunitaria, media, moda y gráficas circulares*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Desmitifica el aprendizaje de las matemáticas, haciéndolo lúdico, accesible y
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Geometría circular, valor aproximado de Pi y plano cartesiano - Variante 28 (Costero y Ribereño)" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Proyectos de Aula 6º Grado (Págs. 161 a la 164) — *Modelación matemática y finanzas comunitarias*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 5º y 6º Grado (Págs. 80 a la 82) — *Porcentajes, números decimales, volumen y proporcionalidad*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

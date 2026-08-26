@@ -77,7 +77,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común"?  
   2. ¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 28 a la 31) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 24 a la 26) — *Mapas temáticos, relieve y regiones geográficas*
 - **📦 Materiales:** Papel bond blanco, Plumones de colores, Material concreto o interactivo, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común".
 
@@ -91,7 +91,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común"?  
   2. ¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 71 a la 74) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 66 a la 68) — *Saberes integrados y formación ética*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Colores y marcatextos, Cuaderno del alumno
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.
 
@@ -105,7 +105,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?  
   2. ¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 34 a la 37) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 28 a la 30) — *Mapas temáticos, relieve y regiones geográficas*
 - **📦 Materiales:** Estaciones con material manipulable o instrumental didáctico, Hojas de registro
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.
 
@@ -119,7 +119,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué existen diferentes formas de resolver el mismo problema sobre "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común"?  
   2. ¿Cuál es el método más claro para explicar tu respuesta a los demás?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 77 a la 80) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 70 a la 72) — *Saberes integrados y formación ética*
 - **📦 Materiales:** Cuaderno de trabajo, Hojas de problemas contextualizados, Lápiz y goma
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.
 
@@ -133,7 +133,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué información clave no puede faltar en nuestro producto sobre "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común"?  
   2. ¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 40 a la 43) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 32 a la 34) — *Mapas temáticos, relieve y regiones geográficas*
 - **📦 Materiales:** Cartulinas o pliegos de papel, Colores y reglas, Borradores de trabajo
 - **📄 Entregable de la Sesión:** 📄 Entregable Intermedio: Primer borrador estructurado del producto del proyecto con datos organizados.
 
@@ -147,7 +147,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?  
   2. ¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 83 a la 86) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 74 a la 76) — *Saberes integrados y formación ética*
 - **📦 Materiales:** Material artístico / cartulinas, Textos informativos complementarios, Plumones
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común con la vida comunitaria.
 
@@ -161,7 +161,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué aprendimos al observar el trabajo de nuestros compañeros?  
   2. ¿Cómo podemos mejorar la claridad y presentación de nuestro producto final?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 46 a la 49) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 24 a la 26) — *Mapas temáticos, relieve y regiones geográficas*
 - **📦 Materiales:** Instrumentos de coevaluación impresos, Notas adhesivas de colores, Borradores de los proyectos
 - **📄 Entregable de la Sesión:** 📄 Instrumento de Coevaluación: Lista de cotejo con retroalimentación entre pares debidamente firmada.
 
@@ -175,7 +175,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?  
   2. ¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 89 a la 92) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 66 a la 68) — *Saberes integrados y formación ética*
 - **📦 Materiales:** Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos), Tijeras, pegamento, plumones
 - **📄 Entregable de la Sesión:** 📄 Producto Final Terminado: Versión definitiva del proyecto didáctico lista para su exposición comunitaria.
 
@@ -189,7 +189,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo podemos explicar conceptos de "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común" de manera sencilla para que cualquiera los entienda?  
   2. ¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 52 a la 55) — *Mapas temáticos, relieve y regiones geográficas*
+- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (4º Grado) (Págs. 28 a la 30) — *Mapas temáticos, relieve y regiones geográficas*
 - **📦 Materiales:** Guiones de exposición, Materiales de exhibición terminados, Espacio escolar acondicionado
 - **📄 Entregable de la Sesión:** 📄 Guion de Exposición: Ficha con los puntos clave que cada integrante explicará durante la muestra.
 
@@ -203,7 +203,7 @@ Promueve el pensamiento científico, la resolución de problemas locales y la pa
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?  
   2. ¿Cómo vas a seguir utilizando este conocimiento sobre "Consejo Infantil de Aula: Ciudadanía Activa, Co-gestión Escolar y Bienestar Común" en tu vida diaria?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 95 a la 98) — *Saberes integrados y formación ética*
+- **📖 Libro de Texto SEP:** Nuestros Saberes 4º Grado (Págs. 70 a la 72) — *Saberes integrados y formación ética*
 - **📦 Materiales:** Rúbricas analíticas individuales, Mural escolar de compromisos, Diplomas simbólicos o distintivos de logro
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.
 

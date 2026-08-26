@@ -77,7 +77,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué una carta escrita a mano transmite emociones más profundas que un mensaje de texto digital?  
   2. ¿Qué personas en nuestra comunidad merecen recibir una carta de agradecimiento o felicitación?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 48 a la 51) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 46 a la 48) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Ejemplos de cartas reales y sobres postales, Papel bond blanco, Plumones de colores, Bitácora escolar
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial "El valor de la correspondencia escrita" y lista de posibles destinatarios.
 
@@ -91,7 +91,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué es indispensable poner la fecha y el lugar en el encabezado de una carta?  
   2. ¿Qué diferencia existe entre saludar a un amigo cercano ("¡Hola, querido Mateo!") y a la directora de la escuela ("Estimada Directora")?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 97 a la 100) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 100 a la 102) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Marcatextos de colores, Cuaderno del alumno, Pizarrón
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Esquema rotulado con las partes del encabezado y plantilla de práctica de saludos formales e informales.
 
@@ -105,7 +105,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo redactamos nuestras vivencias para que la persona que lea la carta se emocione o sonría?  
   2. ¿Qué signos de puntuación nos ayudan a separar las ideas y que el texto no se sienta amontonado?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 54 a la 57) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 50 a la 52) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Hojas de trabajo pautadas, Lápiz y goma, Tarjetas de conectores textuales (además, también, por eso)
 - **📄 Entregable de la Sesión:** 📄 Borrador Parcial #1: Redacción manuscrita del cuerpo de la carta con al menos dos párrafos organizados.
 
@@ -119,7 +119,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Para qué se utiliza la Posdata (P.D.) y en qué momento es útil agregarla?  
   2. ¿Qué tipo de despedida transmite respeto y cuál transmite cariño familiar?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 103 a la 106) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 104 a la 106) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Cuaderno de trabajo, Tiras de papel con fórmulas de despedida, Lápiz y colores
 - **📄 Entregable de la Sesión:** 📄 Borrador Completo #1: Carta íntegra con sus 6 componentes (Lugar/Fecha, Destinatario, Saludo, Cuerpo, Despedida y Firma).
 
@@ -133,7 +133,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué sucedería si intercambiamos de lugar el remitente y el destinatario en un sobre postal?  
   2. ¿Por qué las estampillas postales tienen ilustraciones culturales y artísticas de nuestro país?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 60 a la 63) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 54 a la 56) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Sobres de papel bond o manila, Hojas de colores y pegamento, Plumines finos, Sellos decorativos
 - **📄 Entregable de la Sesión:** 📄 Producto Parcial: Sobre postal rotulado correctamente con datos de remitente/destinatario y estampilla original diseñada.
 
@@ -147,7 +147,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo logramos que el buzón sea visible, resistente y llamativo para toda la comunidad escolar?  
   2. ¿Qué valores como el respeto y la confidencialidad debemos cuidar al manejar la correspondencia ajena?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 109 a la 112) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 108 a la 110) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Caja de cartón grande reciclada, Pinturas acrílicas no tóxicas, pinceles y papel kraft, Tijeras y cinta adhesiva
 - **📄 Entregable de la Sesión:** 📦 Producto Colectivo: Buzón postal comunitario terminado, rotulado y funcional para la recolección de cartas.
 
@@ -161,7 +161,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Por qué revisar nuestro texto con ayuda de un compañero hace que el mensaje final sea mucho más claro y emotivo?  
   2. ¿Qué palabras corregimos para que nuestro destinatario entienda todo sin dificultad?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 66 a la 69) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 46 a la 48) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Lista de cotejo de coevaluación, Notas adhesivas de colores, Borradores de las cartas
 - **📄 Entregable de la Sesión:** 📄 Ficha de Coevaluación: Lista de cotejo completada con retroalimentación entre pares y observaciones del docente.
 
@@ -175,7 +175,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Cómo influye una presentación limpia, ordenada y con bonita letra en la persona que va a recibir nuestra carta?  
   2. ¿Qué emoción sientes al tener en tus manos tu carta lista para ser entregada?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 115 a la 118) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 112 a la 114) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Papel especial o decorado para cartas, Lápices de colores y plumas de gel, Sobres terminados, Sellos adhesivos
 - **📄 Entregable de la Sesión:** 📄 Producto Final Individual: Carta definitiva corregida, manuscrita, doblada, ensobrada y sellada.
 
@@ -189,7 +189,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué responsabilidad tiene un cartero al custodiar y entregar a tiempo los mensajes de las personas?  
   2. ¿Cómo debemos presentarnos amablemente al entregar una carta a un profesor, compañero o padre de familia?
-- **📖 Libro de Texto SEP:** Cartografía de México y el Mundo (5º y 6º) (Págs. 72 a la 75) — *Dinámica poblacional, desastres naturales y sostenibilidad*
+- **📖 Libro de Texto SEP:** Múltiples Lenguajes 5º y 6º Grado (Págs. 50 a la 52) — *Ensayos, reseñas críticas, crónicas y cartas de opinión*
 - **📦 Materiales:** Cartulinas azules o verdes para gorras de cartero, Bolsas de tela o papel kraft, Estambre y tijeras
 - **📄 Entregable de la Sesión:** 📄 Guion de Entrega Postal y distintivos de carteros elaborados por el equipo.
 
@@ -203,7 +203,7 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 - **❓ Preguntas Clave de la Sesión:**  
   1. ¿Qué caras pusieron las personas al recibir sus cartas escritas con tanto cariño y esfuerzo?  
   2. ¿Cómo transformó este proyecto nuestra forma de comunicarnos y convivir en la escuela?
-- **📖 Libro de Texto SEP:** Nuestros Saberes 6º Grado (Págs. 121 a la 124) — *Ciudadanía global, derechos humanos y cultura de paz*
+- **📖 Libro de Texto SEP:** Proyectos Escolares 6º Grado (Págs. 100 a la 102) — *Periódico escolar digital y mesas redondas*
 - **📦 Materiales:** Buzón con cartas listas, Rúbricas analíticas impresas, Mural de firmas y compromisos comunitarios
 - **📄 Entregable de la Sesión:** 🏆 Evidencia Final Integradora: Registro de entrega de cartas, lectura compartida comunitaria y rúbrica analítica formativa evaluada.
 
