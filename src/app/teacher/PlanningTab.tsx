@@ -20,6 +20,8 @@ import {
   getArticulatedPdas, 
   generateFinalProjectProposal, 
   getSepBookForSession, 
+  LEVEL_BASE_SUBJECTS,
+  BaseSubjectDef,
   SessionPlanItem, 
   ArticulatedPda, 
   FinalProjectProposal 
@@ -304,13 +306,6 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const teacherSubjectIds = schedulesList
     .filter(s => s.teacherId === normalizedTeacherId)
     .map(s => s.subjectId);
-    
-  // En el generador curricular NEM 2024, el docente puede planear para cualquier asignatura del currículo
-  const displaySubjects = subjectsList.length > 0 ? subjectsList : (filteredSubjects.length > 0 ? filteredSubjects : [
-    { id: 'sub-span', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Español / Lenguajes', sep_code: 'ESP-NEM', created_at: new Date().toISOString() },
-    { id: 'sub-math', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Matemáticas', sep_code: 'MAT-NEM', created_at: new Date().toISOString() },
-    { id: 'sub-sci', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Ciencias Naturales', sep_code: 'CIE-NEM', created_at: new Date().toISOString() }
-  ]);
 
   // Helper to map subject ID/name to curriculum database category keys
   const mapSubjectToCurriculumKey = (subjectId: string, subjectName: string): 'matematicas' | 'ciencias' | 'lenguajes' => {
@@ -532,7 +527,18 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const [pdaSuggestions, setPdaSuggestions] = useState<string[]>([]);
   const [isLoadingPDAs, setIsLoadingPDAs] = useState(false);
   const [selectedSuggestedPda, setSelectedSuggestedPda] = useState('');
-  
+
+  // Materias oficiales base según el nivel educativo seleccionado (Preescolar a Preparatoria)
+  const displaySubjects = LEVEL_BASE_SUBJECTS[selectedLevel] || LEVEL_BASE_SUBJECTS['primaria-baja'];
+
+  // Sincronizar materia seleccionada automáticamente al cambiar de nivel educativo
+  useEffect(() => {
+    const validSubjects = LEVEL_BASE_SUBJECTS[selectedLevel] || LEVEL_BASE_SUBJECTS['primaria-baja'];
+    if (!selectedSubject || !validSubjects.some(s => s.id === selectedSubject)) {
+      setSelectedSubject(validSubjects[0]?.id || '');
+    }
+  }, [selectedLevel, selectedSubject]);
+
   // Sincronizar materia seleccionada
   useEffect(() => {
     if (selectedSubject && !selectedNEMSubject) {

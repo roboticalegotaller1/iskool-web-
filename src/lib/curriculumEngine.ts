@@ -70,6 +70,79 @@ export interface CompleteNEMPlanning {
   isFromObsidian?: boolean;
 }
 
+export interface BaseSubjectDef {
+  id: string;
+  name: string;
+  campoFormativo: string;
+  sep_code: string;
+}
+
+export const LEVEL_BASE_SUBJECTS: Record<string, BaseSubjectDef[]> = {
+  'preescolar': [
+    { id: 'pre-leng', name: 'Lenguajes (Comunicación, Expresión y Lenguaje Oral/Escrito)', campoFormativo: 'Lenguajes', sep_code: 'PRE-LENG' },
+    { id: 'pre-sab', name: 'Saberes y Pensamiento Científico (Conteo, Formas y Exploración Natural)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'PRE-SAB' },
+    { id: 'pre-soc', name: 'Ética, Naturaleza y Sociedades (Mi Entorno, Familia y Comunidad)', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'PRE-SOC' },
+    { id: 'pre-hum', name: 'De lo Humano y lo Comunitario (Educación Socioemocional y Desarrollo Motriz)', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'PRE-HUM' },
+    { id: 'pre-art', name: 'Artes y Expresión Artística Infantil', campoFormativo: 'Lenguajes', sep_code: 'PRE-ART' },
+    { id: 'pre-ing', name: 'Inglés / Lengua Extranjera (Nivel Inicial)', campoFormativo: 'Lenguajes', sep_code: 'PRE-ING' },
+  ],
+  'primaria-baja': [
+    { id: 'p12-esp', name: 'Español / Lenguajes (1º y 2º Grado)', campoFormativo: 'Lenguajes', sep_code: 'P12-ESP' },
+    { id: 'p12-mat', name: 'Matemáticas (1º y 2º Grado)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'P12-MAT' },
+    { id: 'p12-con', name: 'Conocimiento del Medio (Ciencias, Historia y Geografía)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'P12-CON' },
+    { id: 'p12-civ', name: 'Formación Cívica y Ética', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'P12-CIV' },
+    { id: 'p12-hum', name: 'Educación Socioemocional y Educación Física', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'P12-HUM' },
+    { id: 'p12-art', name: 'Artes', campoFormativo: 'Lenguajes', sep_code: 'P12-ART' },
+    { id: 'p12-ing', name: 'Inglés', campoFormativo: 'Lenguajes', sep_code: 'P12-ING' },
+  ],
+  'primaria-media': [
+    { id: 'p34-esp', name: 'Español / Lenguajes (3º y 4º Grado)', campoFormativo: 'Lenguajes', sep_code: 'P34-ESP' },
+    { id: 'p34-mat', name: 'Matemáticas (3º y 4º Grado)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'P34-MAT' },
+    { id: 'p34-cie', name: 'Ciencias Naturales (3º y 4º Grado)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'P34-CIE' },
+    { id: 'p34-ent', name: 'La Entidad donde Vivo (Historia y Geografía Regional)', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'P34-ENT' },
+    { id: 'p34-civ', name: 'Formación Cívica y Ética', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'P34-CIV' },
+    { id: 'p34-hum', name: 'Educación Física y Vida Saludable', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'P34-HUM' },
+    { id: 'p34-art', name: 'Artes', campoFormativo: 'Lenguajes', sep_code: 'P34-ART' },
+    { id: 'p34-ing', name: 'Inglés', campoFormativo: 'Lenguajes', sep_code: 'P34-ING' },
+  ],
+  'primaria-alta': [
+    { id: 'p56-esp', name: 'Español / Lenguajes (5º y 6º Grado)', campoFormativo: 'Lenguajes', sep_code: 'P56-ESP' },
+    { id: 'p56-mat', name: 'Matemáticas (5º y 6º Grado)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'P56-MAT' },
+    { id: 'p56-cie', name: 'Ciencias Naturales y Tecnología (5º y 6º Grado)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'P56-CIE' },
+    { id: 'p56-geo', name: 'Geografía', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'P56-GEO' },
+    { id: 'p56-his', name: 'Historia de México y el Mundo', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'P56-HIS' },
+    { id: 'p56-civ', name: 'Formación Cívica y Ética', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'P56-CIV' },
+    { id: 'p56-hum', name: 'Educación Socioemocional y Educación Física', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'P56-HUM' },
+    { id: 'p56-art', name: 'Artes', campoFormativo: 'Lenguajes', sep_code: 'P56-ART' },
+    { id: 'p56-ing', name: 'Inglés', campoFormativo: 'Lenguajes', sep_code: 'P56-ING' },
+  ],
+  'secundaria': [
+    { id: 'sec-esp', name: 'Lengua Materna (Español)', campoFormativo: 'Lenguajes', sep_code: 'SEC-ESP' },
+    { id: 'sec-mat', name: 'Matemáticas (Álgebra, Geometría y Estadística)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'SEC-MAT' },
+    { id: 'sec-bio', name: 'Ciencias I (Biología - 1º Secundaria)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'SEC-BIO' },
+    { id: 'sec-fis', name: 'Ciencias II (Física - 2º Secundaria)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'SEC-FIS' },
+    { id: 'sec-qui', name: 'Ciencias III (Química - 3º Secundaria)', campoFormativo: 'Saberes y Pensamiento Científico', sep_code: 'SEC-QUI' },
+    { id: 'sec-his', name: 'Historia (1º, 2º y 3º)', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'SEC-HIS' },
+    { id: 'sec-geo', name: 'Geografía', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'SEC-GEO' },
+    { id: 'sec-civ', name: 'Formación Cívica y Ética', campoFormativo: 'Ética, Naturaleza y Sociedades', sep_code: 'SEC-CIV' },
+    { id: 'sec-ing', name: 'Lengua Extranjera (Inglés)', campoFormativo: 'Lenguajes', sep_code: 'SEC-ING' },
+    { id: 'sec-art', name: 'Artes (Música, Teatro, Danza o Artes Visuales)', campoFormativo: 'Lenguajes', sep_code: 'SEC-ART' },
+    { id: 'sec-tec', name: 'Tecnología / Taller', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'SEC-TEC' },
+    { id: 'sec-efi', name: 'Educación Física', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'SEC-EFI' },
+    { id: 'sec-tut', name: 'Tutoría y Educación Socioemocional', campoFormativo: 'De lo Humano y lo Comunitario', sep_code: 'SEC-TUT' },
+  ],
+  'preparatoria': [
+    { id: 'bac-len', name: 'Lengua y Comunicación (I a IV)', campoFormativo: 'Lengua y Comunicación', sep_code: 'BAC-LEN' },
+    { id: 'bac-mat', name: 'Pensamiento Matemático (Álgebra, Geometría, Cálculo y Estadística)', campoFormativo: 'Pensamiento Matemático', sep_code: 'BAC-MAT' },
+    { id: 'bac-nat', name: 'Ciencias Naturales, Experimentales y Tecnología (Física, Química, Biología)', campoFormativo: 'Ciencias Naturales', sep_code: 'BAC-NAT' },
+    { id: 'bac-soc', name: 'Ciencias Sociales y Conciencia Histórica', campoFormativo: 'Ciencias Sociales', sep_code: 'BAC-SOC' },
+    { id: 'bac-hum', name: 'Humanidades y Filosofía (I a III)', campoFormativo: 'Humanidades', sep_code: 'BAC-HUM' },
+    { id: 'bac-dig', name: 'Cultura Digital', campoFormativo: 'Cultura Digital', sep_code: 'BAC-DIG' },
+    { id: 'bac-ing', name: 'Inglés / Lengua Extranjera (I a IV)', campoFormativo: 'Lengua Extranjera', sep_code: 'BAC-ING' },
+    { id: 'bac-emo', name: 'Recursos Socioemocionales y Responsabilidad Social', campoFormativo: 'Socioemocionales', sep_code: 'BAC-EMO' },
+  ]
+};
+
 // -------------------------------------------------------------
 // CATÁLOGO OFICIAL DE LIBROS DE TEXTO GRATUITOS SEP (NEM 2024)
 // -------------------------------------------------------------
@@ -497,7 +570,210 @@ export function generateChronometerSessions(
     }
   ];
 
-  const masterPool = isLanguageSubject && isEpistolar ? epistolarTemplates : genericTemplates;
+  // 3. Plantilla Especializada: Preescolar (Fase 2 - Enfoque Lúdico y Sensorial)
+  const preschoolTemplates = [
+    {
+      num: 1,
+      titulo: `Ronda de Bienvenida y Caja Mágica de Sorpresas: "¿Qué sabemos de ${capitalizedTopic}?"`,
+      inicio: `⏱️ INICIO (10 min): Canción de bienvenida con títere guía y descubrimiento de la "Caja Mágica". Preguntas detonadoras sensoriales en asamblea sobre el tapete.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Exploración con objetos concretos, texturas y colores. En pequeños grupos de juego libre guiado, las niñas y niños manipulan material táctil sobre "${capitalizedTopic}".`,
+      cierre: `⏱️ CIERRE (10 min): Ronda de expresión en el círculo de diálogo: cada niño muestra su objeto favorito. Aplauso de estrellas y respiración guiada.`,
+      preguntas: [
+        `¿Qué color, forma o sonido tiene lo que descubrimos hoy sobre "${capitalizedTopic}"?`,
+        `¿A quién en casa le queremos platicar de nuestra caja mágica?`
+      ],
+      materiales: ['Caja decorada con materiales sensoriales', 'Títere guía de aula', 'Tapete infantil', 'Música instrumental'],
+      entregable: `🎨 Registro Gráfico #1: Dibujo libre inicial en hoja de trabajo con crayones gruesos.`
+    },
+    {
+      num: 2,
+      titulo: `Exploración en Láminas Didácticas y Mi Álbum de Preescolar`,
+      inicio: `⏱️ INICIO (10 min): Lectura compartida de una lámina ilustrada de gran formato de la SEP. Juego de "¿Quién ve primero...?".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Actividad en "Mi Álbum de Preescolar". Los niños señalan personajes, cuentan elementos con sus deditos y pegan etiquetas o confeti de colores.`,
+      cierre: `⏱️ CIERRE (10 min): Muestra de álbumes en semicírculo y reconocimiento al esfuerzo individual.`,
+      preguntas: [
+        `¿Qué hacen los personajes del libro y cómo se divierten con "${capitalizedTopic}"?`,
+        `¿Cuántos objetos encontramos en la lámina?`
+      ],
+      materiales: ['Mi Álbum de Preescolar SEP', 'Crayolas y gises de colores', 'Pegamento lavable'],
+      entregable: `🎨 Ficha de Registro #2: Página trabajada de Mi Álbum de Preescolar con trazos y estampas.`
+    },
+    {
+      num: 3,
+      titulo: `Taller de Modelado Plástico: Plastilina, Masa y Formas Creativas`,
+      inicio: `⏱️ INICIO (10 min): Canción motriz de calentamiento de manitas ("Mis manitas traviesas").`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Modelado con masa no tóxica o plastilina de colores. Creación de figuras, animales o símbolos alusivos a "${capitalizedTopic}".`,
+      cierre: `⏱️ CIERRE (10 min): Exposición en la "Galería de Esculturas" del salón y lavado de manos cooperativo.`,
+      preguntas: [
+        `¿Cómo se sintió amasar y crear tu figura?`,
+        `¿Qué nombre le pusiste a tu creación sobre "${capitalizedTopic}"?`
+      ],
+      materiales: ['Plastilina o masa casera de colores', 'Moldes plásticos seguros', 'Bandejas individuales'],
+      entregable: `🎨 Escultura Infantil: Modelo tridimensional en masa o plastilina representativo del tema.`
+    },
+    {
+      num: 4,
+      titulo: `Rincón de Juego Simbólico y Dramatización con Disfraces`,
+      inicio: `⏱️ INICIO (10 min): Elección de accesorios y disfraces para la dramatización colectiva.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Representación teatral espontánea en rincones de aprendizaje: los niños asumen roles comunitarios en torno a "${capitalizedTopic}".`,
+      cierre: `⏱️ CIERRE (10 min): Círculo de despedida y felicitación por su participación en la obra de teatro.`,
+      preguntas: [
+        `¿Qué personaje representaste hoy y cómo ayudó a los demás?`,
+        `¿Qué aprendimos jugando juntos?`
+      ],
+      materiales: ['Telas de colores, sombreros y antifaces seguros', 'Escenario de guiñol'],
+      entregable: `🎭 Participación en Dramatización Colectiva y registro fotográfico en el portafolio.`
+    },
+    {
+      num: 5,
+      titulo: `Fiesta de Aprendizajes de Preescolar y Mural de Huellitas`,
+      inicio: `⏱️ INICIO (10 min): Recibimiento festivo a padres de familia o compañeros con cantos infantiles.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Elaboración del gran "Mural Comunitario" estampando huellas dactilares de colores y exhibiendo todos los dibujos y figuras creadas.`,
+      cierre: `⏱️ CIERRE (10 min): Entrega de medallitas de cartón por su esfuerzo y abrazo grupal.`,
+      preguntas: [
+        `¿Cuál fue tu momento favorito de todas nuestras clases?`,
+        `¿Qué le platicaste a mamá o papá de tu mural?`
+      ],
+      materiales: ['Papel kraft gigante', 'Pintura dactilar no tóxica', 'Medallas simbólicas'],
+      entregable: `🏆 Mural Colectivo Infantil y medalla de logros de preescolar completada.`
+    }
+  ];
+
+  // 4. Plantilla Especializada: Secundaria (Fase 6 - Rigor Científico y Crítico)
+  const secundariaTemplates = [
+    {
+      num: 1,
+      titulo: `Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "${capitalizedTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.`,
+      cierre: `⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.`,
+      preguntas: [
+        `¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "${capitalizedTopic}"?`,
+        `¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?`
+      ],
+      materiales: ['Cuaderno de laboratorio / bitácora científica', 'Guía de diseño experimental', 'Artículos de divulgación'],
+      entregable: `📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.`
+    },
+    {
+      num: 2,
+      titulo: `Indagación en Textos Disciplinares SEP y Contrastación Teórica`,
+      inicio: `⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.`,
+      cierre: `⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.`,
+      preguntas: [
+        `¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "${capitalizedTopic}"?`,
+        `¿Cómo contrastan estos hallazgos con las ideas previas del equipo?`
+      ],
+      materiales: ['Libros de texto gratuitos SEP de Secundaria', 'Fichas de trabajo analítico', 'Calculadora / regla'],
+      entregable: `📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.`
+    },
+    {
+      num: 3,
+      titulo: `Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental`,
+      inicio: `⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.`,
+      cierre: `⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.`,
+      preguntas: [
+        `¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?`,
+        `¿Qué correlación existe entre las variables analizadas?`
+      ],
+      materiales: ['Instrumental de laboratorio o simuladores digitales', 'Hojas de tabulación milimétricas', 'Bitácora'],
+      entregable: `📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.`
+    },
+    {
+      num: 4,
+      titulo: `Mesa Redonda, Debate Crítico y Coevaluación Técnica`,
+      inicio: `⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "${capitalizedTopic}". Coevaluación con rúbrica técnica.`,
+      cierre: `⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.`,
+      preguntas: [
+        `¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?`,
+        `¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "${capitalizedTopic}"?`
+      ],
+      materiales: ['Rúbricas técnicas de evaluación entre pares', 'Guiones de argumentación'],
+      entregable: `📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.`
+    },
+    {
+      num: 5,
+      titulo: `Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación`,
+      inicio: `⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.`,
+      cierre: `⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.`,
+      preguntas: [
+        `¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?`,
+        `¿Qué competencias científicas y comunicativas consolidamos durante el proceso?`
+      ],
+      materiales: ['Proyector o stands de exposición', 'Rúbricas analíticas oficiales', 'Prototipos terminados'],
+      entregable: `🏆 Producto Final de Secundaria: Reporte formal de investigación, prototipo funcional evaluado y sustentación oral.`
+    }
+  ];
+
+  // 5. Plantilla Especializada: Preparatoria / Bachillerato (MCCEMS)
+  const preparatoriaTemplates = [
+    {
+      num: 1,
+      titulo: `Diagnóstico Situacional y Formulación Epistemológica del Problema (MCCEMS)`,
+      inicio: `⏱️ INICIO (10 min): Análisis de problemáticas complejas del entorno contemporáneo. Vinculación con las progresiones de aprendizaje del Marco Curricular Común.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En seminarios de investigación, los estudiantes estructuran el marco conceptual, definen la metodología de investigación y delimitan el alcance del proyecto sobre "${capitalizedTopic}".`,
+      cierre: `⏱️ CIERRE (10 min): Validación del protocolo metodológico con asesoría del docente tutor.`,
+      preguntas: [
+        `¿Cuál es el estado del arte y la relevancia socio-científica de abordar "${capitalizedTopic}" en la actualidad?`,
+        `¿Qué metodología analítica o cuantitativa garantiza la validez de nuestro estudio?`
+      ],
+      materiales: ['Bases de datos académicas', 'Protocolo de investigación MCCEMS', 'Bitácora preuniversitaria'],
+      entregable: `📄 Protocolo Metodológico #1: Justificación, marco teórico y diseño metodológico con normas APA.`
+    },
+    {
+      num: 2,
+      titulo: `Modelación Avanzada, Procesamiento de Datos y Simulación Científica`,
+      inicio: `⏱️ INICIO (10 min): Revisión de algoritmos de cálculo, funciones matemáticas o modelos teóricos complejos.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Procesamiento cuantitativo de datos, análisis de regresión, simulaciones por computadora o contraste documental crítico.`,
+      cierre: `⏱️ CIERRE (10 min): Interpretación de resultados y discusión crítica de hallazgos.`,
+      preguntas: [
+        `¿Qué nivel de significancia estadística o rigor cualitativo presentan los resultados?`,
+        `¿Cómo se vincula el modelo matemático con la realidad socioeconómica o natural?`
+      ],
+      materiales: ['Software de cálculo / graficadores', 'Hojas de datos de investigación'],
+      entregable: `📄 Reporte Analítico #2: Modelación cuantitativa, pruebas de hipótesis e interpretación de resultados.`
+    },
+    {
+      num: 3,
+      titulo: `Redacción Académica del Ensayo Crítico / Artículo de Divulgación Preuniversitario`,
+      inicio: `⏱️ INICIO (10 min): Pautas de redacción científica: estructura IMRyD (Introducción, Metodología, Resultados y Discusión).`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Redacción formal del artículo o ensayo con citas en formato APA 7ª edición, integrando gráficos y conclusiones fundamentadas.`,
+      cierre: `⏱️ CIERRE (10 min): Revisión por pares ciegos (Peer Review) entre equipos de investigación.`,
+      preguntas: [
+        `¿Cómo comunicamos ideas complejas con claridad, concisión y rigor académico?`,
+        `¿Qué aportación original genera nuestra investigación a la comunidad?`
+      ],
+      materiales: ['Manual de estilo APA 7ª edición', 'Borradores de artículos académicos'],
+      entregable: `📄 Artículo Científico / Ensayo Crítico #3 con dictamen de revisión por pares.`
+    },
+    {
+      num: 4,
+      titulo: `Simposio Académico Preuniversitario: Transferencia Social del Conocimiento y Evaluación`,
+      inicio: `⏱️ INICIO (10 min): Instalación del presídium del Simposio Académico con invitados de la comunidad educativa.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Ponencias formales de 10 minutos por equipo, sustentación de proyectos de impacto social y sesión de réplica académica.`,
+      cierre: `⏱️ CIERRE (10 min): Evaluación por competencias del MCCEMS, entrega de constancias y cierre académico.`,
+      preguntas: [
+        `¿Qué impacto transformador tiene este proyecto en nuestro entorno local y perfil de egreso?`,
+        `¿Cómo potencia este trabajo nuestra preparación vocacional y universitaria?`
+      ],
+      materiales: ['Atril y proyector de conferencias', 'Rúbricas de evaluación del MCCEMS'],
+      entregable: `🏆 Producto Terminal de Bachillerato: Ponencia académica defendida, artículo publicado y rúbrica por competencias acreditada.`
+    }
+  ];
+
+  let masterPool = genericTemplates;
+  if (level === 'preescolar') {
+    masterPool = preschoolTemplates;
+  } else if (level === 'secundaria') {
+    masterPool = secundariaTemplates;
+  } else if (level === 'preparatoria') {
+    masterPool = preparatoriaTemplates;
+  } else if (isLanguageSubject && isEpistolar) {
+    masterPool = epistolarTemplates;
+  }
 
   // Construcción de la secuencia exacta de "count" sesiones
   const resultSessions: SessionPlanItem[] = [];
@@ -599,17 +875,40 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
     ];
   }
 
-  if (level === 'primaria-baja') {
+  if (level === 'preescolar') {
     return [
       {
-        campoFormativo: 'Lenguajes',
+        campoFormativo: 'Lenguajes (Preescolar - Fase 2)',
+        pda: `Expresa oralmente ideas, emociones y descubrimientos sobre "${capitalizedTopic}" a través del juego dramático, cantos, títeres y producciones gráficas infantiles.`,
+        relacion: 'Desarrollo de la oralidad, enriquecimiento del vocabulario y primeros acercamientos al lenguaje visual y escrito.'
+      },
+      {
+        campoFormativo: 'Saberes y Pensamiento Científico',
+        pda: `Explora, clasifica y cuenta objetos del entorno vinculados a "${capitalizedTopic}" usando material concreto, comparando tamaños, formas y texturas.`,
+        relacion: 'Pensamiento lógico inicial, conteo perceptual, curiosidad científica y exploración sensorial.'
+      },
+      {
+        campoFormativo: 'Ética, Naturaleza y Sociedades',
+        pda: `Reconoce que forma parte de una comunidad escolar y familiar, practicando el cuidado de los seres vivos y materiales relacionados con "${capitalizedTopic}".`,
+        relacion: 'Sentido de pertenencia, empatía comunitaria y cuidado del entorno inmediato.'
+      },
+      {
+        campoFormativo: 'De lo Humano y lo Comunitario',
+        pda: `Coordina movimientos motrices finos y gruesos en actividades lúdicas sobre "${capitalizedTopic}", respetando acuerdos de convivencia y turnos.`,
+        relacion: 'Control corporal, autorregulación emocional y juego cooperativo.'
+      }
+    ];
+  } else if (level === 'primaria-baja') {
+    return [
+      {
+        campoFormativo: 'Lenguajes (Primaria Baja - Fase 3)',
         pda: `Registra y resume información sobre "${capitalizedTopic}" a través de la escritura autónoma, el dibujo y el dictado al docente para compartir con la comunidad.`,
-        relacion: 'Comunicación clara de los procedimientos y hallazgos mediante textos e ilustraciones.'
+        relacion: 'Alfabetización inicial, comunicación clara de procedimientos y expresión de ideas con propósito social.'
       },
       {
         campoFormativo: 'Saberes y Pensamiento Científico',
         pda: `Utiliza material concreto, dibujos y símbolos para representar cantidades, medidas y patrones vinculados a "${capitalizedTopic}".`,
-        relacion: 'Fundamentación lógica, conteo, medición y resolución de problemas prácticos.'
+        relacion: 'Fundamentación lógica, conteo, medición y resolución de problemas prácticos cotidianos.'
       },
       {
         campoFormativo: 'Ética, Naturaleza y Sociedades',
@@ -622,40 +921,97 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
         relacion: 'Trabajo en equipo, empatía y autorregulación emocional.'
       }
     ];
-  } else if (level === 'secundaria') {
+  } else if (level === 'primaria-media') {
     return [
       {
-        campoFormativo: 'Saberes y Pensamiento Científico (Matemáticas / Ciencias)',
-        pda: `Modela situaciones y fenómenos reales relacionados con "${capitalizedTopic}" mediante expresiones algebraicas, gráficas y tabulaciones analíticas.`,
-        relacion: 'Rigor cuantitativo, formulación de modelos y contrastación empírica.'
-      },
-      {
-        campoFormativo: 'Lenguajes (Español)',
-        pda: `Elabora ensayos, textos argumentativos y exposiciones orales formales sobre "${capitalizedTopic}" con base en fuentes fidedignas.`,
-        relacion: 'Argumentación crítica y divulgación científica accesible.'
-      },
-      {
-        campoFormativo: 'Ética, Naturaleza y Sociedades',
-        pda: `Analiza críticamente los factores históricos, éticos y ambientales implicados en "${capitalizedTopic}" a nivel local y global.`,
-        relacion: 'Conciencia histórica, sostenibilidad y justicia social.'
-      }
-    ];
-  } else {
-    return [
-      {
-        campoFormativo: 'Lenguajes',
-        pda: `Produce textos continuos y discontinuos para comunicar ideas y hallazgos sobre "${capitalizedTopic}".`,
-        relacion: 'Expresión oral y escrita de resultados.'
+        campoFormativo: 'Lenguajes (Primaria Media - Fase 4)',
+        pda: `Comprende, sintetiza y redacta textos expositivos, informativos y esquemas visuales sobre "${capitalizedTopic}" para divulgar en el aula y la escuela.`,
+        relacion: 'Comprensión lectora analítica, redacción en párrafos estructurados y uso correcto de signos de puntuación.'
       },
       {
         campoFormativo: 'Saberes y Pensamiento Científico',
-        pda: `Aplica el razonamiento lógico y la indagación sistemática para resolver retos vinculados a "${capitalizedTopic}".`,
-        relacion: 'Pensamiento crítico y solución de problemas.'
+        pda: `Resuelve situaciones problemáticas vinculadas a "${capitalizedTopic}" mediante operaciones básicas, fracciones, cálculo de áreas y experimentos sencillos.`,
+        relacion: 'Razonamiento lógico-matemático, análisis de datos en tablas y pensamiento indagatorio.'
+      },
+      {
+        campoFormativo: 'Ética, Naturaleza y Sociedades',
+        pda: `Analiza la diversidad natural y sociocultural de su entidad en torno a "${capitalizedTopic}", valorando la justicia y los derechos de todos.`,
+        relacion: 'Conocimiento del entorno regional, cuidado del medio ambiente y participación cívica.'
       },
       {
         campoFormativo: 'De lo Humano y lo Comunitario',
-        pda: `Diseña propuestas comunitarias colaborativas que promuevan el bienestar integral en torno a "${capitalizedTopic}".`,
-        relacion: 'Liderazgo participativo y transformación del entorno.'
+        pda: `Diseña estrategias cooperativas para prevenir riesgos y resolver conflictos escolares al trabajar proyectos sobre "${capitalizedTopic}".`,
+        relacion: 'Toma de decisiones consensuadas, vida saludable y bienestar socioemocional.'
+      }
+    ];
+  } else if (level === 'primaria-alta') {
+    return [
+      {
+        campoFormativo: 'Lenguajes (Primaria Alta - Fase 5)',
+        pda: `Elabora ensayos breves, reseñas críticas y participa en debates formales sobre "${capitalizedTopic}", sustentando sus argumentos en fuentes confiables.`,
+        relacion: 'Pensamiento crítico discursivo, análisis literario e informativo y comunicación oral asertiva.'
+      },
+      {
+        campoFormativo: 'Saberes y Pensamiento Científico',
+        pda: `Aplica modelos matemáticos (porcentajes, volumen, proporcionalidad) y el método experimental para investigar fenómenos asociados a "${capitalizedTopic}".`,
+        relacion: 'Pensamiento probabilístico, pensamiento STEM y experimentación científica rigurosa.'
+      },
+      {
+        campoFormativo: 'Ética, Naturaleza y Sociedades',
+        pda: `Evalúa críticamente los procesos históricos y problemáticas ambientales vinculadas a "${capitalizedTopic}" a nivel nacional y global.`,
+        relacion: 'Conciencia histórica de México, soberanía, sustentabilidad ecológica y derechos humanos.'
+      },
+      {
+        campoFormativo: 'De lo Humano y lo Comunitario',
+        pda: `Lidera proyectos comunitarios colaborativos orientados a la salud integral y la equidad social en torno a "${capitalizedTopic}".`,
+        relacion: 'Liderazgo transformador, resiliencia comunitaria y cultura de paz.'
+      }
+    ];
+  } else if (level === 'secundaria') {
+    return [
+      {
+        campoFormativo: 'Saberes y Pensamiento Científico (Secundaria - Fase 6)',
+        pda: `Modela situaciones y fenómenos reales relacionados con "${capitalizedTopic}" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio.`,
+        relacion: 'Rigor cuantitativo, formulación de modelos matemáticos y leyes científicas fundamentales.'
+      },
+      {
+        campoFormativo: 'Lenguajes (Español / Lengua Extranjera)',
+        pda: `Produce ensayos académicos, artículos de divulgación y participa en mesas redondas formales sobre "${capitalizedTopic}" con rigor metodológico y citas textuales.`,
+        relacion: 'Argumentación crítica avanzada, dialéctica y divulgación del conocimiento científico.'
+      },
+      {
+        campoFormativo: 'Ética, Naturaleza y Sociedades',
+        pda: `Analiza críticamente las causas estructurales, históricas y éticas de las problemáticas socioambientales ligadas a "${capitalizedTopic}".`,
+        relacion: 'Conciencia histórica crítica, geopolítica, sostenibilidad y justicia social transformadora.'
+      },
+      {
+        campoFormativo: 'De lo Humano y lo Comunitario',
+        pda: `Diseña prototipos tecnológicos y propuestas productivas comunitarias orientadas a la innovación y el proyecto de vida en torno a "${capitalizedTopic}".`,
+        relacion: 'Innovación técnica, vocación productiva, salud integral y proyecto de vida.'
+      }
+    ];
+  } else {
+    // Preparatoria / Bachillerato (MCCEMS)
+    return [
+      {
+        campoFormativo: 'Lengua y Comunicación (MCCEMS)',
+        pda: `Construye discursos argumentativos y ensayos críticos preuniversitarios sobre "${capitalizedTopic}", integrando diversas perspectivas epistemológicas y normas de citación formal.`,
+        relacion: 'Pensamiento analítico superior, juicio crítico y comunicación académica especializada.'
+      },
+      {
+        campoFormativo: 'Pensamiento Matemático y Ciencias Naturales',
+        pda: `Modela sistemas complejos y resuelve problemas cuantitativos de cálculo, probabilidad y física/química aplicada en torno a "${capitalizedTopic}".`,
+        relacion: 'Modelación matemática formal, abstracción analítica y metodología científica avanzada.'
+      },
+      {
+        campoFormativo: 'Conciencia Histórica y Humanidades',
+        pda: `Examina las implicaciones éticas, filosóficas e históricas de "${capitalizedTopic}" en el desarrollo contemporáneo de la sociedad mexicana y mundial.`,
+        relacion: 'Reflexión filosófica, análisis social interdisciplinario y ciudadanía crítica universal.'
+      },
+      {
+        campoFormativo: 'Recursos Socioemocionales',
+        pda: `Coordina proyectos de impacto comunitario y responsabilidad social vinculados a "${capitalizedTopic}", demostrando liderazgo ético y compromiso ciudadano.`,
+        relacion: 'Transformación del entorno social, compromiso ético y desarrollo humano integral.'
       }
     ];
   }
