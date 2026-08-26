@@ -325,10 +325,10 @@ export async function GET(request: NextRequest) {
 
       return NextResponse.json({
         found: true,
-        source: 'obsidian',
+        source: 'vault',
         filename: bestMatchNode.filename,
         planning: {
-          id: 'plan-obsidian-' + Date.now(),
+          id: 'plan-vault-' + Date.now(),
           title,
           levelName,
           subjectName,
@@ -339,7 +339,7 @@ export async function GET(request: NextRequest) {
           duration: durationStr,
           preguntasDetonadoras: preguntas.length > 0 ? preguntas : [
             `¿Cómo aplicamos el contenido de "${title}" para resolver problemáticas de nuestra comunidad?`,
-            `¿De qué manera fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
+            `¿De qué forma fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
             `¿Qué producto tangible compartiremos con la comunidad escolar al término de las ${sessionCount} sesiones?`
           ],
           sesiones: sesionesList,
@@ -350,15 +350,15 @@ export async function GET(request: NextRequest) {
           evaluacion: evalMatch ? evalMatch[1].trim() : `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
           materiales: matMatch ? matMatch[1].trim() : `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
           createdAt,
-          isFromObsidian: true
+          isFromVault: true
         }
       });
     }
 
     return NextResponse.json({ found: false, note: null });
   } catch (error: any) {
-    console.error("Error al buscar en Obsidian:", error);
-    return NextResponse.json({ found: false, error: error.message }, { status: 500 });
+    console.error("Error al buscar en Bóveda Curricular:", error);
+    return NextResponse.json({ found: false, error: 'Error interno al procesar la búsqueda.' }, { status: 500 });
   }
 }
 
@@ -387,7 +387,7 @@ export async function POST(request: NextRequest) {
     const planning = parsedPlanning.data;
 
     if (!fs.existsSync(OBSIDIAN_VAULT_PATH)) {
-      return NextResponse.json({ success: false, error: 'Bóveda de Obsidian no encontrada' }, { status: 404 });
+      return NextResponse.json({ success: false, error: 'Bóveda Curricular no encontrada' }, { status: 404 });
     }
 
     // Clasificación jerárquica: Nivel Escolar -> Grado/Fase -> Materia (con protección anti-traversal)
@@ -395,7 +395,7 @@ export async function POST(request: NextRequest) {
     const gradeFolder = sanitizeFolderName(planning.gradeName || planning.grado || planning.fase || 'General');
     const subjectFolder = sanitizeFolderName(planning.subjectName || planning.asignatura || 'General');
 
-    // Directorio de destino estructurado dentro del vault
+    // Directorio de destino estructurado dentro de la bóveda
     const targetDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones', levelFolder, gradeFolder, subjectFolder);
     
     // Verificación de seguridad de ruta (evita Path Traversal)
@@ -462,9 +462,9 @@ ${planning.materiales || ''}
 `;
 
     fs.writeFileSync(filePath, markdownContent, 'utf8');
-    console.log(`✅ Planeación guardada en Obsidian estructurada por Nivel/Grado/Materia: ${filePath}`);
+    console.log(`✅ Planeación guardada en Bóveda Curricular estructurada por Nivel/Grado/Materia: ${filePath}`);
 
-    // Sincronización Automática con Git (Commit & Push al repositorio remoto del Segundo Cerebro)
+    // Sincronización Automática con Repositorio Remoto
     let gitSyncStatus = 'skipped';
     let gitMessage = '';
     const isIsrael = (planning.teacherName || '').toLowerCase().includes('israel') || Boolean(planning.isSuperUser);
@@ -472,7 +472,7 @@ ${planning.materiales || ''}
     if (planning.syncGit || isIsrael) {
       try {
         const safeCommitTitle = planning.title.replace(/["`$]/g, '').trim();
-        const commitMsg = `feat(planeacion): ${safeCommitTitle} - ${planning.teacherName || 'Prof. Israel López Ángeles'} (Gemini NEM)`;
+        const commitMsg = `feat(planeacion): ${safeCommitTitle} - ${planning.teacherName || 'Prof. Israel López Ángeles'} (IA NEM)`;
         
         await execPromise(`git -C "${OBSIDIAN_VAULT_PATH}" add -A`);
         await execPromise(`git -C "${OBSIDIAN_VAULT_PATH}" commit -m "${commitMsg}"`).catch((e) => {
@@ -481,12 +481,12 @@ ${planning.materiales || ''}
         });
         await execPromise(`git -C "${OBSIDIAN_VAULT_PATH}" push origin main`);
         gitSyncStatus = 'synced_and_pushed';
-        gitMessage = 'Sincronizado y publicado en GitHub (Bóveda Obsidian)';
-        console.log(`🚀 [Git Auto-Push]: Planeación "${planning.title}" sincronizada y enviada a GitHub.`);
+        gitMessage = 'Sincronizado y publicado en Repositorio Central (Bóveda Curricular)';
+        console.log(`🚀 [Auto-Push]: Planeación "${planning.title}" sincronizada y enviada al repositorio central.`);
       } catch (gitErr: any) {
         gitSyncStatus = 'local_only';
-        gitMessage = `Guardado localmente. Git remoto: ${gitErr?.message || 'Pendiente de sincronizar'}`;
-        console.warn('Aviso Git Obsidian:', gitErr?.message || gitErr);
+        gitMessage = `Guardado localmente. Sincronización remota: ${gitErr?.message || 'Pendiente de sincronizar'}`;
+        console.warn('Aviso de sincronización remota:', gitErr?.message || gitErr);
       }
     }
 
@@ -501,8 +501,8 @@ ${planning.materiales || ''}
       gitMessage
     });
   } catch (error: any) {
-    console.error("Error al guardar en Obsidian:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error("Error al guardar en Bóveda Curricular:", error);
+    return NextResponse.json({ success: false, error: 'Error interno al guardar en Bóveda Curricular' }, { status: 500 });
   }
 }
 

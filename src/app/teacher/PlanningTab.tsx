@@ -613,11 +613,11 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   }, [inputText, selectedLevel]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // --- Estados del Gemini API ---
+  // --- Estados de Clave de IA ---
   const [apiSettingsOpen, setApiSettingsOpen] = useState(false);
-  const [geminiApiKey, setGeminiApiKey] = useState(() => {
+  const [aiApiKey, setAiApiKey] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('iskool_gemini_api_key') || '';
+      return localStorage.getItem('iskool_ai_api_key') || '';
     }
     return '';
   });
@@ -718,9 +718,9 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
   // --- Guardar API Key ---
   const handleSaveApiKey = (key: string) => {
-    setGeminiApiKey(key);
-    localStorage.setItem('iskool_gemini_api_key', key);
-    alert('API Key de Gemini guardada de forma segura en tu navegador.');
+    setAiApiKey(key);
+    localStorage.setItem('iskool_ai_api_key', key);
+    alert('Clave de Inteligencia Artificial guardada de forma segura en tu navegador.');
     setApiSettingsOpen(false);
   };
 
@@ -753,11 +753,11 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     }, 1000);
 
     let resultPlanning: any = null;
-    let foundInObsidian = false;
+    let foundInVault = false;
     const currentSubjectObj = displaySubjects.find(s => s.id === selectedSubject);
     const currKey = mapSubjectToCurriculumKey(selectedSubject, currentSubjectObj?.name || '');
 
-    // Step 1: Consultar prioritariamente la bóveda local de Obsidian (Vault-First / Cache-First) salvo si está activo el Bypass
+    // Step 1: Consultar prioritariamente la Bóveda Curricular (Vault-First / Cache-First) salvo si está activo el Bypass
     if (!bypassVault) {
       try {
         const { data: sessionData } = await supabase.auth.getSession();
@@ -773,12 +773,12 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
           const obsData = await obsRes.json();
           if (obsData.found && obsData.planning) {
             resultPlanning = obsData.planning;
-            foundInObsidian = true;
-            console.log("📚 [Obsidian Vault]: Planeación existente recuperada con éxito:", obsData.filename);
+            foundInVault = true;
+            console.log("📚 [Bóveda Curricular]: Planeación existente recuperada con éxito:", obsData.filename);
           }
         }
       } catch (e) {
-        console.warn("Aviso de consulta a Obsidian:", e);
+        console.warn("Aviso de consulta a Bóveda Curricular:", e);
       }
     } else {
       console.log("⚡ [Modo Innovación IA]: Bypass activado. Generando nueva variación pedagógica...");
@@ -787,14 +787,14 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     // Esperar a que la simulación termine visualmente
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Step 2: Si NO existe en Obsidian o está activado el Bypass, activar motor de Inteligencia Artificial (Gemini AI / Heurístico NEM 2024)
+    // Step 2: Si NO existe en Bóveda o está activado el Bypass, activar motor de Inteligencia Artificial Pedagógica
     if (!resultPlanning) {
       console.log(`🤖 [IA NEM 2024]: Generando nueva planeación didáctica enriquecida (${sessionCount} sesiones)...`);
-      if (geminiApiKey.trim()) {
+      if (aiApiKey.trim()) {
         try {
-          resultPlanning = await callGeminiAPI(inputText, selectedLevel, currKey, sessionCount);
+          resultPlanning = await callAiService(inputText, selectedLevel, currKey, sessionCount);
         } catch (err) {
-          console.error("Fallo llamada a Gemini API, usando motor heurístico local", err);
+          console.error("Fallo llamada al servicio de IA, usando motor pedagógico local", err);
           resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount);
         }
       } else {
@@ -805,11 +805,11 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     if (resultPlanning) {
       resultPlanning.subjectId = selectedSubject;
       resultPlanning.subjectName = displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
-      if (selectedSuggestedPda && !foundInObsidian) {
+      if (selectedSuggestedPda && !foundInVault) {
         resultPlanning.pda = selectedSuggestedPda;
       }
 
-      // Step 3: Guardar automáticamente en el Segundo Cerebro de Obsidian Y Auto-Push a Git
+      // Step 3: Guardar automáticamente en la Bóveda Curricular y Sincronización Remota
       try {
         const { data: sessionData } = await supabase.auth.getSession();
         const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -831,12 +831,12 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
         if (obsSaveRes.ok) {
           const obsData = await obsSaveRes.json();
           if (obsData.gitSyncStatus === 'synced_and_pushed') {
-            console.log("🚀 Planeación guardada en Obsidian local y sincronizada automáticamente en Git.");
+            console.log("🚀 Planeación guardada en Bóveda Curricular y sincronizada en repositorio remoto.");
             resultPlanning.gitSynced = true;
           }
         }
       } catch (e) {
-        console.warn("No se pudo auto-guardar en Obsidian/Git:", e);
+        console.warn("No se pudo auto-guardar en Bóveda Curricular:", e);
       }
     }
 
@@ -849,8 +849,8 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     setActivePlanning(resultPlanning);
   };
 
-  // --- Llamada a la API Real de Gemini ---
-  const callGeminiAPI = async (promptText: string, level: string, subject: string, totalSessions: number = 10) => {
+  // --- Llamada al Servicio de Inteligencia Artificial Pedagógica ---
+  const callAiService = async (promptText: string, level: string, subject: string, totalSessions: number = 10) => {
     const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
     const durationStr = `${count} ${count === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${count * 50} min)`;
     const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(promptText);
@@ -908,7 +908,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
     const fallbackProject = generateFinalProjectProposal(level, subject, promptText);
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${aiApiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -956,7 +956,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         };
       }
     } catch (err) {
-      console.warn("Fallo llamada a Gemini API, usando generador curricular integral", err);
+      console.warn("Fallo llamada al servicio de IA, usando generador curricular integral", err);
     }
 
     return generateLocalNEMPlanning(promptText, level, subject, count);
@@ -1121,8 +1121,8 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
               Prof. Israel López Ángeles
             </h4>
             <div className="text-[10px] text-purple-100 leading-snug space-y-0.5">
-              <p>⚡ <strong>Bypass Bóveda:</strong> Directo a consulta y generación con Gemini AI.</p>
-              <p>🚀 <strong>Auto-Sincronización:</strong> Guardado en Obsidian y Auto-Push a Git.</p>
+              <p>⚡ <strong>Bypass Bóveda:</strong> Directo a consulta y generación con Inteligencia Artificial.</p>
+              <p>🚀 <strong>Auto-Sincronización:</strong> Persistencia en Bóveda Curricular y Sincronización Remota.</p>
             </div>
           </div>
         )}
@@ -1135,7 +1135,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           <button 
             onClick={() => setApiSettingsOpen(!apiSettingsOpen)}
             className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 hover:text-zinc-650 transition-colors"
-            title="Configurar API Key de Gemini"
+            title="Configurar Clave de Inteligencia Artificial"
           >
             <Settings className="h-4 w-4" />
           </button>
@@ -1144,20 +1144,20 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         {/* Formulario API Key */}
         {apiSettingsOpen && (
           <div className="bg-blue-50/50 dark:bg-zinc-950/40 p-4 rounded-2xl border border-blue-150/40 dark:border-zinc-850 flex flex-col gap-3">
-            <h4 className="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-wide">Clave de API Gemini (Google AI)</h4>
+            <h4 className="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-wide">Clave de Acceso para Inteligencia Artificial</h4>
             <p className="text-[9.5px] text-zinc-500 leading-normal">
-              Opcional. Si deseas usar inteligencia artificial generativa de verdad en lugar del motor local offline, introduce tu API key. Se guarda solo en tu navegador.
+              Opcional. Si deseas usar el motor de inteligencia artificial en la nube en lugar del motor pedagógico local, introduce tu clave de acceso. Se almacena únicamente en tu navegador de forma segura.
             </p>
             <div className="flex gap-2">
               <input
                 type="password"
-                value={geminiApiKey}
-                onChange={(e) => setGeminiApiKey(e.target.value)}
-                placeholder="AIzaSy..."
+                value={aiApiKey}
+                onChange={(e) => setAiApiKey(e.target.value)}
+                placeholder="Clave de API..."
                 className="flex-1 text-xs p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 font-mono focus:outline-none"
               />
               <button
-                onClick={() => handleSaveApiKey(geminiApiKey)}
+                onClick={() => handleSaveApiKey(aiApiKey)}
                 className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-colors"
               >
                 Guardar
@@ -1232,8 +1232,8 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 animate-pulse" />
             <div>
-              <p className="font-bold text-[11px] text-zinc-800 dark:text-zinc-200">Bypass Bóveda (Generar Nueva Variante con IA)</p>
-              <p className="text-[9.5px] text-zinc-500 dark:text-zinc-400">Forzar una planeación diferente sin reutilizar archivos previos de Obsidian</p>
+              <p className="font-bold text-[11px] text-zinc-800 dark:text-zinc-200">Modo Innovación IA (Generar Nueva Propuesta)</p>
+              <p className="text-[9.5px] text-zinc-500 dark:text-zinc-400">Forzar una planeación didáctica diferente sin reutilizar registros previos de la Bóveda</p>
             </div>
           </div>
           <button

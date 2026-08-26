@@ -731,28 +731,28 @@ export interface StudentMessage {
 }
 
 /**
- * @interface CanvasActivityQuestion
- * @description Estructura de reactivos/preguntas para actividades de Estudio ISkool.
+ * @interface StudioActivityQuestion
+ * @description Estructura de reactivos/preguntas para actividades del Estudio ISkool.
  */
-export interface CanvasActivityQuestion {
+export interface StudioActivityQuestion {
   question: string;
   options: string[];
   correctIndex: number; // Índice de la respuesta correcta (0-3)
   imageUrl?: string; // Referencia visual opcional para soporte en múltiples plantillas
   explanation?: string; // Retroalimentación formativa y justificación pedagógica
 }
-export type StudioActivityQuestion = CanvasActivityQuestion;
+export type CanvasActivityQuestion = StudioActivityQuestion;
 
 /**
- * @interface CanvasActivityJSON
- * @description Estructura JSON compacta y optimizada en consumo de tokens generada por el LLM para Estudio ISkool.
+ * @interface StudioActivityJSON
+ * @description Estructura JSON compacta generada para actividades de Estudio ISkool.
  */
-export interface CanvasActivityJSON {
+export interface StudioActivityJSON {
   title: string;
   description: string;
-  questions: CanvasActivityQuestion[];
+  questions: StudioActivityQuestion[];
 }
-export type StudioActivityJSON = CanvasActivityJSON;
+export type CanvasActivityJSON = StudioActivityJSON;
 
 /**
  * @interface ISkoolTemplateDefinition

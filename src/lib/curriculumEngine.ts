@@ -67,6 +67,7 @@ export interface CompleteNEMPlanning {
   evaluacion: string;
   materiales: string;
   createdAt: string;
+  isFromVault?: boolean;
   isFromObsidian?: boolean;
 }
 
