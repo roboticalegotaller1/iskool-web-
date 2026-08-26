@@ -68,7 +68,6 @@ export interface CompleteNEMPlanning {
   materiales: string;
   createdAt: string;
   isFromVault?: boolean;
-  isFromObsidian?: boolean;
 }
 
 export interface BaseSubjectDef {
