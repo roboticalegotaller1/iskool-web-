@@ -528,7 +528,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const [inputText, setInputText] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('primaria-baja');
   const [selectedSubject, setSelectedSubject] = useState('');
-  const [sessionCount, setSessionCount] = useState<number>(10);
+  const [sessionCount, setSessionCount] = useState<number>(3);
   const [pdaSuggestions, setPdaSuggestions] = useState<string[]>([]);
   const [isLoadingPDAs, setIsLoadingPDAs] = useState(false);
   const [selectedSuggestedPda, setSelectedSuggestedPda] = useState('');
@@ -1192,51 +1192,33 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           </div>
         </div>
 
-        {/* Configuración de Número de Sesiones Propuestas */}
-        <div className="flex flex-col gap-2 p-3 rounded-xl border border-blue-200/60 dark:border-blue-900/40 bg-gradient-to-r from-blue-50/50 to-indigo-50/40 dark:from-blue-950/20 dark:to-indigo-950/20 text-xs">
+        {/* Selector en Lista de Número de Sesiones Disponibles */}
+        <div className="flex flex-col gap-1.5 font-bold text-xs text-zinc-800 dark:text-zinc-200">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-              <label className="text-[10px] font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">
-                Número de Sesiones Disponibles
-              </label>
-            </div>
-            <span className="px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-black text-[9.5px]">
-              {sessionCount} {sessionCount === 1 ? 'sesión' : 'sesiones'} • {sessionCount * 50} min ({Math.ceil(sessionCount / 5)} sem)
+            <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider flex items-center gap-1">
+              <Clock className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+              Número de Sesiones Disponibles
+            </label>
+            <span className="text-[9.5px] font-black text-blue-600 dark:text-blue-400">
+              Total: {sessionCount * 50} min ({sessionCount <= 5 ? `${sessionCount} días` : `${Math.ceil(sessionCount / 5)} sem`})
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="relative flex items-center">
-              <input
-                type="number"
-                min={1}
-                max={30}
-                value={sessionCount}
-                onChange={(e) => setSessionCount(Math.max(1, Math.min(30, parseInt(e.target.value, 10) || 1)))}
-                className="w-20 p-2 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-black text-sm focus:outline-none focus:border-blue-500 shadow-xs"
-              />
-              <span className="absolute -bottom-3.5 left-1 text-[8.5px] font-semibold text-zinc-400">1 - 30 max</span>
-            </div>
-
-            {/* Pastillas de Selección Rápida */}
-            <div className="flex flex-wrap gap-1 flex-1 pl-1">
-              {[2, 3, 5, 8, 10, 12, 15, 20].map((preset) => (
-                <button
-                  key={preset}
-                  type="button"
-                  onClick={() => setSessionCount(preset)}
-                  className={`px-2 py-1 rounded-lg text-[10px] font-bold transition-all ${
-                    sessionCount === preset
-                      ? 'bg-blue-600 text-white shadow-xs scale-105'
-                      : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:border-blue-400'
-                  }`}
-                >
-                  {preset} {preset === 1 ? 'sesión' : 'ses'}
-                </button>
-              ))}
-            </div>
-          </div>
+          <select
+            value={sessionCount}
+            onChange={(e) => setSessionCount(Number(e.target.value))}
+            className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
+          >
+            <option value={1}>1 sesión (50 min • Sesión única / Taller intensivo)</option>
+            <option value={2}>2 sesiones (100 min • 2 días / Apertura y Cierre)</option>
+            <option value={3}>3 sesiones (150 min • 3 días / Secuencia didáctica corta)</option>
+            <option value={4}>4 sesiones (200 min • 4 días / Desarrollo temático)</option>
+            <option value={5}>5 sesiones (250 min • 1 semana lectiva completa)</option>
+            <option value={6}>6 sesiones (300 min • Secuencia extendida)</option>
+            <option value={8}>8 sesiones (400 min • Proyecto quincenal)</option>
+            <option value={10}>10 sesiones (500 min • 2 semanas lectivas / Proyecto integrado)</option>
+            <option value={12}>12 sesiones (600 min • Unidad temática avanzada)</option>
+          </select>
         </div>
 
         {/* Toggle Bypass Bóveda / Forzar Nueva Variante IA */}
