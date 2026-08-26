@@ -881,6 +881,7 @@ export interface BillingProfile {
   state?: string;
   
   is_default: boolean;
+  auto_invoice_on_payment?: boolean; // Timbrado automático inmediato al acreditarse el pago
   created_at: string;
   updated_at: string;
 
