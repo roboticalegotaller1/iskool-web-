@@ -1,7 +1,7 @@
 ---
 tags: [iskool, arquitectura, smart-connections]
 archivo_origen: "src/types/index.ts"
-fecha_sincronizacion: "2026-08-12T07:41:42.986Z"
+fecha_sincronizacion: "2026-08-27T01:46:23.616Z"
 ---
 
 # index.ts
@@ -112,6 +112,10 @@ export interface Group {
   name: string; // e.g., "A", "B"
   created_at: string;
   
+  level?: string;
+  grade?: string;
+  student_ids?: string[];
+
   // Relaciones opcionales cargadas en consultas
   level_grade?: LevelGrade;
   academic_year?: AcademicYear;
@@ -738,27 +742,28 @@ export interface StudentMessage {
 }
 
 /**
- * @interface CanvasActivityQuestion
- * @description Estructura de reactivos/preguntas para actividades de Estudio ISkool.
+ * @interface StudioActivityQuestion
+ * @description Estructura de reactivos/preguntas para actividades del Estudio ISkool.
  */
-export interface CanvasActivityQuestion {
+export interface StudioActivityQuestion {
   question: string;
   options: string[];
   correctIndex: number; // Índice de la respuesta correcta (0-3)
   imageUrl?: string; // Referencia visual opcional para soporte en múltiples plantillas
+  explanation?: string; // Retroalimentación formativa y justificación pedagógica
 }
-export type StudioActivityQuestion = CanvasActivityQuestion;
+export type CanvasActivityQuestion = StudioActivityQuestion;
 
 /**
- * @interface CanvasActivityJSON
- * @description Estructura JSON compacta y optimizada en consumo de tokens generada por el LLM para Estudio ISkool.
+ * @interface StudioActivityJSON
+ * @description Estructura JSON compacta generada para actividades de Estudio ISkool.
  */
-export interface CanvasActivityJSON {
+export interface StudioActivityJSON {
   title: string;
   description: string;
-  questions: CanvasActivityQuestion[];
+  questions: StudioActivityQuestion[];
 }
-export type StudioActivityJSON = CanvasActivityJSON;
+export type CanvasActivityJSON = StudioActivityJSON;
 
 /**
  * @interface ISkoolTemplateDefinition
@@ -826,5 +831,403 @@ export interface ActivityVote {
   activity_id: string;
   voter_teacher_id: string;
   created_at: string;
+}
+
+// ============================================================================
+// MÓDULO FINANCIERO: FACTURACIÓN, COBRANZA Y PAGOS INSTITUCIONALES (MARCA BLANCA)
+// Cero Gamificación • Seguridad Bancaria • Integración Genérica PaymentGateway
+// ============================================================================
+
+/**
+ * @typedef {('601' | '603' | '605' | '606' | '608' | '612' | '616' | '621' | '625' | '626')} TaxRegimeCode
+ * @description Regímenes fiscales oficiales del SAT (México).
+ */
+export type TaxRegimeCode = 
+  | '601' // General de Ley Personas Morales
+  | '603' // Personas Morales con Fines no Lucrativos
+  | '605' // Sueldos y Salarios e Ingresos Asimilados a Salarios
+  | '606' // Arrendamiento
+  | '608' // Demás ingresos
+  | '612' // Personas Físicas con Actividades Empresariales y Profesionales
+  | '616' // Sin obligaciones fiscales
+  | '621' // Incorporación Fiscal
+  | '625' // Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas
+  | '626'; // Régimen Simplificado de Confianza (RESICO)
+
+/**
+ * @typedef {('D10' | 'G01' | 'G02' | 'G03' | 'S01' | 'CP01')} CfdiUseCode
+ * @description Usos de CFDI oficiales aplicables a servicios educativos y cobranza.
+ */
+export type CfdiUseCode = 
+  | 'D10' // Pagos por servicios educativos (colegiaturas) - Deducción personal
+  | 'G01' // Adquisición de mercancías
+  | 'G02' // Devoluciones, descuentos o bonificaciones
+  | 'G03' // Gastos en general
+  | 'S01' // Sin efectos fiscales
+  | 'CP01'; // Pagos
+
+/**
+ * @interface BillingProfile
+ * @description Perfil y datos fiscales del tutor o padre de familia para facturación y CFDI.
+ * @database Mapea a la tabla `public.billing_profiles`.
+ * @security RLS: Los padres solo gestionan su propio perfil (auth.uid() = parent_id).
+ */
+export interface BillingProfile {
+  id: string;
+  parent_id: string; // references UserProfile
+  school_id: string; // references School
+  rfc: string; // Registro Federal de Contribuyentes (12-13 caracteres)
+  tax_name: string; // Razón Social o Nombre Fiscal
+  tax_regime: TaxRegimeCode | string; // Clave de Régimen Fiscal SAT
+  postal_code: string; // Código Postal Fiscal del emisor/receptor
+  cfdi_use: CfdiUseCode | string; // Uso de CFDI (Default: 'D10' para colegiaturas)
+  billing_email: string; // Correo de recepción de XML y PDF fiscal
+  
+  // Domicilio fiscal complementario (opcional)
+  street?: string;
+  exterior_number?: string;
+  interior_number?: string;
+  neighborhood?: string;
+  city?: string;
+  state?: string;
+  
+  is_default: boolean;
+  auto_invoice_on_payment?: boolean; // Timbrado automático inmediato al acreditarse el pago
+  created_at: string;
+  updated_at: string;
+
+  // Relaciones cargadas opcionalmente
+  parent?: UserProfile;
+  school?: School;
+}
+
+/**
+ * @typedef {('tuition' | 'enrollment' | 'materials' | 'uniform' | 'cafeteria' | 'extracurricular' | 'exam_fee' | 'other')} InvoiceCategory
+ * @description Categoría o concepto del cargo escolar.
+ */
+export type InvoiceCategory = 
+  | 'tuition'        // Colegiatura mensual
+  | 'enrollment'     // Inscripción o Reinscripción anual
+  | 'materials'      // Paquete de libros / materiales didácticos
+  | 'uniform'        // Uniformes escolares
+  | 'cafeteria'      // Servicio de comedor / cafetería
+  | 'extracurricular'// Talleres extraescolares, deportes o robótica
+  | 'exam_fee'       // Cuotas de exámenes o certificaciones
+  | 'other';         // Otros cargos administrativos
+
+/**
+ * @typedef {('pending' | 'paid' | 'overdue' | 'cancelled' | 'in_process')} InvoiceStatus
+ * @description Estado de cobro de un cargo o factura escolar.
+ */
+export type InvoiceStatus = 'pending' | 'paid' | 'overdue' | 'cancelled' | 'in_process';
+
+/**
+ * @interface Invoice
+ * @description Representa un cargo a cobrar emitido por la institución a un estudiante y tutor.
+ * @database Mapea a la tabla `public.invoices`.
+ * @security RLS: Tutores solo ven sus cargos (`parent_id`), coordinadores ven los de su plantel (`school_id`).
+ */
+export interface Invoice {
+  id: string;
+  school_id: string; // references School
+  parent_id: string; // references UserProfile (tutor responsable del pago)
+  student_id: string; // references Student (alumno al que corresponde el concepto)
+  academic_year_id?: string; // references AcademicYear
+  
+  invoice_number: string; // Folio de control escolar (e.g. "COL-2026-00452")
+  concept: string; // Descripción formal (e.g. "Colegiatura Septiembre 2026 - 3º Secundaria")
+  category: InvoiceCategory;
+  
+  // Desglose monetario en moneda local
+  subtotal: number;
+  discount_amount: number; // Descuento por beca o pronto pago
+  surcharge_amount: number; // Recargo por mora o pago extemporáneo
+  total_amount: number; // Monto final neto exigible
+  currency: string; // "MXN"
+  
+  issue_date: string; // Fecha de emisión (YYYY-MM-DD)
+  due_date: string; // Fecha límite de pago sin recargo (YYYY-MM-DD)
+  status: InvoiceStatus;
+  paid_at?: string; // Fecha y hora exacta de liquidación
+  
+  metadata?: Record<string, any>;
+  created_at: string;
+  updated_at: string;
+
+  // Relaciones cargadas en joins
+  student?: Student;
+  parent?: UserProfile;
+  school?: School;
+  billing_profile?: BillingProfile;
+  payments?: PaymentHistoryItem[];
+}
+
+/**
+ * @typedef {('credit_card' | 'debit_card' | 'spei' | 'bank_transfer' | 'cash_store' | 'direct_debit')} PaymentMethod
+ * @description Métodos de pago electrónicos procesados por el proveedor financiero.
+ */
+export type PaymentMethod = 
+  | 'credit_card'   // Tarjeta de crédito (Visa, Mastercard, AMEX)
+  | 'debit_card'    // Tarjeta de débito bancaria
+  | 'spei'          // Transferencia electrónica interbancaria SPEI inmediata
+  | 'bank_transfer' // Depósito o ventanilla bancaria con referencia
+  | 'cash_store'    // Pago en cadena de tiendas de conveniencia con código de barras
+  | 'direct_debit';  // Domiciliación bancaria automática
+
+/**
+ * @typedef {('succeeded' | 'pending' | 'failed' | 'refunded')} PaymentStatus
+ * @description Estado de la transacción en la pasarela de pagos.
+ */
+export type PaymentStatus = 'succeeded' | 'pending' | 'failed' | 'refunded';
+
+/**
+ * @interface PaymentHistoryItem
+ * @description Registro inmutable de transacciones financieras procesadas con éxito o en conciliación.
+ * @database Mapea a la tabla `public.payments_history`.
+ * @security RLS: Tutores consultan recibos propios, administración accede a conciliación de colegio.
+ */
+export interface PaymentHistoryItem {
+  id: string;
+  school_id: string;
+  invoice_id: string;
+  parent_id: string;
+  
+  amount: number;
+  currency: string; // "MXN"
+  payment_method: PaymentMethod;
+  status: PaymentStatus;
+  
+  // Abstracción genérica de pasarela financiera (Marca Blanca)
+  gateway_provider: string; // "PaymentGateway"
+  gateway_transaction_id: string; // Identificador único de transacción del procesador
+  gateway_fee?: number; // Comisión de pasarela
+  net_amount: number; // Monto neto recibido por el colegio
+  
+  receipt_number: string; // Folio de recibo de caja institucional
+  receipt_url?: string; // URL del comprobante de pago digital
+  
+  // Datos de Facturación Electrónica SAT (si fue timbrada)
+  cfdi_uuid?: string; // Folio Fiscal SAT (UUID 36 caracteres)
+  cfdi_xml_url?: string;
+  cfdi_pdf_url?: string;
+  
+  paid_at: string;
+  metadata?: Record<string, any>;
+  created_at: string;
+
+  // Relaciones
+  invoice?: Invoice;
+  parent?: UserProfile;
+}
+
+/**
+ * @interface MagicLink
+ * @description Token criptográfico seguro para acceso directo a pasarela de pago sin requerir contraseña.
+ * @database Mapea a la tabla `public.magic_links`.
+ * @security Alta entropía (SHA-256), expiración automática y uso único.
+ */
+export interface MagicLink {
+  id: string;
+  token_hash: string; // Hash SHA-256 del token unívoco enviado al padre
+  school_id: string;
+  parent_id: string;
+  invoice_id: string;
+  
+  expires_at: string; // Timestamp ISO de caducidad (ej. 72 horas)
+  is_used: boolean; // Flag de un solo uso
+  used_at?: string;
+  
+  ip_address?: string;
+  user_agent?: string;
+  metadata?: Record<string, any>;
+  created_at: string;
+
+  // Relaciones
+  invoice?: Invoice;
+  parent?: UserProfile;
+}
+
+/**
+ * @interface PaymentGatewaySessionParams
+ * @description Parámetros requeridos para inicializar una sesión segura de checkout en la pasarela.
+ */
+export interface PaymentGatewaySessionParams {
+  invoiceId: string;
+  invoiceNumber: string;
+  concept: string;
+  amount: number;
+  currency: string;
+  parentEmail: string;
+  parentName: string;
+  successUrl: string;
+  cancelUrl: string;
+  expiresAt?: string;
+  metadata?: Record<string, string>;
+}
+
+/**
+ * @interface PaymentGatewaySessionResult
+ * @description Respuesta formal generada tras la inicialización del checkout.
+ */
+export interface PaymentGatewaySessionResult {
+  sessionId: string;
+  checkoutUrl: string;
+  referenceCode: string;
+  expiresAt: string;
+  status: 'active' | 'expired';
+}
+
+/**
+ * @interface PaymentWebhookPayload
+ * @description Estructura de eventos webhook asíncronos emitidos por el proveedor financiero.
+ */
+export interface PaymentWebhookPayload {
+  eventId: string;
+  eventType: 'payment.succeeded' | 'payment.failed' | 'charge.refunded';
+  transactionId: string;
+  invoiceId: string;
+  amount: number;
+  currency: string;
+  paymentMethod: PaymentMethod;
+  paidAt: string;
+  signature: string;
+  metadata?: Record<string, any>;
+}/**
+ * @typedef {('Preescolar' | 'Primaria' | 'Secundaria' | 'Profesional tecnico' | 'Bachillerato o su equivalente')} IeduEducationLevel
+ * @description Niveles educativos oficiales para el Complemento IEDU del SAT.
+ */
+export type IeduEducationLevel = 
+  | 'Preescolar'
+  | 'Primaria'
+  | 'Secundaria'
+  | 'Profesional tecnico'
+  | 'Bachillerato o su equivalente';
+
+/**
+ * @interface IeduComplementData
+ * @description Datos del Complemento de Instituciones Educativas Privadas (IEDU V1.0) para deducción fiscal del SAT.
+ */
+export interface IeduComplementData {
+  nombreAlumno: string;
+  curp: string; // 18 caracteres alfanuméricos
+  nivelEducativo: IeduEducationLevel | string;
+  autRvoe: string; // Clave de RVOE SEP o Acuerdo de Incorporación
+  rfcPago?: string; // RFC de quien realiza el pago si es diferente al receptor
+}
+
+/**
+ * @interface SchoolFiscalConfig
+ * @description Configuración fiscal del plantel escolar, CSD y credenciales del PAC.
+ */
+export interface SchoolFiscalConfig {
+  id: string;
+  school_id: string;
+  rfc_emisor: string;
+  razon_social: string;
+  regimen_fiscal: TaxRegimeCode | string;
+  codigo_postal: string;
+  rvoe_preescolar?: string;
+  rvoe_primaria?: string;
+  rvoe_secundaria?: string;
+  rvoe_bachillerato?: string;
+  pac_provider: 'mock_sandbox' | 'generic_pac';
+  pac_environment: 'sandbox' | 'production';
+  pac_api_key?: string;
+  pac_url?: string;
+  csd_certificate_number?: string;
+  csd_expires_at?: string;
+  is_active: boolean;
+}
+
+/**
+ * @interface CfdiItem
+ * @description Concepto o partida a facturar conforme a los catálogos del SAT CFDI 4.0.
+ */
+export interface CfdiItem {
+  claveProdServ: string; // Ej: '86121500' (Servicios educativos)
+  noIdentificacion?: string;
+  cantidad: number;
+  claveUnidad: string; // Ej: 'E48' (Unidad de servicio)
+  unidad?: string;
+  descripcion: string;
+  valorUnitario: number;
+  importe: number;
+  descuento?: number;
+  objetoImp: string; // '01' No objeto de impuesto, '02' Sí objeto
+  ieduComplement?: IeduComplementData;
+}
+
+/**
+ * @interface CfdiStampRequest
+ * @description Petición estructurada para el timbrado fiscal ante el PAC / SAT.
+ */
+export interface CfdiStampRequest {
+  invoiceId: string;
+  receiptNumber: string;
+  emisor: {
+    rfc: string;
+    nombre: string;
+    regimenFiscal: string;
+    codigoPostal: string;
+  };
+  receptor: {
+    rfc: string;
+    nombre: string;
+    regimenFiscalReceptor: string;
+    domicilioFiscalReceptor: string;
+    usoCFDI: CfdiUseCode | string;
+    email?: string;
+  };
+  items: CfdiItem[];
+  formaPago: string; // '01' Efectivo, '03' Transferencia, '04' Tarjeta, etc.
+  metodoPago: 'PUE' | 'PPD';
+  subtotal: number;
+  descuento?: number;
+  total: number;
+  moneda: string;
+  fecha?: string;
+}
+
+/**
+ * @interface CfdiStampResponse
+ * @description Respuesta formal devuelta por el PAC tras el timbrado digital del SAT.
+ */
+export interface CfdiStampResponse {
+  success: boolean;
+  uuid?: string; // Folio Fiscal SAT (36 caracteres)
+  fechaTimbrado?: string;
+  noCertificadoSat?: string;
+  noCertificadoEmisor?: string;
+  selloSat?: string;
+  selloCfd?: string;
+  cadenaOriginalSat?: string;
+  xmlContent?: string;
+  qrCodeData?: string;
+  errorCode?: string;
+  errorMessage?: string;
+}
+
+/**
+ * @interface CfdiCancelRequest
+ * @description Solicitud formal de cancelación fiscal con los motivos oficiales del SAT.
+ */
+export interface CfdiCancelRequest {
+  uuid: string;
+  motivo: '01' | '02' | '03' | '04';
+  folioSustitucion?: string;
+  rfcEmisor: string;
+}
+
+/**
+ * @interface CfdiCancelResponse
+ * @description Resultado devuelto por el PAC / SAT tras la solicitud de cancelación.
+ */
+export interface CfdiCancelResponse {
+  success: boolean;
+  uuid: string;
+  estatus: 'Cancelado' | 'En proceso' | 'Rechazado';
+  fechaCancelacion?: string;
+  acuseXml?: string;
+  errorMessage?: string;
 }
 ```

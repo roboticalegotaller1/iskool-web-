@@ -1,7 +1,7 @@
 ---
 tags: [iskool, arquitectura, smart-connections]
 archivo_origen: "schema_community.sql"
-fecha_sincronizacion: "2026-08-12T07:41:42.976Z"
+fecha_sincronizacion: "2026-08-27T01:46:23.610Z"
 ---
 
 # schema_community.sql
@@ -96,6 +96,7 @@ CREATE OR REPLACE FUNCTION public.handle_activity_vote_change()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public, pg_catalog, pg_temp
 AS $$
 BEGIN
     IF (TG_OP = 'INSERT') THEN
