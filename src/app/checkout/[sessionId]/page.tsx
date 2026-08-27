@@ -32,28 +32,46 @@ interface CheckoutPageProps {
     auth_token?: string;
     source?: string;
     ref?: string;
+    amount?: string;
+    concept?: string;
+    student?: string;
+    parent?: string;
+    invoiceNumber?: string;
+    dueDate?: string;
+    [key: string]: string | undefined;
   }>;
 }
 
 export default function CheckoutPage(props: CheckoutPageProps) {
+  const resolvedParams = React.use(props.params);
+  const resolvedSearchParams = props.searchParams ? React.use(props.searchParams) : ({} as Record<string, string | undefined>);
+
   const [selectedMethod, setSelectedMethod] = useState<'card' | 'spei' | 'store'>('card');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [copiedClabe, setCopiedClabe] = useState(false);
 
-  // Datos simulados estructurados del cargo institucional
+  // Parámetros dinámicos inyectados desde el Magic Link o sesión
+  const amount = Number(resolvedSearchParams.amount) || 3450.00;
+  const concept = resolvedSearchParams.concept ? decodeURIComponent(resolvedSearchParams.concept) : 'Colegiatura de Septiembre 2026';
+  const studentName = resolvedSearchParams.student ? decodeURIComponent(resolvedSearchParams.student) : 'Mateo López Mendoza';
+  const parentName = resolvedSearchParams.parent ? decodeURIComponent(resolvedSearchParams.parent) : 'Israel López Ángeles';
+  const invoiceNumber = resolvedSearchParams.invoiceNumber ? decodeURIComponent(resolvedSearchParams.invoiceNumber) : (resolvedParams.sessionId?.startsWith('COL-') ? resolvedParams.sessionId : 'COL-2026-00452');
+  const dueDate = resolvedSearchParams.dueDate ? decodeURIComponent(resolvedSearchParams.dueDate) : '10 de Septiembre de 2026';
+
+  // Datos estructurados del cargo institucional
   const invoiceData = {
-    invoiceNumber: 'COL-2026-00452',
-    concept: 'Colegiatura de Septiembre 2026',
-    schoolName: 'Colegio ISkool México',
-    studentName: 'Mateo López Mendoza',
+    invoiceNumber,
+    concept,
+    schoolName: 'Colegio Anglo Mexicano',
+    studentName,
     studentGrade: '3º de Secundaria — Grupo A',
-    parentName: 'Israel López Ángeles',
-    subtotal: 3600.00,
-    discount: 150.00,
+    parentName,
+    subtotal: amount,
+    discount: 0.00,
     surcharge: 0.00,
-    total: 3450.00,
-    dueDate: '10 de Septiembre de 2026',
+    total: amount,
+    dueDate,
     speiClabe: '710969000145829103',
     speiBank: 'Sistema de Pagos Interbancarios (SPEI)',
     storeReference: '9845 2301 9842 1094'
@@ -130,20 +148,35 @@ export default function CheckoutPage(props: CheckoutPageProps) {
             </div>
 
             <div className="space-y-3">
-              <button
-                onClick={() => alert('Descargando recibo oficial en formato PDF institucional...')}
-                className="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm shadow-lg shadow-blue-600/20"
+              <a
+                href={`/api/billing/invoice/pdf?receipt_id=REC-2026-098234&uuid=4A8B9C1D-2E3F-4A5B-6C7D-8E9F0A1B2C3D&amount=${invoiceData.total}&concept=${encodeURIComponent(invoiceData.concept)}&student=${encodeURIComponent(invoiceData.studentName)}&tax_name=${encodeURIComponent(invoiceData.parentName)}&payment_method=${encodeURIComponent(selectedMethod === 'card' ? 'Tarjeta Bancaria' : selectedMethod === 'spei' ? 'Transferencia SPEI' : 'Tienda de Conveniencia')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm shadow-lg shadow-blue-600/20 text-center"
               >
                 <Download className="w-4 h-4" />
                 <span>Descargar Comprobante Digital (PDF)</span>
-              </button>
+              </a>
 
-              <Link
-                href="/login"
-                className="w-full inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-3 px-4 rounded-xl transition-colors text-sm"
-              >
-                <span>Volver al Portal de Padres</span>
-              </Link>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={`/api/billing/invoice/download?receipt_id=REC-2026-098234&format=xml&uuid=4A8B9C1D-2E3F-4A5B-6C7D-8E9F0A1B2C3D&amount=${invoiceData.total}&concept=${encodeURIComponent(invoiceData.concept)}&student=${encodeURIComponent(invoiceData.studentName)}&tax_name=${encodeURIComponent(invoiceData.parentName)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-medium py-2.5 px-3 rounded-xl transition-colors text-xs border border-slate-700"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Descargar XML SAT</span>
+                </a>
+
+                <Link
+                  href="/parent/financial"
+                  className="inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 px-3 rounded-xl transition-colors text-xs border border-slate-700"
+                >
+                  <span>Portal de Pagos</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

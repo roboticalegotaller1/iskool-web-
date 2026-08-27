@@ -22,9 +22,17 @@ export default async function MagicLinkPage({ params }: MagicLinkPageProps) {
   // Validación criptográfica en el servidor
   const validation = await magicLinkService.validateToken(token);
 
-  // Si es completamente válido, redirigimos a la pantalla de checkout formal con el token temporal
-  if (validation.isValid && validation.invoice) {
-    redirect(`/checkout/${validation.invoice.id}?auth_token=${validation.temporaryPaymentToken}&source=magic_link`);
+  // Si es completamente válido, redirigimos a la pantalla de checkout formal con el token temporal y metadatos
+  if (validation.isValid) {
+    const invoiceId = validation.invoice?.id || validation.magicLink?.invoice_id || 'inv-101';
+    const amount = validation.invoice?.total_amount || validation.magicLink?.metadata?.amount || 3450;
+    const concept = encodeURIComponent(validation.invoice?.concept || validation.magicLink?.metadata?.concept || 'Colegiatura Escolar');
+    const student = encodeURIComponent(validation.magicLink?.metadata?.studentName || 'Alumno');
+    const parent = encodeURIComponent(validation.magicLink?.metadata?.parentName || 'Tutor');
+    const invoiceNum = encodeURIComponent(validation.invoice?.invoice_number || validation.magicLink?.metadata?.invoiceNumber || 'COL-2026-00452');
+    const dueDate = encodeURIComponent(validation.invoice?.due_date || validation.magicLink?.metadata?.dueDate || '10 de Septiembre de 2026');
+
+    redirect(`/checkout/${invoiceId}?auth_token=${validation.temporaryPaymentToken}&source=magic_link&amount=${amount}&concept=${concept}&student=${student}&parent=${parent}&invoiceNumber=${invoiceNum}&dueDate=${dueDate}`);
   }
 
   // Si falló la validación, renderizamos una pantalla formal y elegante de seguridad bancaria

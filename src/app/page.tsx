@@ -14,13 +14,21 @@ export default function Home() {
             <GraduationCap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <span className="text-xl font-bold tracking-tight">ISkool Académico</span>
           </div>
-          <Link
-            href="/promo"
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-500/20 hover:scale-105 transition-all"
-          >
-            <Sparkles className="h-4 w-4 animate-spin text-amber-300" />
-            Presentación para Inversionistas / Vídeo Promo
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/promo"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-500/20 hover:scale-105 transition-all"
+            >
+              <Sparkles className="h-4 w-4 animate-spin text-amber-300" />
+              <span>Vídeo Promo</span>
+            </Link>
+            <Link
+              href="/login"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-zinc-100 dark:text-zinc-900 font-bold text-xs transition-all border border-zinc-700 dark:border-zinc-300 shadow-sm"
+            >
+              <span>Iniciar Sesión</span>
+            </Link>
+          </div>
         </div>
       </header>
 

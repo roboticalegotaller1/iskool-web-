@@ -564,10 +564,17 @@ export default function CoordinatorDashboard() {
             </button>
             <Link
               href="/coordinator/billing"
-              className="px-4 py-2 rounded-lg text-xs font-bold transition-all bg-blue-700 hover:bg-blue-600 text-white flex items-center gap-1.5 shadow-sm"
+              className="px-3.5 py-2 rounded-lg text-xs font-bold transition-all bg-blue-700 hover:bg-blue-600 text-white flex items-center gap-1.5 shadow-sm"
             >
               <Landmark className="w-3.5 h-3.5" />
-              <span>Cobranza y Pagos</span>
+              <span>Cobranza</span>
+            </Link>
+            <Link
+              href="/coordinator/fiscal"
+              className="px-3.5 py-2 rounded-lg text-xs font-bold transition-all bg-emerald-700 hover:bg-emerald-600 text-white flex items-center gap-1.5 shadow-sm"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Facturación SAT</span>
             </Link>
           </div>
         </div>

@@ -1081,7 +1081,142 @@ export interface PaymentWebhookPayload {
   paidAt: string;
   signature: string;
   metadata?: Record<string, any>;
+}/**
+ * @typedef {('Preescolar' | 'Primaria' | 'Secundaria' | 'Profesional tecnico' | 'Bachillerato o su equivalente')} IeduEducationLevel
+ * @description Niveles educativos oficiales para el Complemento IEDU del SAT.
+ */
+export type IeduEducationLevel = 
+  | 'Preescolar'
+  | 'Primaria'
+  | 'Secundaria'
+  | 'Profesional tecnico'
+  | 'Bachillerato o su equivalente';
+
+/**
+ * @interface IeduComplementData
+ * @description Datos del Complemento de Instituciones Educativas Privadas (IEDU V1.0) para deducción fiscal del SAT.
+ */
+export interface IeduComplementData {
+  nombreAlumno: string;
+  curp: string; // 18 caracteres alfanuméricos
+  nivelEducativo: IeduEducationLevel | string;
+  autRvoe: string; // Clave de RVOE SEP o Acuerdo de Incorporación
+  rfcPago?: string; // RFC de quien realiza el pago si es diferente al receptor
 }
 
+/**
+ * @interface SchoolFiscalConfig
+ * @description Configuración fiscal del plantel escolar, CSD y credenciales del PAC.
+ */
+export interface SchoolFiscalConfig {
+  id: string;
+  school_id: string;
+  rfc_emisor: string;
+  razon_social: string;
+  regimen_fiscal: TaxRegimeCode | string;
+  codigo_postal: string;
+  rvoe_preescolar?: string;
+  rvoe_primaria?: string;
+  rvoe_secundaria?: string;
+  rvoe_bachillerato?: string;
+  pac_provider: 'mock_sandbox' | 'generic_pac';
+  pac_environment: 'sandbox' | 'production';
+  pac_api_key?: string;
+  pac_url?: string;
+  csd_certificate_number?: string;
+  csd_expires_at?: string;
+  is_active: boolean;
+}
 
+/**
+ * @interface CfdiItem
+ * @description Concepto o partida a facturar conforme a los catálogos del SAT CFDI 4.0.
+ */
+export interface CfdiItem {
+  claveProdServ: string; // Ej: '86121500' (Servicios educativos)
+  noIdentificacion?: string;
+  cantidad: number;
+  claveUnidad: string; // Ej: 'E48' (Unidad de servicio)
+  unidad?: string;
+  descripcion: string;
+  valorUnitario: number;
+  importe: number;
+  descuento?: number;
+  objetoImp: string; // '01' No objeto de impuesto, '02' Sí objeto
+  ieduComplement?: IeduComplementData;
+}
+
+/**
+ * @interface CfdiStampRequest
+ * @description Petición estructurada para el timbrado fiscal ante el PAC / SAT.
+ */
+export interface CfdiStampRequest {
+  invoiceId: string;
+  receiptNumber: string;
+  emisor: {
+    rfc: string;
+    nombre: string;
+    regimenFiscal: string;
+    codigoPostal: string;
+  };
+  receptor: {
+    rfc: string;
+    nombre: string;
+    regimenFiscalReceptor: string;
+    domicilioFiscalReceptor: string;
+    usoCFDI: CfdiUseCode | string;
+    email?: string;
+  };
+  items: CfdiItem[];
+  formaPago: string; // '01' Efectivo, '03' Transferencia, '04' Tarjeta, etc.
+  metodoPago: 'PUE' | 'PPD';
+  subtotal: number;
+  descuento?: number;
+  total: number;
+  moneda: string;
+  fecha?: string;
+}
+
+/**
+ * @interface CfdiStampResponse
+ * @description Respuesta formal devuelta por el PAC tras el timbrado digital del SAT.
+ */
+export interface CfdiStampResponse {
+  success: boolean;
+  uuid?: string; // Folio Fiscal SAT (36 caracteres)
+  fechaTimbrado?: string;
+  noCertificadoSat?: string;
+  noCertificadoEmisor?: string;
+  selloSat?: string;
+  selloCfd?: string;
+  cadenaOriginalSat?: string;
+  xmlContent?: string;
+  qrCodeData?: string;
+  errorCode?: string;
+  errorMessage?: string;
+}
+
+/**
+ * @interface CfdiCancelRequest
+ * @description Solicitud formal de cancelación fiscal con los motivos oficiales del SAT.
+ */
+export interface CfdiCancelRequest {
+  uuid: string;
+  motivo: '01' | '02' | '03' | '04';
+  folioSustitucion?: string;
+  rfcEmisor: string;
+}
+
+/**
+ * @interface CfdiCancelResponse
+ * @description Resultado devuelto por el PAC / SAT tras la solicitud de cancelación.
+ */
+export interface CfdiCancelResponse {
+  success: boolean;
+  uuid: string;
+  estatus: 'Cancelado' | 'En proceso' | 'Rechazado';
+  fechaCancelacion?: string;
+  acuseXml?: string;
+  errorMessage?: string;
+}
 

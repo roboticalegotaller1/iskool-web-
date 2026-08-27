@@ -24,7 +24,8 @@ import {
   BaseSubjectDef,
   SessionPlanItem, 
   ArticulatedPda, 
-  FinalProjectProposal 
+  FinalProjectProposal,
+  CompleteNEMPlanning
 } from '@/lib/curriculumEngine';
 
 // ==========================================

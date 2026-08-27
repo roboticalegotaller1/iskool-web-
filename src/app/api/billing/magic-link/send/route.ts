@@ -22,13 +22,27 @@ export async function POST(req: NextRequest) {
       schoolName 
     } = body;
 
-    // 1. Generar token criptográfico seguro y URL unívoca
+    const host = req.headers.get('host') || 'localhost:3000';
+    const protocol = req.headers.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
+    const origin = `${protocol}://${host}`;
+
+    // 1. Generar token criptográfico seguro y URL unívoca con baseUrl dinámico
     const linkResult = await magicLinkService.createMagicLink({
       invoiceId: invoiceId || 'inv-001',
       parentId: parentId || 'usr-parent-001',
       schoolId: schoolId || 'sch-001',
       hoursValid: 48,
-      metadata: { requestedBy: 'coordinator', timestamp: new Date().toISOString() }
+      baseUrl: origin,
+      metadata: { 
+        requestedBy: 'coordinator', 
+        timestamp: new Date().toISOString(),
+        invoiceNumber: invoiceNumber || 'COL-2026-00452',
+        concept: concept || 'Colegiatura Escolar',
+        studentName: studentName || 'Alumno',
+        parentName: parentName || 'Tutor Responsable',
+        amount: Number(amount) || 3450.00,
+        dueDate: dueDate || '10 de Septiembre de 2026'
+      }
     });
 
     // 2. Formatear mensaje para WhatsApp y Correo

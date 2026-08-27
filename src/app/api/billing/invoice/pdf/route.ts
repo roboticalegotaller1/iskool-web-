@@ -117,12 +117,23 @@ export async function GET(req: NextRequest) {
     </tbody>
   </table>
 
+  <!-- Complemento de Instituciones Educativas Privadas (IEDU V1.0) -->
+  <div class="fiscal-box" style="background: #f0fdf4; border-color: #bbf7d0; margin-bottom: 15px;">
+    <div class="box-title" style="color: #166534; border-bottom-color: #dcfce7;">Complemento Fiscal IEDU (Instituciones Educativas Privadas) — Decreto Beneficio Fiscal I.S.R.</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 9.5px;">
+      <div><span style="font-weight: 600; color: #15803d;">Alumno:</span> <span style="font-weight: bold; color: #0f172a;">${req.nextUrl.searchParams.get('student') || 'Mateo López Mendoza'}</span></div>
+      <div><span style="font-weight: 600; color: #15803d;">CURP Alumno:</span> <span style="font-family: monospace; font-weight: bold; color: #0f172a;">${req.nextUrl.searchParams.get('curp') || 'LOMA080912HDFZNS01'}</span></div>
+      <div><span style="font-weight: 600; color: #15803d;">Nivel Educativo:</span> <span style="font-weight: 600; color: #0f172a;">${req.nextUrl.searchParams.get('level') || 'Secundaria'}</span></div>
+      <div style="grid-column: span 3;"><span style="font-weight: 600; color: #15803d;">Acuerdo / Clave RVOE SEP:</span> <span style="font-family: monospace; color: #0f172a;">${req.nextUrl.searchParams.get('rvoe') || 'SEP-RVOE-2024-SEC-098 / DGEI-045-2024'}</span></div>
+    </div>
+  </div>
+
   <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <div style="font-size: 9px; color: #475569; max-width: 350px;">
       <div><strong>Forma de Pago:</strong> 04 - Tarjeta de Crédito / 03 - Transferencia SPEI</div>
       <div><strong>Método de Pago:</strong> PUE - Pago en una sola exhibición</div>
       <div><strong>Moneda:</strong> MXN - Peso Mexicano</div>
-      <div style="margin-top: 4px; color: #059669; font-weight: 600;">✓ Comprobante deducible para efectos del Impuesto Sobre la Renta (I.S.R.)</div>
+      <div style="margin-top: 4px; color: #059669; font-weight: 600;">✓ Comprobante deducible para efectos del Impuesto Sobre la Renta (I.S.R. Colegiaturas)</div>
     </div>
 
     <table class="totals-table">

@@ -23,6 +23,7 @@ import { FormattedDate } from '@/components/FormattedDate';
 import { DetailedStudent, AttendanceStatus, Attendance, ParentMessage, Quest, QuizQuestion, UserProfile } from '@/types';
 import { PlanningTab } from './PlanningTab';
 import { EmergencyModal } from './EmergencyModal';
+import { AttendanceCompendiumModal } from './AttendanceCompendiumModal';
 import { TeacherHubCards } from '@/components/TeacherHubCards';
 import { TeacherCommunityView } from '@/components/TeacherCommunityView';
 
@@ -178,6 +179,7 @@ export default function TeacherDashboard() {
   const [selectedAttendanceSubject, setSelectedAttendanceSubject] = useState<string>('');
   const [attendanceDate, setAttendanceDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [attendanceRecords, setAttendanceRecords] = useState<Record<string, { status: AttendanceStatus; comments: string }>>({});
+  const [isAttendanceCompendiumOpen, setIsAttendanceCompendiumOpen] = useState(false);
 
   // Estados para Seguimiento de Tareas y Alertas
   const [selectedTaskGroup, setSelectedTaskGroup] = useState<string>('');
@@ -1568,7 +1570,15 @@ export default function TeacherDashboard() {
               <span className="text-xs text-zinc-500 dark:text-zinc-400">
                 Alumnos en el grupo: <strong>{detailedStudents.filter(s => s.group_id === selectedAttendanceGroup).length}</strong>
               </span>
-              <div className="flex gap-2 w-full sm:w-auto">
+              <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setIsAttendanceCompendiumOpen(true)}
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-500/15"
+                >
+                  <FileText className="w-4 h-4" />
+                  Compendio de Asistencias
+                </button>
                 <button
                   type="button"
                   onClick={() => {
@@ -3802,6 +3812,19 @@ export default function TeacherDashboard() {
         onClose={() => setIsEmergencyModalOpen(false)}
         currentTeacher={currentTeacher}
         detailedStudents={detailedStudents}
+      />
+
+      <AttendanceCompendiumModal
+        isOpen={isAttendanceCompendiumOpen}
+        onClose={() => setIsAttendanceCompendiumOpen(false)}
+        groupsList={groupsList}
+        schedulesList={schedulesList}
+        subjects={subjects}
+        detailedStudents={detailedStudents}
+        attendanceList={attendanceList}
+        initialGroupId={selectedAttendanceGroup}
+        initialSubjectId={selectedAttendanceSubject}
+        teacherId={normalizedTeacherId}
       />
 
       {realtimeToast && (

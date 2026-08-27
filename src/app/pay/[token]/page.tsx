@@ -223,20 +223,35 @@ export default function PayTokenPage({ params }: PayTokenPageProps) {
             </div>
 
             <div className="space-y-3">
-              <button
-                onClick={() => alert('Descargando comprobante en PDF oficial...')}
-                className="w-full inline-flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm shadow-sm"
+              <a
+                href={`/api/billing/invoice/pdf?receipt_id=REC-2026-098234&uuid=4A8B9C1D-2E3F-4A5B-6C7D-8E9F0A1B2C3D&amount=${invoiceData.total}&concept=${encodeURIComponent(invoiceData.concept)}&student=${encodeURIComponent(invoiceData.studentName)}&tax_name=${encodeURIComponent(invoiceData.parentName)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm shadow-sm text-center"
               >
                 <Download className="w-4 h-4" />
                 <span>Descargar Recibo Oficial (PDF)</span>
-              </button>
+              </a>
 
-              <Link
-                href="/parent/financial"
-                className="w-full inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 px-4 rounded-xl transition-colors text-sm border border-slate-300"
-              >
-                <span>Ir al Estado de Cuenta</span>
-              </Link>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={`/api/billing/invoice/download?receipt_id=REC-2026-098234&format=xml&uuid=4A8B9C1D-2E3F-4A5B-6C7D-8E9F0A1B2C3D&amount=${invoiceData.total}&concept=${encodeURIComponent(invoiceData.concept)}&student=${encodeURIComponent(invoiceData.studentName)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-emerald-800 font-medium py-2.5 px-3 rounded-xl transition-colors text-xs border border-slate-300"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Descargar XML</span>
+                </a>
+
+                <Link
+                  href="/parent/financial"
+                  className="inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 px-3 rounded-xl transition-colors text-xs border border-slate-300"
+                >
+                  <span>Estado de Cuenta</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

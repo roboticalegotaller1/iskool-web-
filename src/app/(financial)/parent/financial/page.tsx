@@ -34,6 +34,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { PaymentGatewayService } from '@/lib/paymentGateway';
+import { validateRfc, validateCurp } from '@/lib/fiscal/fiscalValidation';
 
 interface ChargeItem {
   id: string;
@@ -70,15 +71,21 @@ export default function ParentFinancialStatementPage() {
   const [taxFormSaved, setTaxFormSaved] = useState<boolean>(false);
   const [taxError, setTaxError] = useState<string | null>(null);
 
-  // Formulario Fiscal SAT (CFDI 4.0)
+  // Formulario Fiscal SAT (CFDI 4.0 & Complemento IEDU)
   const [taxData, setTaxData] = useState({
     rfc: 'LOAI840512AB3',
     taxName: 'ISRAEL LOPEZ ANGELES',
     taxRegime: '605', // Sueldos y Salarios
     postalCode: '06700',
     cfdiUse: 'D10', // Colegiaturas
+    studentCurp: 'LOMA080912HDFZNS01',
+    educationLevel: 'Secundaria',
     billingEmail: 'israel.lopez@ejemplo.com',
     autoInvoiceOnPayment: true
+  });
+
+  const [curpValidation, setCurpValidation] = useState<{ isValid: boolean; error?: string }>({
+    isValid: true
   });
 
   // Validación de RFC en vivo
@@ -94,15 +101,18 @@ export default function ParentFinancialStatementPage() {
         const res = await fetch('/api/billing/profile?parent_id=usr-parent-001');
         const json = await res.json();
         if (json.success && json.profile) {
-          setTaxData({
-            rfc: json.profile.rfc || 'LOAI840512AB3',
-            taxName: json.profile.tax_name || 'ISRAEL LOPEZ ANGELES',
-            taxRegime: json.profile.tax_regime || '605',
-            postalCode: json.profile.postal_code || '06700',
-            cfdiUse: json.profile.cfdi_use || 'D10',
-            billingEmail: json.profile.billing_email || 'israel.lopez@ejemplo.com',
-            autoInvoiceOnPayment: json.profile.auto_invoice_on_payment ?? true
-          });
+          setTaxData(prev => ({
+            ...prev,
+            rfc: json.profile.rfc || prev.rfc,
+            taxName: json.profile.tax_name || prev.taxName,
+            taxRegime: json.profile.tax_regime || prev.taxRegime,
+            postalCode: json.profile.postal_code || prev.postalCode,
+            cfdiUse: json.profile.cfdi_use || prev.cfdiUse,
+            studentCurp: json.profile.student_curp || prev.studentCurp,
+            educationLevel: json.profile.education_level || prev.educationLevel,
+            billingEmail: json.profile.billing_email || prev.billingEmail,
+            autoInvoiceOnPayment: json.profile.auto_invoice_on_payment ?? prev.autoInvoiceOnPayment
+          }));
         }
       } catch (e) {
         console.warn('Carga de perfil local:', e);
@@ -115,9 +125,19 @@ export default function ParentFinancialStatementPage() {
     const val = e.target.value.toUpperCase().replace(/[^A-Z0-9&Ñ]/g, '').slice(0, 13);
     setTaxData(prev => ({ ...prev, rfc: val }));
     if (val.length >= 12) {
-      setRfcValidation(PaymentGatewayService.validateRFC(val));
+      setRfcValidation(validateRfc(val));
     } else {
       setRfcValidation({ isValid: false, error: 'Longitud mínima: 12 caracteres (Moral) o 13 (Física).' });
+    }
+  };
+
+  const handleCurpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 18);
+    setTaxData(prev => ({ ...prev, studentCurp: val }));
+    if (val.length === 18) {
+      setCurpValidation(validateCurp(val));
+    } else {
+      setCurpValidation({ isValid: false, error: 'La CURP debe tener exactamente 18 caracteres.' });
     }
   };
 
@@ -276,7 +296,7 @@ export default function ParentFinancialStatementPage() {
           </button>
 
           <Link
-            href="/pay/magic/demo-token"
+            href={`/checkout/all?amount=${totalPending}&concept=Liquidaci%C3%B3n%20Total%20de%20Colegiaturas&student=Mateo%20y%20Sof%C3%ADa%20L%C3%B3pez`}
             className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-lg transition-colors text-xs shadow-sm"
           >
             <CreditCard className="w-4 h-4" />
@@ -427,7 +447,7 @@ export default function ParentFinancialStatementPage() {
                       </td>
                       <td className="py-3.5 px-4 text-center">
                         <Link
-                          href={`/checkout/${charge.id}?ref=${encodeURIComponent(charge.invoiceNumber)}`}
+                          href={`/checkout/${charge.id}?amount=${charge.total}&concept=${encodeURIComponent(charge.concept)}&student=${encodeURIComponent(charge.studentName)}&invoiceNumber=${encodeURIComponent(charge.invoiceNumber)}`}
                           className="inline-flex items-center gap-1.5 bg-blue-700 hover:bg-blue-600 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors shadow-sm"
                         >
                           <span>Pagar</span>
@@ -453,7 +473,7 @@ export default function ParentFinancialStatementPage() {
               <div className="flex items-center gap-4">
                 <span className="text-slate-700 font-semibold text-sm">Total por Liquidar: <span className="text-slate-900 font-mono font-bold text-base">${totalPending.toFixed(2)} MXN</span></span>
                 <Link
-                  href="/checkout/all"
+                  href={`/checkout/all?amount=${totalPending}&concept=Liquidaci%C3%B3n%20Total%20de%20Colegiaturas&student=Mateo%20y%20Sof%C3%ADa%20L%C3%B3pez`}
                   className="bg-blue-700 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg text-xs transition-colors shadow-sm"
                 >
                   Pagar Todo el Saldo
@@ -671,6 +691,59 @@ export default function ParentFinancialStatementPage() {
                   </select>
                 </div>
               </div>
+
+              {/* Complemento IEDU: CURP del Alumno */}
+              {taxData.cfdiUse === 'D10' && (
+                <div className="p-4 bg-emerald-50/60 border border-emerald-200 rounded-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <span>Complemento IEDU del SAT (Deducción Personal de Colegiaturas)</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded">Requerido por SAT</span>
+                  </div>
+                  <p className="text-[11px] text-emerald-800">
+                    Conforme al Decreto Fiscal del SAT, para deducir colegiaturas en su declaración anual es obligatorio incluir la CURP y Nivel Educativo del alumno.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-slate-700 font-semibold text-xs">CURP del Alumno:</label>
+                        {taxData.studentCurp.length === 18 && (
+                          <span className={`text-[10px] font-bold ${curpValidation.isValid ? 'text-emerald-700' : 'text-rose-600'}`}>
+                            {curpValidation.isValid ? '✓ Estructura Válida' : '✕ Inválida'}
+                          </span>
+                        )}
+                      </div>
+                      <input
+                        type="text"
+                        value={taxData.studentCurp}
+                        onChange={handleCurpChange}
+                        maxLength={18}
+                        placeholder="AAAA000000HDFXXX00"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 font-mono uppercase focus:outline-none focus:border-emerald-600"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-700 font-semibold mb-1 text-xs">Nivel Educativo:</label>
+                      <select
+                        value={taxData.educationLevel}
+                        onChange={(e) => setTaxData({ ...taxData, educationLevel: e.target.value })}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-emerald-600"
+                      >
+                        <option value="Preescolar">Preescolar (Tope anual: $14,200 MXN)</option>
+                        <option value="Primaria">Primaria (Tope anual: $12,900 MXN)</option>
+                        <option value="Secundaria">Secundaria (Tope anual: $19,900 MXN)</option>
+                        <option value="Profesional tecnico">Profesional Técnico (Tope: $17,100 MXN)</option>
+                        <option value="Bachillerato o su equivalente">Bachillerato (Tope: $24,500 MXN)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Correo Electrónico Fiscal */}
               <div>

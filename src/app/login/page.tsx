@@ -47,6 +47,30 @@ const DEMO_ACCOUNTS = [
     email: "israel.lopez@iskool.edu.mx",
     avatarColor: "bg-rose-500",
     id: "usr-teacher-1"
+  },
+  {
+    name: "Lic. Beatriz Morales",
+    role: "coordinator",
+    grade: "Coordinación y Cobranza",
+    email: "coordinacion@iskool.edu.mx",
+    avatarColor: "bg-indigo-600",
+    id: "usr-coord-1"
+  },
+  {
+    name: "Familia López Mendoza",
+    role: "parent",
+    grade: "Tutor / Padre de Familia",
+    email: "israel.lopez@ejemplo.com",
+    avatarColor: "bg-amber-600",
+    id: "usr-parent-001"
+  },
+  {
+    name: "Mtro. Carlos Vega",
+    role: "admin",
+    grade: "Dirección General",
+    email: "admin@iskool.edu.mx",
+    avatarColor: "bg-slate-700",
+    id: "usr-admin-1"
   }
 ];
 
@@ -60,6 +84,25 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const routeUserByRole = async (userEmail: string, role?: string, studentId?: string) => {
+    if (studentId) {
+      await switchStudent(studentId);
+    }
+    if (role === 'student') {
+      router.push('/student');
+    } else if (role === 'teacher' || userEmail === 'israel.lopez@iskool.edu.mx') {
+      router.push('/teacher');
+    } else if (role === 'coordinator' || userEmail.includes('coord')) {
+      router.push('/coordinator');
+    } else if (role === 'parent' || userEmail.includes('ejemplo') || userEmail.includes('parent')) {
+      router.push('/parent');
+    } else if (role === 'admin' || userEmail.includes('admin')) {
+      router.push('/admin');
+    } else {
+      router.push('/');
+    }
+  };
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
@@ -72,16 +115,9 @@ export default function LoginPage() {
     try {
       const result = await login(email);
       if (result.success) {
-        // Sync active student ID in store if student logged in
-        const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email === email);
-        if (matchedStudent) {
-          await switchStudent(matchedStudent.id);
-          router.push('/student');
-        } else if (email === 'israel.lopez@iskool.edu.mx') {
-          router.push('/teacher');
-        } else {
-          router.push('/');
-        }
+        const matchedDemo = DEMO_ACCOUNTS.find(d => d.email.toLowerCase() === email.toLowerCase());
+        const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email.toLowerCase() === email.toLowerCase());
+        await routeUserByRole(email, matchedDemo?.role || (matchedStudent ? 'student' : undefined), matchedDemo?.id || matchedStudent?.id);
       } else {
         setErrorMsg(result.error || 'Credenciales inválidas.');
       }
@@ -99,14 +135,7 @@ export default function LoginPage() {
     try {
       const result = await login(demo.email);
       if (result.success) {
-        if (demo.role === 'student') {
-          await switchStudent(demo.id);
-          router.push('/student');
-        } else if (demo.role === 'teacher') {
-          router.push('/teacher');
-        } else {
-          router.push('/');
-        }
+        await routeUserByRole(demo.email, demo.role, demo.id);
       } else {
         setErrorMsg(result.error || 'Error al iniciar sesión con cuenta demo.');
       }

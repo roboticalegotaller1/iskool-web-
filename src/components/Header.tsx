@@ -183,16 +183,28 @@ export const Header: React.FC = () => {
           )}
 
           {currentRole === 'parent' && (
-            <Link
-              href="/parent"
-              aria-label="Ver muro de evidencias y logros de mi hijo"
-              style={pathname === '/parent' ? { color: 'var(--brand-primary)' } : undefined}
-              className={`text-sm font-semibold transition-colors ${
-                pathname === '/parent' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-              }`}
-            >
-              Muro de Logros (Hijo)
-            </Link>
+            <>
+              <Link
+                href="/parent"
+                aria-label="Ver muro de evidencias y logros de mi hijo"
+                style={pathname === '/parent' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/parent' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Muro de Logros
+              </Link>
+              <Link
+                href="/parent/financial"
+                aria-label="Ir al estado de cuenta, pagos y facturación"
+                style={pathname === '/parent/financial' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/parent/financial' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Estado de Cuenta & Pagos
+              </Link>
+            </>
           )}
 
           {currentRole === 'coordinator' && (
@@ -205,7 +217,27 @@ export const Header: React.FC = () => {
                   pathname === '/coordinator' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
-                Control Escolar & Horarios
+                Control Escolar
+              </Link>
+              <Link
+                href="/coordinator/billing"
+                aria-label="Ir al módulo de cobranza y conciliación"
+                style={pathname === '/coordinator/billing' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/coordinator/billing' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Cobranza
+              </Link>
+              <Link
+                href="/coordinator/fiscal"
+                aria-label="Ir a facturación SAT CFDI 4.0"
+                style={pathname === '/coordinator/fiscal' ? { color: 'var(--brand-primary)' } : undefined}
+                className={`text-sm font-semibold transition-colors ${
+                  pathname === '/coordinator/fiscal' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Facturación SAT
               </Link>
               <Link
                 href="/admin"

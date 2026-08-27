@@ -2009,28 +2009,121 @@ export const GUILD_SUBMISSIONS_SEED: GuildMemberSubmission[] = [
 ];
 
 export const ATTENDANCE_SEED: Attendance[] = [
-  {
-    id: 'att-1',
-    student_id: 'std-pa',
-    group_id: 'grp-pa-a',
-    subject_id: 'sub-math',
-    date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    status: 'presente',
-    comments: 'Participó activamente',
-    registered_by: 'usr-teacher-1',
-    created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'att-2',
-    student_id: 'std-sec',
-    group_id: 'grp-sec-a',
-    subject_id: 'sub-sci',
-    date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    status: 'retardo',
-    comments: 'Llegó 10 minutos tarde',
-    registered_by: 'usr-teacher-1',
-    created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
-  }
+  // -------------------------------------------------------------
+  // DÍA 1: 2026-08-04 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-01-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: 'Excelente participación en inicio de bloque', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'retardo', comments: 'Llegó 12 min tarde por cierre vial', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+  { id: 'att-pa-01-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-04', status: 'retardo', comments: 'Llegó 15 min tarde', registered_by: 'usr-teacher-1', created_at: '2026-08-04T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 2: 2026-08-07 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-02-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'falta', comments: 'Inasistencia sin notificación previa', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'justificado', comments: 'Cita médica dental familiar justificada', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+  { id: 'att-pa-02-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-07', status: 'retardo', comments: 'Llegó 10 min tarde (segundo retardo acumulado)', registered_by: 'usr-teacher-1', created_at: '2026-08-07T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 3: 2026-08-11 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-03-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+  { id: 'att-pa-03-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-11', status: 'retardo', comments: 'Llegó 15 min tarde (Tercer retardo: computa 1 falta acumulada)', registered_by: 'usr-teacher-1', created_at: '2026-08-11T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 4: 2026-08-14 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-04-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: 'Lideró la resolución grupal de fracciones', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'retardo', comments: 'Retardo de 8 minutos por lluvia', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+  { id: 'att-pa-04-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-14', status: 'presente', comments: 'Llegó a tiempo hoy', registered_by: 'usr-teacher-1', created_at: '2026-08-14T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 5: 2026-08-18 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-05-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'falta', comments: 'Inasistencia reportada por tutor', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+  { id: 'att-pa-05-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-18', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-18T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 6: 2026-08-21 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-06-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'justificado', comments: 'Participación en olimpiada regional de conocimiento', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'retardo', comments: 'Retardo de 10 min', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: 'Asistencia y puntualidad ejemplar', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+  { id: 'att-pa-06-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-21', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-21T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 7: 2026-08-25 (Matemáticas - Primaria Alta A)
+  // -------------------------------------------------------------
+  { id: 'att-pa-07-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+  { id: 'att-pa-07-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-25', status: 'retardo', comments: 'Llegó 10 min tarde', registered_by: 'usr-teacher-1', created_at: '2026-08-25T08:00:00.000Z' },
+
+  // -------------------------------------------------------------
+  // DÍA 8: 2026-08-26 (Matemáticas - Primaria Alta A) - HOY
+  // -------------------------------------------------------------
+  { id: 'att-pa-08-1', student_id: 'std-pa', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: 'Participó activamente', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-2', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a02', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-3', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a03', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-4', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a04', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-5', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a05', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-6', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a06', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-7', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a07', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-8', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a08', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-9', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a09', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: '', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+  { id: 'att-pa-08-10', student_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a10', group_id: 'grp-pa-a', subject_id: 'sub-math', date: '2026-08-26', status: 'presente', comments: 'Llegó puntual', registered_by: 'usr-teacher-1', created_at: '2026-08-26T08:00:00.000Z' },
+
+  // Secundaria
+  { id: 'att-sec-1', student_id: 'std-sec', group_id: 'grp-sec-a', subject_id: 'sub-sci', date: '2026-08-25', status: 'retardo', comments: 'Llegó 10 minutos tarde', registered_by: 'usr-teacher-1', created_at: '2026-08-25T09:00:00.000Z' },
+  { id: 'att-sec-2', student_id: 'std-sec', group_id: 'grp-sec-a', subject_id: 'sub-sci', date: '2026-08-26', status: 'presente', comments: 'Excelente desempeño en laboratorio', registered_by: 'usr-teacher-1', created_at: '2026-08-26T09:00:00.000Z' }
 ];
 
 export const PARENT_MESSAGES_SEED: ParentMessage[] = [
