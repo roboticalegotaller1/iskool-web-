@@ -16,10 +16,53 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const getDemoUser = (email: string) => {
-  if (email === TEACHER_SEED.email) return TEACHER_SEED;
-  if (email === PARENT_SEED.email) return PARENT_SEED;
-  return STUDENTS_LIST_SEED.find(s => s.email === email);
+const getDemoUser = (email: string): UserProfile => {
+  const emailLower = email.toLowerCase().trim();
+  if (emailLower.includes('admin') || emailLower.includes('vega') || emailLower.includes('director')) {
+    return {
+      id: 'usr-admin-1',
+      first_name: 'Carlos',
+      last_name: 'Vega (Dirección General)',
+      role: 'admin',
+      email: emailLower,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+  }
+  if (emailLower.includes('coord') || emailLower.includes('morales') || emailLower.includes('beatriz')) {
+    return {
+      id: 'usr-coord-1',
+      first_name: 'Beatriz',
+      last_name: 'Morales (Coordinación)',
+      role: 'coordinator',
+      email: emailLower,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+  }
+  if (emailLower === TEACHER_SEED.email.toLowerCase() || emailLower.includes('teacher') || emailLower.includes('prof') || emailLower.includes('docente') || emailLower.includes('israel.lopez')) {
+    return TEACHER_SEED;
+  }
+  if (emailLower === PARENT_SEED.email.toLowerCase() || emailLower.includes('parent') || emailLower.includes('tutor') || emailLower.includes('ejemplo') || emailLower.includes('familia')) {
+    return PARENT_SEED;
+  }
+  const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email.toLowerCase() === emailLower);
+  if (matchedStudent) return matchedStudent;
+
+  // Fallback inteligente para cualquier correo ingresado
+  const nameParts = emailLower.split('@')[0].split('.');
+  const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Usuario';
+  const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'Escolar';
+
+  return {
+    id: `usr-custom-${Date.now()}`,
+    first_name: firstName,
+    last_name: lastName,
+    role: 'student',
+    email: emailLower,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -81,81 +124,66 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string): Promise<{ success: boolean; error?: string }> => {
     setLoading(true);
     const password = 'ISkoolPassword2026!';
+    const resolvedUser = getDemoUser(email);
     
     try {
-      // 1. Try to sign in
-      const signInResult = await supabase.auth.signInWithPassword({ email, password });
+      // 1. Intentar autenticación remota
+      const signInResult = await supabase.auth.signInWithPassword({ email, password }).catch(() => null);
       
       let userObj: any = null;
       let sessionObj: any = null;
 
-      if (signInResult.error) {
-        if (signInResult.error.message.includes('Invalid login credentials') || 
-            signInResult.error.message.includes('User not found') || 
-            signInResult.error.message.includes('Email not confirmed')) {
-          // Auto-create user
-          const demoUser = getDemoUser(email);
-          const first_name = demoUser ? demoUser.first_name : 'Usuario';
-          const last_name = demoUser ? demoUser.last_name : 'Demo';
-          const role = demoUser ? demoUser.role : 'student';
-
-          const signUpResult = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-              data: {
-                first_name,
-                last_name,
-                role
-              }
-            }
-          });
-
-          if (signUpResult.error) {
-            setLoading(false);
-            return { success: false, error: signUpResult.error.message };
-          }
-          
-          userObj = signUpResult.data.user;
-          sessionObj = signUpResult.data.session;
-        } else {
-          // Si falla por red (offline) u otro error de Supabase, usaremos el usuario demo local
-          const demoUser = getDemoUser(email);
-          if (demoUser) {
-            setUser(demoUser);
-            setLoading(false);
-            return { success: true };
-          }
-          setLoading(false);
-          return { success: false, error: signInResult.error.message };
-        }
-      } else {
+      if (signInResult && !signInResult.error && signInResult.data?.user) {
         userObj = signInResult.data.user;
         sessionObj = signInResult.data.session;
+      } else {
+        // Modo libre inmediato: Si falla o hay rate limit, entrar de forma fluida con el usuario local
+        userObj = {
+          id: resolvedUser.id,
+          email: resolvedUser.email,
+          created_at: resolvedUser.created_at,
+          user_metadata: {
+            first_name: resolvedUser.first_name,
+            last_name: resolvedUser.last_name,
+            role: resolvedUser.role
+          }
+        };
+        sessionObj = {
+          access_token: 'mock-token-free-access-session',
+          user: userObj
+        };
       }
 
       setSession(sessionObj);
-      setUser(userObj ? {
+      setUser({
         id: userObj.id,
-        first_name: userObj.user_metadata?.first_name || 'Usuario',
-        last_name: userObj.user_metadata?.last_name || '',
-        role: (userObj.user_metadata?.role || 'student') as any,
-        email: userObj.email || '',
-        created_at: userObj.created_at,
+        first_name: userObj.user_metadata?.first_name || resolvedUser.first_name,
+        last_name: userObj.user_metadata?.last_name || resolvedUser.last_name,
+        role: (userObj.user_metadata?.role || resolvedUser.role) as any,
+        email: userObj.email || resolvedUser.email,
+        created_at: userObj.created_at || new Date().toISOString(),
         updated_at: new Date().toISOString()
-      } : null);
+      });
+
       setLoading(false);
       return { success: true };
     } catch (err: any) {
-      console.warn("Supabase network error, fallback to offline demo user:", err);
-      const demoUser = getDemoUser(email);
-      if (demoUser) {
-        setUser(demoUser);
-        setLoading(false);
-        return { success: true };
-      }
+      console.warn("Acceso libre activado de contingencia:", err);
+      setUser(resolvedUser);
+      setSession({
+        access_token: 'mock-token-free-access-contingency',
+        user: {
+          id: resolvedUser.id,
+          email: resolvedUser.email,
+          user_metadata: {
+            first_name: resolvedUser.first_name,
+            last_name: resolvedUser.last_name,
+            role: resolvedUser.role
+          }
+        }
+      });
       setLoading(false);
-      return { success: false, error: err.message || "Error al conectar en modo offline" };
+      return { success: true };
     }
   };
 

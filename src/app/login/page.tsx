@@ -293,7 +293,7 @@ export default function LoginPage() {
                 </div>
                 
                 <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-400 group-hover:bg-blue-500/10 group-hover:text-blue-400 transition-colors uppercase">
-                  {demo.role === 'teacher' ? 'Docente' : 'Alumno'}
+                  {demo.role === 'teacher' ? 'Docente' : demo.role === 'coordinator' ? 'Coordinador' : demo.role === 'parent' ? 'Tutor' : demo.role === 'admin' ? 'Dirección' : 'Alumno'}
                 </span>
               </button>
             ))}
