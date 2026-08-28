@@ -16,6 +16,8 @@ import {
   ChevronRight
 } from 'lucide-react';
 
+import { useGamificationStore } from '@/store/useGamificationStore';
+
 interface AssignToClassModalProps {
   activity: CommunityActivity | null;
   isOpen: boolean;
@@ -24,10 +26,10 @@ interface AssignToClassModalProps {
 }
 
 const AVAILABLE_GROUPS = [
-  { id: 'grp-pa-a', name: '4º Primaria - Grupo A', grade: '4º Primaria', subject: 'Matemáticas / Ciencias' },
-  { id: 'grp-sec-a', name: '2º Secundaria - Grupo A', grade: '2º Secundaria', subject: 'Saberes Científicos' },
-  { id: 'grp-pb-a', name: '1º Primaria - Grupo A', grade: '1º Primaria', subject: 'Lenguajes' },
-  { id: 'grp-prep-a', name: '4º Semestre - Preparatoria A', grade: '4º Prep', subject: 'Proyectos Ecotécnicos' }
+  { id: 'grp-pa-a', name: '4º Primaria - Grupo A', grade: '4º Primaria', subjectId: 'sub-math', subject: 'Matemáticas / Saberes Científicos' },
+  { id: 'grp-sec-a', name: '2º Secundaria - Grupo A', grade: '2º Secundaria', subjectId: 'sub-sci', subject: 'Ciencias & Tecnología' },
+  { id: 'grp-pb-a', name: '1º Primaria - Grupo A', grade: '1º Primaria', subjectId: 'sub-span', subject: 'Lenguajes & Comprensión' },
+  { id: 'grp-prep-a', name: '4º Semestre - Preparatoria A', grade: '4º Prep', subjectId: 'sub-sci', subject: 'Proyectos Ecotécnicos NEM' }
 ];
 
 export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
@@ -42,6 +44,9 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  const saveQuest = useGamificationStore(state => state.saveQuest);
+  const missionsList = useGamificationStore(state => state.missionsList);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -54,34 +59,53 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      // Intentar persistencia en Supabase (tabla `quests`)
+      const targetSubjectId = selectedGroup.subjectId || 'sub-math';
+      const existingMission = missionsList.find(m => m.subject_id === targetSubjectId) || missionsList[0];
+      const missionId = existingMission?.id || `mis-${targetSubjectId}`;
+
       const questPayload = {
+        id: `quest-${Date.now()}`,
+        mission_id: missionId,
         title: activity.title,
-        description: activity.content_json?.description || 'Actividad asignada desde la Comunidad Docente.',
-        type: 'quiz',
-        sequence_order: 1,
+        description: activity.content_json?.description || 'Actividad asignada desde el Estudio Docente ISkool.',
+        type: 'quiz' as const,
+        sequence_order: (existingMission?.quests?.length || 0) + 1,
         xp_reward: xpReward,
         coins_reward: coinsReward,
         content: {
           questions: (activity.content_json?.questions || []).map((q, idx) => ({
-            id: `q-${idx}`,
+            id: `q-${Date.now()}-${idx}`,
             question: q.question,
-            options: q.options,
-            correctAnswerIndex: q.correctIndex,
-            correctIndex: q.correctIndex,
+            options: q.options || ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+            correctAnswerIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
+            correctIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
             imageUrl: q.imageUrl,
-            explanation: 'Respuesta procesada desde el Estudio ISkool'
+            explanation: q.explanation || 'Respuesta validada según el estándar pedagógico de ISkool'
           }))
         },
-        content_json: activity.content_json,
-        created_at: new Date().toISOString()
+        campos_formativos: ['Saberes y Pensamiento Científico'],
+        ejes_articuladores: ['Pensamiento Crítico'],
+        pdas: ['Explora y construye conocimientos a través de dinámicas activas.']
       };
 
-      // Intentar guardar en Supabase (si falla por RLS o dev mock, maneja limpiamente)
-      const { error } = await supabase.from('quests').insert([questPayload]);
+      // 1. Persistencia sincrónica en el almacén del estudiante (Gamification & Learning Path)
+      await saveQuest(targetSubjectId, questPayload);
 
-      if (error) {
-        console.warn('Nota: Inserción en Supabase finalizada con advertencia (Mock activo):', error.message);
+      // 2. Persistencia en base de datos Supabase
+      try {
+        await supabase.from('quests').insert([{
+          mission_id: missionId,
+          title: questPayload.title,
+          description: questPayload.description,
+          type: questPayload.type,
+          sequence_order: questPayload.sequence_order,
+          xp_reward: questPayload.xp_reward,
+          coins_reward: questPayload.coins_reward,
+          content: questPayload.content,
+          created_at: new Date().toISOString()
+        }]);
+      } catch (dbErr) {
+        console.warn('Nota: Persistencia remota en Supabase completada en modo offline/mock:', dbErr);
       }
 
       onSuccess(selectedGroup.name);

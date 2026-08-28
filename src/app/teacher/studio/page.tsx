@@ -1,9 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Header } from '@/components/Header';
-import { ActivityBuilderLayout } from '@/components/studio/builder/ActivityBuilderLayout';
+import { Loader } from '@/components/Loader';
 import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
+
+const ActivityBuilderLayout = dynamic(
+  () => import('@/components/studio/builder/ActivityBuilderLayout').then((mod) => mod.ActivityBuilderLayout),
+  { ssr: false, loading: () => <Loader message="Iniciando Estudio Docente..." /> }
+);
 import { 
   Sparkles, 
   ArrowLeft, 

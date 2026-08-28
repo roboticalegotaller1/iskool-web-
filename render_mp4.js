@@ -34,7 +34,7 @@ async function generatePromoVideo() {
   fs.mkdirSync(framesDir);
 
   console.log('📸 Capturing slide sequence frames...');
-  const TOTAL_SLIDES = 10; // Intro, Alumno C, Alumno S, Docente C, Docente S, Padres C, Padres S, Coord C, Coord S, Outro
+  const TOTAL_SLIDES = 14; // 14 slides covering all ISkool 2026 modules
   let frameCounter = 0;
   const FPS = 30;
 
@@ -51,7 +51,7 @@ async function generatePromoVideo() {
       await page.screenshot({ path: framePath, type: 'png' });
       frameCounter++;
 
-      // Small delay between screenshots (~33ms for 30fps timing)
+      // Small delay between screenshots (~25ms)
       await new Promise(res => setTimeout(res, 25));
     }
 
@@ -73,7 +73,6 @@ async function generatePromoVideo() {
 
   // STITCH FRAMES WITH FFMPEG INTO HIGH QUALITY MP4
   const outputMp4Path = path.join(__dirname, 'demostracion_iskool_inversionistas.mp4');
-  const artifactMp4Path = 'C:\\Users\\kami-\\.\\gemini\\antigravity-ide\\brain\\b1ba48ae-6da8-4594-a0dc-ac87362e48ab\\demostracion_iskool_inversionistas.mp4';
 
   console.log(`🎬 Encoding ${frameCounter} frames to MP4 with FFmpeg...`);
   
@@ -106,10 +105,6 @@ async function generatePromoVideo() {
   });
 
   console.log(`\n🎉 MP4 encoding completed successfully!`);
-
-  // Copy to artifact path as well
-  fs.copyFileSync(outputMp4Path, artifactMp4Path);
-  console.log(`📁 Copied MP4 to artifacts folder: ${artifactMp4Path}`);
 
   // Verify file size
   const stats = fs.statSync(outputMp4Path);

@@ -583,7 +583,10 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
   },
 
   fetchPortfolioItems: async (groupId, targetStudentId) => {
-    set({ isLoadingPortfolio: true, portfolioError: null });
+    // Si ya tenemos evidencias en memoria, revalidar en segundo plano sin bloquear la UI
+    if (get().portfolioItems.length === 0) {
+      set({ isLoadingPortfolio: true, portfolioError: null });
+    }
     try {
       const schoolAdminStore = useSchoolAdminStore.getState();
       let query = supabase

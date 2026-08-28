@@ -7,6 +7,7 @@ export type StudioBlockType =
   // Herramientas Principales (Barra Lateral Izquierda - Acceso Rápido)
   | 'text_narrative'       // Instrucción / Fragmento narrativo / Lore
   | 'quiz_question'        // Pregunta de opción múltiple interactiva
+  | 'timed_reading_block'  // Lectura cronometrada & comprensión lectora (PPM)
   | 'reward_chest'         // Recompensas: XP, Monedas de oro, Gemas, Insignias
   | 'boss_enemy'           // Encuentro de combate contra Boss / Enemigo Pixi
 
@@ -262,11 +263,37 @@ export interface AudioSfxBlock extends BaseStudioBlock {
 }
 
 /**
- * Unión discriminada de todos los bloques didácticos
+ * Pregunta de opción múltiple para evaluación de comprensión lectora
+ */
+export interface ComprehensionQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation?: string;
+}
+
+/**
+ * 17. Bloque de Lectura Cronometrada y Comprensión Lectora (PPM)
+ */
+export interface TimedReadingBlock extends BaseStudioBlock {
+  type: 'timed_reading_block';
+  data: {
+    readingText: string;
+    timeLimitSeconds: number;
+    wordCount: number;
+    targetWpm?: number;
+    comprehensionQuestions: ComprehensionQuestion[];
+  };
+}
+
+/**
+ * Unión discriminada de todos los bloques didácticos (Lienzo Digital)
  */
 export type StudioBlock =
   | TextNarrativeBlock
   | QuizQuestionBlock
+  | TimedReadingBlock
   | RewardChestBlock
   | BossEnemyBlock
   | YouTubeVideoBlock
@@ -283,15 +310,30 @@ export type StudioBlock =
   | AudioSfxBlock;
 
 /**
- * Metadatos generales de la actividad creada
+ * Aliases para la arquitectura Canvas / Lienzo Digital
+ */
+export type CanvasBlockType = StudioBlockType;
+export type CanvasBlock = StudioBlock;
+
+
+/**
+ * Metadatos generales y pedagógicos de la actividad creada (Alineados a la NEM 2024)
  */
 export interface ActivityBuilderMetadata {
   title: string;
   description: string;
   subject: string;
+  subjectId?: string;
   targetAge: string;
   campoFormativo: string;
+  camposFormativos?: string[];
+  ejesArticuladores?: string[];
+  faseNem?: 'Fase 1' | 'Fase 2' | 'Fase 3' | 'Fase 4' | 'Fase 5' | 'Fase 6';
   pdaNem: string;
+  pdas?: string[];
+  taskType?: 'activity_flow' | 'portfolio_evidence' | 'boss_exam';
+  xpReward?: number;
+  coinsReward?: number;
   totalTimeLimit: number;
   livesCount: number;
   streakMultiplier: boolean;

@@ -18,6 +18,7 @@ import { LogicBranchBlockView } from './LogicBranchBlockView';
 import { CheckpointGateBlockView } from './CheckpointGateBlockView';
 import { BadgeCertificateBlockView } from './BadgeCertificateBlockView';
 import { AudioSfxBlockView } from './AudioSfxBlockView';
+import { TimedReadingBlockView } from './TimedReadingBlockView';
 
 interface Props {
   block: StudioBlock;
@@ -29,6 +30,8 @@ export const BlockDispatcher: React.FC<Props> = ({ block }) => {
       return <TextNarrativeBlockView block={block} />;
     case 'quiz_question':
       return <QuizQuestionBlockView block={block} />;
+    case 'timed_reading_block':
+      return <TimedReadingBlockView block={block} />;
     case 'reward_chest':
       return <RewardChestBlockView block={block} />;
     case 'boss_enemy':

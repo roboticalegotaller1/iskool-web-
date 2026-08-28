@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StudioBlock, ActivityBuilderMetadata, FlowConnection } from '@/types/studioBlocks';
 import { 
@@ -42,7 +42,11 @@ import {
   Star,
   GitBranch,
   Music,
-  Flag
+  Flag,
+  FileText,
+  Gauge,
+  Target,
+  Shuffle
 } from 'lucide-react';
 
 interface Props {
@@ -113,6 +117,8 @@ export const StudioFlowPlayer: React.FC<Props> = ({
   // Estados de Emparejamiento (Drag & Drop Match)
   const [selectedLeftIndex, setSelectedLeftIndex] = useState<number | null>(null);
   const [matchedPairs, setMatchedPairs] = useState<Record<number, number>>({});
+  const [shuffleKey, setShuffleKey] = useState<number>(0);
+  const [failedMatchFeedback, setFailedMatchFeedback] = useState<{ left?: number; right?: number } | null>(null);
 
   // Estados de Ordenamiento (Secuencia Cronológica)
   const [orderedList, setOrderedList] = useState<string[]>([]);
@@ -139,10 +145,49 @@ export const StudioFlowPlayer: React.FC<Props> = ({
   const [spinning, setSpinning] = useState(false);
   const [selectedPrize, setSelectedPrize] = useState<string | null>(null);
 
+  // Estados de Lectura Cronometrada (PPM)
+  const [readingPhase, setReadingPhase] = useState<'reading' | 'questions' | 'results'>('reading');
+  const [readingSecondsLeft, setReadingSecondsLeft] = useState<number>(60);
+  const [readingTimeTaken, setReadingTimeTaken] = useState<number>(0);
+  const [readingSelectedAnswers, setReadingSelectedAnswers] = useState<Record<string, number>>({});
+  const [readingResults, setReadingResults] = useState<{ score: number; ppm: number; xp: number; coins: number; feedback: string } | null>(null);
+
   const activeBlock: StudioBlock | undefined = 
     (currentNodeId ? blocks.find(b => b.id === currentNodeId) : undefined) || 
     blocks[currentStepIndex] || 
     blocks[0];
+
+  // Cálculo sincrónico garantizado de pares revueltos para Drag & Drop Match
+  const pairsJson = activeBlock?.type === 'drag_drop_match' ? JSON.stringify(activeBlock.data.pairs) : '';
+  const shuffledRightPairs = useMemo<{ originalIndex: number; rightText: string }[]>(() => {
+    if (!activeBlock || activeBlock.type !== 'drag_drop_match') return [];
+    const pairs = activeBlock.data.pairs || [];
+    if (pairs.length === 0) return [];
+
+    const mapped = pairs.map((p, idx) => ({
+      originalIndex: idx,
+      rightText: p.right
+    }));
+
+    if (mapped.length <= 1) return mapped;
+
+    // Barajado Fisher-Yates
+    const shuffled = [...mapped];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    // Si por coincidencia aleatoria todos coinciden 1:1 con el orden original,
+    // desplazamos 1 posición cíclicamente para garantizar dificultad pedagógica real.
+    const isIdentical = shuffled.every((item, idx) => item.originalIndex === idx);
+    if (isIdentical && shuffled.length > 1) {
+      const first = shuffled.shift()!;
+      shuffled.push(first);
+    }
+
+    return shuffled;
+  }, [activeBlock?.id, activeBlock?.type, pairsJson, shuffleKey]);
 
   // Sintetizador Web Audio
   const playSound = (type: 'correct' | 'wrong' | 'victory' | 'attack' | 'chest' | 'match' | 'fanfare') => {
@@ -217,14 +262,25 @@ export const StudioFlowPlayer: React.FC<Props> = ({
     setIsSecretUnlocked(false);
     setShowHint(false);
     setSelectedPrize(null);
+    setReadingPhase('reading');
+    setReadingSelectedAnswers({});
+    setReadingResults(null);
 
     if (activeBlock) {
-      if (activeBlock.type === 'boss_enemy') {
+      if (activeBlock.type === 'timed_reading_block') {
+        const limit = activeBlock.data.timeLimitSeconds || 60;
+        setReadingSecondsLeft(limit);
+        setReadingTimeTaken(0);
+      } else if (activeBlock.type === 'boss_enemy') {
         const max = activeBlock.data.maxHp || 100;
         setBossHp(max);
         setBossMaxHp(max);
         setIsBossDefeated(false);
         setBattleLog([`⚔️ ¡Un ${activeBlock.data.bossName} ha aparecido para desafiarte!`]);
+      } else if (activeBlock.type === 'drag_drop_match') {
+        setSelectedLeftIndex(null);
+        setMatchedPairs({});
+        setFailedMatchFeedback(null);
       } else if (activeBlock.type === 'ordering_sequence') {
         const shuffled = [...activeBlock.data.stepsInCorrectOrder].sort(() => Math.random() - 0.5);
         setOrderedList(shuffled);
@@ -233,6 +289,28 @@ export const StudioFlowPlayer: React.FC<Props> = ({
       }
     }
   }, [currentNodeId, currentStepIndex, activeBlock]);
+
+  // Cronómetro regresivo para lectura cronometrada
+  useEffect(() => {
+    if (!activeBlock || activeBlock.type !== 'timed_reading_block' || readingPhase !== 'reading') {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setReadingSecondsLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setReadingPhase('questions');
+          playSound('fanfare');
+          return 0;
+        }
+        return prev - 1;
+      });
+      setReadingTimeTaken(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [activeBlock, readingPhase]);
 
   // Avanzar al siguiente bloque siguiendo el flujo del grafo
   const handleNextStep = (earnedXp: number = 0) => {
@@ -288,25 +366,44 @@ export const StudioFlowPlayer: React.FC<Props> = ({
     }
   };
 
-  // Manejar emparejamiento (Drag & Drop Match)
-  const handleMatchClick = (side: 'left' | 'right', index: number) => {
+  // Manejar emparejamiento (Drag & Drop Match) con aleatorización de respuestas
+  const handleMatchClick = (side: 'left' | 'right', itemOriginalIndex: number) => {
     if (!activeBlock || activeBlock.type !== 'drag_drop_match') return;
 
     if (side === 'left') {
-      setSelectedLeftIndex(index);
+      if (matchedPairs[itemOriginalIndex] !== undefined) return;
+      setSelectedLeftIndex(itemOriginalIndex);
+      setFailedMatchFeedback(null);
     } else if (side === 'right' && selectedLeftIndex !== null) {
-      const isCorrectMatch = selectedLeftIndex === index;
+      if (Object.values(matchedPairs).includes(itemOriginalIndex)) return;
+
+      const isCorrectMatch = selectedLeftIndex === itemOriginalIndex;
       if (isCorrectMatch) {
         playSound('match');
-        const newMatched = { ...matchedPairs, [selectedLeftIndex]: index };
+        const newMatched = { ...matchedPairs, [selectedLeftIndex]: itemOriginalIndex };
         setMatchedPairs(newMatched);
         setSelectedLeftIndex(null);
+        setFailedMatchFeedback(null);
         setAccumulatedXp(prev => prev + 15);
+        setStreak(prev => prev + 1);
       } else {
         playSound('wrong');
-        setSelectedLeftIndex(null);
+        setFailedMatchFeedback({ left: selectedLeftIndex, right: itemOriginalIndex });
+        setStreak(0);
+        setTimeout(() => {
+          setSelectedLeftIndex(null);
+          setFailedMatchFeedback(null);
+        }, 750);
       }
     }
+  };
+
+  const handleReshuffleMatchPairs = () => {
+    if (!activeBlock || activeBlock.type !== 'drag_drop_match') return;
+    playSound('match');
+    setShuffleKey(prev => prev + 1);
+    setSelectedLeftIndex(null);
+    setFailedMatchFeedback(null);
   };
 
   // Manejar ordenamiento de secuencia
@@ -539,6 +636,307 @@ export const StudioFlowPlayer: React.FC<Props> = ({
           transition={{ duration: 0.2 }}
           className="space-y-4"
         >
+          {/* ================= 0. LECTURA CRONOMETRADA & COMPRENSIÓN (PPM) ================= */}
+          {activeBlock?.type === 'timed_reading_block' && (() => {
+            const { readingText = '', timeLimitSeconds = 60, comprehensionQuestions = [], wordCount = 0 } = activeBlock.data;
+            const actualWords = wordCount || (readingText.trim() ? readingText.trim().split(/\s+/).length : 0);
+
+            // Manejar finalización de la lectura
+            const handleFinishReading = () => {
+              setReadingPhase('questions');
+              playSound('correct');
+            };
+
+            // Manejar selección de respuesta
+            const handleSelectQuestionOption = (qId: string, optIdx: number) => {
+              setReadingSelectedAnswers(prev => ({
+                ...prev,
+                [qId]: optIdx
+              }));
+            };
+
+            // Evaluar respuestas de comprensión
+            const handleEvaluateReading = () => {
+              let correctCount = 0;
+              comprehensionQuestions.forEach(q => {
+                if (readingSelectedAnswers[q.id] === q.correctIndex) {
+                  correctCount++;
+                }
+              });
+
+              const totalQuestions = comprehensionQuestions.length || 1;
+              const scorePercent = Math.round((correctCount / totalQuestions) * 100);
+              
+              const minutes = Math.max(0.1, (readingTimeTaken || 15) / 60);
+              const calculatedPpm = Math.round(actualWords / minutes);
+
+              // Cálculo de XP y Monedas
+              const baseXp = 60;
+              let speedBonusXp = 0;
+              let speedBonusCoins = 0;
+
+              if (calculatedPpm >= 200) {
+                speedBonusXp = 40;
+                speedBonusCoins = 15;
+              } else if (calculatedPpm >= 140) {
+                speedBonusXp = 25;
+                speedBonusCoins = 10;
+              } else if (calculatedPpm >= 90) {
+                speedBonusXp = 15;
+                speedBonusCoins = 5;
+              }
+
+              const earnedXp = Math.round((baseXp * (scorePercent / 100)) + speedBonusXp);
+              const earnedCoins = Math.round((15 * (scorePercent / 100)) + speedBonusCoins);
+
+              let feedbackMsg = `¡Lectura completada a ${calculatedPpm} PPM con ${scorePercent}% de comprensión!`;
+              if (scorePercent === 100) {
+                feedbackMsg += ' ¡Puntaje perfecto, has ganado el bono de Galeón!';
+              }
+
+              setReadingResults({
+                score: scorePercent,
+                ppm: calculatedPpm,
+                xp: earnedXp,
+                coins: earnedCoins,
+                feedback: feedbackMsg
+              });
+
+              setReadingPhase('results');
+              setCoins(prev => prev + earnedCoins);
+              playSound(scorePercent >= 60 ? 'victory' : 'wrong');
+            };
+
+            return (
+              <div className="space-y-4">
+                {/* Cabecera del bloque */}
+                <div className="flex items-center justify-between gap-2 p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-800/60">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+                      <BookOpen className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase text-blue-600 dark:text-blue-400">
+                        Comprensión Lectora & Fluidez (PPM)
+                      </span>
+                      <h3 className="text-sm font-black text-slate-900 dark:text-white">
+                        {activeBlock.title || 'Lectura Cronometrada'}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-1 rounded-xl bg-white dark:bg-zinc-800 text-xs font-black text-blue-600 dark:text-blue-300 border border-blue-200/50 shadow-2xs flex items-center gap-1">
+                      <FileText className="w-3.5 h-3.5" />
+                      {actualWords} palabras
+                    </span>
+                    {readingPhase === 'reading' && (
+                      <span className={`px-2.5 py-1 rounded-xl text-white text-xs font-black flex items-center gap-1 shadow-md transition-all ${
+                        readingSecondsLeft <= 10 
+                          ? 'bg-rose-600 shadow-rose-500/30 animate-pulse' 
+                          : readingSecondsLeft <= 25 
+                          ? 'bg-amber-600 shadow-amber-500/25' 
+                          : 'bg-purple-600 shadow-purple-500/20 animate-pulse'
+                      }`}>
+                        <Clock className="w-3.5 h-3.5" />
+                        {readingSecondsLeft}s
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Fase 1: Lectura del texto con Barra de Tiempo que se agota */}
+                {readingPhase === 'reading' && (() => {
+                  const timeLimit = timeLimitSeconds || 60;
+                  const timePercent = Math.max(0, Math.min(100, (readingSecondsLeft / timeLimit) * 100));
+                  const isLowTime = readingSecondsLeft <= 10 || timePercent <= 20;
+                  const isMidTime = readingSecondsLeft <= 25 || timePercent <= 50;
+
+                  return (
+                    <div className="space-y-4">
+                      {/* Barra de Tiempo Dinámica que se agota con el segundero */}
+                      <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-50 dark:bg-zinc-850/80 border border-slate-200 dark:border-zinc-750 shadow-inner">
+                        <div className="flex items-center justify-between text-xs font-black">
+                          <span className={`flex items-center gap-1.5 transition-colors ${
+                            isLowTime 
+                              ? 'text-rose-600 dark:text-rose-400 animate-pulse' 
+                              : isMidTime
+                              ? 'text-amber-600 dark:text-amber-400'
+                              : 'text-purple-600 dark:text-purple-400'
+                          }`}>
+                            <Clock className={`w-3.5 h-3.5 ${isLowTime ? 'animate-spin' : ''}`} />
+                            <span>Tiempo Restante: <strong>{readingSecondsLeft}s</strong> / {timeLimit}s</span>
+                          </span>
+                          
+                          <span className="text-[11px] font-bold text-slate-400 dark:text-zinc-400">
+                            {Math.round(timePercent)}% disponible
+                          </span>
+                        </div>
+
+                        {/* Pista de la barra con resplandor */}
+                        <div className="relative w-full h-3 bg-slate-200 dark:bg-zinc-800 rounded-full overflow-hidden p-0.5 shadow-inner">
+                          <div
+                            className={`h-full rounded-full transition-all duration-1000 ease-linear relative ${
+                              isLowTime
+                                ? 'bg-gradient-to-r from-red-600 via-rose-500 to-amber-500 shadow-[0_0_12px_rgba(239,68,68,0.6)]'
+                                : isMidTime
+                                ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-emerald-500'
+                                : 'bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400'
+                            }`}
+                            style={{ width: `${timePercent}%` }}
+                          >
+                            <div className="absolute right-0 top-0 bottom-0 w-2.5 bg-white/90 rounded-full blur-[1px] shadow-sm animate-pulse" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-5 rounded-3xl bg-white dark:bg-zinc-850 border border-slate-200 dark:border-zinc-750 shadow-sm space-y-3">
+                        <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 border-b border-slate-100 dark:border-zinc-800 pb-2">
+                          <span className="flex items-center gap-1 text-purple-600 dark:text-purple-400">
+                            <Gauge className="w-3.5 h-3.5" />
+                            Lee con atención y concentración
+                          </span>
+                          <span>Tiempo límite: {timeLimitSeconds}s</span>
+                        </div>
+
+                        <p className="text-sm sm:text-base leading-relaxed font-serif text-slate-800 dark:text-zinc-100 whitespace-pre-line">
+                          {readingText}
+                        </p>
+                      </div>
+
+                      <div className="flex justify-end pt-1">
+                        <button
+                          type="button"
+                          onClick={handleFinishReading}
+                          className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs shadow-md shadow-blue-500/25 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-4 h-4" />
+                          <span>¡Terminé de Leer! Ir a las Preguntas</span>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* Fase 2: Preguntas de comprensión */}
+                {readingPhase === 'questions' && (
+                  <div className="space-y-4">
+                    <div className="p-3 bg-purple-50 dark:bg-purple-950/40 rounded-2xl border border-purple-200/60 dark:border-purple-800/60 text-xs font-bold text-purple-800 dark:text-purple-200 flex items-center gap-2">
+                      <Target className="w-4 h-4 text-purple-600" />
+                      <span>Responde las preguntas para evaluar tu nivel de comprensión lectora:</span>
+                    </div>
+
+                    <div className="space-y-3">
+                      {comprehensionQuestions.map((q, qIdx) => (
+                        <div
+                          key={q.id}
+                          className="p-4 rounded-2xl bg-white dark:bg-zinc-850 border border-slate-200 dark:border-zinc-750 shadow-2xs space-y-2.5"
+                        >
+                          <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-[10px] font-black flex items-center justify-center">
+                              {qIdx + 1}
+                            </span>
+                            {q.question}
+                          </h4>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {q.options.map((opt, optIdx) => {
+                              const isSelected = readingSelectedAnswers[q.id] === optIdx;
+                              const letter = String.fromCharCode(65 + optIdx);
+
+                              return (
+                                <button
+                                  key={optIdx}
+                                  type="button"
+                                  onClick={() => handleSelectQuestionOption(q.id, optIdx)}
+                                  className={`p-2.5 rounded-xl border text-left text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+                                    isSelected
+                                      ? 'bg-purple-600 text-white border-purple-700 shadow-sm shadow-purple-500/20'
+                                      : 'bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 hover:border-purple-300'
+                                  }`}
+                                >
+                                  <span className={`w-5 h-5 rounded-md text-[10px] font-black flex items-center justify-center ${
+                                    isSelected ? 'bg-white text-purple-700' : 'bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-zinc-400'
+                                  }`}>
+                                    {letter}
+                                  </span>
+                                  <span className="truncate">{opt}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex justify-end pt-2">
+                      <button
+                        type="button"
+                        onClick={handleEvaluateReading}
+                        className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-md shadow-emerald-500/20 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
+                      >
+                        <Zap className="w-4 h-4" />
+                        <span>Validar Respuestas y Calcular Recompensas</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Fase 3: Resultados y Recompensas */}
+                {readingPhase === 'results' && readingResults && (
+                  <div className="p-6 text-center space-y-4 rounded-3xl bg-white dark:bg-zinc-850 border border-slate-200 dark:border-zinc-750 shadow-md animate-scale-in">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-purple-500/25">
+                      <Trophy className="w-7 h-7" />
+                    </div>
+
+                    <div className="space-y-1">
+                      <h3 className="text-base font-black text-slate-900 dark:text-white">
+                        ¡Módulo de Comprensión Concluido!
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-zinc-300 max-w-md mx-auto">
+                        {readingResults.feedback}
+                      </p>
+                    </div>
+
+                    {/* Métricas obtenidas */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-lg mx-auto pt-2">
+                      <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 block uppercase">Velocidad</span>
+                        <span className="text-base font-black text-blue-600 dark:text-blue-300">{readingResults.ppm} PPM</span>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 block uppercase">Comprensión</span>
+                        <span className="text-base font-black text-indigo-600 dark:text-indigo-300">{readingResults.score}%</span>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 block uppercase">XP Ganado</span>
+                        <span className="text-base font-black text-purple-600 dark:text-purple-300">+{readingResults.xp} XP</span>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 block uppercase">Galeones</span>
+                        <span className="text-base font-black text-amber-500">+{readingResults.coins} 🪙</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => handleNextStep(readingResults.xp)}
+                        className="px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 mx-auto cursor-pointer"
+                      >
+                        <span>Continuar Aventura (+{readingResults.xp} XP)</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
           {/* ================= 1. VIDEO DE YOUTUBE ================= */}
           {activeBlock?.type === 'youtube_video' && (() => {
             const embedUrl = getYouTubeEmbedUrl(activeBlock.data.videoUrl, activeBlock.data.startAtSeconds);
@@ -656,27 +1054,49 @@ export const StudioFlowPlayer: React.FC<Props> = ({
             </div>
           )}
 
-          {/* ================= 3. EMPAREJAMIENTO (DRAG & DROP MATCH) ================= */}
+          {/* ================= 3. EMPAREJAMIENTO (DRAG & DROP MATCH) CON RESPUESTAS REVUELTAS ================= */}
           {activeBlock?.type === 'drag_drop_match' && (
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300">
-                  Mecánica de Emparejamiento
-                </span>
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  {activeBlock.data.instructions}
-                </h3>
-                <p className="text-xs text-slate-500">
-                  Haz clic en un término de la izquierda y luego en su definición correspondiente a la derecha.
-                </p>
+            <div className="space-y-4 animate-fade-in">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-zinc-800 pb-3">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300 inline-flex items-center gap-1">
+                    <Shuffle className="w-3 h-3 text-violet-500" />
+                    <span>Emparejamiento Aleatorizado</span>
+                  </span>
+                  <h3 className="text-base font-black text-slate-900 dark:text-white">
+                    {activeBlock.data.instructions}
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">
+                    Las definiciones han sido revueltas aleatoriamente. Haz clic en un concepto (izquierda) y luego en su definición correspondiente (derecha).
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={handleReshuffleMatchPairs}
+                    title="Revolver aleatoriamente las opciones de la derecha"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Shuffle className="w-3.5 h-3.5 text-violet-500" />
+                    <span>Revolver</span>
+                  </button>
+                  <span className="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-zinc-850 px-2.5 py-1 rounded-xl border border-slate-200 dark:border-zinc-750">
+                    {Object.keys(matchedPairs).length} / {activeBlock.data.pairs.length}
+                  </span>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                {/* Columna Izquierda: Conceptos */}
                 <div className="space-y-2">
-                  <h4 className="text-[11px] font-black text-slate-400 uppercase">Conceptos</h4>
+                  <h4 className="text-[11px] font-black text-violet-600 dark:text-violet-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <span>Conceptos / Términos</span>
+                  </h4>
                   {activeBlock.data.pairs.map((pair, idx) => {
                     const isMatched = matchedPairs[idx] !== undefined;
                     const isSelected = selectedLeftIndex === idx;
+                    const isError = failedMatchFeedback?.left === idx;
 
                     return (
                       <button
@@ -684,38 +1104,60 @@ export const StudioFlowPlayer: React.FC<Props> = ({
                         type="button"
                         disabled={isMatched}
                         onClick={() => handleMatchClick('left', idx)}
-                        className={`w-full p-3 rounded-2xl border text-left font-bold text-xs transition-all cursor-pointer ${
+                        className={`w-full p-3.5 rounded-2xl border text-left font-bold text-xs transition-all flex items-center justify-between gap-2 cursor-pointer ${
                           isMatched 
-                            ? 'bg-emerald-500 text-white border-emerald-600 line-through opacity-80' 
+                            ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-300 line-through opacity-85 shadow-sm' 
+                            : isError
+                            ? 'bg-rose-500/20 border-rose-500 text-rose-700 dark:text-rose-300 animate-shake'
                             : isSelected
-                            ? 'bg-violet-600 text-white border-violet-700 shadow-md shadow-violet-500/25 scale-[1.02]'
-                            : 'bg-white dark:bg-zinc-850 border-slate-200 dark:border-zinc-750 text-slate-800 dark:text-zinc-200 hover:border-violet-400'
+                            ? 'bg-violet-600 text-white border-violet-700 shadow-lg shadow-violet-500/30 scale-[1.02] ring-2 ring-violet-400'
+                            : 'bg-white dark:bg-zinc-850 border-slate-200 dark:border-zinc-750 text-slate-800 dark:text-zinc-200 hover:border-violet-400 hover:bg-violet-50/40 dark:hover:bg-zinc-800'
                         }`}
                       >
-                        {pair.left}
+                        <span className="flex items-center gap-2.5">
+                          <span className="w-5 h-5 rounded-lg bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300 text-[10px] font-black flex items-center justify-center shrink-0">
+                            {idx + 1}
+                          </span>
+                          <span>{pair.left}</span>
+                        </span>
+                        {isMatched && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />}
                       </button>
                     );
                   })}
                 </div>
 
+                {/* Columna Derecha: Definiciones (Revueltas Aleatoriamente) */}
                 <div className="space-y-2">
-                  <h4 className="text-[11px] font-black text-slate-400 uppercase">Definiciones</h4>
-                  {activeBlock.data.pairs.map((pair, idx) => {
-                    const isMatched = Object.values(matchedPairs).includes(idx);
+                  <h4 className="text-[11px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <span>Definiciones (Revueltas)</span>
+                  </h4>
+                  {shuffledRightPairs.map((item, shuffledIdx) => {
+                    const isMatched = Object.values(matchedPairs).includes(item.originalIndex);
+                    const isError = failedMatchFeedback?.right === item.originalIndex;
 
                     return (
                       <button
-                        key={idx}
+                        key={`${item.originalIndex}-${shuffledIdx}`}
                         type="button"
                         disabled={isMatched}
-                        onClick={() => handleMatchClick('right', idx)}
-                        className={`w-full p-3 rounded-2xl border text-left font-medium text-xs transition-all cursor-pointer ${
+                        onClick={() => handleMatchClick('right', item.originalIndex)}
+                        className={`w-full p-3.5 rounded-2xl border text-left font-medium text-xs transition-all flex items-center justify-between gap-2 cursor-pointer ${
                           isMatched
-                            ? 'bg-emerald-500 text-white border-emerald-600 line-through opacity-80'
-                            : 'bg-white dark:bg-zinc-850 border-slate-200 dark:border-zinc-750 text-slate-800 dark:text-zinc-200 hover:border-violet-400'
+                            ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-300 line-through opacity-85 shadow-sm'
+                            : isError
+                            ? 'bg-rose-500/20 border-rose-500 text-rose-700 dark:text-rose-300 animate-shake'
+                            : selectedLeftIndex !== null
+                            ? 'bg-white dark:bg-zinc-850 border-indigo-300 dark:border-indigo-700 text-slate-800 dark:text-zinc-200 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-zinc-800 hover:scale-[1.01]'
+                            : 'bg-white dark:bg-zinc-850 border-slate-200 dark:border-zinc-750 text-slate-800 dark:text-zinc-200 hover:border-indigo-400'
                         }`}
                       >
-                        {pair.right}
+                        <span className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-[10px] font-black flex items-center justify-center shrink-0">
+                            {String.fromCharCode(65 + shuffledIdx)}
+                          </span>
+                          <span>{item.rightText}</span>
+                        </span>
+                        {isMatched && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />}
                       </button>
                     );
                   })}
@@ -723,13 +1165,13 @@ export const StudioFlowPlayer: React.FC<Props> = ({
               </div>
 
               {Object.keys(matchedPairs).length === activeBlock.data.pairs.length && (
-                <div className="flex justify-end pt-2">
+                <div className="flex justify-end pt-3">
                   <button
                     type="button"
                     onClick={() => handleNextStep(35)}
-                    className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 text-white font-black text-xs shadow-md shadow-violet-500/20 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
+                    className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:from-violet-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-violet-500/25 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
                   >
-                    <span>¡Todos Conectados! Continuar (+35 XP)</span>
+                    <span>¡Todos Conectados con Éxito! Continuar (+35 XP)</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

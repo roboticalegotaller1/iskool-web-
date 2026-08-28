@@ -14,7 +14,9 @@ import {
   Copy, 
   Check, 
   Link2, 
-  Layers 
+  Layers,
+  AlertCircle,
+  AlertTriangle 
 } from 'lucide-react';
 
 export const NodeConfigDrawer: React.FC = () => {
@@ -33,7 +35,70 @@ export const NodeConfigDrawer: React.FC = () => {
     removeConnection
   } = useActivityBuilderStore();
 
+  const [validationError, setValidationError] = React.useState<string | null>(null);
+
   const selectedBlock = blocks.find(b => b.id === selectedBlockId);
+
+  // Auto-limpiar error si el bloque pasa a ser válido
+  React.useEffect(() => {
+    if (!selectedBlock) {
+      setValidationError(null);
+      return;
+    }
+
+    if (selectedBlock.type === 'quiz_question') {
+      const { correctIndex, options } = selectedBlock.data;
+      if (typeof correctIndex === 'number' && correctIndex >= 0 && correctIndex < (options?.length || 0)) {
+        setValidationError(null);
+      }
+    } else if (selectedBlock.type === 'timed_reading_block') {
+      const { comprehensionQuestions } = selectedBlock.data;
+      const allValid = !comprehensionQuestions || comprehensionQuestions.every(
+        (q: any) => typeof q.correctIndex === 'number' && q.correctIndex >= 0 && q.correctIndex < (q.options?.length || 0)
+      );
+      if (allValid) {
+        setValidationError(null);
+      }
+    }
+  }, [selectedBlock]);
+
+  // Validar si el bloque cumple con los requisitos pedagógicos antes de permitir salir
+  const handleAttemptClose = () => {
+    if (!selectedBlock) {
+      setIsNodeConfigDrawerOpen(false);
+      setValidationError(null);
+      return;
+    }
+
+    if (selectedBlock.type === 'quiz_question') {
+      const { correctIndex, options } = selectedBlock.data;
+      if (
+        correctIndex === undefined ||
+        correctIndex === null ||
+        correctIndex < 0 ||
+        correctIndex >= (options?.length || 0)
+      ) {
+        setValidationError('⚠️ Debes seleccionar cuál de las opciones es la respuesta correcta (haz clic sobre la opción deseada para activar el check verde) antes de guardar y salir.');
+        return;
+      }
+    }
+
+    if (selectedBlock.type === 'timed_reading_block') {
+      const { comprehensionQuestions } = selectedBlock.data;
+      if (comprehensionQuestions && comprehensionQuestions.length > 0) {
+        const unassignedIdx = comprehensionQuestions.findIndex(
+          (q: any) => q.correctIndex === undefined || q.correctIndex === null || q.correctIndex < 0 || q.correctIndex >= (q.options?.length || 0)
+        );
+        if (unassignedIdx >= 0) {
+          setValidationError(`⚠️ La pregunta de comprensión #${unassignedIdx + 1} requiere que selecciones una respuesta correcta.`);
+          return;
+        }
+      }
+    }
+
+    setValidationError(null);
+    setIsNodeConfigDrawerOpen(false);
+  };
 
   if (!isNodeConfigDrawerOpen || !selectedBlock) return null;
 
@@ -55,8 +120,8 @@ export const NodeConfigDrawer: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={() => setIsNodeConfigDrawerOpen(false)}
-          className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
+          onClick={handleAttemptClose}
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity cursor-pointer"
         />
 
         {/* Panel Lateral Deslizante */}
@@ -70,7 +135,7 @@ export const NodeConfigDrawer: React.FC = () => {
           {/* Cabecera del Panel */}
           <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between gap-3 bg-slate-50/80 dark:bg-zinc-850/80">
             <div className="flex items-center gap-3 min-w-0">
-              <div className={`w-10 h-10 rounded-2xl bg-gradient-to-tr ${meta.color} flex items-center justify-center text-white shrink-0 shadow-md`}>
+              <div className={`w-10 h-10 rounded-2xl bg-gradient-to-tr ${meta.color || 'from-purple-600 to-indigo-600'} flex items-center justify-center text-white shrink-0 shadow-md`}>
                 <meta.icon className="w-5 h-5" />
               </div>
               <div className="min-w-0">
@@ -97,7 +162,7 @@ export const NodeConfigDrawer: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setIsNodeConfigDrawerOpen(false)}
+              onClick={handleAttemptClose}
               aria-label="Cerrar panel de configuración"
               className="p-2 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-rose-500 hover:text-white text-slate-500 dark:text-zinc-400 transition-colors cursor-pointer shrink-0"
             >
@@ -183,6 +248,21 @@ export const NodeConfigDrawer: React.FC = () => {
             </div>
           </div>
 
+          {/* Alerta de Validación Pedagógica si falta asignar respuesta correcta */}
+          {validationError && (
+            <div className="mx-4 sm:mx-6 mb-2 p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/80 border-2 border-rose-400 dark:border-rose-700 text-xs font-bold text-rose-800 dark:text-rose-200 flex items-start gap-2.5 shadow-lg shadow-rose-500/10 animate-bounce">
+              <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+              <div className="space-y-0.5">
+                <span className="font-black text-rose-900 dark:text-rose-100 block">
+                  Acción Requerida para Salir / Guardar:
+                </span>
+                <p className="text-[11px] text-rose-700 dark:text-rose-300 font-normal leading-relaxed">
+                  {validationError}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Pie del Panel con Acciones Rápidas */}
           <div className="p-4 border-t border-slate-200 dark:border-zinc-800 flex items-center justify-between gap-2 bg-slate-50/80 dark:bg-zinc-850/80">
             <div className="flex items-center gap-1">
@@ -224,7 +304,7 @@ export const NodeConfigDrawer: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setIsNodeConfigDrawerOpen(false)}
+              onClick={handleAttemptClose}
               className="px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black text-xs shadow-md shadow-purple-500/25 flex items-center gap-1.5 transition-all cursor-pointer"
             >
               <Check className="w-4 h-4" />

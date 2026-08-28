@@ -21,6 +21,7 @@ import { useCoopStore } from '@/store/useCoopStore';
 import CoopInviteWidget from '@/components/CoopInviteWidget';
 import PartyStatus from '@/components/PartyStatus';
 import QuestList from '@/components/QuestList';
+import { GrimoireReadingQuestView } from '@/components/GrimoireReadingQuestView';
 
 const PixiCombatView = dynamic(() => import('@/components/PixiCombatView'), { ssr: false });
 
@@ -62,6 +63,8 @@ function MissionPageContent({ params }: MissionPageContentProps) {
   const [isPlayingQuiz, setIsPlayingQuiz] = useState(false);
   const [isSubmittingEvidence, setIsSubmittingEvidence] = useState(false);
   const [isPlayingExam, setIsPlayingExam] = useState(false);
+  const [isPlayingReading, setIsPlayingReading] = useState(false);
+  const [selectedReadingQuest, setSelectedReadingQuest] = useState<any>(null);
   const [showForm, setShowForm] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -224,10 +227,10 @@ function MissionPageContent({ params }: MissionPageContentProps) {
   }, [user, loading, router]);
 
   useEffect(() => {
-    if (user && user.role === 'student') {
-      fetchStats();
-      fetchMissions();
+    fetchStats();
+    fetchMissions();
 
+    if (user) {
       // Cargar los intentos de retos (quest attempts) en tiempo real
       const gamificationStore = useGamificationStore.getState();
       gamificationStore.fetchQuestAttempts(user.id);
@@ -249,8 +252,13 @@ function MissionPageContent({ params }: MissionPageContentProps) {
 
   const normalizedId = normalizeMissionId(id);
 
-  // Buscar misión por su ID propio
-  const mission = missions.find(m => m.id === normalizedId);
+  // Buscar misión por su ID propio, slug de semilla o UUID de Supabase
+  const mission = missions.find(
+    m => m.id === id ||
+         m.id === normalizedId ||
+         (id === 'mis-selva' && (m.id === 'mis-selva' || m.id === 'd00a0eeb-9c0b-4ef8-bb6d-7e9aa39842e5')) ||
+         (id === 'mis-fractions' && (m.id === 'mis-fractions' || m.id === 'd00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d11'))
+  ) || missions[0];
 
   
   // Cuestionario (Quiz State)
@@ -546,16 +554,16 @@ function MissionPageContent({ params }: MissionPageContentProps) {
 
   const isHydrated = useHydration();
 
-  if (!isHydrated || loading || !user) {
+  if (!isHydrated) {
     return <Loader />;
   }
 
-  if (!isInitialized || isLoadingMissions) {
+  if (isLoadingMissions && missions.length === 0) {
     return <Loader />;
   }
 
   if (!mission) {
-    notFound();
+    return <Loader />;
   }
 
   return (
@@ -613,7 +621,10 @@ function MissionPageContent({ params }: MissionPageContentProps) {
                 quests={mission.quests || []}
                 getQuestStatus={getQuestStatus}
                 onQuestClick={(quest) => {
-                  if (quest.type === 'exam') {
+                  if (quest.type === 'reading' || quest.type === 'timed_reading') {
+                    setSelectedReadingQuest(quest);
+                    setIsPlayingReading(true);
+                  } else if (quest.type === 'exam') {
                     startBossBattle(quest);
                   } else if (quest.type === 'quiz') {
                     startQuiz(quest);
@@ -1482,6 +1493,20 @@ function MissionPageContent({ params }: MissionPageContentProps) {
             )}
 
           </div>
+        )}
+
+        {/* --- MODAL INTERACTIVO: GRIMORIO DE COMPRENSIÓN Y BATALLA MÁGICA --- */}
+        {isPlayingReading && selectedReadingQuest && (
+          <GrimoireReadingQuestView
+            quest={selectedReadingQuest}
+            onClose={() => {
+              setIsPlayingReading(false);
+              setSelectedReadingQuest(null);
+            }}
+            onComplete={() => {
+              fetchStats();
+            }}
+          />
         )}
 
       </main>

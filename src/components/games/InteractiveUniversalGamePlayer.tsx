@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { CanvasActivityJSON, ISKOOL_TEMPLATES } from '@/types';
 import { 
   Sparkles, Trophy, Coins, Flame, Heart, RefreshCw, 
@@ -11,7 +11,20 @@ import {
 } from 'lucide-react';
 
 interface InteractiveUniversalGamePlayerProps {
-  activity: CanvasActivityJSON;
+  activity: CanvasActivityJSON & {
+    content?: {
+      questions?: {
+        question: string;
+        options: string[];
+        correctIndex?: number;
+        explanation?: string;
+      }[];
+    };
+    gamificationSettings?: {
+      lives?: number;
+      timePerQuestion?: number;
+    };
+  };
   templateType: string;
   onClose?: () => void;
   onComplete?: (score: number) => void;
@@ -24,33 +37,71 @@ export const InteractiveUniversalGamePlayer: React.FC<InteractiveUniversalGamePl
   onComplete
 }) => {
   const templateDef = ISKOOL_TEMPLATES.find(t => t.id === templateType) || {
-    name: templateType.toUpperCase(),
-    description: 'Actividad interactiva pedagógica gamificada.',
-    category: 'quiz'
+    name: 'Reto Pedagógico',
+    iconName: 'Sparkles',
+    description: 'Actividad interactiva formativa.'
   };
 
-  const questions = activity.questions || [];
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const questions = (activity.questions || activity.content?.questions || []) as {
+    question: string;
+    options: string[];
+    correctIndex?: number;
+    explanation?: string;
+  }[];
+
+  const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [score, setScore] = useState(0);
-  const [streak, setStreak] = useState(0);
-  const [maxStreak, setMaxStreak] = useState(0);
-  const [lives, setLives] = useState(3);
-  const [timeLeft, setTimeLeft] = useState(25);
-  const [isFinished, setIsFinished] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [spinning, setSpinning] = useState(false);
-  const [wheelAngle, setWheelAngle] = useState(0);
+  const [isAnswered, setIsAnswered] = useState<boolean>(false);
+  const [score, setScore] = useState<number>(0);
+  const [streak, setStreak] = useState<number>(0);
+  const [maxStreak, setMaxStreak] = useState<number>(0);
+  const [lives, setLives] = useState<number>(activity.gamificationSettings?.lives || 3);
+  const [timeLeft, setTimeLeft] = useState<number>(activity.gamificationSettings?.timePerQuestion || 30);
+  const [isFinished, setIsFinished] = useState<boolean>(false);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const [spinning, setSpinning] = useState<boolean>(false);
+  const [wheelAngle, setWheelAngle] = useState<number>(0);
   const [unlockedDoors, setUnlockedDoors] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
   const [classifiedItems, setClassifiedItems] = useState<Record<number, string>>({});
 
-  const currentQ = questions[currentIdx] || {
-    question: 'Pregunta pedagógica',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctIndex: 0
-  };
+  // Opciones revueltas dinámicamente para desafiar al alumno
+  const shuffledOptionsData = useMemo(() => {
+    const rawQ = questions[currentIdx];
+    if (!rawQ || !rawQ.options || rawQ.options.length <= 1) {
+      return { options: rawQ?.options || [], correctIndex: rawQ?.correctIndex ?? 0 };
+    }
+    
+    const mapped = rawQ.options.map((opt: string, i: number) => ({
+      text: opt,
+      isCorrect: i === (rawQ.correctIndex ?? 0)
+    }));
+    
+    const shuffled = [...mapped];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    const newCorrectIndex = shuffled.findIndex(o => o.isCorrect);
+    return {
+      options: shuffled.map(o => o.text),
+      correctIndex: newCorrectIndex >= 0 ? newCorrectIndex : 0
+    };
+  }, [currentIdx, questions]);
+
+  const currentQ = useMemo(() => {
+    const rawQ = questions[currentIdx] || {
+      question: 'Pregunta pedagógica',
+      options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+      correctIndex: 0
+    };
+    return {
+      ...rawQ,
+      options: shuffledOptionsData.options.length > 0 ? shuffledOptionsData.options : rawQ.options,
+      correctIndex: shuffledOptionsData.options.length > 0 ? shuffledOptionsData.correctIndex : rawQ.correctIndex
+    };
+  }, [currentIdx, questions, shuffledOptionsData]);
 
   // Web Audio Synthesizer
   const playSound = (type: 'correct' | 'wrong' | 'victory' | 'spin' | 'click') => {
@@ -153,22 +204,22 @@ export const InteractiveUniversalGamePlayer: React.FC<InteractiveUniversalGamePl
       playSound('correct');
       const comboBonus = (streak + 1) * 15;
       const points = 100 + comboBonus;
-      setScore(prev => prev + points);
-      setStreak(prev => {
+      setScore((prev: number) => prev + points);
+      setStreak((prev: number) => {
         const nextStreak = prev + 1;
         if (nextStreak > maxStreak) setMaxStreak(nextStreak);
         return nextStreak;
       });
       if (templateType === 'escape_room') {
-        setUnlockedDoors(prev => [...prev, currentIdx]);
+        setUnlockedDoors((prev: number[]) => [...prev, currentIdx]);
       }
       if (templateType === 'match') {
-        setMatchedPairs(prev => [...prev, currentIdx]);
+        setMatchedPairs((prev: number[]) => [...prev, currentIdx]);
       }
     } else {
       playSound('wrong');
       setStreak(0);
-      setLives(prev => {
+      setLives((prev: number) => {
         const nextLives = prev - 1;
         if (nextLives <= 0) {
           setTimeout(() => setIsFinished(true), 1200);
@@ -181,7 +232,7 @@ export const InteractiveUniversalGamePlayer: React.FC<InteractiveUniversalGamePl
   // Siguiente Reactivo
   const handleNext = () => {
     if (currentIdx + 1 < questions.length) {
-      setCurrentIdx(prev => prev + 1);
+      setCurrentIdx((prev: number) => prev + 1);
       setSelectedOpt(null);
       setIsAnswered(false);
       setTimeLeft(25);
@@ -363,7 +414,7 @@ export const InteractiveUniversalGamePlayer: React.FC<InteractiveUniversalGamePl
                 Puertas de Escape:
               </span>
               <div className="flex gap-2">
-                {questions.map((_, i) => (
+                {questions.map((_: unknown, i: number) => (
                   <span
                     key={i}
                     className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold border ${
@@ -393,7 +444,7 @@ export const InteractiveUniversalGamePlayer: React.FC<InteractiveUniversalGamePl
 
           {/* Grid de Opciones de Respuesta */}
           <div className={`grid gap-3 ${templateType === 'tf_explosivo' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2'}`}>
-            {currentQ.options.map((opt, oIdx) => {
+            {currentQ.options.map((opt: string, oIdx: number) => {
               const isCorrect = oIdx === currentQ.correctIndex;
               const isSelected = selectedOpt === oIdx;
 

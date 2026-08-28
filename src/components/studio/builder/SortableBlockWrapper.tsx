@@ -58,6 +58,14 @@ export const BLOCK_META: Record<StudioBlockType, { label: string; icon: any; col
     badgeBg: 'bg-purple-100/90 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border-purple-200/60',
     glow: 'hover:border-purple-400 dark:hover:border-purple-700 hover:shadow-purple-500/10'
   },
+  timed_reading_block: {
+    label: 'Lectura Cronometrada & PPM',
+    icon: BookOpen,
+    colorScheme: 'border-indigo-200/90 dark:border-indigo-900/60 shadow-indigo-500/5',
+    badgeBg: 'bg-indigo-100/90 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border-indigo-200/60',
+    glow: 'hover:border-indigo-400 dark:hover:border-indigo-700 hover:shadow-indigo-500/10',
+    color: 'from-blue-600 to-indigo-600'
+  },
   reward_chest: {
     label: 'Cofre de Recompensas',
     icon: Sparkles,

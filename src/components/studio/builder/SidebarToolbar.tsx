@@ -57,12 +57,23 @@ export const SCRATCH_CATEGORIES: BlockCategoryItem[] = [
   {
     id: 'assessments',
     name: 'Evaluación & Reactivos',
-    badge: '5 Bloques',
+    badge: '6 Bloques',
     icon: HelpCircle,
     color: 'from-purple-600 to-indigo-600',
-    description: 'Reactivos de evaluación formativa inmediata, emparejamiento, ordenamiento y preguntas abiertas.',
-    example: 'Ideal para evaluar comprensión de lectura, definiciones científicas y procesos históricos.',
+    description: 'Reactivos de evaluación formativa inmediata, lectura cronometrada, emparejamiento y preguntas abiertas.',
+    example: 'Ideal para evaluar fluidez y comprensión lectora (PPM), definiciones científicas y procesos históricos.',
     blocks: [
+      {
+        type: 'timed_reading_block',
+        title: 'Lectura Cronometrada (PPM)',
+        category: 'Comprensión Lectora',
+        badge: '⏱️ Fluidez & Lógica',
+        description: 'Texto de lectura con cronómetro automático, cálculo de palabras por minuto (PPM) y preguntas de comprensión.',
+        example: 'Lectura sobre el eclipse solar o biodiversidad con 2 reactivos de comprensión formativa.',
+        icon: BookOpen,
+        gradient: 'from-blue-600 to-indigo-600',
+        glowColor: 'shadow-blue-500/30'
+      },
       {
         type: 'quiz_question',
         title: 'Pregunta de Opción Múltiple',
@@ -395,7 +406,7 @@ export const SidebarToolbar: React.FC = () => {
         </div>
 
         <span className="px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-[10px] border border-purple-200/60 dark:border-purple-800/60">
-          16 Nodos
+          17 Nodos
         </span>
       </div>
 

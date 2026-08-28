@@ -1,20 +1,38 @@
 "use client";
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar, normalizeStudentId } from '@/store/useStudentStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { BADGES_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
-import { AvatarCustomizer } from '@/components/AvatarCustomizer';
 import { AnimeAvatarSprite } from '@/components/AnimeAvatarSprite';
-import { RpgCombatViewport } from '@/components/RpgCombatViewport';
 import SagaMap from '@/components/SagaMap';
-import QuestCardModal from '@/components/QuestCardModal';
 import { Loader } from '@/components/Loader';
 import { useHydration } from '@/hooks/useHydration';
-import { PetSanctuary } from '@/components/PetSanctuary';
+
+// Carga diferida de componentes pesados e interactivos bajo demanda
+const AvatarCustomizer = dynamic(
+  () => import('@/components/AvatarCustomizer').then((mod) => mod.AvatarCustomizer),
+  { ssr: false, loading: () => <Loader message="Cargando personalizador de avatar..." /> }
+);
+
+const PetSanctuary = dynamic(
+  () => import('@/components/PetSanctuary').then((mod) => mod.PetSanctuary),
+  { ssr: false, loading: () => <Loader message="Cargando santuario de mascotas..." /> }
+);
+
+const RpgCombatViewport = dynamic(
+  () => import('@/components/RpgCombatViewport').then((mod) => mod.RpgCombatViewport),
+  { ssr: false, loading: () => <Loader message="Iniciando arena de combate RPG..." /> }
+);
+
+const QuestCardModal = dynamic(
+  () => import('@/components/QuestCardModal'),
+  { ssr: false }
+);
 import { 
   Flame, Coins, Sparkles, Compass, Trophy, Star, ArrowRight, 
   Lock, Heart, HelpCircle, Gamepad2, Dumbbell, Brain, Shield,

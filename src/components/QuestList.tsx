@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { 
-  Trophy, FileSpreadsheet, AudioLines, Lock, Coins, CheckCircle2, XCircle, Sparkles, Swords
+  Trophy, FileSpreadsheet, AudioLines, Lock, Coins, CheckCircle2, XCircle, Sparkles, Swords, BookOpen, Wand2
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -49,6 +49,7 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
           const isCompleted = status === 'completed';
           const isFailed = status === 'failed';
           const isBoss = quest.type === 'exam';
+          const isReading = quest.type === 'reading' || quest.type === 'timed_reading';
 
           // Select visual style based on status and quest type
           let itemBorderClass = 'border-zinc-800 hover:border-zinc-700 bg-zinc-900/30';
@@ -62,6 +63,10 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
             itemBorderClass = 'border-emerald-500/30 bg-emerald-950/10';
             hoverGlowClass = 'hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:border-emerald-500/50 hover:scale-[1.005]';
             iconContainerClass = 'bg-emerald-950/45 text-emerald-400 border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.2)]';
+          } else if (isReading) {
+            itemBorderClass = 'border-amber-500/40 bg-zinc-950/90 shadow-[0_0_20px_rgba(245,158,11,0.15)]';
+            hoverGlowClass = 'hover:shadow-[0_0_25px_rgba(245,158,11,0.5)] hover:border-amber-400 hover:scale-[1.02] transition-all duration-300';
+            iconContainerClass = 'bg-gradient-to-tr from-amber-950/80 to-purple-950/80 text-amber-300 border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.3)]';
           } else if (isBoss) {
             itemBorderClass = 'border-purple-500/30 bg-purple-950/10';
             hoverGlowClass = 'hover:shadow-[0_0_18px_rgba(168,85,247,0.25)] hover:border-purple-500/50 hover:scale-[1.005]';
@@ -81,6 +86,8 @@ export default function QuestList({ quests, getQuestStatus, onQuestClick }: Ques
                 <div className={`h-14 w-14 rounded-full border flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${!isLocked && 'group-hover:scale-105'} ${iconContainerClass}`}>
                   {isLocked ? (
                     <Lock className="h-5 w-5" />
+                  ) : isReading ? (
+                    <BookOpen className="h-6 w-6 text-amber-300 animate-pulse" />
                   ) : quest.type === 'exam' ? (
                     <Trophy className="h-6 w-6 animate-pulse" />
                   ) : quest.type === 'quiz' ? (

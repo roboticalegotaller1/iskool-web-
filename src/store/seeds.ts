@@ -234,6 +234,52 @@ export const MISSIONS_SEED: Mission[] = [
           instructions: 'Lee el siguiente fragmento en voz alta con entonación:\n"Bajo las sombras del ceiba milenario, ruge el jaguar con ojos de fuego."\nGraba tu voz y súbela aquí.',
           acceptedFormats: ['audio']
         }
+      },
+      {
+        id: 'q-selva-reading',
+        mission_id: 'mis-selva',
+        title: 'El Códice del Guardián Ancestral',
+        description: 'Lee el pergamino místico sobre la Selva Lacandona y derrota a la Sombra del Olvido con tu retención.',
+        type: 'timed_reading',
+        sequence_order: 3,
+        xp_reward: 180,
+        coins_reward: 35,
+        created_at: new Date().toISOString(),
+        campos_formativos: ['Lenguajes'],
+        ejes_articuladores: ['Fomento a la Lectura', 'Apropiación de las culturas a través de la lectura'],
+        pdas: ['Fase 4 - Lenguajes: Lee y analiza textos informativos y leyendas sobre la biodiversidad de México.'],
+        content: {
+          readingText: 'En las profundidades de la Selva Lacandona habita el majestuoso jaguar, venerado por los antiguos mayas como Balam, guardián nocturno del inframundo y del cosmos. Su pelaje dorado con rosetas oscuras representa las estrellas del firmamento nocturno. Este felino requiere amplios corredores biológicos de selva alta perennifolia para cazar y mantener el equilibrio ecológico de cientos de especies vegetales y animales en el sureste mexicano.',
+          timeLimitSeconds: 60,
+          wordCount: 71,
+          targetWpm: 120,
+          bossName: 'Sombra del Olvido',
+          bossHp: 100,
+          storyIntro: '¡Un espectro oscuro intenta borrar la memoria de las leyendas mayas! Lee el códice y conjura las respuestas correctas para vencerlo.',
+          questions: [
+            {
+              id: 'q-selva-r1',
+              question: '¿Qué nombre sagrado daban los mayas al jaguar como guardián cósmico?',
+              options: ['Balam', 'Kukulkán', 'Chaac', 'Kinich'],
+              correctAnswerIndex: 0,
+              explanation: 'Los mayas llamaban Balam al jaguar, considerándolo el protector nocturno de la selva y el inframundo.'
+            },
+            {
+              id: 'q-selva-r2',
+              question: '¿Qué simbolizaban las manchas oscuras (rosetas) del pelaje del jaguar?',
+              options: ['Las estrellas del firmamento nocturno', 'Las gotas de lluvia sagrada', 'Las hojas de la ceiba', 'Las piedras del cenote'],
+              correctAnswerIndex: 0,
+              explanation: 'Su pelaje con rosetas representaba las constelaciones y estrellas del cielo nocturno.'
+            },
+            {
+              id: 'q-selva-r3',
+              question: '¿Qué tipo de ecosistema requiere el jaguar para mantener el equilibrio ecológico?',
+              options: ['Selva alta perennifolia con corredores biológicos', 'Desierto árido de matorrales', 'Tundra helada', 'Bosque de coníferas'],
+              correctAnswerIndex: 0,
+              explanation: 'Necesita selva alta perennifolia continua y corredores biológicos en el sureste de México.'
+            }
+          ]
+        }
       }
     ]
   }

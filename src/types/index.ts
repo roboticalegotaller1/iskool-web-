@@ -376,10 +376,10 @@ export interface Mission {
 }
 
 /**
- * @typedef {('quiz' | 'portfolio_submission' | 'exam')} QuestType
+ * @typedef {('quiz' | 'portfolio_submission' | 'exam' | 'reading' | 'timed_reading')} QuestType
  * @description Tipos de retos escolares soportados.
  */
-export type QuestType = 'quiz' | 'portfolio_submission' | 'exam';
+export type QuestType = 'quiz' | 'portfolio_submission' | 'exam' | 'reading' | 'timed_reading';
 
 /**
  * @interface QuizQuestion
@@ -391,6 +391,21 @@ export interface QuizQuestion {
   options: string[];
   correctAnswerIndex: number;
   explanation: string;
+}
+
+/**
+ * @interface ReadingQuestContent
+ * @description Reto de comprensión lectora gamificado (Grimorio Mágico y Duelo Pixi).
+ */
+export interface ReadingQuestContent {
+  readingText: string;
+  timeLimitSeconds: number;
+  wordCount: number;
+  targetWpm?: number;
+  bossName?: string;
+  bossHp?: number;
+  storyIntro?: string;
+  questions: QuizQuestion[];
 }
 
 /**
@@ -444,7 +459,7 @@ export interface Quest {
   sequence_order: number;
   xp_reward: number;
   coins_reward: number;
-  content: QuizContent | SubmissionContent | ExamContent;
+  content: QuizContent | SubmissionContent | ExamContent | ReadingQuestContent;
   created_at: string;
   campo_formativo_id?: string;
   pda_ids?: string[];
@@ -1219,4 +1234,54 @@ export interface CfdiCancelResponse {
   acuseXml?: string;
   errorMessage?: string;
 }
+
+/**
+ * @interface ReadingMetric
+ * @description Registro individual de desempeño y fluidez en retos de comprensión lectora y pensamiento lógico.
+ * @database Mapea a la tabla `public.reading_metrics`.
+ * @relation Vinculado a `Student` (N:1) y opcionalmente `Quest` (N:1).
+ * @stateImpact Utilizado para evaluar el progreso en el campo formativo NEM de Lenguajes y alimentar el historial de fluidez del alumno.
+ */
+export interface ReadingMetric {
+  id: string;
+  student_id: string;
+  quest_id?: string | null;
+  words_per_minute: number; // PPM
+  comprehension_score: number; // 0.00 a 100.00
+  time_spent_seconds: number;
+  created_at: string;
+}
+
+/**
+ * @interface SubmitReadingQuestResult
+ * @description Payload estructurado devuelto por la función RPC `submit_reading_quest`.
+ */
+export interface SubmitReadingQuestResult {
+  success: boolean;
+  reading_metric_id: string;
+  attempt_id?: string | null;
+  xp_earned: number;
+  coins_earned: number;
+  words_per_minute: number;
+  comprehension_score: number;
+  time_spent_seconds: number;
+  leveled_up: boolean;
+  feedback: string;
+  new_stats: {
+    xp: number;
+    level: number;
+    coins: number;
+    current_streak: number;
+    max_streak: number;
+    skill_points: number;
+    stat_lenguajes: number;
+  };
+  badge_earned?: {
+    id: string;
+    name: string;
+    description: string;
+    icon_name: string;
+  } | null;
+}
+
 

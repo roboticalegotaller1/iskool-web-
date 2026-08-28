@@ -11,7 +11,8 @@ import {
   Clock, 
   HelpCircle, 
   Upload, 
-  Link as LinkIcon 
+  Link as LinkIcon,
+  AlertTriangle 
 } from 'lucide-react';
 
 interface Props {
@@ -43,7 +44,7 @@ export const QuizQuestionBlockView: React.FC<Props> = ({ block }) => {
     const nextOptions = options.filter((_, i) => i !== index);
     let nextCorrect = correctIndex;
     if (correctIndex === index) {
-      nextCorrect = 0;
+      nextCorrect = -1; // Queda pendiente de asignar
     } else if (correctIndex > index) {
       nextCorrect = correctIndex - 1;
     }
@@ -156,10 +157,32 @@ export const QuizQuestionBlockView: React.FC<Props> = ({ block }) => {
       </div>
 
       {/* Lista de Alternativas de Respuesta */}
-      <div className="space-y-2">
-        <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-zinc-400">
-          Opciones de Respuesta (Marca la Correcta con el Check verde):
-        </label>
+      <div className="space-y-2.5">
+        <div className="flex items-center justify-between">
+          <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+            Opciones de Respuesta (Marca la Correcta con el Check verde):
+          </label>
+          {(correctIndex === undefined || correctIndex === null || correctIndex < 0 || correctIndex >= options.length) && (
+            <span className="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] font-black border border-amber-300 animate-pulse">
+              ⚠️ Respuesta Pendiente
+            </span>
+          )}
+        </div>
+
+        {/* Alerta si el profesor no ha asignado respuesta correcta */}
+        {(correctIndex === undefined || correctIndex === null || correctIndex < 0 || correctIndex >= options.length) && (
+          <div className="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700 text-xs font-bold text-amber-900 dark:text-amber-200 flex items-start gap-2.5 shadow-2xs">
+            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <div className="space-y-0.5">
+              <span className="font-black text-amber-800 dark:text-amber-300 block">
+                Selección de Respuesta Correcta Requerida:
+              </span>
+              <p className="text-[11px] text-amber-700 dark:text-amber-400 font-normal leading-relaxed">
+                Haz clic sobre el botón de letra (<strong className="font-bold">A, B, C o D</strong>) de la opción que sea la respuesta adecuada. El sistema requiere que asignes una para poder guardar y probar la actividad.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="space-y-2">
           {options.map((opt, idx) => {
@@ -171,20 +194,20 @@ export const QuizQuestionBlockView: React.FC<Props> = ({ block }) => {
                 key={idx}
                 className={`flex items-center gap-2.5 p-2 rounded-2xl border transition-all ${
                   isCorrect
-                    ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700 shadow-sm'
-                    : 'bg-white dark:bg-zinc-850 border-slate-200 dark:border-zinc-750'
+                    ? 'bg-emerald-50/90 dark:bg-emerald-950/50 border-emerald-400 dark:border-emerald-700 shadow-sm ring-1 ring-emerald-400/30'
+                    : 'bg-white dark:bg-zinc-850 border-slate-200 dark:border-zinc-750 hover:border-slate-300'
                 }`}
               >
                 {/* Botón Selector de Respuesta Correcta */}
                 <button
                   type="button"
                   onClick={() => updateBlockData(block.id, { correctIndex: idx })}
-                  title={isCorrect ? 'Esta es la respuesta correcta' : 'Marcar como respuesta correcta'}
+                  title={isCorrect ? '✅ Respuesta correcta asignada' : `Haz clic para marcar opción ${letter} como la respuesta correcta`}
                   aria-label={`Marcar opción ${letter} como correcta`}
                   className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black transition-all cursor-pointer ${
                     isCorrect
-                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30'
-                      : 'bg-slate-100 dark:bg-zinc-700 text-slate-500 dark:text-zinc-400 hover:bg-slate-200'
+                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30 ring-2 ring-emerald-300 scale-105'
+                      : 'bg-slate-100 dark:bg-zinc-750 text-slate-600 dark:text-zinc-300 hover:bg-emerald-100 hover:text-emerald-700 hover:border-emerald-300 border border-slate-200 dark:border-zinc-700'
                   }`}
                 >
                   {isCorrect ? <CheckCircle2 className="w-4 h-4" /> : letter}
@@ -195,8 +218,8 @@ export const QuizQuestionBlockView: React.FC<Props> = ({ block }) => {
                   type="text"
                   value={opt}
                   onChange={(e) => handleOptionChange(idx, e.target.value)}
-                  placeholder={`Opción ${letter}...`}
-                  className="flex-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-transparent focus:outline-none text-slate-800 dark:text-zinc-100"
+                  placeholder={`Escribe el texto de la opción ${letter}...`}
+                  className="flex-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-transparent focus:outline-none text-slate-800 dark:text-zinc-100 placeholder:text-slate-400"
                 />
 
                 {/* Botón de Eliminar Opción */}

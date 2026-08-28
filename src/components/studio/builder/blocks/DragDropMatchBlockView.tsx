@@ -3,7 +3,7 @@
 import React from 'react';
 import { DragDropMatchBlock } from '@/types/studioBlocks';
 import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
-import { Link2, Plus, Trash2, Clock, HelpCircle } from 'lucide-react';
+import { Link2, Plus, Trash2, Clock, HelpCircle, Shuffle } from 'lucide-react';
 
 interface Props {
   block: DragDropMatchBlock;
@@ -34,6 +34,14 @@ export const DragDropMatchBlockView: React.FC<Props> = ({ block }) => {
 
   return (
     <div className="space-y-4">
+      {/* Aviso de aleatorización automática */}
+      <div className="p-3 rounded-2xl bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-850 flex items-center gap-2.5 text-xs text-violet-700 dark:text-violet-300">
+        <Shuffle className="w-4 h-4 shrink-0 text-violet-600 dark:text-violet-400 animate-spin-slow" />
+        <span>
+          <strong>Dificultad Dinámica:</strong> En la vista del estudiante, las respuestas de la columna derecha se revolverán automáticamente de forma aleatoria para fomentar la retención y el análisis.
+        </span>
+      </div>
+
       {/* Instrucciones */}
       <div className="space-y-1">
         <label className="text-xs font-bold text-slate-700 dark:text-zinc-300 flex items-center gap-1.5">

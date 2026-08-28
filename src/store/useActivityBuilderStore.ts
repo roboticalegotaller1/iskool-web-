@@ -21,7 +21,8 @@ import {
   LogicBranchBlock,
   CheckpointGateBlock,
   BadgeCertificateBlock,
-  AudioSfxBlock
+  AudioSfxBlock,
+  TimedReadingBlock
 } from '@/types/studioBlocks';
 import { StudioActivityJSON } from '@/types';
 
@@ -89,10 +90,18 @@ interface ActivityBuilderState {
 const DEFAULT_METADATA: ActivityBuilderMetadata = {
   title: 'Nueva Actividad Didáctica',
   description: 'Actividad construida con bloques interactivos para estudiantes.',
-  subject: 'Saberes y Pensamiento Científico',
+  subject: 'Matemáticas',
+  subjectId: 'sub-math',
   targetAge: 'Primaria Alta (9 - 11 años)',
   campoFormativo: 'Saberes y Pensamiento Científico',
-  pdaNem: 'Explora y construye conocimientos a través de dinámicas activas.',
+  camposFormativos: ['Saberes y Pensamiento Científico'],
+  ejesArticuladores: ['Pensamiento Crítico'],
+  faseNem: 'Fase 4',
+  pdaNem: 'Fase 4 - Saberes y Pensamiento Científico: Resuelve problemas que implican repartir y dividir elementos en partes iguales (fracciones).',
+  pdas: ['Fase 4 - Saberes y Pensamiento Científico: Resuelve problemas que implican repartir y dividir elementos en partes iguales (fracciones).'],
+  taskType: 'activity_flow',
+  xpReward: 100,
+  coinsReward: 15,
   totalTimeLimit: 0,
   livesCount: 3,
   streakMultiplier: true,
@@ -130,12 +139,43 @@ const createDefaultBlock = (type: StudioBlockType, index: number = 0): StudioBlo
         position,
         data: {
           question: '¿Cuál es el concepto clave que aprendimos en esta sesión?',
-          options: ['Opción A (Respuesta correcta)', 'Opción B', 'Opción C', 'Opción D'],
-          correctIndex: 0,
-          explanation: 'Explicación pedagógica: Esta es la opción adecuada porque fundamenta el principio estudiado.',
+          options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+          correctIndex: -1, // -1 indica que el docente aún no ha asignado la opción correcta
+          explanation: '',
           timeLimitSeconds: 30,
         }
       } as QuizQuestionBlock;
+
+    case 'timed_reading_block':
+      return {
+        id,
+        type: 'timed_reading_block',
+        title: 'Lectura Cronometrada & Comprensión (PPM)',
+        isCollapsed: false,
+        position,
+        data: {
+          readingText: 'El sistema solar está compuesto por una estrella central, el Sol, y todos los cuerpos celestes que orbitan a su alrededor debido a la fuerza de gravedad. Entre ellos se encuentran ocho planetas principales, planetas enanos como Plutón, lunas, asteroides y cometas.',
+          timeLimitSeconds: 60,
+          wordCount: 42,
+          targetWpm: 120,
+          comprehensionQuestions: [
+            {
+              id: `q-${Date.now()}-1`,
+              question: '¿Qué fuerza mantiene a los planetas orbitando alrededor del Sol?',
+              options: ['La fuerza de gravedad', 'El magnetismo estelar', 'El viento solar', 'La inercia lunar'],
+              correctIndex: 0,
+              explanation: 'La atracción gravitacional del Sol mantiene los planetas en sus órbitas.'
+            },
+            {
+              id: `q-${Date.now()}-2`,
+              question: '¿Cuántos planetas principales conforman nuestro sistema solar?',
+              options: ['Ocho planetas', 'Nueve planetas', 'Seis planetas', 'Doce planetas'],
+              correctIndex: 0,
+              explanation: 'Actualmente se catalogan ocho planetas principales tras la reclasificación de Plutón.'
+            }
+          ]
+        }
+      } as TimedReadingBlock;
 
     case 'reward_chest':
       return {

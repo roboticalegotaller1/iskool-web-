@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Mission, QuestAttempt, StudentBadge, GuildBoss, GuildMemberSubmission, ShopArtifact, Quest, Badge } from '../types';
+import { Mission, QuestAttempt, StudentBadge, GuildBoss, GuildMemberSubmission, ShopArtifact, Quest, Badge, SubmitReadingQuestResult } from '../types';
 import { MISSIONS_SEED, BOSS_SEED, GUILD_SUBMISSIONS_SEED, DEFAULT_ARTIFACTS_SEED, SUBJECTS_SEED, BADGES_SEED } from './seeds';
 import { useStudentStore } from './useStudentStore';
 import { supabase } from '@/lib/supabaseClient';
@@ -135,6 +135,13 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
+
+  submitReadingQuest: (
+    questId: string,
+    wordsPerMinute: number,
+    comprehensionScore: number,
+    timeSpentSeconds: number
+  ) => Promise<SubmitReadingQuestResult>;
   
   saveQuest: (subjectId: string, questData: Omit<Quest, 'created_at'> & { id?: string }) => Promise<void>;
   triggerGuildAttack: (damage: number) => Promise<void>;
@@ -412,6 +419,153 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     }
 
     return { xpEarned, coinsEarned, leveledUp: false, badgeEarned: null };
+  },
+
+  submitReadingQuest: async (questId, wordsPerMinute, comprehensionScore, timeSpentSeconds) => {
+    const studentStore = useStudentStore.getState();
+    const activeStudentId = studentStore.activeStudentId;
+    const dbStudentId = mapStudentIdToUuid(activeStudentId);
+
+    // 1. Intentar llamar a la RPC `submit_reading_quest` en Supabase
+    try {
+      if (isUuid(dbStudentId)) {
+        const response = await supabase.rpc('submit_reading_quest', {
+          p_student_id: dbStudentId,
+          p_quest_id: isUuid(questId) ? questId : '00000000-0000-0000-0000-000000000001',
+          p_words_per_minute: wordsPerMinute,
+          p_comprehension_score: comprehensionScore,
+          p_time_spent_seconds: timeSpentSeconds
+        });
+
+        if (!response.error && response.data) {
+          const res = response.data as SubmitReadingQuestResult;
+          
+          if (res.new_stats) {
+            useStudentStore.setState((state) => ({
+              allStats: {
+                ...state.allStats,
+                [activeStudentId]: {
+                  ...state.allStats[activeStudentId],
+                  xp: res.new_stats.xp,
+                  level: res.new_stats.level,
+                  coins: res.new_stats.coins,
+                  current_streak: res.new_stats.current_streak,
+                  max_streak: res.new_stats.max_streak,
+                  stat_lenguajes: res.new_stats.stat_lenguajes
+                }
+              }
+            }));
+          }
+
+          // Registrar intento en el estado local
+          const newAttempt: QuestAttempt = {
+            id: res.reading_metric_id || `att-${Date.now()}`,
+            student_id: activeStudentId,
+            quest_id: questId,
+            score: comprehensionScore,
+            is_completed: comprehensionScore >= 60,
+            answers: { wordsPerMinute, timeSpentSeconds },
+            feedback: res.feedback || '¡Lectura completada!',
+            created_at: new Date().toISOString()
+          };
+
+          set((state) => ({
+            questAttempts: [newAttempt, ...state.questAttempts]
+          }));
+
+          return res;
+        }
+      }
+    } catch (rpcErr) {
+      console.warn('Fallo RPC submit_reading_quest (usando fallback local):', rpcErr);
+    }
+
+    // 2. Fallback Local Pedagógico
+    const baseXp = 75;
+    let speedBonusXp = 0;
+    let speedBonusCoins = 0;
+
+    if (wordsPerMinute >= 200) {
+      speedBonusXp = 40;
+      speedBonusCoins = 15;
+    } else if (wordsPerMinute >= 140) {
+      speedBonusXp = 25;
+      speedBonusCoins = 10;
+    } else if (wordsPerMinute >= 90) {
+      speedBonusXp = 15;
+      speedBonusCoins = 5;
+    }
+
+    const xpEarned = Math.round((baseXp * (comprehensionScore / 100.0)) + speedBonusXp);
+    const coinsEarned = Math.round((20 * (comprehensionScore / 100.0)) + speedBonusCoins);
+
+    let leveledUp = false;
+    await useStudentStore.getState().addXpAndCoins(activeStudentId, xpEarned, coinsEarned, (lvl) => {
+      leveledUp = lvl;
+    });
+
+    // Subir afinidad NEM Lenguajes
+    const currentStats = useStudentStore.getState().allStats[activeStudentId];
+    const newLenguajes = (currentStats?.stat_lenguajes || 0) + (comprehensionScore >= 80 ? 1 : 0);
+    const newStreak = (currentStats?.current_streak || 0) + 1;
+
+    useStudentStore.setState((state) => ({
+      allStats: {
+        ...state.allStats,
+        [activeStudentId]: {
+          ...state.allStats[activeStudentId],
+          stat_lenguajes: newLenguajes,
+          current_streak: newStreak,
+          max_streak: Math.max(state.allStats[activeStudentId]?.max_streak || 0, newStreak)
+        }
+      }
+    }));
+
+    const feedbackMsg = comprehensionScore >= 90
+      ? `¡Extraordinaria retención mágica! Leíste a ${wordsPerMinute} PPM con ${comprehensionScore}% de precisión. ¡Recompensa de Galeón y afinidad en Lenguajes otorgadas!`
+      : comprehensionScore >= 60
+      ? `¡Grimorio superado! Velocidad: ${wordsPerMinute} PPM con ${comprehensionScore}% de comprensión lectora.`
+      : `Has completado la lectura a ${wordsPerMinute} PPM. Sigue practicando tu concentración mágica para mejorar tu retención.`;
+
+    const attemptId = `reading-metric-${Date.now()}`;
+    const newAttempt: QuestAttempt = {
+      id: attemptId,
+      student_id: activeStudentId,
+      quest_id: questId,
+      score: comprehensionScore,
+      is_completed: comprehensionScore >= 60,
+      answers: { wordsPerMinute, timeSpentSeconds },
+      feedback: feedbackMsg,
+      created_at: new Date().toISOString()
+    };
+
+    set((state) => ({
+      questAttempts: [newAttempt, ...state.questAttempts]
+    }));
+
+    const updatedStats = useStudentStore.getState().allStats[activeStudentId];
+
+    return {
+      success: true,
+      reading_metric_id: attemptId,
+      attempt_id: attemptId,
+      xp_earned: xpEarned,
+      coins_earned: coinsEarned,
+      words_per_minute: wordsPerMinute,
+      comprehension_score: comprehensionScore,
+      time_spent_seconds: timeSpentSeconds,
+      leveled_up: leveledUp,
+      feedback: feedbackMsg,
+      new_stats: {
+        xp: updatedStats?.xp || 0,
+        level: updatedStats?.level || 1,
+        coins: updatedStats?.coins || 0,
+        current_streak: updatedStats?.current_streak || 1,
+        max_streak: updatedStats?.max_streak || 1,
+        skill_points: updatedStats?.skill_points || 0,
+        stat_lenguajes: updatedStats?.stat_lenguajes || newLenguajes
+      }
+    };
   },
 
   saveQuest: async (subjectId, questData) => {
@@ -736,7 +890,10 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
   },
 
   fetchMissions: async () => {
-    set({ isLoadingMissions: true });
+    // Si ya tenemos misiones en memoria, revalidar en segundo plano sin bloquear la UI (Stale-While-Revalidate)
+    if (!get().isInitialized) {
+      set({ isLoadingMissions: true });
+    }
     try {
       const response = await supabase.from('missions').select('*, quests(*)');
       if (response.error) {
@@ -754,7 +911,9 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
         };
       });
 
-      set({ missionsList: missionsWithSortedQuests });
+      if (missionsWithSortedQuests.length > 0) {
+        set({ missionsList: missionsWithSortedQuests });
+      }
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : String(err);
       console.warn('Utilizando misiones locales cacheadas (Aviso Supabase):', errorMsg);
