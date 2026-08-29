@@ -9,6 +9,8 @@ import { AhorcadoPlayer } from '@/components/games/AhorcadoPlayer';
 import { FlashcardsPlayer } from '@/components/games/FlashcardsPlayer';
 import { GenericGameStub } from '@/components/games/GenericGameStub';
 import { InteractiveUniversalGamePlayer } from '@/components/games/InteractiveUniversalGamePlayer';
+import { LogicMathInteractivePlayer } from '@/components/studio/player/LogicMathInteractivePlayer';
+import { LogicActivityPreset } from '@/data/mathematicalLogicActivities';
 
 interface ISkoolActivityPlayerProps {
   activity: CanvasActivityJSON;
@@ -24,7 +26,53 @@ export const ISkoolActivityPlayer: React.FC<ISkoolActivityPlayerProps> = ({
   onComplete
 }) => {
   const renderGameComponent = () => {
-    switch (templateType.toLowerCase()) {
+    const normTemplate = templateType.toLowerCase();
+
+    if (normTemplate === 'logic_math' || normTemplate === 'logica_matematica' || (activity as any).logicChallengeData) {
+      const challengeData = (activity as any).logicChallengeData || {};
+      const preset: LogicActivityPreset = {
+        id: activity.title || 'custom-logic',
+        templateType: 'logic_math',
+        title: activity.title || 'Reto de Lógica Matemática',
+        level: 'primaria_media',
+        faseNem: (activity as any).faseNem || 'Fase 4',
+        levelLabel: (activity as any).targetAge || 'Educación Básica',
+        targetAge: activity.targetAge || 'Nivel Escolar',
+        description: activity.description || 'Resuelve el acertijo lógico analizando las reglas dadas.',
+        problemLore: challengeData.problemLore || activity.description || 'Analiza el escenario y aplica pensamiento computacional.',
+        pdaNem: (activity as any).pdaNem || 'Desarrolla habilidades de pensamiento lógico y algoritmia.',
+        campoFormativo: activity.campoFormativo || 'Saberes y Pensamiento Científico',
+        badgeReward: (activity as any).badgeReward || { name: 'Pensador Algorítmico', icon: '🧠', description: '¡Reto de lógica superado!' },
+        gamificationSettings: (activity as any).gamificationSettings || {
+          timeLimitSeconds: 60,
+          lives: 3,
+          streakMultiplier: true,
+          passScorePercentage: 75,
+          xpBaseReward: 150,
+          coinsReward: 30
+        },
+        logicType: challengeData.logicType || 'conditions',
+        simulationConfig: challengeData.simulationConfig || {
+          engine: 'circuit_gates',
+          initialState: {},
+          targetState: {},
+          options: (activity.questions || []).map((q: any, i: number) => ({
+            id: `opt-${i}`,
+            label: q.question || `Opción ${i + 1}`,
+            isCorrect: q.correctIndex === i,
+            icon: '🔹',
+            detail: q.explanation || ''
+          }))
+        },
+        pedagogicalExplanation: challengeData.pedagogicalExplanation || 'Las computadoras procesan datos mediante reglas condicionales y algoritmos precisos.',
+        classroomActivity: challengeData.classroomActivity || 'Prueba modelar este problema en el pizarrón con tus compañeros de clase.',
+        hints: challengeData.hints || ['Examina las reglas paso a paso.', 'Verifica qué opciones rompen alguna restricción.']
+      };
+
+      return <LogicMathInteractivePlayer activity={preset} onClose={onClose} onComplete={onComplete} />;
+    }
+
+    switch (normTemplate) {
       case 'trivia':
         return <TriviaPlayer activity={activity} onClose={onClose} onComplete={onComplete} />;
       

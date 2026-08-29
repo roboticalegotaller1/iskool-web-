@@ -8,6 +8,7 @@ import { CommunityActivity, CanvasActivityJSON } from '@/types';
 import { ISkoolActivityPlayer } from './ISkoolActivityPlayer';
 import { AssignToClassModal } from './AssignToClassModal';
 import { getIndependenceCommunityActivities } from '@/data/mexicanIndependenceActivities';
+import { getMathematicalLogicCommunityActivities } from '@/data/mathematicalLogicActivities';
 import { 
   Heart, 
   Sparkles, 
@@ -22,7 +23,9 @@ import {
   MessageSquare,
   Award,
   Rocket,
-  X
+  X,
+  Binary,
+  GraduationCap
 } from 'lucide-react';
 
 export const TeacherCommunityView: React.FC = () => {
@@ -33,7 +36,8 @@ export const TeacherCommunityView: React.FC = () => {
   const [selectedActivity, setSelectedActivity] = useState<CommunityActivity | null>(null);
   const [assigningActivity, setAssigningActivity] = useState<CommunityActivity | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'independencia' | 'quiz' | 'visual' | 'puzzle' | 'challenge'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'logic_math' | 'independencia' | 'quiz' | 'visual' | 'puzzle' | 'challenge'>('all');
+  const [levelFilter, setLevelFilter] = useState<'all' | 'fase_3' | 'fase_4' | 'fase_5' | 'fase_6'>('all');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -48,6 +52,7 @@ export const TeacherCommunityView: React.FC = () => {
     setIsLoading(true);
     try {
       const independenceActivities = getIndependenceCommunityActivities();
+      const logicActivities = getMathematicalLogicCommunityActivities();
 
       // 1. Obtener actividades creadas en la BD
       const { data: activitiesData, error: actError } = await supabase
@@ -57,18 +62,19 @@ export const TeacherCommunityView: React.FC = () => {
 
       if (actError) {
         console.warn('Supabase fetch error, combinando con mock data:', actError);
-        setActivities(getMockCommunityActivities());
+        setActivities([...logicActivities, ...independenceActivities, ...getMockCommunityActivities()]);
       } else if (activitiesData && activitiesData.length > 0) {
-        // Combinar actividades creadas por usuarios en Supabase con el catálogo de 40 de Independencia
+        // Combinar actividades creadas por usuarios en Supabase con los catálogos oficiales
         const dbIds = new Set(activitiesData.map(a => a.id));
         const combined = [
           ...(activitiesData as CommunityActivity[]),
+          ...logicActivities.filter(a => !dbIds.has(a.id)),
           ...independenceActivities.filter(a => !dbIds.has(a.id))
         ];
         combined.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
         setActivities(combined);
       } else {
-        setActivities(getMockCommunityActivities());
+        setActivities([...logicActivities, ...independenceActivities, ...getMockCommunityActivities()]);
       }
 
       // 2. Obtener votos emitidos por el profesor actual
@@ -146,6 +152,13 @@ export const TeacherCommunityView: React.FC = () => {
 
   // Conteos dinámicos para las pestañas de filtros
   const counts = useMemo(() => {
+    const logic_math = activities.filter(act => 
+      act.template_type.toLowerCase() === 'logic_math' || 
+      act.template_type.toLowerCase() === 'logica_matematica' || 
+      act.id.startsWith('comm-logic-') ||
+      Boolean((act.content_json as any)?.logicChallengeData)
+    ).length;
+
     const indep = activities.filter(act => 
       act.id.startsWith('indep-') || 
       act.title.toLowerCase().includes('independencia') || 
@@ -161,7 +174,7 @@ export const TeacherCommunityView: React.FC = () => {
     const puzzle = activities.filter(act => ['ahorcado', 'match', 'sentence_builder', 'escape_room', 'crucigrama', 'word_detective', 'sopa_letras', 'clasificacion'].includes(act.template_type.toLowerCase())).length;
     const challenge = activities.filter(act => ['carrera_math', 'tf_explosivo', 'simon_says', 'batalla_respuestas', 'treasure_hunt'].includes(act.template_type.toLowerCase())).length;
 
-    return { total: activities.length, indep, quiz, visual, puzzle, challenge };
+    return { total: activities.length, logic_math, indep, quiz, visual, puzzle, challenge };
   }, [activities]);
 
   // Filtrado de Actividades
@@ -174,6 +187,24 @@ export const TeacherCommunityView: React.FC = () => {
         (act.content_json?.description && act.content_json.description.toLowerCase().includes(q));
 
       if (!matchesSearch) return false;
+
+      // Filtro por Nivel Educativo (Fases NEM)
+      if (levelFilter !== 'all') {
+        const actFase = (act.content_json as any)?.faseNem?.toLowerCase().replace(' ', '_');
+        const matchesLevel = actFase === levelFilter || 
+          (levelFilter === 'fase_3' && (act.title.includes('Fase 3') || act.content_json?.targetAge?.includes('6-8') || act.content_json?.targetAge?.includes('Primaria Baja'))) ||
+          (levelFilter === 'fase_4' && (act.title.includes('Fase 4') || act.content_json?.targetAge?.includes('8-10') || act.content_json?.targetAge?.includes('Primaria Media') || act.content_json?.targetAge?.includes('Educación Básica'))) ||
+          (levelFilter === 'fase_5' && (act.title.includes('Fase 5') || act.content_json?.targetAge?.includes('10-12') || act.content_json?.targetAge?.includes('Primaria Alta'))) ||
+          (levelFilter === 'fase_6' && (act.title.includes('Fase 6') || act.content_json?.targetAge?.includes('12-15') || act.content_json?.targetAge?.includes('Secundaria')));
+        if (!matchesLevel) return false;
+      }
+
+      if (categoryFilter === 'logic_math') {
+        return act.template_type.toLowerCase() === 'logic_math' || 
+          act.template_type.toLowerCase() === 'logica_matematica' || 
+          act.id.startsWith('comm-logic-') ||
+          Boolean((act.content_json as any)?.logicChallengeData);
+      }
 
       if (categoryFilter === 'independencia') {
         return act.id.startsWith('indep-') || 
@@ -203,7 +234,7 @@ export const TeacherCommunityView: React.FC = () => {
 
       return true;
     });
-  }, [activities, searchQuery, categoryFilter]);
+  }, [activities, searchQuery, categoryFilter, levelFilter]);
 
   return (
     <div className="w-full space-y-8 animate-fade-in">
@@ -227,7 +258,7 @@ export const TeacherCommunityView: React.FC = () => {
             Comunidad Docente
           </h1>
           <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">
-            Explora más de 40 juegos creados y catalogados por otros profesores, apóyalos con tu voto y clónalos a tus grupos.
+            Explora más de 80 juegos y retos de lógica matemática catalogados por profesores, apóyalos con tu voto y clónalos a tus grupos.
           </p>
         </div>
 
@@ -259,84 +290,129 @@ export const TeacherCommunityView: React.FC = () => {
       </div>
 
       {/* Barra de Filtros por Categoría */}
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setCategoryFilter('all')}
-          aria-label="Ver todas las actividades"
-          className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer ${
-            categoryFilter === 'all'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25'
-              : 'bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800 hover:bg-slate-50'
-          }`}
-        >
-          Todas ({counts.total})
-        </button>
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('all')}
+            aria-label="Ver todas las actividades"
+            className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer ${
+              categoryFilter === 'all'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25'
+                : 'bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800 hover:bg-slate-50'
+            }`}
+          >
+            Todas ({counts.total})
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setCategoryFilter('independencia')}
-          aria-label="Filtrar por Independencia de México"
-          className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
-            categoryFilter === 'independencia'
-              ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/25 ring-2 ring-purple-400'
-              : 'bg-white dark:bg-zinc-900 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/60 hover:bg-purple-50 dark:hover:bg-purple-950/40'
-          }`}
-        >
-          <span>🇲🇽 Independencia de México ({counts.indep})</span>
-        </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('logic_math')}
+            aria-label="Filtrar por Lógica Matemática y Pensamiento Computacional"
+            className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+              categoryFilter === 'logic_math'
+                ? 'bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 text-white shadow-md shadow-cyan-500/25 ring-2 ring-cyan-400'
+                : 'bg-white dark:bg-zinc-900 text-cyan-700 dark:text-cyan-300 border border-cyan-200/70 dark:border-cyan-800/70 hover:bg-cyan-50 dark:hover:bg-cyan-950/40'
+            }`}
+          >
+            <Binary className="w-4 h-4" />
+            <span>🧮 Lógica Matemática ({counts.logic_math})</span>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setCategoryFilter('quiz')}
-          aria-label="Filtrar por tipo Quiz"
-          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-            categoryFilter === 'quiz'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
-          }`}
-        >
-          Quizzes & Ruletas ({counts.quiz})
-        </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('independencia')}
+            aria-label="Filtrar por Independencia de México"
+            className={`px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+              categoryFilter === 'independencia'
+                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/25 ring-2 ring-purple-400'
+                : 'bg-white dark:bg-zinc-900 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/60 hover:bg-purple-50 dark:hover:bg-purple-950/40'
+            }`}
+          >
+            <span>🇲🇽 Independencia de México ({counts.indep})</span>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setCategoryFilter('visual')}
-          aria-label="Filtrar por tipo Visual"
-          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-            categoryFilter === 'visual'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
-          }`}
-        >
-          Visuales & Memoramas ({counts.visual})
-        </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('quiz')}
+            aria-label="Filtrar por tipo Quiz"
+            className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+              categoryFilter === 'quiz'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+            }`}
+          >
+            Quizzes & Ruletas ({counts.quiz})
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setCategoryFilter('puzzle')}
-          aria-label="Filtrar por tipo Puzzle"
-          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-            categoryFilter === 'puzzle'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
-          }`}
-        >
-          Puzzles & Escape Rooms ({counts.puzzle})
-        </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('visual')}
+            aria-label="Filtrar por tipo Visual"
+            className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+              categoryFilter === 'visual'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+            }`}
+          >
+            Visuales & Memoramas ({counts.visual})
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setCategoryFilter('challenge')}
-          aria-label="Filtrar por tipo Challenge"
-          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-            categoryFilter === 'challenge'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
-          }`}
-        >
-          Desafíos & Carreras ({counts.challenge})
-        </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('puzzle')}
+            aria-label="Filtrar por tipo Puzzle"
+            className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+              categoryFilter === 'puzzle'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+            }`}
+          >
+            Puzzles & Escape Rooms ({counts.puzzle})
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setCategoryFilter('challenge')}
+            aria-label="Filtrar por tipo Challenge"
+            className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+              categoryFilter === 'challenge'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-800'
+            }`}
+          >
+            Desafíos & Carreras ({counts.challenge})
+          </button>
+        </div>
+
+        {/* Sub-Filtros por Nivel Educativo (Fases NEM) */}
+        <div className="flex flex-wrap items-center gap-2 p-2.5 rounded-2xl bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-xs">
+          <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-1.5 pr-2">
+            <GraduationCap className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <span>Nivel Educativo:</span>
+          </span>
+
+          {[
+            { id: 'all', label: 'Todos los Grados' },
+            { id: 'fase_3', label: '🐣 Fase 3 (1º-2º Primaria)' },
+            { id: 'fase_4', label: '🎨 Fase 4 (3º-4º Primaria)' },
+            { id: 'fase_5', label: '🚀 Fase 5 (5º-6º Primaria)' },
+            { id: 'fase_6', label: '⚡ Fase 6 (Secundaria)' }
+          ].map((level) => (
+            <button
+              key={level.id}
+              type="button"
+              onClick={() => setLevelFilter(level.id as any)}
+              className={`px-3 py-1 rounded-xl font-bold transition-all cursor-pointer ${
+                levelFilter === level.id
+                  ? 'bg-cyan-600 text-white shadow-sm'
+                  : 'bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200'
+              }`}
+            >
+              {level.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Modal Reproductor Visual (Fábrica de Actividades ISkool) con Portal al Viewport */}

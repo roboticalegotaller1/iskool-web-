@@ -386,6 +386,132 @@ const createDefaultBlock = (type: StudioBlockType, index: number = 0): StudioBlo
         }
       } as AudioSfxBlock;
 
+    case 'logic_challenge_interactive':
+      return {
+        id,
+        type: 'logic_challenge_interactive',
+        title: 'Reto de Lógica: La Hora del Lunch',
+        isCollapsed: false,
+        position,
+        data: {
+          storyText: 'Lala puede llevar 4 tipos de alimento (Manzanas, Peras, Mangos, Dulces). Reglas: 1) No puede comer mango dos días seguidos. 2) Si hoy lleva dulces, mañana debe llevar manzana o pera.',
+          problemQuestion: '¿Qué combinación de alimentos para los 5 días de la semana cumple rigurosamente con todas las reglas?',
+          logicCategory: 'conditions',
+          educationalLevel: 'fase_3',
+          interactiveEngine: 'switch_rules',
+          options: [
+            { id: 'opt-1', label: 'Lunes: Mango, Martes: Manzana, Miércoles: Pera, Jueves: Mango, Viernes: Pera', isCorrect: true, icon: '🍎', detail: 'Cumple ambas condiciones' },
+            { id: 'opt-2', label: 'Lunes: Mango, Martes: Mango, Miércoles: Dulces, Jueves: Manzana, Viernes: Pera', isCorrect: false, icon: '🥭', detail: 'Rompe la regla del mango consecutivo' },
+            { id: 'opt-3', label: 'Lunes: Dulces, Martes: Mango, Miércoles: Pera, Jueves: Mango, Viernes: Dulces', isCorrect: false, icon: '🍬', detail: 'Rompe la regla del dulce seguido de fruta' }
+          ],
+          pedagogicalExplanation: 'Las computadoras siguen reglas llamadas "Condiciones" (IF-THEN). Al combinar múltiples condiciones, el sistema verifica todas antes de tomar una decisión válida.',
+          classroomActivity: 'Juego de "Si... Entonces...": Los estudiantes ejecutan una acción física únicamente si cumplen la condición mencionada por el docente.',
+          hints: ['Observa qué alimento tiene restricción de días consecutivos.', 'Revisa la regla especial que se activa tras consumir dulces.']
+        }
+      } as any;
+
+    case 'boolean_circuit_builder':
+      return {
+        id,
+        type: 'boolean_circuit_builder',
+        title: 'Circuito Lógico: Prende la Luz',
+        isCollapsed: false,
+        position,
+        data: {
+          circuitTitle: 'Red de Compuertas AND y XOR',
+          instructions: 'Activa la combinación correcta de interruptores para que la señal eléctrica encienda el foco final.',
+          switchesCount: 8,
+          gates: [
+            { id: 'g1', type: 'AND', inputs: [0, 1], outputTarget: 'g4' },
+            { id: 'g2', type: 'XOR', inputs: [2, 3], outputTarget: 'g5' },
+            { id: 'g3', type: 'AND', inputs: [4, 5], outputTarget: 'foco' }
+          ],
+          targetLightState: true,
+          validCombinationsCount: 16,
+          solutionKey: '11010000',
+          pedagogicalExplanation: 'Los procesadores utilizan compuertas AND (ambas señales activas) y XOR (solo una activa) para realizar operaciones binarias a nivel de hardware.',
+          classroomActivity: 'Compuertas Humanas: Tres estudiantes actúan como entradas y compuerta lógica con tarjetas de 0 y 1 para predecir la salida.'
+        }
+      } as any;
+
+    case 'graph_network_path':
+      return {
+        id,
+        type: 'graph_network_path',
+        title: 'Exploración de Redes & Grafos',
+        isCollapsed: false,
+        position,
+        data: {
+          graphType: 'bfs_propagation',
+          storyPrompt: 'Un mensaje inicia en el nodo central. ¿Cuántos días o saltos de red se requieren para alcanzar todos los pueblos vecinos?',
+          nodes: [
+            { id: 'J', label: 'Pueblo J (Origen)', x: 50, y: 50, isStart: true },
+            { id: 'E', label: 'Pueblo E', x: 35, y: 40 },
+            { id: 'H', label: 'Pueblo H', x: 45, y: 30 },
+            { id: 'G', label: 'Pueblo G', x: 40, y: 70 },
+            { id: 'M', label: 'Pueblo M', x: 65, y: 60 },
+            { id: 'Q', label: 'Pueblo Q (Destino)', x: 15, y: 20, isTarget: true }
+          ],
+          edges: [
+            { from: 'J', to: 'E' }, { from: 'J', to: 'H' }, { from: 'J', to: 'G' }, { from: 'J', to: 'M' },
+            { from: 'E', to: 'Q' }
+          ],
+          correctPath: ['J', 'E', 'Q'],
+          correctAnswer: 4,
+          pedagogicalExplanation: 'La Búsqueda en Amplitud (BFS) explora redes capa por capa, siendo la base de algoritmos de rutas, redes sociales y difusión de datos.',
+          classroomActivity: 'Red Social en Pizarrón: Dibujar una red de nodos y calcular los grados de separación entre alumnos.'
+        }
+      } as any;
+
+    case 'turing_step_simulator':
+      return {
+        id,
+        type: 'turing_step_simulator',
+        title: 'Simulador de Autómata & Robot Agrícola',
+        isCollapsed: false,
+        position,
+        data: {
+          simulatorType: 'turing_tape',
+          initialTape: ['🌸', '🌷', '🌻', 'X', '_', '_', '_'],
+          rules: [
+            { state: 'q0', readSymbol: 'X', writeSymbol: '🌸', move: 'R', nextState: 'q1' },
+            { state: 'q1', readSymbol: '_', writeSymbol: '🌸', move: 'L', nextState: 'q2' }
+          ],
+          targetGoalDescription: 'Plantar flores en efecto espejo a partir de la casilla central X siguiendo las instrucciones del cabezal.',
+          maxSteps: 10,
+          options: [
+            { id: 'o1', label: 'Espejo simétrico de flores en el lado derecho', isCorrect: true },
+            { id: 'o2', label: 'Flores alternadas sin orden simétrico', isCorrect: false },
+            { id: 'o3', label: 'Cinta vacía al finalizar los ciclos', isCorrect: false }
+          ],
+          pedagogicalExplanation: 'Una máquina de Turing lee, escribe en cinta y se desplaza según un estado interno, modelando el funcionamiento fundamental de todo procesador.',
+          classroomActivity: 'Robot de Papel: Seguir una secuencia de instrucciones con tarjetas físicas y verificar el estado final en el aula.'
+        }
+      } as any;
+
+    case 'constraint_scheduler':
+      return {
+        id,
+        type: 'constraint_scheduler',
+        title: 'Planificador de Procesos & Turnos (CSP)',
+        isCollapsed: false,
+        position,
+        data: {
+          schedulerType: 'timetable_grid',
+          scenarioDescription: 'Seis colaboradores deben distribuirse en 3 días de trabajo agrícola cooperativo sin que nadie trabaje más de 2 días seguidos.',
+          entities: [
+            { id: 'e1', name: 'Ana', requirements: ['Lunes', 'Martes', 'Sábado'], duration: 1 },
+            { id: 'e2', name: 'Beto', requirements: ['Lunes', 'Martes', 'Miércoles'], duration: 1 },
+            { id: 'e3', name: 'Carlos', requirements: ['Martes', 'Jueves', 'Sábado'], duration: 1 }
+          ],
+          slotsOrDays: ['Lunes', 'Martes', 'Sábado'],
+          rules: ['Mínimo 4 personas por jornada', 'Nadie puede participar en las 3 jornadas simultáneamente'],
+          correctAssignment: { 'Lunes': ['e1', 'e2'], 'Martes': ['e1', 'e2', 'e3'], 'Sábado': ['e1', 'e3'] },
+          pedagogicalExplanation: 'Los problemas de Satisfacción de Restricciones (CSP) son fundamentales para la optimización de recursos, planificadores de CPU y logística.',
+          classroomActivity: 'Organizador de Torneos: Asignar consolas y turnos entre estudiantes cumpliendo restricciones sin conflictos.'
+        }
+      } as any;
+
     default:
       return {
         id,

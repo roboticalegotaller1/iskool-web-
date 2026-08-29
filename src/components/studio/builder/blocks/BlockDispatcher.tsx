@@ -19,6 +19,7 @@ import { CheckpointGateBlockView } from './CheckpointGateBlockView';
 import { BadgeCertificateBlockView } from './BadgeCertificateBlockView';
 import { AudioSfxBlockView } from './AudioSfxBlockView';
 import { TimedReadingBlockView } from './TimedReadingBlockView';
+import { LogicMathBlockView } from './LogicMathBlockView';
 
 interface Props {
   block: StudioBlock;
@@ -36,6 +37,12 @@ export const BlockDispatcher: React.FC<Props> = ({ block }) => {
       return <RewardChestBlockView block={block} />;
     case 'boss_enemy':
       return <BossEnemyBlockView block={block} />;
+    case 'logic_challenge_interactive':
+    case 'boolean_circuit_builder':
+    case 'graph_network_path':
+    case 'turing_step_simulator':
+    case 'constraint_scheduler':
+      return <LogicMathBlockView block={block} />;
     case 'youtube_video':
       return <YouTubeVideoBlockView block={block} />;
     case 'external_embed':

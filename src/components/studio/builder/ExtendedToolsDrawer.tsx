@@ -29,12 +29,19 @@ import {
   MessageSquare,
   ShieldCheck,
   Award,
-  Compass
+  Compass,
+  Binary,
+  Cpu,
+  Network,
+  Boxes,
+  Bot,
+  ToggleLeft,
+  BrainCircuit
 } from 'lucide-react';
 
 interface ToolItem {
   type: StudioBlockType;
-  category: 'assessments' | 'multimedia' | 'gamification' | 'pedagogy';
+  category: 'assessments' | 'multimedia' | 'gamification' | 'pedagogy' | 'logic_math';
   title: string;
   description: string;
   icon: any;
@@ -46,7 +53,7 @@ interface ToolItem {
 
 export const ExtendedToolsDrawer: React.FC = () => {
   const { isExtendedMenuOpen, setIsExtendedMenuOpen, addBlock } = useActivityBuilderStore();
-  const [activeTab, setActiveTab] = useState<'all' | 'assessments' | 'multimedia' | 'gamification' | 'pedagogy'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'assessments' | 'multimedia' | 'gamification' | 'pedagogy' | 'logic_math'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   const tools: ToolItem[] = [
@@ -233,6 +240,62 @@ export const ExtendedToolsDrawer: React.FC = () => {
       badge: 'Lectura',
       platformInspiration: 'Storytelling'
     },
+    // === 5. LÓGICA MATEMÁTICA & PENSAMIENTO COMPUTACIONAL ===
+    {
+      type: 'logic_challenge_interactive',
+      category: 'logic_math',
+      title: 'Reto de Lógica & Condiciones',
+      description: 'Desafíos de patrones, reglas condicionales IF-THEN, ordenamiento y optimización con retroalimentación.',
+      icon: BrainCircuit,
+      gradient: 'from-cyan-500 to-blue-600 text-white',
+      glow: 'shadow-cyan-500/20',
+      badge: 'Lógica Algorítmica',
+      platformInspiration: 'Desafíos de Lógica'
+    },
+    {
+      type: 'boolean_circuit_builder',
+      category: 'logic_math',
+      title: 'Compuertas & Circuitos Booleanos',
+      description: 'Simulador visual interactivo de compuertas AND, OR, NOT, XOR con cables luminosos y focos.',
+      icon: ToggleLeft,
+      gradient: 'from-blue-600 to-indigo-700 text-white',
+      glow: 'shadow-blue-500/20',
+      badge: 'Compuertas Lógicas',
+      platformInspiration: 'Simulador de Hardware'
+    },
+    {
+      type: 'graph_network_path',
+      category: 'logic_math',
+      title: 'Redes, Grafos & Rutas BFS',
+      description: 'Exploración de mapas interconectados, senderos de Euler, flujo máximo y propagación en amplitud (BFS).',
+      icon: Network,
+      gradient: 'from-indigo-500 to-purple-600 text-white',
+      glow: 'shadow-indigo-500/20',
+      badge: 'Teoría de Grafos',
+      platformInspiration: 'Algoritmia de Redes'
+    },
+    {
+      type: 'turing_step_simulator',
+      category: 'logic_math',
+      title: 'Autómatas & Máquinas de Turing',
+      description: 'Cabezal lector/escritor sobre cinta de símbolos, autómatas finitos y algoritmos de recorrido paso a paso.',
+      icon: Bot,
+      gradient: 'from-teal-500 to-emerald-600 text-white',
+      glow: 'shadow-teal-500/20',
+      badge: 'Simulador de Cinta',
+      platformInspiration: 'Máquina de Turing'
+    },
+    {
+      type: 'constraint_scheduler',
+      category: 'logic_math',
+      title: 'Restricciones & Planificador CSP',
+      description: 'Optimización de recursos, balanceo de carga en procesadores y calendarización de tareas complejas.',
+      icon: Boxes,
+      gradient: 'from-amber-500 to-orange-600 text-white',
+      glow: 'shadow-amber-500/20',
+      badge: 'Algoritmos CSP',
+      platformInspiration: 'Planificación de Procesos'
+    },
   ];
 
   // Filtrado por Pestaña y por Búsqueda en Vivo
@@ -278,11 +341,11 @@ export const ExtendedToolsDrawer: React.FC = () => {
                       Catálogo de Herramientas LMS Gamificado
                     </h3>
                     <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
-                      16 Mecánicas
+                      21 Mecánicas
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-zinc-400">
-                    Elige entre evaluaciones interactivas, laboratorios vivos, minijuegos y rutas adaptativas.
+                    Elige entre evaluaciones interactivas, laboratorios vivos, retos de lógica matemática, minijuegos y rutas adaptativas.
                   </p>
                 </div>
               </div>
@@ -314,7 +377,8 @@ export const ExtendedToolsDrawer: React.FC = () => {
             {/* Pestañas de Categoría */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 shrink-0">
               {[
-                { id: 'all', label: '🌟 Todos (16)' },
+                { id: 'all', label: '🌟 Todos (21)' },
+                { id: 'logic_math', label: '🧮 Lógica Matemática & Algoritmia' },
                 { id: 'assessments', label: '⚡ Evaluaciones Interactivas' },
                 { id: 'multimedia', label: '🎬 Multimedia & Laboratorios' },
                 { id: 'gamification', label: '🎮 Gamificación & Retos' },

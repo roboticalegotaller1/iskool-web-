@@ -27,11 +27,18 @@ import {
   Lightbulb,
   Workflow,
   Search,
-  Plus
+  Plus,
+  Binary,
+  Cpu,
+  Network,
+  Boxes,
+  Bot,
+  ToggleLeft,
+  BrainCircuit
 } from 'lucide-react';
 
 export interface BlockCategoryItem {
-  id: 'assessments' | 'multimedia' | 'gamification' | 'pedagogy';
+  id: 'assessments' | 'multimedia' | 'gamification' | 'pedagogy' | 'logic_math';
   name: string;
   badge: string;
   icon: any;
@@ -281,6 +288,72 @@ export const SCRATCH_CATEGORIES: BlockCategoryItem[] = [
         example: 'Diploma oficial "Maestro de las Ciencias Exactas" otorgado por el colegio.',
         icon: Award,
         gradient: 'from-amber-400 to-yellow-500',
+        glowColor: 'shadow-amber-500/30'
+      }
+    ]
+  },
+  {
+    id: 'logic_math',
+    name: 'Lógica Matemática & Algoritmia',
+    badge: '5 Bloques',
+    icon: Binary,
+    color: 'from-cyan-600 via-blue-600 to-indigo-700',
+    description: 'Retos de pensamiento computacional, compuertas booleanas, autómatas, grafos y satisfacción de restricciones.',
+    example: 'Ideal para olimpiadas de lógica, retos interactivos por niveles (1º Primaria a 3º Secundaria) y simuladores animados.',
+    blocks: [
+      {
+        type: 'logic_challenge_interactive',
+        title: 'Reto de Lógica & Condiciones',
+        category: 'Lógica Matemática',
+        badge: '🧠 Razonamiento',
+        description: 'Desafíos de patrones, reglas condicionales IF-THEN, ordenamiento y optimización con retroalimentación.',
+        example: 'La hora del lunch, dibujos arreglados, collares de amistad y secuencias lógicas.',
+        icon: BrainCircuit,
+        gradient: 'from-cyan-500 to-blue-600',
+        glowColor: 'shadow-cyan-500/30'
+      },
+      {
+        type: 'boolean_circuit_builder',
+        title: 'Compuertas & Circuitos Booleanos',
+        category: 'Lógica Matemática',
+        badge: '⚡ Compuertas Lógicas',
+        description: 'Simulador visual interactivo de compuertas AND, OR, NOT, XOR con cables luminosos y focos.',
+        example: 'Juego "Prende la Luz": activa los switches correctos para encender la bombilla.',
+        icon: ToggleLeft,
+        gradient: 'from-blue-600 to-indigo-700',
+        glowColor: 'shadow-blue-500/30'
+      },
+      {
+        type: 'graph_network_path',
+        title: 'Redes, Grafos & Rutas BFS',
+        category: 'Lógica Matemática',
+        badge: '🕸️ Teoría de Grafos',
+        description: 'Exploración de mapas interconectados, senderos de Euler, flujo máximo y propagación en amplitud (BFS).',
+        example: 'El mensaje del cartero en la isla, barquitos de Euler y rutas de transporte público.',
+        icon: Network,
+        gradient: 'from-indigo-500 to-purple-600',
+        glowColor: 'shadow-indigo-500/30'
+      },
+      {
+        type: 'turing_step_simulator',
+        title: 'Autómatas & Máquinas de Turing',
+        category: 'Lógica Matemática',
+        badge: '🤖 Simulador de Cinta',
+        description: 'Cabezal lector/escritor sobre cinta de símbolos, autómatas finitos y algoritmos de recorrido paso a paso.',
+        example: 'Robot agrícola plantador de flores, laberinto de comandos y autómatas de vajilla.',
+        icon: Bot,
+        gradient: 'from-teal-500 to-emerald-600',
+        glowColor: 'shadow-teal-500/30'
+      },
+      {
+        type: 'constraint_scheduler',
+        title: 'Restricciones & Planificador CSP',
+        category: 'Lógica Matemática',
+        badge: '⏱️ Algoritmos CSP',
+        description: 'Optimización de recursos, balanceo de carga en procesadores y calendarización de tareas complejas.',
+        example: 'Tradición Du-re, balanceo de velas de adviento y ordenamiento Shortest Job First.',
+        icon: Boxes,
+        gradient: 'from-amber-500 to-orange-600',
         glowColor: 'shadow-amber-500/30'
       }
     ]

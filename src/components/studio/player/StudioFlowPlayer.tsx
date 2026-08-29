@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StudioBlock, ActivityBuilderMetadata, FlowConnection } from '@/types/studioBlocks';
+import { LogicMathInteractivePlayer } from './LogicMathInteractivePlayer';
+import { LogicActivityPreset } from '@/data/mathematicalLogicActivities';
 import { 
   Sparkles, 
   Trophy, 
@@ -636,7 +638,65 @@ export const StudioFlowPlayer: React.FC<Props> = ({
           transition={{ duration: 0.2 }}
           className="space-y-4"
         >
-          {/* ================= 0. LECTURA CRONOMETRADA & COMPRENSIÓN (PPM) ================= */}
+          {/* ================= 0. RETOS DE LÓGICA MATEMÁTICA & ALGORITMIA ================= */}
+          {(activeBlock?.type === 'logic_challenge_interactive' || 
+            activeBlock?.type === 'boolean_circuit_builder' || 
+            activeBlock?.type === 'graph_network_path' || 
+            activeBlock?.type === 'turing_step_simulator' || 
+            activeBlock?.type === 'constraint_scheduler') && (() => {
+            const bData = (activeBlock as any).data || {};
+            const preset: LogicActivityPreset = {
+              id: activeBlock.id,
+              templateType: 'logic_math',
+              title: activeBlock.title || 'Reto de Lógica Matemática',
+              level: 'primaria_media',
+              faseNem: 'Fase 4',
+              levelLabel: 'Lógica & Algoritmia',
+              targetAge: metadata.targetAge || 'Educación Básica',
+              description: bData.problemQuestion || bData.instructions || bData.storyPrompt || bData.scenarioDescription || 'Resuelve el desafío aplicando pensamiento computacional.',
+              problemLore: bData.storyText || bData.storyPrompt || bData.scenarioDescription || bData.instructions || 'Analiza el escenario lógico.',
+              pdaNem: metadata.pdaNem || 'Desarrolla habilidades de pensamiento lógico y algorítmico.',
+              campoFormativo: metadata.campoFormativo || 'Saberes y Pensamiento Científico',
+              badgeReward: { name: 'Pensador Algorítmico', icon: '🧠', description: '¡Reto de lógica superado!' },
+              gamificationSettings: {
+                timeLimitSeconds: bData.timeLimitSeconds || 60,
+                lives: 3,
+                streakMultiplier: true,
+                passScorePercentage: 75,
+                xpBaseReward: 150,
+                coinsReward: 30
+              },
+              logicType: bData.logicCategory || 'conditions',
+              simulationConfig: {
+                engine: bData.interactiveEngine || (activeBlock.type === 'boolean_circuit_builder' ? 'circuit_gates' : activeBlock.type === 'graph_network_path' ? 'graph_explorer' : activeBlock.type === 'turing_step_simulator' ? 'step_automaton' : 'grid_selector'),
+                initialState: bData.initialTape ? { tape: bData.initialTape } : bData.nodes ? { nodes: bData.nodes } : {},
+                targetState: bData.targetGoalDescription ? { target: bData.targetGoalDescription } : {},
+                options: bData.options || [
+                  { id: 'opt-1', label: 'Solución correcta demostrada', isCorrect: true, icon: '✅', detail: 'Satisface todas las reglas del problema' },
+                  { id: 'opt-2', label: 'Configuración alternativa no viable', isCorrect: false, icon: '❌', detail: 'Rompe una condición previa' }
+                ]
+              },
+              pedagogicalExplanation: bData.pedagogicalExplanation || 'Las computadoras evalúan reglas y patrones para resolver problemas eficientemente.',
+              classroomActivity: bData.classroomActivity || 'Modela este problema en el pizarrón o con tarjetas físicas.',
+              hints: bData.hints || ['Examina cada regla con calma antes de decidir.', 'Prueba descartar las opciones imposibles.']
+            };
+
+            return (
+              <div className="space-y-4">
+                <LogicMathInteractivePlayer
+                  activity={preset}
+                  onComplete={(score) => {
+                    handleNextStep(score > 0 ? 150 : 0);
+                  }}
+                  onClose={() => {
+                    handleNextStep(100);
+                  }}
+                />
+              </div>
+            );
+          })()}
+
+          {/* ================= 0.1 LECTURA CRONOMETRADA & COMPRENSIÓN (PPM) ================= */}
           {activeBlock?.type === 'timed_reading_block' && (() => {
             const { readingText = '', timeLimitSeconds = 60, comprehensionQuestions = [], wordCount = 0 } = activeBlock.data;
             const actualWords = wordCount || (readingText.trim() ? readingText.trim().split(/\s+/).length : 0);

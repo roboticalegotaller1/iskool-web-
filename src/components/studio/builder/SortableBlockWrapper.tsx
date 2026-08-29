@@ -32,7 +32,14 @@ import {
   MessageSquare,
   KeyRound,
   ShieldCheck,
-  Award
+  Award,
+  Binary,
+  Cpu,
+  Network,
+  Bot,
+  Boxes,
+  ToggleLeft,
+  BrainCircuit
 } from 'lucide-react';
 
 export interface Props {
@@ -163,6 +170,41 @@ export const BLOCK_META: Record<StudioBlockType, { label: string; icon: any; col
     colorScheme: 'border-violet-200/90 dark:border-violet-900/60 shadow-violet-500/5',
     badgeBg: 'bg-violet-100/90 dark:bg-violet-950 text-violet-700 dark:text-violet-300 border-violet-200/60',
     glow: 'hover:border-violet-400 dark:hover:border-violet-700 hover:shadow-violet-500/10'
+  },
+  logic_challenge_interactive: {
+    label: 'Reto de Lógica & Condiciones',
+    icon: BrainCircuit,
+    colorScheme: 'border-cyan-200/90 dark:border-cyan-900/60 shadow-cyan-500/5',
+    badgeBg: 'bg-cyan-100/90 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border-cyan-200/60',
+    glow: 'hover:border-cyan-400 dark:hover:border-cyan-700 hover:shadow-cyan-500/10'
+  },
+  boolean_circuit_builder: {
+    label: 'Compuertas & Circuitos Booleanos',
+    icon: ToggleLeft,
+    colorScheme: 'border-blue-200/90 dark:border-blue-900/60 shadow-blue-500/5',
+    badgeBg: 'bg-blue-100/90 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border-blue-200/60',
+    glow: 'hover:border-blue-400 dark:hover:border-blue-700 hover:shadow-blue-500/10'
+  },
+  graph_network_path: {
+    label: 'Redes, Grafos & Rutas BFS',
+    icon: Network,
+    colorScheme: 'border-indigo-200/90 dark:border-indigo-900/60 shadow-indigo-500/5',
+    badgeBg: 'bg-indigo-100/90 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border-indigo-200/60',
+    glow: 'hover:border-indigo-400 dark:hover:border-indigo-700 hover:shadow-indigo-500/10'
+  },
+  turing_step_simulator: {
+    label: 'Autómatas & Máquinas de Turing',
+    icon: Bot,
+    colorScheme: 'border-teal-200/90 dark:border-teal-900/60 shadow-teal-500/5',
+    badgeBg: 'bg-teal-100/90 dark:bg-teal-950 text-teal-700 dark:text-teal-300 border-teal-200/60',
+    glow: 'hover:border-teal-400 dark:hover:border-teal-700 hover:shadow-teal-500/10'
+  },
+  constraint_scheduler: {
+    label: 'Restricciones & Planificador CSP',
+    icon: Boxes,
+    colorScheme: 'border-amber-200/90 dark:border-amber-900/60 shadow-amber-500/5',
+    badgeBg: 'bg-amber-100/90 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-200/60',
+    glow: 'hover:border-amber-400 dark:hover:border-amber-700 hover:shadow-amber-500/10'
   },
 };
 

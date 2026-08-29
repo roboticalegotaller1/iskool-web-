@@ -11,6 +11,13 @@ export type StudioBlockType =
   | 'reward_chest'         // Recompensas: XP, Monedas de oro, Gemas, Insignias
   | 'boss_enemy'           // Encuentro de combate contra Boss / Enemigo Pixi
 
+  // Herramientas de Lógica Matemática & Pensamiento Computacional
+  | 'logic_challenge_interactive' // Reto interactivo de lógica, estados y condiciones
+  | 'boolean_circuit_builder'     // Simulador de compuertas lógicas (AND, OR, NOT, XOR)
+  | 'graph_network_path'          // Recorrido de grafos, rutas de Euler, flujos y BFS
+  | 'turing_step_simulator'       // Autómatas finitos y cinta de máquina de Turing
+  | 'constraint_scheduler'        // Satisfacción de restricciones (CSP), colas FIFO y balanceo
+
   // Herramientas Extendidas LMS (Menú [+])
   | 'youtube_video'        // Video educativo incrustado con marcas de tiempo
   | 'external_embed'       // Simuladores interactivos (PhET, GeoGebra, Desmos)
@@ -288,6 +295,95 @@ export interface TimedReadingBlock extends BaseStudioBlock {
 }
 
 /**
+ * 18. Bloque de Reto Interactivo de Lógica y Algoritmia
+ */
+export interface LogicChallengeInteractiveBlock extends BaseStudioBlock {
+  type: 'logic_challenge_interactive';
+  data: {
+    storyText: string;
+    problemQuestion: string;
+    logicCategory: 'conditions' | 'patterns' | 'binary' | 'sorting' | 'state_machine' | 'optimization';
+    educationalLevel: 'fase_3' | 'fase_4' | 'fase_5' | 'fase_6'; // Primaria Baja a Secundaria
+    interactiveEngine: 'switch_rules' | 'image_pattern' | 'queue_fifo' | 'binary_counter' | 'grid_selector' | 'greedy_match';
+    options?: { id: string; label: string; isCorrect: boolean; icon?: string; detail?: string }[];
+    interactiveConfig?: Record<string, any>;
+    pedagogicalExplanation: string; // ¿Cómo es informática / pensamiento computacional?
+    classroomActivity: string;       // Continúa aprendiendo (actividad física en aula)
+    hints: string[];
+    timeLimitSeconds?: number;
+  };
+}
+
+/**
+ * 19. Bloque de Simulador de Compuertas Lógicas y Circuitos Booleanos
+ */
+export interface BooleanCircuitBuilderBlock extends BaseStudioBlock {
+  type: 'boolean_circuit_builder';
+  data: {
+    circuitTitle: string;
+    instructions: string;
+    switchesCount: number; // e.g., 4 or 8 switches
+    gates: { id: string; type: 'AND' | 'OR' | 'NOT' | 'XOR'; inputs: number[]; outputTarget: string }[];
+    targetLightState: boolean;
+    validCombinationsCount: number;
+    solutionKey: string;
+    pedagogicalExplanation: string;
+    classroomActivity: string;
+  };
+}
+
+/**
+ * 20. Bloque de Recorrido de Grafos y Redes
+ */
+export interface GraphNetworkPathBlock extends BaseStudioBlock {
+  type: 'graph_network_path';
+  data: {
+    graphType: 'bfs_propagation' | 'euler_trail' | 'shortest_path' | 'max_flow';
+    storyPrompt: string;
+    nodes: { id: string; label: string; x: number; y: number; isStart?: boolean; isTarget?: boolean }[];
+    edges: { from: string; to: string; weight?: number; directed?: boolean }[];
+    correctPath: string[];
+    correctAnswer: string | number;
+    pedagogicalExplanation: string;
+    classroomActivity: string;
+  };
+}
+
+/**
+ * 21. Bloque de Autómata y Máquina de Turing en Cinta
+ */
+export interface TuringStepSimulatorBlock extends BaseStudioBlock {
+  type: 'turing_step_simulator';
+  data: {
+    simulatorType: 'turing_tape' | 'grid_bot' | 'state_automaton';
+    initialTape: string[];
+    rules: { state: string; readSymbol: string; writeSymbol: string; move: 'L' | 'R' | 'STAY'; nextState: string }[];
+    targetGoalDescription: string;
+    maxSteps: number;
+    options?: { id: string; label: string; isCorrect: boolean }[];
+    pedagogicalExplanation: string;
+    classroomActivity: string;
+  };
+}
+
+/**
+ * 22. Bloque de Satisfacción de Restricciones y Planificación (CSP)
+ */
+export interface ConstraintSchedulerBlock extends BaseStudioBlock {
+  type: 'constraint_scheduler';
+  data: {
+    schedulerType: 'timetable_grid' | 'sjf_priority' | 'memory_shift' | 'load_balance';
+    scenarioDescription: string;
+    entities: { id: string; name: string; requirements: string[]; duration?: number; weight?: number }[];
+    slotsOrDays: string[];
+    rules: string[];
+    correctAssignment: Record<string, string | string[]>;
+    pedagogicalExplanation: string;
+    classroomActivity: string;
+  };
+}
+
+/**
  * Unión discriminada de todos los bloques didácticos (Lienzo Digital)
  */
 export type StudioBlock =
@@ -296,6 +392,11 @@ export type StudioBlock =
   | TimedReadingBlock
   | RewardChestBlock
   | BossEnemyBlock
+  | LogicChallengeInteractiveBlock
+  | BooleanCircuitBuilderBlock
+  | GraphNetworkPathBlock
+  | TuringStepSimulatorBlock
+  | ConstraintSchedulerBlock
   | YouTubeVideoBlock
   | ExternalEmbedBlock
   | DragDropMatchBlock
