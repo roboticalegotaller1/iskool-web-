@@ -701,6 +701,7 @@ export default function TeacherDashboard() {
           <TeacherHubCards
             teacherName={`${currentTeacher.first_name || 'Profesor(a)'} ${currentTeacher.last_name || ''}`}
             onSelectAction={(action) => {
+              if (action === 'classroom') setCurrentMenuTab('classroom');
               if (action === 'classes') setCurrentMenuTab('evaluation');
               if (action === 'studio') router.push('/teacher/studio');
               if (action === 'community') router.push('/teacher/community');

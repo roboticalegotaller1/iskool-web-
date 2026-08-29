@@ -14,7 +14,7 @@ import util from 'util';
 
 const execPromise = util.promisify(exec);
 
-const OBSIDIAN_VAULT_PATH = 'C:\\Users\\kami-\\Desktop\\2025-2026\\iskool\\obsidean\\brain\\iskool';
+const OBSIDIAN_VAULT_PATH = process.env.OBSIDIAN_VAULT_PATH || 'C:\\Users\\kami-\\Desktop\\2025-2026\\iskool\\obsidean\\brain\\iskool';
 
 const ObsidianQuerySchema = z.object({
   q: z.string().trim().min(1, 'El parámetro de búsqueda "q" es requerido').max(300),
