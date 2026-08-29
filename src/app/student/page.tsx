@@ -12,6 +12,7 @@ import { AnimeAvatarSprite } from '@/components/AnimeAvatarSprite';
 import SagaMap from '@/components/SagaMap';
 import { Loader } from '@/components/Loader';
 import { useHydration } from '@/hooks/useHydration';
+import { useClassroomStore } from '@/store/useClassroomStore';
 
 // Carga diferida de componentes pesados e interactivos bajo demanda
 const AvatarCustomizer = dynamic(
@@ -64,6 +65,10 @@ export default function StudentDashboard() {
   const unsubscribeFromPortfolioChanges = usePortfolioStore(state => state.unsubscribeFromPortfolioChanges);
   const fetchMissions = useGamificationStore(state => state.fetchMissions);
   
+  const edictosList = useClassroomStore(state => state.edictosList);
+  const recordSocioemotionalCheckin = useClassroomStore(state => state.recordSocioemotionalCheckin);
+  const [studentMoodFeedback, setStudentMoodFeedback] = useState<string | null>(null);
+
   const rawStats = useCurrentStudentStats();
   const rawAvatar = useCurrentStudentAvatar();
 
@@ -913,8 +918,73 @@ export default function StudentDashboard() {
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950">
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
+        {/* BANNER DEL GREMIO: EDICTO ACTIVO & PULSO SOCIOEMOCIONAL */}
+        {edictosList.length > 0 && (
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 border border-indigo-800/60 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-fade-in">
+            <div className="flex items-start gap-3">
+              <div className="p-2.5 rounded-2xl bg-indigo-500/20 text-indigo-300 shrink-0 mt-0.5 border border-indigo-400/30">
+                <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200">
+                    📜 Edicto del Aula
+                  </span>
+                  {edictosList[0].xpBonusPercent && (
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-500/30 text-amber-300 border border-amber-400/30">
+                      +{edictosList[0].xpBonusPercent}% XP Activo
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-sm sm:text-base font-black text-white">
+                  {edictosList[0].title}
+                </h3>
+                <p className="text-xs text-indigo-200/90 line-clamp-2">
+                  {edictosList[0].content}
+                </p>
+              </div>
+            </div>
+
+            {/* Termómetro Socioemocional Rápido del Alumno */}
+            <div className="bg-white/10 p-3 rounded-2xl border border-white/10 shrink-0 w-full md:w-auto text-center space-y-1.5">
+              <span className="text-[10px] font-black uppercase text-indigo-200 block">
+                {studentMoodFeedback ? studentMoodFeedback : '¿Cómo te sientes hoy?'}
+              </span>
+              <div className="flex items-center justify-center gap-2">
+                {[
+                  { mood: 'energized' as const, icon: '🚀', label: 'Enérgico' },
+                  { mood: 'motivated' as const, icon: '😊', label: 'Motivado' },
+                  { mood: 'peaceful' as const, icon: '🧘', label: 'Tranquilo' },
+                  { mood: 'tired' as const, icon: '🥱', label: 'Cansado' },
+                  { mood: 'support_needed' as const, icon: '🆘', label: 'Apoyo' }
+                ].map(item => (
+                  <button
+                    key={item.mood}
+                    type="button"
+                    onClick={() => {
+                      recordSocioemotionalCheckin({
+                        studentId: activeStudentId || 'std-current',
+                        studentName: avatar?.avatar_name || 'Estudiante',
+                        groupId: 'grp-4a',
+                        date: new Date().toISOString().split('T')[0],
+                        mood: item.mood
+                      });
+                      setStudentMoodFeedback(`¡Ánimo ${item.icon}! +10 XP registrado`);
+                      setTimeout(() => setStudentMoodFeedback(null), 4000);
+                    }}
+                    title={item.label}
+                    className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-lg transition-transform hover:scale-125 cursor-pointer"
+                  >
+                    <span>{item.icon}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Renderizado Condicional por Nivel */}
         {activeLevel === 'primaria' && renderPrimariaBaja()}
         {activeLevel === 'secundaria' && renderSecundariaRPG()}

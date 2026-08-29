@@ -17,7 +17,7 @@ import {
   ChevronDown, ChevronUp, RefreshCw, FileCode,
   ZoomIn, ZoomOut, Maximize2, Users, Palette,
   X, MapPin, Phone, Mail, User, AlertTriangle, Bell,
-  Bookmark, Save, Sparkles, Lock, ArrowLeft
+  Bookmark, Save, Sparkles, Lock, ArrowLeft, Zap
 } from 'lucide-react';
 import { FormattedDate } from '@/components/FormattedDate';
 import dynamic from 'next/dynamic';
@@ -42,6 +42,26 @@ const AttendanceCompendiumModal = dynamic(
 
 const TeacherCommunityView = dynamic(
   () => import('@/components/TeacherCommunityView').then((mod) => mod.TeacherCommunityView),
+  { ssr: false }
+);
+
+const GuildBoardView = dynamic(
+  () => import('@/components/classroom/GuildBoardView').then((mod) => mod.GuildBoardView),
+  { ssr: false }
+);
+
+const LiveClassModeModal = dynamic(
+  () => import('@/components/classroom/LiveClassModeModal').then((mod) => mod.LiveClassModeModal),
+  { ssr: false }
+);
+
+const InteractiveRubricModal = dynamic(
+  () => import('@/components/classroom/InteractiveRubricModal').then((mod) => mod.InteractiveRubricModal),
+  { ssr: false }
+);
+
+const RosterImporterModal = dynamic(
+  () => import('@/components/classroom/RosterImporterModal').then((mod) => mod.RosterImporterModal),
   { ssr: false }
 );
 
@@ -165,8 +185,13 @@ export default function TeacherDashboard() {
   // Estado para el modal de emergencia (SOS)
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
 
+  // Estados de Aula Digital & Gremio
+  const [isLiveClassModalOpen, setIsLiveClassModalOpen] = useState(false);
+  const [evaluatingSubmissionId, setEvaluatingSubmissionId] = useState<string | null>(null);
+  const [isRosterImporterOpen, setIsRosterImporterOpen] = useState(false);
+
   // Navegación principal del portal del profesor (Por defecto: 'hub' - Regla de los 3 Clics de Apple)
-  const [currentMenuTab, setCurrentMenuTab] = useState<'hub' | 'evaluation' | 'attendance' | 'tasks' | 'design' | 'planning' | 'canvas' | 'community'>('hub');
+  const [currentMenuTab, setCurrentMenuTab] = useState<'hub' | 'classroom' | 'evaluation' | 'attendance' | 'tasks' | 'design' | 'planning' | 'canvas' | 'community'>('hub');
 
   // Realtime toast notification state
   const [realtimeToast, setRealtimeToast] = useState<{ studentName: string; questTitle: string } | null>(null);
@@ -702,6 +727,7 @@ export default function TeacherDashboard() {
                   <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1 rounded-md">
                     {currentMenuTab === 'canvas' ? '✨ ISkool Canvas IA' :
                      currentMenuTab === 'community' ? '🌍 Comunidad Docente' :
+                     currentMenuTab === 'classroom' ? '🏛️ Aula Digital & Gremio' :
                      currentMenuTab === 'evaluation' ? 'Módulo de Evaluación Formativa' : 
                      currentMenuTab === 'attendance' ? 'Módulo de Asistencia Diaria' : 
                      currentMenuTab === 'design' ? 'Módulo de Planificación y Diseño' : 
@@ -710,6 +736,7 @@ export default function TeacherDashboard() {
                   <h1 className="text-2xl font-black text-zinc-950 dark:text-white mt-1">
                     {currentMenuTab === 'canvas' ? 'Estudio de Creación de Actividades' :
                      currentMenuTab === 'community' ? 'Red de Recursos Docentes Compartidos' :
+                     currentMenuTab === 'classroom' ? 'Tablón de Edictos, Dinámicas & Entregas' :
                      currentMenuTab === 'evaluation' ? 'Alineación Estructural NEM' :
                      currentMenuTab === 'attendance' ? 'Control de Asistencia de Grupos' :
                      currentMenuTab === 'design' ? 'Diseño y Planeación de Tareas NEM' :
@@ -722,6 +749,16 @@ export default function TeacherDashboard() {
               {(currentMenuTab !== 'canvas' && currentMenuTab !== 'community') && (
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
                   <div className="flex flex-wrap gap-1 bg-zinc-100 dark:bg-zinc-950 p-1.5 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 w-full xl:w-auto">
+                    <button
+                      onClick={() => setCurrentMenuTab('classroom')}
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                        currentMenuTab === 'classroom'
+                          ? 'bg-indigo-600 text-white shadow-sm'
+                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                      }`}
+                    >
+                      🏛️ Aula & Gremio
+                    </button>
                     <button
                       onClick={() => setCurrentMenuTab('evaluation')}
                       className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
@@ -764,14 +801,34 @@ export default function TeacherDashboard() {
                     </button>
                   </div>
                   
-                  {/* Acceso Directo al Estudio Docente */}
-                  <button
-                    onClick={() => router.push('/teacher/studio')}
-                    className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-black shadow-md shadow-purple-500/20 flex items-center gap-1.5 transition-all hover:scale-102 cursor-pointer shrink-0"
-                  >
-                    <Palette className="w-3.5 h-3.5" />
-                    <span>Estudio Docente</span>
-                  </button>
+                  {/* Acciones Rápidas del Aula */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setIsLiveClassModalOpen(true)}
+                      className="px-3.5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-2xl text-xs font-black shadow-md shadow-amber-500/20 flex items-center gap-1.5 transition-all hover:scale-102 cursor-pointer shrink-0"
+                      title="Abrir Modo Proyector de Clase en Pantalla Completa"
+                    >
+                      <Zap className="w-3.5 h-3.5 fill-slate-950" />
+                      <span>Proyector</span>
+                    </button>
+
+                    <button
+                      onClick={() => setIsRosterImporterOpen(true)}
+                      className="px-3.5 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-2xl text-xs font-black shadow-md shadow-cyan-500/20 flex items-center gap-1.5 transition-all hover:scale-102 cursor-pointer shrink-0"
+                      title="Importar lista de alumnos desde Excel o CSV"
+                    >
+                      <Users className="w-3.5 h-3.5" />
+                      <span>Importar</span>
+                    </button>
+
+                    <button
+                      onClick={() => router.push('/teacher/studio')}
+                      className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-black shadow-md shadow-purple-500/20 flex items-center gap-1.5 transition-all hover:scale-102 cursor-pointer shrink-0"
+                    >
+                      <Palette className="w-3.5 h-3.5" />
+                      <span>Estudio Docente</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -799,6 +856,14 @@ export default function TeacherDashboard() {
             {/* MÓDULO COMUNIDAD DOCENTE (RED SOCIAL DOCENTE) */}
             {currentMenuTab === 'community' && (
               <TeacherCommunityView />
+            )}
+
+            {/* MÓDULO AULA DIGITAL & TABLÓN DEL GREMIO */}
+            {currentMenuTab === 'classroom' && (
+              <GuildBoardView 
+                onOpenLiveClass={() => setIsLiveClassModalOpen(true)}
+                onOpenReviewSubmission={(id) => setEvaluatingSubmissionId(id)}
+              />
             )}
           </>
         )}
@@ -2829,6 +2894,24 @@ export default function TeacherDashboard() {
         initialSubjectId={selectedAttendanceSubject}
         teacherId={normalizedTeacherId}
       />
+
+      {/* Modales de Aula Digital & Gremio */}
+      {isLiveClassModalOpen && (
+        <LiveClassModeModal onClose={() => setIsLiveClassModalOpen(false)} />
+      )}
+
+      {evaluatingSubmissionId && (
+        <InteractiveRubricModal
+          submissionId={evaluatingSubmissionId}
+          onClose={() => setEvaluatingSubmissionId(null)}
+        />
+      )}
+
+      {isRosterImporterOpen && (
+        <RosterImporterModal
+          onClose={() => setIsRosterImporterOpen(false)}
+        />
+      )}
 
       {realtimeToast && (
         <div className="fixed bottom-6 right-6 z-[250] bg-zinc-950/90 border-2 border-indigo-500/50 backdrop-blur-xl p-4 rounded-2xl shadow-[0_0_25px_rgba(99,102,241,0.35)] flex items-center gap-3 animate-in slide-in-from-bottom-8 duration-300 max-w-sm">
