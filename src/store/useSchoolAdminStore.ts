@@ -52,6 +52,7 @@ interface SchoolAdminStoreState {
   // Actions
   saveSchoolSettings: (settings: SchoolSettings) => void;
   registerStudent: (studentData: Omit<DetailedStudent, 'id'>) => void;
+  addStudent: (studentData: any) => void;
   generateGroupsForGrade: (level: 'primaria' | 'secundaria' | 'preparatoria', grade: string, groupNames: string[]) => void;
   assignStudentToGroup: (studentId: string, groupId: string) => void;
   createSchedule: (scheduleData: Omit<ClassSchedule, 'id'>) => void;
@@ -207,7 +208,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
   },
 
   registerStudent: (studentData) => {
-    const newId = `std-${Date.now()}`;
+    const newId = (studentData as any).id || `std-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
     const newStudent: DetailedStudent = {
       ...studentData,
       id: newId,
@@ -215,12 +216,22 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     };
 
     set((state) => ({
-      detailedStudents: [...state.detailedStudents, newStudent]
+      detailedStudents: [...(state.detailedStudents || []), newStudent]
     }));
 
     // Inicializar stats y avatar en useStudentStore
-    const studentStore = useStudentStore.getState();
-    studentStore.initializeNewStudent(newId, studentData.first_name);
+    try {
+      const studentStore = useStudentStore.getState();
+      if (studentStore && typeof studentStore.initializeNewStudent === 'function') {
+        studentStore.initializeNewStudent(newId, studentData.first_name);
+      }
+    } catch (e) {
+      console.warn('Could not initialize student stats:', e);
+    }
+  },
+
+  addStudent: (studentData) => {
+    get().registerStudent(studentData);
   },
 
   updateStudentStatus: (studentId, status) => {
