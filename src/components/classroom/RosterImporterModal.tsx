@@ -113,10 +113,10 @@ export const RosterImporterModal: React.FC<Props> = ({
         group_id: targetGroupId,
         status: 'activo',
         photo_url: '/images/students/default.png',
-        tutor_email: row.guardianEmail || 'tutor@familia.com',
-        tutor_phone: row.guardianPhone || '55-1234-5678',
-        tags: ['Aula Digital', 'Importado']
-      });
+        email: row.guardianEmail || 'tutor@familia.com',
+        phone: row.guardianPhone || '55-1234-5678',
+        tutor_name: 'Tutor Familiar'
+      } as any);
       importedCount++;
     });
 

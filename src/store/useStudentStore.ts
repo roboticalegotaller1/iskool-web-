@@ -1003,60 +1003,7 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
     }
   },
 
-  initializeNewStudent: (studentId, firstName) => {
-    const newStats: StudentStats = {
-      student_id: studentId,
-      xp: 0,
-      level: 1,
-      coins: 50,
-      current_streak: 1,
-      max_streak: 1,
-      rpg_class: 'mago',
-      attribute_strength: 10,
-      attribute_intelligence: 10,
-      attribute_defense: 10,
-      skill_points: 0,
-      funding_credits: 1000,
-      pet_stage: 'egg',
-      pet_energy: 100,
-      pet_happiness: 100,
-      updated_at: new Date().toISOString()
-    };
 
-    const newAvatar: StudentAvatar = {
-      student_id: studentId,
-      avatar_name: firstName || 'Estudiante',
-      hair_style: 'classic',
-      hair_color: '#4B5563',
-      eyes_style: 'happy',
-      outfit_style: 'explorer',
-      outfit_color: '#3B82F6',
-      background_style: 'forest',
-      unlocked_items: ['classic', 'happy', 'explorer', 'forest'],
-      pet_type: 'dragon',
-      pet_name: 'Compañero',
-      pet_hunger: 80,
-      pet_happiness: 80,
-      pet_energy: 100,
-      pet_outfit: 'none',
-      updated_at: new Date().toISOString()
-    };
-
-    set((state) => ({
-      allStats: {
-        ...state.allStats,
-        [studentId]: newStats
-      },
-      allAvatars: {
-        ...state.allAvatars,
-        [studentId]: newAvatar
-      },
-      studentInventoryMap: {
-        ...state.studentInventoryMap,
-        [studentId]: ['art-potion-small']
-      }
-    }));
-  },
 
   resetStudentStore: () => {
     set({

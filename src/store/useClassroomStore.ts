@@ -170,7 +170,7 @@ export const useClassroomStore = create<ClassroomStore>()(
       activeLivePoll: null,
       heroPickerLogs: [],
       submissionsList: SEED_SUBMISSIONS,
-      selectedGroupId: 'grp-4a',
+      selectedGroupId: 'all',
 
       setSelectedGroupId: (groupId: string) => set({ selectedGroupId: groupId }),
 

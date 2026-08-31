@@ -87,7 +87,7 @@ export const GuildBoardView: React.FC<Props> = ({
 
     addEdicto({
       teacherId: user?.id || 'usr-teacher-1',
-      teacherName: user?.user_metadata?.full_name || 'Profesor Titular',
+      teacherName: (user as any)?.user_metadata?.full_name || `${user?.first_name || ''} ${user?.last_name || ''}`.trim() || 'Profesor Titular',
       groupId: selectedGroupId,
       groupName: groupsList.find(g => g.id === selectedGroupId)?.name || 'Grupo 4º A',
       title: newTitle.trim(),
@@ -111,7 +111,7 @@ export const GuildBoardView: React.FC<Props> = ({
 
     addCommentToEdicto(edictoId, {
       authorId: user?.id || 'usr-teacher-1',
-      authorName: user?.user_metadata?.full_name || 'Profesor Titular',
+      authorName: (user as any)?.user_metadata?.full_name || `${user?.first_name || ''} ${user?.last_name || ''}`.trim() || 'Profesor Titular',
       authorRole: 'teacher',
       text
     });
@@ -154,17 +154,6 @@ export const GuildBoardView: React.FC<Props> = ({
               <option key={g.id} value={g.id}>{g.name}</option>
             ))}
           </select>
-
-          {onOpenLiveClass && (
-            <button
-              type="button"
-              onClick={onOpenLiveClass}
-              className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/25 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
-            >
-              <Zap className="w-4 h-4 fill-slate-950" />
-              <span>Modo Proyector / Clase en Vivo</span>
-            </button>
-          )}
 
           <button
             type="button"
@@ -212,7 +201,7 @@ export const GuildBoardView: React.FC<Props> = ({
                   type="button"
                   onClick={() => recordSocioemotionalCheckin({
                     studentId: user?.id || 'std-test',
-                    studentName: user?.user_metadata?.full_name || 'Estudiante',
+                    studentName: (user as any)?.user_metadata?.full_name || `${user?.first_name || ''} ${user?.last_name || ''}`.trim() || 'Estudiante',
                     groupId: selectedGroupId,
                     date: today,
                     mood

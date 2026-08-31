@@ -64,7 +64,7 @@ export const StudentSubmissionModal: React.FC<Props> = ({
       questId,
       questTitle,
       studentId: user?.id || 'std-current',
-      studentName: user?.user_metadata?.full_name || 'Estudiante Héroe',
+      studentName: (user as any)?.user_metadata?.full_name || `${user?.first_name || ''} ${user?.last_name || ''}`.trim() || 'Estudiante Héroe',
       groupId,
       dueDate,
       evidenceType,

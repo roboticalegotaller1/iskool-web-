@@ -209,46 +209,51 @@ export const InteractiveRubricModal: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* 2. Matriz de Criterios de Rúbrica */}
-          <div className="space-y-4">
+          {/* 2. Criterios de Rúbrica en Listas Desplegables */}
+          <div className="space-y-3">
             <h3 className="text-xs font-black uppercase tracking-wider text-slate-400">
               Criterios de Evaluación Formativa:
             </h3>
 
-            <div className="space-y-4">
-              {RUBRIC_CRITERIA.map((crit) => (
-                <div key={crit.key} className="space-y-2">
-                  <div className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                    {crit.title}
-                  </div>
+            <div className="space-y-3">
+              {RUBRIC_CRITERIA.map((crit) => {
+                const selectedLevelKey = selectedLevels[crit.key];
+                const currentLvl = crit.levels.find(l => l.key === selectedLevelKey) || crit.levels[2];
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {crit.levels.map((lvl) => {
-                      const isSelected = selectedLevels[crit.key] === lvl.key;
-                      return (
-                        <button
-                          key={lvl.key}
-                          type="button"
-                          onClick={() => handleSelectLevel(crit.key, lvl.key)}
-                          className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-1.5 ${
-                            isSelected
-                              ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-500 text-indigo-900 dark:text-indigo-200 shadow-md shadow-indigo-500/15 ring-2 ring-indigo-400'
-                              : 'bg-slate-50 dark:bg-zinc-800/60 border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:border-slate-400'
-                          }`}
+                return (
+                  <div 
+                    key={crit.key} 
+                    className="p-3.5 rounded-2xl bg-slate-50 dark:bg-zinc-800/60 border border-slate-200 dark:border-zinc-700/80 space-y-2 transition-all"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <label className="text-xs font-black text-slate-800 dark:text-zinc-200">
+                        {crit.title}
+                      </label>
+
+                      {/* Lista Desplegable del Criterio */}
+                      <div className="relative">
+                        <select
+                          value={selectedLevelKey}
+                          onChange={(e) => handleSelectLevel(crit.key, e.target.value)}
+                          className="w-full sm:w-80 px-3.5 py-2 bg-white dark:bg-zinc-900 border-2 border-indigo-200 dark:border-indigo-800/70 hover:border-indigo-500 rounded-xl text-xs font-black text-indigo-700 dark:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm cursor-pointer"
                         >
-                          <div className="flex items-center justify-between font-black text-xs">
-                            <span>{lvl.label}</span>
-                            <span className="text-[10px] text-indigo-500">+{lvl.xp} XP</span>
-                          </div>
-                          <p className="text-[10px] text-slate-500 dark:text-zinc-400 leading-tight">
-                            {lvl.desc}
-                          </p>
-                        </button>
-                      );
-                    })}
+                          {crit.levels.map((lvl) => (
+                            <option key={lvl.key} value={lvl.key}>
+                              {lvl.label} (+{lvl.xp} XP / +{lvl.coins} 🪙)
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Descripción del nivel seleccionado */}
+                    <div className="text-[11px] text-slate-600 dark:text-zinc-400 font-medium flex items-start gap-1.5 pl-1 pt-0.5">
+                      <span className="text-indigo-500 font-bold shrink-0">💡 Detalle:</span>
+                      <span>{currentLvl.desc}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

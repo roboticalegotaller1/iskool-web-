@@ -192,10 +192,10 @@ export const TeacherCommunityView: React.FC = () => {
       if (levelFilter !== 'all') {
         const actFase = (act.content_json as any)?.faseNem?.toLowerCase().replace(' ', '_');
         const matchesLevel = actFase === levelFilter || 
-          (levelFilter === 'fase_3' && (act.title.includes('Fase 3') || act.content_json?.targetAge?.includes('6-8') || act.content_json?.targetAge?.includes('Primaria Baja'))) ||
-          (levelFilter === 'fase_4' && (act.title.includes('Fase 4') || act.content_json?.targetAge?.includes('8-10') || act.content_json?.targetAge?.includes('Primaria Media') || act.content_json?.targetAge?.includes('Educación Básica'))) ||
-          (levelFilter === 'fase_5' && (act.title.includes('Fase 5') || act.content_json?.targetAge?.includes('10-12') || act.content_json?.targetAge?.includes('Primaria Alta'))) ||
-          (levelFilter === 'fase_6' && (act.title.includes('Fase 6') || act.content_json?.targetAge?.includes('12-15') || act.content_json?.targetAge?.includes('Secundaria')));
+          (levelFilter === 'fase_3' && (act.title.includes('Fase 3') || (act.content_json as any)?.targetAge?.includes('6-8') || (act.content_json as any)?.targetAge?.includes('Primaria Baja'))) ||
+          (levelFilter === 'fase_4' && (act.title.includes('Fase 4') || (act.content_json as any)?.targetAge?.includes('8-10') || (act.content_json as any)?.targetAge?.includes('Primaria Media') || (act.content_json as any)?.targetAge?.includes('Educación Básica'))) ||
+          (levelFilter === 'fase_5' && (act.title.includes('Fase 5') || (act.content_json as any)?.targetAge?.includes('10-12') || (act.content_json as any)?.targetAge?.includes('Primaria Alta'))) ||
+          (levelFilter === 'fase_6' && (act.title.includes('Fase 6') || (act.content_json as any)?.targetAge?.includes('12-15') || (act.content_json as any)?.targetAge?.includes('Secundaria')));
         if (!matchesLevel) return false;
       }
 

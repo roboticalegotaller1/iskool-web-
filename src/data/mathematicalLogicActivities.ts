@@ -35,7 +35,10 @@ export interface LogicActivityPreset {
     | 'greedy_optimization' 
     | 'csp_scheduler' 
     | 'database_relational' 
-    | 'boolean_algebra';
+    | 'boolean_algebra'
+    | 'sorting'
+    | 'binary_search'
+    | string;
   simulationConfig: {
     engine: 'interactive_switches' | 'step_automaton' | 'graph_explorer' | 'binary_counter' | 'grid_selector' | 'sorter_tray' | 'circuit_gates';
     initialState: any;
@@ -1266,7 +1269,7 @@ export function getMathematicalLogicCommunityActivities(): CommunityActivity[] {
           classroomActivity: activity.classroomActivity,
           hints: activity.hints
         }
-      } as CanvasActivityJSON
+      } as unknown as CanvasActivityJSON
     };
   });
 }

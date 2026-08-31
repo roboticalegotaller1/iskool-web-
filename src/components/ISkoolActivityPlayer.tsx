@@ -37,11 +37,11 @@ export const ISkoolActivityPlayer: React.FC<ISkoolActivityPlayerProps> = ({
         level: 'primaria_media',
         faseNem: (activity as any).faseNem || 'Fase 4',
         levelLabel: (activity as any).targetAge || 'Educación Básica',
-        targetAge: activity.targetAge || 'Nivel Escolar',
+        targetAge: (activity as any).targetAge || 'Nivel Escolar',
         description: activity.description || 'Resuelve el acertijo lógico analizando las reglas dadas.',
         problemLore: challengeData.problemLore || activity.description || 'Analiza el escenario y aplica pensamiento computacional.',
         pdaNem: (activity as any).pdaNem || 'Desarrolla habilidades de pensamiento lógico y algoritmia.',
-        campoFormativo: activity.campoFormativo || 'Saberes y Pensamiento Científico',
+        campoFormativo: (activity as any).campoFormativo || 'Saberes y Pensamiento Científico',
         badgeReward: (activity as any).badgeReward || { name: 'Pensador Algorítmico', icon: '🧠', description: '¡Reto de lógica superado!' },
         gamificationSettings: (activity as any).gamificationSettings || {
           timeLimitSeconds: 60,
