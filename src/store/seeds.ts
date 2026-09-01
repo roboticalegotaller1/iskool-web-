@@ -22,8 +22,42 @@ import {
   AttendanceStatus,
   ParentMessage,
   ShopArtifact,
-  StudentMessage
+  StudentMessage,
+  Campus
 } from '../types';
+
+export const CAMPUSES_SEED: Campus[] = [
+  {
+    id: 'cmp-pri-jardines',
+    school_id: 'sch-jjr',
+    name: 'Primaria Jardines',
+    level: 'primaria',
+    grades: ['1º', '2º', '3º', '4º', '5º', '6º'],
+    address: 'Av. Las Palmas 402, Col. Jardines, CDMX',
+    phone: '55-4160-8801',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-pri-torres',
+    school_id: 'sch-jjr',
+    name: 'Primaria Torres',
+    level: 'primaria',
+    grades: ['1º', '2º', '3º', '4º', '5º', '6º'],
+    address: 'Calzada de las Torres 890, Col. Campestre, CDMX',
+    phone: '55-4160-8802',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-sec-torres',
+    school_id: 'sch-jjr',
+    name: 'Secundaria Torres',
+    level: 'secundaria',
+    grades: ['1º', '2º', '3º'],
+    address: 'Calzada de las Torres 892, Col. Campestre, CDMX',
+    phone: '55-4160-8803',
+    created_at: new Date().toISOString()
+  }
+];
 
 export const DEFAULT_ARTIFACTS_SEED: ShopArtifact[] = [
   { id: 'art-boots', name: 'Botas de Velocidad Escolar', description: 'Te permiten esquivar preguntas capciosas.', price: 10, icon: 'Footprints', effect: 'extra_attempt' },
@@ -98,9 +132,33 @@ export const STUDENT_MESSAGES_SEED: StudentMessage[] = [
 ];
 
 export const SUBJECTS_SEED: Subject[] = [
-  { id: 'sub-math', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Matemáticas', sep_code: 'MAT-4A', created_at: new Date().toISOString() },
-  { id: 'sub-span', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Español', sep_code: 'ESP-4A', created_at: new Date().toISOString() },
-  { id: 'sub-sci', school_id: 'sch-1', level_grade_id: 'lg-4', name: 'Ciencias Naturales', sep_code: 'CIE-4A', created_at: new Date().toISOString() }
+  // Curriculares Primaria
+  { id: 'sub-esp-pri', school_id: 'sch-jjr', level_grade_id: 'primaria', name: 'Lenguajes (Español)', sep_code: 'LEN-PRI', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-ing-pri', school_id: 'sch-jjr', level_grade_id: 'primaria', name: 'Lengua Extranjera (Inglés)', sep_code: 'ING-PRI', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-math-pri', school_id: 'sch-jjr', level_grade_id: 'primaria', name: 'Saberes y Pensamiento Científico (Matemáticas)', sep_code: 'SPC-MAT', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-cie-pri', school_id: 'sch-jjr', level_grade_id: 'primaria', name: 'Ciencias Naturales y Tecnología', sep_code: 'SPC-CIE', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-soc-pri', school_id: 'sch-jjr', level_grade_id: 'primaria', name: 'Ética, Naturaleza y Sociedades (Historia y Geografía)', sep_code: 'ENS-SOC', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-hum-pri', school_id: 'sch-jjr', level_grade_id: 'primaria', name: 'De lo Humano y lo Comunitario (Educación Socioemocional)', sep_code: 'DHC-SOC', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  
+  // Curriculares Secundaria
+  { id: 'sub-esp-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Lengua Materna (Español)', sep_code: 'LEN-SEC', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-ing-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Inglés Avanzado', sep_code: 'ING-SEC', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-mat-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Matemáticas y Razonamiento Lógico', sep_code: 'SPC-MSEC', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-fis-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Física y Métodos de Laboratorio', sep_code: 'SPC-FIS', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-his-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Historia de México y Ciudadanía', sep_code: 'ENS-HIS', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-fcye-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Formación Cívica y Ética', sep_code: 'ENS-FCYE', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+
+  // Materias Optativas / Talleres Oficiales Solicitados
+  { id: 'sub-opt-act-fisica', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Actividad Física', sep_code: 'OPT-ACF', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
+  { id: 'sub-opt-basquetbol', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Basquetbol', sep_code: 'OPT-BKB', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
+  { id: 'sub-opt-musica', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Música', sep_code: 'OPT-MUS', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
+  { id: 'sub-opt-robotica', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Robótica', sep_code: 'OPT-ROB', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
+  { id: 'sub-opt-danza', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Danza', sep_code: 'OPT-DAN', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
+
+  // Compatibilidad con IDs previos de misiones
+  { id: 'sub-math', school_id: 'sch-jjr', level_grade_id: 'lg-4', name: 'Matemáticas', sep_code: 'MAT-4A', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-span', school_id: 'sch-jjr', level_grade_id: 'lg-4', name: 'Español', sep_code: 'ESP-4A', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
+  { id: 'sub-sci', school_id: 'sch-jjr', level_grade_id: 'lg-4', name: 'Ciencias Naturales', sep_code: 'CIE-4A', category: 'curricular', is_elective: false, created_at: new Date().toISOString() }
 ];
 
 export const BADGES_SEED: Badge[] = [
@@ -330,10 +388,32 @@ export const STUDENTS_LIST_SEED: UserProfile[] = [
 ];
 
 export const GROUPS_SEED: Group[] = [
-  { id: 'grp-pb-a', school_id: 'sch-1', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() },
-  { id: 'grp-pa-a', school_id: 'sch-1', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() },
-  { id: 'grp-sec-a', school_id: 'sch-1', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() },
-  { id: 'grp-prep-a', school_id: 'sch-1', level_grade_id: 'preparatoria-4ºSemestre', level: 'preparatoria', grade: '4º Semestre', academic_year_id: 'ay-25-26', name: 'A', student_ids: [], created_at: new Date().toISOString() }
+  // Primaria Jardines (1º a 6º)
+  { id: 'grp-jar-1a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-jar-2a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-2º', level: 'primaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-jar-3a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-3º', level: 'primaria', grade: '3º', academic_year_id: 'ay-25-26', name: '3ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-jar-4a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: '4ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-jar-5a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-5º', level: 'primaria', grade: '5º', academic_year_id: 'ay-25-26', name: '5ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-jar-6a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-6º', level: 'primaria', grade: '6º', academic_year_id: 'ay-25-26', name: '6ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+
+  // Primaria Torres (1º a 6º)
+  { id: 'grp-tor-1a', school_id: 'sch-jjr', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-tor-2a', school_id: 'sch-jjr', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-2º', level: 'primaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-tor-3a', school_id: 'sch-jjr', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-3º', level: 'primaria', grade: '3º', academic_year_id: 'ay-25-26', name: '3ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-tor-4a', school_id: 'sch-jjr', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: '4ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-tor-5a', school_id: 'sch-jjr', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-5º', level: 'primaria', grade: '5º', academic_year_id: 'ay-25-26', name: '5ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-tor-6a', school_id: 'sch-jjr', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-6º', level: 'primaria', grade: '6º', academic_year_id: 'ay-25-26', name: '6ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+
+  // Secundaria Torres (1º a 3º)
+  { id: 'grp-sec-1a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-1º', level: 'secundaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-sec-2a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-sec-3a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-3º', level: 'secundaria', grade: '3º', academic_year_id: 'ay-25-26', name: '3ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
+
+  // Aliases de compatibilidad para simulación de estudiantes
+  { id: 'grp-pb-a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-pa-a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: '4ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-sec-a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-prep-a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-3º', level: 'secundaria', grade: '3º', academic_year_id: 'ay-25-26', name: '3ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() }
 ];
 
 export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
@@ -347,13 +427,13 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     curp: 'GÓPS190510HDFMRN01',
     enrollment_id: 'MAT-2025-pb-001',
     gender: 'Masculino',
-    shift: 'vespertino',
+    shift: 'matutino',
     status: 'activo',
     previous_school: 'Jardín de Niños Pipila',
     photo_url: '/images/students/std-pb.png',
-    address: 'Calle Juárez 10, Col. Centro, CDMX',
+    address: 'Calle Juárez 10, Col. Jardines, CDMX',
     phone: '555-123-1000',
-    email: 'santi.gómez@iskool.edu.mx',
+    email: 'santi.gomez@jjrosseau.edu.mx',
     father_name: 'Roberto Gómez',
     mother_name: 'Gabriela Pérez',
     tutor_name: 'Roberto Gómez',
@@ -364,8 +444,120 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     academic_notes: 'Excelente alumno, participa mucho en clase.',
     level: 'primaria',
     grade: '1º',
-    group_id: 'grp-pb-a',
+    group_id: 'grp-jar-1a',
+    campus_id: 'cmp-pri-jardines',
+    campus_name: 'Primaria Jardines',
+    temporary_password: 'San7K4',
+    is_blocked: false,
     pending_payments: ["Colegiatura Junio 2026"],
+    behavior_reports: [],
+    teacher_notes: []
+  },
+  {
+    id: 'std-pa',
+    first_name: 'Lucas',
+    second_name: 'Mateo',
+    last_name_1: 'Hernández',
+    last_name_2: 'Ruiz',
+    birth_date: '2016-08-15',
+    curp: 'HERL160815HDFMRN02',
+    enrollment_id: 'MAT-2025-pa-001',
+    gender: 'Masculino',
+    shift: 'matutino',
+    status: 'activo',
+    previous_school: 'Primaria Jardines',
+    photo_url: '/images/students/std-pa.png',
+    address: 'Av. Las Palmas 210, Col. Jardines, CDMX',
+    phone: '555-123-2000',
+    email: 'lucas.hernandez@jjrosseau.edu.mx',
+    father_name: 'Esteban Hernández',
+    mother_name: 'Sofía Ruiz',
+    tutor_name: 'Esteban Hernández',
+    emergency_contact_name: 'Sofía Ruiz',
+    emergency_contact_phone: '555-987-2001',
+    blood_type: 'A+',
+    medical_notes: 'Ninguna alergia.',
+    academic_notes: 'Gran desempeño en Matemáticas y Robótica.',
+    level: 'primaria',
+    grade: '4º',
+    group_id: 'grp-jar-4a',
+    campus_id: 'cmp-pri-jardines',
+    campus_name: 'Primaria Jardines',
+    temporary_password: 'Luc4P9',
+    is_blocked: false,
+    pending_payments: [],
+    behavior_reports: [],
+    teacher_notes: []
+  },
+  {
+    id: 'std-tor-1',
+    first_name: 'Mateo',
+    second_name: 'Benjamín',
+    last_name_1: 'Ortiz',
+    last_name_2: 'Medina',
+    birth_date: '2016-04-12',
+    curp: 'ORMM160412HDFMRN03',
+    enrollment_id: 'MAT-2025-tor-001',
+    gender: 'Masculino',
+    shift: 'matutino',
+    status: 'activo',
+    previous_school: 'Colegio del Valle',
+    photo_url: '/images/students/c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380b03.png',
+    address: 'Calzada de las Torres 450, Col. Campestre, CDMX',
+    phone: '555-123-3000',
+    email: 'mateo.ortiz@jjrosseau.edu.mx',
+    father_name: 'Roberto Ortiz',
+    mother_name: 'Gabriela Medina',
+    tutor_name: 'Roberto Ortiz',
+    emergency_contact_name: 'Gabriela Medina',
+    emergency_contact_phone: '555-987-3000',
+    blood_type: 'B+',
+    medical_notes: 'Ninguna.',
+    academic_notes: 'Destacado en Ciencias y Robótica.',
+    level: 'primaria',
+    grade: '4º',
+    group_id: 'grp-tor-4a',
+    campus_id: 'cmp-pri-torres',
+    campus_name: 'Primaria Torres',
+    temporary_password: 'Mat9X1',
+    is_blocked: false,
+    pending_payments: [],
+    behavior_reports: [],
+    teacher_notes: []
+  },
+  {
+    id: 'std-sec',
+    first_name: 'Elena',
+    second_name: 'Regina',
+    last_name_1: 'Salazar',
+    last_name_2: 'Castro',
+    birth_date: '2012-11-20',
+    curp: 'SACE121120MDFMRN04',
+    enrollment_id: 'MAT-2025-sec-001',
+    gender: 'Femenino',
+    shift: 'matutino',
+    status: 'activo',
+    previous_school: 'Primaria Torres',
+    photo_url: '/images/students/std-sec.png',
+    address: 'Calzada de las Torres 890, Col. Campestre, CDMX',
+    phone: '555-123-4000',
+    email: 'elena.salazar@jjrosseau.edu.mx',
+    father_name: 'Mauricio Salazar',
+    mother_name: 'Diana Castro',
+    tutor_name: 'Mauricio Salazar',
+    emergency_contact_name: 'Diana Castro',
+    emergency_contact_phone: '555-987-4000',
+    blood_type: 'O+',
+    medical_notes: 'Ninguna alergia.',
+    academic_notes: 'Líder en proyectos y destacada en Basquetbol.',
+    level: 'secundaria',
+    grade: '2º',
+    group_id: 'grp-sec-2a',
+    campus_id: 'cmp-sec-torres',
+    campus_name: 'Secundaria Torres',
+    temporary_password: 'Ele2W7',
+    is_blocked: false,
+    pending_payments: [],
     behavior_reports: [],
     teacher_notes: []
   },
@@ -1633,15 +1825,122 @@ export const SCHEDULES_SEED: ClassSchedule[] = [
   { id: 'sch-5', groupId: 'grp-prep-a', subjectId: 'sub-sci', teacherId: 'usr-teacher-1', dayOfWeek: 'Viernes', timeSlot: '10:00 - 11:30' }
 ];
 
-export const TEACHER_SEED: UserProfile = {
-  id: 'usr-teacher-1',
-  first_name: 'Israel',
-  last_name: 'López',
-  role: 'teacher',
-  email: 'israel.lopez@iskool.edu.mx',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString()
-};
+export const TEACHERS_LIST_SEED: UserProfile[] = [
+  {
+    id: 'usr-teacher-1',
+    first_name: 'Israel',
+    last_name: 'López',
+    role: 'teacher',
+    email: 'israel.lopez@jjrosseau.edu.mx',
+    campus_id: 'cmp-pri-jardines',
+    campus_name: 'Primaria Jardines',
+    ai_tokens_consumed: 68450,
+    is_blocked: false,
+    temporary_password: 'Isr9X2',
+    assigned_subjects: ['Matemáticas', 'Robótica'],
+    assigned_groups: ['4ºA Jardines', '5ºA Jardines'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-2',
+    first_name: 'María',
+    last_name: 'Fernández',
+    role: 'teacher',
+    email: 'maria.fernandez@jjrosseau.edu.mx',
+    campus_id: 'cmp-pri-jardines',
+    campus_name: 'Primaria Jardines',
+    ai_tokens_consumed: 45200,
+    is_blocked: false,
+    temporary_password: 'Mar3P8',
+    assigned_subjects: ['Español', 'Música'],
+    assigned_groups: ['1ºA Jardines', '2ºA Jardines'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-3',
+    first_name: 'Roberto',
+    last_name: 'Díaz',
+    role: 'teacher',
+    email: 'roberto.diaz@jjrosseau.edu.mx',
+    campus_id: 'cmp-pri-torres',
+    campus_name: 'Primaria Torres',
+    ai_tokens_consumed: 53100,
+    is_blocked: false,
+    temporary_password: 'Rob7K1',
+    assigned_subjects: ['Ciencias Naturales', 'Robótica'],
+    assigned_groups: ['4ºA Torres', '6ºA Torres'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-4',
+    first_name: 'Carmen',
+    last_name: 'Morales',
+    role: 'teacher',
+    email: 'carmen.morales@jjrosseau.edu.mx',
+    campus_id: 'cmp-pri-torres',
+    campus_name: 'Primaria Torres',
+    ai_tokens_consumed: 32800,
+    is_blocked: false,
+    temporary_password: 'Car5W4',
+    assigned_subjects: ['Historia y Geografía', 'Danza'],
+    assigned_groups: ['3ºA Torres', '5ºA Torres'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-5',
+    first_name: 'David',
+    last_name: 'Navarrete',
+    role: 'teacher',
+    email: 'david.navarrete@jjrosseau.edu.mx',
+    campus_id: 'cmp-sec-torres',
+    campus_name: 'Secundaria Torres',
+    ai_tokens_consumed: 79600,
+    is_blocked: false,
+    temporary_password: 'Dav2M9',
+    assigned_subjects: ['Física', 'Matemáticas', 'Basquetbol'],
+    assigned_groups: ['2ºA Secundaria Torres', '3ºA Secundaria Torres'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-6',
+    first_name: 'Elena',
+    last_name: 'Salazar',
+    role: 'teacher',
+    email: 'elena.salazar@jjrosseau.edu.mx',
+    campus_id: 'cmp-sec-torres',
+    campus_name: 'Secundaria Torres',
+    ai_tokens_consumed: 41900,
+    is_blocked: false,
+    temporary_password: 'Ele8V3',
+    assigned_subjects: ['Lengua Materna', 'Actividad Física'],
+    assigned_groups: ['1ºA Secundaria Torres', '2ºA Secundaria Torres'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-7',
+    first_name: 'Fernando',
+    last_name: 'Rangel',
+    role: 'teacher',
+    email: 'fernando.rangel@jjrosseau.edu.mx',
+    campus_id: 'cmp-sec-torres',
+    campus_name: 'Todos los Planteles',
+    ai_tokens_consumed: 24300,
+    is_blocked: false,
+    temporary_password: 'Fer4T7',
+    assigned_subjects: ['Actividad Física', 'Basquetbol'],
+    assigned_groups: ['Talleres Extracurriculares'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+];
+
+export const TEACHER_SEED: UserProfile = TEACHERS_LIST_SEED[0];
 
 export const PARENT_SEED: UserProfile = {
   id: 'usr-parent-1',

@@ -12,6 +12,17 @@ export type UserRole = 'superadmin' | 'admin' | 'director' | 'coordinator' | 'te
  * @relation Relación 1:1 con `auth.users` de Supabase. Referenciado en `Student` y `TeacherAssignment`.
  * @stateImpact Almacenado en `AuthContext` tras el inicio de sesión del usuario.
  */
+export interface Campus {
+  id: string;
+  school_id: string;
+  name: string; // e.g. "Primaria Jardines", "Primaria Torres", "Secundaria Torres"
+  level: 'primaria' | 'secundaria' | 'preparatoria';
+  grades: string[]; // e.g. ["1º", "2º", "3º", "4º", "5º", "6º"]
+  address?: string;
+  phone?: string;
+  created_at: string;
+}
+
 export interface UserProfile {
   id: string;
   first_name: string;
@@ -19,6 +30,13 @@ export interface UserProfile {
   role: UserRole;
   email: string;
   phone?: string;
+  campus_id?: string;
+  campus_name?: string;
+  ai_tokens_consumed?: number; // Contador de tokens consumidos del Asistente Pedagógico IA
+  is_blocked?: boolean; // Estado de bloqueo/cancelación de cuenta
+  temporary_password?: string; // Contraseña de acceso (6 caracteres alfanuméricos)
+  assigned_subjects?: string[];
+  assigned_groups?: string[];
   created_at: string;
   updated_at: string;
 }
@@ -36,6 +54,7 @@ export interface School {
   cct?: string; // Clave de Centro de Trabajo (SEP)
   address?: string;
   phone?: string;
+  campuses?: Campus[];
   created_at: string;
 }
 
@@ -96,6 +115,8 @@ export interface LevelGrade {
 export interface Group {
   id: string;
   school_id: string;
+  campus_id?: string;
+  campus_name?: string; // "Primaria Jardines", "Primaria Torres", "Secundaria Torres"
   level_grade_id: string;
   academic_year_id: string;
   name: string; // e.g., "A", "B"
@@ -112,7 +133,7 @@ export interface Group {
 
 /**
  * @interface Subject
- * @description Materia académica dictada en el colegio (e.g., Matemáticas).
+ * @description Materia académica dictada en el colegio (e.g., Matemáticas, Robótica).
  * @database Mapea a la tabla `public.subjects`.
  * @relation Vinculado a `School` (N:1) y `LevelGrade` (N:1). Referenciada en `Mission` y `Grade`.
  * @stateImpact Filtra el mapa de misiones y la segmentación de evidencias en el portafolio del estudiante.
@@ -120,9 +141,12 @@ export interface Group {
 export interface Subject {
   id: string;
   school_id: string;
+  campus_id?: string;
   level_grade_id: string;
-  name: string; // e.g., "Matemáticas"
+  name: string; // e.g., "Matemáticas", "Robótica", "Basquetbol"
   sep_code?: string;
+  is_elective?: boolean; // true para materias optativas (Actividad Física, Basquetbol, Música, Robótica, Danza)
+  category?: 'curricular' | 'optativa';
   created_at: string;
 }
 
@@ -662,6 +686,10 @@ export interface DetailedStudent {
   level: 'primaria' | 'secundaria' | 'preparatoria';
   grade: string;
   group_id?: string;
+  campus_id?: string;
+  campus_name?: string; // "Primaria Jardines", "Primaria Torres", "Secundaria Torres"
+  temporary_password?: string; // Contraseña generada de 6 dígitos alfanuméricos
+  is_blocked?: boolean;
 
   // Campos adicionales del expediente
   pending_payments?: string[];

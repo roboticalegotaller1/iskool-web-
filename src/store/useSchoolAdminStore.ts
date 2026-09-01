@@ -1,8 +1,18 @@
 import { create } from 'zustand';
-import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile } from '../types';
-import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHER_SEED, SUBJECTS_SEED } from './seeds';
+import { persist } from 'zustand/middleware';
+import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile, Campus } from '../types';
+import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHERS_LIST_SEED, SUBJECTS_SEED, CAMPUSES_SEED } from './seeds';
 import { useStudentStore } from './useStudentStore';
 import { supabase } from '@/lib/supabaseClient';
+
+export const generateRandomPassword = (length = 6): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
 
 const isUuid = (str?: string): boolean => {
   if (!str) return false;
@@ -11,10 +21,10 @@ const isUuid = (str?: string): boolean => {
 
 const mapGroupIdToUuid = (id: string): string => {
   if (isUuid(id)) return id;
-  if (id === 'grp-pb-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e11';
-  if (id === 'grp-pa-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e22';
-  if (id === 'grp-sec-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e33';
-  if (id === 'grp-prep-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e44';
+  if (id === 'grp-pb-a' || id === 'grp-jar-1a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e11';
+  if (id === 'grp-pa-a' || id === 'grp-jar-4a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e22';
+  if (id === 'grp-sec-a' || id === 'grp-sec-2a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e33';
+  if (id === 'grp-prep-a' || id === 'grp-sec-3a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e44';
   
   let hash1 = 0;
   let hash2 = 0;
@@ -32,14 +42,9 @@ const mapGroupIdToUuid = (id: string): string => {
   return 'a00a0eeb-9c0b-4ef8-bb6d-' + hex;
 };
 
-const INITIAL_TEACHERS_SEED: UserProfile[] = [
-  TEACHER_SEED,
-  { id: 'usr-teacher-2', first_name: 'María', last_name: 'Fernández', role: 'teacher', email: 'maria.fernandez@iskool.edu.mx', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: 'usr-teacher-3', first_name: 'Roberto', last_name: 'Díaz', role: 'teacher', email: 'roberto.diaz@iskool.edu.mx', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
-];
-
 interface SchoolAdminStoreState {
   schoolSettings: SchoolSettings;
+  campusesList: Campus[];
   detailedStudents: DetailedStudent[];
   groupsList: Group[];
   schedulesList: ClassSchedule[];
@@ -51,9 +56,10 @@ interface SchoolAdminStoreState {
 
   // Actions
   saveSchoolSettings: (settings: SchoolSettings) => void;
-  registerStudent: (studentData: Omit<DetailedStudent, 'id'>) => void;
-  addStudent: (studentData: any) => void;
-  generateGroupsForGrade: (level: 'primaria' | 'secundaria' | 'preparatoria', grade: string, groupNames: string[]) => void;
+  registerStudent: (studentData: Omit<DetailedStudent, 'id'>) => DetailedStudent;
+  addStudent: (studentData: any) => DetailedStudent;
+  bulkRegisterStudents: (studentsList: Array<Partial<DetailedStudent>>) => DetailedStudent[];
+  generateGroupsForGrade: (level: 'primaria' | 'secundaria' | 'preparatoria', grade: string, groupNames: string[], campusName?: string) => void;
   assignStudentToGroup: (studentId: string, groupId: string) => void;
   createSchedule: (scheduleData: Omit<ClassSchedule, 'id'>) => void;
   deleteSchedule: (scheduleId: string) => Promise<void>;
@@ -68,6 +74,17 @@ interface SchoolAdminStoreState {
   registerTeacher: (teacherData: Omit<UserProfile, 'id' | 'role' | 'created_at' | 'updated_at'>) => void;
   updateTeacher: (teacherId: string, updatedData: Partial<UserProfile>) => void;
   deleteTeacher: (teacherId: string) => void;
+
+  // Super User Security Actions
+  toggleUserBlock: (userId: string, role: 'teacher' | 'student', isBlocked: boolean) => void;
+  changeUserPassword: (userId: string, role: 'teacher' | 'student', newPassword?: string) => string;
+  incrementTeacherTokens: (teacherId: string, tokensUsed: number) => void;
+  
+  // Campus Management
+  createCampus: (campus: Omit<Campus, 'id' | 'created_at'>) => void;
+  updateCampus: (campusId: string, data: Partial<Campus>) => void;
+  deleteCampus: (campusId: string) => void;
+
   updateStudentStatus: (studentId: string, status: 'activo' | 'suspendido' | 'baja') => void;
   updateStudent: (studentId: string, updatedData: Partial<DetailedStudent>) => void;
   addTeacherNote: (studentId: string, note: { id?: string; date: string; note: string; teacher_name: string; parent_reply?: string; replied_at?: string }) => void;
@@ -104,135 +121,253 @@ export const applyThemeCssVariables = (themeColors?: { primary: string; secondar
 
 let saveSettingsTimeout: NodeJS.Timeout | null = null;
 
-export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => ({
-  schoolSettings: {
-    isConfigured: false,
-    name: 'Colegio Anglo Mexicano',
-    website: '',
-    logoUrl: '',
-    cct: '09DPR1234Z',
-    address: 'Av. Paseo de la Reforma 123, Ciudad de México',
-    phone: '555-019-2834',
-    coordinators: ['Carlos Duran', 'Ana Gómez'],
-    teachers: ['Israel López', 'María Fernández', 'Roberto Díaz'],
-    themeColors: {
-      primary: '250 84% 54%',
-      secondary: '221 83% 53%',
-      accent: '142 71% 45%'
-    }
-  },
-  detailedStudents: DETAILED_STUDENTS_SEED,
-  groupsList: GROUPS_SEED,
-  schedulesList: SCHEDULES_SEED,
-  subjectsList: SUBJECTS_SEED,
-  teachersList: INITIAL_TEACHERS_SEED,
-  attendanceList: ATTENDANCE_SEED,
-  parentMessages: PARENT_MESSAGES_SEED,
-  syncError: null,
-
-  saveSchoolSettings: (settings) => {
-    // Apply CSS root variables for active adaptive theme
-    applyThemeCssVariables(settings.themeColors);
-
-    // Sync any teacher names from settings.teachers into state.teachersList
-    const currentTeachersList = get().teachersList || [];
-    const updatedTeachersList: UserProfile[] = [...currentTeachersList];
-
-    if (settings.teachers && Array.isArray(settings.teachers)) {
-      settings.teachers.forEach((fullName, idx) => {
-        if (!fullName || !fullName.trim()) return;
-        const trimmed = fullName.trim();
-        // Check if teacher already exists in teachersList
-        const exists = updatedTeachersList.some(t => {
-          const tFull = `${t.first_name} ${t.last_name}`.trim().toLowerCase();
-          return tFull === trimmed.toLowerCase() || t.first_name.toLowerCase() === trimmed.toLowerCase();
-        });
-
-        if (!exists) {
-          const parts = trimmed.split(/\s+/);
-          const firstName = parts[0] || trimmed;
-          const lastName = parts.slice(1).join(' ') || 'Docente';
-          const email = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}.${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}@iskool.edu.mx`;
-          updatedTeachersList.push({
-            id: `usr-teacher-onb-${Date.now()}-${idx}`,
-            first_name: firstName,
-            last_name: lastName,
-            email,
-            role: 'teacher',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          });
+export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
+  persist(
+    (set, get) => ({
+      schoolSettings: {
+        isConfigured: true,
+        name: 'UP Juan Jacobo Rosseau',
+        website: 'https://jjrosseau.edu.mx',
+        logoUrl: '',
+        cct: '09PPR2026R',
+        address: 'Calzada de los Filósofos 1712, Col. Del Valle, Ciudad de México',
+        phone: '55-4160-8800',
+        coordinators: ['Lic. Alejandro Valdés', 'Mtra. Patricia Mendoza'],
+        teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar', 'Prof. Fernando Rangel'],
+        themeColors: {
+          primary: '221 83% 53%',
+          secondary: '250 84% 54%',
+          accent: '142 71% 45%'
         }
-      });
-    }
+      },
+      campusesList: CAMPUSES_SEED,
+      detailedStudents: DETAILED_STUDENTS_SEED,
+      groupsList: GROUPS_SEED,
+      schedulesList: SCHEDULES_SEED,
+      subjectsList: SUBJECTS_SEED,
+      teachersList: TEACHERS_LIST_SEED,
+      attendanceList: ATTENDANCE_SEED,
+      parentMessages: PARENT_MESSAGES_SEED,
+      syncError: null,
 
-    // 1. Instantly update local state to keep typing lag-free
-    set({ schoolSettings: settings, teachersList: updatedTeachersList, syncError: null });
+      saveSchoolSettings: (settings) => {
+        applyThemeCssVariables(settings.themeColors);
+        set({ schoolSettings: settings, syncError: null });
 
-    // 2. Clear any pending Supabase upsert
-    if (saveSettingsTimeout) {
-      clearTimeout(saveSettingsTimeout);
-    }
+        if (saveSettingsTimeout) clearTimeout(saveSettingsTimeout);
 
-    // 3. Debounce database sync to 1000ms after user stops typing
-    saveSettingsTimeout = setTimeout(async () => {
-      try {
-        const dbSettings = {
-          name: settings.name,
-          website: settings.website || '',
-          logo_url: settings.logoUrl || '',
-          cct: settings.cct || '',
-          address: settings.address || '',
-          phone: settings.phone || '',
-          coordinators: settings.coordinators || [],
-          teachers: settings.teachers || [],
-          theme_colors: settings.themeColors,
-          is_configured: settings.isConfigured
+        saveSettingsTimeout = setTimeout(async () => {
+          try {
+            const dbSettings = {
+              name: settings.name,
+              website: settings.website || '',
+              logo_url: settings.logoUrl || '',
+              cct: settings.cct || '',
+              address: settings.address || '',
+              phone: settings.phone || '',
+              coordinators: settings.coordinators || [],
+              teachers: settings.teachers || [],
+              theme_colors: settings.themeColors,
+              is_configured: settings.isConfigured
+            };
+
+            await supabase
+              .from('school_settings')
+              .upsert({
+                id: '00000000-0000-0000-0000-000000000000',
+                ...dbSettings,
+                updated_at: new Date().toISOString()
+              });
+          } catch (err) {
+            console.warn('Silent local fallback for school settings save:', err);
+          }
+        }, 1000);
+      },
+
+      registerStudent: (studentData) => {
+        const newId = (studentData as any).id || `std-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+        const tempPassword = studentData.temporary_password || generateRandomPassword(6);
+        
+        let campusName = studentData.campus_name || 'Primaria Jardines';
+        if (studentData.level === 'secundaria' && !studentData.campus_name) {
+          campusName = 'Secundaria Torres';
+        }
+        const campusObj = get().campusesList.find(c => c.name.toLowerCase() === campusName.toLowerCase());
+
+        const newStudent: DetailedStudent = {
+          ...studentData,
+          id: newId,
+          campus_id: campusObj?.id || 'cmp-pri-jardines',
+          campus_name: campusName,
+          temporary_password: tempPassword,
+          status: studentData.status || 'activo',
+          is_blocked: studentData.is_blocked || false,
+          photo_url: studentData.photo_url || '/images/students/default.png'
         };
 
-        const { error } = await supabase
-          .from('school_settings')
-          .upsert({
-            id: '00000000-0000-0000-0000-000000000000',
-            ...dbSettings,
-            updated_at: new Date().toISOString()
-          });
+        set((state) => ({
+          detailedStudents: [newStudent, ...(state.detailedStudents || [])]
+        }));
 
-        if (error) throw new Error(error.message);
-      } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Error al guardar la configuración escolar';
-        console.error('Error saving school settings to Supabase:', err);
-        set({ syncError: errorMsg });
-      }
-    }, 1000);
-  },
+        try {
+          const studentStore = useStudentStore.getState();
+          if (studentStore && typeof studentStore.initializeNewStudent === 'function') {
+            studentStore.initializeNewStudent(newId, studentData.first_name);
+          }
+        } catch (e) {
+          console.warn('Could not initialize student stats:', e);
+        }
 
-  registerStudent: (studentData) => {
-    const newId = (studentData as any).id || `std-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
-    const newStudent: DetailedStudent = {
-      ...studentData,
-      id: newId,
-      photo_url: studentData.photo_url || '/images/students/default.png'
-    };
+        (async () => {
+          try {
+            await supabase.from('students').insert({
+              id: isUuid(newId) ? newId : undefined,
+              school_id: '00000000-0000-0000-0000-000000000000',
+              first_name: newStudent.first_name,
+              last_name: `${newStudent.last_name_1} ${newStudent.last_name_2 || ''}`.trim(),
+              curp: newStudent.curp || '',
+              grade: newStudent.grade,
+              created_at: new Date().toISOString()
+            });
+          } catch (e) {}
+        })();
 
-    set((state) => ({
-      detailedStudents: [...(state.detailedStudents || []), newStudent]
-    }));
+        return newStudent;
+      },
 
-    // Inicializar stats y avatar en useStudentStore
-    try {
-      const studentStore = useStudentStore.getState();
-      if (studentStore && typeof studentStore.initializeNewStudent === 'function') {
-        studentStore.initializeNewStudent(newId, studentData.first_name);
-      }
-    } catch (e) {
-      console.warn('Could not initialize student stats:', e);
-    }
-  },
+      addStudent: (studentData) => {
+        return get().registerStudent(studentData);
+      },
 
-  addStudent: (studentData) => {
-    get().registerStudent(studentData);
-  },
+      bulkRegisterStudents: (studentsList) => {
+        const createdList: DetailedStudent[] = [];
+
+        studentsList.forEach((st, idx) => {
+          if (!st.first_name || !st.last_name_1) return;
+          const newId = st.id || `std-bulk-${Date.now()}-${idx}-${Math.random().toString(36).substring(2, 6)}`;
+          const tempPassword = st.temporary_password || generateRandomPassword(6);
+          
+          let campusName = st.campus_name || 'Primaria Jardines';
+          if (st.level === 'secundaria' && !st.campus_name) {
+            campusName = 'Secundaria Torres';
+          }
+          const campusObj = get().campusesList.find(c => c.name.toLowerCase() === campusName.toLowerCase());
+
+          const newStudent: DetailedStudent = {
+            id: newId,
+            first_name: st.first_name.trim(),
+            second_name: st.second_name?.trim() || '',
+            last_name_1: st.last_name_1.trim(),
+            last_name_2: st.last_name_2?.trim() || '',
+            birth_date: st.birth_date || '2016-01-01',
+            curp: st.curp || `${st.last_name_1.substring(0, 2).toUpperCase()}${st.first_name.substring(0, 2).toUpperCase()}160101HDFMRN01`,
+            enrollment_id: st.enrollment_id || `MAT-2026-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+            gender: st.gender || 'No especificado',
+            shift: st.shift || 'matutino',
+            status: 'activo',
+            is_blocked: false,
+            temporary_password: tempPassword,
+            level: st.level || 'primaria',
+            grade: st.grade || '1º',
+            group_id: st.group_id || 'grp-jar-1a',
+            campus_id: campusObj?.id || 'cmp-pri-jardines',
+            campus_name: campusName,
+            email: st.email || `${st.first_name.toLowerCase().replace(/[^a-z0-9]/g, '')}.${st.last_name_1.toLowerCase().replace(/[^a-z0-9]/g, '')}@jjrosseau.edu.mx`,
+            phone: st.phone || '55-0000-0000',
+            address: st.address || 'Ciudad de México',
+            photo_url: '/images/students/default.png',
+            pending_payments: [],
+            behavior_reports: [],
+            teacher_notes: []
+          };
+
+          createdList.push(newStudent);
+
+          try {
+            const studentStore = useStudentStore.getState();
+            if (studentStore && typeof studentStore.initializeNewStudent === 'function') {
+              studentStore.initializeNewStudent(newId, newStudent.first_name);
+            }
+          } catch (e) {}
+        });
+
+        set((state) => ({
+          detailedStudents: [...createdList, ...(state.detailedStudents || [])]
+        }));
+
+        return createdList;
+      },
+
+      toggleUserBlock: (userId, role, isBlocked) => {
+        if (role === 'teacher') {
+          set((state) => ({
+            teachersList: (state.teachersList || []).map(t => 
+              t.id === userId ? { ...t, is_blocked: isBlocked } : t
+            )
+          }));
+        } else {
+          set((state) => ({
+            detailedStudents: (state.detailedStudents || []).map(s => 
+              s.id === userId ? { ...s, is_blocked: isBlocked, status: isBlocked ? 'suspendido' : 'activo' } : s
+            )
+          }));
+        }
+      },
+
+      changeUserPassword: (userId, role, newPassword) => {
+        const passwordToSet = newPassword && newPassword.trim().length >= 4 
+          ? newPassword.trim() 
+          : generateRandomPassword(6);
+
+        if (role === 'teacher') {
+          set((state) => ({
+            teachersList: (state.teachersList || []).map(t => 
+              t.id === userId ? { ...t, temporary_password: passwordToSet } : t
+            )
+          }));
+        } else {
+          set((state) => ({
+            detailedStudents: (state.detailedStudents || []).map(s => 
+              s.id === userId ? { ...s, temporary_password: passwordToSet } : s
+            )
+          }));
+        }
+
+        return passwordToSet;
+      },
+
+      incrementTeacherTokens: (teacherId, tokensUsed) => {
+        set((state) => ({
+          teachersList: (state.teachersList || []).map(t => 
+            t.id === teacherId ? { ...t, ai_tokens_consumed: (t.ai_tokens_consumed || 0) + tokensUsed } : t
+          )
+        }));
+      },
+
+      createCampus: (campusData) => {
+        const newCampus: Campus = {
+          ...campusData,
+          id: `cmp-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          created_at: new Date().toISOString()
+        };
+        set((state) => ({
+          campusesList: [...(state.campusesList || []), newCampus]
+        }));
+      },
+
+      updateCampus: (campusId, data) => {
+        set((state) => ({
+          campusesList: (state.campusesList || []).map(c => 
+            c.id === campusId ? { ...c, ...data } : c
+          )
+        }));
+      },
+
+      deleteCampus: (campusId) => {
+        set((state) => ({
+          campusesList: (state.campusesList || []).filter(c => c.id !== campusId)
+        }));
+      },
 
   updateStudentStatus: (studentId, status) => {
     set((state) => ({
@@ -630,104 +765,120 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     }
   },
 
-  registerTeacher: (teacherData) => {
-    const newTeacher: UserProfile = {
-      ...teacherData,
-      id: `usr-teacher-${Date.now()}`,
-      role: 'teacher',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-    set((state) => ({
-      teachersList: [...(state.teachersList || []), newTeacher],
-      schoolSettings: {
-        ...state.schoolSettings,
-        teachers: Array.from(new Set([...(state.schoolSettings?.teachers || []), `${teacherData.first_name} ${teacherData.last_name}`]))
-      }
-    }));
-  },
-
-  updateTeacher: (teacherId, updatedData) => {
-    set((state) => {
-      const teachersList = state.teachersList || [];
-      const target = teachersList.find(t => t.id === teacherId);
-      if (!target) return state;
-
-      const oldFullName = `${target.first_name} ${target.last_name}`;
-      const newFirstName = updatedData.first_name ?? target.first_name;
-      const newLastName = updatedData.last_name ?? target.last_name;
-      const newFullName = `${newFirstName} ${newLastName}`;
-
-      const updatedTeachersList = teachersList.map(t => 
-        t.id === teacherId ? { ...t, ...updatedData, updated_at: new Date().toISOString() } : t
-      );
-
-      const currentTeachers = state.schoolSettings?.teachers || [];
-      const updatedTeachersNames = currentTeachers.map(name => 
-        name === oldFullName ? newFullName : name
-      );
-
-      return {
-        teachersList: updatedTeachersList,
-        schoolSettings: {
-          ...state.schoolSettings,
-          teachers: Array.from(new Set(updatedTeachersNames))
-        }
-      };
-    });
-  },
-
-  deleteTeacher: (teacherId) => {
-    set((state) => {
-      const teachersList = state.teachersList || [];
-      const target = teachersList.find(t => t.id === teacherId);
-      if (!target) return state;
-      const fullName = `${target.first_name} ${target.last_name}`;
-
-      // Garantiza que las materias, horarios, asistencias, tareas y planeaciones NO se eliminen.
-      // Simplemente desvincula al profesor saliente (teacherId: '') para que un nuevo profesor las herede al ser asignado.
-      const updatedSchedulesList = (state.schedulesList || []).map(s => 
-        s.teacherId === teacherId ? { ...s, teacherId: '' } : s
-      );
-
-      const currentTeachers = state.schoolSettings?.teachers || [];
-      return {
-        teachersList: teachersList.filter(t => t.id !== teacherId),
-        schedulesList: updatedSchedulesList,
-        schoolSettings: {
-          ...state.schoolSettings,
-          teachers: currentTeachers.filter(name => name !== fullName)
-        }
-      };
-    });
-  },
-
-  resetSchoolAdminStore: () => {
-    set({
-      schoolSettings: {
-        isConfigured: false,
-        name: 'Colegio Anglo Mexicano',
-        website: '',
-        logoUrl: '',
-        cct: '09DPR1234Z',
-        address: 'Av. Paseo de la Reforma 123, Ciudad de México',
-        phone: '555-019-2834',
-        coordinators: ['Carlos Duran', 'Ana Gómez'],
-        teachers: ['Israel López', 'María Fernández', 'Roberto Díaz'],
-        themeColors: {
-          primary: '250 84% 54%',
-          secondary: '221 83% 53%',
-          accent: '142 71% 45%'
-        }
+      registerTeacher: (teacherData) => {
+        const newTeacher: UserProfile = {
+          ...teacherData,
+          id: `usr-teacher-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          role: 'teacher',
+          ai_tokens_consumed: 0,
+          is_blocked: false,
+          temporary_password: generateRandomPassword(6),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+        set((state) => ({
+          teachersList: [...(state.teachersList || []), newTeacher],
+          schoolSettings: {
+            ...state.schoolSettings,
+            teachers: Array.from(new Set([...(state.schoolSettings?.teachers || []), `${teacherData.first_name} ${teacherData.last_name}`]))
+          }
+        }));
       },
-      detailedStudents: DETAILED_STUDENTS_SEED,
-      groupsList: GROUPS_SEED,
-      schedulesList: SCHEDULES_SEED,
-      subjectsList: SUBJECTS_SEED,
-      teachersList: INITIAL_TEACHERS_SEED,
-      attendanceList: ATTENDANCE_SEED,
-      parentMessages: PARENT_MESSAGES_SEED,
-      syncError: null
-    });
-  }
-}));
+
+      updateTeacher: (teacherId, updatedData) => {
+        set((state) => {
+          const teachersList = state.teachersList || [];
+          const target = teachersList.find(t => t.id === teacherId);
+          if (!target) return state;
+
+          const oldFullName = `${target.first_name} ${target.last_name}`;
+          const newFirstName = updatedData.first_name ?? target.first_name;
+          const newLastName = updatedData.last_name ?? target.last_name;
+          const newFullName = `${newFirstName} ${newLastName}`;
+
+          const updatedTeachersList = teachersList.map(t => 
+            t.id === teacherId ? { ...t, ...updatedData, updated_at: new Date().toISOString() } : t
+          );
+
+          const currentTeachers = state.schoolSettings?.teachers || [];
+          const updatedTeachersNames = currentTeachers.map(name => 
+            name === oldFullName ? newFullName : name
+          );
+
+          return {
+            teachersList: updatedTeachersList,
+            schoolSettings: {
+              ...state.schoolSettings,
+              teachers: Array.from(new Set(updatedTeachersNames))
+            }
+          };
+        });
+      },
+
+      deleteTeacher: (teacherId) => {
+        set((state) => {
+          const teachersList = state.teachersList || [];
+          const target = teachersList.find(t => t.id === teacherId);
+          if (!target) return state;
+          const fullName = `${target.first_name} ${target.last_name}`;
+
+          const updatedSchedulesList = (state.schedulesList || []).map(s => 
+            s.teacherId === teacherId ? { ...s, teacherId: '' } : s
+          );
+
+          const currentTeachers = state.schoolSettings?.teachers || [];
+          return {
+            teachersList: teachersList.filter(t => t.id !== teacherId),
+            schedulesList: updatedSchedulesList,
+            schoolSettings: {
+              ...state.schoolSettings,
+              teachers: currentTeachers.filter(name => name !== fullName)
+            }
+          };
+        });
+      },
+
+      resetSchoolAdminStore: () => {
+        set({
+          schoolSettings: {
+            isConfigured: true,
+            name: 'UP Juan Jacobo Rosseau',
+            website: 'https://jjrosseau.edu.mx',
+            logoUrl: '',
+            cct: '09PPR2026R',
+            address: 'Calzada de los Filósofos 1712, Col. Del Valle, Ciudad de México',
+            phone: '55-4160-8800',
+            coordinators: ['Lic. Alejandro Valdés', 'Mtra. Patricia Mendoza'],
+            teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar', 'Prof. Fernando Rangel'],
+            themeColors: {
+              primary: '221 83% 53%',
+              secondary: '250 84% 54%',
+              accent: '142 71% 45%'
+            }
+          },
+          campusesList: CAMPUSES_SEED,
+          detailedStudents: DETAILED_STUDENTS_SEED,
+          groupsList: GROUPS_SEED,
+          schedulesList: SCHEDULES_SEED,
+          subjectsList: SUBJECTS_SEED,
+          teachersList: TEACHERS_LIST_SEED,
+          attendanceList: ATTENDANCE_SEED,
+          parentMessages: PARENT_MESSAGES_SEED,
+          syncError: null
+        });
+      }
+    }),
+    {
+      name: 'iskool_school_admin_store',
+      partialize: (state) => ({
+        schoolSettings: state.schoolSettings,
+        campusesList: state.campusesList,
+        detailedStudents: state.detailedStudents,
+        groupsList: state.groupsList,
+        schedulesList: state.schedulesList,
+        subjectsList: state.subjectsList,
+        teachersList: state.teachersList
+      })
+    }
+  )
+);
