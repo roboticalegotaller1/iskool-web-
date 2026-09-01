@@ -11,6 +11,7 @@ import {
   CheckCircle2, XCircle, ChevronRight, Bold, Italic, List, Heading,
   Upload, FileImage, Mic, Timer, Heart, Award, Check
 } from 'lucide-react';
+import { StudioFlowPlayer } from '@/components/studio/player/StudioFlowPlayer';
 
 // Dynamically load the PixiCombatView to avoid SSR hydration issues
 const PixiCombatView = dynamic(() => import('./PixiCombatView'), { ssr: false });
@@ -678,7 +679,36 @@ export default function QuestCardModal() {
                 )}
 
                 {/* Render Quest Types */}
-                {activeQuest.type === 'quiz' || activeQuest.type === 'exam' ? (
+                {(activeQuest.content as any)?.blocks && (activeQuest.content as any).blocks.length > 0 ? (
+                  // --- STUDIO FLOW PLAYER VIEW (FULL INTERACTIVE EXPERIENCES) ---
+                  <div className="w-full p-2">
+                    <StudioFlowPlayer
+                      blocks={(activeQuest.content as any).blocks}
+                      connections={(activeQuest.content as any).connections || []}
+                      startNodeId={(activeQuest.content as any).startNodeId || null}
+                      metadata={(activeQuest.content as any).metadata || { title: activeQuest.title, description: activeQuest.description }}
+                      onClose={closeQuestModal}
+                      onComplete={async (score) => {
+                        setIsLoading(true);
+                        try {
+                          if (score >= 60) {
+                            const onFinalize = async () => {
+                              const result = await submitQuiz(activeQuest.id, score, { studio_completed: score });
+                              setQuizResult(result);
+                              showToast(`✨ ¡Actividad completada! +${activeQuest.xp_reward} XP y +${activeQuest.coins_reward} Monedas.`);
+                            };
+                            await triggerCombatSequence(onFinalize);
+                          } else {
+                            setCombatState('defeat');
+                            showToast('❌ Puntaje insuficiente. ¡Reintenta la actividad!');
+                          }
+                        } finally {
+                          setIsLoading(false);
+                        }
+                      }}
+                    />
+                  </div>
+                ) : activeQuest.type === 'quiz' || activeQuest.type === 'exam' ? (
                   // --- QUIZ GAME FIELD ---
                   <div className="w-full p-4 flex flex-col gap-4 text-left">
                     {/* Quest progress & Timer */}

@@ -62,8 +62,8 @@ const SLIDES: SlideData[] = [
     highlightCategory: "Ecosistema Global",
     badge: "Plataforma EdTech Integral · Presentación Oficial 2026",
     title: "La Revolución del Aprendizaje Digital en México",
-    subtitle: "Conectando a toda la comunidad escolar en una sola plataforma inmersiva, gamificada y alineada 100% a la Nueva Escuela Mexicana (NEM).",
-    narrativeCaption: "ISkool 2026: Una suite educativa completa que une gamificación, pedagogía oficial y gestión escolar de alto rendimiento.",
+    subtitle: "Conectando a toda la comunidad escolar en una sola suite inmersiva, gamificada y alineada 100% a la Nueva Escuela Mexicana (NEM).",
+    narrativeCaption: "ISkool 2026: La plataforma educativa todo-en-uno que une gamificación, pedagogía oficial NEM y gestión escolar de alto rendimiento.",
     colorTheme: "indigo",
     metrics: [
       { label: "Engagement Estudiantil", value: "+96%" },
@@ -72,66 +72,154 @@ const SLIDES: SlideData[] = [
       { label: "Alineación Curricular", value: "100% SEP" }
     ],
     features: [
-      { iconName: "Trophy", title: "Gamificación & Portafolios", desc: "Misiones curriculares, mascota virtual en PixiJS y tienda de recompensas." },
-      { iconName: "BookOpen", title: "Bóveda Curricular & IA", desc: "+1,500 nodos oficiales NEM, planeación analítica y evaluación formativa." },
-      { iconName: "Heart", title: "Vinculación Familiar", desc: "Muro de logros en tiempo real y comunicación transparente sin estrés." },
-      { iconName: "ShieldAlert", title: "Control Multi-Plantel", desc: "Expedientes NEM, generador de horarios y super usuario multi-colegio." }
+      { iconName: "Trophy", title: "Estudio Docente & Retos", desc: "Constructor de flujos interactivos con 14+ tipos de bloques y despliegue automático." },
+      { iconName: "Sparkles", title: "Camino del Héroe & Recompensas", desc: "Sendero de misiones, XP, galeones/monedas, mascota en PixiJS y tienda mágica." },
+      { iconName: "BookOpen", title: "Bóveda Curricular & IA", desc: "+1,500 nodos oficiales NEM, planeación analítica y evaluación formativa SEP." },
+      { iconName: "ShieldAlert", title: "Control & Facturación SAT", desc: "Expedientes NEM, generador de horarios, cobranza digital y multi-plantel." }
     ]
   },
 
-  // SLIDE 1: CORTINA PORTAL ALUMNO
+  // SLIDE 1: CORTINA ESTUDIO DOCENTE / STUDIO
   {
     id: 1,
     type: "curtain",
-    portalName: "PORTAL DEL ALUMNO",
-    highlightCategory: "Estudiantes",
-    badge: "Módulo 01 · Gamificación & Portafolios Inteligentes",
-    title: "Aprender Jugando: Motivación & Recompensas",
-    subtitle: "Los estudiantes superan misiones vinculadas al plan de estudios, ganan experiencia (XP), cuidan su mascota PixiJS y guardan evidencias en su portafolio.",
-    narrativeCaption: "Módulo de Alumnos: Transformamos las tareas escolares en misiones heroicas con retroalimentación instantánea y avatares interactivos.",
-    colorTheme: "blue",
+    portalName: "ESTUDIO DOCENTE ISKOOL",
+    highlightCategory: "Creación de Retos",
+    badge: "Módulo 01 · Estudio de Actividades & Constructor de Flujos",
+    title: "Estudio Docente: Diseña Experiencias Memorables",
+    subtitle: "Constructor visual de actividades por nodos con 14+ bloques interactivos: lógica computacional, lectura cronometrada (PPM), circuitos booleanos, combate de jefes, escape room y preguntas con feedback de IA.",
+    narrativeCaption: "Estudio Docente: Permite a los profesores crear retos gamificados e interactivos en minutos con asignación inmediata por grado y grupo.",
+    colorTheme: "cyan",
     metrics: [
-      { label: "Misiones Completadas", value: "18,950+" },
-      { label: "Satisfacción Alumnos", value: "4.9/5 ★" },
-      { label: "Asistencia Motivada", value: "98.6%" },
-      { label: "Racha Promedio", value: "14 Días" }
+      { label: "Tipos de Bloques", value: "14+ Módulos" },
+      { label: "Tiempo de Creación", value: "< 3 Minutos" },
+      { label: "Interactividad", value: "+98%" },
+      { label: "Alineación Pedagógica", value: "NEM / SEP" }
     ],
     features: [
-      { iconName: "Trophy", title: "Misiones & Quizzes", desc: "Retos dinámicos diarios con calificación y retroalimentación inmediata." },
-      { iconName: "Sparkles", title: "Mascota & Avatar PixiJS", desc: "Personalización y animación visual que estimula la constancia escolar." },
-      { iconName: "Award", title: "Tienda de Recompensas", desc: "Canje de XP y gemas por artefactos, insignias y beneficios académicos." }
+      { iconName: "Layers", title: "Constructor Visual por Nodos", desc: "Arrastra y conecta retos de lógica, preguntas, videos, acertijos y cofres." },
+      { iconName: "Zap", title: "Asignación Directa por Grado", desc: "Envío instantáneo a 4º Primaria, 1º Primaria, Secundaria RPG y Preparatoria." },
+      { iconName: "Award", title: "Calibración de Recompensas", desc: "Configura puntos de experiencia (XP) y monedas otorgadas al superar el reto." }
+    ],
+    portalUrl: "/teacher/studio"
+  },
+
+  // SLIDE 2: SHOWCASE ESTUDIO DOCENTE
+  {
+    id: 2,
+    type: "showcase",
+    portalName: "ESTUDIO DOCENTE EN ACCIÓN",
+    highlightCategory: "Creación de Retos",
+    badge: "Demostración Interactiva del Estudio Docente",
+    title: "Constructor de Flujos y Asignación en Tiempo Real",
+    subtitle: "Interfaz visual donde el maestro ensambla la experiencia formativa y la envía directamente a la clase.",
+    narrativeCaption: "Vista en vivo del Estudio Docente: crea, simula y publica actividades interactivas con sincronización inmediata.",
+    colorTheme: "cyan",
+    metrics: [
+      { label: "Bloques Activos", value: "Flujo Interactivo" },
+      { label: "Sincronización", value: "Instantánea" }
+    ],
+    features: [],
+    portalUrl: "/teacher/studio"
+  },
+
+  // SLIDE 3: CORTINA CAMINO DEL HÉROE & PORTAL DEL ALUMNO
+  {
+    id: 3,
+    type: "curtain",
+    portalName: "PORTAL DEL ALUMNO & CAMINO DEL HÉROE",
+    highlightCategory: "Estudiantes & Gamificación",
+    badge: "Módulo 02 · Sendero de Aventuras & Motivación Continua",
+    title: "El Camino del Héroe: Misiones Adaptadas por Grado",
+    subtitle: "Los alumnos recorren un sendero orgánico de retos adaptado a su nivel escolar: Primaria Baja, Primaria Alta (Galaxia), Secundaria RPG y Preparatoria Innovación.",
+    narrativeCaption: "Camino del Héroe: Transforma las tareas escolares en misiones heroicas donde cada actividad del maestro aparece al instante.",
+    colorTheme: "blue",
+    metrics: [
+      { label: "Misiones Superadas", value: "24,800+" },
+      { label: "Satisfacción Alumnos", value: "4.9/5 ★" },
+      { label: "Racha Promedio", value: "16 Días" },
+      { label: "Retención Activa", value: "99.2%" }
+    ],
+    features: [
+      { iconName: "Trophy", title: "Sendero de Misiones en Vivo", desc: "Cada actividad creada en el Estudio aparece como un nuevo nodo de desafío." },
+      { iconName: "Sparkles", title: "Mascota & Avatar en PixiJS", desc: "Animación gráfica fluida que responde al progreso académico y cuidados." },
+      { iconName: "BookOpen", title: "Portafolio Digital de Evidencias", desc: "Bitácora automática de trabajos, reflexiones y audios del estudiante." }
     ],
     portalUrl: "/student"
   },
 
-  // SLIDE 2: SHOWCASE PORTAL ALUMNO
+  // SLIDE 4: SHOWCASE PORTAL ALUMNO
   {
-    id: 2,
+    id: 4,
     type: "showcase",
     portalName: "PORTAL DEL ALUMNO EN ACCIÓN",
-    highlightCategory: "Estudiantes",
-    badge: "Demostración Interactiva del Estudiante",
-    title: "Experiencia Lúdica en el Aula y el Hogar",
-    subtitle: "Interfaz inmersiva con seguimiento de nivel, gemas acumuladas, cuestionarios interactivos y portafolio digital de evidencias.",
-    narrativeCaption: "Vista en vivo del panel de alumno: interfaz optimizada para computadoras y tabletas escolares.",
+    highlightCategory: "Estudiantes & Gamificación",
+    badge: "Demostración Interactiva del Alumno",
+    title: "Sendero de Misiones y Combates Mágicos",
+    subtitle: "Interfaz inmersiva con seguimiento de nivel, experiencia (XP), galeones acumulados y mapa del laberinto académico.",
+    narrativeCaption: "Vista en vivo del panel de alumno: resuelve los retos del profesor, gana recompensas y fortalece su aprendizaje.",
     colorTheme: "blue",
     metrics: [
-      { label: "Nivel Promedio", value: "Nivel 15 (Élite)" },
-      { label: "Gemas Acumuladas", value: "520 💎" }
+      { label: "Nivel Actual", value: "Nivel 2 (En Ascenso)" },
+      { label: "Monedas Ganadas", value: "46 Galeones" }
     ],
     features: [],
     portalUrl: "/student"
   },
 
-  // SLIDE 3: CORTINA PORTAL DOCENTE & BÓVEDA CURRICULAR
+  // SLIDE 5: CORTINA RECOMPENSAS & TIENDA MÁGICA
   {
-    id: 3,
+    id: 5,
     type: "curtain",
-    portalName: "PORTAL DEL DOCENTE",
+    portalName: "TIENDA MÁGICA & RECOMPENSAS",
+    highlightCategory: "Economía del Juego",
+    badge: "Módulo 03 · Sistema Integral de Recompensas & Canje",
+    title: "Recompensas Reales: XP, Galeones & Tienda Mágica",
+    subtitle: "Las monedas obtenidas al superar retos se sincronizan al instante en el encabezado y en la Tienda Mágica para canjear artefactos, pociones y mejoras cosméticas.",
+    narrativeCaption: "Sistema de Recompensas: Acreditación exacta y en tiempo real de XP, monedas y subida de nivel utilizables en la Tienda Mágica.",
+    colorTheme: "amber",
+    metrics: [
+      { label: "Acreditación", value: "Tiempo Real" },
+      { label: "Artefactos Mágicos", value: "20+ Ítems" },
+      { label: "Subida de Nivel", value: "Automática" },
+      { label: "Persistencia", value: "100% Garantizada" }
+    ],
+    features: [
+      { iconName: "Award", title: "Acreditación Transparente", desc: "Cada punto de XP y moneda ganada se refleja inmediatamente en el perfil." },
+      { iconName: "Sparkles", title: "Tienda de Artefactos", desc: "Pociones de perseverancia, plumas fénix y cosméticos para personalizar el avatar." },
+      { iconName: "TrendingUp", title: "Árbol de Habilidades", desc: "Puntos de atributo desbloqueados al subir de nivel para potenciar su poder académico." }
+    ],
+    portalUrl: "/student/shop"
+  },
+
+  // SLIDE 6: SHOWCASE TIENDA MÁGICA
+  {
+    id: 6,
+    type: "showcase",
+    portalName: "TIENDA MÁGICA EN ACCIÓN",
+    highlightCategory: "Economía del Juego",
+    badge: "Demostración de la Tienda de Artefactos",
+    title: "Catálogo de Mejoras y Canje de Galeones",
+    subtitle: "Los estudiantes administran sus monedas ganadas con esfuerzo académico para adquirir ítems motivacionales.",
+    narrativeCaption: "Vista en vivo de la Tienda Mágica: saldo de monedas actualizado y catálogo de artefactos formativos.",
+    colorTheme: "amber",
+    metrics: [
+      { label: "Saldo Disponible", value: "46 Monedas" },
+      { label: "Inventario", value: "Sincronizado" }
+    ],
+    features: [],
+    portalUrl: "/student/shop"
+  },
+
+  // SLIDE 7: CORTINA PORTAL DOCENTE & BÓVEDA CURRICULAR
+  {
+    id: 7,
+    type: "curtain",
+    portalName: "PORTAL DOCENTE & BÓVEDA CURRICULAR",
     highlightCategory: "Docentes & Pedagogía",
-    badge: "Módulo 02 · Bóveda Curricular & Asistente Pedagógico IA",
+    badge: "Módulo 04 · Bóveda Curricular (+1,500 Nodos) & IA Pedagógica",
     title: "Potenciando al Maestro: Bóveda Curricular & IA",
-    subtitle: "Acceso inmediato a más de 1,500 nodos curriculares oficiales de la NEM (Fases 1 a 6). Planeación analítica instantánea, evaluación formativa y seguridad escolar.",
+    subtitle: "Acceso inmediato a más de 1,500 nodos curriculares oficiales de la NEM (Fases 1 a 6). Planeación analítica instantánea, evaluación formativa y Boleta SEP oficial.",
     narrativeCaption: "Módulo Docente: Planeación curricular inteligente basada en la Bóveda de Conocimiento Oficial y evaluación automática en Boleta SEP.",
     colorTheme: "emerald",
     metrics: [
@@ -148,65 +236,40 @@ const SLIDES: SlideData[] = [
     portalUrl: "/teacher"
   },
 
-  // SLIDE 4: SHOWCASE PORTAL DOCENTE
+  // SLIDE 8: SHOWCASE PORTAL DOCENTE
   {
-    id: 4,
+    id: 8,
     type: "showcase",
     portalName: "PORTAL DEL DOCENTE EN ACCIÓN",
     highlightCategory: "Docentes & Pedagogía",
     badge: "Demostración Interactiva del Profesor",
-    title: "Gestión Académica Ágil y Rúbricas Formativas",
-    subtitle: "Revisión de evidencias enviadas por los alumnos, pase de lista compendiado, asignación de retroalimentación y cálculo de Boleta SEP.",
-    narrativeCaption: "Vista en vivo del panel docente: control de grupos, expedientes de evidencias y evaluación formativa.",
+    title: "Planeación Curricular y Revisión de Evidencias",
+    subtitle: "Revisión de trabajos enviados por los alumnos, pase de lista compendiado, retroalimentación formativa y cálculo de Boleta SEP.",
+    narrativeCaption: "Vista en vivo del panel docente: control de grupos, expedientes de evidencias y evaluación formativa oficial.",
     colorTheme: "emerald",
     metrics: [
-      { label: "Grupos Asignados", value: "6°A & 6°B Primaria" },
-      { label: "Evidencias Evaluadas", value: "100% al Día" }
+      { label: "Planeaciones NEM", value: "Al Día" },
+      { label: "Boleta SEP", value: "Formativa" }
     ],
     features: [],
     portalUrl: "/teacher"
   },
 
-  // SLIDE 5: CORTINA LIENZO DIGITAL / ESTUDIO DE ACTIVIDADES
+  // SLIDE 9: CORTINA PORTAL PADRES
   {
-    id: 5,
+    id: 9,
     type: "curtain",
-    portalName: "LIENZO DIGITAL & ESTUDIO",
-    highlightCategory: "Actividades Interactivas",
-    badge: "Módulo 03 · Estudio de Actividades & Lienzo Digital",
-    title: "Lienzo Digital: Creación de Retos Interactivos",
-    subtitle: "Estudio integrado para diseñar actividades pedagógicas interactivas, dinámicas multimedia y evaluaciones formativas gamificadas.",
-    narrativeCaption: "Lienzo Digital: Los profesores diseñan actividades interactivas y recursos didácticos personalizados en minutos.",
-    colorTheme: "cyan",
-    metrics: [
-      { label: "Formatos Disponibles", value: "12+ Tipos" },
-      { label: "Tiempo de Creación", value: "< 3 Minutos" },
-      { label: "Interactividad", value: "+94%" },
-      { label: "Compatibilidad", value: "Multi-Dispositivo" }
-    ],
-    features: [
-      { iconName: "Layers", title: "Constructor Visual Intuitivo", desc: "Arrastra y suelta preguntas, imágenes y elementos gamificados sin complicaciones." },
-      { iconName: "Sparkles", title: "Plantillas Curriculares NEM", desc: "Modelos listos para usar en Matemáticas, Lenguajes, Ética y De lo Humano." },
-      { iconName: "CheckCircle2", title: "Sincronización Inmediata", desc: "Publicación directa al portal de alumnos con ponderación automática de XP." }
-    ],
-    portalUrl: "/teacher/studio"
-  },
-
-  // SLIDE 6: CORTINA PORTAL PADRES
-  {
-    id: 6,
-    type: "curtain",
-    portalName: "PORTAL DE PADRES",
+    portalName: "PORTAL DE PADRES & FAMILIAS",
     highlightCategory: "Familias & Tutores",
-    badge: "Módulo 04 · Vinculación Familia-Escuela Transparente",
+    badge: "Módulo 05 · Vinculación Familia-Escuela Transparente",
     title: "Padres Involucrados, Estudiantes Felices",
     subtitle: "Una ventana comprensible y motivadora al crecimiento escolar: muro de reconocimientos en tiempo real, notas de aliento y boletas sin tecnicismos.",
     narrativeCaption: "Módulo de Padres: Conexión emocional positiva entre el hogar y la escuela a través de felicitaciones y reportes transparentes.",
     colorTheme: "rose",
     metrics: [
-      { label: "Participación Familiar", value: "+92%" },
-      { label: "Mensajes Motivacionales", value: "22,400+" },
-      { label: "Satisfacción Padres", value: "99.4%" },
+      { label: "Participación Familiar", value: "+94%" },
+      { label: "Mensajes de Aliento", value: "28,000+" },
+      { label: "Satisfacción Padres", value: "99.5%" },
       { label: "Claridad de Boleta", value: "10/10" }
     ],
     features: [
@@ -217,76 +280,57 @@ const SLIDES: SlideData[] = [
     portalUrl: "/parent"
   },
 
-  // SLIDE 7: SHOWCASE PORTAL PADRES
+  // SLIDE 10: SHOWCASE PORTAL PADRES
   {
-    id: 7,
+    id: 10,
     type: "showcase",
     portalName: "PORTAL DE PADRES EN ACCIÓN",
     highlightCategory: "Familias & Tutores",
     badge: "Demostración Interactiva del Tutor",
     title: "Acompañamiento Escolar en Tiempo Real",
-    subtitle: "Visualización del muro de Sofía Martínez, galería de evidencias destacadas, notas motivacionales y calificaciones periódicas.",
+    subtitle: "Muro de logros, galería de evidencias destacadas, notas motivacionales y calificaciones periódicas.",
     narrativeCaption: "Vista en vivo del panel de tutores: un espacio cálido, transparente y altamente participativo.",
     colorTheme: "rose",
     metrics: [
-      { label: "Estudiante Vinculada", value: "Sofía Martínez (6°A)" },
+      { label: "Vínculo Tutor", value: "Activo" },
       { label: "Promedio Formativo", value: "10.0 (Excelente)" }
     ],
     features: [],
     portalUrl: "/parent"
   },
 
-  // SLIDE 8: CORTINA PORTAL COORDINADOR
+  // SLIDE 11: CORTINA PORTAL COORDINADOR & CONTROL ESCOLAR
   {
-    id: 8,
+    id: 11,
     type: "curtain",
-    portalName: "PORTAL DEL COORDINADOR",
+    portalName: "PORTAL DEL COORDINADOR & CONTROL ESCOLAR",
     highlightCategory: "Gestión Directiva",
-    badge: "Módulo 05 · Analítica Institucional & Horarios Inteligentes",
+    badge: "Módulo 06 · Control Escolar, Horarios Inteligentes & Cobranza",
     title: "Control Operativo & Expedientes Digitales NEM",
     subtitle: "Supervisión integral de grupos, expedientes oficiales de alumnos y docentes, algoritmo generador de horarios sin empalmes y alertas preventivas.",
-    narrativeCaption: "Módulo del Coordinador: Control administrativo de alto nivel con expedientes digitales centralizados y analítica preventiva.",
+    narrativeCaption: "Módulo del Coordinador: Control administrativo de alto nivel con expedientes digitales centralizados, cobranza y horarios.",
     colorTheme: "purple",
     metrics: [
       { label: "Expedientes Digitales", value: "100% Organizados" },
       { label: "Horarios sin Cruces", value: "10x Más Rápido" },
-      { label: "Detección de Rezago", value: "Tiempo Real" },
-      { label: "Seguridad de Datos", value: "Encriptación A+" }
+      { label: "Cobranza & Conciliación", value: "Automatizada" },
+      { label: "Facturación SAT 4.0", value: "Integrada" }
     ],
     features: [
       { iconName: "Users", title: "Expedientes Digitales NEM", desc: "Historial completo de asistencias, evidencias, conductas y salud escolar." },
       { iconName: "Clock", title: "Generador de Horarios", desc: "Algoritmo inteligente para optimizar disponibilidad de docentes y aulas." },
-      { iconName: "TrendingUp", title: "Dashboards de Rendimiento", desc: "Métricas consolidadas de aprobación y cumplimiento curricular por plantel." }
+      { iconName: "DollarSign", title: "Módulo de Cobranza & Fiscal", desc: "Conciliación de colegiaturas y facturación CFDI 4.0 con el SAT." }
     ],
     portalUrl: "/coordinator"
   },
 
-  // SLIDE 9: SHOWCASE PORTAL COORDINADOR
+  // SLIDE 12: CORTINA SUPER USUARIO & MULTI-PLANTEL
   {
-    id: 9,
-    type: "showcase",
-    portalName: "PORTAL DEL COORDINADOR EN ACCIÓN",
-    highlightCategory: "Gestión Directiva",
-    badge: "Demostración Interactiva de Coordinación",
-    title: "Supervisión Académica de Todo el Plantel",
-    subtitle: "Monitoreo integral de salones de clase, estadísticas de asistencia, registro docente y administración de expedientes institucionales.",
-    narrativeCaption: "Vista en vivo del panel de coordinación académica: supervisión total y toma de decisiones basada en datos.",
-    colorTheme: "purple",
-    metrics: [
-      { label: "Alumnos Inscritos", value: "540 Estudiantes" },
-      { label: "Plantilla Docente", value: "28 Profesores" }
-    ],
-    features: [],
-    portalUrl: "/coordinator"
-  },
-
-  // SLIDE 10: CORTINA PORTAL SUPER USUARIO
-  {
-    id: 10,
+    id: 12,
     type: "curtain",
     portalName: "PORTAL DE SUPER USUARIO",
     highlightCategory: "Administración Global",
-    badge: "Módulo 06 · Control Multi-Colegio & Licencias Globales",
+    badge: "Módulo 07 · Control Multi-Colegio & Licencias Globales",
     title: "Super Usuario: Escalabilidad Multi-Plantel",
     subtitle: "Panel supremo para la dirección general y corporativos educativos: administración de múltiples colegios, asignación de licencias y auditoría global.",
     narrativeCaption: "Módulo Super Usuario: Capacidad multi-sede para redes escolares, gestión de catálogos institucionales y configuración avanzada.",
@@ -305,53 +349,28 @@ const SLIDES: SlideData[] = [
     portalUrl: "/admin"
   },
 
-  // SLIDE 11: SHOWCASE PORTAL SUPER USUARIO
+  // SLIDE 13: SHOWCASE SUPER USUARIO
   {
-    id: 11,
+    id: 13,
     type: "showcase",
     portalName: "PORTAL DE SUPER USUARIO EN ACCIÓN",
     highlightCategory: "Administración Global",
-    badge: "Demostración Interactiva del Super Administrador",
-    title: "Centro de Mando Corporativo & Auditoría",
-    subtitle: "Visualización de colegios activos, distribución de usuarios globales, catálogo institucional de asignaturas y registros de auditoría.",
+    badge: "Demostración del Centro de Mando",
+    title: "Centro de Mando Corporativo & Auditoría Global",
+    subtitle: "Visualización de colegios activos, distribución de usuarios globales, catálogo institucional y registros de auditoría.",
     narrativeCaption: "Vista en vivo del panel de Super Usuario: máxima gobernanza institucional y monitoreo de infraestructura.",
     colorTheme: "amber",
     metrics: [
       { label: "Sedes Activas", value: "Red Escolar ISkool" },
-      { label: "Usuarios Globales", value: "Operación Continua" }
+      { label: "Infraestructura", value: "Alta Disponibilidad" }
     ],
     features: [],
     portalUrl: "/admin"
   },
 
-  // SLIDE 12: CORTINA GESTIÓN FINANCIERA & COBRANZA
+  // SLIDE 14: CONCLUSIÓN GRAND FINALE
   {
-    id: 12,
-    type: "curtain",
-    portalName: "MÓDULO FINANCIERO & PAGOS",
-    highlightCategory: "Finanzas Escolares",
-    badge: "Módulo 07 · Cobranza Digital & Estados de Cuenta",
-    title: "Finanzas Transparentes & Pagos en Línea",
-    subtitle: "Simplificación del cobro de colegiaturas, pasarela de pago digital segura para padres de familia y conciliación financiera en tiempo real.",
-    narrativeCaption: "Módulo Financiero: Cobranza digital ágil, estados de cuenta claros para los tutores y reducción drástica de la morosidad.",
-    colorTheme: "teal",
-    metrics: [
-      { label: "Reducción de Morosidad", value: "-65%" },
-      { label: "Cobro Digital 24/7", value: "Instantáneo" },
-      { label: "Conciliación Bancaria", value: "Automatizada" },
-      { label: "Transparencia Total", value: "100%" }
-    ],
-    features: [
-      { iconName: "DollarSign", title: "Pasarela de Pago Segura", desc: "Pago ágil de mensualidades con tarjetas bancarias y recibos descargables." },
-      { iconName: "Clock", title: "Recordatorios Automáticos", desc: "Alertas amigables a tutores sobre fechas de corte para evitar retrasos." },
-      { iconName: "FileText", title: "Estados de Cuenta Digitales", desc: "Historial completo de abonos y facturación para la administración escolar." }
-    ],
-    portalUrl: "/parent"
-  },
-
-  // SLIDE 13: CONCLUSIÓN GRAND FINALE
-  {
-    id: 13,
+    id: 14,
     type: "curtain",
     portalName: "EL FUTURO ES ISKOOL",
     highlightCategory: "Ecosistema Global",
@@ -361,15 +380,15 @@ const SLIDES: SlideData[] = [
     narrativeCaption: "ISkool 2026: Una inversión estratégica que eleva el prestigio, la retención y la excelencia académica de su institución.",
     colorTheme: "indigo",
     metrics: [
-      { label: "Portales Integrados", value: "5 en 1" },
+      { label: "Portales Integrados", value: "6 en 1" },
       { label: "Normativa Oficial", value: "100% NEM / SEP" },
       { label: "Infraestructura", value: "Nube Segura" },
       { label: "Impacto Académico", value: "Inmediato" }
     ],
     features: [
-      { iconName: "Trophy", title: "Alumnos Motivados", desc: "Aprendizaje lúdico con misiones y portafolio de evidencias." },
-      { iconName: "Zap", title: "Docentes Empoderados", desc: "Bóveda curricular oficial con asistente de IA pedagógica." },
-      { iconName: "Users", title: "Comunidad Unida", desc: "Padres satisfechos, coordinadores eficientes y dirección con control total." }
+      { iconName: "Trophy", title: "Alumnos Motivados", desc: "Aprendizaje lúdico con misiones, mascotas y tienda de recompensas." },
+      { iconName: "Zap", title: "Docentes Empoderados", desc: "Estudio visual de retos y Bóveda curricular oficial con asistente de IA pedagógica." },
+      { iconName: "Users", title: "Comunidad Unida", desc: "Padres satisfechos, coordinadores eficientes y dirección con control multi-plantel." }
     ],
     portalUrl: "/"
   }

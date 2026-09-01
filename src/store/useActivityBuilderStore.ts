@@ -934,6 +934,11 @@ export const useActivityBuilderStore = create<ActivityBuilderState>()(
         return {
           title: state.metadata.title,
           description: state.metadata.description,
+          task_type: state.metadata.taskType || 'activity_flow',
+          blocks: state.blocks,
+          connections: state.connections,
+          startNodeId: state.startNodeId,
+          metadata: state.metadata,
           questions: quizQuestions.length > 0 ? quizQuestions : [
             {
               question: '¿Listo para comenzar?',

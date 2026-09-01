@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { Mission, QuestAttempt, StudentBadge, GuildBoss, GuildMemberSubmission, ShopArtifact, Quest, Badge, SubmitReadingQuestResult } from '../types';
 import { MISSIONS_SEED, BOSS_SEED, GUILD_SUBMISSIONS_SEED, DEFAULT_ARTIFACTS_SEED, SUBJECTS_SEED, BADGES_SEED } from './seeds';
 import { useStudentStore } from './useStudentStore';
@@ -166,17 +167,36 @@ interface GamificationStoreState {
     itemGranted?: string | null;
     error?: string;
   }>;
+  assignStudioActivity: (payload: {
+    groupId: string;
+    groupName?: string;
+    levelGradeId?: string;
+    targetLevel?: 'primaria' | 'secundaria' | 'preparatoria';
+    targetGrade?: string;
+    subjectId?: string;
+    activityTitle: string;
+    activityDescription?: string;
+    blocks: any[];
+    connections?: any[];
+    startNodeId?: string | null;
+    metadata?: any;
+    xpReward?: number;
+    coinsReward?: number;
+    questions?: any[];
+    teacherName?: string;
+  }) => Promise<{ success: boolean; missionId: string; questId: string }>;
   resetGamificationStore: () => void;
 }
 
-
-export const useGamificationStore = create<GamificationStoreState>((set, get) => ({
-  missionsList: MISSIONS_SEED,
-  questAttempts: [],
-  studentBadges: [
-    { student_id: 'std-pa', badge_id: 'badge-1', earned_at: new Date().toISOString() },
-    { student_id: 'std-sec', badge_id: 'badge-3', earned_at: new Date().toISOString() }
-  ],
+export const useGamificationStore = create<GamificationStoreState>()(
+  persist(
+    (set, get) => ({
+      missionsList: MISSIONS_SEED,
+      questAttempts: [],
+      studentBadges: [
+        { student_id: 'std-pa', badge_id: 'badge-1', earned_at: new Date().toISOString() },
+        { student_id: 'std-sec', badge_id: 'badge-3', earned_at: new Date().toISOString() }
+      ],
   guildBoss: { id: '', name: 'Cargando Jefe...', hp_max: 1, hp_actual: 1, xp_reward: 0 },
   guildSubmissions: [],
   shopArtifacts: DEFAULT_ARTIFACTS_SEED,
@@ -1155,6 +1175,162 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     }
   },
 
+  assignStudioActivity: async (payload) => {
+    let targetLevel: 'primaria' | 'secundaria' | 'preparatoria' = payload.targetLevel || 'primaria';
+    let targetGrade = payload.targetGrade || '4º';
+    let targetSubjectId = payload.subjectId || payload.metadata?.subjectId || 'sub-math';
+    let targetLevelGradeId = payload.levelGradeId || 'primaria-4º';
+
+    if (payload.groupId === 'grp-pb-a') {
+      targetLevel = 'primaria';
+      targetGrade = '1º';
+      targetSubjectId = payload.subjectId || 'sub-span';
+      targetLevelGradeId = 'primaria-1º';
+    } else if (payload.groupId === 'grp-pa-a') {
+      targetLevel = 'primaria';
+      targetGrade = '4º';
+      targetSubjectId = payload.subjectId || 'sub-math';
+      targetLevelGradeId = 'primaria-4º';
+    } else if (payload.groupId === 'grp-sec-a') {
+      targetLevel = 'secundaria';
+      targetGrade = '2º';
+      targetSubjectId = payload.subjectId || 'sub-sci';
+      targetLevelGradeId = 'secundaria-2º';
+    } else if (payload.groupId === 'grp-prep-a') {
+      targetLevel = 'preparatoria';
+      targetGrade = '4º Semestre';
+      targetSubjectId = payload.subjectId || 'sub-sci';
+      targetLevelGradeId = 'preparatoria-4ºSemestre';
+    }
+
+    const missionId = `mis-studio-${Date.now()}`;
+    const questId = `quest-studio-${Date.now()}`;
+
+    // Extraer o mapear preguntas de los bloques
+    const mappedQuestions = (payload.questions && payload.questions.length > 0)
+      ? payload.questions.map((q: any, idx: number) => ({
+          id: `q-std-${Date.now()}-${idx}`,
+          question: q.question,
+          options: q.options || ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+          correctAnswerIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
+          explanation: q.explanation || '¡Respuesta validada!'
+        }))
+      : (payload.blocks || []).filter((b: any) => b.type === 'quiz_question').map((b: any, idx: number) => ({
+          id: `q-std-${Date.now()}-${idx}`,
+          question: b.data?.question || 'Pregunta de repaso',
+          options: b.data?.options || ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+          correctAnswerIndex: typeof b.data?.correctIndex === 'number' ? b.data?.correctIndex : 0,
+          explanation: b.data?.explanation || '¡Respuesta validada!'
+        }));
+
+    const finalQuestions = mappedQuestions.length > 0 ? mappedQuestions : [
+      {
+        id: `q-std-${Date.now()}-0`,
+        question: '¿Listo para superar este desafío del Estudio Docente?',
+        options: ['¡Sí, iniciar aventura!', 'Revisar instrucciones'],
+        correctAnswerIndex: 0,
+        explanation: '¡Adelante!'
+      }
+    ];
+
+    const xpReward = payload.xpReward || payload.metadata?.xpReward || 100;
+    const coinsReward = payload.coinsReward || payload.metadata?.coinsReward || 20;
+
+    const newQuest: Quest = {
+      id: questId,
+      mission_id: missionId,
+      title: payload.activityTitle,
+      description: payload.activityDescription || payload.metadata?.description || 'Actividad interactiva creada desde el Estudio Docente.',
+      type: 'quiz',
+      sequence_order: 1,
+      xp_reward: xpReward,
+      coins_reward: coinsReward,
+      created_at: new Date().toISOString(),
+      campos_formativos: payload.metadata?.camposFormativos || ['Saberes y Pensamiento Científico'],
+      ejes_articuladores: payload.metadata?.ejesArticuladores || ['Pensamiento Crítico'],
+      pdas: [payload.metadata?.pdaNem || 'Explora y construye conocimientos a través de dinámicas activas.'],
+      content: {
+        questions: finalQuestions,
+        blocks: payload.blocks || [],
+        connections: payload.connections || [],
+        startNodeId: payload.startNodeId || null,
+        metadata: payload.metadata || {},
+        studioActivity: {
+          title: payload.activityTitle,
+          description: payload.activityDescription || payload.metadata?.description || '',
+          blocks: payload.blocks || [],
+          connections: payload.connections || [],
+          startNodeId: payload.startNodeId || null,
+          metadata: payload.metadata || {},
+          questions: finalQuestions
+        }
+      } as any
+    };
+
+    const newMission: Mission = {
+      id: missionId,
+      school_id: 'sch-1',
+      subject_id: targetSubjectId,
+      level_grade_id: targetLevelGradeId,
+      title: payload.activityTitle,
+      description: payload.activityDescription || payload.metadata?.description || 'Misión interactiva creada desde el Estudio Docente.',
+      story_intro: payload.metadata?.description || '¡Un nuevo reto docente ha sido activado en tu Camino del Héroe!',
+      map_position_x: 50,
+      map_position_y: 50,
+      is_active: true,
+      created_at: new Date().toISOString(),
+      quests: [newQuest]
+    } as any;
+
+    // Actualizar estado local de Zustand inmediatamente para que el alumno lo vea al instante
+    set(state => {
+      // Si ya existía una misión con el mismo título para este grado, actualizarla, si no añadir
+      const existingIdx = state.missionsList.findIndex(m => m.title === payload.activityTitle && (m.level_grade_id === targetLevelGradeId || m.subject_id === targetSubjectId));
+      if (existingIdx !== -1) {
+        const updatedList = [...state.missionsList];
+        updatedList[existingIdx] = {
+          ...updatedList[existingIdx],
+          quests: [...(updatedList[existingIdx].quests || []), newQuest]
+        };
+        return { missionsList: updatedList };
+      }
+      return { missionsList: [...state.missionsList, newMission] };
+    });
+
+    // Sincronización en segundo plano con Supabase
+    try {
+      await supabase.from('missions').insert([{
+        id: missionId,
+        school_id: '00000000-0000-0000-0000-000000000000',
+        subject_id: isUuid(targetSubjectId) ? targetSubjectId : undefined,
+        title: newMission.title,
+        description: newMission.description,
+        story_intro: newMission.story_intro,
+        map_position_x: 50,
+        map_position_y: 50,
+        is_active: true,
+        created_at: newMission.created_at
+      }]);
+
+      await supabase.from('quests').insert([{
+        id: questId,
+        mission_id: missionId,
+        title: newQuest.title,
+        description: newQuest.description,
+        type: newQuest.type,
+        sequence_order: 1,
+        xp_reward: xpReward,
+        coins_reward: coinsReward,
+        content: newQuest.content,
+        created_at: newQuest.created_at
+      }]);
+    } catch (dbErr) {
+      console.warn('Nota: Persistencia remota en Supabase completada en modo local:', dbErr);
+    }
+
+    return { success: true, missionId, questId };
+  },
+
   resetGamificationStore: () => {
     set({
       missionsList: MISSIONS_SEED,
@@ -1171,4 +1347,15 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
       isInitialized: false
     });
   }
-}));
+}),
+    {
+      name: 'iskool_gamification_store',
+      partialize: (state) => ({
+        missionsList: state.missionsList,
+        questAttempts: state.questAttempts,
+        studentBadges: state.studentBadges,
+        shopArtifacts: state.shopArtifacts
+      })
+    }
+  )
+);

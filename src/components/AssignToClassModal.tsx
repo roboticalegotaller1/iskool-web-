@@ -44,8 +44,7 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const saveQuest = useGamificationStore(state => state.saveQuest);
-  const missionsList = useGamificationStore(state => state.missionsList);
+  const assignStudioActivity = useGamificationStore(state => state.assignStudioActivity);
 
   useEffect(() => {
     setMounted(true);
@@ -59,54 +58,22 @@ export const AssignToClassModal: React.FC<AssignToClassModalProps> = ({
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      const targetSubjectId = selectedGroup.subjectId || 'sub-math';
-      const existingMission = missionsList.find(m => m.subject_id === targetSubjectId) || missionsList[0];
-      const missionId = existingMission?.id || `mis-${targetSubjectId}`;
-
-      const questPayload = {
-        id: `quest-${Date.now()}`,
-        mission_id: missionId,
-        title: activity.title,
-        description: activity.content_json?.description || 'Actividad asignada desde el Estudio Docente ISkool.',
-        type: 'quiz' as const,
-        sequence_order: (existingMission?.quests?.length || 0) + 1,
-        xp_reward: xpReward,
-        coins_reward: coinsReward,
-        content: {
-          questions: (activity.content_json?.questions || []).map((q, idx) => ({
-            id: `q-${Date.now()}-${idx}`,
-            question: q.question,
-            options: q.options || ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-            correctAnswerIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
-            correctIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
-            imageUrl: q.imageUrl,
-            explanation: q.explanation || 'Respuesta validada según el estándar pedagógico de ISkool'
-          }))
-        },
-        campos_formativos: ['Saberes y Pensamiento Científico'],
-        ejes_articuladores: ['Pensamiento Crítico'],
-        pdas: ['Explora y construye conocimientos a través de dinámicas activas.']
-      };
-
-      // 1. Persistencia sincrónica en el almacén del estudiante (Gamification & Learning Path)
-      await saveQuest(targetSubjectId, questPayload);
-
-      // 2. Persistencia en base de datos Supabase
-      try {
-        await supabase.from('quests').insert([{
-          mission_id: missionId,
-          title: questPayload.title,
-          description: questPayload.description,
-          type: questPayload.type,
-          sequence_order: questPayload.sequence_order,
-          xp_reward: questPayload.xp_reward,
-          coins_reward: questPayload.coins_reward,
-          content: questPayload.content,
-          created_at: new Date().toISOString()
-        }]);
-      } catch (dbErr) {
-        console.warn('Nota: Persistencia remota en Supabase completada en modo offline/mock:', dbErr);
-      }
+      await assignStudioActivity({
+        groupId: selectedGroup.id,
+        groupName: selectedGroup.name,
+        levelGradeId: selectedGroup.id === 'grp-pb-a' ? 'primaria-1º' : selectedGroup.id === 'grp-sec-a' ? 'secundaria-2º' : selectedGroup.id === 'grp-prep-a' ? 'preparatoria-4ºSemestre' : 'primaria-4º',
+        subjectId: selectedGroup.subjectId,
+        activityTitle: activity.title,
+        activityDescription: activity.content_json?.description || activity.title,
+        blocks: activity.content_json?.blocks || [],
+        connections: activity.content_json?.connections || [],
+        startNodeId: activity.content_json?.startNodeId || null,
+        metadata: activity.content_json?.metadata || {},
+        questions: activity.content_json?.questions || [],
+        xpReward: xpReward,
+        coinsReward: coinsReward,
+        teacherName: activity.teacher_name
+      });
 
       onSuccess(selectedGroup.name);
       onClose();

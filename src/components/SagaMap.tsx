@@ -79,11 +79,31 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
     .filter(s => s.groupId === studentGroupId)
     .map(s => s.subjectId);
 
-  // Filter active missions by student's subjects
+  const currentLevel = activeLevel || activeStudent?.level || 'primaria';
+  const currentGrade = activeGrade || activeStudent?.grade || '4º';
+
+  // Filter active missions by student's group, level/grade and subjects
   const filteredMissions = missions.filter(m => {
     if (m.is_active === false) return false;
+
+    // 1. Coincidencia directa por grupo
+    if ((m as any).group_id && (m as any).group_id === studentGroupId) return true;
+
+    // 2. Coincidencia por nivel y grado académico
+    if (m.level_grade_id) {
+      if (m.level_grade_id.includes(currentLevel) || m.level_grade_id.includes(currentGrade)) return true;
+      if (currentLevel === 'primaria') {
+        const gradeNum = parseInt(currentGrade) || 4;
+        if (gradeNum <= 3 && (m.level_grade_id === 'primaria-1º' || m.level_grade_id === 'lg-1')) return true;
+        if (gradeNum > 3 && (m.level_grade_id === 'primaria-4º' || m.level_grade_id === 'lg-4')) return true;
+      }
+      if (currentLevel === 'secundaria' && (m.level_grade_id.includes('sec') || m.level_grade_id === 'lg-sec' || m.level_grade_id === 'secundaria-2º')) return true;
+      if (currentLevel === 'preparatoria' && (m.level_grade_id.includes('prep') || m.level_grade_id === 'lg-prep' || m.level_grade_id === 'preparatoria-4ºSemestre')) return true;
+    }
+
+    // 3. Coincidencia por materia de su horario
     if (studentSubjectIds.length > 0) {
-      return studentSubjectIds.some(subId => {
+      const matchSubject = studentSubjectIds.some(subId => {
         if (subId === m.subject_id) return true;
         const subjects = useSchoolAdminStore.getState().subjectsList;
         const studentSub = subjects.find(s => s.id === subId);
@@ -91,8 +111,14 @@ export default function SagaMap({ missions, activeLevel, activeGrade }: SagaMapP
         if (studentSub && missionSub && studentSub.name === missionSub.name) return true;
         return false;
       }) || studentSubjectIds.includes(m.subject_id);
+
+      if (matchSubject) return true;
     }
-    return true;
+
+    // 4. Si la misión no tiene restricción de nivel/grupo específica, mostrarla por defecto en su nivel
+    if (!m.level_grade_id && !(m as any).group_id) return true;
+
+    return false;
   });
 
   // Fallback to all active provided missions if subject-specific filter returns empty

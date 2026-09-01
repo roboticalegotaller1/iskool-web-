@@ -766,6 +766,12 @@ export interface StudioActivityJSON {
   title: string;
   description: string;
   questions: StudioActivityQuestion[];
+  task_type?: string;
+  blocks?: any[];
+  connections?: any[];
+  startNodeId?: string | null;
+  metadata?: any;
+  logicChallengeData?: any;
 }
 export type CanvasActivityJSON = StudioActivityJSON;
 

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { useMemo } from 'react';
 import { StudentStats, StudentAvatar, StudentMessage, UserProfile, Quest } from '../types';
 import { STATS_MAP_SEED, AVATAR_MAP_SEED, STUDENT_INVENTORY_SEED, STUDENT_MESSAGES_SEED, STUDENTS_LIST_SEED } from './seeds';
@@ -50,7 +51,9 @@ interface StudentStoreState {
   resetStudentStore: () => void;
 }
 
-export const useStudentStore = create<StudentStoreState>((set, get) => ({
+export const useStudentStore = create<StudentStoreState>()(
+  persist(
+    (set, get) => ({
   activeStudentId: 'std-pa',
   allStats: STATS_MAP_SEED,
   allAvatars: AVATAR_MAP_SEED,
@@ -1015,7 +1018,19 @@ export const useStudentStore = create<StudentStoreState>((set, get) => ({
       isLoadingStats: false,
     });
   },
-}));
+}),
+    {
+      name: 'iskool_student_store',
+      partialize: (state) => ({
+        activeStudentId: state.activeStudentId,
+        allStats: state.allStats,
+        allAvatars: state.allAvatars,
+        studentInventoryMap: state.studentInventoryMap,
+        studentMessages: state.studentMessages,
+      })
+    }
+  )
+);
 
 export const isUuid = (str?: string): boolean => {
   if (!str) return false;
