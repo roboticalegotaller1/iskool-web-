@@ -22,6 +22,8 @@ import {
   generateFinalProjectProposal, 
   generateDetonatingQuestions,
   getSepBookForSession, 
+  cleanCoreTopicName,
+  sanitizeSpanishPedagogicalGrammar,
   LEVEL_BASE_SUBJECTS,
   BaseSubjectDef,
   SessionPlanItem, 
@@ -216,7 +218,8 @@ interface PlanningTabProps {
   groupsList: Group[];
 }
 
-const getPdaMap = (capitalizedTopic: string): Record<string, Record<string, string>> => {
+const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => {
+  const capitalizedTopic = cleanCoreTopicName(rawTopic);
   const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(capitalizedTopic);
   const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(capitalizedTopic);
   const isAdditionOrSubtraction = /suma|resta|agregar|quitar|conteo|numero|agrupacion|reagrupa/i.test(capitalizedTopic);
@@ -965,12 +968,15 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         text = text.replace(/```json/g, '').replace(/```/g, '').trim();
         const parsed = JSON.parse(text);
 
-        const effectiveTopic = parsed.detectedTopic || promptText || parsed.title || 'Tema Curricular Situado';
+        const effectiveTopic = cleanCoreTopicName(parsed.detectedTopic || promptText || parsed.title || 'Tema Curricular Situado');
         const fallbackSessions = generateChronometerSessions(level, subject, effectiveTopic, count);
         const fallbackPdas = getArticulatedPdas(level, subject, effectiveTopic);
         const fallbackProject = generateFinalProjectProposal(level, subject, effectiveTopic);
 
-        const proposedTitle = parsed.title || `Proyecto Didáctico: ${effectiveTopic} — ${levelLabel}`;
+        const proposedTitle = sanitizeSpanishPedagogicalGrammar(parsed.title || `Proyecto Didáctico: ${effectiveTopic} — ${levelLabel}`);
+        const detonatingQs = Array.isArray(parsed.preguntasDetonadoras) && parsed.preguntasDetonadoras.length >= 2 
+          ? parsed.preguntasDetonadoras.map((q: string) => sanitizeSpanishPedagogicalGrammar(q))
+          : generateDetonatingQuestions(effectiveTopic, level, subject);
 
         return {
           id: 'plan-' + Date.now(),
@@ -981,12 +987,10 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           levelName: levelLabel,
           campoFormativo: parsed.campoFormativo || (subject === 'lenguajes' ? 'Lenguajes' : 'Saberes y Pensamiento Científico'),
           ejesArticuladores: parsed.ejesArticuladores || ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable'],
-          pda: targetPda || parsed.pda || fallbackPdas[0]?.pda || 'PDA Oficial NEM',
+          pda: sanitizeSpanishPedagogicalGrammar(targetPda || parsed.pda || fallbackPdas[0]?.pda || 'PDA Oficial NEM'),
           pdasArticulados: fallbackPdas,
           duration: durationStr,
-          preguntasDetonadoras: Array.isArray(parsed.preguntasDetonadoras) && parsed.preguntasDetonadoras.length >= 2 
-            ? parsed.preguntasDetonadoras 
-            : generateDetonatingQuestions(effectiveTopic, level, subject),
+          preguntasDetonadoras: detonatingQs,
           sesiones: fallbackSessions,
           proyectoIntegrador: fallbackProject,
           inicio: fallbackSessions[0]?.actividadInicio + '\n' + fallbackSessions[0]?.actividadDesarrollo + '\n' + fallbackSessions[0]?.actividadCierre,
@@ -1033,7 +1037,8 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       }
     }
 
-    const capitalizedTopic = effectiveTopic.charAt(0).toUpperCase() + effectiveTopic.slice(1).trim();
+    const cleanTopic = cleanCoreTopicName(effectiveTopic);
+    const capitalizedTopic = cleanTopic;
 
     const levelNames: Record<string, string> = {
       'preescolar':     'Preescolar (Fase 2: 1º a 3º)',
@@ -1050,24 +1055,25 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       'lenguajes':   'Español / Lenguajes (Lenguajes)'
     };
 
-    const isLanguage = subject === 'lenguajes' || (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(effectiveTopic));
-    const isMath = subject === 'matematicas' || (!subject && !isLanguage && /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(effectiveTopic));
-    const isScience = subject === 'ciencias' || (!subject && !isLanguage && !isMath && /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(effectiveTopic));
+    const isLanguage = subject === 'lenguajes' || (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(cleanTopic));
+    const isMath = subject === 'matematicas' || (!subject && !isLanguage && /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(cleanTopic));
+    const isScience = subject === 'ciencias' || (!subject && !isLanguage && !isMath && /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(cleanTopic));
     const campo = isLanguage ? 'Lenguajes' : (isMath || isScience ? 'Saberes y Pensamiento Científico' : 'Lenguajes');
     const ejes = ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'];
 
     const pdaMap = getPdaMap(capitalizedTopic);
     const pdaKey = isLanguage ? 'language' : isMath ? 'math' : isScience ? 'ecology' : 'default';
-    const pda = customPda || pdaMap[level]?.[pdaKey] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
+    const rawPda = customPda || pdaMap[level]?.[pdaKey] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
+    const pda = sanitizeSpanishPedagogicalGrammar(rawPda);
 
-    const sesionesList = generateChronometerSessions(level, subject, effectiveTopic, count);
-    const pdasArticulados = getArticulatedPdas(level, subject, effectiveTopic);
-    const proyectoIntegrador = generateFinalProjectProposal(level, subject, effectiveTopic);
-    const preguntasDetonadoras = generateDetonatingQuestions(effectiveTopic, level, subject);
+    const sesionesList = generateChronometerSessions(level, subject, cleanTopic, count);
+    const pdasArticulados = getArticulatedPdas(level, subject, cleanTopic);
+    const proyectoIntegrador = generateFinalProjectProposal(level, subject, cleanTopic);
+    const preguntasDetonadoras = generateDetonatingQuestions(cleanTopic, level, subject);
 
     return {
       id: 'plan-' + Date.now(),
-      title: `Proyecto didáctico: ${capitalizedTopic} — ${levelNames[level] || level}`,
+      title: sanitizeSpanishPedagogicalGrammar(`Proyecto didáctico: ${capitalizedTopic} — ${levelNames[level] || level}`),
       subjectId: subject,
       subjectName: subjectNames[subject] || 'Asignatura',
       levelId: level,
@@ -1077,7 +1083,7 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
       pda,
       pdasArticulados,
       duration: durationStr,
-      preguntasDetonadoras,
+      preguntasDetonadoras: preguntasDetonadoras.map(p => sanitizeSpanishPedagogicalGrammar(p)),
       sesiones: sesionesList,
       proyectoIntegrador,
       inicio: sesionesList[0]?.actividadInicio + '\n' + sesionesList[0]?.actividadDesarrollo + '\n' + sesionesList[0]?.actividadCierre,

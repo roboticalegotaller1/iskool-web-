@@ -7,7 +7,10 @@ import {
   generateChronometerSessions,
   generateChronometer10Sessions, 
   getArticulatedPdas, 
-  generateFinalProjectProposal 
+  generateFinalProjectProposal,
+  cleanCoreTopicName,
+  generateDetonatingQuestions,
+  sanitizeSpanishPedagogicalGrammar
 } from '@/lib/curriculumEngine';
 import { exec } from 'child_process';
 import util from 'util';
@@ -323,9 +326,11 @@ export async function GET(request: NextRequest) {
       const normLevel = levelParam || 'primaria-baja';
       const cleanSub = cleanString(subjectParam || subjectName || campoFormativo);
       const normSubject = (cleanSub.includes('leng') || cleanSub.includes('esp')) ? 'lenguajes' : (cleanSub.includes('cien') || cleanSub.includes('medio')) ? 'ciencias' : 'matematicas';
-      const sesionesList = generateChronometerSessions(normLevel, normSubject, title, sessionCount);
-      const pdasArticulados = getArticulatedPdas(normLevel, normSubject, title);
-      const proyectoIntegrador = generateFinalProjectProposal(normLevel, normSubject, title);
+      const cleanTopic = cleanCoreTopicName(title);
+      const sesionesList = generateChronometerSessions(normLevel, normSubject, cleanTopic, sessionCount);
+      const pdasArticulados = getArticulatedPdas(normLevel, normSubject, cleanTopic);
+      const proyectoIntegrador = generateFinalProjectProposal(normLevel, normSubject, cleanTopic);
+      const detonatingQuestions = generateDetonatingQuestions(cleanTopic, normLevel, normSubject);
       const durationStr = `${sessionCount} ${sessionCount === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${sessionCount * 50} min)`;
 
       return NextResponse.json({
@@ -334,26 +339,22 @@ export async function GET(request: NextRequest) {
         filename: bestMatchNode.filename,
         planning: {
           id: 'plan-vault-' + Date.now(),
-          title,
+          title: sanitizeSpanishPedagogicalGrammar(title),
           levelName,
           subjectName,
           campoFormativo,
           ejesArticuladores: ['Pensamiento Crítico', 'Interculturalidad Crítica', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'],
-          pda,
+          pda: sanitizeSpanishPedagogicalGrammar(pda),
           pdasArticulados,
           duration: durationStr,
-          preguntasDetonadoras: preguntas.length > 0 ? preguntas : [
-            `¿Cómo aplicamos el contenido de "${title}" para resolver problemáticas de nuestra comunidad?`,
-            `¿De qué forma fomentamos el pensamiento crítico, la inclusión y el trabajo colaborativo en este proyecto?`,
-            `¿Qué producto tangible compartiremos con la comunidad escolar al término de las ${sessionCount} sesiones?`
-          ],
+          preguntasDetonadoras: preguntas.length > 0 ? preguntas.map(p => sanitizeSpanishPedagogicalGrammar(p)) : detonatingQuestions,
           sesiones: sesionesList,
           proyectoIntegrador,
-          inicio: fase1Match ? fase1Match[1].trim() : sesionesList[0]?.actividadInicio + '\n' + sesionesList[0]?.actividadDesarrollo + '\n' + sesionesList[0]?.actividadCierre,
-          desarrollo: fase2Match ? fase2Match[1].trim() : (sesionesList.length > 2 ? sesionesList.slice(1, -1).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n') : (sesionesList[1] ? `📌 SESIÓN ${sesionesList[1].numero}: ${sesionesList[1].titulo}\n${sesionesList[1].actividadDesarrollo}` : 'Desarrollo en sesión única.')),
-          cierre: fase3Match ? fase3Match[1].trim() : (sesionesList.length > 1 ? `📌 SESIÓN FINAL ${sesionesList[sesionesList.length - 1].numero} (${sesionesList[sesionesList.length - 1].duracionTotal}): ${sesionesList[sesionesList.length - 1].titulo}\n${sesionesList[sesionesList.length - 1].actividadInicio}\n${sesionesList[sesionesList.length - 1].actividadDesarrollo}\n${sesionesList[sesionesList.length - 1].actividadCierre}\n📖 Libro SEP: ${sesionesList[sesionesList.length - 1].libroSep.titulo}, ${sesionesList[sesionesList.length - 1].libroSep.paginas}\n📄 Entregable: ${sesionesList[sesionesList.length - 1].entregableSesion}` : sesionesList[0]?.actividadCierre || ''),
-          evaluacion: evalMatch ? evalMatch[1].trim() : `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
-          materiales: matMatch ? matMatch[1].trim() : `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
+          inicio: fase1Match ? sanitizeSpanishPedagogicalGrammar(fase1Match[1].trim()) : sesionesList[0]?.actividadInicio + '\n' + sesionesList[0]?.actividadDesarrollo + '\n' + sesionesList[0]?.actividadCierre,
+          desarrollo: fase2Match ? sanitizeSpanishPedagogicalGrammar(fase2Match[1].trim()) : (sesionesList.length > 2 ? sesionesList.slice(1, -1).map(s => `📌 SESIÓN ${s.numero} (${s.duracionTotal}): ${s.titulo}\n${s.actividadInicio}\n${s.actividadDesarrollo}\n${s.actividadCierre}\n📖 Libro SEP: ${s.libroSep.titulo}, ${s.libroSep.paginas}\n📄 Entregable: ${s.entregableSesion}`).join('\n\n') : (sesionesList[1] ? `📌 SESIÓN ${sesionesList[1].numero}: ${sesionesList[1].titulo}\n${sesionesList[1].actividadDesarrollo}` : 'Desarrollo en sesión única.')),
+          cierre: fase3Match ? sanitizeSpanishPedagogicalGrammar(fase3Match[1].trim()) : (sesionesList.length > 1 ? `📌 SESIÓN FINAL ${sesionesList[sesionesList.length - 1].numero} (${sesionesList[sesionesList.length - 1].duracionTotal}): ${sesionesList[sesionesList.length - 1].titulo}\n${sesionesList[sesionesList.length - 1].actividadInicio}\n${sesionesList[sesionesList.length - 1].actividadDesarrollo}\n${sesionesList[sesionesList.length - 1].actividadCierre}\n📖 Libro SEP: ${sesionesList[sesionesList.length - 1].libroSep.titulo}, ${sesionesList[sesionesList.length - 1].libroSep.paginas}\n📄 Entregable: ${sesionesList[sesionesList.length - 1].entregableSesion}` : sesionesList[0]?.actividadCierre || ''),
+          evaluacion: evalMatch ? sanitizeSpanishPedagogicalGrammar(evalMatch[1].trim()) : `RÚBRICA FORMATIVA ANALÍTICA (NIVELES NEM 2024):\n• ${proyectoIntegrador.rubrica.criterio1.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio1.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio1.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio1.enProceso}\n• ${proyectoIntegrador.rubrica.criterio2.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio2.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio2.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio2.enProceso}\n• ${proyectoIntegrador.rubrica.criterio3.nombre}:\n  - Sobresaliente: ${proyectoIntegrador.rubrica.criterio3.sobresaliente}\n  - Satisfactorio: ${proyectoIntegrador.rubrica.criterio3.satisfactorio}\n  - En Proceso: ${proyectoIntegrador.rubrica.criterio3.enProceso}`,
+          materiales: matMatch ? sanitizeSpanishPedagogicalGrammar(matMatch[1].trim()) : `MATERIALES POR SESIÓN Y RECURSOS DIDÁCTICOS:\n• Libros de Texto Gratuitos de la SEP asignados con páginas específicas.\n• Materiales manipulables (fichas, regletas, instrumentos de medición, papel bond, colores).\n• Entregables parciales acumulables en la bitácora escolar.\n\nEVIDENCIA ENTREGABLE DEL PROYECTO:\n• ${proyectoIntegrador.productoFinal}`,
           createdAt,
           isFromVault: true
         }

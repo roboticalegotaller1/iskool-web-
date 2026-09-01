@@ -422,7 +422,7 @@ export function getSepBookForSession(
   if (cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('lect') || cleanSub.includes('comun') || cleanSub.includes('artes') || cleanSub.includes('ingles')) {
     subKey = 'lenguajes';
   } else if (cleanSub.includes('mat') || cleanSub.includes('num') || cleanSub.includes('calc') || cleanSub.includes('geom')) {
-    subKey = 'matematicas';
+subKey = 'matematicas';
   } else if (cleanSub.includes('cien') || cleanSub.includes('nat') || cleanSub.includes('fis') || cleanSub.includes('quim') || cleanSub.includes('bio')) {
     subKey = 'ciencias';
   }
@@ -443,8 +443,86 @@ export function getSepBookForSession(
 }
 
 /**
+ * Sanitiza y limpia gramaticalmente el nombre del tema escolar,
+ * eliminando prefijos de planeaciones, sufijos de niveles y errores de duplicación.
+ */
+export function cleanCoreTopicName(topic: string): string {
+  if (!topic || typeof topic !== 'string') return 'Tema Curricular Situado';
+  let cleaned = topic.trim();
+
+  // Eliminar prefijos de proyectos o planeaciones
+  cleaned = cleaned.replace(/^(?:📚\s*)?(?:Proyecto\s+didáctico(?:\s+integral)?|Planeación(?:\s+didáctica)?|Secuencia(?:\s+didáctica)?|Unidad(?:\s+didáctica)?|Tema|Propuesta(?:\s+pedagógica)?):\s*/i, '');
+  
+  // Eliminar sufijos de nivel o fase (ej. "— Primaria Baja (Fase 3: 1º y 2º Grado)")
+  cleaned = cleaned.replace(/\s*—\s*(?:Preescolar|Primaria\s+(?:Baja|Media|Alta)|Secundaria|Preparatoria|Bachillerato|Fase\s+\d+).*$/i, '');
+  cleaned = cleaned.replace(/\s*\(Fase\s+\d+.*?\)$/i, '');
+
+  // Corregir duplicaciones o tartamudeos frecuentes (ej. "Revolucirevolucion", "matematmatematicas")
+  cleaned = cleaned.replace(/revoluci(?:on)?\s*revoluci[oó]n/gi, 'Revolución');
+  cleaned = cleaned.replace(/matemat(?:icas)?\s*matem[aá]ticas/gi, 'Matemáticas');
+  cleaned = cleaned.replace(/cienc(?:ias)?\s*ciencias/gi, 'Ciencias');
+
+  // Corregir duplicación de palabras pequeñas
+  cleaned = cleaned.replace(/\b(de|la|el|los|las|un|una|en|que|y|a|con|por|sobre)\s+\1\b/gi, '$1');
+
+  // Normalización canónica para temas frecuentes de la NEM
+  const lower = cleaned.toLowerCase();
+  if (/revoluci/i.test(lower) && /mexic/i.test(lower)) return 'Revolución Mexicana';
+  if (/independen/i.test(lower) && /mexic/i.test(lower)) return 'Independencia de México';
+  if (/porfiriato/i.test(lower)) return 'El Porfiriato y sus Contradicciones Sociales';
+  if (/constituc/i.test(lower) && /1917/i.test(lower)) return 'La Constitución de 1917 y los Derechos Sociales';
+  if (/fraccion/i.test(lower)) return 'Fracciones y Reparto Equitativo';
+  if (/suma|resta/i.test(lower) && /concreto|fichas|reagrupa/i.test(lower)) return 'Suma y Resta con Material Concreto';
+  if (/multiplic|tablas/i.test(lower)) return 'Multiplicación y Tablas Numéricas';
+  if (/geometr|figuras|tangram/i.test(lower)) return 'Figuras Geométricas y Cuerpos del Entorno';
+  if (/cuadrat|parabol/i.test(lower)) return 'Modelación de Funciones Cuadráticas';
+  if (/agua|filtr/i.test(lower)) return 'Cuidado y Filtración del Agua';
+  if (/huerto|germin/i.test(lower)) return 'El Huerto Escolar Agroecológico';
+  if (/biodigestor|biogas/i.test(lower)) return 'Biodigestores y Energías Renovables';
+  if (/carta|epistol|buzon/i.test(lower)) return 'Producción de Textos Epistolares (La Carta)';
+  if (/cuento|leyenda|fabula/i.test(lower)) return 'Lectura y Creación de Cuentos Colectivos';
+  if (/derecho|paz|acuerdo/i.test(lower)) return 'Derechos de la Niñez y Convivencia Pacífica';
+
+  // Capitalización limpia
+  cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+  return cleaned;
+}
+
+/**
+ * Validador y corrector ortográfico/gramatical para textos pedagógicos en español
+ */
+export function sanitizeSpanishPedagogicalGrammar(text: string): string {
+  if (!text || typeof text !== 'string') return '';
+  let res = text.trim();
+
+  // Corregir duplicaciones de palabras
+  res = res.replace(/revoluci(?:on)?\s*revoluci[oó]n/gi, 'Revolución');
+  res = res.replace(/\b(de|la|el|los|las|un|una|en|que|y|a|con|por|sobre)\s+\1\b/gi, '$1');
+
+  // Corregir espacios antes de signos de puntuación
+  res = res.replace(/\s+([,.:;?!])/g, '$1');
+
+  // Asegurar signos de interrogación completos en preguntas
+  if (res.includes('?') && !res.startsWith('¿')) {
+    res = '¿' + res.replace(/^[¿\s]+/, '');
+  }
+  if (res.startsWith('¿') && !res.endsWith('?')) {
+    res = res.replace(/[?\s]+$/, '') + '?';
+  }
+
+  // Eliminar comillas dobles anidadas
+  res = res.replace(/""([^"]+)""/g, '"$1"');
+
+  // Asegurar mayúscula después de ¿ o ¡
+  res = res.replace(/^([¿¡])([a-záéíóúñ])/i, (_, mark, char) => `${mark}${char.toUpperCase()}`);
+
+  return res;
+}
+
+/**
  * Generador Dinámico de Sesiones Individuales con Minutero (10/30/10 min), Libros SEP y Entregables
- * Genera de forma exacta el número de sesiones solicitado por el docente (1 a 30 sesiones).
+ * Genera de forma exacta el número de sesiones solicitado por el docente (1 a 30 sesiones),
+ * calibrando el nivel cognitivo y vocabulario estrictamente a cada Fase (2 a 6 y Bachillerato).
  */
 export function generateChronometerSessions(
   level: string,
@@ -453,9 +531,9 @@ export function generateChronometerSessions(
   totalSessions: number = 10
 ): SessionPlanItem[] {
   const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
-  const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1).trim();
-  const topicLower = topic.toLowerCase();
-  const topicHash = Math.abs(topic.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0));
+  const cleanTopic = cleanCoreTopicName(topic);
+  const topicLower = cleanTopic.toLowerCase();
+  const topicHash = Math.abs(cleanTopic.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0));
   
   const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
   const isCuento = /cuento|fabula|leyenda|mito|narracion|literat/i.test(topicLower);
@@ -463,7 +541,7 @@ export function generateChronometerSessions(
   const cleanSub = subject.toLowerCase();
   const isLanguageSubject = cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('comun') || (!cleanSub.includes('mat') && !cleanSub.includes('cien') && (isEpistolar || isCuento || isPoesia));
 
-  // 1. Plantilla Maestra Especializada: Cartas y Textos Epistolares (Lenguajes / Español)
+  // 1. Plantilla Especializada: Cartas y Textos Epistolares (Lenguajes / Español)
   const epistolarTemplates = [
     {
       num: 1,
@@ -597,20 +675,223 @@ export function generateChronometerSessions(
     }
   ];
 
-  // 2. Plantilla Maestra General (NEM 2024)
-  const genericTemplates = [
+  // 2. Plantilla Especializada: Preescolar (Fase 2 - Enfoque Lúdico, Sensorial y Expresivo)
+  const preschoolTemplates = [
     {
       num: 1,
-      titulo: `Planteamiento del Reto Comunitario y Activación de Saberes sobre "${capitalizedTopic}"`,
-      inicio: `⏱️ INICIO (10 min): Dinámica detonadora "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "${capitalizedTopic}". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "${capitalizedTopic}" y elabora su primer registro diagnóstico.`,
-      cierre: `⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre ${capitalizedTopic}?".`,
+      titulo: `Ronda de Bienvenida y Caja Mágica de Sorpresas: "¿Qué sabemos de ${cleanTopic}?"`,
+      inicio: `⏱️ INICIO (10 min): Canción de bienvenida con títere guía y descubrimiento de la "Caja Mágica". Preguntas detonadoras sensoriales en asamblea sobre el tapete.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Exploración con objetos concretos, texturas y colores. En pequeños grupos de juego libre guiado, las niñas y niños manipulan material táctil sobre "${cleanTopic}".`,
+      cierre: `⏱️ CIERRE (10 min): Ronda de expresión en el círculo de diálogo: cada niño muestra su objeto favorito. Aplauso de estrellas y respiración guiada.`,
       preguntas: [
-        `¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos o utilizamos "${capitalizedTopic}"?`,
-        `¿Qué problema podríamos resolver en la escuela o en casa si dominamos este conocimiento?`
+        `¿Qué color, forma o sonido tiene lo que descubrimos hoy sobre "${cleanTopic}"?`,
+        `¿A quién en casa le queremos platicar de nuestra caja mágica?`
+      ],
+      materiales: ['Caja decorada con materiales sensoriales', 'Títere guía de aula', 'Tapete infantil', 'Música instrumental'],
+      entregable: `🎨 Registro Gráfico #1: Dibujo libre inicial en hoja de trabajo con crayones gruesos.`
+    },
+    {
+      num: 2,
+      titulo: `Cuentacuentos Infantil y Libro de la SEP: Imágenes y Relatos de "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Ronda de adivinanzas visuales mostrando láminas ilustradas del libro de texto gratuito de la SEP.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Narración oral interactiva apoyada con títeres y láminas del libro escolar. Los niños identifican personajes, acciones y colores clave.`,
+      cierre: `⏱️ CIERRE (10 min): Juego de mímica y dramatización corporal: "Imitamos a los personajes de la historia".`,
+      preguntas: [
+        `¿Qué personaje del cuento te gustó más y por qué?`,
+        `¿Qué sonido o movimiento hace lo que vimos en el libro de la SEP?`
+      ],
+      materiales: ['Libro de texto gratuito SEP de Preescolar', 'Títeres de calcetín o guiñol', 'Láminas de colores'],
+      entregable: `🎨 Ficha Creativa #2: Pintura dactilar o con esponjas representando la escena favorita del relato.`
+    },
+    {
+      num: 3,
+      titulo: `Taller de Modelado y Expresión Plástica: Construimos con plastilina sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Presentación de barras de plastilina o masa vegetal de colores y canto rítmico de amasar.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Modelado libre y guiado. Las niñas y niños crean figuras representativas de "${cleanTopic}", experimentando con mezclas de colores y texturas.`,
+      cierre: `⏱️ CIERRE (10 min): Museo en el tapete: Exposición de esculturas infantiles sobre platos de cartón reciclado.`,
+      preguntas: [
+        `¿Cómo se siente la masa en tus manos: suave, tibia o pegajosa?`,
+        `¿Qué figura creaste y qué historia nos cuenta tu escultura?`
+      ],
+      materiales: ['Plastilina o masa casera no tóxica', 'Platos de cartón reciclado', 'Herramientas de plástico seguras'],
+      entregable: `🎨 Escultura Infantil #3: Figura modelada sobre plato base con tarjeta de autor.`
+    },
+    {
+      num: 4,
+      titulo: `Juegos y Rondas Cooperativas: Aprendemos a compartir y ayudarnos en el salón`,
+      inicio: `⏱️ INICIO (10 min): Ronda infantil con música tradicional y juego de estatuas de marfil.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Circuitos motrices y estaciones de juego cooperativo vinculadas a "${cleanTopic}" (clasificación de objetos por color, tamaño y forma).`,
+      cierre: `⏱️ CIERRE (10 min): El abrazo de amigos: Todos colaboran recogiendo los materiales cantando "A guardar, a guardar".`,
+      preguntas: [
+        `¿Cómo nos ayudamos entre amigos para que todos puedan jugar contentos?`,
+        `¿Qué juguetes compartiste hoy con tus compañeros?`
+      ],
+      materiales: ['Aros plásticos', 'Pelotas de esponja', 'Canastas de clasificación', 'Música infantil'],
+      entregable: `🎨 Registro de Convivencia: Estampas de caritas felices y dibujo colectivo en papel kraft.`
+    },
+    {
+      num: 5,
+      titulo: `Festival y Muestra de Arte Infantil: Compartimos nuestras creaciones con las familias`,
+      inicio: `⏱️ INICIO (10 min): Colocación de distintivos de artistas infantiles y bienvenida a las familias invitadas.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Recorrido por la Galería de Arte Infantil en el aula. Los pequeños presentan sus dibujos y esculturas a sus papás con apoyo del docente.`,
+      cierre: `⏱️ CIERRE (10 min): Canto colectivo de despedida y entrega de diplomas simbólicos de exploradores.`,
+      preguntas: [
+        `¿Qué carita puso tu familia cuando vio tus trabajitos de arte?`,
+        `¿Qué fue lo más divertido de aprender juntos en este proyecto?`
+      ],
+      materiales: ['Mural de exhibición', 'Mesa de trabajos infantiles', 'Diplomas simbólicos'],
+      entregable: `🏆 Portafolio de Arte Preescolar: Carpeta decorada con todos los trabajitos y diploma de logro.`
+    }
+  ];
+
+  // 3. Plantilla Especializada: Primaria Baja (Fase 3: 1º y 2º Grado - Lenguaje Sencillo, Narrativo y Concreto)
+  const primaryLowTemplates = [
+    {
+      num: 1,
+      titulo: `Apertura y Asombro: ¿Qué sabemos y qué historias conocemos sobre "${cleanTopic}"?`,
+      inicio: `⏱️ INICIO (10 min): Dinámica "El Tesoro de los Recuerdos". El docente muestra objetos, fotografías o imágenes sencillas sobre "${cleanTopic}" y pregunta: "¿Alguien ha visto algo parecido en su casa o en la calle?". Lluvia de palabras en el pizarrón.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En equipos de 3 o 4 compañeros, los alumnos observan láminas ilustradas y platican qué cosas conocen sobre el tema. Dibujan en su cuaderno su primer recuerdo o idea con colores vivos y rotulan su nombre.`,
+      cierre: `⏱️ CIERRE (10 min): Círculo de diálogo en el tapete o salón: Cada equipo muestra un dibujo y dice una frase corta: "Nosotros aprendimos que...".`,
+      preguntas: [
+        `¿Qué personas, objetos o relatos de nuestra vida diaria conocemos sobre "${cleanTopic}"?`,
+        `¿Qué juego, dibujo o historia nos gustaría hacer para empezar este proyecto?`
+      ],
+      materiales: ['Fotografías o láminas ilustradas', 'Cuaderno de dibujo', 'Crayones y lápices de colores', 'Pizarrón'],
+      entregable: `📄 Ficha de Dibujo #1: Registro gráfico inicial con título y primeros saberes compartidos en familia.`
+    },
+    {
+      num: 2,
+      titulo: `Exploración en Libros SEP: Descubrimos cuentos e imágenes sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Canto rítmico de atención y apertura guiada del libro de texto gratuito de la SEP en la página indicada.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Lectura en voz alta compartida con el docente. Los niños siguen la lectura con su dedo, encierran con color azul las palabras que reconocen e identifican a los personajes o imágenes principales del libro.`,
+      cierre: `⏱️ CIERRE (10 min): Dinámica "Veo, veo en mi libro": Los alumnos señalan dibujos del libro que responden a las preguntas del maestro.`,
+      preguntas: [
+        `¿Qué descubrimos y qué dibujos nos gustaron más de nuestro libro escolar de la SEP?`,
+        `¿Cómo se parece lo que leímos a lo que platicamos ayer en el salón?`
+      ],
+      materiales: ['Libro de texto gratuito SEP asignado', 'Colores y marcatextos escolares', 'Cuaderno del alumno'],
+      entregable: `📄 Ficha de Trabajo #2: Actividad resuelta del libro escolar y lista ilustrada de 3 palabras clave.`
+    },
+    {
+      num: 3,
+      titulo: `Taller de Creación Concreta: Modelado con plastilina y dibujos sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Presentación de materiales manipulables (plastilina, semillas, fichas o recortes) y explicación de las medidas de orden.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Creación individual o en parejas. Los alumnos modelan figuras, recortan imágenes o arman composiciones que representen lo que han aprendido sobre "${cleanTopic}". Escriben una pequeña tarjeta con su nombre.`,
+      cierre: `⏱️ CIERRE (10 min): Paseo por la galería del salón: Caminamos despacito observando los trabajos de los demás compañeros y aplaudimos el esfuerzo.`,
+      preguntas: [
+        `¿Cómo podemos construir con plastilina, fichas o dibujos lo que estamos aprendiendo?`,
+        `¿Qué fue lo más divertido de trabajar en equipo con nuestros materiales?`
+      ],
+      materiales: ['Plastilina de colores o masa vegetal', 'Fichas didácticas o semillas', 'Hojas blancas y pegamento'],
+      entregable: `📄 Evidencia Manual #3: Figura modelada o collage pegado en cartulina con tarjeta de autor.`
+    },
+    {
+      num: 4,
+      titulo: `Juegos y Retos en Parejas: Resolviendo actividades sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Planteamiento de un reto lúdico o juego de adivinanzas entre parejas para despertar la curiosidad.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo en parejas. Los alumnos resuelven una hoja de retos con dibujos para colorear, conteo o unión de palabras con flechas de colores sobre "${cleanTopic}". Se ayudan si alguno tiene dudas.`,
+      cierre: `⏱️ CIERRE (10 min): Revisión cariñosa en plenaria: "¡Reto cumplido!". Felicitación por el compañerismo demostrado.`,
+      preguntas: [
+        `¿Cómo resolvemos en parejas las actividades y nos ayudamos mutuamente?`,
+        `¿Cómo le explicarías con tus propias palabras a un amigo lo que dibujaste?`
+      ],
+      materiales: ['Hojas de retos ilustradas', 'Lápiz, goma y sacapuntas', 'Colores escolares'],
+      entregable: `📄 Ficha de Retos #4: Hoja de actividades resuelta en parejas con caritas de autoevaluación.`
+    },
+    {
+      num: 5,
+      titulo: `Organización de Nuestro Proyecto: Letreros y dibujos en cartulinas colectivas`,
+      inicio: `⏱️ INICIO (10 min): Organización de comisiones en el aula: dibujantes, recortadores, rotuladores y ordenadores.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En equipos de 4, pegan sus dibujos en una cartulina grande, le ponen un título colorido con ayuda del docente y decoran los bordes con huellitas o grecas.`,
+      cierre: `⏱️ CIERRE (10 min): Colocación de los carteles en el tendedero escolar del salón. Registro en el mural de avances.`,
+      preguntas: [
+        `¿Qué dibujos, letreros y colores no pueden faltar en nuestro trabajo en equipo?`,
+        `¿Cómo nos organizamos para que todos los compañeros participen contentos?`
+      ],
+      materiales: ['Cartulinas de colores', 'Tijeras de punta redonda', 'Pegamento en barra', 'Plumones'],
+      entregable: `📦 Cartel Colectivo #5: Cartulina ilustrada por equipo lista para la exposición escolar.`
+    },
+    {
+      num: 6,
+      titulo: `Conexión con el Arte y la Música: Canciones, coplas y dramatizaciones sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Escucha guiada de un corrido, ronda, poema o cuento tradicional sobre el tema.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Expresión artística y corporal. Los alumnos aprenden un verso corto o ensayan una representación sencilla con sombreros de papel o máscaras de cartulina.`,
+      cierre: `⏱️ CIERRE (10 min): Mini-presentación de 1 minuto por equipo cantando o diciendo su verso con entusiasmo.`,
+      preguntas: [
+        `¿De qué manera combinamos lo aprendido con canciones, coplas o representaciones?`,
+        `¿Cómo nos ayuda este tema a ser mejores amigos y cuidar nuestro salón?`
+      ],
+      materiales: ['Gorros de cartulina o antifaces', 'Instrumentos sencillos (maracas, panderos o claves)', 'Hojas de coplas'],
+      entregable: `📄 Registro Artístico #6: Ficha ilustrada con el verso o canción aprendida y dibujo del personaje.`
+    },
+    {
+      num: 7,
+      titulo: `Taller de Apoyo Amable: Revisamos y mejoramos nuestros trabajitos`,
+      inicio: `⏱️ INICIO (10 min): Dinámica "El Elogio Cariñoso": Aprendemos a decir cosas bonitas sobre el esfuerzo de los demás.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Intercambio de cuadernos o carteles entre parejas. Cada niño pega una estrellita de color en la parte que más le gustó del trabajo de su amigo y le sugiere una mejora con una sonrisa.`,
+      cierre: `⏱️ CIERRE (10 min): Agradecimiento entre compañeros: "¡Gracias por ayudarme a mejorar mi trabajito!".`,
+      preguntas: [
+        `¿Qué cosas bonitas le podemos decir a nuestros compañeros sobre sus trabajos?`,
+        `¿Qué detalles podemos mejorar en nuestro dibujo o texto con mucha paciencia?`
+      ],
+      materiales: ['Estrellitas adhesivas de colores', 'Lápiz y colores para retoques'],
+      entregable: `📄 Ficha de Coevaluación Infantil: Hoja con estrellitas y comentarios positivos entre pares.`
+    },
+    {
+      num: 8,
+      titulo: `Detalles Finales: Elaboración de la versión definitiva para compartir`,
+      inicio: `⏱️ INICIO (10 min): Revisión de los carteles y materiales. Recordamos que la limpieza y el orden hacen que todo se vea hermoso.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Sesión de terminado fino. Los alumnos repasan letras con plumón, pegan elementos faltantes y dejan su producto final listo y limpio.`,
+      cierre: `⏱️ CIERRE (10 min): Visto bueno del docente con sello de felicitación. Guardado cuidadoso para la muestra comunitaria.`,
+      preguntas: [
+        `¿Qué colores y toques finales le agregamos a nuestro trabajo para que quede hermoso?`,
+        `¿Qué emoción sentimos al ver nuestro proyecto casi listo?`
+      ],
+      materiales: ['Materiales finales de exposición', 'Borrador limpio y lápiz'],
+      entregable: `📄 Producto Final Individual o Colectivo terminado con nombre y sello de logro.`
+    },
+    {
+      num: 9,
+      titulo: `Ensayo en el Aula: Practicamos cómo platicarle a los demás sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Demostración del docente: "¿Cómo nos paramos derechitos y hablamos fuerte y claro ante las familias?".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Ensayo general en el salón. Cada niño practica su frase o muestra su dibujo diciendo su nombre y lo que aprendió en voz clara.`,
+      cierre: `⏱️ CIERRE (10 min): Porra grupal de ánimo y seguridad para la presentación final.`,
+      preguntas: [
+        `¿Cómo ensayamos en equipo lo que le vamos a platicar a nuestras familias e invitados?`,
+        `¿Quién va a sostener cada dibujo o cartel durante la presentación?`
+      ],
+      materiales: ['Carteles y trabajos listos', 'Espacio del salón despejado'],
+      entregable: `📄 Ficha de Ensayo: Guion gráfico con la frase y dibujo que cada alumno presentará.`
+    },
+    {
+      num: 10,
+      titulo: `Muestra Comunitaria y Fiesta de Aprendizajes: Compartimos nuestro trabajo`,
+      inicio: `⏱️ INICIO (10 min): Bienvenida a las familias, compañeros de otros salones y autoridades escolares.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Recorrido por la Muestra Escolar de Aprendizajes. Los niños explican sus carteles, cantan sus coplas o muestran sus maquetas con orgullo infantil.`,
+      cierre: `⏱️ CIERRE (10 min): Entrega de reconocimientos formativos, aplauso general y firma en el "Mural de la Amistad".`,
+      preguntas: [
+        `¿Qué caras de alegría pusieron las familias e invitados al ver nuestro trabajo?`,
+        `¿Qué fue lo que más nos gustó y aprendimos a lo largo de este proyecto?`
+      ],
+      materiales: ['Exposición montada', 'Diplomas formativos simbólicos', 'Mural de firmas y huellas'],
+      entregable: `🏆 Evidencia Integradora: Muestra escolar realizada, autoevaluación con caritas y diploma de participación.`
+    }
+  ];
+
+  // 4. Plantilla Especializada: Primaria Media (Fase 4: 3º y 4º Grado - Indagación Guiada y Proyectos en Equipo)
+  const primaryMidTemplates = [
+    {
+      num: 1,
+      titulo: `Planteamiento del Reto Comunitario y Activación de Saberes sobre "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Dinámica "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "${cleanTopic}". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "${cleanTopic}" y elabora su primer registro diagnóstico.`,
+      cierre: `⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre ${cleanTopic}?".`,
+      preguntas: [
+        `¿En qué momentos de nuestra vida cotidiana o en nuestra comunidad observamos situaciones sobre "${cleanTopic}"?`,
+        `¿Qué reto o problema podemos resolver en la escuela si investigamos este tema en equipo?`
       ],
       materiales: ['Papel bond blanco', 'Plumones de colores', 'Material concreto o interactivo', 'Cuaderno del alumno'],
-      entregable: `📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "${capitalizedTopic}".`
+      entregable: `📄 Ficha de Trabajo #1: Diagnóstico inicial de saberes previos y mapa mental grupal sobre "${cleanTopic}".`
     },
     {
       num: 2,
@@ -619,8 +900,8 @@ export function generateChronometerSessions(
       desarrollo: `⏱️ DESARROLLO (30 min): Lectura guiada y analítica en el libro de texto oficial de la SEP. Los alumnos identifican conceptos clave, subrayan definiciones y resuelven en parejas las actividades formativas del libro.`,
       cierre: `⏱️ CIERRE (10 min): Dinámica del "Semáforo del Aprendizaje" (Verde: comprendido, Amarillo: dudas, Rojo: apoyo). Aclaración de dudas en plenaria.`,
       preguntas: [
-        `¿Qué conceptos nuevos aprendimos hoy en el libro de la SEP respecto a "${capitalizedTopic}"?`,
-        `¿Cómo se relacionan estas definiciones con los ejemplos que analizamos en la sesión anterior?`
+        `¿Qué ideas y explicaciones nuevas encontramos hoy en el libro de la SEP respecto a "${cleanTopic}"?`,
+        `¿Cómo se relacionan estas lecturas con los ejemplos que observamos en nuestra comunidad?`
       ],
       materiales: ['Libro de texto gratuito SEP asignado', 'Colores y marcatextos', 'Cuaderno del alumno'],
       entregable: `📄 Ficha de Trabajo #2: Resumen visual o mapa conceptual con las ideas clave extraídas del libro de la SEP.`
@@ -629,11 +910,11 @@ export function generateChronometerSessions(
       num: 3,
       titulo: `Modelación Práctica y Estaciones de Trabajo Concreto / Experimental`,
       inicio: `⏱️ INICIO (10 min): Presentación de los materiales de la sesión y asignación de roles en los equipos de trabajo (coordinador, relator, materiales, vocero).`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "${capitalizedTopic}".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo en estaciones rotativas de indagación y manipulación práctica. Los alumnos aplican procedimientos directos, tabulan datos o construyen representaciones tangibles sobre "${cleanTopic}".`,
       cierre: `⏱️ CIERRE (10 min): Síntesis grupal. El portavoz de una estación comparte los resultados y conclusiones obtenidas.`,
       preguntas: [
-        `¿Qué estrategia fue la más eficiente para resolver los retos prácticos de las estaciones?`,
-        `¿Qué dificultades encontramos al aplicar el procedimiento y cómo las superamos?`
+        `¿Qué procedimiento resultó más claro para resolver los retos de las estaciones?`,
+        `¿Qué dificultades encontramos al aplicar el procedimiento y cómo las resolvimos juntos?`
       ],
       materiales: ['Estaciones con material manipulable o instrumental didáctico', 'Hojas de registro'],
       entregable: `📄 Ficha de Trabajo #3: Hoja de registro de las estaciones con procedimientos, esquemas y conclusiones.`
@@ -641,12 +922,12 @@ export function generateChronometerSessions(
     {
       num: 4,
       titulo: `Resolución de Problemas Situados en el Contexto Escolar y Comunitario`,
-      inicio: `⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "${capitalizedTopic}".`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver 3 situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.`,
-      cierre: `⏱️ CIERRE (10 min): Debate en plenaria sobre las diferentes rutas de solución y validación formativa por parte del docente.`,
+      inicio: `⏱️ INICIO (10 min): Planteamiento de una problemática real de la comunidad escolar vinculada a "${cleanTopic}".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo en parejas para resolver situaciones problemáticas contextualizadas paso a paso, justificando por escrito el razonamiento empleado.`,
+      cierre: `⏱️ CIERRE (10 min): Puesta en común sobre las diferentes formas de resolver el reto y retroalimentación docente.`,
       preguntas: [
-        `¿Por qué existen diferentes formas de resolver el mismo problema sobre "${capitalizedTopic}"?`,
-        `¿Cuál es el método más claro para explicar tu respuesta a los demás?`
+        `¿Por qué existen diferentes formas de resolver un mismo problema sobre "${cleanTopic}"?`,
+        `¿Cuál es la forma más clara de explicar nuestro razonamiento a los demás compañeros?`
       ],
       materiales: ['Cuaderno de trabajo', 'Hojas de problemas contextualizados', 'Lápiz y goma'],
       entregable: `📄 Ficha de Trabajo #4: Resolución analítica y argumentada de los problemas comunitarios.`
@@ -658,7 +939,7 @@ export function generateChronometerSessions(
       desarrollo: `⏱️ DESARROLLO (30 min): En equipos, los alumnos estructuran el primer borrador de su producto integrador, organizando datos, textos, ilustraciones o maquetas.`,
       cierre: `⏱️ CIERRE (10 min): Registro del porcentaje de avance en el termómetro del proyecto grupal.`,
       preguntas: [
-        `¿Qué información clave no puede faltar en nuestro producto sobre "${capitalizedTopic}"?`,
+        `¿Qué información clave no puede faltar en nuestro producto sobre "${cleanTopic}"?`,
         `¿Cómo organizamos los datos para que cualquier persona de la comunidad los entienda con claridad?`
       ],
       materiales: ['Cartulinas o pliegos de papel', 'Colores y reglas', 'Borradores de trabajo'],
@@ -668,14 +949,14 @@ export function generateChronometerSessions(
       num: 6,
       titulo: `Profundización Curricular y Vinculación Interdisciplinaria`,
       inicio: `⏱️ INICIO (10 min): Conexión explícita con los campos formativos articulados (Lenguajes, Saberes, Ética y De lo Humano).`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Actividad integradora que combina "${capitalizedTopic}" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Actividad integradora que combina "${cleanTopic}" con la expresión artística, el análisis ético o la redacción formal de propuestas comunitarias.`,
       cierre: `⏱️ CIERRE (10 min): Mini-exposición de 2 minutos por equipo destacando la conexión interdisciplinaria lograda.`,
       preguntas: [
         `¿Cómo nos ayuda este tema a ser más empáticos, solidarios o analíticos con nuestra comunidad?`,
         `¿Qué otros conocimientos de la escuela se relacionan directamente con lo que estamos construyendo?`
       ],
       materiales: ['Material artístico / cartulinas', 'Textos informativos complementarios', 'Plumones'],
-      entregable: `📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula ${capitalizedTopic} con la vida comunitaria.`
+      entregable: `📄 Ficha de Trabajo #6: Producto interdisciplinario que vincula ${cleanTopic} con la vida comunitaria.`
     },
     {
       num: 7,
@@ -697,7 +978,7 @@ export function generateChronometerSessions(
       desarrollo: `⏱️ DESARROLLO (30 min): Sesión intensiva de producción final. Los alumnos aplican correcciones ortográficas, precisión en cálculos, orden estético y claridad en su producto entregable.`,
       cierre: `⏱️ CIERRE (10 min): Verificación final de calidad con la rúbrica oficial antes de la entrega final. Visto bueno del docente.`,
       preguntas: [
-        `¿Qué cambios hicimos en nuestro producto que lo hicieron más profesional y comprensible?`,
+        `¿Qué cambios hicimos en nuestro producto que lo hicieron más claro y completo?`,
         `¿Nos sentimos orgullosos del trabajo que vamos a presentar a la comunidad escolar?`
       ],
       materiales: ['Materiales finales de exposición (cartulinas, modelos, maquetas, sobres, trípticos)', 'Tijeras, pegamento, plumones'],
@@ -710,7 +991,7 @@ export function generateChronometerSessions(
       desarrollo: `⏱️ DESARROLLO (30 min): Simulación y ensayo de las exposiciones orales. Cada alumno practica su explicación con seguridad, lenguaje claro y uso de sus apoyos visuales y materiales concretos.`,
       cierre: `⏱️ CIERRE (10 min): Ronda de recomendaciones finales y palabras de motivación para la presentación oficial.`,
       preguntas: [
-        `¿Cómo podemos explicar conceptos de "${capitalizedTopic}" de manera sencilla para que cualquiera los entienda?`,
+        `¿Cómo podemos explicar ideas sobre "${cleanTopic}" de manera sencilla para que cualquiera las entienda?`,
         `¿Qué tono de voz y postura corporal transmiten seguridad y entusiasmo en nuestra presentación?`
       ],
       materiales: ['Guiones de exposición', 'Materiales de exhibición terminados', 'Espacio escolar acondicionado'],
@@ -720,136 +1001,70 @@ export function generateChronometerSessions(
       num: 10,
       titulo: `Feria de Aprendizajes Comunitarios, Evaluación Formativa y Compromisos`,
       inicio: `⏱️ INICIO (10 min): Bienvenida a la muestra de aprendizajes. Palabras de apertura por parte de los alumnos y del docente.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "${capitalizedTopic}".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Presentación de la Feria de Aprendizajes ante compañeros de otros grupos, docentes o padres de familia. Demostración práctica de los conocimientos adquiridos sobre "${cleanTopic}".`,
       cierre: `⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica de autoevaluación final. Firma del "Árbol de Compromisos de Aprendizaje" y felicitación grupal.`,
       preguntas: [
-        `¿Cuál fue el aprendizaje más significativo y transformador que obtuviste a lo largo de estas 10 sesiones?`,
-        `¿Cómo vas a seguir utilizando este conocimiento sobre "${capitalizedTopic}" en tu vida diaria?`
+        `¿Cuál fue el aprendizaje más valioso que obtuviste a lo largo de este proyecto?`,
+        `¿Cómo vas a seguir utilizando lo que aprendiste sobre "${cleanTopic}" en tu vida diaria?`
       ],
       materiales: ['Rúbricas analíticas individuales', 'Mural escolar de compromisos', 'Diplomas simbólicos o distintivos de logro'],
       entregable: `🏆 Evidencia Final Integradora: Rúbrica analítica completada, bitácora del proyecto y registro de la feria comunitaria.`
     }
   ];
 
-  // 3. Plantilla Especializada: Preescolar (Fase 2 - Enfoque Lúdico y Sensorial)
-  const preschoolTemplates = [
-    {
-      num: 1,
-      titulo: `Ronda de Bienvenida y Caja Mágica de Sorpresas: "¿Qué sabemos de ${capitalizedTopic}?"`,
-      inicio: `⏱️ INICIO (10 min): Canción de bienvenida con títere guía y descubrimiento de la "Caja Mágica". Preguntas detonadoras sensoriales en asamblea sobre el tapete.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Exploración con objetos concretos, texturas y colores. En pequeños grupos de juego libre guiado, las niñas y niños manipulan material táctil sobre "${capitalizedTopic}".`,
-      cierre: `⏱️ CIERRE (10 min): Ronda de expresión en el círculo de diálogo: cada niño muestra su objeto favorito. Aplauso de estrellas y respiración guiada.`,
-      preguntas: [
-        `¿Qué color, forma o sonido tiene lo que descubrimos hoy sobre "${capitalizedTopic}"?`,
-        `¿A quién en casa le queremos platicar de nuestra caja mágica?`
-      ],
-      materiales: ['Caja decorada con materiales sensoriales', 'Títere guía de aula', 'Tapete infantil', 'Música instrumental'],
-      entregable: `🎨 Registro Gráfico #1: Dibujo libre inicial en hoja de trabajo con crayones gruesos.`
-    },
-    {
-      num: 2,
-      titulo: `Exploración en Láminas Didácticas y Mi Álbum de Preescolar`,
-      inicio: `⏱️ INICIO (10 min): Lectura compartida de una lámina ilustrada de gran formato de la SEP. Juego de "¿Quién ve primero...?".`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Actividad en "Mi Álbum de Preescolar". Los niños señalan personajes, cuentan elementos con sus deditos y pegan etiquetas o confeti de colores.`,
-      cierre: `⏱️ CIERRE (10 min): Muestra de álbumes en semicírculo y reconocimiento al esfuerzo individual.`,
-      preguntas: [
-        `¿Qué hacen los personajes del libro y cómo se divierten con "${capitalizedTopic}"?`,
-        `¿Cuántos objetos encontramos en la lámina?`
-      ],
-      materiales: ['Mi Álbum de Preescolar SEP', 'Crayolas y gises de colores', 'Pegamento lavable'],
-      entregable: `🎨 Ficha de Registro #2: Página trabajada de Mi Álbum de Preescolar con trazos y estampas.`
-    },
-    {
-      num: 3,
-      titulo: `Taller de Modelado Plástico: Plastilina, Masa y Formas Creativas`,
-      inicio: `⏱️ INICIO (10 min): Canción motriz de calentamiento de manitas ("Mis manitas traviesas").`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Modelado con masa no tóxica o plastilina de colores. Creación de figuras, animales o símbolos alusivos a "${capitalizedTopic}".`,
-      cierre: `⏱️ CIERRE (10 min): Exposición en la "Galería de Esculturas" del salón y lavado de manos cooperativo.`,
-      preguntas: [
-        `¿Cómo se sintió amasar y crear tu figura?`,
-        `¿Qué nombre le pusiste a tu creación sobre "${capitalizedTopic}"?`
-      ],
-      materiales: ['Plastilina o masa casera de colores', 'Moldes plásticos seguros', 'Bandejas individuales'],
-      entregable: `🎨 Escultura Infantil: Modelo tridimensional en masa o plastilina representativo del tema.`
-    },
-    {
-      num: 4,
-      titulo: `Rincón de Juego Simbólico y Dramatización con Disfraces`,
-      inicio: `⏱️ INICIO (10 min): Elección de accesorios y disfraces para la dramatización colectiva.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Representación teatral espontánea en rincones de aprendizaje: los niños asumen roles comunitarios en torno a "${capitalizedTopic}".`,
-      cierre: `⏱️ CIERRE (10 min): Círculo de despedida y felicitación por su participación en la obra de teatro.`,
-      preguntas: [
-        `¿Qué personaje representaste hoy y cómo ayudó a los demás?`,
-        `¿Qué aprendimos jugando juntos?`
-      ],
-      materiales: ['Telas de colores, sombreros y antifaces seguros', 'Escenario de guiñol'],
-      entregable: `🎭 Participación en Dramatización Colectiva y registro fotográfico en el portafolio.`
-    },
-    {
-      num: 5,
-      titulo: `Fiesta de Aprendizajes de Preescolar y Mural de Huellitas`,
-      inicio: `⏱️ INICIO (10 min): Recibimiento festivo a padres de familia o compañeros con cantos infantiles.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Elaboración del gran "Mural Comunitario" estampando huellas dactilares de colores y exhibiendo todos los dibujos y figuras creadas.`,
-      cierre: `⏱️ CIERRE (10 min): Entrega de medallitas de cartón por su esfuerzo y abrazo grupal.`,
-      preguntas: [
-        `¿Cuál fue tu momento favorito de todas nuestras clases?`,
-        `¿Qué le platicaste a mamá o papá de tu mural?`
-      ],
-      materiales: ['Papel kraft gigante', 'Pintura dactilar no tóxica', 'Medallas simbólicas'],
-      entregable: `🏆 Mural Colectivo Infantil y medalla de logros de preescolar completada.`
-    }
-  ];
+  // 5. Plantilla Especializada: Primaria Alta (Fase 5: 5º y 6º Grado - Análisis Crítico y Propuestas Comunitarias)
+  const primaryHighTemplates = primaryMidTemplates;
 
-  // 4. Plantilla Especializada: Secundaria (Fase 6 - Rigor Científico y Crítico)
+  // 6. Plantilla Especializada: Secundaria (Fase 6: 1º a 3º Grado - Pensamiento Crítico y Rigor Científico/Histórico)
   const secundariaTemplates = [
     {
       num: 1,
-      titulo: `Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "${capitalizedTopic}"`,
-      inicio: `⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.`,
-      cierre: `⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.`,
+      titulo: `Planteamiento del Problema Sociocrítico y Delimitación Científica de "${cleanTopic}"`,
+      inicio: `⏱️ INICIO (10 min): Presentación de un caso de estudio real o discrepancia conceptual sobre "${cleanTopic}". Debate inicial en plenaria guiado con preguntas de conflicto cognitivo.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En mesas de trabajo analíticas, los estudiantes delimitan el problema de investigación, formulan hipótesis sustentadas y diseñan una matriz de análisis de fuentes.`,
+      cierre: `⏱️ CIERRE (10 min): Síntesis metodológica. Cada mesa expone su hipótesis de trabajo y se registran los acuerdos en la bitácora científica.`,
       preguntas: [
-        `¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "${capitalizedTopic}"?`,
-        `¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?`
+        `¿Cuáles son los factores estructurales que originan las problemáticas en torno a "${cleanTopic}"?`,
+        `¿Qué metodología de investigación nos permitirá contrastar nuestras hipótesis con rigor?`
       ],
-      materiales: ['Cuaderno de laboratorio / bitácora científica', 'Guía de diseño experimental', 'Artículos de divulgación'],
-      entregable: `📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.`
+      materiales: ['Artículos científicos o fuentes primarias', 'Matriz de análisis documental', 'Bitácora de investigación'],
+      entregable: `📄 Protocolo de Indagación #1: Planteamiento del problema, hipótesis formuladas y justificación comunitaria.`
     },
     {
       num: 2,
-      titulo: `Indagación en Textos Disciplinares SEP y Contrastación Teórica`,
-      inicio: `⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.`,
-      cierre: `⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.`,
+      titulo: `Análisis de Fuentes Primarias, Modelación Cuantitativa y Libros SEP`,
+      inicio: `⏱️ INICIO (10 min): Recuperación de saberes previos y orientación para el análisis crítico de textos y datos estadísticos en libros de la SEP.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Análisis riguroso de fuentes documentales, gráficas, ecuaciones o modelos conceptuales. Los estudiantes contrastan autores y formulan conclusiones preliminares sustentadas.`,
+      cierre: `⏱️ CIERRE (10 min): Ronda de preguntas socráticas para evaluar el nivel de profundidad analítica alcanzado.`,
       preguntas: [
-        `¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "${capitalizedTopic}"?`,
-        `¿Cómo contrastan estos hallazgos con las ideas previas del equipo?`
+        `¿Qué inconsistencias o consensos encontramos entre las distintas fuentes analizadas?`,
+        `¿Cómo fundamentamos con datos cuantitativos o citas textuales nuestras afirmaciones?`
       ],
-      materiales: ['Libros de texto gratuitos SEP de Secundaria', 'Fichas de trabajo analítico', 'Calculadora / regla'],
-      entregable: `📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.`
+      materiales: ['Libros de texto gratuitos SEP de Secundaria', 'Gráficas estadísticas o modelos matemáticos', 'Fichas de trabajo analíticas'],
+      entregable: `📄 Reporte Analítico #2: Cuadro comparativo de fuentes, análisis de datos y fichas de síntesis crítica.`
     },
     {
       num: 3,
-      titulo: `Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental`,
-      inicio: `⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.`,
-      cierre: `⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.`,
+      titulo: `Experimentación en Laboratorio / Taller de Prototipado y Modelación`,
+      inicio: `⏱️ INICIO (10 min): Verificación de protocolos de seguridad y calibración de instrumentos para el experimento o simulación.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, desarrollo de modelos algebraicos/geométricos o ensamblaje de prototipos funcionales vinculados a "${cleanTopic}". Registro sistemático de variables.`,
+      cierre: `⏱️ CIERRE (10 min): Discusión de resultados experimentales y control de márgenes de error.`,
       preguntas: [
-        `¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?`,
-        `¿Qué correlación existe entre las variables analizadas?`
+        `¿De qué manera los resultados empíricos validan o refutan las hipótesis iniciales?`,
+        `¿Qué variables influyeron en el comportamiento del modelo o prototipo?`
       ],
-      materiales: ['Instrumental de laboratorio o simuladores digitales', 'Hojas de tabulación milimétricas', 'Bitácora'],
-      entregable: `📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.`
+      materiales: ['Instrumental de laboratorio / materiales de prototipado', 'Hojas de registro de datos experimentales'],
+      entregable: `📄 Reporte Experimental #3: Gráficas de resultados, análisis de variables y memoria técnica del prototipo.`
     },
     {
       num: 4,
-      titulo: `Mesa Redonda, Debate Crítico y Coevaluación Técnica`,
-      inicio: `⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "${capitalizedTopic}". Coevaluación con rúbrica técnica.`,
-      cierre: `⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.`,
+      titulo: `Mesa Redonda / Debate Crítico Argumentativo entre Facciones o Posturas`,
+      inicio: `⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal: turnos de réplica, uso del tiempo y respeto a la diversidad ideológica.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Realización del debate argumentativo. Los equipos defienden posturas fundamentadas con evidencias científicas, históricas o éticas sobre "${cleanTopic}".`,
+      cierre: `⏱️ CIERRE (10 min): Dictamen de conclusiones por el comité relator y reflexión sobre la construcción democrática del conocimiento.`,
       preguntas: [
         `¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?`,
-        `¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "${capitalizedTopic}"?`
+        `¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "${cleanTopic}"?`
       ],
       materiales: ['Rúbricas técnicas de evaluación entre pares', 'Guiones de argumentación'],
       entregable: `📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.`
@@ -869,16 +1084,16 @@ export function generateChronometerSessions(
     }
   ];
 
-  // 5. Plantilla Especializada: Preparatoria / Bachillerato (MCCEMS)
+  // 7. Plantilla Especializada: Preparatoria / Bachillerato (MCCEMS)
   const preparatoriaTemplates = [
     {
       num: 1,
       titulo: `Diagnóstico Situacional y Formulación Epistemológica del Problema (MCCEMS)`,
       inicio: `⏱️ INICIO (10 min): Análisis de problemáticas complejas del entorno contemporáneo. Vinculación con las progresiones de aprendizaje del Marco Curricular Común.`,
-      desarrollo: `⏱️ DESARROLLO (30 min): En seminarios de investigación, los estudiantes estructuran el marco conceptual, definen la metodología de investigación y delimitan el alcance del proyecto sobre "${capitalizedTopic}".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En seminarios de investigación, los estudiantes estructuran el marco conceptual, definen la metodología de investigación y delimitan el alcance del proyecto sobre "${cleanTopic}".`,
       cierre: `⏱️ CIERRE (10 min): Validación del protocolo metodológico con asesoría del docente tutor.`,
       preguntas: [
-        `¿Cuál es el estado del arte y la relevancia socio-científica de abordar "${capitalizedTopic}" en la actualidad?`,
+        `¿Cuál es el estado del arte y la relevancia socio-científica de abordar "${cleanTopic}" en la actualidad?`,
         `¿Qué metodología analítica o cuantitativa garantiza la validez de nuestro estudio?`
       ],
       materiales: ['Bases de datos académicas', 'Protocolo de investigación MCCEMS', 'Bitácora preuniversitaria'],
@@ -925,14 +1140,22 @@ export function generateChronometerSessions(
     }
   ];
 
-  let masterPool = genericTemplates;
+  let masterPool = primaryLowTemplates;
   if (level === 'preescolar') {
     masterPool = preschoolTemplates;
+  } else if (level === 'primaria-baja') {
+    masterPool = primaryLowTemplates;
+  } else if (level === 'primaria-media') {
+    masterPool = primaryMidTemplates;
+  } else if (level === 'primaria-alta') {
+    masterPool = primaryHighTemplates;
   } else if (level === 'secundaria') {
     masterPool = secundariaTemplates;
   } else if (level === 'preparatoria') {
     masterPool = preparatoriaTemplates;
-  } else if (isLanguageSubject && isEpistolar) {
+  }
+  
+  if (isLanguageSubject && isEpistolar) {
     masterPool = epistolarTemplates;
   }
 
@@ -947,16 +1170,19 @@ export function generateChronometerSessions(
       // 1 sesión integrada
       baseTpl = {
         num: 1,
-        titulo: `Sesión Integradora: Reto, Indagación y Aplicación Práctica sobre "${capitalizedTopic}"`,
-        inicio: `⏱️ INICIO (10 min): Activación del conflicto cognitivo y planteamiento del reto comunitario sobre "${capitalizedTopic}". Lluvia de ideas y saberes previos.`,
-        desarrollo: `⏱️ DESARROLLO (30 min): Exploración guiada en libros SEP, modelado práctico en equipos y elaboración del producto o artefacto tangible de aprendizaje.`,
-        cierre: `⏱️ CIERRE (10 min): Socialización exprés en plenaria, autoevaluación formativa con rúbrica y registro de conclusiones en bitácora.`,
-        preguntas: [
-          `¿Cómo resolvemos el reto central de "${capitalizedTopic}" con los saberes adquiridos hoy?`,
-          `¿Qué aprendizaje clave compartiré con mi familia al llegar a casa?`
+        titulo: `Sesión Integradora: Reto, Indagación y Aplicación Práctica sobre "${cleanTopic}"`,
+        inicio: `⏱️ INICIO (10 min): Activación de saberes previos y presentación del reto sobre "${cleanTopic}". Lluvia de ideas participativa en el salón.`,
+        desarrollo: `⏱️ DESARROLLO (30 min): Exploración guiada en libros SEP, modelado práctico en equipos y elaboración del producto tangible de aprendizaje.`,
+        cierre: `⏱️ CIERRE (10 min): Socialización en plenaria, autoevaluación formativa con rúbrica y registro de conclusiones.`,
+        preguntas: level === 'preescolar' || level === 'primaria-baja' ? [
+          `¿Qué personas, objetos o dibujos descubrimos hoy sobre "${cleanTopic}"?`,
+          `¿Qué aprendizaje bonito compartiré con mi familia al llegar a casa?`
+        ] : [
+          `¿Cómo resolvemos el reto central de "${cleanTopic}" con los saberes adquiridos hoy?`,
+          `¿Qué aprendizaje clave compartiré con mi comunidad escolar?`
         ],
         materiales: ['Libro de texto gratuito SEP', 'Material manipulable o cartulinas', 'Bitácora escolar'],
-        entregable: `🏆 Evidencia Integradora: Ficha de trabajo y producto demostrativo completado sobre "${capitalizedTopic}".`
+        entregable: `🏆 Evidencia Integradora: Ficha de trabajo y producto demostrativo completado sobre "${cleanTopic}".`
       };
     } else {
       const poolLen = masterPool.length;
@@ -1008,9 +1234,9 @@ export function generateChronometer10Sessions(
  * Garantiza vinculación interdisciplinaria auténtica de los 4 Campos Formativos sin respuestas genéricas.
  */
 export function getArticulatedPdas(level: string, subject: string, topic: string): ArticulatedPda[] {
-  const rawTopic = topic.trim();
-  const capitalizedTopic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
-  const topicLower = rawTopic.toLowerCase();
+  const cleanTopic = cleanCoreTopicName(topic);
+  const capitalizedTopic = cleanTopic;
+  const topicLower = cleanTopic.toLowerCase();
   const levelKey = level || 'primaria-baja';
 
   // Identificación precisa del dominio temático
@@ -1455,9 +1681,9 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
  * Generador de Propuesta de Proyecto Final Integrador Situado y Específico (Basado en Libros Oficiales SEP / NEM)
  */
 export function generateFinalProjectProposal(level: string, subject: string, topic: string): FinalProjectProposal {
-  const rawTopic = topic.trim();
-  const capitalizedTopic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
-  const topicLower = rawTopic.toLowerCase();
+  const cleanTopic = cleanCoreTopicName(topic);
+  const capitalizedTopic = cleanTopic;
+  const topicLower = cleanTopic.toLowerCase();
   const levelKey = level || 'primaria-baja';
 
   // Identificación temática
@@ -1933,11 +2159,11 @@ export function generateFinalProjectProposal(level: string, subject: string, top
 
 /**
  * Generador de Preguntas Detonadoras Situadas y No Genéricas (Apertura y Conflicto Cognitivo)
+ * Estrictamente calibradas al nivel de desarrollo cognitivo de cada Fase NEM.
  */
 export function generateDetonatingQuestions(topic: string, level: string = 'primaria-baja', subject: string = ''): string[] {
-  const rawTopic = topic.trim();
-  const capitalizedTopic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
-  const topicLower = rawTopic.toLowerCase();
+  const cleanTopic = cleanCoreTopicName(topic);
+  const topicLower = cleanTopic.toLowerCase();
   const levelKey = level || 'primaria-baja';
 
   const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
@@ -1951,106 +2177,236 @@ export function generateDetonatingQuestions(topic: string, level: string = 'prim
   const isCleanEnergy = /biodigestor|biogas|energia|solar|eolica|renovable|ecotecnia|residu|recicl/i.test(topicLower);
   const isCivicsPeace = /derecho|paz|acuerdo|convivenc|mediacion|inclusion|igualdad|genero|discrimin|democrac|ciudadan|justicia/i.test(topicLower);
 
+  let rawQuestions: string[] = [];
+
   if (isHistory) {
-    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
-      return [
-        `¿Cómo vivían las niñas y los niños en el campo y en las ciudades de México durante la época de la Revolución Mexicana?`,
-        `¿Por qué las familias cantaban corridos populares para contar lo que sucedía en las batallas y noticias de la época?`,
-        `¿Qué derechos y libertades que hoy disfrutamos en nuestra escuela nacieron gracias a las demandas de este movimiento histórico?`
+    if (levelKey === 'preescolar') {
+      rawQuestions = [
+        `¿Qué historias nos cuentan en casa sobre cómo jugaban y vivían las familias hace muchos años?`,
+        `¿Por qué cantamos canciones y nos vestimos con trajes típicos en las fiestas patrias de México?`,
+        `¿Cómo nos ayudamos entre todas las niñas y niños para convivir con alegría y respeto en el salón?`
       ];
-    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
-      return [
-        `¿Cuáles fueron las principales injusticias y desigualdades durante el Porfiriato que provocaron que campesinos y obreros tomaran las armas en 1910?`,
-        `¿En qué se diferenciaban las demandas campesinas de Emiliano Zapata de los ideales políticos de Francisco I. Madero y Venustiano Carranza?`,
-        `¿De qué manera los Artículos 3º (Educación), 27 (Tierra) y 123 (Trabajo) de la Constitución de 1917 siguen protegiendo a nuestras familias en el presente?`
+    } else if (levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Cómo vestían, qué comían y a qué jugaban las niñas y los niños en la época de la Revolución Mexicana?`,
+        `¿Por qué las familias cantaban corridos populares para contar las noticias y relatos de los pueblos?`,
+        `¿Qué derechos y cosas buenas que hoy tenemos en nuestra escuela (como libros gratuitos y maestros) nacieron de esa época?`
+      ];
+    } else if (levelKey === 'primaria-media') {
+      rawQuestions = [
+        `¿Cuáles fueron las principales razones por las que campesinos y familias mexicanas participaron en el movimiento de 1910?`,
+        `¿Qué ideales defendían líderes como Francisco I. Madero y Emiliano Zapata en beneficio de los pueblos?`,
+        `¿Cómo influyeron los cambios de la Revolución Mexicana en las escuelas y comunidades de nuestro estado?`
+      ];
+    } else if (levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cuáles fueron las principales causas económicas, laborales y agrarias que provocaron el estallido de la Revolución Mexicana?`,
+        `¿En qué se diferenciaban las demandas campesinas de Emiliano Zapata de los ideales políticos de Venustiano Carranza?`,
+        `¿De qué manera los Artículos 3º (Educación) y 123 (Trabajo) de la Constitución de 1917 protegen los derechos de nuestras familias?`
+      ];
+    } else if (levelKey === 'secundaria') {
+      rawQuestions = [
+        `¿Hasta qué punto la Revolución Mexicana logró desmantelar las estructuras de dominación socioeconómica del Porfiriato?`,
+        `¿Qué papel desempeñaron las diversas corrientes historiográficas, la prensa y la diplomacia en la legitimación de las facciones revolucionarias?`,
+        `¿Qué demandas agrarias, laborales y de soberanía consagradas en 1917 siguen siendo retos en el México del siglo XXI?`
       ];
     } else {
-      return [
-        `¿Hasta qué punto la Revolución Mexicana logró desmantelar las estructuras de dominación económica del Porfiriato y democratizar el poder en México?`,
-        `¿Qué papel desempeñaron las diversas corrientes historiográficas y la prensa en la legitimación de los caudillos revolucionarios?`,
-        `¿Qué demandas agrarias, laborales y de soberanía nacional de 1910 continúan siendo asignaturas pendientes en el siglo XXI?`
+      rawQuestions = [
+        `¿Cuáles son las contradicciones epistemológicas y estructurales entre el proyecto modernizador porfirista y el constitucionalismo revolucionario?`,
+        `¿De qué forma las fuentes primarias y los debates historiográficos contemporáneos resignifican la institucionalización del Estado posrevolucionario?`,
+        `¿Cómo influye la memoria histórica de 1910 en la conformación de la ciudadanía crítica y la defensa de los derechos sociales actuales?`
+      ];
+    }
+  } else if (isEpistolar) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿A qué persona de tu familia o amigo te gustaría enviarle una carta o un dibujo con una sonrisa?`,
+        `¿Por qué una carta guardada en un sobre con estampilla se siente tan especial y bonita al recibirla?`,
+        `¿Qué datos y dibujos necesitamos poner en el sobre para que el cartero sepa a quién entregárselo?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Por qué una carta formal o personal escrita con esmero transmite ideas con mayor calidez y claridad que un mensaje digital rápido?`,
+        `¿Qué partes indispensables (fecha, destinatario, saludo, cuerpo, despedida y firma) estructuran un texto epistolar?`,
+        `¿A qué autoridades o miembros de la comunidad escolar podemos plantearles una propuesta de mejora mediante una carta formal?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo ha evolucionado el género epistolar como testimonio histórico, político y literario en la conformación de la esfera pública?`,
+        `¿Qué estrategias retóricas y registros lingüísticos distinguen a la correspondencia formal diplomática del ensayo personal?`,
+        `¿Qué valor ético conserva la privacidad de la correspondencia en la era de las comunicaciones digitales masivas?`
+      ];
+    }
+  } else if (isLiterature) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Qué cuentos o leyendas divertidas te han contado tus abuelitos o maestros en la escuela?`,
+        `¿Cómo podemos inventar personajes fantásticos y un final feliz para nuestra historia colectiva?`,
+        `¿Qué dibujos y colores le pondremos a la portada de nuestro libro de cuentos?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Qué estructura narrativa (inicio, desarrollo, conflicto y desenlace) hace que una leyenda atrape la emoción del lector?`,
+        `¿Cómo nos ayudan las descripciones detalladas y los diálogos a transmitir la personalidad de los personajes?`,
+        `¿De qué manera la elaboración de un libro cartonero escolar fomenta el amor por la lectura y el cuidado del medio ambiente?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿De qué forma las tradiciones orales y la narrativa ficcional reflejan la cosmovisión e identidad cultural de los pueblos?`,
+        `¿Qué recursos estilísticos, figuras retóricas y tropos literarios enriquecen la construcción dramática de un relato?`,
+        `¿Cómo influye la recepción crítica de una obra literaria en la resignificación de los dilemas éticos contemporáneos?`
+      ];
+    }
+  } else if (isFractions) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Cómo podemos repartir 4 manzanas o panes entre 4 amigos para que a todos les toque exactamente lo mismo?`,
+        `¿Qué pasa cuando doblamos una hoja de papel a la mitad o en 4 partes iguales?`,
+        `¿En qué momentos en la cocina o en los juegos de la escuela usamos mitades y cuartos?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Por qué 2/4 de una pizza representa exactamente la misma porción que 1/2 aunque se escriban con números diferentes?`,
+        `¿Cómo podemos sumar fracciones con distinto denominador cuando medimos ingredientes para una receta comunitaria?`,
+        `¿De qué manera las fracciones nos ayudan a realizar repartos justos y resolver retos de compras y medidas en el mercado?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se fundamenta algebraicamente la densidad y el orden en el conjunto de los números racionales?`,
+        `¿Qué aplicaciones prácticas tienen las razones, proporciones y fracciones en la física, la química y la economía aplicada?`,
+        `¿De qué forma los algoritmos de simplificación y conversión fraccionaria optimizan el cálculo en proyectos de ingeniería?`
+      ];
+    }
+  } else if (isMathStoreOrMoney) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Qué monedas y billetes de juguete conocemos y cómo los usamos para jugar a la tiendita?`,
+        `¿Cómo contamos nuestras monedas de 1, 2, 5 y 10 pesos para saber cuánto dinero juntamos?`,
+        `¿Qué alimentos saludables de la tiendita escolar son los mejores para crecer fuertes?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cómo calculamos con rapidez el costo total de varios productos y el cambio exacto al pagar con billetes grandes?`,
+        `¿Qué diferencia existe entre un gasto necesario para la salud y un gasto impulsivo en la economía del hogar?`,
+        `¿De qué manera las matemáticas nos permiten comparar precios por kilogramo y verificar si una oferta es conveniente?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se modelan matemáticamente los presupuestos, el valor del dinero en el tiempo y el interés compuesto en proyectos productivos?`,
+        `¿Qué indicadores estadísticos nos permiten evaluar el costo-beneficio y la rentabilidad social de una cooperativa escolar?`,
+        `¿De qué manera la educación financiera previene el sobreendeudamiento y promueve el consumo ético y sustentable?`
+      ];
+    }
+  } else if (isParabola) {
+    rawQuestions = [
+      `¿Por qué la trayectoria de un balón en un tiro libre o el arco de un puente colgante describen una curva parabólica?`,
+      `¿Qué representan físicamente el vértice, el eje de simetría y las raíces en una ecuación cuadrática (y = ax² + bx + c)?`,
+      `¿Cómo nos ayuda el software de modelación matemática (GeoGebra) a predecir alturas máximas y alcances horizontales?`
+    ];
+  } else if (isWater) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Por qué es importante cerrar bien las llaves del agua cuando nos lavamos las manitas en la escuela?`,
+        `¿De dónde viene el agua de lluvia y cómo ayuda a que crezcan las plantitas y los árboles?`,
+        `¿Qué acciones sencillas podemos hacer en casa y en el salón para no desperdiciar ni una gota de agua?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cómo funcionan las capas de arena, grava y carbón activado para filtrar y limpiar el agua pluvial?`,
+        `¿Qué problemáticas de salud y escasez enfrenta nuestra comunidad cuando el agua potable no llega a tiempo?`,
+        `¿Qué compromisos medibles podemos establecer en la escuela para captar y reutilizar el agua en las áreas verdes?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cuáles son las variables fisicoquímicas y microbiológicas que determinan la calidad del agua potable según las normas oficiales?`,
+        `¿Qué impacto socioeconómico y bioético genera la sobreexplotación de los mantos acuíferos en nuestra cuenca hidrográfica?`,
+        `¿Cómo diseñamos un sistema de captación y purificación pluvial sustentable de bajo costo para espacios comunitarios?`
+      ];
+    }
+  } else if (isGardenOrFood) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Qué cuidados necesita una pequeña semilla con tierra, agua y sol para crecer y dar frutos?`,
+        `¿Por qué comer frutas y verduras frescas de colores nos llena de energía y salud en lugar de comer comida chatarra?`,
+        `¿Cómo podemos cuidar en equipo las plantitas de nuestro huerto escolar?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Qué nutrientes del suelo y factores climáticos determinan el ciclo de germinación y crecimiento de las hortalizas?`,
+        `¿Cómo se relaciona la producción de alimentos en el huerto escolar con los grupos del Plato del Bien Comer y la salud familiar?`,
+        `¿De qué manera la elaboración de composta con residuos orgánicos reduce la basura escolar y nutre la tierra?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Qué principios de la agroecología y la soberanía alimentaria desafían los modelos de monocultivo industrial?`,
+        `¿Cómo influye la calidad nutricional de la dieta en la prevención de enfermedades crónicas no transmisibles a nivel poblacional?`,
+        `¿Qué diseño de policultivo y riego tecnificado optimiza el rendimiento y la biodiversidad en un huerto comunitario?`
+      ];
+    }
+  } else if (isCleanEnergy) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Cómo nos da luz y calor el sol para que vivan las plantas, los animales y las personas?`,
+        `¿Por qué es importante apagar los focos que no estemos usando para cuidar el planeta?`,
+        `¿Qué materiales que ya no usamos en casa podemos reciclar y transformar en cosas bonitas?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se transforman los residuos orgánicos y el estiércol en gas combustible y biofertilizante mediante digestión anaeróbica?`,
+        `¿Qué ventajas ambientales y económicas tienen las energías renovables (solar, eólica, biogás) frente al uso de combustibles fósiles?`,
+        `¿De qué manera el diseño e instalación de un biodigestor escolar contribuye a mitigar el cambio climático en nuestra comunidad?`
+      ];
+    }
+  } else if (isCivicsPeace) {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Por qué es bonito tener acuerdos de convivencia en el salón para jugar y aprender con respeto y amistad?`,
+        `¿Cómo podemos resolver un desacuerdo en el recreo platicando con calma y escuchando a los demás?`,
+        `¿Qué derechos tienen todas las niñas y niños para sentirse queridos, seguros y felices en la escuela?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Por qué los acuerdos construidos democráticamente en asamblea son más respetados que las reglas impuestas?`,
+        `¿Qué estrategias de mediación de la amistad y diálogo asertivo podemos aplicar cuando surja un conflicto en el aula?`,
+        `¿De qué manera defendemos y promovemos la igualdad de género y la inclusión de todas y todos en las actividades escolares?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se articulan los derechos humanos, el estado de derecho y la justicia restaurativa en la resolución de controversias sociales?`,
+        `¿Qué dilemas éticos contemporáneos desafían la construcción de una cultura de paz y no violencia en los espacios públicos?`,
+        `¿Qué mecanismos de participación ciudadana y mediación institucional fortalecen el tejido social y la convivencia democrática?`
+      ];
+    }
+  } else {
+    // Fallback Situado Calibrado por Nivel (Cero Frases Genéricas)
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Qué personas, objetos o historias de nuestra familia y comunidad conocemos sobre ${cleanTopic}?`,
+        `¿Cómo nos ayudamos en equipo para investigar, dibujar y aprender con nuestros libros de texto de la SEP?`,
+        `¿Qué dibujo, manualidad o cartel bonito compartiremos con nuestros compañeros al final del proyecto?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Qué preguntas nos hacemos sobre "${cleanTopic}" y qué podemos indagar en nuestros libros escolares de la SEP?`,
+        `¿Cómo podemos comprobar nuestras ideas trabajando en equipo y haciendo registros organizados en nuestro cuaderno?`,
+        `¿Qué propuesta o producto podemos mostrar a la escuela para ayudar a comprender mejor este tema?`
+      ];
+    } else if (levelKey === 'secundaria') {
+      rawQuestions = [
+        `¿Qué contradicciones o retos éticos, científicos o sociales identificamos en torno a "${cleanTopic}"?`,
+        `¿Cómo podemos contrastar diferentes fuentes de información y formular argumentos fundamentados con evidencias?`,
+        `¿Qué propuesta transformadora, reporte de investigación o prototipo presentaremos en la muestra escolar?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cuáles son las implicaciones epistemológicas, éticas y estructurales de "${cleanTopic}" en el contexto actual?`,
+        `¿De qué forma los marcos teóricos y cuantitativos nos permiten analizar rigurosamente este fenómeno?`,
+        `¿Qué proyecto de impacto social o indagación académica sustentada podemos formular para incidir en nuestro entorno?`
       ];
     }
   }
 
-  if (isEpistolar) {
-    return [
-      `¿Por qué una carta escrita a mano con sobre y estampilla transmite emociones más profundas que un mensaje digital instantáneo?`,
-      `¿Qué componentes indispensables debe tener un sobre postal para garantizar que el cartero entregue la correspondencia sin perderse?`,
-      `¿A qué personas de nuestra comunidad escolar o familiar nos gustaría expresarles nuestro agradecimiento o plantearles una petición de mejora?`
-    ];
-  }
-
-  if (isLiterature) {
-    return [
-      `¿Qué historias, mitos y leyendas han escuchado nuestros abuelos y vecinos que expliquen el origen de las tradiciones de nuestra localidad?`,
-      `¿Cómo construimos personajes memorables y un conflicto emocionante para que nuestro cuento atrape la atención de los lectores?`,
-      `¿De qué manera la creación de un libro cartonero fomenta la reutilización de materiales y el amor por la lectura en nuestra biblioteca?`
-    ];
-  }
-
-  if (isFractions) {
-    return [
-      `¿Cómo podemos repartir 3 pizzas o panes entre 4 compañeros de manera exactamente equitativa sin que sobre nada?`,
-      `¿Por qué 2/4 de una pizza representa exactamente la misma porción que 1/2 pizza aunque tengan números diferentes?`,
-      `¿De qué manera el uso correcto de las fracciones nos ayuda a no desperdiciar ingredientes al preparar una receta familiar?`
-    ];
-  }
-
-  if (isMathStoreOrMoney) {
-    return [
-      `¿Cómo calculamos rápidamente el total de una compra y el cambio exacto cuando pagamos con billetes de distintas denominaciones?`,
-      `¿Qué diferencia existe entre un gasto necesario (alimento saludable) y un gasto impulsivo al administrar el dinero en el hogar?`,
-      `¿De qué forma las matemáticas nos permiten detectar si un precio o descuento en el mercado es justo y conveniente?`
-    ];
-  }
-
-  if (isParabola) {
-    return [
-      `¿Por qué la trayectoria de un balón de fútbol en un tiro parabólico o el diseño de un puente colgante siguen la curva de una ecuación cuadrática?`,
-      `¿Qué representa físicamente el vértice y las raíces de la parábola cuando modelamos el lanzamiento de un proyectil o la altura máxima alcanzada?`,
-      `¿Cómo nos ayuda el software matemático (GeoGebra) a predecir el comportamiento de estructuras arquitectónicas antes de construirlas?`
-    ];
-  }
-
-  if (isWater) {
-    return [
-      `¿Qué pasaría en nuestra escuela y con la salud de nuestras familias si el agua potable comenzara a escasear por completo?`,
-      `¿Cómo podemos aprovechar las propiedades de la arena, la grava y el carbón activado para filtrar y reutilizar el agua pluvial en el huerto escolar?`,
-      `¿Qué compromisos medibles podemos asumir como comunidad escolar para evitar el desperdicio diario de agua en sanitarios y lavamanos?`
-    ];
-  }
-
-  if (isGardenOrFood) {
-    return [
-      `¿Qué nutrientes necesita una semilla para germinar y cómo influye la calidad del suelo y la luz solar en el crecimiento de nuestras hortalizas?`,
-      `¿Por qué consumir verduras frescas de nuestro huerto es mucho más saludable y económico que comprar alimentos ultraprocesados con sellos de advertencia?`,
-      `¿Cómo podemos colaborar organizadamente para mantener vivo y productivo nuestro huerto escolar durante todo el ciclo escolar?`
-    ];
-  }
-
-  if (isCleanEnergy) {
-    return [
-      `¿Cómo se transforman las cáscaras de fruta y el estiércol en gas combustible y abono líquido sin contaminar el aire?`,
-      `¿Qué ventajas tienen las energías renovables (solar, biogás, eólica) frente al uso de combustibles fósiles en nuestra comunidad?`,
-      `¿De qué manera la construcción de un biodigestor escolar reduce la huella de carbono y genera ahorros económicos en la escuela?`
-    ];
-  }
-
-  if (isCivicsPeace) {
-    return [
-      `¿Por qué es fundamental que en el salón de clases existan acuerdos de convivencia claros construidos y votados por todas y todos?`,
-      `¿Qué estrategias de mediación pacífica y diálogo asertivo podemos usar cuando surja un desacuerdo durante los juegos del recreo?`,
-      `¿De qué manera protegemos y defendemos los derechos de las niñas y niños que puedan sentirse excluidos o vulnerables en la escuela?`
-    ];
-  }
-
-  // Fallback Situado Contextualizado
-  return [
-    `¿De qué manera el aprendizaje sobre "${capitalizedTopic}" nos permite resolver problemáticas reales de nuestra vida cotidiana y comunidad escolar?`,
-    `¿Qué procedimientos, evidencias y herramientas colaborativas utilizaremos para comprobar nuestras hipótesis y saberes en este proyecto?`,
-    `¿Qué producto tangible y de impacto social compartiremos con las familias y compañeros en la muestra comunitaria final?`
-  ];
+  return rawQuestions.map(q => sanitizeSpanishPedagogicalGrammar(q));
 }
 
 /**
@@ -2095,9 +2451,9 @@ export function detectCurriculumPdasForTopic(
 ): string[] {
   if (!topic || topic.trim().length < 2) return [];
 
-  const rawTopic = topic.trim();
-  const capitalizedTopic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
-  const topicLower = rawTopic.toLowerCase();
+  const cleanTopic = cleanCoreTopicName(topic);
+  const capitalizedTopic = cleanTopic;
+  const topicLower = cleanTopic.toLowerCase();
   const subLower = (subjectIdOrName || '').toLowerCase();
   const levelKey = level || 'primaria-baja';
 
