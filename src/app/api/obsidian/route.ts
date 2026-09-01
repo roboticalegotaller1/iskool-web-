@@ -152,7 +152,8 @@ export async function GET(request: NextRequest) {
       q: searchParams.get('q') || '',
       level: searchParams.get('level') || '',
       grade: searchParams.get('grade') || '',
-      subject: searchParams.get('subject') || ''
+      subject: searchParams.get('subject') || '',
+      sessions: searchParams.get('sessions') || '10'
     });
 
     if (!parsedQuery.success) {
@@ -193,25 +194,27 @@ export async function GET(request: NextRequest) {
 
     const allIndexed = getOrBuildVaultIndex(planningsDir);
 
-    // Filtrado inteligente por parámetros de nivel, grado y materia
+    // Filtrado inteligente estricto por parámetros de nivel, grado y materia
     let candidateNodes = allIndexed;
     if (levelParam) {
       const cleanLevel = cleanString(levelParam);
       let levelKeywords: string[] = [cleanLevel];
       if (cleanLevel.includes('baja') || cleanLevel.includes('fase 3') || cleanLevel.includes('fase_3')) {
-        levelKeywords = ['primaria_fase_3', 'fase_3', '1er_grado', '2do_grado', 'primaria baja'];
+        levelKeywords = ['primaria_fase_3', 'fase_3', '1er_grado', '2do_grado', 'primaria baja', 'fase3'];
       } else if (cleanLevel.includes('media') || cleanLevel.includes('fase 4') || cleanLevel.includes('fase_4')) {
-        levelKeywords = ['primaria_fase_4', 'fase_4', '3er_grado', '4to_grado'];
+        levelKeywords = ['primaria_fase_4', 'fase_4', '3er_grado', '4to_grado', 'fase4'];
       } else if (cleanLevel.includes('alta') || cleanLevel.includes('fase 5') || cleanLevel.includes('fase_5')) {
-        levelKeywords = ['primaria_fase_5', 'fase_5', '5to_grado', '6to_grado', 'primaria alta'];
+        levelKeywords = ['primaria_fase_5', 'fase_5', '5to_grado', '6to_grado', 'primaria alta', 'fase5'];
       } else if (cleanLevel.includes('secundaria') || cleanLevel.includes('fase 6') || cleanLevel.includes('fase_6')) {
-        levelKeywords = ['secundaria', 'fase_6'];
+        levelKeywords = ['secundaria', 'fase_6', 'fase6'];
       } else if (cleanLevel.includes('preescolar') || cleanLevel.includes('fase 2') || cleanLevel.includes('fase_2')) {
-        levelKeywords = ['preescolar', 'fase_2'];
+        levelKeywords = ['preescolar', 'fase_2', 'fase2'];
+      } else if (cleanLevel.includes('prepa') || cleanLevel.includes('bachill')) {
+        levelKeywords = ['preparatoria', 'bachillerato', 'mccems'];
       }
 
-      const filtered = candidateNodes.filter(n => levelKeywords.some(kw => n.cleanPath.includes(kw)));
-      if (filtered.length > 0) candidateNodes = filtered;
+      // Filtrado estricto por nivel educativo: si no existen archivos para ese nivel, no devolver notas de otros niveles
+      candidateNodes = candidateNodes.filter(n => levelKeywords.some(kw => n.cleanPath.includes(kw)));
     }
 
     if (gradeParam) {
@@ -227,7 +230,7 @@ export async function GET(request: NextRequest) {
       if (cleanSub.includes('cien') || cleanSub.includes('medio')) subKeywords.push('conocimiento_del_medio', 'ciencias', 'cie', 'bio', 'fis', 'qui');
       if (cleanSub.includes('esp') || cleanSub.includes('leng')) subKeywords.push('espanol', 'lenguajes', 'esp');
       if (cleanSub.includes('art')) subKeywords.push('artes', 'art');
-      if (cleanSub.includes('civ') || cleanSub.includes('form')) subKeywords.push('formacion_civica_y_etica', 'civ');
+      if (cleanSub.includes('civ') || cleanSub.includes('form') || cleanSub.includes('etic')) subKeywords.push('formacion_civica_y_etica', 'civ', 'etica');
       if (cleanSub.includes('fisic') || cleanSub.includes('deport')) subKeywords.push('educacion_fisica', 'fis');
       if (cleanSub.includes('socio') || cleanSub.includes('tutor')) subKeywords.push('educacion_socioemocional', 'tutoria', 'tut');
 
@@ -240,24 +243,26 @@ export async function GET(request: NextRequest) {
 
     for (const node of candidateNodes) {
       let score = 0;
+      let topicMatches = 0;
       queryWords.forEach(word => {
-        if (node.cleanFilename.includes(word)) score += 4;
-        else if (node.cleanTopic.includes(word)) score += 3;
-        else if (node.cleanPath.includes(word)) score += 2;
+        if (node.cleanFilename.includes(word)) { score += 4; topicMatches++; }
+        else if (node.cleanTopic.includes(word)) { score += 3; topicMatches++; }
+        else if (node.cleanPath.includes(word)) { score += 2; }
       });
 
-      if (levelParam && node.cleanPath.includes(cleanString(levelParam))) score += 2;
-      if (gradeParam && node.cleanPath.includes(cleanString(gradeParam))) score += 2;
-      if (subjectParam && node.cleanPath.includes(cleanString(subjectParam))) score += 2;
+      if (levelParam && node.cleanPath.includes(cleanString(levelParam))) score += 1;
+      if (gradeParam && node.cleanPath.includes(cleanString(gradeParam))) score += 1;
+      if (subjectParam && node.cleanPath.includes(cleanString(subjectParam))) score += 1;
 
-      if (score > bestScore) {
+      // Requiere coincidencia directa con el tema y puntaje mínimo
+      if (topicMatches > 0 && score >= 3 && score > bestScore) {
         bestScore = score;
         bestMatchNode = node;
       }
     }
 
-    // Si encontramos una nota coincidente, leemos y parseamos sus secciones completas
-    if (bestMatchNode && bestScore >= 1) {
+    // Si encontramos una nota coincidente que pertenezca al nivel solicitado, leemos y parseamos
+    if (bestMatchNode && bestScore >= 3) {
       const rawContent = fs.readFileSync(bestMatchNode.filePath, 'utf8');
       
       // Extracción de título

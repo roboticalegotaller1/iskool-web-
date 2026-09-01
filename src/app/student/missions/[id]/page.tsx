@@ -29,6 +29,10 @@ interface MissionPageProps {
   params: Promise<{ id: string }>;
 }
 
+interface MissionPageContentProps {
+  params: Promise<{ id: string }>;
+}
+
 function MissionPageContent({ params }: MissionPageContentProps) {
   const { id } = use(params);
   const { user, loading } = useAuth();
@@ -1512,10 +1516,6 @@ function MissionPageContent({ params }: MissionPageContentProps) {
       </main>
     </div>
   );
-}
-
-interface MissionPageContentProps {
-  params: Promise<{ id: string }>;
 }
 
 export default function MissionPage({ params }: MissionPageProps) {

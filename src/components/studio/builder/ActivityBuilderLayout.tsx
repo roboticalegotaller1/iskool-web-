@@ -6,6 +6,7 @@ import { StudioFlowPlayer } from '../player/StudioFlowPlayer';
 import { AssignToClassModal } from '@/components/AssignToClassModal';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
+import { detectCurriculumPdasForTopic } from '@/lib/curriculumEngine';
 import { 
   Play, 
   Share2, 
@@ -816,21 +817,39 @@ export const ActivityBuilderLayout: React.FC = () => {
                   placeholder="Describe el PDA correspondiente..."
                   className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-850 border border-slate-200 dark:border-zinc-750 text-slate-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500 font-medium text-xs"
                 />
-                {/* Sugerencias Rápidas de PDA */}
+                {/* Sugerencias Rápidas de PDA Oficiales */}
                 <div className="flex flex-col gap-1 mt-1">
-                  <span className="text-[10px] font-extrabold text-blue-600 dark:text-blue-400">Sugerencias rápidas:</span>
-                  <select
-                    onChange={(e) => {
-                      if (e.target.value) updateMetadata({ pdaNem: e.target.value });
-                    }}
-                    className="w-full text-[10px] p-2 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50/40 dark:bg-blue-950/20 text-slate-800 dark:text-zinc-200 font-medium"
-                    defaultValue=""
-                  >
-                    <option value="">-- Seleccionar sugerencia oficial de la SEP --</option>
-                    {(PDA_SUGGESTIONS[metadata.subjectId || 'sub-math'] || PDA_SUGGESTIONS['sub-math']).map((pda, idx) => (
-                      <option key={idx} value={pda}>{pda}</option>
-                    ))}
-                  </select>
+                  <span className="text-[10px] font-extrabold text-blue-600 dark:text-blue-400">Sugerencias Oficiales NEM 2024:</span>
+                  {(() => {
+                    const phaseToLevelKey: Record<string, string> = {
+                      'Fase 1': 'preescolar',
+                      'Fase 2': 'preescolar',
+                      'Fase 3': 'primaria-baja',
+                      'Fase 4': 'primaria-media',
+                      'Fase 5': 'primaria-alta',
+                      'Fase 6': 'secundaria',
+                      'Bachillerato': 'preparatoria'
+                    };
+                    const levelKey = phaseToLevelKey[metadata.faseNem || 'Fase 4'] || 'primaria-media';
+                    const queryTopic = metadata.title || metadata.description || 'Contenido Curricular Situado';
+                    const dynamicSuggestions = detectCurriculumPdasForTopic(queryTopic, levelKey, metadata.campoFormativo || metadata.subjectId || '');
+                    const suggestionsList = dynamicSuggestions.length > 0 ? dynamicSuggestions : (PDA_SUGGESTIONS[metadata.subjectId || 'sub-math'] || PDA_SUGGESTIONS['sub-math']);
+
+                    return (
+                      <select
+                        onChange={(e) => {
+                          if (e.target.value) updateMetadata({ pdaNem: e.target.value });
+                        }}
+                        className="w-full text-[10px] p-2 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50/40 dark:bg-blue-950/20 text-slate-800 dark:text-zinc-200 font-medium"
+                        defaultValue=""
+                      >
+                        <option value="">-- Seleccionar PDA Oficial para {metadata.faseNem || 'Fase 4'} --</option>
+                        {suggestionsList.map((pda, idx) => (
+                          <option key={idx} value={pda}>{pda}</option>
+                        ))}
+                      </select>
+                    );
+                  })()}
                 </div>
               </div>
 
