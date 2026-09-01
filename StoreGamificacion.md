@@ -46,7 +46,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   submitExam: (
     questId: string,
     score: number,
@@ -59,7 +59,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   saveQuest: (subjectId: string, questData: Omit<Quest, 'created_at'> & { id?: string }) => Promise<void>;
   triggerGuildAttack: (damage: number) => Promise<void>;
   resetGuildBoss: () => void;
@@ -87,7 +87,7 @@ interface StudentStoreState {
   studentInventoryMap: Record<string, string[]>;
   studentMessages: StudentMessage[];
   isLoadingStats: boolean;
-  
+
   // Actions
   switchStudent: (studentId: string) => Promise<void>;
   changeAvatar: (config: Partial<StudentAvatar>) => void;
@@ -99,13 +99,13 @@ interface StudentStoreState {
   revokeArtifact: (studentId: string, artifactId: string, reason: string) => Promise<void>;
   markStudentMessageAsRead: (messageId: string) => void;
   fetchStats: (groupId?: string) => Promise<void>;
-  
+
   // Cross-store helpers
   addXpAndCoins: (studentId: string, xpEarned: number, coinsEarned: number, levelUpCallback?: (leveledUp: boolean) => void) => void;
   updateStatsAfterExam: (
-    studentId: string, 
-    xpEarned: number, 
-    coinsEarned: number, 
+    studentId: string,
+    xpEarned: number,
+    coinsEarned: number,
     statBoost?: { strength?: number; intelligence?: number; defense?: number },
     customLoot?: string
   ) => void;
@@ -124,7 +124,7 @@ Gestiona el estado en cliente y sincronización asíncrona mediante políticas d
 interface PortfolioStoreState {
   portfolioItems: PortfolioItem[];
   isLoadingPortfolio: boolean;
-  
+
   // Actions
   submitPortfolioItem: (
     title: string,
@@ -135,7 +135,7 @@ interface PortfolioStoreState {
     questId?: string,
     subjectId?: string
   ) => void;
-  
+
   submitPortfolioItemOnBehalf: (
     studentId: string,
     title: string,
@@ -146,10 +146,10 @@ interface PortfolioStoreState {
     questId?: string,
     subjectId?: string
   ) => void;
-  
+
   addPortfolioFeedback: (itemId: string, text: string, role: FeedbackAuthorRole, authorId: string) => void;
   addReaction: (itemId: string, roleCategory: string, emoji: string) => void;
-  
+
   reviewPortfolioItem: (
     itemId: string,
     status: PortfolioItemStatus,
@@ -165,7 +165,7 @@ interface PortfolioStoreState {
       communication?: number;
     }
   ) => void;
-  
+
   linkPortfolioItemToQuest: (itemId: string, questId: string) => void;
   submitPeerReview: (itemId: string, score: number, comment: string) => void;
   fetchPortfolioItems: (groupId?: string) => Promise<void>;

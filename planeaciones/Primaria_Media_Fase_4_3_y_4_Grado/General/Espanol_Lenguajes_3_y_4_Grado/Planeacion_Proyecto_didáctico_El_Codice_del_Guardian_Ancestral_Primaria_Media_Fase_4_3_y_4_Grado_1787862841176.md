@@ -1,7 +1,7 @@
 ---
 tags: [iskool, planeacion_nem, segundo_cerebro, nivel_primaria_media_fase_4_3_y_4_grado, grado_general, materia_espanol_lenguajes_3_y_4_grado]
 nivel: "Primaria Media (Fase 4: 3º y 4º Grado)"
-grado: ""
+grado: "
 asignatura: "Español / Lenguajes (3º y 4º Grado)"
 campo_formativo: "Lenguajes"
 fecha_creacion: "27 de agosto de 2026"
@@ -11,13 +11,13 @@ updated_at: "27 de agosto de 2026"
 
 # Proyecto didáctico: El Codice del Guardian Ancestral — Primaria Media (Fase 4: 3º y 4º Grado)
 
-**Docente:** Prof. Israel López Ángeles  
-**Nivel / Fase:** Primaria Media (Fase 4: 3º y 4º Grado)  
-**Grado:** No especificado  
-**Asignatura:** Español / Lenguajes (3º y 4º Grado)  
-**Campo Formativo:** Lenguajes  
-**Duración:** 3 sesiones de 50 minutos (Total: 150 min)  
-**PDA:** Fase 4 (3º y 4º Primaria) - Redacta textos expositivos, narrativos y resúmenes estructurados sobre "El Codice del Guardian Ancestral".  
+**Docente:** Prof. Israel López Ángeles
+**Nivel / Fase:** Primaria Media (Fase 4: 3º y 4º Grado)
+**Grado:** No especificado
+**Asignatura:** Español / Lenguajes (3º y 4º Grado)
+**Campo Formativo:** Lenguajes
+**Duración:** 3 sesiones de 50 minutos (Total: 150 min)
+**PDA:** Fase 4 (3º y 4º Primaria) - Redacta textos expositivos, narrativos y resúmenes estructurados sobre "El Codice del Guardian Ancestral".
 **Fecha:** 27 de agosto de 2026
 
 ---

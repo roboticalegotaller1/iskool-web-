@@ -17,20 +17,20 @@ updated_at: "25 de agosto de 2026"
 
 # 📚 Proyecto Didáctico Integral: El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl
 
-> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
-> **Nivel y Fase:** SECUNDARIA • Fase 6 (1º de Secundaria)  
-> **Campo Formativo:** Saberes y Pensamiento Científico  
-> **Asignatura:** General  
-> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
-> **Producto Central Integrador:** *Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.*  
-> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (1º de Secundaria)
+> **Campo Formativo:** Saberes y Pensamiento Científico
+> **Asignatura:** General
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)
+> **Producto Central Integrador:** *Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria con lectura en atril ante padres de familia.*
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]
 
 ---
 
 ## 🎯 I. Proceso de Desarrollo de Aprendizaje (PDA Principal)
 
 ```yaml
-PDA: "Modela situaciones y fenómenos reales relacionados con "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl" mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
+PDA: "Modela situaciones y fenómenos reales relacionados con 'El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl' mediante expresiones algebraicas, gráficas, funciones y contrastación experimental de laboratorio."
 ```
 
 ### 🔗 Articulación Curricular con otros Campos Formativos:
@@ -54,13 +54,13 @@ PDA: "Modela situaciones y fenómenos reales relacionados con "El Quinto Sol: Mi
 
 ## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-**Problemática Situada:**  
+**Problemática Situada:**
 Se ha detectado una pérdida paulatina de la tradición oral comunitaria y un escaso hábito de creación literaria autónoma en la infancia, lo que limita el desarrollo de la imaginación y la comprensión lectora.
 
-**Propósito del Proyecto:**  
+**Propósito del Proyecto:**
 Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa (inicio, desarrollo, nudo y desenlace).
 
-**Impacto Social y Transformador:**  
+**Impacto Social y Transformador:**
 Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.
 
 ---
@@ -68,140 +68,140 @@ Fomenta el amor por la lectura comunitaria, recupera la memoria histórica y dot
 ## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
 
 ### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
 - **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 62 a la 64) — *Historia crítica de México, derechos humanos y soberanía*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
 ### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
 - **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 46 a la 48) — *Tecnología, proyectos productivos, educación socioemocional y salud*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
 ### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
 - **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 66 a la 68) — *Historia crítica de México, derechos humanos y soberanía*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
 ### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
 - **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 50 a la 52) — *Tecnología, proyectos productivos, educación socioemocional y salud*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
 ### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?
   2. ¿Qué correlación existe entre las variables analizadas?
 - **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 70 a la 72) — *Historia crítica de México, derechos humanos y soberanía*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
 ### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?
   2. ¿Qué correlación existe entre las variables analizadas?
 - **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 54 a la 56) — *Tecnología, proyectos productivos, educación socioemocional y salud*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
 ### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl". Coevaluación con rúbrica técnica.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
 - **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 74 a la 76) — *Historia crítica de México, derechos humanos y soberanía*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
 ### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl". Coevaluación con rúbrica técnica.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
 - **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 46 a la 48) — *Tecnología, proyectos productivos, educación socioemocional y salud*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
 ### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl". Coevaluación con rúbrica técnica.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "El Quinto Sol: Mitos Fundacionales, Dioses del Maíz y la Filosofía Náhuatl"?
 - **📖 Libro de Texto SEP:** Ética, Naturaleza y Sociedades Secundaria (Págs. 62 a la 64) — *Historia crítica de México, derechos humanos y soberanía*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
 ### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
 - **📖 Libro de Texto SEP:** De lo Humano y lo Comunitario Secundaria (Págs. 50 a la 52) — *Tecnología, proyectos productivos, educación socioemocional y salud*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados

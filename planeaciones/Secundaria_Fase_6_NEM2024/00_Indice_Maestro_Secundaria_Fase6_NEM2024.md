@@ -57,7 +57,7 @@ mindmap
 
 ### 1. 📖 Lenguajes (50 Planeaciones Didácticas)
 
-| Tema | Grado | Disciplina | Título del Proyecto | Archivo Obsidian |
+| Tema | Grado | Disciplina | Título del Proyecto | Archivo Bóveda Curricular |
 | :---: | :---: | :---: | :--- | :--- |
 | 1 | 1º de Secundaria | Español | **Voces de Nuestra Tierra: Cartografía y Memoria de la Diversidad Lingüística** | [[T001_Espaol_Voces_de_Nuestra_Tierra_Cartografía_y_Memoria_de_la_Diversidad_Lingüística]] |
 | 2 | 1º de Secundaria | Español | **El Manifiesto del Diálogo: Lectura Crítica y Ensayos de Interculturalidad** | [[T002_Espaol_El_Manifiesto_del_Diálogo_Lectura_Crítica_y_Ensayos_de_Interculturalidad]] |
@@ -115,7 +115,7 @@ mindmap
 
 ### 2. 🔬 Saberes y Pensamiento Científico (50 Planeaciones Didácticas)
 
-| Tema | Grado | Disciplina | Título del Proyecto | Archivo Obsidian |
+| Tema | Grado | Disciplina | Título del Proyecto | Archivo Bóveda Curricular |
 | :---: | :---: | :---: | :--- | :--- |
 | 51 | 1º de Secundaria | Matemáticas | **El Muro Decimal: Fracciones Finitas, Periódicas Puras y Mixtas en el Comercio** | [[T051_Matemticas_El_Muro_Decimal_Fracciones_Finitas,_Periódicas_Puras_y_Mixtas_en_el_Comercio]] |
 | 52 | 1º de Secundaria | Matemáticas | **Bajo Cero y en las Alturas: Números con Signo, Valor Absoluto y Densidad Numérica** | [[T052_Matemticas_Bajo_Cero_y_en_las_Alturas_Números_con_Signo,_Valor_Absoluto_y_Densidad_Numérica]] |
@@ -173,7 +173,7 @@ mindmap
 
 ### 3. ⚖️ Ética, Naturaleza y Sociedades (50 Planeaciones Didácticas)
 
-| Tema | Grado | Disciplina | Título del Proyecto | Archivo Obsidian |
+| Tema | Grado | Disciplina | Título del Proyecto | Archivo Bóveda Curricular |
 | :---: | :---: | :---: | :--- | :--- |
 | 101 | 1º de Secundaria | Geografía | **Territorios Vivos: El Espacio Geográfico y el Patrimonio Biocultural de México** | [[T101_Geografa_Territorios_Vivos_El_Espacio_Geográfico_y_el_Patrimonio_Biocultural_de_México]] |
 | 102 | 1º de Secundaria | Geografía | **Las Cinco Escalas del Saber Geográfico: Lugar, Medio, Paisaje, Región y Territorio** | [[T102_Geografa_Las_Cinco_Escalas_del_Saber_Geográfico_Lugar,_Medio,_Paisaje,_Región_y_Territorio]] |
@@ -231,7 +231,7 @@ mindmap
 
 ### 4. 🤝 De lo Humano y lo Comunitario (50 Planeaciones Didácticas)
 
-| Tema | Grado | Disciplina | Título del Proyecto | Archivo Obsidian |
+| Tema | Grado | Disciplina | Título del Proyecto | Archivo Bóveda Curricular |
 | :---: | :---: | :---: | :--- | :--- |
 | 151 | 1º de Secundaria | Tecnología | **La Prolongación del Cuerpo: De la Palanca Mecánica a la Robótica y la Ergonomía** | [[T151_Tecnologa_La_Prolongación_del_Cuerpo_De_la_Palanca_Mecánica_a_la_Robótica_y_la_Ergonomía]] |
 | 152 | 1º de Secundaria | Tecnología | **Alquimia Tecnológica: Ciclo de Vida de los Materiales y Ecotecnias Escolares** | [[T152_Tecnologa_Alquimia_Tecnológica_Ciclo_de_Vida_de_los_Materiales_y_Ecotecnias_Escolares]] |

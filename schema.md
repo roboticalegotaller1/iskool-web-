@@ -233,10 +233,10 @@ alter table public.grades enable row level security;
 
 -- Insert initial levels and grades
 insert into public.levels_grades (level_name, grade_name) values
-  ('primaria', '1º'), ('primaria', '2º'), ('primaria', '3º'), 
+  ('primaria', '1º'), ('primaria', '2º'), ('primaria', '3º'),
   ('primaria', '4º'), ('primaria', '5º'), ('primaria', '6º'),
   ('secundaria', '1º'), ('secundaria', '2º'), ('secundaria', '3º'),
-  ('preparatoria', '1º Semestre'), ('preparatoria', '2º Semestre'), 
-  ('preparatoria', '3º Semestre'), ('preparatoria', '4º Semestre'), 
+  ('preparatoria', '1º Semestre'), ('preparatoria', '2º Semestre'),
+  ('preparatoria', '3º Semestre'), ('preparatoria', '4º Semestre'),
   ('preparatoria', '5º Semestre'), ('preparatoria', '6º Semestre');
 ```

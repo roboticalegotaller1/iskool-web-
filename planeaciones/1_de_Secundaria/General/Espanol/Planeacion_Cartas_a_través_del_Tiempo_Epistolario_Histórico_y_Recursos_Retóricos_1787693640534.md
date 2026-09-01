@@ -17,13 +17,13 @@ updated_at: "25 de agosto de 2026"
 
 # 📚 Proyecto Didáctico Integral: Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos
 
-> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
-> **Nivel y Fase:** SECUNDARIA • Fase 6 (No especificado)  
-> **Campo Formativo:** Lenguajes  
-> **Asignatura:** Español  
-> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
-> **Producto Central Integrador:** *Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.*  
-> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]
+> **Nivel y Fase:** SECUNDARIA • Fase 6 (No especificado)
+> **Campo Formativo:** Lenguajes
+> **Asignatura:** Español
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)
+> **Producto Central Integrador:** *Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.*
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]
 
 ---
 
@@ -54,13 +54,13 @@ PDA: "Produce y lee textos epistolares (cartas personales y formales) dirigidas 
 
 ## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-**Problemática Situada:**  
+**Problemática Situada:**
 En el contexto escolar actual, la comunicación digital inmediata ha desplazado la correspondencia escrita, provocando que las niñas y niños desconozcan la función social de la carta formal e informal, sus componentes estructurales (fecha, lugar, destinatario, saludo, cuerpo, despedida, firma y remitente) y el valor de expresar afecto, agradecimiento o peticiones ciudadanas mediante la palabra escrita.
 
-**Propósito del Proyecto:**  
+**Propósito del Proyecto:**
 Que las y los estudiantes desarrollen competencias comunicativas integrales de lectoescritura con sentido social real, elaboren cartas personalizadas para miembros de la comunidad escolar y sus familias, y diseñen un buzón postal funcional para dinamizar la correspondencia en la escuela.
 
-**Impacto Social y Transformador:**  
+**Impacto Social y Transformador:**
 Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, rescata el patrimonio cultural de la correspondencia postal mexicana, fomenta la empatía y la resolución pacífica de conflictos mediante el diálogo escrito, y estimula la lectoescritura con propósito comunitario.
 
 ---
@@ -68,140 +68,140 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 ## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
 
 ### 📌 SESIÓN 1 (50 minutos): Planteamiento del Problema, Conflicto Cognitivo y Formulación de Hipótesis sobre "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Presentación de una discrepancia experimental o dilema socio-científico real. Los estudiantes formulan preguntas de indagación e hipótesis contrastables.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): En equipos de trabajo colaborativo, delimitan las variables del problema, diseñan el plan de experimentación o investigación documental y revisan fuentes científicas.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Plenaria de validación de hipótesis ante el grupo y retroalimentación metodológica del docente.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Cuáles son las variables dependientes e independientes que intervienen en el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
   2. ¿Qué evidencias empíricas necesitamos para validar o refutar nuestras hipótesis iniciales?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 44 a la 46) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Cuaderno de laboratorio / bitácora científica, Guía de diseño experimental, Artículos de divulgación
 - **📄 Entregable de la Sesión:** 📄 Protocolo de Investigación #1: Formulación del problema, variables e hipótesis de trabajo.
 
 ### 📌 SESIÓN 2 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 45 a la 47) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
 ### 📌 SESIÓN 3 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 47 a la 49) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
 ### 📌 SESIÓN 4 (50 minutos): Indagación en Textos Disciplinares SEP y Contrastación Teórica
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación teórica y apertura de los libros de texto de la SEP (Saberes Disciplinares / Lenguajes).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Análisis crítico de lecturas científicas o históricas oficiales. Elaboración de diagramas de flujo, tablas de datos o cuadros comparativos en el cuaderno.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Síntesis grupal mediante organizadores gráficos digitales o en pizarrón.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué leyes, principios o hechos históricos explican con rigor el fenómeno de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
   2. ¿Cómo contrastan estos hallazgos con las ideas previas del equipo?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 48 a la 50) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Libros de texto gratuitos SEP de Secundaria, Fichas de trabajo analítico, Calculadora / regla
 - **📄 Entregable de la Sesión:** 📄 Ficha Teórica #2: Cuadro comparativo y síntesis analítica con citas bibliográficas oficiales.
 
 ### 📌 SESIÓN 5 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?
   2. ¿Qué correlación existe entre las variables analizadas?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 50 a la 52) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
 ### 📌 SESIÓN 6 (50 minutos): Práctica de Laboratorio / Taller de Modelación Cuantitativa y Experimental (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Verificación de normas de seguridad, preparación de instrumentos o ecuaciones de modelado.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Ejecución de la práctica experimental, toma de lecturas, tabulación de datos y modelado algebraico/gráfico de los resultados.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Análisis de posibles fuentes de error experimental y validación cruzada con otros equipos.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué comportamiento matemático o físico describen los datos obtenidos en la práctica?
   2. ¿Qué correlación existe entre las variables analizadas?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 51 a la 53) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Instrumental de laboratorio o simuladores digitales, Hojas de tabulación milimétricas, Bitácora
 - **📄 Entregable de la Sesión:** 📄 Reporte de Práctica #3: Tabulación rigurosa de datos, gráficas de comportamiento y análisis cuantitativo.
 
 ### 📌 SESIÓN 7 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos". Coevaluación con rúbrica técnica.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 53 a la 55) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
 ### 📌 SESIÓN 8 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos". Coevaluación con rúbrica técnica.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 54 a la 56) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
 ### 📌 SESIÓN 9 (50 minutos): Mesa Redonda, Debate Crítico y Coevaluación Técnica (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Establecimiento de las reglas del debate formal y asignación de posturas o moderación.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Debate estructurado con argumentación fundamentada sobre las implicaciones éticas, sociales o tecnológicas de "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos". Coevaluación con rúbrica técnica.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Conclusiones consensuadas y redacción del posicionamiento ético del grupo.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué argumentos demostraron mayor solidez y rigor conceptual durante la discusión?
   2. ¿Cuál es la responsabilidad social de la ciencia y la tecnología en torno a "Cartas a través del Tiempo: Epistolario Histórico y Recursos Retóricos"?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 56 a la 58) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Rúbricas técnicas de evaluación entre pares, Guiones de argumentación
 - **📄 Entregable de la Sesión:** 📄 Acta de Debate y Rúbrica de Coevaluación con argumentos fundamentados.
 
 ### 📌 SESIÓN 10 (50 minutos): Coloquio Estudiantil de Ciencias y Humanidades: Defensa del Proyecto y Evaluación (Fase de Profundización y Taller Práctico - Parte 2)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Apertura solemne del Coloquio Académico Escolar ante la comunidad y docentes invitados.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Exposición oral en atril con apoyo de diapositivas o stands demostrativos. Ronda de preguntas y respuestas técnicas.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Evaluación sumativa y formativa con rúbrica analítica oficial y retroalimentación docente.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿De qué manera nuestro proyecto contribuye a resolver un problema real de la comunidad?
   2. ¿Qué competencias científicas y comunicativas consolidamos durante el proceso?
 - **📖 Libro de Texto SEP:** Lenguajes: Español 1º de Secundaria (Colección Ximhai / Sk’asolil) (Págs. 57 a la 59) — *Proyecto Formativo: "Cartas formales de gestión y peticiones ciudadanas" — Estructura epistolar formal, argumentación y derechos ciudadanos*
 - **📦 Materiales:** Proyector o stands de exposición, Rúbricas analíticas oficiales, Prototipos terminados

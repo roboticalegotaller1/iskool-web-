@@ -65,7 +65,7 @@ const mapGroupIdToUuid = (id: string): string => {
   if (id === 'grp-pa-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e22';
   if (id === 'grp-sec-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e33';
   if (id === 'grp-prep-a') return 'a00a0eeb-9c0b-4ef8-bb6d-6bb9bd380e44';
-  
+
   let hash1 = 0;
   let hash2 = 0;
   for (let i = 0; i < id.length; i++) {
@@ -211,7 +211,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
 
   assignStudentToGroup: (studentId, groupId) => {
     set((state) => ({
-      detailedStudents: state.detailedStudents.map(s => 
+      detailedStudents: state.detailedStudents.map(s =>
         s.id === studentId ? { ...s, group_id: groupId } : s
       )
     }));
@@ -252,7 +252,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
     set({ syncError: null });
     try {
       const uuid = mapGroupIdToUuid(groupId);
-      
+
       const { error } = await supabase
         .from('groups')
         .delete()
@@ -279,9 +279,9 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
 
     set((state) => {
       const cleanPrev = state.attendanceList.filter(att => {
-        const isSameGroupAndSubjectAndDate = records.some(rec => 
-          rec.date === att.date && 
-          rec.group_id === att.group_id && 
+        const isSameGroupAndSubjectAndDate = records.some(rec =>
+          rec.date === att.date &&
+          rec.group_id === att.group_id &&
           rec.subject_id === att.subject_id &&
           rec.student_id === att.student_id
         );
@@ -332,7 +332,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>((set, get) => (
 
   markMessageAsRead: (messageId) => {
     set((state) => ({
-      parentMessages: state.parentMessages.map(msg => 
+      parentMessages: state.parentMessages.map(msg =>
         msg.id === messageId ? { ...msg, is_read: true } : msg
       )
     }));

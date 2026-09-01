@@ -1,18 +1,18 @@
 ---
-tags: [iskool, gamification, social-loop, canvas, player, supabase, rls, 1-click-assignment]
+tags: [iskool, gamification, social-loop, Lienzo Digital, player, supabase, rls, 1-click-assignment]
 fecha_creacion: "2026-08-12"
-modulo: "Red Social Docente, Asignación a Clase y Reproductor Canvas"
+modulo: "Red Social Docente, Asignación a Clase y Reproductor Lienzo Digital"
 ---
 
 # El Ciclo de Retención Gamificado: Red Social Docente, Asignación a Clase y Reproductor Visual (`Teacher_Social_Loop.md`)
 
 ## 1. El Diagrama de Flujo Final del Ciclo Ecosistémico
 
-La función **ISkool Canvas** conecta de forma transparente el trabajo del docente con la experiencia gamificada del estudiante, respetando la **Regla de los 3 Clics de Apple**:
+La función **ISkool Lienzo Digital** conecta de forma transparente el trabajo del docente con la experiencia gamificada del estudiante, respetando la **Regla de los 3 Clics de Apple**:
 
 ```mermaid
 graph TD
-    A[🤖 1. Generación de Actividad con IA - ISkool Canvas] --> B[🚀 2. Publicación Instantánea en la Comunidad Docente]
+    A[🤖 1. Generación de Actividad con IA - ISkool Lienzo Digital] --> B[🚀 2. Publicación Instantánea en la Comunidad Docente]
     B --> C[❤️ 3. Votación Antifraude por Pares - Upvotes]
     C --> D[🚀 4. Asignación a Clase en 1 Clic - AssignToClassModal]
     D --> E[🎮 5. Resolución Gamificada por el Alumno - CanvasTriviaPlayer]

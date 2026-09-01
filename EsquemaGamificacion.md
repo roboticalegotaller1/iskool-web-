@@ -163,11 +163,11 @@ create table public.portfolio_items (
   file_type text not null check (file_type in ('image', 'audio', 'video', 'pdf', 'link')),
   status text not null default 'submitted' check (status in ('draft', 'submitted', 'approved', 'needs_revision')),
   self_reflection text, -- Reflexión del propio alumno (Autoevaluación)
-  
+
   -- Coevaluación y Proyectos de Preparatoria
   peer_review_score numeric(3,1) check (peer_review_score >= 0.0 and peer_review_score <= 10.0),
   peer_review_comments text,
-  
+
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -258,7 +258,7 @@ export interface Mission {
   map_position_y: number;
   is_active: boolean;
   created_at: string;
-  
+
   // Relaciones opcionales cargadas
   subject?: Subject;
   quests?: Quest[];
@@ -402,16 +402,16 @@ export interface PortfolioItem {
   file_type: PortfolioFileType;
   status: PortfolioItemStatus;
   self_reflection?: string;
-  
+
   // Coevaluación (Preparatoria)
   peer_review_score?: number;
   peer_review_comments?: string;
-  
+
   // Metadatos formativos (NEM)
   campos_formativos?: string[];
   pdas?: string[];
   ejes_articuladores?: string[];
-  
+
   // Desglose de XP otorgado
   xp_breakdown?: {
     scientific?: number;
@@ -419,7 +419,7 @@ export interface PortfolioItem {
     collaborative?: number;
     communication?: number;
   };
-  
+
   created_at: string;
   updated_at: string;
 
@@ -536,7 +536,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   submitExam: (
     questId: string,
     score: number,
@@ -549,7 +549,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   saveQuest: (subjectId: string, questData: Omit<Quest, 'created_at'> & { id?: string }) => Promise<void>;
   triggerGuildAttack: (damage: number) => Promise<void>;
   resetGuildBoss: () => void;
@@ -573,7 +573,7 @@ Gestiona el estado en cliente y sincronización asíncrona mediante políticas d
 interface PortfolioStoreState {
   portfolioItems: PortfolioItem[];
   isLoadingPortfolio: boolean;
-  
+
   // Actions
   submitPortfolioItem: (
     title: string,
@@ -584,7 +584,7 @@ interface PortfolioStoreState {
     questId?: string,
     subjectId?: string
   ) => void;
-  
+
   submitPortfolioItemOnBehalf: (
     studentId: string,
     title: string,
@@ -595,10 +595,10 @@ interface PortfolioStoreState {
     questId?: string,
     subjectId?: string
   ) => void;
-  
+
   addPortfolioFeedback: (itemId: string, text: string, role: FeedbackAuthorRole, authorId: string) => void;
   addReaction: (itemId: string, roleCategory: string, emoji: string) => void;
-  
+
   reviewPortfolioItem: (
     itemId: string,
     status: PortfolioItemStatus,
@@ -614,7 +614,7 @@ interface PortfolioStoreState {
       communication?: number;
     }
   ) => void;
-  
+
   linkPortfolioItemToQuest: (itemId: string, questId: string) => void;
   submitPeerReview: (itemId: string, score: number, comment: string) => void;
   fetchPortfolioItems: (groupId?: string) => Promise<void>;

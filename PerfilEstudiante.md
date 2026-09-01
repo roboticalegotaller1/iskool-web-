@@ -96,17 +96,17 @@ create table public.student_stats (
   current_streak integer default 0 not null check (current_streak >= 0),
   max_streak integer default 0 not null check (max_streak >= 0),
   last_active_date date,
-  
+
   -- Atributos RPG (Secundaria)
   rpg_class text check (rpg_class in ('guerrero', 'mago', 'curandero', 'explorador')),
   attribute_strength integer default 10 check (attribute_strength >= 0),
   attribute_intelligence integer default 10 check (attribute_intelligence >= 0),
   attribute_defense integer default 10 check (attribute_defense >= 0),
   skill_points integer default 0 check (skill_points >= 0),
-  
+
   -- Financiamiento (Preparatoria)
   funding_credits integer default 1000 check (funding_credits >= 0),
-  
+
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 ```
@@ -128,14 +128,14 @@ create table public.student_avatars (
   outfit_color text not null default '#3B82F6',
   background_style text not null default 'nebula',
   unlocked_items text[] default array['classic', 'happy', 'space_suit', 'nebula']::text[] not null,
-  
+
   -- Mascota Virtual (Primaria Baja)
   pet_type text default 'dragon' check (pet_type in ('dragon', 'gatito', 'osito')),
   pet_name text default 'Chispas' not null,
   pet_hunger integer default 50 check (pet_hunger >= 0 and pet_hunger <= 100),
   pet_happiness integer default 50 check (pet_happiness >= 0 and pet_happiness <= 100),
   pet_outfit text default 'none',
-  
+
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 ```
@@ -280,23 +280,23 @@ export interface DetailedStudent {
   status: 'activo' | 'inactivo' | 'baja' | 'suspendido';
   previous_school?: string;
   photo_url?: string;
-  
+
   // Contacto
   address?: string;
   phone?: string;
   email?: string;
-  
+
   // Familiares
   father_name?: string;
   mother_name?: string;
   tutor_name?: string;
   emergency_contact_name?: string;
   emergency_contact_phone?: string;
-  
+
   // Médicos
   blood_type?: string;
   medical_notes?: string;
-  
+
   // Académicos
   academic_notes?: string;
   level: 'primaria' | 'secundaria' | 'preparatoria';
@@ -349,7 +349,7 @@ interface StudentStoreState {
   studentInventoryMap: Record<string, string[]>;
   studentMessages: StudentMessage[];
   isLoadingStats: boolean;
-  
+
   // Actions
   switchStudent: (studentId: string) => Promise<void>;
   changeAvatar: (config: Partial<StudentAvatar>) => void;
@@ -361,13 +361,13 @@ interface StudentStoreState {
   revokeArtifact: (studentId: string, artifactId: string, reason: string) => Promise<void>;
   markStudentMessageAsRead: (messageId: string) => void;
   fetchStats: (groupId?: string) => Promise<void>;
-  
+
   // Cross-store helpers
   addXpAndCoins: (studentId: string, xpEarned: number, coinsEarned: number, levelUpCallback?: (leveledUp: boolean) => void) => void;
   updateStatsAfterExam: (
-    studentId: string, 
-    xpEarned: number, 
-    coinsEarned: number, 
+    studentId: string,
+    xpEarned: number,
+    coinsEarned: number,
     statBoost?: { strength?: number; intelligence?: number; defense?: number },
     customLoot?: string
   ) => void;

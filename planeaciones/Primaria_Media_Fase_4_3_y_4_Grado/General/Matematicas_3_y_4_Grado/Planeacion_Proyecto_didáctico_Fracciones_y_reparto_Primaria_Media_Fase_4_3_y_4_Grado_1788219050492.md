@@ -1,7 +1,7 @@
 ---
 tags: [iskool, planeacion_nem, segundo_cerebro, nivel_primaria_media_fase_4_3_y_4_grado, grado_general, materia_matematicas_3_y_4_grado]
 nivel: "Primaria Media (Fase 4: 3º y 4º Grado)"
-grado: ""
+grado: "
 asignatura: "Matemáticas (3º y 4º Grado)"
 campo_formativo: "Lenguajes"
 fecha_creacion: "31 de agosto de 2026"
@@ -11,13 +11,13 @@ updated_at: "31 de agosto de 2026"
 
 # Proyecto didáctico: Fracciones y reparto — Primaria Media (Fase 4: 3º y 4º Grado)
 
-**Docente:** Prof. Israel López Ángeles  
-**Nivel / Fase:** Primaria Media (Fase 4: 3º y 4º Grado)  
-**Grado:** No especificado  
-**Asignatura:** Matemáticas (3º y 4º Grado)  
-**Campo Formativo:** Lenguajes  
-**Duración:** 3 sesiones de 50 minutos (Total: 150 min)  
-**PDA:** Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Resuelve problemas de fracciones equivalentes, multiplicación, división, cálculo de perímetros y áreas contextualizados en situaciones reales de "Fracciones y reparto".  
+**Docente:** Prof. Israel López Ángeles
+**Nivel / Fase:** Primaria Media (Fase 4: 3º y 4º Grado)
+**Grado:** No especificado
+**Asignatura:** Matemáticas (3º y 4º Grado)
+**Campo Formativo:** Lenguajes
+**Duración:** 3 sesiones de 50 minutos (Total: 150 min)
+**PDA:** Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Resuelve problemas de fracciones equivalentes, multiplicación, división, cálculo de perímetros y áreas contextualizados en situaciones reales de "Fracciones y reparto".
 **Fecha:** 31 de agosto de 2026
 
 ---

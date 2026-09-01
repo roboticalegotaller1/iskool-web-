@@ -1,7 +1,7 @@
 ---
 tags: [iskool, planeacion_nem, segundo_cerebro, nivel_primaria_baja_fase_3_1_y_2_grado, grado_general, materia_espanol_lenguajes_1_y_2_grado]
 nivel: "Primaria Baja (Fase 3: 1º y 2º Grado)"
-grado: ""
+grado: "
 asignatura: "Español / Lenguajes (1º y 2º Grado)"
 campo_formativo: "Lenguajes"
 fecha_creacion: "31 de agosto de 2026"
@@ -11,13 +11,13 @@ updated_at: "31 de agosto de 2026"
 
 # Proyecto didáctico: Revolución Mexicana — Primaria Baja (Fase 3: 1º y 2º Grado)
 
-**Docente:** Prof. Israel López Ángeles  
-**Nivel / Fase:** Primaria Baja (Fase 3: 1º y 2º Grado)  
-**Grado:** No especificado  
-**Asignatura:** Español / Lenguajes (1º y 2º Grado)  
-**Campo Formativo:** Lenguajes  
-**Duración:** 3 sesiones de 50 minutos (Total: 150 min)  
-**PDA:** Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios los acontecimientos clave de "Revolución Mexicana", reconociendo cómo transformaron la vida cotidiana, la escuela y la comunidad.  
+**Docente:** Prof. Israel López Ángeles
+**Nivel / Fase:** Primaria Baja (Fase 3: 1º y 2º Grado)
+**Grado:** No especificado
+**Asignatura:** Español / Lenguajes (1º y 2º Grado)
+**Campo Formativo:** Lenguajes
+**Duración:** 3 sesiones de 50 minutos (Total: 150 min)
+**PDA:** Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios los acontecimientos clave de "Revolución Mexicana", reconociendo cómo transformaron la vida cotidiana, la escuela y la comunidad.
 **Fecha:** 31 de agosto de 2026
 
 ---

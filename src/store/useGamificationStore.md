@@ -39,7 +39,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   submitExam: (
     questId: string,
     score: number,
@@ -52,7 +52,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   saveQuest: (subjectId: string, questData: Omit<Quest, 'created_at'> & { id?: string }) => Promise<void>;
   triggerGuildAttack: (damage: number) => Promise<void>;
   resetGuildBoss: () => void;
@@ -222,7 +222,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   submitExam: (
     questId: string,
     score: number,
@@ -235,7 +235,7 @@ interface GamificationStoreState {
     leveledUp: boolean;
     badgeEarned: Badge | null;
   }>;
-  
+
   saveQuest: (subjectId: string, questData: Omit<Quest, 'created_at'> & { id?: string }) => Promise<void>;
   triggerGuildAttack: (damage: number) => Promise<void>;
   resetGuildBoss: () => void;
@@ -409,7 +409,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
       // 4. Update Zustand state ONLY if Supabase mutation was successful
       set((state) => {
         const existingMissionIndex = state.missionsList.findIndex(m => m.subject_id === subjectId);
-        
+
         const newQuest: Quest = {
           ...questData,
           id: questUuid, // Keep consistent with database UUID
@@ -430,7 +430,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
           }
 
           return {
-            missionsList: state.missionsList.map((m, idx) => 
+            missionsList: state.missionsList.map((m, idx) =>
               idx === existingMissionIndex ? { ...mission, quests: updatedQuests } : m
             )
           };
@@ -492,7 +492,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     try {
       const currentBoss = get().guildBoss;
       const newHp = Math.max(0, currentBoss.hp_actual - damage);
-      
+
       const { error } = await supabase
         .from('guild_bosses')
         .update({ hp_actual: newHp })
@@ -676,7 +676,7 @@ export const useGamificationStore = create<GamificationStoreState>((set, get) =>
     try {
       const response = await supabase.from('missions').select('*, quests(*)');
       if (response.error) throw new Error(response.error.message);
-      
+
       const missionsWithSortedQuests = (response.data || []).map((m) => {
         const mission = m as Mission & { quests?: Quest[] };
         return {

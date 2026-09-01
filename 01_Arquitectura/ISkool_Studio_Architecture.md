@@ -36,11 +36,11 @@ export interface StudioActivityJSON {
 Para prevenir errores visuales (404) o URLs alucinadas por modelos de lenguaje, todos los reproductores de minijuegos (`StudioTriviaPlayer`, `MemoramaPlayer`, `FlashcardsPlayer`) implementan una función defensiva `onError`:
 
 ```tsx
-<img 
-  src={question.imageUrl} 
-  alt="Referencia pedagógica" 
+<img
+  src={question.imageUrl}
+  alt="Referencia pedagógica"
   onError={(e) => { e.currentTarget.src = '/images/students/default.png'; }}
-  className="..." 
+  className="..."
 />
 ```
 

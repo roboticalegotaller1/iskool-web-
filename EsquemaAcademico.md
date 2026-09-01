@@ -297,7 +297,7 @@ export interface Group {
   academic_year_id: string;
   name: string; // e.g., "A", "B"
   created_at: string;
-  
+
   // Relaciones opcionales cargadas en consultas
   level_grade?: LevelGrade;
   academic_year?: AcademicYear;

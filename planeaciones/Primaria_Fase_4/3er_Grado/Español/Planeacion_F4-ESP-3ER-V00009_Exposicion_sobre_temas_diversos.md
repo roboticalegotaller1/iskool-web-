@@ -17,13 +17,13 @@ updated_at: "25 de agosto de 2026"
 
 # 📚 Proyecto Didáctico Integral: Exposición sobre temas diversos - Variante 9 (Urbano Metropolitano)
 
-> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
-> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (3º de Primaria)  
-> **Campo Formativo:** Lenguajes  
-> **Asignatura:** Español  
-> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)  
-> **Producto Central Integrador:** *Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.*  
-> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]  
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]
+> **Nivel y Fase:** PRIMARIA-MEDIA • Fase 4 (3º de Primaria)
+> **Campo Formativo:** Lenguajes
+> **Asignatura:** Español
+> **Temporalidad:** 10 sesiones de 50 minutos (Total: 500 min)
+> **Producto Central Integrador:** *Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.*
+> **Índice Curricular:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Curricular Central]]
 
 ---
 
@@ -54,13 +54,13 @@ PDA: "Produce y lee textos epistolares (cartas personales y formales) dirigidas 
 
 ## 🏘️ II. Diagnóstico Comunitario y Propuesta de Proyecto Integrador
 
-**Problemática Situada:**  
+**Problemática Situada:**
 En el contexto escolar actual, la comunicación digital inmediata ha desplazado la correspondencia escrita, provocando que las niñas y niños desconozcan la función social de la carta formal e informal, sus componentes estructurales (fecha, lugar, destinatario, saludo, cuerpo, despedida, firma y remitente) y el valor de expresar afecto, agradecimiento o peticiones ciudadanas mediante la palabra escrita.
 
-**Propósito del Proyecto:**  
+**Propósito del Proyecto:**
 Que las y los estudiantes desarrollen competencias comunicativas integrales de lectoescritura con sentido social real, elaboren cartas personalizadas para miembros de la comunidad escolar y sus familias, y diseñen un buzón postal funcional para dinamizar la correspondencia en la escuela.
 
-**Impacto Social y Transformador:**  
+**Impacto Social y Transformador:**
 Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, rescata el patrimonio cultural de la correspondencia postal mexicana, fomenta la empatía y la resolución pacífica de conflictos mediante el diálogo escrito, y estimula la lectoescritura con propósito comunitario.
 
 ---
@@ -68,140 +68,140 @@ Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, 
 ## 📅 III. Secuencia Didáctica Completa (Dosificación en 10 Bloques de 50 Minutos)
 
 ### 📌 SESIÓN 1 (50 minutos): Apertura del Reto: ¿Cómo viaja un mensaje? El origen de las cartas y el oficio del cartero
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Dinámica detonadora "La Carta Viajera". El docente muestra sobres postales antiguos con timbres y plantea el misterio: "¿Cómo se comunicaban las familias antes del teléfono celular?". Lluvia de ideas en el pizarrón.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Proyección de imágenes de carteros y buzones históricos. En equipos de 4, los alumnos analizan ejemplos reales de cartas y reflexionan sobre a quién les gustaría escribirle (abuelos, amigos, autoridades escolares). Registran en papel bond sus saberes previos.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Puesta en común. Cada equipo elige a quién dirigirá su mensaje de agradecimiento o amistad. Registro individual en bitácora: "¿Qué mensaje importante quiero enviar al mundo?".
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Por qué una carta escrita a mano transmite emociones más profundas que un mensaje de texto digital?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Por qué una carta escrita a mano transmite emociones más profundas que un mensaje de texto digital?
   2. ¿Qué personas en nuestra comunidad merecen recibir una carta de agradecimiento o felicitación?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 112 a la 114) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Ejemplos de cartas reales y sobres postales, Papel bond blanco, Plumones de colores, Bitácora escolar
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #1: Diagnóstico inicial "El valor de la correspondencia escrita" y lista de posibles destinatarios.
 
 ### 📌 SESIÓN 2 (50 minutos): Exploración en Libros SEP: Las partes esenciales de una carta (Lugar, Fecha, Destinatario y Saludo)
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Ruleta de preguntas sobre la sesión previa y apertura del libro de texto gratuito de la SEP. Identificación visual de la cabecera epistolar.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Lectura guiada en el libro de texto oficial de la SEP. Los alumnos identifican y encierran con color rojo: 1) Lugar y Fecha, 2) Nombre del Destinatario, y 3) Saludo afectuoso o formal. En parejas practican la escritura de 3 saludos diferentes.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Dinámica "El Saludo Ideal": Cada pareja lee su saludo favorito. Retroalimentación inmediata sobre el uso de mayúsculas y dos puntos (:).
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Por qué es indispensable poner la fecha y el lugar en el encabezado de una carta?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Por qué es indispensable poner la fecha y el lugar en el encabezado de una carta?
   2. ¿Qué diferencia existe entre saludar a un amigo cercano ("¡Hola, querido Mateo!") y a la directora de la escuela ("Estimada Directora")?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 113 a la 115) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Libro de texto gratuito SEP asignado, Marcatextos de colores, Cuaderno del alumno, Pizarrón
 - **📄 Entregable de la Sesión:** 📄 Ficha de Trabajo #2: Esquema rotulado con las partes del encabezado y plantilla de práctica de saludos formales e informales.
 
 ### 📌 SESIÓN 3 (50 minutos): El Cuerpo de la Carta: Expresión de ideas, anécdotas y sentimientos con claridad
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Activación "El Teléfono Descompuesto de las Emociones". Reflexión sobre cómo evitar confusiones al escribir lo que sentimos y pensamos.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Taller de redacción del cuerpo del mensaje. Los alumnos organizan sus ideas respondiendo a 3 preguntas: 1) ¿Por qué te escribo?, 2) ¿Qué anécdota o noticia quiero contarte?, y 3) ¿Qué deseo preguntarte? Escriben su primer borrador manuscrito en hojas de raya.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Lectura en voz baja en parejas para verificar que el mensaje se entienda con claridad. Autoevaluación del párrafo principal.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Cómo redactamos nuestras vivencias para que la persona que lea la carta se emocione o sonría?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Cómo redactamos nuestras vivencias para que la persona que lea la carta se emocione o sonría?
   2. ¿Qué signos de puntuación nos ayudan a separar las ideas y que el texto no se sienta amontonado?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 114 a la 116) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Hojas de trabajo pautadas, Lápiz y goma, Tarjetas de conectores textuales (además, también, por eso)
 - **📄 Entregable de la Sesión:** 📄 Borrador Parcial #1: Redacción manuscrita del cuerpo de la carta con al menos dos párrafos organizados.
 
 ### 📌 SESIÓN 4 (50 minutos): Despedida, Firma y Posdata: El cierre afectuoso y formal del texto epistolar
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Lectura compartida de distintas despedidas de cartas literarias famosas ("Con todo mi cariño", "Atentamente", "Se despide tu amigo").
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Los alumnos completan el cierre de su carta agregando una despedida adecuada a su destinatario, su firma o nombre completo y una Posdata (P.D.) con un detalle especial o sorpresa. Ensamblan el borrador completo (encabezado + cuerpo + cierre).
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Exposición mural de cartas modelo en el salón. Felicitación colectiva por completar el primer texto integral.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Para qué se utiliza la Posdata (P.D.) y en qué momento es útil agregarla?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Para qué se utiliza la Posdata (P.D.) y en qué momento es útil agregarla?
   2. ¿Qué tipo de despedida transmite respeto y cuál transmite cariño familiar?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 115 a la 117) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Cuaderno de trabajo, Tiras de papel con fórmulas de despedida, Lápiz y colores
 - **📄 Entregable de la Sesión:** 📄 Borrador Completo #1: Carta íntegra con sus 6 componentes (Lugar/Fecha, Destinatario, Saludo, Cuerpo, Despedida y Firma).
 
 ### 📌 SESIÓN 5 (50 minutos): El Arte del Sobre Postal: Rotulación de Remitente, Destinatario, Código Postal y Estampillas
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Presentación de sobres postales y explicación de la regla de oro: ¿Dónde va el Remitente (quien envía) y dónde el Destinatario (quien recibe)?
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Taller de diseño y rotulación de sobres. Los alumnos elaboran o decoran su propio sobre tamaño carta. Escriben con letra clara el nombre y domicilio escolar del destinatario al frente y sus propios datos al reverso. Crean y colorean una estampilla postal artística con un símbolo escolar.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Revisión cruzada en parejas: "¿El cartero sabrá exactamente a qué salón o persona llevar este sobre?".
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué sucedería si intercambiamos de lugar el remitente y el destinatario en un sobre postal?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué sucedería si intercambiamos de lugar el remitente y el destinatario en un sobre postal?
   2. ¿Por qué las estampillas postales tienen ilustraciones culturales y artísticas de nuestro país?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 117 a la 119) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Sobres de papel bond o manila, Hojas de colores y pegamento, Plumines finos, Sellos decorativos
 - **📄 Entregable de la Sesión:** 📄 Producto Parcial: Sobre postal rotulado correctamente con datos de remitente/destinatario y estampilla original diseñada.
 
 ### 📌 SESIÓN 6 (50 minutos): Construcción del Buzón Comunitario: Trabajo manual colaborativo con cartón reciclado
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Organización de comisiones de trabajo para el montaje del gran "Buzón Postal de la Escuela" (diseño, pintura, rotulación y ranura de depósito).
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Trabajo colaborativo en estaciones: 1) Pintura y forrado de la caja con color rojo/azul institucional, 2) Creación del letrero "Buzón Escolar de la Amistad", 3) Rotulación de instrucciones de uso para la comunidad escolar, y 4) Elaboración de banderines decorativos.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Instalación simbólica del buzón en el aula. Prueba de depósito de los primeros mensajes de muestra.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Cómo logramos que el buzón sea visible, resistente y llamativo para toda la comunidad escolar?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Cómo logramos que el buzón sea visible, resistente y llamativo para toda la comunidad escolar?
   2. ¿Qué valores como el respeto y la confidencialidad debemos cuidar al manejar la correspondencia ajena?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 118 a la 120) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Caja de cartón grande reciclada, Pinturas acrílicas no tóxicas, pinceles y papel kraft, Tijeras y cinta adhesiva
 - **📄 Entregable de la Sesión:** 📦 Producto Colectivo: Buzón postal comunitario terminado, rotulado y funcional para la recolección de cartas.
 
 ### 📌 SESIÓN 7 (50 minutos): Taller de Corrección Epistolar: Coevaluación con "Lentes de Revisor" y Cuidado Ortográfico
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Dinámica "Los Lentes del Revisor". Explicación de la lista de cotejo: mayúsculas al inicio, puntos finales, claridad y caligrafía legible.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Intercambio de borradores entre compañeros. Con notas adhesivas suaves (post-its), cada revisor señala 2 aspectos hermosos del mensaje y 1 sugerencia para mejorar la ortografía o el trazo de las letras. El docente acompaña a quienes requieran apoyo.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Devolución afectuosa de cartas con comentarios positivos: "Tu carta me hizo sonreír porque...".
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Por qué revisar nuestro texto con ayuda de un compañero hace que el mensaje final sea mucho más claro y emotivo?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Por qué revisar nuestro texto con ayuda de un compañero hace que el mensaje final sea mucho más claro y emotivo?
   2. ¿Qué palabras corregimos para que nuestro destinatario entienda todo sin dificultad?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 119 a la 121) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Lista de cotejo de coevaluación, Notas adhesivas de colores, Borradores de las cartas
 - **📄 Entregable de la Sesión:** 📄 Ficha de Coevaluación: Lista de cotejo completada con retroalimentación entre pares y observaciones del docente.
 
 ### 📌 SESIÓN 8 (50 minutos): Versión Final Manuscrita: Caligrafía cuidada en papel carta, ensobrado y sellado postal
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Presentación del papel especial para la versión final y recordatorio del cuidado en los márgenes, sangría y limpieza.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Sesión intensiva de escritura de la versión final en papel membretado artesanalmente. Los alumnos aplican todas las correcciones, agregan ilustraciones en los márgenes, doblan la carta en tres partes iguales, la introducen en su sobre y la sellan con un sticker o sello postal.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Ceremonia de sellado: Cada alumno muestra su sobre cerrado listo para depositarlo en el buzón comunitario.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Cómo influye una presentación limpia, ordenada y con bonita letra en la persona que va a recibir nuestra carta?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Cómo influye una presentación limpia, ordenada y con bonita letra en la persona que va a recibir nuestra carta?
   2. ¿Qué emoción sientes al tener en tus manos tu carta lista para ser entregada?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 121 a la 123) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Papel especial o decorado para cartas, Lápices de colores y plumas de gel, Sobres terminados, Sellos adhesivos
 - **📄 Entregable de la Sesión:** 📄 Producto Final Individual: Carta definitiva corregida, manuscrita, doblada, ensobrada y sellada.
 
 ### 📌 SESIÓN 9 (50 minutos): El Oficio del Cartero: Ensayo de rutas de reparto postal, gorras y organización de la entrega
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Asignación de roles para la jornada comunitaria: carteros infantiles, clasificadores de correspondencia, recepcionistas y voceros.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Los alumnos elaboran gorras y bolsos de cartero con cartulina y estambre. Simulan el circuito postal: 1) Recolección en el buzón, 2) Clasificación por salones o destinatarios, 3) Ensayo de las palabras de entrega ("¡Buenas noticias! Traigo correspondencia para...").
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Ajuste de tiempos y protocolos de respeto para la entrega formal en la escuela.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué responsabilidad tiene un cartero al custodiar y entregar a tiempo los mensajes de las personas?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué responsabilidad tiene un cartero al custodiar y entregar a tiempo los mensajes de las personas?
   2. ¿Cómo debemos presentarnos amablemente al entregar una carta a un profesor, compañero o padre de familia?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 122 a la 124) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Cartulinas azules o verdes para gorras de cartero, Bolsas de tela o papel kraft, Estambre y tijeras
 - **📄 Entregable de la Sesión:** 📄 Guion de Entrega Postal y distintivos de carteros elaborados por el equipo.
 
 ### 📌 SESIÓN 10 (50 minutos): Jornada del Cartero Escolar: Entrega de correspondencia comunitaria, lectura en voz alta y evaluación
-- **⏱️ Inicio (10 min):**  
+- **⏱️ Inicio (10 min):**
   ⏱️ INICIO (10 min): Palabras de bienvenida a la "Jornada del Cartero Comunitario". Apertura solemne del buzón postal ante la comunidad escolar.
-- **🔬 Desarrollo (30 min):**  
+- **🔬 Desarrollo (30 min):**
   ⏱️ DESARROLLO (30 min): Recorrido de los carteros infantiles entregando las cartas en los salones y a familiares invitados. Momento de lectura compartida: quienes deseen leen fragmentos de sus cartas recibidas en el círculo de diálogo.
-- **🌟 Cierre (10 min):**  
+- **🌟 Cierre (10 min):**
   ⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica formativa de 3 niveles. Firma del "Mural de la Amistad Epistolar" y reflexión sobre lo aprendido.
-- **❓ Preguntas Clave de la Sesión:**  
-  1. ¿Qué caras pusieron las personas al recibir sus cartas escritas con tanto cariño y esfuerzo?  
+- **❓ Preguntas Clave de la Sesión:**
+  1. ¿Qué caras pusieron las personas al recibir sus cartas escritas con tanto cariño y esfuerzo?
   2. ¿Cómo transformó este proyecto nuestra forma de comunicarnos y convivir en la escuela?
 - **📖 Libro de Texto SEP:** Proyectos de Aula 3º Grado (Págs. 123 a la 125) — *Proyecto de Aula: "Las fracciones en la cocina comunitaria" — Fracciones equivalentes, medidas de capacidad y pesos*
 - **📦 Materiales:** Buzón con cartas listas, Rúbricas analíticas impresas, Mural de firmas y compromisos comunitarios

@@ -8,10 +8,10 @@ actualizado: "25 de agosto de 2026"
 
 # 📑 Índice Maestro: Primaria Baja (Fase 3: 1º y 2º)
 
-> **Bóveda Curricular Central:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Central de Conocimiento]]  
-> **Total de Proyectos Curriculares:** 24 planeaciones activas dosificadas  
-> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]  
-> **Última Actualización:** 25 de agosto de 2026  
+> **Bóveda Curricular Central:** [[00_Indice_Maestro_Boveda_Curricular|Bóveda Central de Conocimiento]]
+> **Total de Proyectos Curriculares:** 24 planeaciones activas dosificadas
+> **Docente Titular:** [[Prof_Israel_Lopez_Angeles|Prof. Israel López Ángeles]]
+> **Última Actualización:** 25 de agosto de 2026
 
 ---
 

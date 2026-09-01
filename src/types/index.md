@@ -111,7 +111,7 @@ export interface Group {
   academic_year_id: string;
   name: string; // e.g., "A", "B"
   created_at: string;
-  
+
   level?: string;
   grade?: string;
   student_ids?: string[];
@@ -380,7 +380,7 @@ export interface Mission {
   created_at: string;
   campo_formativo_id?: string;
   pda_ids?: string[];
-  
+
   // Relaciones opcionales cargadas
   subject?: Subject;
   quests?: Quest[];
@@ -528,16 +528,16 @@ export interface PortfolioItem {
   file_type: PortfolioFileType;
   status: PortfolioItemStatus;
   self_reflection?: string;
-  
+
   // Coevaluación (Preparatoria)
   peer_review_score?: number;
   peer_review_comments?: string;
-  
+
   // Metadatos formativos (NEM)
   campos_formativos?: string[];
   pdas?: string[];
   ejes_articuladores?: string[];
-  
+
   // Desglose de XP otorgado
   xp_breakdown?: {
     scientific?: number;
@@ -545,7 +545,7 @@ export interface PortfolioItem {
     collaborative?: number;
     communication?: number;
   };
-  
+
   created_at: string;
   updated_at: string;
   isNewRealtime?: boolean;
@@ -651,23 +651,23 @@ export interface DetailedStudent {
   status: 'activo' | 'inactivo' | 'baja' | 'suspendido';
   previous_school?: string;
   photo_url?: string;
-  
+
   // Contacto
   address?: string;
   phone?: string;
   email?: string;
-  
+
   // Familiares
   father_name?: string;
   mother_name?: string;
   tutor_name?: string;
   emergency_contact_name?: string;
   emergency_contact_phone?: string;
-  
+
   // Médicos
   blood_type?: string;
   medical_notes?: string;
-  
+
   // Académicos
   academic_notes?: string;
   level: 'primaria' | 'secundaria' | 'preparatoria';
@@ -857,7 +857,7 @@ export interface ActivityVote {
  * @typedef {('601' | '603' | '605' | '606' | '608' | '612' | '616' | '621' | '625' | '626')} TaxRegimeCode
  * @description Regímenes fiscales oficiales del SAT (México).
  */
-export type TaxRegimeCode = 
+export type TaxRegimeCode =
   | '601' // General de Ley Personas Morales
   | '603' // Personas Morales con Fines no Lucrativos
   | '605' // Sueldos y Salarios e Ingresos Asimilados a Salarios
@@ -873,7 +873,7 @@ export type TaxRegimeCode =
  * @typedef {('D10' | 'G01' | 'G02' | 'G03' | 'S01' | 'CP01')} CfdiUseCode
  * @description Usos de CFDI oficiales aplicables a servicios educativos y cobranza.
  */
-export type CfdiUseCode = 
+export type CfdiUseCode =
   | 'D10' // Pagos por servicios educativos (colegiaturas) - Deducción personal
   | 'G01' // Adquisición de mercancías
   | 'G02' // Devoluciones, descuentos o bonificaciones
@@ -897,7 +897,7 @@ export interface BillingProfile {
   postal_code: string; // Código Postal Fiscal del emisor/receptor
   cfdi_use: CfdiUseCode | string; // Uso de CFDI (Default: 'D10' para colegiaturas)
   billing_email: string; // Correo de recepción de XML y PDF fiscal
-  
+
   // Domicilio fiscal complementario (opcional)
   street?: string;
   exterior_number?: string;
@@ -905,7 +905,7 @@ export interface BillingProfile {
   neighborhood?: string;
   city?: string;
   state?: string;
-  
+
   is_default: boolean;
   auto_invoice_on_payment?: boolean; // Timbrado automático inmediato al acreditarse el pago
   created_at: string;
@@ -920,7 +920,7 @@ export interface BillingProfile {
  * @typedef {('tuition' | 'enrollment' | 'materials' | 'uniform' | 'cafeteria' | 'extracurricular' | 'exam_fee' | 'other')} InvoiceCategory
  * @description Categoría o concepto del cargo escolar.
  */
-export type InvoiceCategory = 
+export type InvoiceCategory =
   | 'tuition'        // Colegiatura mensual
   | 'enrollment'     // Inscripción o Reinscripción anual
   | 'materials'      // Paquete de libros / materiales didácticos
@@ -948,23 +948,23 @@ export interface Invoice {
   parent_id: string; // references UserProfile (tutor responsable del pago)
   student_id: string; // references Student (alumno al que corresponde el concepto)
   academic_year_id?: string; // references AcademicYear
-  
+
   invoice_number: string; // Folio de control escolar (e.g. "COL-2026-00452")
   concept: string; // Descripción formal (e.g. "Colegiatura Septiembre 2026 - 3º Secundaria")
   category: InvoiceCategory;
-  
+
   // Desglose monetario en moneda local
   subtotal: number;
   discount_amount: number; // Descuento por beca o pronto pago
   surcharge_amount: number; // Recargo por mora o pago extemporáneo
   total_amount: number; // Monto final neto exigible
   currency: string; // "MXN"
-  
+
   issue_date: string; // Fecha de emisión (YYYY-MM-DD)
   due_date: string; // Fecha límite de pago sin recargo (YYYY-MM-DD)
   status: InvoiceStatus;
   paid_at?: string; // Fecha y hora exacta de liquidación
-  
+
   metadata?: Record<string, any>;
   created_at: string;
   updated_at: string;
@@ -981,7 +981,7 @@ export interface Invoice {
  * @typedef {('credit_card' | 'debit_card' | 'spei' | 'bank_transfer' | 'cash_store' | 'direct_debit')} PaymentMethod
  * @description Métodos de pago electrónicos procesados por el proveedor financiero.
  */
-export type PaymentMethod = 
+export type PaymentMethod =
   | 'credit_card'   // Tarjeta de crédito (Visa, Mastercard, AMEX)
   | 'debit_card'    // Tarjeta de débito bancaria
   | 'spei'          // Transferencia electrónica interbancaria SPEI inmediata
@@ -1006,26 +1006,26 @@ export interface PaymentHistoryItem {
   school_id: string;
   invoice_id: string;
   parent_id: string;
-  
+
   amount: number;
   currency: string; // "MXN"
   payment_method: PaymentMethod;
   status: PaymentStatus;
-  
+
   // Abstracción genérica de pasarela financiera (Marca Blanca)
   gateway_provider: string; // "PaymentGateway"
   gateway_transaction_id: string; // Identificador único de transacción del procesador
   gateway_fee?: number; // Comisión de pasarela
   net_amount: number; // Monto neto recibido por el colegio
-  
+
   receipt_number: string; // Folio de recibo de caja institucional
   receipt_url?: string; // URL del comprobante de pago digital
-  
+
   // Datos de Facturación Electrónica SAT (si fue timbrada)
   cfdi_uuid?: string; // Folio Fiscal SAT (UUID 36 caracteres)
   cfdi_xml_url?: string;
   cfdi_pdf_url?: string;
-  
+
   paid_at: string;
   metadata?: Record<string, any>;
   created_at: string;
@@ -1047,11 +1047,11 @@ export interface MagicLink {
   school_id: string;
   parent_id: string;
   invoice_id: string;
-  
+
   expires_at: string; // Timestamp ISO de caducidad (ej. 72 horas)
   is_used: boolean; // Flag de un solo uso
   used_at?: string;
-  
+
   ip_address?: string;
   user_agent?: string;
   metadata?: Record<string, any>;
@@ -1111,7 +1111,7 @@ export interface PaymentWebhookPayload {
  * @typedef {('Preescolar' | 'Primaria' | 'Secundaria' | 'Profesional tecnico' | 'Bachillerato o su equivalente')} IeduEducationLevel
  * @description Niveles educativos oficiales para el Complemento IEDU del SAT.
  */
-export type IeduEducationLevel = 
+export type IeduEducationLevel =
   | 'Preescolar'
   | 'Primaria'
   | 'Secundaria'

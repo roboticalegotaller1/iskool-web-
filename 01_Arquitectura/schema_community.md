@@ -1,12 +1,12 @@
 ---
-tags: [iskool, arquitectura, supabase, comunidad, canvas, rls]
+tags: [iskool, arquitectura, supabase, comunidad, Lienzo Digital, rls]
 archivo_origen: "supabase/migrations/20260812000000_schema_community.sql"
 fecha_creacion: "2026-08-12"
 ---
 
-# Esquema de Comunidad Docente e ISkool Canvas (`schema_community.md`)
+# Esquema de Comunidad Docente e ISkool Lienzo Digital (`schema_community.md`)
 
-Este documento especifica la infraestructura de base de datos diseñada para la función **"ISkool Canvas y Comunidad Docente"**, la cual permite a los profesores compartir, explorar y votar por actividades educativas interactivas creadas directamente en la plataforma o mediante inteligencia artificial.
+Este documento especifica la infraestructura de base de datos diseñada para la función **"ISkool Lienzo Digital y Comunidad Docente"**, la cual permite a los profesores compartir, explorar y votar por actividades educativas interactivas creadas directamente en la plataforma o mediante inteligencia artificial.
 
 ---
 
@@ -73,19 +73,19 @@ Registra los votos emitidos por la comunidad de docentes para prevenir fraudes.
 Ambas tablas tienen habilitado Row Level Security (RLS) para proteger los datos.
 
 ### Políticas en `community_activities`:
-- **SELECT:** `TO authenticated USING (true)`  
+- **SELECT:** `TO authenticated USING (true)`
   *Cualquier usuario autenticado puede explorar las actividades comunitarias.*
-- **INSERT:** `TO authenticated WITH CHECK (auth.uid() = teacher_id)`  
+- **INSERT:** `TO authenticated WITH CHECK (auth.uid() = teacher_id)`
   *Un profesor solo puede publicar actividades asociadas a su propio usuario.*
-- **UPDATE / DELETE:** `TO authenticated USING (auth.uid() = teacher_id)`  
+- **UPDATE / DELETE:** `TO authenticated USING (auth.uid() = teacher_id)`
   *Únicamente el autor de la actividad puede modificarla o eliminarla.*
 
 ### Políticas en `activity_votes`:
-- **SELECT:** `TO authenticated USING (true)`  
+- **SELECT:** `TO authenticated USING (true)`
   *Acceso de lectura a los votos registrados.*
-- **INSERT:** `TO authenticated WITH CHECK (auth.uid() = voter_teacher_id)`  
+- **INSERT:** `TO authenticated WITH CHECK (auth.uid() = voter_teacher_id)`
   *Un usuario solo puede emitir un voto a su propio nombre (`auth.uid()`).*
-- **DELETE:** `TO authenticated USING (auth.uid() = voter_teacher_id)`  
+- **DELETE:** `TO authenticated USING (auth.uid() = voter_teacher_id)`
   *Permite al usuario retirar su propio voto.*
 
 ---
