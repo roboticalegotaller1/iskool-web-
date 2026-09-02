@@ -76,6 +76,36 @@ export const CAMPUSES_SEED: Campus[] = [
     address: 'Campus Digital de Innovación, CDMX',
     phone: '55-8000-TEST',
     created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-test-prep',
+    school_id: 'sch-test-case',
+    name: 'Preparatoria Laboratorio Demo',
+    level: 'preparatoria',
+    grades: ['1º Semestre', '2º Semestre', '3º Semestre', '4º Semestre', '5º Semestre', '6º Semestre'],
+    address: 'Campus Digital de Innovación, CDMX',
+    phone: '55-8000-TEST',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-mont-pri',
+    school_id: 'sch-montessori',
+    name: 'Primaria Montessori del Valle',
+    level: 'primaria',
+    grades: ['1º', '2º', '3º', '4º', '5º', '6º'],
+    address: 'Av. Universidad 1200, Col. Del Valle, CDMX',
+    phone: '55-0000-0000',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-mont-sec',
+    school_id: 'sch-montessori',
+    name: 'Secundaria Montessori del Valle',
+    level: 'secundaria',
+    grades: ['1º', '2º', '3º'],
+    address: 'Av. Universidad 1200, Col. Del Valle, CDMX',
+    phone: '55-0000-0000',
+    created_at: new Date().toISOString()
   }
 ];
 
@@ -638,11 +668,21 @@ export const GROUPS_SEED: Group[] = [
   { id: 'grp-sec-2a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
   { id: 'grp-sec-3a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-3º', level: 'secundaria', grade: '3º', academic_year_id: 'ay-25-26', name: '3ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
 
+  // Grupos Sandbox / Laboratorio Pedagógico
+  { id: 'grp-test-pri-1a', school_id: 'sch-test-case', campus_id: 'cmp-test-pri', campus_name: 'Primaria Laboratorio Demo', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Primaria Demo', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-test-pri-4a', school_id: 'sch-test-case', campus_id: 'cmp-test-pri', campus_name: 'Primaria Laboratorio Demo', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: '4ºA Primaria Demo', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-test-sec-2a', school_id: 'sch-test-case', campus_id: 'cmp-test-sec', campus_name: 'Secundaria Laboratorio Demo', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Secundaria Demo', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-test-prep-4a', school_id: 'sch-test-case', campus_id: 'cmp-test-prep', campus_name: 'Preparatoria Laboratorio Demo', level_grade_id: 'preparatoria-4º', level: 'preparatoria', grade: '4º Semestre', academic_year_id: 'ay-25-26', name: '4º Semestre Prepa Demo', student_ids: [], created_at: new Date().toISOString() },
+
+  // Grupos Montessori del Valle
+  { id: 'grp-mont-pri-1a', school_id: 'sch-montessori', campus_id: 'cmp-mont-pri', campus_name: 'Primaria Montessori del Valle', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Montessori', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-mont-sec-1a', school_id: 'sch-montessori', campus_id: 'cmp-mont-sec', campus_name: 'Secundaria Montessori del Valle', level_grade_id: 'secundaria-1º', level: 'secundaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Secundaria Montessori', student_ids: [], created_at: new Date().toISOString() },
+
   // Aliases de compatibilidad para simulación de estudiantes
-  { id: 'grp-pb-a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
-  { id: 'grp-pa-a', school_id: 'sch-jjr', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: '4ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
-  { id: 'grp-sec-a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
-  { id: 'grp-prep-a', school_id: 'sch-jjr', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-3º', level: 'secundaria', grade: '3º', academic_year_id: 'ay-25-26', name: '3ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() }
+  { id: 'grp-pb-a', school_id: 'sch-jjrosseau', campus_id: 'cmp-pri-jardines', campus_name: 'Primaria Jardines', level_grade_id: 'primaria-1º', level: 'primaria', grade: '1º', academic_year_id: 'ay-25-26', name: '1ºA Jardines', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-pa-a', school_id: 'sch-jjrosseau', campus_id: 'cmp-pri-torres', campus_name: 'Primaria Torres', level_grade_id: 'primaria-4º', level: 'primaria', grade: '4º', academic_year_id: 'ay-25-26', name: '4ºA Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-sec-a', school_id: 'sch-jjrosseau', campus_id: 'cmp-sec-torres', campus_name: 'Secundaria Torres', level_grade_id: 'secundaria-2º', level: 'secundaria', grade: '2º', academic_year_id: 'ay-25-26', name: '2ºA Secundaria Torres', student_ids: [], created_at: new Date().toISOString() },
+  { id: 'grp-prep-a', school_id: 'sch-test-case', campus_id: 'cmp-test-prep', campus_name: 'Preparatoria Laboratorio Demo', level_grade_id: 'preparatoria-4º', level: 'preparatoria', grade: '4º Semestre', academic_year_id: 'ay-25-26', name: '4º Semestre Prepa Demo', student_ids: [], created_at: new Date().toISOString() }
 ];
 
 export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
@@ -2166,6 +2206,54 @@ export const TEACHERS_LIST_SEED: UserProfile[] = [
     assigned_groups: ['Talleres Extracurriculares'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-test-1',
+    first_name: 'Alan',
+    last_name: 'Turing (Demo)',
+    role: 'teacher',
+    email: 'alan.turing@sandbox.iskool.edu.mx',
+    campus_id: 'cmp-test-pri',
+    campus_name: 'Primaria Laboratorio Demo',
+    ai_tokens_consumed: 15400,
+    is_blocked: false,
+    temporary_password: '008805',
+    assigned_subjects: ['Matemáticas', 'Robótica'],
+    assigned_groups: ['1ºA Primaria Demo', '4ºA Primaria Demo'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-test-2',
+    first_name: 'Ada',
+    last_name: 'Lovelace (Demo)',
+    role: 'teacher',
+    email: 'ada.lovelace@sandbox.iskool.edu.mx',
+    campus_id: 'cmp-test-sec',
+    campus_name: 'Secundaria Laboratorio Demo',
+    ai_tokens_consumed: 18200,
+    is_blocked: false,
+    temporary_password: '008805',
+    assigned_subjects: ['Ciencias Naturales', 'Pensamiento Computacional'],
+    assigned_groups: ['2ºA Secundaria Demo'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'usr-teacher-test-3',
+    first_name: 'Carl',
+    last_name: 'Sagan (Demo)',
+    role: 'teacher',
+    email: 'carl.sagan@sandbox.iskool.edu.mx',
+    campus_id: 'cmp-test-prep',
+    campus_name: 'Preparatoria Laboratorio Demo',
+    ai_tokens_consumed: 14600,
+    is_blocked: false,
+    temporary_password: '008805',
+    assigned_subjects: ['Física Cuántica', 'Astronomía'],
+    assigned_groups: ['4º Semestre Prepa Demo'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   }
 ];
 
@@ -2858,8 +2946,8 @@ export const INSTITUTIONS_SEED: import('../types').Institution[] = [
     website: 'https://jjrosseau.edu.mx',
     coordinatorName: 'Lic. Alejandro Valdés',
     campusesCount: 3,
-    studentsCount: 45,
-    teachersCount: 8,
+    studentsCount: 30,
+    teachersCount: 6,
     aiTokensConsumed: 345350,
     currency: 'MXN',
     settings: {
@@ -2871,7 +2959,7 @@ export const INSTITUTIONS_SEED: import('../types').Institution[] = [
       address: 'Calzada de los Filósofos 1712, Col. Del Valle, Ciudad de México',
       phone: '55-4160-8800',
       coordinators: ['Lic. Alejandro Valdés', 'Mtra. Patricia Mendoza'],
-      teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar', 'Prof. Fernando Rangel'],
+      teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar'],
       themeColors: {
         primary: '221 83% 53%',
         secondary: '250 84% 54%',
@@ -2892,9 +2980,9 @@ export const INSTITUTIONS_SEED: import('../types').Institution[] = [
     phone: '55-8000-TEST',
     website: 'https://sandbox.iskool.edu.mx',
     coordinatorName: 'Coordinador Sandbox',
-    campusesCount: 2,
-    studentsCount: 12,
-    teachersCount: 4,
+    campusesCount: 3,
+    studentsCount: 15,
+    teachersCount: 3,
     aiTokensConsumed: 48200,
     currency: 'MXN',
     settings: {
@@ -2906,11 +2994,46 @@ export const INSTITUTIONS_SEED: import('../types').Institution[] = [
       address: 'Campus Digital de Innovación, CDMX',
       phone: '55-8000-TEST',
       coordinators: ['Coordinador Sandbox'],
-      teachers: ['Prof. Israel López (Test)', 'Profa. María Fernández (Test)'],
+      teachers: ['Prof. Alan Turing (Demo)', 'Profa. Ada Lovelace (Demo)', 'Prof. Carl Sagan (Demo)'],
       themeColors: {
         primary: '280 84% 60%',
         secondary: '220 84% 54%',
         accent: '38 92% 50%'
+      }
+    }
+  },
+  {
+    id: 'sch-montessori',
+    name: 'Colegio Montessori del Valle',
+    tagline: 'Educación Viva, Creativa y con Sentido Humano',
+    cct: '09PPR8800M',
+    logoUrl: '',
+    isTestCase: false,
+    status: 'active',
+    createdAt: '2026-02-15T09:00:00.000Z',
+    address: 'Av. Universidad 1200, Col. Del Valle, CDMX',
+    phone: '55-0000-0000',
+    website: 'https://montessoridelvalle.edu.mx',
+    coordinatorName: 'Dirección General Montessori',
+    campusesCount: 2,
+    studentsCount: 0,
+    teachersCount: 1,
+    aiTokensConsumed: 0,
+    currency: 'MXN',
+    settings: {
+      isConfigured: true,
+      name: 'Colegio Montessori del Valle',
+      website: 'https://montessoridelvalle.edu.mx',
+      logoUrl: '',
+      cct: '09PPR8800M',
+      address: 'Av. Universidad 1200, Col. Del Valle, CDMX',
+      phone: '55-0000-0000',
+      coordinators: ['Dirección General Montessori'],
+      teachers: ['Prof. Coordinador Inicial'],
+      themeColors: {
+        primary: '150 70% 45%',
+        secondary: '200 80% 50%',
+        accent: '35 90% 50%'
       }
     }
   }

@@ -75,75 +75,79 @@ export const getSchoolCampuses = (campusesList: Campus[], schoolId: string | nul
   const allCampuses = (campusesList && campusesList.length > 0) ? campusesList : CAMPUSES_SEED;
   if (!schoolId) return allCampuses;
 
-  const filtered = allCampuses.filter(c => {
-    if (c.school_id) return c.school_id === schoolId;
-    if (schoolId === 'sch-jjrosseau') {
-      return !c.name.toLowerCase().includes('montessori') && !c.name.toLowerCase().includes('demo') && !c.name.toLowerCase().includes('laboratorio');
-    }
-    if (schoolId === 'sch-test-case') {
-      return c.name.toLowerCase().includes('demo') || c.name.toLowerCase().includes('laboratorio') || c.id.includes('test');
-    }
-    return false;
-  });
-
-  if (filtered.length === 0) {
-    if (schoolId === 'sch-jjrosseau') {
-      return CAMPUSES_SEED.filter(c => c.school_id === 'sch-jjrosseau');
-    }
-    if (schoolId === 'sch-test-case') {
-      return CAMPUSES_SEED.filter(c => c.school_id === 'sch-test-case');
-    }
+  if (schoolId === 'sch-jjrosseau') {
+    const list = allCampuses.filter(c => c.school_id === 'sch-jjrosseau' || (!c.school_id && (c.name === 'Primaria Jardines' || c.name === 'Primaria Torres' || c.name === 'Secundaria Torres')));
+    if (list.length > 0) return list;
+    return CAMPUSES_SEED.filter(c => c.school_id === 'sch-jjrosseau');
   }
 
-  return filtered;
+  if (schoolId === 'sch-test-case') {
+    const list = allCampuses.filter(c => c.school_id === 'sch-test-case' || c.name.toLowerCase().includes('laboratorio') || c.name.toLowerCase().includes('demo'));
+    if (list.length > 0) return list;
+    return CAMPUSES_SEED.filter(c => c.school_id === 'sch-test-case');
+  }
+
+  return allCampuses.filter(c => c.school_id === schoolId);
 };
 
 export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: string | null, schoolCampuses?: Campus[]): DetailedStudent[] => {
   const allStudents = (studentsList && studentsList.length > 0) ? studentsList : DETAILED_STUDENTS_SEED;
   if (!schoolId) return allStudents;
 
-  const filtered = allStudents.filter(s => {
-    // Si tiene school_id explícito
-    if (s.school_id) {
-      if (s.school_id !== schoolId) return false;
-      if (schoolId === 'sch-jjrosseau') {
-        const isPrepa = s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep');
-        return !isPrepa && (s.level === 'primaria' || s.level === 'secundaria');
+  // 1. Laboratorio Pedagógico & Test Cases (Sandbox)
+  if (schoolId === 'sch-test-case') {
+    return allStudents.filter(s => {
+      if (s.school_id === 'sch-test-case') return true;
+      if (s.school_id && s.school_id !== 'sch-test-case') return false;
+      const isTestCampus = (s.campus_name || '').toLowerCase().includes('demo') || (s.campus_name || '').toLowerCase().includes('laboratorio');
+      const isTestId = s.id.includes('test') || s.id.includes('prep') || s.level === 'preparatoria';
+      return isTestCampus || isTestId;
+    }).map(s => {
+      // Normalizar campus_name para que coincida exactamente con los planteles de Sandbox
+      if (s.campus_name === 'Primaria Laboratorio Demo' || s.campus_name === 'Secundaria Laboratorio Demo' || s.campus_name === 'Preparatoria Laboratorio Demo') {
+        return s;
       }
-      return true;
-    }
+      if (s.level === 'preparatoria' || (s.grade || '').includes('Semestre')) {
+        return { ...s, campus_name: 'Preparatoria Laboratorio Demo', campus_id: 'cmp-test-prep' };
+      }
+      if (s.level === 'secundaria') {
+        return { ...s, campus_name: 'Secundaria Laboratorio Demo', campus_id: 'cmp-test-sec' };
+      }
+      return { ...s, campus_name: 'Primaria Laboratorio Demo', campus_id: 'cmp-test-pri' };
+    });
+  }
 
-    // Colegio Test Case / Demo
-    if (schoolId === 'sch-test-case') {
-      const isTestPrep = s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep');
-      const isTestId = s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo');
-      return isTestPrep || isTestId;
-    }
+  // 2. UP Juan Jacobo Rosseau
+  if (schoolId === 'sch-jjrosseau') {
+    return allStudents.filter(s => {
+      if (s.school_id && s.school_id !== 'sch-jjrosseau') return false;
+      if (s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo') || (s.campus_name || '').toLowerCase().includes('laboratorio')) return false;
+      if (s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep')) return false;
+      return s.level === 'primaria' || s.level === 'secundaria';
+    }).map(s => {
+      if (s.campus_name === 'Primaria Jardines' || s.campus_name === 'Primaria Torres' || s.campus_name === 'Secundaria Torres') {
+        return s;
+      }
+      if (s.level === 'secundaria') {
+        return { ...s, campus_name: 'Secundaria Torres', campus_id: 'cmp-sec-torres' };
+      }
+      const gradeNum = parseInt(s.grade || '1');
+      return {
+        ...s,
+        campus_name: gradeNum >= 4 ? 'Primaria Torres' : 'Primaria Jardines',
+        campus_id: gradeNum >= 4 ? 'cmp-pri-torres' : 'cmp-pri-jardines'
+      };
+    });
+  }
 
-    // UP Juan Jacobo Rosseau: Solo Primaria y Secundaria oficiales
-    if (schoolId === 'sch-jjrosseau') {
-      const isTest = s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test');
-      const isOther = (s.campus_name || '').toLowerCase().includes('montessori') || (s.campus_name || '').toLowerCase().includes('demo');
-      const isPrepa = s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep');
-      return !isTest && !isOther && !isPrepa && (s.level === 'primaria' || s.level === 'secundaria');
-    }
-
-    // Cualquier otra institución
-    if (schoolCampuses && schoolCampuses.length > 0) {
-      return schoolCampuses.some(c => c.name.toLowerCase() === (s.campus_name || '').toLowerCase() || c.id === s.campus_id);
+  // 3. Otros Colegios (Montessori u otros dados de alta)
+  const currentCampuses = schoolCampuses && schoolCampuses.length > 0 ? schoolCampuses : [];
+  return allStudents.filter(s => {
+    if (s.school_id) return s.school_id === schoolId;
+    if (currentCampuses.length > 0) {
+      return currentCampuses.some(c => c.name.toLowerCase() === (s.campus_name || '').toLowerCase() || c.id === s.campus_id);
     }
     return false;
-  });
-
-  return filtered.map(s => {
-    if (s.campus_name && s.campus_name !== 'Primaria Jardines') return s;
-    if (s.level === 'secundaria') return { ...s, campus_name: 'Secundaria Torres' };
-    if (s.level === 'primaria') {
-      const gradeNum = parseInt(s.grade || '1');
-      return { ...s, campus_name: gradeNum >= 4 ? 'Primaria Torres' : 'Primaria Jardines' };
-    }
-    if (s.level === 'preparatoria') return { ...s, campus_name: 'Campus Laboratorio Demo' };
-    return s;
   });
 };
 
@@ -151,49 +155,60 @@ export const getSchoolTeachers = (teachersList: UserProfile[], schoolId: string 
   const allTeachers = (teachersList && teachersList.length > 0) ? teachersList : TEACHERS_LIST_SEED;
   if (!schoolId) return allTeachers;
 
-  const filtered = allTeachers.filter(t => {
-    if (t.school_id) return t.school_id === schoolId;
-    if (schoolId === 'sch-test-case') {
-      return t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || t.last_name.toLowerCase().includes('test') || (t.campus_name || '').toLowerCase().includes('demo');
-    }
-    if (schoolId === 'sch-jjrosseau') {
+  if (schoolId === 'sch-test-case') {
+    const list = allTeachers.filter(t => {
+      if (t.school_id === 'sch-test-case') return true;
+      if (t.school_id && t.school_id !== 'sch-test-case') return false;
+      return t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || (t.campus_name || '').toLowerCase().includes('demo') || (t.campus_name || '').toLowerCase().includes('laboratorio');
+    });
+    if (list.length > 0) return list;
+    return TEACHERS_LIST_SEED.filter(t => t.school_id === 'sch-test-case' || t.id.includes('test'));
+  }
+
+  if (schoolId === 'sch-jjrosseau') {
+    return allTeachers.filter(t => {
+      if (t.school_id && t.school_id !== 'sch-jjrosseau') return false;
       const isTest = t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || t.last_name.toLowerCase().includes('test');
-      const isOther = (t.campus_name || '').toLowerCase().includes('montessori') || (t.campus_name || '').toLowerCase().includes('demo');
+      const isOther = (t.campus_name || '').toLowerCase().includes('montessori') || (t.campus_name || '').toLowerCase().includes('demo') || (t.campus_name || '').toLowerCase().includes('laboratorio');
       return !isTest && !isOther;
-    }
-    if (schoolCampuses && schoolCampuses.length > 0) {
-      return schoolCampuses.some(c => c.name.toLowerCase() === (t.campus_name || '').toLowerCase() || t.campus_name === 'Todos los Planteles');
+    });
+  }
+
+  const currentCampuses = schoolCampuses && schoolCampuses.length > 0 ? schoolCampuses : [];
+  return allTeachers.filter(t => {
+    if (t.school_id) return t.school_id === schoolId;
+    if (currentCampuses.length > 0) {
+      return currentCampuses.some(c => c.name.toLowerCase() === (t.campus_name || '').toLowerCase() || t.campus_name === 'Todos los Planteles');
     }
     return false;
   });
-
-  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
-    return TEACHERS_LIST_SEED;
-  }
-
-  return filtered;
 };
 
 export const getSchoolGroups = (groupsList: Group[], schoolId: string | null, schoolCampuses?: Campus[]): Group[] => {
   const allGroups = (groupsList && groupsList.length > 0) ? groupsList : GROUPS_SEED;
   if (!schoolId) return allGroups;
 
-  const filtered = allGroups.filter(g => {
+  if (schoolId === 'sch-test-case') {
+    return allGroups.filter(g => g.school_id === 'sch-test-case' || g.id.includes('test') || (g.campus_name || '').toLowerCase().includes('demo') || (g.campus_name || '').toLowerCase().includes('laboratorio'));
+  }
+
+  if (schoolId === 'sch-jjrosseau') {
+    return allGroups.filter(g => {
+      if (g.school_id && g.school_id !== 'sch-jjrosseau' && g.school_id !== 'sch-jjr') return false;
+      const isTest = g.id.includes('test') || (g.campus_name || '').toLowerCase().includes('demo') || (g.campus_name || '').toLowerCase().includes('laboratorio');
+      const isOther = (g.campus_name || '').toLowerCase().includes('montessori');
+      return !isTest && !isOther;
+    });
+  }
+
+  const currentCampuses = schoolCampuses && schoolCampuses.length > 0 ? schoolCampuses : [];
+  return allGroups.filter(g => {
     if (g.school_id) return g.school_id === schoolId;
-    if (schoolCampuses && schoolCampuses.length > 0) {
-      return schoolCampuses.some(c => c.name.toLowerCase() === (g.campus_name || '').toLowerCase() || c.id === g.campus_id);
-    }
-    if (schoolId === 'sch-jjrosseau') {
-      return !g.campus_name?.toLowerCase().includes('montessori') && !g.campus_name?.toLowerCase().includes('demo');
+    if (currentCampuses.length > 0) {
+      return currentCampuses.some(c => c.name.toLowerCase() === (g.campus_name || '').toLowerCase() || c.id === g.campus_id);
     }
     return false;
   });
-
-  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
-    return GROUPS_SEED;
-  }
-
-  return filtered;
 };
 
 export const getSchoolSubjects = (subjectsList: Subject[], schoolId: string | null, schoolCampuses?: Campus[]): Subject[] => {

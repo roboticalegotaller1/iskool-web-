@@ -1577,9 +1577,9 @@ export default function SuperUserAdminPage() {
               <h3 className="text-sm font-black text-slate-300 uppercase tracking-wider">Planteles de la Unidad Pedagógica</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {schoolCampuses.map(campus => {
-                  const campusStudents = schoolStudents.filter(s => s.campus_name?.toLowerCase() === campus.name.toLowerCase());
-                  const campusTeachers = schoolTeachers.filter(t => t.campus_name?.toLowerCase() === campus.name.toLowerCase() || t.campus_name === 'Todos los Planteles');
-                  const campusGroups = schoolGroups.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
+                  const campusStudents = schoolStudents.filter(s => s.campus_id === campus.id || s.campus_name?.toLowerCase() === campus.name.toLowerCase());
+                  const campusTeachers = schoolTeachers.filter(t => t.campus_id === campus.id || t.campus_name?.toLowerCase() === campus.name.toLowerCase() || t.campus_name === 'Todos los Planteles');
+                  const campusGroups = schoolGroups.filter(g => g.campus_id === campus.id || g.campus_name?.toLowerCase() === campus.name.toLowerCase());
 
                   return (
                     <div 
