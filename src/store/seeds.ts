@@ -2822,3 +2822,77 @@ export const BILLING_RECORDS_SEED: import('../types').FamilyBillingRecord[] = [
     paidAt: '24 Agosto 2026'
   }
 ];
+
+export const INSTITUTIONS_SEED: import('../types').Institution[] = [
+  {
+    id: 'sch-jjrosseau',
+    name: 'UP Juan Jacobo Rosseau',
+    tagline: 'Red Educativa de Excelencia · Primaria y Secundaria Oficial',
+    cct: '09PPR2026R',
+    logoUrl: '',
+    isTestCase: false,
+    status: 'active',
+    createdAt: '2026-01-15T08:00:00.000Z',
+    address: 'Calzada de los Filósofos 1712, Col. Del Valle, Ciudad de México',
+    phone: '55-4160-8800',
+    website: 'https://jjrosseau.edu.mx',
+    coordinatorName: 'Lic. Alejandro Valdés',
+    campusesCount: 3,
+    studentsCount: 45,
+    teachersCount: 8,
+    aiTokensConsumed: 345350,
+    currency: 'MXN',
+    settings: {
+      isConfigured: true,
+      name: 'UP Juan Jacobo Rosseau',
+      website: 'https://jjrosseau.edu.mx',
+      logoUrl: '',
+      cct: '09PPR2026R',
+      address: 'Calzada de los Filósofos 1712, Col. Del Valle, Ciudad de México',
+      phone: '55-4160-8800',
+      coordinators: ['Lic. Alejandro Valdés', 'Mtra. Patricia Mendoza'],
+      teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar', 'Prof. Fernando Rangel'],
+      themeColors: {
+        primary: '221 83% 53%',
+        secondary: '250 84% 54%',
+        accent: '142 71% 45%'
+      }
+    }
+  },
+  {
+    id: 'sch-test-case',
+    name: 'Laboratorio Pedagógico & Test Cases',
+    tagline: 'Entorno de Pruebas Aislado con Alumnos y Profesores de Demostración',
+    cct: '09TEST2026X',
+    logoUrl: '',
+    isTestCase: true,
+    status: 'active',
+    createdAt: '2026-02-01T10:00:00.000Z',
+    address: 'Campus Digital de Innovación, CDMX',
+    phone: '55-8000-TEST',
+    website: 'https://sandbox.iskool.edu.mx',
+    coordinatorName: 'Coordinador Sandbox',
+    campusesCount: 2,
+    studentsCount: 12,
+    teachersCount: 4,
+    aiTokensConsumed: 48200,
+    currency: 'MXN',
+    settings: {
+      isConfigured: true,
+      name: 'Laboratorio Pedagógico & Test Cases',
+      website: 'https://sandbox.iskool.edu.mx',
+      logoUrl: '',
+      cct: '09TEST2026X',
+      address: 'Campus Digital de Innovación, CDMX',
+      phone: '55-8000-TEST',
+      coordinators: ['Coordinador Sandbox'],
+      teachers: ['Prof. Israel López (Test)', 'Profa. María Fernández (Test)'],
+      themeColors: {
+        primary: '280 84% 60%',
+        secondary: '220 84% 54%',
+        accent: '38 92% 50%'
+      }
+    }
+  }
+];
+

@@ -54,8 +54,30 @@ export interface School {
   cct?: string; // Clave de Centro de Trabajo (SEP)
   address?: string;
   phone?: string;
+  logoUrl?: string;
   campuses?: Campus[];
   created_at: string;
+}
+
+export interface Institution {
+  id: string;
+  name: string;
+  tagline?: string;
+  cct: string;
+  logoUrl?: string;
+  isTestCase?: boolean;
+  status: 'active' | 'inactive' | 'trial';
+  createdAt: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  coordinatorName?: string;
+  campusesCount: number;
+  studentsCount: number;
+  teachersCount: number;
+  aiTokensConsumed: number;
+  currency?: string;
+  settings?: SchoolSettings;
 }
 
 /**
@@ -717,6 +739,7 @@ export interface DetailedStudent {
   medical_notes?: string;
   
   // Académicos
+  school_id?: string;
   academic_notes?: string;
   level: 'primaria' | 'secundaria' | 'preparatoria';
   grade: string;

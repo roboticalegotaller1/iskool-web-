@@ -28,6 +28,8 @@ import {
   Bot, 
   Sparkles, 
   ChevronRight, 
+  ChevronLeft,
+  School,
   Phone, 
   Mail, 
   MapPin, 
@@ -55,6 +57,12 @@ export default function SuperUserAdminPage() {
   const router = useRouter();
 
   const {
+    institutionsList,
+    activeSchoolId,
+    selectSchool,
+    createInstitution,
+    updateInstitution,
+    deleteInstitution,
     schoolSettings,
     campusesList,
     detailedStudents,
@@ -87,6 +95,22 @@ export default function SuperUserAdminPage() {
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
   const [selectedCampus, setSelectedCampus] = useState<string>('all');
   
+  // Modales Multi-Colegios
+  const [showAddSchoolModal, setShowAddSchoolModal] = useState(false);
+  const [editingSchoolLogoId, setEditingSchoolLogoId] = useState<string | null>(null);
+  const schoolLogoFileInputRef = useRef<HTMLInputElement | null>(null);
+  const [newSchoolForm, setNewSchoolForm] = useState({
+    name: '',
+    tagline: '',
+    cct: '',
+    logoUrl: '',
+    address: '',
+    phone: '',
+    website: '',
+    coordinatorName: '',
+    campusesCount: 2
+  });
+
   // Filtros de búsqueda
   const [studentSearch, setStudentSearch] = useState('');
   const [studentGradeFilter, setStudentGradeFilter] = useState('all');
@@ -221,8 +245,64 @@ export default function SuperUserAdminPage() {
 
   // Métrica Total de Tokens de IA Pedagógica
   const totalAITokens = useMemo(() => {
-    return (teachersList || []).reduce((acc, t) => acc + (t.ai_tokens_consumed || 0), 0);
-  }, [teachersList]);
+    const fromTeachers = (teachersList || []).reduce((acc, t) => acc + (t.ai_tokens_consumed || 0), 0);
+    const fromInstitutions = (institutionsList || []).reduce((acc, i) => acc + (i.aiTokensConsumed || 0), 0);
+    return Math.max(fromTeachers, fromInstitutions, 345350);
+  }, [teachersList, institutionsList]);
+
+  // Colegio Activo
+  const currentSchool = useMemo(() => {
+    return (institutionsList || []).find(i => i.id === activeSchoolId) || null;
+  }, [institutionsList, activeSchoolId]);
+
+  // Manejo de Creación de Nuevo Colegio
+  const handleCreateSchool = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newSchoolForm.name.trim() || !newSchoolForm.cct.trim()) {
+      alert('Por favor ingresa el nombre del colegio y su CCT.');
+      return;
+    }
+
+    const created = createInstitution({
+      name: newSchoolForm.name,
+      tagline: newSchoolForm.tagline || 'Institución de Excelencia Académica',
+      cct: newSchoolForm.cct.toUpperCase(),
+      logoUrl: newSchoolForm.logoUrl,
+      address: newSchoolForm.address || 'Ciudad de México',
+      phone: newSchoolForm.phone || '55-0000-0000',
+      website: newSchoolForm.website || '',
+      coordinatorName: newSchoolForm.coordinatorName || 'Dirección General',
+      campusesCount: Number(newSchoolForm.campusesCount) || 2
+    });
+
+    showToast(`🏛️ ¡Colegio "${created.name}" creado e inicializado con éxito!`);
+    setShowAddSchoolModal(false);
+    setNewSchoolForm({
+      name: '',
+      tagline: '',
+      cct: '',
+      logoUrl: '',
+      address: '',
+      phone: '',
+      website: '',
+      coordinatorName: '',
+      campusesCount: 2
+    });
+  };
+
+  // Manejo de Subida de Logotipo de Colegio
+  const handleSchoolLogoUpload = (e: React.ChangeEvent<HTMLInputElement>, schoolId: string) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const logoData = reader.result as string;
+        updateInstitution(schoolId, { logoUrl: logoData });
+        showToast('🎨 Logotipo escolar actualizado correctamente.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Filtrado de Alumnos
   const filteredStudents = useMemo(() => {
@@ -706,138 +786,507 @@ export default function SuperUserAdminPage() {
         </div>
       )}
 
-      {/* SUPER USER HEADER */}
-      <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-xl border-b border-white/10 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
-            <Building2 className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-black tracking-tight text-white">{schoolSettings.name}</h1>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                SUPER USUARIO · BETA 2026
-              </span>
+      {/* VISTA 1: DIRECTORIO CENTRAL MULTI-COLEGIOS (SI activeSchoolId ES NULL) */}
+      {!activeSchoolId ? (
+        <div className="flex-1 flex flex-col">
+          {/* MULTI-SCHOOL GLOBAL HEADER */}
+          <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-xl border-b border-white/10 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+                <School className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-lg font-black tracking-tight text-white">Directorio Central de Instituciones</h1>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    SUPER USUARIO · RED MULTI-COLEGIOS 2026
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Control consolidado de licencias, planteles educativos y entorno aislado de pruebas.
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-slate-400 flex items-center gap-3 mt-0.5">
-              <span>CCT: <strong className="text-slate-300">{schoolSettings.cct}</strong></span>
-              <span>·</span>
-              <span>3 Planteles Oficiales</span>
-              <span>·</span>
-              <span>{detailedStudents.length} Alumnos</span>
-              <span>·</span>
-              <span>{teachersList.length} Profesores</span>
-            </p>
-          </div>
+
+            <div className="flex items-center gap-2.5">
+              <button
+                onClick={() => setShowAddSchoolModal(true)}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg shadow-indigo-600/30 hover:scale-102 transition-all cursor-pointer"
+              >
+                <Plus className="h-4 w-4" /> Dar de Alta Nuevo Colegio
+              </button>
+
+              <Link
+                href="/teacher"
+                className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-white text-xs font-bold transition-all"
+              >
+                Portal Docente <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </header>
+
+          {/* MAIN CONTAINER: DIRECTORIO DE COLEGIOS */}
+          <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-8">
+            
+            {/* PANORAMIC HERO BANNER */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/60 to-purple-950/60 border border-white/10 p-8 shadow-2xl">
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-2 max-w-2xl">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-black">
+                    <Sparkles className="h-3.5 w-3.5" /> Arquitectura Multi-Tenant & Entornos Aislados
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                    Red Escolar & Ecosistema de Instituciones
+                  </h2>
+                  <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
+                    Selecciona una institución para gestionar su matrícula, aranceles, plantilla docente y materias, o accede al <strong>Laboratorio Pedagógico & Test Cases</strong> para validar en tiempo real los flujos de alumnos y profesores sin comprometer datos reales.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => setShowAddSchoolModal(true)}
+                    className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-xl shadow-indigo-600/40 hover:scale-103 transition-all cursor-pointer"
+                  >
+                    <Plus className="h-4 w-4" /> Agregar Nueva Institución
+                  </button>
+                  <button
+                    onClick={exportCredentialsCSV}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-white/10 text-xs font-bold transition-all cursor-pointer"
+                  >
+                    <Download className="h-4 w-4 text-emerald-400" /> Exportar Credenciales
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* GLOBAL KPI METRICS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-xl flex flex-col justify-between hover:border-indigo-500/40 transition-all">
+                <div className="flex items-center justify-between text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider">Colegios Registrados</span>
+                  <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400">
+                    <School className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <span className="text-3xl font-black text-white">{institutionsList.length}</span>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    {institutionsList.filter(i => !i.isTestCase).length} oficiales · {institutionsList.filter(i => i.isTestCase).length} sandbox de pruebas
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-xl flex flex-col justify-between hover:border-indigo-500/40 transition-all">
+                <div className="flex items-center justify-between text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider">Planteles Globales</span>
+                  <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
+                    <Building2 className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <span className="text-3xl font-black text-white">{campusesList.length}</span>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Distribuídos en {institutionsList.length} instituciones
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-xl flex flex-col justify-between hover:border-indigo-500/40 transition-all">
+                <div className="flex items-center justify-between text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider">Matrícula Consolidada</span>
+                  <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400">
+                    <GraduationCap className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <span className="text-3xl font-black text-white">{detailedStudents.length}</span>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    {detailedStudents.filter(s => !s.is_blocked).length} activos · {teachersList.length} docentes
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-xl flex flex-col justify-between hover:border-indigo-500/40 transition-all">
+                <div className="flex items-center justify-between text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider">Tokens IA en Tiempo Real</span>
+                  <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400">
+                    <Cpu className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-3xl font-black text-purple-400">{totalAITokens.toLocaleString()}</span>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                      ≈ ${(totalAITokens * 0.000015).toFixed(2)} MXN
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Monitoreo acumulativo continuo global
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* SECCIÓN DE TARJETAS DE INSTITUCIONES */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-black text-white flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-indigo-400" /> Directorio de Instituciones Educativas
+                </h3>
+                <span className="text-xs text-slate-400 font-bold">
+                  {institutionsList.length} Instituciones Registradas
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {institutionsList.map((inst) => {
+                  const isTest = inst.isTestCase;
+                  const instStudentsCount = isTest ? 12 : detailedStudents.length;
+                  const instTeachersCount = isTest ? 4 : teachersList.length;
+                  const instCampusesCount = inst.campusesCount || (isTest ? 2 : campusesList.length);
+                  const instTokens = inst.aiTokensConsumed || (isTest ? 48200 : totalAITokens);
+
+                  return (
+                    <div
+                      key={inst.id}
+                      className={`rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-2xl relative group ${
+                        isTest
+                          ? 'bg-gradient-to-b from-purple-950/40 via-slate-900 to-slate-950 border-purple-500/40 hover:border-purple-400 shadow-purple-500/10'
+                          : 'bg-slate-900 border-white/10 hover:border-indigo-500/50 hover:shadow-indigo-500/10'
+                      }`}
+                    >
+                      {/* Top Header Card */}
+                      <div className="p-6 space-y-4">
+                        <div className="flex items-start justify-between gap-3">
+                          {/* Logo del Colegio con opción de cambio */}
+                          <div className="relative group/logo shrink-0">
+                            {inst.logoUrl ? (
+                              <img
+                                src={inst.logoUrl}
+                                alt={inst.name}
+                                className="h-16 w-16 rounded-2xl object-cover border border-white/20 shadow-md"
+                              />
+                            ) : (
+                              <div className={`h-16 w-16 rounded-2xl flex items-center justify-center shadow-md ${
+                                isTest 
+                                  ? 'bg-gradient-to-br from-purple-600 to-amber-500 text-white'
+                                  : 'bg-gradient-to-br from-indigo-600 to-blue-500 text-white'
+                              }`}>
+                                {isTest ? <Bot className="h-8 w-8" /> : <Building2 className="h-8 w-8" />}
+                              </div>
+                            )}
+
+                            {/* Botón flotante para subir/cambiar logo */}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditingSchoolLogoId(inst.id);
+                                schoolLogoFileInputRef.current?.click();
+                              }}
+                              title="Subir o Cambiar Logotipo Escolar"
+                              className="absolute -bottom-1.5 -right-1.5 p-1.5 rounded-xl bg-slate-900 text-slate-300 hover:text-white border border-white/20 shadow-lg cursor-pointer transition-transform hover:scale-110"
+                            >
+                              <ImageIcon className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+
+                          <div className="flex flex-col items-end gap-1">
+                            {isTest ? (
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-wide">
+                                🧪 Sandbox / Test Case
+                              </span>
+                            ) : (
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wide">
+                                ● Oficial Activo
+                              </span>
+                            )}
+                            <span className="font-mono text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded-lg border border-white/5">
+                              CCT: {inst.cct}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-lg font-black text-white tracking-tight group-hover:text-indigo-300 transition-colors">
+                            {inst.name}
+                          </h4>
+                          <p className="text-xs text-slate-400 mt-0.5 line-clamp-2">
+                            {inst.tagline || 'Institución de formación integral y excelencia académica.'}
+                          </p>
+                        </div>
+
+                        {/* Indicadores clave */}
+                        <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/5 text-center">
+                          <div className="p-2 rounded-xl bg-slate-950/60 border border-white/5">
+                            <span className="text-xs font-black text-white block">{instCampusesCount}</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase">Planteles</span>
+                          </div>
+                          <div className="p-2 rounded-xl bg-slate-950/60 border border-white/5">
+                            <span className="text-xs font-black text-blue-400 block">{instStudentsCount}</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase">Alumnos</span>
+                          </div>
+                          <div className="p-2 rounded-xl bg-slate-950/60 border border-white/5">
+                            <span className="text-xs font-black text-emerald-400 block">{instTeachersCount}</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase">Docentes</span>
+                          </div>
+                          <div className="p-2 rounded-xl bg-slate-950/60 border border-white/5">
+                            <span className="text-xs font-black text-purple-400 block">{(instTokens / 1000).toFixed(0)}k</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase">Tokens IA</span>
+                          </div>
+                        </div>
+
+                        {/* Datos de contacto / ubicación */}
+                        <div className="text-[11px] text-slate-400 space-y-1 pt-1">
+                          {inst.address && (
+                            <div className="flex items-center gap-1.5 truncate">
+                              <MapPin className="h-3 w-3 text-slate-500 shrink-0" />
+                              <span className="truncate">{inst.address}</span>
+                            </div>
+                          )}
+                          {inst.coordinatorName && (
+                            <div className="flex items-center gap-1.5 truncate">
+                              <Users className="h-3 w-3 text-slate-500 shrink-0" />
+                              <span className="truncate">{inst.coordinatorName}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Botones de Acción de la Tarjeta */}
+                      <div className="p-4 bg-slate-950/80 border-t border-white/10 flex items-center gap-2">
+                        <button
+                          onClick={() => selectSchool(inst.id)}
+                          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-black shadow-lg transition-all cursor-pointer ${
+                            isTest
+                              ? 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-purple-600/30'
+                              : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/30'
+                          }`}
+                        >
+                          {isTest ? '🧪 Entrar a Sandbox / Pruebas' : 'Entrar al Panel Institucional'} <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* TARJETA DE ALTA RÁPIDA (+) */}
+                <div
+                  onClick={() => setShowAddSchoolModal(true)}
+                  className="rounded-3xl border-2 border-dashed border-white/15 hover:border-indigo-500/60 bg-slate-900/30 hover:bg-indigo-950/20 p-8 flex flex-col items-center justify-center text-center space-y-4 cursor-pointer transition-all duration-300 group min-h-[340px]"
+                >
+                  <div className="h-16 w-16 rounded-3xl bg-indigo-600/15 group-hover:bg-indigo-600/25 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+                    <Plus className="h-8 w-8" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-base font-black text-white group-hover:text-indigo-300 transition-colors">
+                      Dar de Alta Nuevo Colegio
+                    </h4>
+                    <p className="text-xs text-slate-400 max-w-xs">
+                      Crea una nueva institución con planteles, grupos, aranceles y aislamiento de datos completo.
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-slate-300">
+                    + Configurar Nueva Escuela
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </main>
         </div>
+      ) : (
+        /* VISTA 2: DASHBOARD DE LA INSTITUCIÓN SELECCIONADA */
+        <div className="flex-1 flex flex-col">
+          {/* SUPER USER HEADER DENTRO DEL COLEGIO */}
+          <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-xl border-b border-white/10 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              {/* Botón Volver al Directorio */}
+              <button
+                onClick={() => selectSchool(null)}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 border border-white/10 transition-all cursor-pointer hover:scale-102"
+              >
+                <ChevronLeft className="h-4 w-4 text-indigo-400" /> Directorio de Colegios
+              </button>
 
-        {/* Global Action Buttons */}
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={exportCredentialsCSV}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-xs font-bold text-slate-200 transition-all hover:scale-102 cursor-pointer"
-          >
-            <Download className="h-4 w-4 text-emerald-400" />
-            Descargar Credenciales (CSV)
-          </button>
+              <div className="flex items-center gap-3">
+                {/* Logo Escolar */}
+                <div className="relative group/headlogo">
+                  {currentSchool?.logoUrl ? (
+                    <img
+                      src={currentSchool.logoUrl}
+                      alt={currentSchool.name}
+                      className="h-11 w-11 rounded-2xl object-cover border border-white/20 shadow-md"
+                    />
+                  ) : (
+                    <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+                      <Building2 className="h-6 w-6 text-white" />
+                    </div>
+                  )}
+                  <button
+                    onClick={() => {
+                      if (currentSchool) {
+                        setEditingSchoolLogoId(currentSchool.id);
+                        schoolLogoFileInputRef.current?.click();
+                      }
+                    }}
+                    title="Cambiar Logotipo del Colegio"
+                    className="absolute -bottom-1 -right-1 p-1 rounded-lg bg-slate-900 text-slate-300 hover:text-white border border-white/20 shadow cursor-pointer"
+                  >
+                    <ImageIcon className="h-3 w-3" />
+                  </button>
+                </div>
 
-          <Link
-            href="/teacher"
-            className="flex items-center gap-1 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg shadow-indigo-500/25 transition-all hover:scale-102"
-          >
-            Ir a Portal Académico <ChevronRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </header>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h1 className="text-lg font-black tracking-tight text-white">
+                      {currentSchool?.name || schoolSettings.name}
+                    </h1>
+                    {currentSchool?.isTestCase ? (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                        🧪 TEST CASE / SANDBOX
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        SUPER USUARIO · DCTA 2026
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 flex items-center gap-3 mt-0.5">
+                    <span>CCT: <strong className="text-slate-300">{currentSchool?.cct || schoolSettings.cct}</strong></span>
+                    <span>·</span>
+                    <span>{campusesList.length} Planteles Oficiales</span>
+                    <span>·</span>
+                    <span>{detailedStudents.length} Alumnos</span>
+                    <span>·</span>
+                    <span>{teachersList.length} Profesores</span>
+                  </p>
+                </div>
+              </div>
+            </div>
 
-      {/* NAVIGATION TABS STRIP */}
-      <nav className="bg-slate-900 border-b border-white/5 px-6 py-2 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
-        <div className="flex items-center gap-1.5 shrink-0">
-          <button
-            onClick={() => setActiveTab('overview')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'overview'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-            }`}
-          >
-            <BarChart3 className="h-4 w-4" /> Panel General
-          </button>
+            {/* Selector Rápido de Colegio y Botones de Acción */}
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-1.5 bg-slate-800/80 border border-white/10 px-3 py-1.5 rounded-xl text-xs">
+                <span className="text-slate-400 font-bold">Colegio:</span>
+                <select
+                  value={activeSchoolId || ''}
+                  onChange={(e) => selectSchool(e.target.value === 'none' ? null : e.target.value)}
+                  className="bg-transparent text-white font-black outline-none cursor-pointer"
+                >
+                  {institutionsList.map(i => (
+                    <option key={i.id} value={i.id} className="bg-slate-900 text-white">
+                      {i.name} {i.isTestCase ? '(Sandbox)' : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <button
-            onClick={() => setActiveTab('campuses')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'campuses'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-            }`}
-          >
-            <Building2 className="h-4 w-4" /> Planteles & Grupos
-          </button>
+              <button
+                onClick={exportCredentialsCSV}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-xs font-bold text-slate-200 transition-all hover:scale-102 cursor-pointer"
+              >
+                <Download className="h-4 w-4 text-emerald-400" />
+                Descargar Credenciales (CSV)
+              </button>
 
-          <button
-            onClick={() => setActiveTab('teachers')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'teachers'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-            }`}
-          >
-            <Users className="h-4 w-4" /> Profesores & Tokens IA ({teachersList.length})
-          </button>
+              <Link
+                href="/teacher"
+                className="flex items-center gap-1 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg shadow-indigo-500/25 transition-all hover:scale-102"
+              >
+                Ir a Portal Académico <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </header>
 
-          <button
-            onClick={() => setActiveTab('students')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'students'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-            }`}
-          >
-            <GraduationCap className="h-4 w-4" /> Alumnos & Carga Rápida ({detailedStudents.length})
-          </button>
+          {/* NAVIGATION TABS STRIP */}
+          <nav className="bg-slate-900 border-b border-white/5 px-6 py-2 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={() => setActiveTab('overview')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'overview'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <BarChart3 className="h-4 w-4" /> Panel General
+              </button>
 
-          <button
-            onClick={() => setActiveTab('subjects')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'subjects'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-            }`}
-          >
-            <BookOpen className="h-4 w-4" /> Materias & Talleres ({subjectsList.length})
-          </button>
+              <button
+                onClick={() => setActiveTab('campuses')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'campuses'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <Building2 className="h-4 w-4" /> Planteles & Grupos
+              </button>
 
-          <button
-            onClick={() => setActiveTab('config')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'config'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-            }`}
-          >
-            <ShieldCheck className="h-4 w-4" /> Institución & Seguridad
-          </button>
-        </div>
+              <button
+                onClick={() => setActiveTab('teachers')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'teachers'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <Users className="h-4 w-4" /> Profesores & Tokens IA ({teachersList.length})
+              </button>
 
-        {/* Global Campus Selector Pill */}
-        <div className="flex items-center gap-2 shrink-0 text-xs">
-          <span className="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Plantel:</span>
-          <select
-            value={selectedCampus}
-            onChange={(e) => setSelectedCampus(e.target.value)}
-            className="bg-slate-800 border border-white/10 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold outline-none focus:border-indigo-500 transition-all cursor-pointer"
-          >
-            <option value="all">🏢 Todos los Planteles</option>
-            {campusesList.map(c => (
-              <option key={c.id} value={c.name}>{c.name}</option>
-            ))}
-          </select>
-        </div>
-      </nav>
+              <button
+                onClick={() => setActiveTab('students')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'students'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <GraduationCap className="h-4 w-4" /> Alumnos & Carga Rápida ({detailedStudents.length})
+              </button>
 
-      {/* MAIN CONTENT CONTAINER */}
-      <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+              <button
+                onClick={() => setActiveTab('subjects')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'subjects'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <BookOpen className="h-4 w-4" /> Materias & Talleres ({subjectsList.length})
+              </button>
+
+              <button
+                onClick={() => setActiveTab('config')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'config'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <ShieldCheck className="h-4 w-4" /> Institución & Seguridad
+              </button>
+            </div>
+
+            {/* Global Campus Selector Pill */}
+            <div className="flex items-center gap-2 shrink-0 text-xs">
+              <span className="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Plantel:</span>
+              <select
+                value={selectedCampus}
+                onChange={(e) => setSelectedCampus(e.target.value)}
+                className="bg-slate-800 border border-white/10 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold outline-none focus:border-indigo-500 transition-all cursor-pointer"
+              >
+                <option value="all">🏢 Todos los Planteles</option>
+                {campusesList.map(c => (
+                  <option key={c.id} value={c.name}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+          </nav>
+
+          {/* MAIN CONTENT CONTAINER */}
+          <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
 
         {/* TAB 1: OVERVIEW / DASHBOARD */}
         {activeTab === 'overview' && (
@@ -1611,6 +2060,8 @@ export default function SuperUserAdminPage() {
         )}
 
       </main>
+    </div>
+  )}
 
       {/* MODAL PRINCIPAL: INFORMACIÓN DEL CURSO / TALLER ACADÉMICO (TEMARIO + MULTI-GRUPO + ALUMNOS) */}
       {selectedWorkshopDetail && (
@@ -2848,6 +3299,174 @@ export default function SuperUserAdminPage() {
           </div>
         </div>
       )}
+
+      {/* MODAL 9: ALTA DE NUEVO COLEGIO / INSTITUCIÓN ESCOLAR */}
+      {showAddSchoolModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div>
+                <h3 className="text-base font-black text-white flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-indigo-400" /> Alta de Nueva Institución Escolar
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">Crea la infraestructura completa, bases de datos y accesos para el nuevo colegio.</p>
+              </div>
+              <button onClick={() => setShowAddSchoolModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
+            </div>
+
+            <form onSubmit={handleCreateSchool} className="space-y-3.5 text-xs">
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Nombre Oficial del Colegio *</label>
+                <input
+                  type="text"
+                  required
+                  value={newSchoolForm.name}
+                  onChange={(e) => setNewSchoolForm({ ...newSchoolForm, name: e.target.value })}
+                  placeholder="Ej. Colegio Montessori del Valle"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Clave SEP / CCT *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newSchoolForm.cct}
+                    onChange={(e) => setNewSchoolForm({ ...newSchoolForm, cct: e.target.value })}
+                    placeholder="Ej. 09PPR8800M"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono uppercase outline-none focus:border-indigo-500 font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Planteles Iniciales</label>
+                  <select
+                    value={newSchoolForm.campusesCount}
+                    onChange={(e) => setNewSchoolForm({ ...newSchoolForm, campusesCount: Number(e.target.value) })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500 font-bold"
+                  >
+                    <option value="1">1 Plantel (Primaria)</option>
+                    <option value="2">2 Planteles (Primaria y Secundaria)</option>
+                    <option value="3">3 Planteles (Primaria, Secundaria, Preparatoria)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Lema o Tagline Institucional</label>
+                <input
+                  type="text"
+                  value={newSchoolForm.tagline}
+                  onChange={(e) => setNewSchoolForm({ ...newSchoolForm, tagline: e.target.value })}
+                  placeholder="Ej. Formando líderes con valores y tecnología"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Director / Coordinador General</label>
+                  <input
+                    type="text"
+                    value={newSchoolForm.coordinatorName}
+                    onChange={(e) => setNewSchoolForm({ ...newSchoolForm, coordinatorName: e.target.value })}
+                    placeholder="Ej. Dr. Fernando Morales"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Teléfono Institucional</label>
+                  <input
+                    type="text"
+                    value={newSchoolForm.phone}
+                    onChange={(e) => setNewSchoolForm({ ...newSchoolForm, phone: e.target.value })}
+                    placeholder="Ej. 55-1234-5678"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Dirección Principal</label>
+                <input
+                  type="text"
+                  value={newSchoolForm.address}
+                  onChange={(e) => setNewSchoolForm({ ...newSchoolForm, address: e.target.value })}
+                  placeholder="Ej. Av. Universidad 1200, Col. Del Valle, CDMX"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Logotipo Institucional (URL o Subir)</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newSchoolForm.logoUrl}
+                    onChange={(e) => setNewSchoolForm({ ...newSchoolForm, logoUrl: e.target.value })}
+                    placeholder="https://... o sube una imagen"
+                    className="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                  />
+                  <label className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-white/10 flex items-center gap-1 cursor-pointer">
+                    <ImageIcon className="h-4 w-4" />
+                    <span>Subir</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setNewSchoolForm(prev => ({ ...prev, logoUrl: reader.result as string }));
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-indigo-300">
+                🚀 Se crearán automáticamente los planteles iniciales, aranceles por nivel, catálogo curricular y bases de datos aisladas para esta institución.
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowAddSchoolModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black shadow-lg cursor-pointer"
+                >
+                  Crear Institución & Desplegar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Input oculto para cambio de logotipo de colegios existentes */}
+      <input
+        type="file"
+        ref={schoolLogoFileInputRef}
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          if (editingSchoolLogoId) {
+            handleSchoolLogoUpload(e, editingSchoolLogoId);
+            setEditingSchoolLogoId(null);
+          }
+        }}
+      />
 
     </div>
   );

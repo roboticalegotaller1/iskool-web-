@@ -374,6 +374,19 @@ export const Header: React.FC = () => {
               >
                 Coordinador
               </Link>
+              {user?.role === 'admin' && (
+                <Link
+                  href="/admin"
+                  aria-label="Directorio Central de Colegios"
+                  className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                    pathname.startsWith('/admin')
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
+                  }`}
+                >
+                  Colegios
+                </Link>
+              )}
             </div>
           )}
 

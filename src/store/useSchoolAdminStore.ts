@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile, Campus, TuitionPricing, FamilyBillingRecord } from '../types';
-import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHERS_LIST_SEED, SUBJECTS_SEED, CAMPUSES_SEED, TUITION_PRICINGS_SEED, BILLING_RECORDS_SEED } from './seeds';
+import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile, Campus, TuitionPricing, FamilyBillingRecord, Institution } from '../types';
+import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHERS_LIST_SEED, SUBJECTS_SEED, CAMPUSES_SEED, TUITION_PRICINGS_SEED, BILLING_RECORDS_SEED, INSTITUTIONS_SEED } from './seeds';
 import { useStudentStore } from './useStudentStore';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -68,6 +68,8 @@ const mapGroupIdToUuid = (id: string): string => {
 };
 
 interface SchoolAdminStoreState {
+  institutionsList: Institution[];
+  activeSchoolId: string | null; // null = Directorio General Multi-Colegios
   schoolSettings: SchoolSettings;
   campusesList: Campus[];
   detailedStudents: DetailedStudent[];
@@ -80,6 +82,23 @@ interface SchoolAdminStoreState {
   tuitionPricings: TuitionPricing[];
   billingRecords: FamilyBillingRecord[];
   syncError: string | null;
+
+  // Multi-School Actions
+  selectSchool: (schoolId: string | null) => void;
+  createInstitution: (instData: {
+    name: string;
+    tagline?: string;
+    cct: string;
+    logoUrl?: string;
+    address?: string;
+    phone?: string;
+    website?: string;
+    coordinatorName?: string;
+    campusesCount?: number;
+    initialPlanteles?: Array<{ name: string; level: 'primaria' | 'secundaria' | 'preparatoria'; address?: string }>;
+  }) => Institution;
+  updateInstitution: (schoolId: string, data: Partial<Institution>) => void;
+  deleteInstitution: (schoolId: string) => void;
 
   // Financial and Tuition Actions
   updateTuitionPricing: (levelId: string, data: Partial<TuitionPricing>) => void;
@@ -158,6 +177,8 @@ let saveSettingsTimeout: NodeJS.Timeout | null = null;
 export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   persist(
     (set, get) => ({
+      institutionsList: INSTITUTIONS_SEED,
+      activeSchoolId: null,
       schoolSettings: {
         isConfigured: true,
         name: 'UP Juan Jacobo Rosseau',
@@ -185,6 +206,127 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       tuitionPricings: TUITION_PRICINGS_SEED,
       billingRecords: BILLING_RECORDS_SEED,
       syncError: null,
+
+      selectSchool: (schoolId) => {
+        set((state) => {
+          if (!schoolId) {
+            return { activeSchoolId: null };
+          }
+          const inst = (state.institutionsList || []).find(i => i.id === schoolId);
+          if (inst && inst.settings) {
+            applyThemeCssVariables(inst.settings.themeColors);
+            return {
+              activeSchoolId: schoolId,
+              schoolSettings: inst.settings
+            };
+          }
+          return { activeSchoolId: schoolId };
+        });
+      },
+
+      createInstitution: (instData) => {
+        const newId = `sch-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
+        const initialCampusesCount = instData.initialPlanteles?.length || instData.campusesCount || 2;
+        
+        const newInstitution: Institution = {
+          id: newId,
+          name: instData.name.trim(),
+          tagline: instData.tagline || 'Institución Educativa Oficial',
+          cct: instData.cct.trim(),
+          logoUrl: instData.logoUrl || '',
+          isTestCase: false,
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          address: instData.address || 'Ciudad de México',
+          phone: instData.phone || '55-0000-0000',
+          website: instData.website || '',
+          coordinatorName: instData.coordinatorName || 'Dirección General',
+          campusesCount: initialCampusesCount,
+          studentsCount: 0,
+          teachersCount: 1,
+          aiTokensConsumed: 0,
+          currency: 'MXN',
+          settings: {
+            isConfigured: true,
+            name: instData.name.trim(),
+            website: instData.website || '',
+            logoUrl: instData.logoUrl || '',
+            cct: instData.cct.trim(),
+            address: instData.address || 'Ciudad de México',
+            phone: instData.phone || '55-0000-0000',
+            coordinators: [instData.coordinatorName || 'Dirección General'],
+            teachers: ['Prof. Coordinador Inicial'],
+            themeColors: {
+              primary: '221 83% 53%',
+              secondary: '250 84% 54%',
+              accent: '142 71% 45%'
+            }
+          }
+        };
+
+        // Crear planteles iniciales para el colegio
+        const generatedCampuses: Campus[] = (instData.initialPlanteles || [
+          { name: `Primaria ${instData.name}`, level: 'primaria' as const, address: instData.address },
+          { name: `Secundaria ${instData.name}`, level: 'secundaria' as const, address: instData.address }
+        ]).map((p, idx) => ({
+          id: `cmp-${newId}-${idx}`,
+          school_id: newId,
+          name: p.name,
+          level: p.level,
+          grades: p.level === 'primaria' ? ['1º', '2º', '3º', '4º', '5º', '6º'] : ['1º', '2º', '3º'],
+          address: p.address || instData.address,
+          phone: instData.phone,
+          created_at: new Date().toISOString()
+        }));
+
+        set((state) => ({
+          institutionsList: [newInstitution, ...(state.institutionsList || [])],
+          campusesList: [...generatedCampuses, ...(state.campusesList || [])],
+          activeSchoolId: newId,
+          schoolSettings: newInstitution.settings!
+        }));
+
+        return newInstitution;
+      },
+
+      updateInstitution: (schoolId, data) => {
+        set((state) => {
+          const updated = (state.institutionsList || []).map(inst => {
+            if (inst.id === schoolId) {
+              const updatedInst = { ...inst, ...data };
+              if (data.logoUrl !== undefined && updatedInst.settings) {
+                updatedInst.settings = { ...updatedInst.settings, logoUrl: data.logoUrl };
+              }
+              if (data.name !== undefined && updatedInst.settings) {
+                updatedInst.settings = { ...updatedInst.settings, name: data.name };
+              }
+              return updatedInst;
+            }
+            return inst;
+          });
+
+          // Si es el colegio activo, sincronizar schoolSettings
+          let updatedSettings = state.schoolSettings;
+          if (state.activeSchoolId === schoolId) {
+            const target = updated.find(i => i.id === schoolId);
+            if (target?.settings) {
+              updatedSettings = target.settings;
+            }
+          }
+
+          return {
+            institutionsList: updated,
+            schoolSettings: updatedSettings
+          };
+        });
+      },
+
+      deleteInstitution: (schoolId) => {
+        set((state) => ({
+          institutionsList: (state.institutionsList || []).filter(i => i.id !== schoolId),
+          activeSchoolId: state.activeSchoolId === schoolId ? null : state.activeSchoolId
+        }));
+      },
 
       updateTuitionPricing: (levelId, data) => {
         set((state) => {
@@ -516,11 +658,26 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       },
 
       incrementTeacherTokens: (teacherId, tokensUsed) => {
-        set((state) => ({
-          teachersList: (state.teachersList || []).map(t => 
+        set((state) => {
+          const updatedTeachers = (state.teachersList || []).map(t => 
             t.id === teacherId ? { ...t, ai_tokens_consumed: (t.ai_tokens_consumed || 0) + tokensUsed } : t
-          )
-        }));
+          );
+
+          const updatedInstitutions = (state.institutionsList || []).map(inst => {
+            if (state.activeSchoolId && inst.id === state.activeSchoolId) {
+              return { ...inst, aiTokensConsumed: (inst.aiTokensConsumed || 0) + tokensUsed };
+            }
+            if (!state.activeSchoolId && !inst.isTestCase) {
+              return { ...inst, aiTokensConsumed: (inst.aiTokensConsumed || 0) + tokensUsed };
+            }
+            return inst;
+          });
+
+          return {
+            teachersList: updatedTeachers,
+            institutionsList: updatedInstitutions
+          };
+        });
       },
 
       createCampus: (campusData) => {
@@ -1062,6 +1219,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
 
       resetSchoolAdminStore: () => {
         set({
+          institutionsList: INSTITUTIONS_SEED,
+          activeSchoolId: null,
           schoolSettings: {
             isConfigured: true,
             name: 'UP Juan Jacobo Rosseau',
@@ -1095,6 +1254,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
     {
       name: 'iskool_school_admin_store',
       partialize: (state) => ({
+        institutionsList: state.institutionsList,
+        activeSchoolId: state.activeSchoolId,
         schoolSettings: state.schoolSettings,
         campusesList: state.campusesList,
         detailedStudents: state.detailedStudents,
