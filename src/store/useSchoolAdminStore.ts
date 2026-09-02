@@ -94,16 +94,23 @@ export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: str
   const allStudents = (studentsList && studentsList.length > 0) ? studentsList : DETAILED_STUDENTS_SEED;
   if (!schoolId) return allStudents;
 
-  // 1. Laboratorio Pedagógico & Test Cases (Sandbox)
+  // 1. UP Juan Jacobo Rosseau (En CEROS para inicio oficial de Prueba Beta)
+  if (schoolId === 'sch-jjrosseau') {
+    return allStudents.filter(s => 
+      s.school_id === 'sch-jjrosseau' && 
+      !s.id.includes('test') && 
+      !s.id.startsWith('std-pb') && 
+      !s.id.startsWith('std-pa') && 
+      !s.id.startsWith('std-tor') && 
+      !s.id.startsWith('std-sec') &&
+      !s.id.startsWith('std-prep') &&
+      !s.id.startsWith('c00a0eeb')
+    );
+  }
+
+  // 2. Laboratorio Pedagógico & Test Cases (Contenedor de todos los casos de prueba, activos y muestras)
   if (schoolId === 'sch-test-case') {
-    return allStudents.filter(s => {
-      if (s.school_id === 'sch-test-case') return true;
-      if (s.school_id && s.school_id !== 'sch-test-case') return false;
-      const isTestCampus = (s.campus_name || '').toLowerCase().includes('demo') || (s.campus_name || '').toLowerCase().includes('laboratorio');
-      const isTestId = s.id.includes('test') || s.id.includes('prep') || s.level === 'preparatoria';
-      return isTestCampus || isTestId;
-    }).map(s => {
-      // Normalizar campus_name para que coincida exactamente con los planteles de Sandbox
+    return allStudents.filter(s => s.school_id !== 'sch-montessori').map(s => {
       if (s.campus_name === 'Primaria Laboratorio Demo' || s.campus_name === 'Secundaria Laboratorio Demo' || s.campus_name === 'Preparatoria Laboratorio Demo') {
         return s;
       }
@@ -114,29 +121,6 @@ export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: str
         return { ...s, campus_name: 'Secundaria Laboratorio Demo', campus_id: 'cmp-test-sec' };
       }
       return { ...s, campus_name: 'Primaria Laboratorio Demo', campus_id: 'cmp-test-pri' };
-    });
-  }
-
-  // 2. UP Juan Jacobo Rosseau
-  if (schoolId === 'sch-jjrosseau') {
-    return allStudents.filter(s => {
-      if (s.school_id && s.school_id !== 'sch-jjrosseau') return false;
-      if (s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo') || (s.campus_name || '').toLowerCase().includes('laboratorio')) return false;
-      if (s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep')) return false;
-      return s.level === 'primaria' || s.level === 'secundaria';
-    }).map(s => {
-      if (s.campus_name === 'Primaria Jardines' || s.campus_name === 'Primaria Torres' || s.campus_name === 'Secundaria Torres') {
-        return s;
-      }
-      if (s.level === 'secundaria') {
-        return { ...s, campus_name: 'Secundaria Torres', campus_id: 'cmp-sec-torres' };
-      }
-      const gradeNum = parseInt(s.grade || '1');
-      return {
-        ...s,
-        campus_name: gradeNum >= 4 ? 'Primaria Torres' : 'Primaria Jardines',
-        campus_id: gradeNum >= 4 ? 'cmp-pri-torres' : 'cmp-pri-jardines'
-      };
     });
   }
 
@@ -155,23 +139,19 @@ export const getSchoolTeachers = (teachersList: UserProfile[], schoolId: string 
   const allTeachers = (teachersList && teachersList.length > 0) ? teachersList : TEACHERS_LIST_SEED;
   if (!schoolId) return allTeachers;
 
-  if (schoolId === 'sch-test-case') {
-    const list = allTeachers.filter(t => {
-      if (t.school_id === 'sch-test-case') return true;
-      if (t.school_id && t.school_id !== 'sch-test-case') return false;
-      return t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || (t.campus_name || '').toLowerCase().includes('demo') || (t.campus_name || '').toLowerCase().includes('laboratorio');
-    });
-    if (list.length > 0) return list;
-    return TEACHERS_LIST_SEED.filter(t => t.school_id === 'sch-test-case' || t.id.includes('test'));
+  // 1. UP Juan Jacobo Rosseau (En CEROS para inicio oficial de Prueba Beta)
+  if (schoolId === 'sch-jjrosseau') {
+    return allTeachers.filter(t => 
+      t.school_id === 'sch-jjrosseau' && 
+      !t.id.startsWith('usr-teacher-') &&
+      !t.first_name.toLowerCase().includes('demo') &&
+      !t.last_name.toLowerCase().includes('demo')
+    );
   }
 
-  if (schoolId === 'sch-jjrosseau') {
-    return allTeachers.filter(t => {
-      if (t.school_id && t.school_id !== 'sch-jjrosseau') return false;
-      const isTest = t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || t.last_name.toLowerCase().includes('test');
-      const isOther = (t.campus_name || '').toLowerCase().includes('montessori') || (t.campus_name || '').toLowerCase().includes('demo') || (t.campus_name || '').toLowerCase().includes('laboratorio');
-      return !isTest && !isOther;
-    });
+  // 2. Laboratorio Pedagógico & Test Cases (Todos los docentes demo y de prueba)
+  if (schoolId === 'sch-test-case') {
+    return allTeachers.filter(t => t.school_id !== 'sch-montessori');
   }
 
   const currentCampuses = schoolCampuses && schoolCampuses.length > 0 ? schoolCampuses : [];
@@ -215,25 +195,22 @@ export const getSchoolSubjects = (subjectsList: Subject[], schoolId: string | nu
   const allSubjects = (subjectsList && subjectsList.length > 0) ? subjectsList : SUBJECTS_SEED;
   if (!schoolId) return allSubjects;
 
-  const filtered = allSubjects.filter(sub => {
+  if (schoolId === 'sch-jjrosseau') {
+    return allSubjects.filter(sub => sub.school_id === 'sch-jjrosseau');
+  }
+
+  if (schoolId === 'sch-test-case') {
+    return allSubjects.filter(sub => sub.school_id !== 'sch-montessori');
+  }
+
+  const currentCampuses = schoolCampuses && schoolCampuses.length > 0 ? schoolCampuses : [];
+  return allSubjects.filter(sub => {
     if (sub.school_id) return sub.school_id === schoolId;
-    if (schoolId === 'sch-test-case') {
-      return sub.campus_name?.toLowerCase().includes('demo') || sub.id.includes('test');
-    }
-    if (schoolId === 'sch-jjrosseau') {
-      return !sub.campus_name?.toLowerCase().includes('montessori') && !sub.campus_name?.toLowerCase().includes('demo');
-    }
-    if (schoolCampuses && schoolCampuses.length > 0) {
-      return schoolCampuses.some(c => c.name.toLowerCase() === (sub.campus_name || '').toLowerCase() || sub.campus_name === 'Todos los Planteles');
+    if (currentCampuses.length > 0) {
+      return currentCampuses.some(c => c.name.toLowerCase() === (sub.campus_name || '').toLowerCase() || sub.campus_name === 'Todos los Planteles');
     }
     return false;
   });
-
-  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
-    return SUBJECTS_SEED;
-  }
-
-  return filtered;
 };
 
 interface SchoolAdminStoreState {
