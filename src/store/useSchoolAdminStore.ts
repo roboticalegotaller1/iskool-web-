@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile, Campus } from '../types';
-import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHERS_LIST_SEED, SUBJECTS_SEED, CAMPUSES_SEED } from './seeds';
+import { SchoolSettings, DetailedStudent, Group, ClassSchedule, Attendance, ParentMessage, Subject, UserProfile, Campus, TuitionPricing, FamilyBillingRecord } from '../types';
+import { DETAILED_STUDENTS_SEED, GROUPS_SEED, SCHEDULES_SEED, ATTENDANCE_SEED, PARENT_MESSAGES_SEED, TEACHERS_LIST_SEED, SUBJECTS_SEED, CAMPUSES_SEED, TUITION_PRICINGS_SEED, BILLING_RECORDS_SEED } from './seeds';
 import { useStudentStore } from './useStudentStore';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -17,6 +17,31 @@ export const generateRandomPassword = (length = 6): string => {
 const isUuid = (str?: string): boolean => {
   if (!str) return false;
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+};
+
+export const getTuitionFeeForStudent = (
+  level: string, 
+  grade: string, 
+  tuitionPricings: TuitionPricing[] = TUITION_PRICINGS_SEED
+): number => {
+  const lvlLower = (level || '').toLowerCase();
+  const gradeNum = parseInt(grade || '1');
+
+  if (lvlLower.includes('primaria')) {
+    if (gradeNum >= 4) {
+      const alta = tuitionPricings.find(p => p.level === 'primaria_alta');
+      return alta?.monthly_fee || 3450.00;
+    } else {
+      const baja = tuitionPricings.find(p => p.level === 'primaria_baja');
+      return baja?.monthly_fee || 3200.00;
+    }
+  }
+  if (lvlLower.includes('secundaria')) {
+    const sec = tuitionPricings.find(p => p.level === 'secundaria');
+    return sec?.monthly_fee || 3800.00;
+  }
+  const prep = tuitionPricings.find(p => p.level === 'preparatoria');
+  return prep?.monthly_fee || 4100.00;
 };
 
 const mapGroupIdToUuid = (id: string): string => {
@@ -52,7 +77,15 @@ interface SchoolAdminStoreState {
   teachersList: UserProfile[];
   attendanceList: Attendance[];
   parentMessages: ParentMessage[];
+  tuitionPricings: TuitionPricing[];
+  billingRecords: FamilyBillingRecord[];
   syncError: string | null;
+
+  // Financial and Tuition Actions
+  updateTuitionPricing: (levelId: string, data: Partial<TuitionPricing>) => void;
+  assignScholarship: (studentId: string, scholarship: { percentage: number; type?: string; notes?: string }) => void;
+  recordBillingPayment: (recordId: string, paymentData?: { method?: string; reference?: string; notes?: string }) => void;
+  createManualBillingCharge: (charge: Omit<FamilyBillingRecord, 'id' | 'invoiceNumber'>) => FamilyBillingRecord;
 
   // Actions
   saveSchoolSettings: (settings: SchoolSettings) => void;
@@ -149,7 +182,91 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       teachersList: TEACHERS_LIST_SEED,
       attendanceList: ATTENDANCE_SEED,
       parentMessages: PARENT_MESSAGES_SEED,
+      tuitionPricings: TUITION_PRICINGS_SEED,
+      billingRecords: BILLING_RECORDS_SEED,
       syncError: null,
+
+      updateTuitionPricing: (levelId, data) => {
+        set((state) => {
+          const updated = (state.tuitionPricings || TUITION_PRICINGS_SEED).map(p => 
+            (p.id === levelId || p.level === levelId) ? { ...p, ...data } : p
+          );
+          return { tuitionPricings: updated };
+        });
+      },
+
+      assignScholarship: (studentId, scholarship) => {
+        set((state) => {
+          const student = (state.detailedStudents || []).find(s => s.id === studentId);
+          if (!student) return state;
+
+          const updatedStudents = (state.detailedStudents || []).map(s => {
+            if (s.id === studentId) {
+              return {
+                ...s,
+                scholarship_percentage: scholarship.percentage,
+                scholarship_type: (scholarship.type || 'academica') as any,
+                scholarship_notes: scholarship.notes || ''
+              };
+            }
+            return s;
+          });
+
+          // Recalcular o actualizar cargos pendientes de este alumno en billingRecords
+          const updatedBilling = (state.billingRecords || []).map(rec => {
+            if (rec.studentId === studentId && (rec.status === 'pending' || rec.status === 'overdue')) {
+              const base = rec.baseAmount || rec.amount;
+              const discount = (scholarship.percentage / 100) * base;
+              const finalAmount = Math.max(0, base - discount);
+
+              return {
+                ...rec,
+                baseAmount: base,
+                scholarshipPercentage: scholarship.percentage,
+                scholarshipType: scholarship.type || 'academica',
+                discountAmount: discount,
+                amount: finalAmount
+              };
+            }
+            return rec;
+          });
+
+          return {
+            detailedStudents: updatedStudents,
+            billingRecords: updatedBilling
+          };
+        });
+      },
+
+      recordBillingPayment: (recordId, paymentData) => {
+        set((state) => {
+          const updatedRecords = (state.billingRecords || []).map(rec => {
+            if (rec.id === recordId) {
+              return {
+                ...rec,
+                status: 'paid' as const,
+                paidAt: new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })
+              };
+            }
+            return rec;
+          });
+          return { billingRecords: updatedRecords };
+        });
+      },
+
+      createManualBillingCharge: (chargeData) => {
+        const newRecord: FamilyBillingRecord = {
+          ...chargeData,
+          id: `inv-custom-${Date.now()}`,
+          invoiceNumber: `COL-2026-${Math.floor(10000 + Math.random() * 90000)}`
+        };
+
+        set((state) => ({
+          billingRecords: [newRecord, ...(state.billingRecords || [])]
+        }));
+
+        return newRecord;
+      },
 
       saveSchoolSettings: (settings) => {
         applyThemeCssVariables(settings.themeColors);
@@ -195,6 +312,12 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         }
         const campusObj = get().campusesList.find(c => c.name.toLowerCase() === campusName.toLowerCase());
 
+        // Calcular costo de colegiatura según su nivel educativo
+        const tuitionPricings = get().tuitionPricings || TUITION_PRICINGS_SEED;
+        const baseFee = getTuitionFeeForStudent(studentData.level, studentData.grade, tuitionPricings);
+        const discount = ((studentData.scholarship_percentage || 0) / 100) * baseFee;
+        const finalAmount = Math.max(0, baseFee - discount);
+
         const newStudent: DetailedStudent = {
           ...studentData,
           id: newId,
@@ -203,11 +326,36 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
           temporary_password: tempPassword,
           status: studentData.status || 'activo',
           is_blocked: studentData.is_blocked || false,
-          photo_url: studentData.photo_url || '/images/students/default.png'
+          photo_url: studentData.photo_url || '/images/students/default.png',
+          pending_payments: ['Colegiatura de Septiembre 2026']
+        };
+
+        // Generar folio de cobro en el portal de finanzas institucional
+        const newBillingRecord: FamilyBillingRecord = {
+          id: `inv-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          invoiceNumber: `COL-2026-${Math.floor(10000 + Math.random() * 90000)}`,
+          studentId: newId,
+          parentName: newStudent.tutor_name || newStudent.father_name || newStudent.mother_name || `${newStudent.last_name_1} ${newStudent.last_name_2 || ''}`.trim() || 'Tutor Familiar',
+          parentPhone: newStudent.emergency_contact_phone || newStudent.phone || '55-4160-8800',
+          parentEmail: newStudent.email ? `tutor.${newStudent.email}` : 'tutor@jjrosseau.edu.mx',
+          studentName: `${newStudent.first_name} ${newStudent.second_name || ''} ${newStudent.last_name_1} ${newStudent.last_name_2 || ''}`.replace(/\s+/g, ' ').trim(),
+          level: newStudent.level === 'primaria' ? 'Primaria' : newStudent.level === 'secundaria' ? 'Secundaria' : 'Preparatoria',
+          grade: newStudent.grade,
+          group: (newStudent.group_id || 'A').toUpperCase().includes('B') ? 'B' : 'A',
+          concept: `Colegiatura de Septiembre 2026 - ${newStudent.level === 'primaria' ? 'Primaria' : newStudent.level === 'secundaria' ? 'Secundaria' : 'Preparatoria'} ${newStudent.grade}`,
+          baseAmount: baseFee,
+          scholarshipPercentage: newStudent.scholarship_percentage || 0,
+          scholarshipType: newStudent.scholarship_type || 'ninguna',
+          discountAmount: discount,
+          amount: finalAmount,
+          dueDate: '10 Septiembre 2026',
+          status: 'pending',
+          autoInvoice: true
         };
 
         set((state) => ({
-          detailedStudents: [newStudent, ...(state.detailedStudents || [])]
+          detailedStudents: [newStudent, ...(state.detailedStudents || [])],
+          billingRecords: [newBillingRecord, ...(state.billingRecords || [])]
         }));
 
         try {
@@ -242,6 +390,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
 
       bulkRegisterStudents: (studentsList) => {
         const createdList: DetailedStudent[] = [];
+        const createdBilling: FamilyBillingRecord[] = [];
+        const tuitionPricings = get().tuitionPricings || TUITION_PRICINGS_SEED;
 
         studentsList.forEach((st, idx) => {
           if (!st.first_name || !st.last_name_1) return;
@@ -253,6 +403,10 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
             campusName = 'Secundaria Torres';
           }
           const campusObj = get().campusesList.find(c => c.name.toLowerCase() === campusName.toLowerCase());
+
+          const baseFee = getTuitionFeeForStudent(st.level || 'primaria', st.grade || '1º', tuitionPricings);
+          const discount = ((st.scholarship_percentage || 0) / 100) * baseFee;
+          const finalAmount = Math.max(0, baseFee - discount);
 
           const newStudent: DetailedStudent = {
             id: newId,
@@ -277,12 +431,35 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
             phone: st.phone || '55-0000-0000',
             address: st.address || 'Ciudad de México',
             photo_url: '/images/students/default.png',
-            pending_payments: [],
+            pending_payments: ['Colegiatura de Septiembre 2026'],
             behavior_reports: [],
             teacher_notes: []
           };
 
           createdList.push(newStudent);
+
+          // Generar registro de cobro
+          createdBilling.push({
+            id: `inv-${Date.now()}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
+            invoiceNumber: `COL-2026-${Math.floor(10000 + Math.random() * 90000)}`,
+            studentId: newId,
+            parentName: newStudent.tutor_name || newStudent.father_name || newStudent.mother_name || `${newStudent.last_name_1} ${newStudent.last_name_2 || ''}`.trim() || 'Tutor Familiar',
+            parentPhone: newStudent.emergency_contact_phone || newStudent.phone || '55-4160-8800',
+            parentEmail: newStudent.email ? `tutor.${newStudent.email}` : 'tutor@jjrosseau.edu.mx',
+            studentName: `${newStudent.first_name} ${newStudent.second_name || ''} ${newStudent.last_name_1} ${newStudent.last_name_2 || ''}`.replace(/\s+/g, ' ').trim(),
+            level: newStudent.level === 'primaria' ? 'Primaria' : newStudent.level === 'secundaria' ? 'Secundaria' : 'Preparatoria',
+            grade: newStudent.grade,
+            group: (newStudent.group_id || 'A').toUpperCase().includes('B') ? 'B' : 'A',
+            concept: `Colegiatura de Septiembre 2026 - ${newStudent.level === 'primaria' ? 'Primaria' : newStudent.level === 'secundaria' ? 'Secundaria' : 'Preparatoria'} ${newStudent.grade}`,
+            baseAmount: baseFee,
+            scholarshipPercentage: newStudent.scholarship_percentage || 0,
+            scholarshipType: newStudent.scholarship_type || 'ninguna',
+            discountAmount: discount,
+            amount: finalAmount,
+            dueDate: '10 Septiembre 2026',
+            status: 'pending',
+            autoInvoice: true
+          });
 
           try {
             const studentStore = useStudentStore.getState();
@@ -293,7 +470,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         });
 
         set((state) => ({
-          detailedStudents: [...createdList, ...(state.detailedStudents || [])]
+          detailedStudents: [...createdList, ...(state.detailedStudents || [])],
+          billingRecords: [...createdBilling, ...(state.billingRecords || [])]
         }));
 
         return createdList;
@@ -908,6 +1086,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
           teachersList: TEACHERS_LIST_SEED,
           attendanceList: ATTENDANCE_SEED,
           parentMessages: PARENT_MESSAGES_SEED,
+          tuitionPricings: TUITION_PRICINGS_SEED,
+          billingRecords: BILLING_RECORDS_SEED,
           syncError: null
         });
       }
@@ -921,7 +1101,9 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         groupsList: state.groupsList,
         schedulesList: state.schedulesList,
         subjectsList: state.subjectsList,
-        teachersList: state.teachersList
+        teachersList: state.teachersList,
+        tuitionPricings: state.tuitionPricings,
+        billingRecords: state.billingRecords
       })
     }
   )

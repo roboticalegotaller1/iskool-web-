@@ -2697,3 +2697,128 @@ export const PARENT_MESSAGES_SEED: ParentMessage[] = [
     is_read: false
   }
 ];
+
+export const TUITION_PRICINGS_SEED: import('../types').TuitionPricing[] = [
+  {
+    id: 'prc-pri-baja',
+    level: 'primaria_baja',
+    name: 'Primaria Baja (1º a 3º Grado)',
+    description: 'Planteles Jardines y Torres · Jornada regular con materias base y talleres formativos iniciales.',
+    monthly_fee: 3200.00,
+    annual_inscription: 4500.00,
+    materials_fee: 1200.00,
+    due_day: 10
+  },
+  {
+    id: 'prc-pri-alta',
+    level: 'primaria_alta',
+    name: 'Primaria Alta (4º a 6º Grado)',
+    description: 'Planteles Jardines y Torres · Incluye laboratorio de ciencias, robótica y talleres optativos.',
+    monthly_fee: 3450.00,
+    annual_inscription: 4800.00,
+    materials_fee: 1400.00,
+    due_day: 10
+  },
+  {
+    id: 'prc-sec',
+    level: 'secundaria',
+    name: 'Secundaria Torres (1º a 3º Grado)',
+    description: 'Secundaria Torres · Especialidades técnicas, laboratorio avanzado, robótica y preparación académica.',
+    monthly_fee: 3800.00,
+    annual_inscription: 5200.00,
+    materials_fee: 1600.00,
+    due_day: 10
+  },
+  {
+    id: 'prc-prep',
+    level: 'preparatoria',
+    name: 'Preparatoria / Bachillerato',
+    description: 'Bachillerato general con orientación propedéutica y certificaciones.',
+    monthly_fee: 4100.00,
+    annual_inscription: 5600.00,
+    materials_fee: 1800.00,
+    due_day: 10
+  }
+];
+
+export const BILLING_RECORDS_SEED: import('../types').FamilyBillingRecord[] = [
+  {
+    id: 'inv-101',
+    invoiceNumber: 'COL-2026-00452',
+    studentId: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d09',
+    parentName: 'Israel López Ángeles',
+    parentPhone: '5541982301',
+    parentEmail: 'israel.lopez@ejemplo.com',
+    studentName: 'Diego Vargas Ríos',
+    level: 'Secundaria',
+    grade: '3º',
+    group: 'A',
+    concept: 'Colegiatura de Septiembre 2026',
+    baseAmount: 3800.00,
+    scholarshipPercentage: 0,
+    amount: 3800.00,
+    dueDate: '10 Septiembre 2026',
+    status: 'pending',
+    autoInvoice: true
+  },
+  {
+    id: 'inv-102',
+    invoiceNumber: 'COL-2026-00453',
+    studentId: 'std-pb',
+    parentName: 'Aurelio Gómez Morales',
+    parentPhone: '5589123456',
+    parentEmail: 'aurelio.gomez@ejemplo.com',
+    studentName: 'Santi Gómez Pérez',
+    level: 'Primaria',
+    grade: '1º',
+    group: 'A',
+    concept: 'Colegiatura de Septiembre 2026',
+    baseAmount: 3200.00,
+    scholarshipPercentage: 0,
+    amount: 3200.00,
+    dueDate: '10 Septiembre 2026',
+    status: 'pending',
+    autoInvoice: false
+  },
+  {
+    id: 'inv-103',
+    invoiceNumber: 'COL-2026-00389',
+    studentId: 'std-sec',
+    parentName: 'Mauricio Salazar',
+    parentPhone: '5512349876',
+    parentEmail: 'mauricio.salazar@ejemplo.com',
+    studentName: 'Elena Salazar Castro',
+    level: 'Secundaria',
+    grade: '2º',
+    group: 'A',
+    concept: 'Colegiatura de Agosto 2026 (Extemporánea)',
+    baseAmount: 3800.00,
+    scholarshipPercentage: 0,
+    amount: 3800.00,
+    dueDate: '15 Agosto 2026',
+    status: 'overdue',
+    autoInvoice: true
+  },
+  {
+    id: 'inv-104',
+    invoiceNumber: 'COL-2026-00410',
+    studentId: 'std-pa',
+    parentName: 'Roberto Hernández',
+    parentPhone: '5578901234',
+    parentEmail: 'roberto.hernandez@ejemplo.com',
+    studentName: 'Lucas Hernández Ruiz',
+    level: 'Primaria',
+    grade: '4º',
+    group: 'A',
+    concept: 'Colegiatura de Septiembre 2026',
+    baseAmount: 3450.00,
+    scholarshipPercentage: 25,
+    scholarshipType: 'academica',
+    discountAmount: 862.50,
+    amount: 2587.50,
+    dueDate: '10 Septiembre 2026',
+    status: 'paid',
+    autoInvoice: true,
+    paidAt: '24 Agosto 2026'
+  }
+];

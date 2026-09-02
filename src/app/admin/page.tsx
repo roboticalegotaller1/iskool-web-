@@ -171,7 +171,9 @@ export default function SuperUserAdminPage() {
     curp: '',
     gender: 'Masculino',
     tutor_name: '',
-    emergency_contact_phone: ''
+    emergency_contact_phone: '',
+    scholarship_percentage: 0,
+    scholarship_type: 'academica' as 'academica' | 'deportiva' | 'hermanos' | 'sep' | 'socioeconomica'
   });
 
   // Formulario de Profesor
@@ -275,12 +277,14 @@ export default function SuperUserAdminPage() {
       campus_name: newStudentForm.campus_name,
       tutor_name: newStudentForm.tutor_name,
       emergency_contact_phone: newStudentForm.emergency_contact_phone,
+      scholarship_percentage: Number(newStudentForm.scholarship_percentage) || 0,
+      scholarship_type: newStudentForm.scholarship_type,
       status: 'activo',
       is_blocked: false,
       temporary_password: generateRandomPassword(6)
     });
 
-    showToast(`✅ Alumno ${created.first_name} ${created.last_name_1} registrado (Contraseña: ${created.temporary_password})`);
+    showToast(`✅ Alumno ${created.first_name} ${created.last_name_1} registrado y dado de alta en Finanzas (Contraseña: ${created.temporary_password})`);
     setShowAddStudentModal(false);
     setNewStudentForm({
       first_name: '',
@@ -294,7 +298,9 @@ export default function SuperUserAdminPage() {
       curp: '',
       gender: 'Masculino',
       tutor_name: '',
-      emergency_contact_phone: ''
+      emergency_contact_phone: '',
+      scholarship_percentage: 0,
+      scholarship_type: 'academica'
     });
   };
 
@@ -1212,6 +1218,13 @@ export default function SuperUserAdminPage() {
                             <div className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
                               <Mail className="h-3 w-3 text-slate-500" /> {student.email}
                             </div>
+                            {student.scholarship_percentage && student.scholarship_percentage > 0 ? (
+                              <div className="mt-1">
+                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-purple-300 bg-purple-500/20 px-2 py-0.5 rounded-md border border-purple-500/30">
+                                  <span>Beca {student.scholarship_percentage}% ({student.scholarship_type || 'Académica'})</span>
+                                </span>
+                              </div>
+                            ) : null}
                           </td>
                           <td className="p-4 font-mono text-slate-300">
                             <div>{student.curp || 'SIN-CURP'}</div>
@@ -2056,8 +2069,40 @@ export default function SuperUserAdminPage() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Beca Inicial (%)</label>
+                  <select
+                    value={newStudentForm.scholarship_percentage}
+                    onChange={(e) => setNewStudentForm({ ...newStudentForm, scholarship_percentage: Number(e.target.value) })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
+                  >
+                    <option value="0">0% - Sin Beca (Arancel Regular)</option>
+                    <option value="10">10% - Descuento Inicial</option>
+                    <option value="25">25% - Beca Hermanos / Familiar</option>
+                    <option value="50">50% - Beca Académica</option>
+                    <option value="75">75% - Beca Deportiva / Destacada</option>
+                    <option value="100">100% - Beca Excelencia Total</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Modalidad de Beca</label>
+                  <select
+                    value={newStudentForm.scholarship_type}
+                    onChange={(e) => setNewStudentForm({ ...newStudentForm, scholarship_type: e.target.value as any })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
+                  >
+                    <option value="academica">Académica</option>
+                    <option value="deportiva">Deportiva</option>
+                    <option value="hermanos">Hermanos</option>
+                    <option value="sep">SEP Oficial</option>
+                    <option value="socioeconomica">Socioeconómica</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-indigo-300">
-                ℹ️ Se generará automáticamente una <strong>contraseña de 6 caracteres aleatorios</strong> y se creará todo su perfil y stats en el sistema.
+                ℹ️ Se generará automáticamente una <strong>contraseña de 6 caracteres</strong> y su <strong>registro contable en el Portal de Finanzas</strong> con el arancel correspondiente a su nivel.
               </div>
 
               <div className="flex justify-end gap-2 pt-2">

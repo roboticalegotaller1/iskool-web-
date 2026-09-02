@@ -726,10 +726,48 @@ export interface DetailedStudent {
   temporary_password?: string; // Contraseña generada de 6 dígitos alfanuméricos
   is_blocked?: boolean;
 
-  // Campos adicionales del expediente
+  // Campos adicionales del expediente y finanzas
   pending_payments?: string[];
+  scholarship_percentage?: number; // 0, 10, 25, 50, 75, 100
+  scholarship_type?: 'ninguna' | 'academica' | 'deportiva' | 'hermanos' | 'sep' | 'socioeconomica';
+  scholarship_notes?: string;
+  monthly_tuition_override?: number;
   behavior_reports?: { id?: string; date: string; description: string; reporter: string; parent_reply?: string; replied_at?: string }[];
   teacher_notes?: { id?: string; date: string; note: string; teacher_name: string; parent_reply?: string; replied_at?: string }[];
+}
+
+export interface TuitionPricing {
+  id: string;
+  level: 'primaria_baja' | 'primaria_alta' | 'secundaria' | 'preparatoria';
+  name: string;
+  description: string;
+  monthly_fee: number;
+  annual_inscription: number;
+  materials_fee: number;
+  due_day: number;
+}
+
+export interface FamilyBillingRecord {
+  id: string;
+  invoiceNumber: string;
+  studentId?: string;
+  parentName: string;
+  parentPhone: string;
+  parentEmail: string;
+  studentName: string;
+  level: string; // 'Primaria' | 'Secundaria' | 'Preparatoria'
+  grade: string; // '1º', '2º', '3º', '4º'
+  group: string; // 'A' | 'B'
+  concept: string;
+  baseAmount?: number;
+  discountAmount?: number;
+  scholarshipPercentage?: number;
+  scholarshipType?: string;
+  amount: number;
+  dueDate: string;
+  status: 'paid' | 'pending' | 'overdue';
+  autoInvoice: boolean;
+  paidAt?: string;
 }
 
 /**
