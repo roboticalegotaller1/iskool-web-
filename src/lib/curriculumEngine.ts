@@ -157,88 +157,102 @@ interface SepBookDef {
 const SEP_BOOKS_BY_LEVEL: Record<string, Record<string, SepBookDef[]>> = {
   'preescolar': {
     'general': [
-      { titulo: 'Mi Álbum de Preescolar (1º, 2º y 3º)', paginasBase: 12, paginasRango: 6, descripcion: 'Retos visuales, registro gráfico y exploración sensorial' },
-      { titulo: 'Láminas de Diálogo y Expresión de Preescolar', paginasBase: 6, paginasRango: 4, descripcion: 'Imágenes detonadoras de lenguaje oral y reflexión' },
-      { titulo: 'Juegos y Expresión Artística Infantil', paginasBase: 18, paginasRango: 5, descripcion: 'Dinámicas corporales, cantos y rondas' }
+      { titulo: 'Mi Álbum de Preescolar 1º Grado', paginasBase: 12, paginasRango: 6, descripcion: 'Retos visuales, registro gráfico y exploración sensorial' },
+      { titulo: 'Mi Álbum de Preescolar 2º Grado', paginasBase: 16, paginasRango: 6, descripcion: 'Juegos de conteo, expresión corporal y mundo natural' },
+      { titulo: 'Mi Álbum de Preescolar 3º Grado', paginasBase: 20, paginasRango: 6, descripcion: 'Resolución de retos, convivencia y arte infantil' },
+      { titulo: 'Láminas de Diálogo y Expresión de Preescolar', paginasBase: 6, paginasRango: 4, descripcion: 'Imágenes detonadoras de lenguaje oral y reflexión' }
     ]
   },
   'primaria-baja': {
     'matematicas': [
-      { titulo: 'Nuestros Saberes: Libro para alumnos, maestros y familia 1º y 2º', paginasBase: 34, paginasRango: 5, descripcion: 'Conceptos matemáticos, números, medidas y geometría' },
+      { titulo: 'Nuestros Saberes 2º Grado', paginasBase: 34, paginasRango: 6, descripcion: 'Conceptos matemáticos, números, monedas, medidas y geometría' },
       { titulo: 'Proyectos de Aula 2º Grado', paginasBase: 68, paginasRango: 8, descripcion: 'La tiendita, conteo comunitario y resolución de problemas' },
-      { titulo: 'Proyectos Escolares 1º y 2º Grado', paginasBase: 92, paginasRango: 7, descripcion: 'Medición de espacios escolares y conteo de recursos' },
+      { titulo: 'Proyectos Escolares 2º Grado', paginasBase: 92, paginasRango: 7, descripcion: 'Medición de espacios escolares y conteo de recursos' },
       { titulo: 'Múltiples Lenguajes 2º Grado', paginasBase: 44, paginasRango: 4, descripcion: 'Acertijos matemáticos, patrones y juegos numéricos' }
     ],
     'lenguajes': [
       { titulo: 'Proyectos Comunitarios 2º Grado', paginasBase: 76, paginasRango: 8, descripcion: 'Correspondencia escolar, cartas a la comunidad y buzón postal' },
-      { titulo: 'Proyectos de Aula 1º y 2º Grado', paginasBase: 48, paginasRango: 7, descripcion: 'Producción de textos, cartas personales y dictado colectivo' },
+      { titulo: 'Proyectos de Aula 1º Grado', paginasBase: 48, paginasRango: 7, descripcion: 'Producción de textos, cuentos ilustrados y dictado colectivo' },
       { titulo: 'Nuestros Saberes 2º Grado', paginasBase: 16, paginasRango: 5, descripcion: 'Estructura de la carta, signos de puntuación y remitente/destinatario' },
-      { titulo: 'Múltiples Lenguajes 1º y 2º Grado', paginasBase: 22, paginasRango: 6, descripcion: 'Cuentos, textos epistolares y narraciones infantiles' }
+      { titulo: 'Múltiples Lenguajes 1º Grado', paginasBase: 22, paginasRango: 6, descripcion: 'Cuentos, textos epistolares y narraciones infantiles' }
     ],
     'ciencias': [
-      { titulo: 'Nuestros Saberes: Libro para alumnos, maestros y familia 1º y 2º', paginasBase: 82, paginasRango: 6, descripcion: 'Los 5 sentidos, plantas, animales y cuidado de la salud' },
-      { titulo: 'Proyectos Comunitarios 1º y 2º Grado', paginasBase: 104, paginasRango: 8, descripcion: 'El huerto escolar, reciclaje y cuidado del agua' },
+      { titulo: 'Nuestros Saberes 2º Grado', paginasBase: 82, paginasRango: 6, descripcion: 'Los 5 sentidos, plantas, animales y cuidado de la salud' },
+      { titulo: 'Proyectos Comunitarios 2º Grado', paginasBase: 104, paginasRango: 8, descripcion: 'El huerto escolar, reciclaje y cuidado del agua' },
       { titulo: 'Proyectos Escolares 2º Grado', paginasBase: 120, paginasRango: 7, descripcion: 'Estados de la materia, fuentes de luz y sonido' }
     ],
     'general': [
       { titulo: 'Nuestros Saberes 2º Grado', paginasBase: 50, paginasRango: 6, descripcion: 'Contenidos interdisciplinarios y valores comunitarios' },
-      { titulo: 'Proyectos de Aula 2º Grado', paginasBase: 80, paginasRango: 8, descripcion: 'Proyectos colaborativos del aula' }
+      { titulo: 'Proyectos de Aula 2º Grado', paginasBase: 80, paginasRango: 8, descripcion: 'Proyectos colaborativos del aula y acuerdos de convivencia' }
     ]
   },
   'primaria-media': {
     'matematicas': [
-      { titulo: 'Nuestros Saberes 3º y 4º Grado', paginasBase: 56, paginasRango: 7, descripcion: 'Fracciones, algoritmos convencionales y cuerpos geométricos' },
-      { titulo: 'Proyectos de Aula 3º Grado', paginasBase: 112, paginasRango: 8, descripcion: 'Cálculo de áreas, perímetros y presupuestos' },
+      { titulo: 'Nuestros Saberes 3º Grado', paginasBase: 56, paginasRango: 7, descripcion: 'Fracciones, algoritmos convencionales y cuerpos geométricos' },
+      { titulo: 'Proyectos de Aula 3º Grado', paginasBase: 112, paginasRango: 8, descripcion: 'Cálculo de áreas, perímetros y presupuestos comunitarios' },
+      { titulo: 'Nuestros Saberes 4º Grado', paginasBase: 68, paginasRango: 8, descripcion: 'Fracciones equivalentes, números decimales y cuadriláteros' },
       { titulo: 'Proyectos Escolares 4º Grado', paginasBase: 134, paginasRango: 8, descripcion: 'Tablas de doble entrada, gráficas de barras y encuestas' }
     ],
     'lenguajes': [
-      { titulo: 'Múltiples Lenguajes 3º y 4º Grado', paginasBase: 38, paginasRango: 6, descripcion: 'Lecturas de divulgación, leyendas y textos expositivos' },
+      { titulo: 'Múltiples Lenguajes 4º Grado', paginasBase: 38, paginasRango: 6, descripcion: 'Lecturas de divulgación, leyendas y textos expositivos' },
       { titulo: 'Proyectos de Aula 4º Grado', paginasBase: 86, paginasRango: 8, descripcion: 'Elaboración de revistas científicas, correspondencia y debates' },
-      { titulo: 'Nuestros Saberes 3º y 4º Grado', paginasBase: 24, paginasRango: 6, descripcion: 'Estructura textual, ortografía y redacción formal' }
+      { titulo: 'Nuestros Saberes 4º Grado', paginasBase: 24, paginasRango: 6, descripcion: 'Estructura textual, ortografía y redacción formal' }
     ],
     'ciencias': [
-      { titulo: 'Nuestros Saberes 3º y 4º Grado', paginasBase: 94, paginasRango: 7, descripcion: 'Ecosistemas, cadenas alimentarias y nutrición' },
-      { titulo: 'Proyectos Comunitarios 3º Grado', paginasBase: 142, paginasRango: 8, descripcion: 'Filtros de agua y composta escolar' }
+      { titulo: 'Nuestros Saberes 4º Grado', paginasBase: 94, paginasRango: 7, descripcion: 'Ecosistemas, cadenas alimentarias, estados del agua y nutrición' },
+      { titulo: 'Proyectos Comunitarios 3º Grado', paginasBase: 142, paginasRango: 8, descripcion: 'Filtros de agua y composta escolar sustentable' },
+      { titulo: 'Proyectos Escolares 4º Grado', paginasBase: 156, paginasRango: 8, descripcion: 'Propiedades físicas de los materiales y mezclas del entorno' }
     ],
     'general': [
-      { titulo: 'Cartografía de México y el Mundo (4º Grado)', paginasBase: 24, paginasRango: 6, descripcion: 'Mapas temáticos, relieve y regiones geográficas' },
-      { titulo: 'Nuestros Saberes 4º Grado', paginasBase: 64, paginasRango: 6, descripcion: 'Saberes integrados y formación ética' }
+      { titulo: 'Cartografía de México y el Mundo (4º Grado)', paginasBase: 24, paginasRango: 6, descripcion: 'Mapas temáticos, relieve, regiones geográficas y patrimonio biocultural' },
+      { titulo: 'Nuestros Saberes 4º Grado', paginasBase: 64, paginasRango: 6, descripcion: 'Saberes integrados, identidad cultural y formación ética' }
     ]
   },
   'primaria-alta': {
     'matematicas': [
-      { titulo: 'Nuestros Saberes 5º y 6º Grado', paginasBase: 78, paginasRango: 8, descripcion: 'Porcentajes, números decimales, volumen y proporcionalidad' },
+      { titulo: 'Nuestros Saberes 5º Grado', paginasBase: 78, paginasRango: 8, descripcion: 'Porcentajes, fracciones con distinto denominador y proporcionalidad' },
+      { titulo: 'Nuestros Saberes 6º Grado', paginasBase: 84, paginasRango: 8, descripcion: 'Geometría del círculo, valor aproximado de Pi, volumen y plano cartesiano' },
       { titulo: 'Proyectos de Aula 6º Grado', paginasBase: 128, paginasRango: 8, descripcion: 'Modelación matemática y finanzas comunitarias' },
       { titulo: 'Proyectos Comunitarios 5º Grado', paginasBase: 156, paginasRango: 8, descripcion: 'Estadística comunitaria, media, moda y gráficas circulares' }
     ],
     'lenguajes': [
-      { titulo: 'Múltiples Lenguajes 5º y 6º Grado', paginasBase: 46, paginasRango: 6, descripcion: 'Ensayos, reseñas críticas, crónicas y cartas de opinión' },
-      { titulo: 'Proyectos Escolares 6º Grado', paginasBase: 98, paginasRango: 8, descripcion: 'Periódico escolar digital y mesas redondas' }
+      { titulo: 'Múltiples Lenguajes 6º Grado', paginasBase: 46, paginasRango: 6, descripcion: 'Ensayos, reseñas críticas, crónicas y cartas de opinión' },
+      { titulo: 'Proyectos Escolares 6º Grado', paginasBase: 98, paginasRango: 8, descripcion: 'Periódico escolar digital, mesas redondas y debates' },
+      { titulo: 'Nuestros Saberes 5º Grado', paginasBase: 28, paginasRango: 6, descripcion: 'Textos argumentativos, fuentes confiables y citas' }
     ],
     'ciencias': [
-      { titulo: 'Nuestros Saberes 5º y 6º Grado', paginasBase: 118, paginasRango: 8, descripcion: 'Sistemas del cuerpo humano, biodiversidad y energías limpias' },
+      { titulo: 'Nuestros Saberes 6º Grado', paginasBase: 118, paginasRango: 8, descripcion: 'Circuitos eléctricos, conductores, energía y biodiversidad' },
+      { titulo: 'Nuestros Saberes 5º Grado', paginasBase: 96, paginasRango: 8, descripcion: 'Sistemas del cuerpo humano, estilo de vida saludable y medio ambiente' },
       { titulo: 'Proyectos Comunitarios 6º Grado', paginasBase: 168, paginasRango: 8, descripcion: 'Biodigestores, huellas ecológicas y energías renovables' }
     ],
     'general': [
-      { titulo: 'Cartografía de México y el Mundo (5º y 6º)', paginasBase: 42, paginasRango: 8, descripcion: 'Dinámica poblacional, desastres naturales y sostenibilidad' },
+      { titulo: 'Cartografía de México y el Mundo (5º y 6º Grado)', paginasBase: 42, paginasRango: 8, descripcion: 'Dinámica poblacional, desastres naturales y sostenibilidad' },
       { titulo: 'Nuestros Saberes 6º Grado', paginasBase: 88, paginasRango: 6, descripcion: 'Ciudadanía global, derechos humanos y cultura de paz' }
     ]
   },
   'secundaria': {
     'matematicas': [
-      { titulo: 'Saberes y Pensamiento Científico: Matemáticas (1º, 2º y 3º Secundaria)', paginasBase: 84, paginasRango: 8, descripcion: 'Álgebra, funciones lineales y cuadráticas, teorema de Pitágoras y probabilidad' },
-      { titulo: 'Colección Ximhai / Sk’asolil Matemáticas Secundaria', paginasBase: 136, paginasRango: 8, descripcion: 'Modelación algebraica y resolución de problemas situados' }
+      { titulo: 'Saberes y Pensamiento Científico: Matemáticas 1º de Secundaria', paginasBase: 84, paginasRango: 8, descripcion: 'Álgebra, ecuaciones lineales, proporcionalidad y geometría' },
+      { titulo: 'Saberes y Pensamiento Científico: Matemáticas 2º de Secundaria', paginasBase: 112, paginasRango: 8, descripcion: 'Sistemas de ecuaciones, teorema de Pitágoras y probabilidad' },
+      { titulo: 'Saberes y Pensamiento Científico: Matemáticas 3º de Secundaria', paginasBase: 136, paginasRango: 8, descripcion: 'Funciones cuadráticas, trigonometría y modelación matemática' },
+      { titulo: 'Colección Ximhai: Matemáticas Secundaria', paginasBase: 140, paginasRango: 8, descripcion: 'Modelación algebraica y resolución de problemas situados' }
     ],
     'ciencias': [
-      { titulo: 'Saberes y Pensamiento Científico: Ciencias (Física / Química / Biología)', paginasBase: 96, paginasRango: 8, descripcion: 'Leyes de Newton, energía, enlace químico, genética y evolución' },
+      { titulo: 'Saberes y Pensamiento Científico: Biología 1º de Secundaria', paginasBase: 64, paginasRango: 8, descripcion: 'Célula, biodiversidad, genética y nutrición saludable' },
+      { titulo: 'Saberes y Pensamiento Científico: Física 2º de Secundaria', paginasBase: 96, paginasRango: 8, descripcion: 'Leyes de Newton, energía, calor, ondas y electromagnetismo' },
+      { titulo: 'Saberes y Pensamiento Científico: Química 3º de Secundaria', paginasBase: 104, paginasRango: 8, descripcion: 'Estructura atómica, enlaces químicos, reacciones y ácidos/bases' },
       { titulo: 'Proyectos de Ciencias Naturales Secundaria', paginasBase: 148, paginasRango: 8, descripcion: 'Indagación experimental en laboratorio y proyectos STEM' }
     ],
     'lenguajes': [
-      { titulo: 'Lenguajes: Español 1º, 2º y 3º Secundaria', paginasBase: 52, paginasRango: 8, descripcion: 'Textos argumentativos, cartas formales y de petición, ensayos y debates' },
-      { titulo: 'Múltiples Lenguajes Secundaria', paginasBase: 74, paginasRango: 6, descripcion: 'Crítica literaria, arte contemporáneo y medios de comunicación' }
+      { titulo: 'Lenguajes: Español 1º de Secundaria', paginasBase: 52, paginasRango: 8, descripcion: 'Textos argumentativos, cartas formales y reglamentos' },
+      { titulo: 'Lenguajes: Español 2º de Secundaria', paginasBase: 68, paginasRango: 8, descripcion: 'Crónica, textos de divulgación y mesas redondas' },
+      { titulo: 'Lenguajes: Español 3º de Secundaria', paginasBase: 80, paginasRango: 8, descripcion: 'Ensayos literarios, análisis de medios y debates críticos' },
+      { titulo: 'Múltiples Lenguajes Secundaria', paginasBase: 74, paginasRango: 6, descripcion: 'Crítica literaria, arte contemporáneo y patrimonio lingüístico' }
     ],
     'general': [
-      { titulo: 'Ética, Naturaleza y Sociedades Secundaria', paginasBase: 62, paginasRango: 8, descripcion: 'Historia crítica de México, derechos humanos y soberanía' },
+      { titulo: 'Ética, Naturaleza y Sociedades 1º de Secundaria (Geografía)', paginasBase: 56, paginasRango: 8, descripcion: 'Espacio geográfico, recursos naturales y sustentabilidad' },
+      { titulo: 'Ética, Naturaleza y Sociedades 2º de Secundaria (Historia)', paginasBase: 78, paginasRango: 8, descripcion: 'México prehispánico, virreinato e independencia nacional' },
+      { titulo: 'Ética, Naturaleza y Sociedades 3º de Secundaria (Historia y FCE)', paginasBase: 120, paginasRango: 8, descripcion: 'Revolución Mexicana, democracia, derechos humanos y estado de derecho' },
       { titulo: 'De lo Humano y lo Comunitario Secundaria', paginasBase: 44, paginasRango: 6, descripcion: 'Tecnología, proyectos productivos, educación socioemocional y salud' }
     ]
   },
@@ -298,8 +312,44 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
     pageEnd: 117,
     description: 'Cuidado del agua, huertos escolares y separación de residuos'
   },
+  {
+    level: 'primaria-baja',
+    topicRegex: /muert|difunt|ofrend|calaver|altar|cempasuchil|costumbre|tradicion/i,
+    bookTitle: 'Proyectos Comunitarios 2º Grado',
+    projectTitle: 'Proyecto Comunitario: "Costumbres y tradiciones que nos dan identidad"',
+    pageStart: 36,
+    pageEnd: 49,
+    description: 'Altares tradicionales, relatos familiares y patrimonio biocultural'
+  },
+  {
+    level: 'primaria-baja',
+    topicRegex: /revoluci|independ|historia|heroe|patria/i,
+    bookTitle: 'Proyectos de Aula 2º Grado',
+    projectTitle: 'Proyecto de Aula: "Viajeros del tiempo: personajes y fechas de México"',
+    pageStart: 82,
+    pageEnd: 95,
+    description: 'Acontecimientos cívicos, corridos populares y memoria comunitaria'
+  },
   
   // --- FASE 4: PRIMARIA MEDIA (3º Y 4º) ---
+  {
+    level: 'primaria-media',
+    topicRegex: /muert|difunt|ofrend|calaver|altar|cempasuchil|costumbre|tradicion|patrimonio/i,
+    bookTitle: 'Proyectos Comunitarios 4º Grado',
+    projectTitle: 'Proyecto Comunitario: "Nuestras tradiciones y el patrimonio biocultural"',
+    pageStart: 28,
+    pageEnd: 41,
+    description: 'Ofrendas tradicionales, flora nativa (cempasúchil), calaveritas y memoria oral'
+  },
+  {
+    level: 'primaria-media',
+    topicRegex: /entidad|donde vivo|municipio|comunidad|region|mapa|localidad/i,
+    bookTitle: 'Cartografía de México y el Mundo (4º Grado)',
+    projectTitle: 'Proyecto Geográfico: "Territorio, costumbres y paisajes de nuestra entidad"',
+    pageStart: 24,
+    pageEnd: 37,
+    description: 'Mapas de la entidad, patrimonio cultural, recursos naturales y relieve'
+  },
   {
     level: 'primaria-media',
     topicRegex: /carta|epistol|mensaje|buzon|correspondencia|opinion/i,
@@ -327,8 +377,35 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
     pageEnd: 155,
     description: 'Ecotecnias escolares, filtración de agua pluvial y nutrición'
   },
+  {
+    level: 'primaria-media',
+    topicRegex: /revoluci|independ|historia|virreinato|conquista/i,
+    bookTitle: 'Nuestros Saberes 4º Grado',
+    projectTitle: 'Proyecto Histórico: "Acontecimientos y transformaciones de nuestro país"',
+    pageStart: 160,
+    pageEnd: 175,
+    description: 'Causas históricas, movimientos sociales y derechos constitucionales'
+  },
 
   // --- FASE 5: PRIMARIA ALTA (5º Y 6º) ---
+  {
+    level: 'primaria-alta',
+    topicRegex: /electric|circuito|estatica|conductor|corriente|energia/i,
+    bookTitle: 'Proyectos Escolares 6º Grado',
+    projectTitle: 'Proyecto Tecnológico: "Ingenieros de la energía: circuitos eléctricos y conductores"',
+    pageStart: 140,
+    pageEnd: 155,
+    description: 'Conductores y aislantes, circuitos en serie/paralelo y uso eficiente de energía'
+  },
+  {
+    level: 'primaria-alta',
+    topicRegex: /circulo|pi\b|circunferenc|radio|diametro|cartesiano/i,
+    bookTitle: 'Proyectos de Aula 6º Grado',
+    projectTitle: 'Proyecto Matemático: "El enigma del círculo y la constante Pi en la vida cotidiana"',
+    pageStart: 110,
+    pageEnd: 125,
+    description: 'Cálculo del perímetro y área circular, relación entre diámetro y circunferencia'
+  },
   {
     level: 'primaria-alta',
     topicRegex: /carta|peticion|autoridad|oficio|formal|debate/i,
@@ -346,6 +423,24 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
     pageStart: 168,
     pageEnd: 183,
     description: 'Aprovechamiento de biomasa, producción de biogás y huella ecológica'
+  },
+  {
+    level: 'primaria-alta',
+    topicRegex: /revoluci|madero|zapata|constituc|1917|porfiriato|agrario/i,
+    bookTitle: 'Proyectos Comunitarios 5º Grado',
+    projectTitle: 'Proyecto Histórico: "Voces de la Revolución Mexicana y la Constitución de 1917"',
+    pageStart: 192,
+    pageEnd: 207,
+    description: 'Demandas agrarias, laborales, Artículo 3º y 123 y memoria histórica'
+  },
+  {
+    level: 'primaria-alta',
+    topicRegex: /muert|difunt|ofrend|calaver|cempasuchil|tradicion/i,
+    bookTitle: 'Proyectos Escolares 5º Grado',
+    projectTitle: 'Proyecto Cultural: "Mural de las memorias y tradiciones comunitarias"',
+    pageStart: 54,
+    pageEnd: 67,
+    description: 'Patrimonio inmaterial, altares tradicionales y lírica popular'
   },
   {
     level: 'primaria-alta',
@@ -378,12 +473,30 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
   },
   {
     level: 'secundaria',
-    topicRegex: /ultraproces|nutric|diabetes|dieta|alimento/i,
+    topicRegex: /ultraproces|nutric|diabetes|dieta|alimento|salud/i,
     bookTitle: 'Saberes y Pensamiento Científico: Biología 1º de Secundaria',
     projectTitle: 'Proyecto de Salud: "Prevención de enfermedades y etiquetado frontal NOM-051"',
     pageStart: 63,
     pageEnd: 79,
     description: 'Metabolismo, alimentos ultraprocesados y estilo de vida saludable'
+  },
+  {
+    level: 'secundaria',
+    topicRegex: /revoluci|porfiriato|constituc|soberania|guerra|independencia/i,
+    bookTitle: 'Ética, Naturaleza y Sociedades: Historia 3º de Secundaria',
+    projectTitle: 'Proyecto Histórico: "Transformaciones revolucionarias, soberanía y justicia social"',
+    pageStart: 140,
+    pageEnd: 159,
+    description: 'Procesos revolucionarios, reformas sociales y vigencia constitucional'
+  },
+  {
+    level: 'secundaria',
+    topicRegex: /muert|difunt|tradicion|sincretismo|pueblos originarios/i,
+    bookTitle: 'Ética, Naturaleza y Sociedades 2º de Secundaria',
+    projectTitle: 'Proyecto Intercultural: "Diversidad biocultural, sincretismo y memoria comunitaria"',
+    pageStart: 88,
+    pageEnd: 103,
+    description: 'Cosmovisión sobre la vida y la muerte, pueblos originarios y preservación cultural'
   }
 ];
 
@@ -467,11 +580,13 @@ export function cleanCoreTopicName(topic: string): string {
 
   // Normalización canónica para temas frecuentes de la NEM
   const lower = cleaned.toLowerCase();
+  if (/muert|difunt|ofrend|calaver|cempasuchil|altar/i.test(lower)) return 'Tradiciones y Día de Muertos';
   if (/revoluci/i.test(lower) && /mexic/i.test(lower)) return 'Revolución Mexicana';
   if (/independen/i.test(lower) && /mexic/i.test(lower)) return 'Independencia de México';
   if (/porfiriato/i.test(lower)) return 'El Porfiriato y sus Contradicciones Sociales';
   if (/constituc/i.test(lower) && /1917/i.test(lower)) return 'La Constitución de 1917 y los Derechos Sociales';
   if (/fraccion/i.test(lower)) return 'Fracciones y Reparto Equitativo';
+  if (/tiend|mercado|moneda|billete|compra/i.test(lower)) return 'La Tiendita Escolar y el Uso de Monedas';
   if (/suma|resta/i.test(lower) && /concreto|fichas|reagrupa/i.test(lower)) return 'Suma y Resta con Material Concreto';
   if (/multiplic|tablas/i.test(lower)) return 'Multiplicación y Tablas Numéricas';
   if (/geometr|figuras|tangram/i.test(lower)) return 'Figuras Geométricas y Cuerpos del Entorno';
@@ -482,6 +597,8 @@ export function cleanCoreTopicName(topic: string): string {
   if (/carta|epistol|buzon/i.test(lower)) return 'Producción de Textos Epistolares (La Carta)';
   if (/cuento|leyenda|fabula/i.test(lower)) return 'Lectura y Creación de Cuentos Colectivos';
   if (/derecho|paz|acuerdo/i.test(lower)) return 'Derechos de la Niñez y Convivencia Pacífica';
+  if (/ecosistem|biodivers/i.test(lower)) return 'Ecosistemas y Conservación de la Biodiversidad';
+  if (/cuerpo|salud|nutric|bien comer/i.test(lower)) return 'El Plato del Bien Comer y Hábitos Saludables';
 
   // Capitalización limpia
   cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
@@ -519,6 +636,108 @@ export function sanitizeSpanishPedagogicalGrammar(text: string): string {
   return res;
 }
 
+export type PedagogicalDomain = 
+  | 'traditions_culture'
+  | 'history_society'
+  | 'civics_ethics'
+  | 'natural_sciences'
+  | 'health_nutrition'
+  | 'mathematics_fractions'
+  | 'mathematics_geometry'
+  | 'mathematics_algebra'
+  | 'mathematics_numbers'
+  | 'language_epistolar'
+  | 'language_narrative'
+  | 'language_poetry'
+  | 'language_expository'
+  | 'arts'
+  | 'socioemotional_physical';
+
+/**
+ * Clasificador semántico universal de dominios curriculares oficiales (NEM 2024)
+ */
+export function classifyPedagogicalDomain(topic: string, subject: string = ''): PedagogicalDomain {
+  const cleanTopic = cleanCoreTopicName(topic).toLowerCase();
+  const cleanSub = (subject || '').toLowerCase();
+
+  // 1. Tradiciones y Patrimonio Biocultural
+  if (/muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad|carnaval|charro|mariachi|indigena|originario|lengua materna/i.test(cleanTopic)) {
+    return 'traditions_culture';
+  }
+
+  // 2. Textos Epistolares / Cartas
+  if (/carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(cleanTopic)) {
+    return 'language_epistolar';
+  }
+
+  // 3. Poesía, Lírica y Rima
+  if (/poe|rima|verso|estrofa|cancion|calaverita|copla|lira|cantos populares/i.test(cleanTopic)) {
+    return 'language_poetry';
+  }
+
+  // 4. Narrativa, Cuentos, Leyendas y Teatro
+  if (/cuento|fabula|leyenda|mito|narracion|relato|teatro|dramat|guiñol|obra de teatro/i.test(cleanTopic)) {
+    return 'language_narrative';
+  }
+
+  // 5. Matemáticas - Fracciones
+  if (/fraccion|equivalen|particion|reparto|denominador|numerador/i.test(cleanTopic)) {
+    return 'mathematics_fractions';
+  }
+
+  // 6. Matemáticas - Geometría
+  if (/geometr|figura|cuerpo geometric|tangram|perimetr|area\b|volumen|angulo|vertice|arista|plano cartes/i.test(cleanTopic)) {
+    return 'mathematics_geometry';
+  }
+
+  // 7. Matemáticas - Álgebra y Funciones
+  if (/algebra|ecuacion|cuadrat|parabol|funcion|segundo grado|tiro parab/i.test(cleanTopic)) {
+    return 'mathematics_algebra';
+  }
+
+  // 8. Matemáticas - Números, Aritmética, Conteo y Tiendita
+  if (/matemat|suma|resta|multiplic|division|conteo|numero|agrupacion|tiendita|moneda|dinero|billete|precio|cambio|mercado|compras|presupuesto|porcentaj|estadist|probabil/i.test(cleanTopic) || cleanSub.includes('mat') || cleanSub.includes('algebra') || cleanSub.includes('calc')) {
+    return 'mathematics_numbers';
+  }
+
+  // 9. Ciencias - Salud, Nutrición y Cuerpo Humano
+  if (/cuerpo|organo|salud|nutric|plato del bien comer|aliment|higiene|vacuna|enfermedad|sentido|vista|oido|tacto|gusto|olfato/i.test(cleanTopic) || cleanSub.includes('salud')) {
+    return 'health_nutrition';
+  }
+
+  // 10. Ciencias Naturales, Ecología, Biodiversidad, Ecosistemas, Materia y Agua
+  if (/cienc|natur|biolog|fisic|quimic|planta|animal|ecosistem|agua|aire|suelo|materia|energia|fuerza|movimient|celul|atomo|huerto|germin|solar|eolica|biodigestor|recicl|cambio climatic/i.test(cleanTopic) || cleanSub.includes('cien') || cleanSub.includes('medio') || cleanSub.includes('nat') || cleanSub.includes('bio') || cleanSub.includes('fis') || cleanSub.includes('quim')) {
+    return 'natural_sciences';
+  }
+
+  // 11. Artes Visuales y Plásticas
+  if (/arte|pintur|dibujo|escultur|musica|danza|color|expresion artist|ritmo|sonido|obra plastica/i.test(cleanTopic) || cleanSub.includes('art') || cleanSub.includes('mus')) {
+    return 'arts';
+  }
+
+  // 12. Civismo, Derechos, Paz y Democracia
+  if (/derecho|paz|acuerdo|convivenc|mediacion|inclusion|igualdad|genero|discrimin|democrac|ciudadan|justicia|constituc|regla|norma/i.test(cleanTopic) || cleanSub.includes('civ') || cleanSub.includes('etic')) {
+    return 'civics_ethics';
+  }
+
+  // 13. Socioemocional y Educación Física
+  if (/emocion|socioemocional|autoestima|empatia|deport|educacion fisica|motriz|juego cooperativo/i.test(cleanTopic) || cleanSub.includes('hum') || cleanSub.includes('efi') || cleanSub.includes('tut')) {
+    return 'socioemotional_physical';
+  }
+
+  // 14. Historia, Geografía y Sociedad
+  if (/revoluci|independen|porfir|reforma|mexic|histori|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria|entidad|region|localidad|geografia|mapa|territorio/i.test(cleanTopic) || cleanSub.includes('his') || cleanSub.includes('ent') || cleanSub.includes('geo') || cleanSub.includes('soc')) {
+    return 'history_society';
+  }
+
+  // 15. Lenguajes - Expositivo y General
+  if (cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('comun') || /lectur|escritur|texto|noticia|periodico|oratori|debate|discurs|argument|exposit|instructiv|ortograf|redacc|gaceta/i.test(cleanTopic)) {
+    return 'language_expository';
+  }
+
+  return 'history_society';
+}
+
 /**
  * Generador Dinámico de Sesiones Individuales con Minutero (10/30/10 min), Libros SEP y Entregables
  * Genera de forma exacta el número de sesiones solicitado por el docente (1 a 30 sesiones),
@@ -538,6 +757,7 @@ export function generateChronometerSessions(
   const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
   const isCuento = /cuento|fabula|leyenda|mito|narracion|literat/i.test(topicLower);
   const isPoesia = /poe|rima|verso|estrofa|cancion/i.test(topicLower);
+  const isTradition = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad/i.test(topicLower);
   const cleanSub = subject.toLowerCase();
   const isLanguageSubject = cleanSub.includes('leng') || cleanSub.includes('esp') || cleanSub.includes('comun') || (!cleanSub.includes('mat') && !cleanSub.includes('cien') && (isEpistolar || isCuento || isPoesia));
 
@@ -672,6 +892,140 @@ export function generateChronometerSessions(
       ],
       materiales: ['Buzón con cartas listas', 'Rúbricas analíticas impresas', 'Mural de firmas y compromisos comunitarios'],
       entregable: `🏆 Evidencia Final Integradora: Registro de entrega de cartas, lectura compartida comunitaria y rúbrica analítica formativa evaluada.`
+    }
+  ];
+
+  // Plantilla Especializada: Tradiciones, Día de Muertos y Patrimonio Biocultural
+  const traditionTemplates = [
+    {
+      num: 1,
+      titulo: `Apertura del Reto: ¿Por qué conmemoramos a nuestros antepasados? La memoria oral y el patrimonio biocultural`,
+      inicio: `⏱️ INICIO (10 min): Dinámica detonadora "El Baúl de la Memoria". El docente presenta elementos simbólicos de la temporada (flor de cempasúchil, copal, pan de muerto) y plantea la pregunta central: "¿Qué significan los altares de muertos y por qué son patrimonio de nuestra entidad?".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): En equipos de 4, las y los alumnos exploran fotografías, relatos familiares y dialogan sobre cómo se vive la tradición en sus hogares y colonias. Registran en un papel bond sus saberes previos y dibujan el mapa de recuerdos de su localidad.`,
+      cierre: `⏱️ CIERRE (10 min): Puesta en común de saberes familiares. Cada equipo formula una pregunta que investigará con sus abuelos o personas mayores de la comunidad.`,
+      preguntas: [
+        `¿Qué relatos o recuerdos guardan en casa sobre las personas queridas que ya no están?`,
+        `¿Por qué decimos que las tradiciones nos unen como comunidad y nos dan identidad?`
+      ],
+      materiales: ['Muestras de elementos tradicionales', 'Papel bond', 'Plumones de colores', 'Cuaderno del alumno'],
+      entregable: `📄 Ficha de Trabajo #1: Diagnóstico inicial "Las tradiciones de mi comunidad" y preguntas de indagación familiar.`
+    },
+    {
+      num: 2,
+      titulo: `Exploración en Libros SEP: Los cuatro elementos del altar tradicional y su simbolismo biocultural`,
+      inicio: `⏱️ INICIO (10 min): Ruleta de preguntas sobre la sesión anterior y apertura de los libros de texto gratuitos de la SEP (Proyectos Comunitarios / Nuestros Saberes).`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Lectura analítica guiada sobre el origen de las ofrendas. Los alumnos identifican y relacionan los 4 elementos naturales: 1) Tierra (frutos y semillas), 2) Agua (para mitigar la sed), 3) Fuego (velas y luz guía), y 4) Viento (papel picado e incienso). En parejas completan un esquema rotulado.`,
+      cierre: `⏱️ CIERRE (10 min): Plenaria formativa: Cada pareja comparte el elemento que más le llamó la atención y su significado cultural en su entidad federativa.`,
+      preguntas: [
+        `¿Qué representa cada nivel y cada elemento que se coloca en el altar tradicional?`,
+        `¿Cómo se relacionan estos elementos con la naturaleza y el cuidado de los recursos de nuestro entorno?`
+      ],
+      materiales: ['Libros de texto gratuitos de la SEP', 'Colores y marcatextos', 'Esquemas ilustrados'],
+      entregable: `📄 Ficha de Trabajo #2: Esquema rotulado y analítico "Los 4 elementos naturales y el simbolismo del altar".`
+    },
+    {
+      num: 3,
+      titulo: `Taller Lírico Tradicional: Creación de calaveritas literarias y coplas populares con rima y humor respetuoso`,
+      inicio: `⏱️ INICIO (10 min): Lectura en voz alta de calaveritas literarias históricas y de José Guadalupe Posada. Análisis del ritmo y el juego poético.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Taller de creación poética en cuartetas rimadas (versos octosílabos o rima libre). Las y los alumnos escriben versos dedicados con afecto y humor a personajes de la escuela (maestros, compañeros, bibliotecarios) o a oficios de la comunidad.`,
+      cierre: `⏱️ CIERRE (10 min): Micrófono abierto de declamación: voluntarios leen su calaverita favorita. Coevaluación basada en el respeto y la creatividad.`,
+      preguntas: [
+        `¿Cómo logramos que una calaverita literaria sea graciosa, ingeniosa y al mismo tiempo respetuosa?`,
+        `¿Qué palabras rimaron mejor en nuestros versos y cómo le dan musicalidad a la lectura?`
+      ],
+      materiales: ['Hojas pautadas o de raya', 'Lápiz y goma', 'Ejemplos de calaveras literarias tradicionales'],
+      entregable: `📄 Producción Lírica #3: Borrador revisado de calaverita literaria con rima y recursos poéticos populares.`
+    },
+    {
+      num: 4,
+      titulo: `Saberes Bioculturales: Propiedades del cempasúchil, semillas nativas y cambios físicos de la materia`,
+      inicio: `⏱️ INICIO (10 min): Exploración sensorial guiada con pétalos de cempasúchil, copal y veladoras de cera. Observación con lupas escolares.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Indagación científica escolar. Registro botánico del cempasúchil (ciclo otoñal, pigmentos carotenoides y propiedades repelentes). Observación de cambios de estado: la cera que se funde con el calor (fusión) y el copal que desprende aroma (combustión y sublimación).`,
+      cierre: `⏱️ CIERRE (10 min): Conclusiones en plenaria: Registro en bitácora de cómo la ciencia y los saberes ancestrales explican los fenómenos del altar.`,
+      preguntas: [
+        `¿Por qué florece el cempasúchil justamente en los meses de octubre y noviembre en México?`,
+        `¿Qué transformaciones físicas le ocurren a la cera de las velas y a los aromas al calentarse?`
+      ],
+      materiales: ['Flores de cempasúchil', 'Lupas escolares', 'Trozos de cera o plastilina', 'Bitácora científica'],
+      entregable: `📄 Ficha Científica #4: Registro botánico y tabla de transformaciones físicas observadas en los materiales del altar.`
+    },
+    {
+      num: 5,
+      titulo: `Taller de Arte Popular: Papel picado tradicional, catrinas artesanales y tapetes florales`,
+      inicio: `⏱️ INICIO (10 min): Muestra de papel picado artesanal y análisis geométrico de simetría axial en los dobleces y calados.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Taller manual. Doblez y calado de papel china con figuras tradicionales (calaveras, flores, palomas). Modelado de calaveritas de plastilina o masa de sal y diseño de cenefas para el altar colectivo.`,
+      cierre: `⏱️ CIERRE (10 min): Tendedero visual en el salón de clases: exhibición de los pliegos de papel picado creados por el grupo.`,
+      preguntas: [
+        `¿Cómo ayuda la simetría y la paciencia para que el papel picado quede armónico y detallado?`,
+        `¿Qué historias de nuestra comunidad podemos representar en los grabados y figuras populares?`
+      ],
+      materiales: ['Papel china de colores vivos', 'Tijeras de punta redonda', 'Masa o plastilina', 'Cuerda para colgar'],
+      entregable: `🎨 Artefacto Plástico #5: Pliego de papel picado artesanal y figura en relieve terminada para la ofrenda escolar.`
+    },
+    {
+      num: 6,
+      titulo: `Tradición Oral y Memoria Comunitaria: Entrevistas sobre relatos, leyendas y costumbres de antes`,
+      inicio: `⏱️ INICIO (10 min): Planteamiento: "¿Cómo podemos documentar los saberes de los abuelos antes de que se olviden?".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Los alumnos organizan en equipos la información recabada en sus entrevistas familiares. Redactan un breve texto testimonial o leyenda comunitaria sobre cómo se conmemoraba a los fieles difuntos en su región en décadas pasadas.`,
+      cierre: `⏱️ CIERRE (10 min): Círculo de la palabra: lectura de fragmentos testimoniales más emotivos y registro de saberes en el periódico mural.`,
+      preguntas: [
+        `¿Qué costumbres se mantienen vivas y cuáles han cambiado a lo largo del tiempo en nuestra entidad?`,
+        `¿Por qué escuchar a los adultos mayores enriquece nuestro conocimiento y nos enseña a valorar la vida?`
+      ],
+      materiales: ['Notas de entrevistas familiares', 'Cartulinas de colores', 'Plumones'],
+      entregable: `📄 Ficha Testimonial #6: Transcripción ilustrada de la entrevista comunitaria sobre tradiciones de la entidad.`
+    },
+    {
+      num: 7,
+      titulo: `Organización del Altar Colectivo: Boceto espacial, distribución de niveles y asignación de comisiones`,
+      inicio: `⏱️ INICIO (10 min): Presentación del plano del espacio escolar donde se montará la ofrenda tradicional comunitaria.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Trabajo colaborativo por comisiones: 1) Estructura y niveles del altar, 2) Módulo de elementos bioculturales (flores y frutos), 3) Módulo lírico de calaveritas, y 4) Módulo de papel picado y arte popular. Elaboración del croquis a escala.`,
+      cierre: `⏱️ CIERRE (10 min): Firma de la lista de responsabilidades y verificación de materiales para el montaje final.`,
+      preguntas: [
+        `¿Cómo nos organizamos equitativamente para que todos participen con gusto y nadie se quede sin tarea?`,
+        `¿Qué medidas de seguridad y cuidado debemos mantener durante el montaje de las estructuras?`
+      ],
+      materiales: ['Croquis impreso', 'Caja organizadora de materiales', 'Lista de comisiones'],
+      entregable: `📄 Plan de Montaje #7: Croquis espacial a escala y cédula de responsabilidades por equipo.`
+    },
+    {
+      num: 8,
+      titulo: `Ensayo General de la Muestra Cultural: Declamación lírica, guion museográfico y atención a visitantes`,
+      inicio: `⏱️ INICIO (10 min): Técnica de respiración y modulación de la voz: "¿Cómo hablar con seguridad ante un público numeroso?".`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Ensayo general. Cada alumno ensaya su intervención: recitar su calaverita, explicar el significado del cempasúchil, o narrar el simbolismo del pan de muerto a los visitantes. Retroalimentación constructiva entre compañeros.`,
+      cierre: `⏱️ CIERRE (10 min): Dinámica de motivación colectiva y colocación de distintivos de mediadores culturales escolares.`,
+      preguntas: [
+        `¿Qué palabras clave debemos recordar al explicar nuestra ofrenda a las familias?`,
+        `¿Cómo demostramos empatía y calidez al recibir a los visitantes de nuestra escuela?`
+      ],
+      materiales: ['Tarjetas guía con notas clave', 'Gafetes de mediador cultural elaborados en clase'],
+      entregable: `📄 Guion Expositivo #8: Tarjeta síntesis con los puntos que cada estudiante explicará en la ofrenda.`
+    },
+    {
+      num: 9,
+      titulo: `Montaje de la Ofrenda Tradicional Viva: Colocación de elementos, flores, arte popular y calaveritas`,
+      inicio: `⏱️ INICIO (10 min): Pase de lista de comisiones y activación del protocolo de cuidado y respeto al espacio ceremonial y comunitario.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Montaje activo de la ofrenda en el espacio asignado: colocación de manteles, niveles, arcos de cempasúchil, papel picado, ofrendas de semillas, alimentos tradicionales y la antología de calaveritas murales.`,
+      cierre: `⏱️ CIERRE (10 min): Vista panorámica del altar terminado. Momento de contemplación, agradecimiento y toma de fotografía colectiva del trabajo en equipo.`,
+      preguntas: [
+        `¿Cómo se transformó el espacio escolar gracias al esfuerzo conjunto de todo el grupo?`,
+        `¿Qué detalle de nuestra ofrenda refleja mejor la identidad de nuestra entidad federativa?`
+      ],
+      materiales: ['Estructura del altar', 'Flores, manteles, papel picado, trabajos de los alumnos'],
+      entregable: `🏆 Producto Tangible #9: Ofrenda Tradicional Viva montada con todos sus módulos y cédulas explicativas.`
+    },
+    {
+      num: 10,
+      titulo: `Encuentro Comunitario de Tradiciones con Familias: Recorrido cultural, recital y evaluación formativa`,
+      inicio: `⏱️ INICIO (10 min): Palabras de bienvenida y apertura de la Muestra Cultural Comunitaria ante familias, docentes y directivos.`,
+      desarrollo: `⏱️ DESARROLLO (30 min): Recorrido guiado por las estaciones de la ofrenda conducido por los propios alumnos. Recital de calaveritas literarias, degustación simbólica y firma del "Libro de Oro de la Memoria Escolar".`,
+      cierre: `⏱️ CIERRE (10 min): Aplicación de la rúbrica analítica formativa de 3 niveles, palabras de agradecimiento de una madre/padre de familia y aplauso comunitario.`,
+      preguntas: [
+        `¿Qué emoción o aprendizaje nuevo se llevan las familias de nuestra muestra escolar?`,
+        `¿Cómo nos sentimos al haber logrado un proyecto tan significativo y qué aprendimos sobre nosotros mismos?`
+      ],
+      materiales: ['Ofrenda montada', 'Libro de firmas comunitarias', 'Rúbricas analíticas formativas impresas'],
+      entregable: `🏆 Evidencia Final Integradora: Muestra cultural comunitaria culminada, recital presentado y rúbrica analítica evaluada.`
     }
   ];
 
@@ -883,7 +1237,7 @@ export function generateChronometerSessions(
     {
       num: 1,
       titulo: `Planteamiento del Reto Comunitario y Activación de Saberes sobre "${cleanTopic}"`,
-      inicio: `⏱️ INICIO (10 min): Dinámica "La Caja de Saberes". El docente plantea la pregunta central y conflicto cognitivo sobre "${cleanTopic}". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.`,
+      inicio: `⏱️ INICIO (10 min): Activación temática y exploración de saberes previos. El docente plantea la pregunta central y conflicto cognitivo sobre "${cleanTopic}". Los alumnos comparten sus experiencias cotidianas y registran en el pizarrón lo que ya saben.`,
       desarrollo: `⏱️ DESARROLLO (30 min): Exploración con material manipulable y organizadores gráficos en equipos de 4 alumnos. Cada equipo analiza una situación real vinculada a "${cleanTopic}" y elabora su primer registro diagnóstico.`,
       cierre: `⏱️ CIERRE (10 min): Puesta en común de hallazgos iniciales. Cada equipo expresa en una frase su meta de aprendizaje. Registro individual en bitácora: "¿Qué descubrí hoy sobre ${cleanTopic}?".`,
       preguntas: [
@@ -1157,6 +1511,8 @@ export function generateChronometerSessions(
   
   if (isLanguageSubject && isEpistolar) {
     masterPool = epistolarTemplates;
+  } else if (isTradition) {
+    masterPool = traditionTemplates;
   }
 
   // Construcción de la secuencia exacta de "count" sesiones
@@ -1184,13 +1540,32 @@ export function generateChronometerSessions(
         materiales: ['Libro de texto gratuito SEP', 'Material manipulable o cartulinas', 'Bitácora escolar'],
         entregable: `🏆 Evidencia Integradora: Ficha de trabajo y producto demostrativo completado sobre "${cleanTopic}".`
       };
+    } else if (count === 2) {
+      const poolLen = masterPool.length;
+      const tplIndex = i === 0 ? 0 : poolLen - 1;
+      baseTpl = masterPool[tplIndex] || masterPool[0];
+    } else if (count === 3) {
+      const poolLen = masterPool.length;
+      const tplIndex = i === 0 ? 0 : i === 1 ? 1 : poolLen - 1;
+      baseTpl = masterPool[tplIndex] || masterPool[0];
+    } else if (count === 4) {
+      const poolLen = masterPool.length;
+      const midIdx = Math.min(poolLen - 2, Math.max(2, Math.floor(poolLen / 2)));
+      const tplIndex = i === 0 ? 0 : i === 1 ? 1 : i === 2 ? midIdx : poolLen - 1;
+      baseTpl = masterPool[tplIndex] || masterPool[0];
     } else {
       const poolLen = masterPool.length;
-      const tplIndex = i === 0 
-        ? 0 
-        : i === count - 1 
-          ? poolLen - 1 
-          : Math.min(poolLen - 2, Math.max(1, Math.round((i / (count - 1)) * (poolLen - 1))));
+      let tplIndex: number;
+      if (i === 0) {
+        tplIndex = 0;
+      } else if (i === 1) {
+        tplIndex = 1;
+      } else if (i === count - 1) {
+        tplIndex = poolLen - 1;
+      } else {
+        const progress = (i - 1) / (count - 2); // 0 to 1 between session 2 and session count-1
+        tplIndex = Math.min(poolLen - 2, Math.max(2, 2 + Math.round(progress * (poolLen - 4))));
+      }
       const phaseTpl = masterPool[tplIndex] || masterPool[0];
       baseTpl = {
         ...phaseTpl,
@@ -1240,6 +1615,7 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
   const levelKey = level || 'primaria-baja';
 
   // Identificación precisa del dominio temático
+  const isTraditionsOrCulture = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad|carnaval|charro|mariachi|indigena|originario|lengua materna/i.test(topicLower);
   const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
   const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
   const isLiterature = /cuento|leyenda|mito|fabula|poema|poes|rima|verso|cancion|teatro|dramat|relato|literat/i.test(topicLower);
@@ -1251,6 +1627,149 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
   const isCleanEnergy = /biodigestor|biogas|energia|solar|eolica|renovable|ecotecnia|residu|recicl/i.test(topicLower);
   const isScienceGeneral = /cienc|natur|biolog|fisic|quimic|plan|animal|cuerpo|organo|salud|ecosistem|materia|fuerza|movimient|celul|atomo|luz|universo|biodivers/i.test(topicLower);
   const isCivicsPeace = /derecho|paz|acuerdo|convivenc|mediacion|inclusion|igualdad|genero|discrimin|democrac|ciudadan|justicia/i.test(topicLower);
+
+  // 0. DOMINIO TRADICIONES, PATRIMONIO BIOCULTURAL Y DÍA DE MUERTOS
+  if (isTraditionsOrCulture) {
+    if (levelKey === 'preescolar') {
+      return [
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades (Preescolar - Fase 2)',
+          pda: `Comparte relatos, costumbres y tradiciones familiares sobre Día de Muertos y festividades de su comunidad, reconociendo la diversidad cultural y el respeto a sus compañeros.`,
+          relacion: 'Identidad familiar comunitaria, primeras nociones de tradición y respeto a la diversidad.'
+        },
+        {
+          campoFormativo: 'Lenguajes',
+          pda: `Expresa mediante dibujos, modelado con masa y canciones tradicionales sus impresiones sobre las ofrendas y personajes de las festividades comunitarias.`,
+          relacion: 'Expresión plástica y corporal, oralidad infantil y apreciación de símbolos culturales tradicionales.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Identifica que forma parte de una familia y comunidad con costumbres propias, participando con respeto y empatía en celebraciones colectivas.`,
+          relacion: 'Pertenencia afectiva familiar, trabajo colaborativo y valores de convivencia armónica.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Observa y clasifica elementos naturales de temporada (flores de cempasúchil, frutas, semillas y hojas), describiendo colores, texturas y aromas.`,
+          relacion: 'Exploración sensorial de la naturaleza y observación de los ciclos estacionales.'
+        }
+      ];
+    } else if (levelKey === 'primaria-baja') {
+      return [
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades (Primaria Baja - Fase 3)',
+          pda: `Indaga en relatos familiares, fotografías y testimonios comunitarios el origen y los cambios en las tradiciones y festividades de su localidad (Día de Muertos y conmemoraciones patronales), reconociendo el patrimonio biocultural.`,
+          relacion: 'Rescate de la memoria histórica local, sentido de pertenencia y valoración de las prácticas comunitarias.'
+        },
+        {
+          campoFormativo: 'Lenguajes',
+          pda: `Escribe de manera autónoma y colaborativa coplas populares, calaveritas sencillas y descripciones sobre las ofrendas y personajes tradicionales de su comunidad.`,
+          relacion: 'Lectoescritura con sentido sociocultural, disfrute de la lírica popular y expresión creativa en verso.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Reconoce que las tradiciones y festividades familiares fortalecen los lazos afectivos, el respeto hacia los abuelos y adultos mayores y el sentido de identidad colectiva.`,
+          relacion: 'Vínculos afectivos intergeneracionales, memoria familiar y colaboración en proyectos escolares.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Describe y clasifica elementos naturales de temporada (cempasúchil, mandarinas, calabaza, copal) y observa transformaciones físicas cotidianas en la preparación del altar.`,
+          relacion: 'Observación de la biodiversidad regional, ciclos agrícolas de otoño y cambios cotidianos de la materia.'
+        }
+      ];
+    } else if (levelKey === 'primaria-media') {
+      return [
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades (La Entidad donde Vivo - Fase 4)',
+          pda: `Reconoce y valora las prácticas culturales, expresiones artísticas, rituales, ofrendas y celebraciones tradicionales (como Día de Muertos) como parte del patrimonio biocultural y la memoria colectiva de su entidad federativa y pueblos originarios.`,
+          relacion: 'Patrimonio biocultural regional, memoria histórica estatal y valoración de la diversidad de pueblos originarios.'
+        },
+        {
+          campoFormativo: 'Lenguajes',
+          pda: `Lee, comprende y produce calaveritas literarias y coplas populares, explorando la rima, el ritmo lírico, la sátira humorística y las figuras retóricas de la tradición lírica mexicana.`,
+          relacion: 'Comprensión y creación lírica tradicional, juego poético, métrica popular y uso de la sátira respetuosa.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Indaga y describe las propiedades botánicas y usos de flores tradicionales (cempasúchil, terciopelo), semillas y frutos de temporada en las expresiones culturales de la región, reconociendo su ciclo biológico y los cambios de estado físico de la materia (fusión de cera, combustión de incienso y copal).`,
+          relacion: 'Botánica regional aplicada, transformaciones físicas de la materia y preservación de la biodiversidad local.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Identifica eventos y celebraciones importantes de la historia familiar y comunitaria, reconociendo que fortalecen la identidad colectiva, el sentido de pertenencia y la transmisión intergeneracional de saberes y afectos.`,
+          relacion: 'Cohesión comunitaria, vínculos afectivos familiares y colaboración activa en proyectos culturales escolares.'
+        }
+      ];
+    } else if (levelKey === 'primaria-alta') {
+      return [
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades (Primaria Alta - Fase 5)',
+          pda: `Analiza críticamente el origen prehispánico, virreinal y contemporáneo de la cosmovisión sobre la vida y la muerte en México, valorando la declaratoria del Día de Muertos como Patrimonio Cultural Inmaterial de la Humanidad.`,
+          relacion: 'Conciencia histórica crítica, sincretismo cultural y valoración del patrimonio inmaterial universal.'
+        },
+        {
+          campoFormativo: 'Lenguajes',
+          pda: `Elabora crónicas comunitarias, ensayos descriptivos y una antología comentada de calaveritas literarias, empleando figuras retóricas complejas, recursos de cohesión y ortografía normativa.`,
+          relacion: 'Redacción literaria avanzada, divulgación cultural y preservación de la palabra escrita tradicional.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Investiga los saberes agrícolas ancestrales en el cultivo del cempasúchil y alimentos de temporada, analizando el impacto de las prácticas agroecológicas vs el uso de agroquímicos en los suelos locales.`,
+          relacion: 'Saberes agrícolas tradicionales, química ambiental, sustentabilidad y preservación de suelos.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Promueve el diálogo intercultural y el respeto a la diversidad de prácticas conmemorativas presentes en su comunidad y en distintos pueblos del país, combatiendo prejuicios culturales.`,
+          relacion: 'Interculturalidad crítica, empatía comunitaria y valoración de la diversidad de cosmovisiones.'
+        }
+      ];
+    } else if (levelKey === 'secundaria') {
+      return [
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades (Secundaria - Fase 6)',
+          pda: `Investiga desde fuentes historiográficas el sincretismo cultural y la resignificación de las festividades de muertos durante el Virreinato y su evolución en el México independiente y contemporáneo.`,
+          relacion: 'Investigación historiográfica, análisis sociocrítico del sincretismo y derechos culturales de los pueblos originarios.'
+        },
+        {
+          campoFormativo: 'Lenguajes (Español / Artes)',
+          pda: `Escribe calaveras literarias de sátira política y diseña instalaciones artísticas multidisciplinarias que resignifican los elementos simbólicos del altar tradicional frente a la mercantilización cultural.`,
+          relacion: 'Análisis sociolingüístico, sátira lírica, creación artística contemporánea y pensamiento crítico discursivo.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Analiza las propiedades fitoquímicas de plantas ceremoniales (cempasúchil, copal, resinas) y modela el impacto ecológico de la producción estacional en agroecosistemas locales.`,
+          relacion: 'Fitoquímica botánica, agroecología sustentable y análisis experimental de compuestos orgánicos.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Reflexiona sobre los procesos de duelo, la memoria de los antepasados y la resignificación de la pérdida, canalizando emociones mediante la creación artística y el diálogo comunitario.`,
+          relacion: 'Inteligencia socioemocional, resiliencia colectiva y sentido de trascendencia humana.'
+        }
+      ];
+    } else {
+      return [
+        {
+          campoFormativo: 'Conciencia Histórica y Humanidades (MCCEMS)',
+          pda: `Examina con aparato crítico el sincretismo biocultural, la filosofía indígena de la muerte y la construcción de la identidad nacional mexicana a través de sus tradiciones populares.`,
+          relacion: 'Filosofía social, hermenéutica cultural y valoración de cosmovisiones originarias.'
+        },
+        {
+          campoFormativo: 'Lengua y Comunicación',
+          pda: `Produce ensayos argumentativos y piezas líricas de alta complejidad sobre la preservación de las tradiciones mexicanas y el derecho a la memoria biocultural.`,
+          relacion: 'Pensamiento discursivo superior, rigor formal de citación y comunicación académica.'
+        },
+        {
+          campoFormativo: 'Pensamiento Científico',
+          pda: `Investiga la etnobotánica de especies endémicas ceremoniales y evalúa los equilibrios ecológicos de su cultivo en regiones bioculturales de México.`,
+          relacion: 'Etnobotánica, métodos de muestreo ecológico y preservación del patrimonio natural.'
+        },
+        {
+          campoFormativo: 'Recursos Socioemocionales',
+          pda: `Diseña y coordina proyectos culturales comunitarios orientados al rescate de la memoria colectiva y el fortalecimiento del tejido social de su localidad.`,
+          relacion: 'Responsabilidad social, liderazgo humanista y vinculación comunitaria activa.'
+        }
+      ];
+    }
+  }
 
   // 1. DOMINIO HISTÓRICO Y CÍVICO (Ej. Revolución Mexicana, Independencia, Tradiciones)
   if (isHistory) {
@@ -1586,23 +2105,23 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
     return [
       {
         campoFormativo: 'Lenguajes (Primaria Media - Fase 4)',
-        pda: `Comprende, resume y redacta textos expositivos e instructivos sobre "${capitalizedTopic}" empleando conectores lógicos y signos de puntuación adecuados.`,
-        relacion: 'Comprensión lectora analítica, redacción estructurada en párrafos y divulgación escolar.'
+        pda: `Indaga en diversas fuentes informativas, sintetiza ideas clave y redacta textos explicativos e instructivos estructurados sobre "${capitalizedTopic}" empleando conectores lógicos y signos de puntuación.`,
+        relacion: 'Comprensión lectora analítica, redacción estructurada en párrafos y divulgación de saberes.'
       },
       {
         campoFormativo: 'Saberes y Pensamiento Científico',
-        pda: `Resuelve problemas contextualizados sobre "${capitalizedTopic}" mediante operaciones combinadas, fracciones y registro de datos en gráficas de barras.`,
-        relacion: 'Pensamiento lógico-matemático, análisis estadístico inicial e indagación científica sistemática.'
+        pda: `Plantea preguntas, formula hipótesis tentativas y registra observaciones empíricas sistemáticas sobre los componentes y fenómenos de "${capitalizedTopic}" en su entorno escolar y comunitario.`,
+        relacion: 'Indagación científica escolar, pensamiento lógico y registro riguroso de evidencias empíricas.'
       },
       {
         campoFormativo: 'Ética, Naturaleza y Sociedades',
-        pda: `Analiza la importancia del tema "${capitalizedTopic}" en la vida y el patrimonio de su entidad federativa, promoviendo la justicia y la equidad.`,
-        relacion: 'Identidad regional, pensamiento crítico social y participación democrática.'
+        pda: `Examina la relevancia y consecuencias sociales o ambientales de "${capitalizedTopic}" en la vida cotidiana de su entidad federativa, proponiendo acciones orientadas al bien común.`,
+        relacion: 'Identidad regional, pensamiento ético situado y participación democrática escolar.'
       },
       {
         campoFormativo: 'De lo Humano y lo Comunitario',
-        pda: `Diseña acuerdos y estrategias cooperativas para prevenir riesgos y optimizar el trabajo en equipo en el proyecto sobre "${capitalizedTopic}".`,
-        relacion: 'Toma de decisiones consensuada, resiliencia y salud comunitaria.'
+        pda: `Colabora en equipos escolares mediante acuerdos consensuados, diálogo empático y distribución equitativa de roles para desarrollar propuestas de acción comunitaria sobre "${capitalizedTopic}".`,
+        relacion: 'Toma de acuerdos colectivos, trabajo colaborativo solidario y convivencia escolar armónica.'
       }
     ];
   } else if (levelKey === 'primaria-alta') {
@@ -1679,94 +2198,172 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
 
 /**
  * Generador de Propuesta de Proyecto Final Integrador Situado y Específico (Basado en Libros Oficiales SEP / NEM)
+ * Universal para todos los niveles educativos (Preescolar a Bachillerato) y todas las disciplinas.
  */
 export function generateFinalProjectProposal(level: string, subject: string, topic: string): FinalProjectProposal {
   const cleanTopic = cleanCoreTopicName(topic);
   const capitalizedTopic = cleanTopic;
-  const topicLower = cleanTopic.toLowerCase();
   const levelKey = level || 'primaria-baja';
+  const domain = classifyPedagogicalDomain(cleanTopic, subject);
 
-  // Identificación temática
-  const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
-  const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
-  const isLiterature = /cuento|leyenda|mito|fabula|poema|poes|rima|verso|cancion|teatro|dramat|relato|literat/i.test(topicLower);
-  const isFractions = /fraccion|equivalen|particion|reparto|denominador|numerador/i.test(topicLower);
-  const isMathStoreOrMoney = /tienda|mercado|dinero|moneda|compra|venta|precio|cambio|billete|ahorro|presupuesto/i.test(topicLower);
-  const isParabola = /parabol|cuadrat|segundo grado|tiro parab|algebra/i.test(topicLower);
-  const isWater = /agua|rio|lluvia|filtr|pozo|sequia|pluvial|hidrico/i.test(topicLower);
-  const isGardenOrFood = /huerto|siembra|cosecha|cultivo|semilla|alimento|nutric|plato del bien comer|comida|dieta|ultraproces/i.test(topicLower);
-  const isCleanEnergy = /biodigestor|biogas|energia|solar|eolica|renovable|ecotecnia|residu|recicl/i.test(topicLower);
-  const isCivicsPeace = /derecho|paz|acuerdo|convivenc|mediacion|inclusion|igualdad|genero|discrimin|democrac|ciudadan|justicia/i.test(topicLower);
-
-  // 1. PROYECTO DE HISTORIA Y MEMORIA CÍVICA (Ej. Revolución Mexicana, Independencia)
-  if (isHistory) {
+  // 1. DOMINIO TRADICIONES Y PATRIMONIO BIOCULTURAL
+  if (domain === 'traditions_culture') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       return {
-        titulo: `Galería Histórica y Museo Viviente: "Voces, Corridos y Relatos de la Revolución Mexicana"`,
-        problematicaComunitaria: `En nuestra comunidad escolar y familiar se ha debilitado la transmisión de la memoria histórica sobre la Revolución Mexicana de 1910, limitando la comprensión de cómo este movimiento conquistó los derechos agrarios, laborales y la educación pública gratuita que hoy gozamos en nuestra escuela.`,
-        proposito: `Investigar a través de relatos familiares, canciones populares (corridos) y libros de texto gratuitos de la SEP los acontecimientos, causas y personajes de la Revolución Mexicana, para crear una galería histórica interactiva y dramatizaciones que fortalezcan la identidad cívica y la valoración de los derechos sociales.`,
-        productoFinal: `Instalación del "Museo Viviente y Galería de la Revolución Mexicana" en el patio escolar (vinculado a Proyectos Comunitarios y Nuestros Saberes de la SEP), con módulos de personajes históricos caracterizados (Madero, Zapata, Villa, Adelitas), exposición de corridos y coplas ilustradas, periódicos facsimilares y tertulia testimonial con familias y adultos mayores.`,
-        impactoSocial: `Fortalece los lazos intergeneracionales con abuelos y miembros de la comunidad, fomenta el orgullo por el patrimonio histórico nacional y profundiza la comprensión de las garantías sociales y los derechos de la niñez.`,
+        titulo: `Ofrenda Tradicional Viva y Álbum de Recuerdos: "Costumbres y Sabores de ${capitalizedTopic}"`,
+        problematicaComunitaria: `En nuestra comunidad escolar y familiar se requiere fortalecer la transmisión oral de los saberes ancestrales sobre "${capitalizedTopic}", valorando los elementos naturales, la convivencia afectiva y el respeto a la memoria familiar.`,
+        proposito: `Investigar en relatos de abuelos, familias y libros de texto de la SEP los elementos naturales (cempasúchil, frutas, copal) y montar una ofrenda viva infantil con dibujos, modelado y versos tradicionales.`,
+        productoFinal: `Instalación de la "Ofrenda Tradicional Infantil de ${capitalizedTopic}" en el aula, con módulos de elementos naturales (flores nativas, semillas, frutas), dibujos rotulados por los alumnos y recital de rimas y cantos ante las familias.`,
+        impactoSocial: `Fortalece la identidad cultural temprana, estrecha lazos afectivos con las familias y estimula el respeto a la diversidad de costumbres locales.`,
         rubrica: {
           criterio1: {
-            nombre: 'Indagación Histórica y Testimonios de la Tradición Oral',
-            sobresaliente: `Recupera con profundidad relatos orales familiares y datos de los libros de texto de la SEP, explicando con claridad las causas y personajes de la Revolución Mexicana.`,
-            satisfactorio: `Identifica los personajes principales y algunos acontecimientos clave con apoyo de testimonios y lecturas del libro de texto.`,
-            enProceso: `Presenta dificultades para distinguir los hechos históricos o relatar con sus palabras lo investigado.`
+            nombre: 'Indagación Familiar y Elementos Tradicionales',
+            sobresaliente: `Recupera con entusiasmo relatos familiares y reconoce los elementos naturales del altar tradicional y su significado.`,
+            satisfactorio: `Identifica los elementos principales de la tradición con apoyo de su familia y el docente.`,
+            enProceso: `Presenta dificultades para identificar los elementos o el sentido de la celebración.`
           },
           criterio2: {
-            nombre: 'Expresión Literaria y Artística de Época (Corridos y Periódico Mural)',
-            sobresaliente: `Crea coplas, corridos ilustrados y caracterizaciones con excelente creatividad, utilizando lenguaje de época y conectores temporales precisos.`,
-            satisfactorio: `Elabora sus dibujos y coplas con orden, limpieza y relación evidente con los personajes revolucionarios.`,
-            enProceso: `Las producciones gráficas o escritas carecen de relación con la época histórica estudiada.`
+            nombre: 'Expresión Plástica y Oral Infantil',
+            sobresaliente: `Elabora dibujos detallados, piezas de modelado y recita coplas o rimas tradicionales con alegría y claridad.`,
+            satisfactorio: `Participa en la elaboración de dibujos o manualidades para el altar con orden y limpieza.`,
+            enProceso: `Muestra timidez o poco interés en las actividades artísticas del proyecto.`
           },
           criterio3: {
-            nombre: 'Conducción en el Museo Viviente y Compromiso Cívico',
-            sobresaliente: `Explica con elocuencia, respeto y entusiasmo su módulo a los visitantes del museo, promoviendo el diálogo sobre los derechos conquistados.`,
-            satisfactorio: `Participa activamente en la atención a su estación y explica su personaje con amabilidad.`,
-            enProceso: `Muestra timidez o dificultad para compartir oralmente su experiencia ante la comunidad.`
+            nombre: 'Convivencia Afectiva en el Montaje Colectivo',
+            sobresaliente: `Colabora con generosidad y respeto con sus compañeros y familias durante la preparación y muestra de la ofrenda.`,
+            satisfactorio: `Trabaja en equipo y comparte materiales de forma armoniosa.`,
+            enProceso: `Le cuesta compartir materiales o integrarse al trabajo con el grupo.`
           }
         }
       };
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       return {
-        titulo: `Museo Escolar de la Transformación: "Causas, Ideales y Derechos de la Revolución Mexicana"`,
-        problematicaComunitaria: `Los estudiantes requieren profundizar en el análisis crítico de las causas estructurales de la Revolución Mexicana y valorar cómo la Constitución de 1917 garantiza los derechos educativos, agrarios y laborales en su vida cotidiana.`,
-        proposito: `Elaborar un dossier de investigación histórica y montar una museografía interactiva basada en los libros de texto de la SEP (Proyectos Escolares y Cartografía de México) para divulgar los principios de justicia social y soberanía nacional.`,
-        productoFinal: `Montaje de la "Sala Museográfica de la Revolución Mexicana" con maquetas de batallas decisivas, líneas del tiempo geoespaciales, periódicos facsimilares de época y mesa redonda de debate sobre el Artículo 3º y 123 Constitucional.`,
-        impactoSocial: `Sensibiliza a la comunidad escolar sobre la importancia de defender los derechos sociales y la democracia participativa en el México contemporáneo.`,
+        titulo: `Ofrenda Viva y Memoria Comunitaria: "Patrimonio Biocultural, Tradiciones y Calaveritas sobre ${capitalizedTopic}"`,
+        problematicaComunitaria: `En nuestra comunidad escolar y en el entorno local se ha debilitado la transmisión oral de los saberes ancestrales y el significado profundo del patrimonio biocultural y lírico de nuestra entidad en torno a "${capitalizedTopic}".`,
+        proposito: `Investigar en fuentes familiares, comunitarias y libros de texto de la SEP (Proyectos Escolares / Cartografía de México) el origen, los elementos bioculturales (flores nativas, copal, alimentos de temporada) y las manifestaciones literarias (calaveritas y relatos orales) para montar una ofrenda viva comunitaria y recital tradicional.`,
+        productoFinal: `Montaje de la "Ofrenda Tradicional Viva de Nuestra Entidad" en el patio escolar, con módulos de elementos bioculturales (cempasúchil, gastronomía regional), exposición de tapetes artesanales, antología ilustrada de calaveritas literarias y tertulia de relatos con familias y adultos mayores.`,
+        impactoSocial: `Fortalece el sentido de pertenencia y arraigo cultural en las niñas y niños, dignifica la memoria de los antepasados y estrecha los lazos afectivos y solidarios entre la escuela y las familias de la comunidad.`,
         rubrica: {
           criterio1: {
-            nombre: 'Análisis Crítico de Fuentes Históricas y Libros SEP',
-            sobresaliente: `Contrasta múltiples fuentes primarias y libros de la SEP con rigor, fundamentando las distintas posturas ideológicas de los caudillos revolucionarios.`,
-            satisfactorio: `Explica las causas principales y consecuencias de la Revolución apoyándose en los textos escolares.`,
-            enProceso: `El análisis es superficial o repite información sin contrastar causas y efectos.`
+            nombre: 'Indagación del Patrimonio Biocultural y Tradición Oral',
+            sobresaliente: `Recupera con profundidad relatos familiares, el simbolismo de los altares y el uso de flora nativa (cempasúchil) y alimentos de temporada con base en fuentes comunitarias y libros SEP.`,
+            satisfactorio: `Identifica los elementos principales del altar tradicional y explica su significado con apoyo de lecturas e indagación familiar.`,
+            enProceso: `Presenta dificultades para explicar el origen o significado de los elementos tradicionales.`
           },
           criterio2: {
-            nombre: 'Diseño Museográfico y Producción Editorial',
-            sobresaliente: `Diseña fichas museográficas impecables, maquetas a escala y periódicos murales con alta calidad estética y narrativa.`,
-            satisfactorio: `Presenta su material museográfico con orden, limpieza y datos históricos correctos.`,
-            enProceso: `El material es descuidado o contiene errores cronológicos notorios.`
+            nombre: 'Producción Literaria y Artística Tradicional (Calaveritas y Ofrenda)',
+            sobresaliente: `Crea calaveritas literarias con excelente métrica, rima consonante, humor respetuoso y elabora piezas plásticas para el altar con alta calidad estética y simbólica.`,
+            satisfactorio: `Elabora calaveritas o dibujos para el altar con orden, rima básica y apego a la temática de la festividad.`,
+            enProceso: `Los textos o trabajos plásticos carecen de relación con la lírica o simbolismo tradicional.`
           },
           criterio3: {
-            nombre: 'Participación en el Debate y Exposición Comunitaria',
-            sobresaliente: `Argumenta con elocuencia y solidez académica en la mesa de debate, vinculando los ideales revolucionarios con los retos actuales de su comunidad.`,
-            satisfactorio: `Expone sus ideas con claridad y respeto durante la visita de la comunidad escolar.`,
-            enProceso: `Dificultad para sustentar sus posturas o responder preguntas de la audiencia.`
+            nombre: 'Participación en el Montaje Comunitario y Convivencia Afectiva',
+            sobresaliente: `Colabora con entusiasmo, respeto y liderazgo solidario en el montaje y atención de la ofrenda, dialogando cordialmente con familias y visitantes.`,
+            satisfactorio: `Participa activamente en su equipo y explica su sección de la ofrenda con claridad y amabilidad.`,
+            enProceso: `Muestra poca disposición para colaborar en equipo o atender el evento escolar.`
           }
         }
       };
     } else {
       return {
-        titulo: `Simposio Histórico y Tribunal Crítico: "La Revolución Mexicana y la Construcción del Estado de Derecho"`,
-        problematicaComunitaria: `Necesidad de examinar críticamente las contradicciones del Porfiriato, los planes revolucionarios y el grado de cumplimiento de las garantías sociales consagradas en la Constitución de 1917 en el México actual.`,
-        proposito: `Desarrollar una investigación historiográfica rigurosa que culmine en un simposio académico estudiantil y la publicación de una revista histórica digital para la comunidad.`,
-        productoFinal: `Simposio Académico Estudiantil con ponencias sustentadas, juicio histórico simulado a las facciones revolucionarias y dossier de ensayos analíticos con aparato crítico formal (Colección Ximhai / MCCEMS).`,
-        impactoSocial: `Fomenta la conciencia histórica transformadora, la cultura de la legalidad y el compromiso cívico de la juventud con su país.`,
+        titulo: `Muestra Etnográfica y Encuentro Intercultural: "Sincretismo, Memoria Colectiva y Resistencia Cultural en ${capitalizedTopic}"`,
+        problematicaComunitaria: `Desarticulación entre los saberes ancestrales de los pueblos originarios y las juventudes contemporáneas ante la mercantilización y descontextualización de "${capitalizedTopic}".`,
+        proposito: `Analizar el sincretismo histórico, la cosmovisión sobre la vida y la muerte y el valor etnobotánico regional para montar una instalación comunitaria, documental multimedia y foro de diálogo intercultural (Colección Ximhai / MCCEMS).`,
+        productoFinal: `Exposición etnográfica y documental multimedia sobre las variantes regionales de "${capitalizedTopic}", con ensayos críticos, altares monumentales bioculturales y coloquio escolar con especialistas comunitarios.`,
+        impactoSocial: `Revaloriza los saberes bioculturales de los pueblos originarios, promueve el pensamiento crítico ante el consumo globalizado y afianza la identidad juvenil comunitaria.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Análisis Etnohistórico y Rigor Conceptual',
+            sobresaliente: `Fundamenta el origen prehispánico, virreinal y contemporáneo de la festividad con base en fuentes etnográficas rigurosas y bibliografía especializada.`,
+            satisfactorio: `Explica las transformaciones históricas de la tradición apoyándose en textos escolares e indagación formal.`,
+            enProceso: `El análisis histórico es superficial o confunde elementos folclóricos con datos documentados.`
+          },
+          criterio2: {
+            nombre: 'Curaduría y Producción Cultural Comunitaria',
+            sobresaliente: `Diseña una museografía de alta calidad estética con cédulas informativas impecables, testimonios orales grabados y respeto absoluto al patrimonio inmaterial.`,
+            satisfactorio: `Presenta su montaje etnográfico con orden, cédulas comprensibles y materiales pertinentes.`,
+            enProceso: `El montaje carece de rigor explicativo o la presentación visual es descuidada.`
+          },
+          criterio3: {
+            nombre: 'Liderazgo y Difusión Dialógica en el Foro',
+            sobresaliente: `Conduce el diálogo con elocuencia, respeto y sensibilidad intercultural, respondiendo con solvencia a las preguntas del público y familias.`,
+            satisfactorio: `Expone su módulo con claridad y participa cordialmente en la atención del evento.`,
+            enProceso: `Dificultad para interactuar con la audiencia o explicar los fundamentos culturales del proyecto.`
+          }
+        }
+      };
+    }
+  }
+
+  // 2. DOMINIO HISTORIA, GEOGRAFÍA Y SOCIEDAD
+  if (domain === 'history_society') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      return {
+        titulo: `Galería de la Historia Viva: "Relatos, Dibujos y Personajes de ${capitalizedTopic}"`,
+        problematicaComunitaria: `En nuestra comunidad escolar y familiar se requiere fortalecer la memoria histórica sobre "${capitalizedTopic}", comprendiendo cómo vivían las personas en el pasado y qué cosas valiosas heredamos en nuestra escuela y hogar.`,
+        proposito: `Investigar a través de relatos familiares, canciones populares y libros de texto de la SEP acontecimientos y personajes clave sobre "${capitalizedTopic}", para crear una galería ilustrada y dramatizaciones infantiles sencillas.`,
+        productoFinal: `Instalación de la "Galería Histórica Infantil de ${capitalizedTopic}" en el salón, con dibujos coloreados de escenas y personajes, vestuario simbólico sencillo y narración oral guiada ante las familias.`,
+        impactoSocial: `Inicia a las niñas y niños en la noción del tiempo histórico, fortalece la identidad comunitaria y estrecha los lazos intergeneracionales.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Comprensión de Personajes y Épocas Históricas',
+            sobresaliente: `Reconoce personajes centrales, su vestimenta y el motivo por el cual recordamos "${capitalizedTopic}" con apoyo de lecturas e imágenes.`,
+            satisfactorio: `Identifica a los personajes principales y menciona algunos detalles de su historia.`,
+            enProceso: `Confunde los personajes o hechos históricos con situaciones de ficción.`
+          },
+          criterio2: {
+            nombre: 'Expresión Plástica y Narrativa Infantil',
+            sobresaliente: `Elabora dibujos expresivos con colores limpios y relata con sus palabras lo que aprendió sobre los hechos históricos.`,
+            satisfactorio: `Realiza sus dibujos y participa en la narración oral con apoyo del docente.`,
+            enProceso: `Presenta dificultad para expresar oralmente o plasmar en dibujos lo aprendido.`
+          },
+          criterio3: {
+            nombre: 'Participación y Respeto en la Muestra Escolar',
+            sobresaliente: `Participa con orgullo y respeto en la presentación ante las familias, escuchando atentamente a sus compañeros.`,
+            satisfactorio: `Colabora en el salón y comparte sus trabajos durante la visita familiar.`,
+            enProceso: `Muestra timidez excesiva o desinterés en la actividad comunitaria.`
+          }
+        }
+      };
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      return {
+        titulo: `Museo Viviente y Archivo Histórico Escolar: "Voces, Cronología y Transformaciones de ${capitalizedTopic}"`,
+        problematicaComunitaria: `Los estudiantes requieren profundizar en el análisis crítico de las causas sociales, territoriales y humanas vinculadas a "${capitalizedTopic}", valorando cómo las luchas del pasado forjaron los derechos cívicos y educativos de nuestra entidad.`,
+        proposito: `Analizar fuentes primarias (cartas, testimonios orales, mapas históricos) y libros de texto de la SEP (Proyectos Escolares y Cartografía de México) para montar estaciones interactivas del museo viviente escolar sobre "${capitalizedTopic}".`,
+        productoFinal: `Montaje del "Museo Viviente y Galería Histórica de ${capitalizedTopic}" en el patio escolar, con módulos atendidos por alumnos caracterizados, líneas de tiempo ilustradas, mapas de batallas o rutas y periódico facsimilar de época.`,
+        impactoSocial: `Sensibiliza a la comunidad escolar sobre la importancia de la memoria histórica, la justicia social y el cuidado de los derechos ciudadanos en el México contemporáneo.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Indagación Histórica y Manejo de Fuentes',
+            sobresaliente: `Contrasta información de libros SEP y testimonios orales, explicando con claridad causas, desarrollo y consecuencias de "${capitalizedTopic}".`,
+            satisfactorio: `Identifica los acontecimientos y personajes principales apoyándose en las lecturas del libro de texto.`,
+            enProceso: `Presenta dificultades para ordenar cronológicamente los hechos o explicar sus causas.`
+          },
+          criterio2: {
+            nombre: 'Caracterización y Producción Museográfica',
+            sobresaliente: `Diseña cédulas museográficas impecables, vestuario de época representativo y periódicos facsimilares con alta creatividad y fidelidad histórica.`,
+            satisfactorio: `Elabora su material museográfico con orden, limpieza y datos históricos correctos.`,
+            enProceso: `El material es descuidado o contiene errores cronológicos notorios.`
+          },
+          criterio3: {
+            nombre: 'Conducción del Museo y Diálogo Cívico',
+            sobresaliente: `Explica con elocuencia, empatía y respeto su módulo a los visitantes, respondiendo dudas y vinculando los hechos con la vida actual.`,
+            satisfactorio: `Atiende su estación de forma adecuada y comparte lo aprendido con amabilidad.`,
+            enProceso: `Muestra timidez o dificultad para comunicar sus ideas ante el público.`
+          }
+        }
+      };
+    } else {
+      return {
+        titulo: `Coloquio Historiográfico y Archivo de la Memoria Social: "Análisis Crítico, Actores Colectivos y Vigencia de ${capitalizedTopic}"`,
+        problematicaComunitaria: `Necesidad de examinar críticamente las contradicciones estructurales, los proyectos de nación en disputa y el grado de cumplimiento de los derechos sociales vinculados a "${capitalizedTopic}" en el México actual.`,
+        proposito: `Desarrollar una investigación historiográfica rigurosa que culmine en un simposio académico estudiantil y la publicación de una revista histórica digital para la comunidad (Colección Ximhai / MCCEMS).`,
+        productoFinal: `Coloquio estudiantil "Voces y Debates sobre ${capitalizedTopic}" con ponencias argumentadas, revista digital facsimilar y podcast de divulgación histórica comunitaria.`,
+        impactoSocial: `Fomenta la conciencia histórica transformadora, la cultura de la legalidad y el compromiso cívico de la juventud con su entorno sociopolítico.`,
         rubrica: {
           criterio1: {
             nombre: 'Rigor Historiográfico y Aparato Crítico',
-            sobresaliente: `Analiza fuentes primarias y secundarias con metodología historiográfica rigurosa, citando fuentes documentales y contrastando corrientes interpretativas.`,
+            sobresaliente: `Analiza fuentes primarias y secundarias con metodología historiográfica rigurosa, citando fuentes documentales y contrastando corrientes interpretativas sobre "${capitalizedTopic}".`,
             satisfactorio: `Sustenta su ensayo histórico con bibliografía adecuada y argumentos estructurados.`,
             enProceso: `Carece de aparato crítico o muestra sesgo sin sustento documental.`
           },
@@ -1778,7 +2375,7 @@ export function generateFinalProjectProposal(level: string, subject: string, top
           },
           criterio3: {
             nombre: 'Compromiso Ético y Propuestas de Incidencia Social',
-            sobresaliente: `Formula propuestas concretas de incidencia cívica vinculando los ideales revolucionarios con la justicia social contemporánea.`,
+            sobresaliente: `Formula propuestas concretas de incidencia cívica vinculando los ideales históricos con la justicia social contemporánea.`,
             satisfactorio: `Relaciona adecuadamente el tema histórico con la realidad comunitaria actual.`,
             enProceso: `No logra vincular el análisis histórico con el contexto presente.`
           }
@@ -1787,49 +2384,293 @@ export function generateFinalProjectProposal(level: string, subject: string, top
     }
   }
 
-  // 2. PROYECTO DE CORRESPONDENCIA Y TEXTOS EPISTOLARES
-  if (isEpistolar) {
+  // 3. DOMINIO MATEMÁTICAS - NÚMEROS, ARITMÉTICA Y TIENDITA ESCOLAR
+  if (domain === 'mathematics_numbers') {
     return {
-      titulo: `El Cartero Escolar y el Buzón de la Amistad: "Cartas que Unen Corazones en Nuestra Comunidad"`,
-      problematicaComunitaria: `En el contexto escolar actual, la comunicación digital inmediata ha desplazado la correspondencia escrita, provocando que las niñas y niños desconozcan la función social de la carta formal e informal, sus componentes estructurales (fecha, lugar, destinatario, saludo, cuerpo, despedida, firma y remitente) y el valor de expresar afecto, agradecimiento o peticiones ciudadanas mediante la palabra escrita.`,
-      proposito: `Que las y los estudiantes desarrollen competencias comunicativas integrales de lectoescritura con sentido social real, elaboren cartas personalizadas para miembros de la comunidad escolar y sus familias, y diseñen un buzón postal funcional para dinamizar la correspondencia en la escuela (Libro SEP: Proyectos Comunitarios 2º Grado, págs. 76-87).`,
-      productoFinal: `Montaje del "Buzón Postal Comunitario" en el aula y patio cívico escolar, con sobres decorados a mano, estampillas postales elaboradas por los alumnos y una jornada de reparto de cartas en la comunidad escolar con lectura en voz alta.`,
-      impactoSocial: `Fortalece los vínculos afectivos e intergeneracionales con abuelos y familias, rescata el patrimonio cultural de la correspondencia postal mexicana, fomenta la empatía y la resolución pacífica de conflictos mediante el diálogo escrito, y estimula la lectoescritura con propósito comunitario.`,
+      titulo: `Mercado Escolar y Tiendita Cooperativa: "Números, Monedas y Finanzas para el Bien Común sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Los estudiantes requieren fortalecer el cálculo mental, la comprensión del valor posicional del dinero y el desarrollo de hábitos de consumo responsable y finanzas solidarias en torno a "${capitalizedTopic}".`,
+      proposito: `Diseñar e instalar una tiendita escolar cooperativa utilizando billetes y monedas didácticos para resolver problemas de adición, sustracción, cálculo de cambio y presupuesto familiar (Libro SEP: Nuestros Saberes / Proyectos de Aula).`,
+      productoFinal: `Simulación del "Mercado Cooperativo Escolar" con puestos de productos, lista de precios calculada por los alumnos, billetes y monedas didácticas, libro de contabilidad escolar y guía de compra inteligente para las familias.`,
+      impactoSocial: `Fomenta la educación financiera temprana, el comercio justo, el consumo de alimentos locales y el ahorro familiar responsable.`,
       rubrica: {
         criterio1: {
-          nombre: 'Estructura Epistolar y Calidad del Mensaje Escrito',
-          sobresaliente: `La carta incluye con absoluta claridad y precisión sus 6 partes (fecha/lugar, destinatario, saludo, cuerpo en párrafos organizados, despedida y firma), con excelente caligrafía y ortografía.`,
-          satisfactorio: `La carta contiene la mayoría de los elementos de la estructura epistolar con redacción comprensible y pocas faltas ortográficas.`,
-          enProceso: `El texto carece de encabezado o despedida, las ideas están desordenadas o presenta dificultades notables en la escritura autónoma.`
+          nombre: 'Cálculo de Precios, Operaciones y Cálculo de Cambio',
+          sobresaliente: `Realiza transacciones con exactitud, aplica estrategias de cálculo mental eficientes y calcula el cambio correspondiente con rapidez y sin errores.`,
+          satisfactorio: `Calcula totales y cambios de forma correcta apoyándose en el registro escrito o material manipulable.`,
+          enProceso: `Presenta dificultades para sumar cantidades monetarias o calcular el cambio exacto.`
         },
         criterio2: {
-          nombre: 'Diseño del Sobre, Estampilla y Rotulación Postal',
-          sobresaliente: `El sobre está impecablemente rotulado con remitente y destinatario en las posiciones correctas, incluye código postal y una estampilla artística original y creativa.`,
-          satisfactorio: `El sobre contiene los datos principales de remitente y destinatario con buena presentación general.`,
-          enProceso: `El sobre confunde el remitente con el destinatario o carece de datos indispensables para la entrega postal.`
+          nombre: 'Organización del Puesto y Clasificación Numérica',
+          sobresaliente: `Etiqueta productos con claridad, organiza listas de precios ordenadas por valor y promueve productos sanos y sustentables.`,
+          satisfactorio: `Mantiene su puesto ordenado y con precios visibles para los compradores.`,
+          enProceso: `Los precios son confusos o el puesto presenta desorganización en los datos numéricos.`
         },
         criterio3: {
-          nombre: 'Participación en la Jornada del Buzón Comunitario',
-          sobresaliente: `Participa con entusiasmo y empatía en la construcción del buzón, asume con responsabilidad su rol de cartero y lee con elocuencia y respeto ante la comunidad.`,
-          satisfactorio: `Colabora adecuadamente en el montaje del buzón y entrega su correspondencia a tiempo con amabilidad.`,
-          enProceso: `Muestra poco interés en la entrega comunitaria o dificultad para integrarse en las actividades del equipo.`
+          nombre: 'Atención al Cliente y Trabajo en Equipo',
+          sobresaliente: `Atiende con empatía, amabilidad y honestidad a los compradores, promoviendo el consumo ético y el ahorro solidario.`,
+          satisfactorio: `Colabora en la atención de su puesto y se comunica con respeto con los clientes.`,
+          enProceso: `Muestra desinterés en la atención de la tiendita o dificultad para trabajar con sus pares.`
         }
       }
     };
   }
 
-  // 3. PROYECTO DE CUENTOS, MITOS Y TRADICIÓN ORAL
-  if (isLiterature) {
+  // 4. DOMINIO MATEMÁTICAS - FRACCIONES Y REPARTO EQUITATIVO
+  if (domain === 'mathematics_fractions') {
     return {
-      titulo: `Antología Cartonera y Tendedero Literario: "Voces Mágicas y Relatos de Nuestra Comunidad"`,
-      problematicaComunitaria: `Se ha detectado una pérdida paulatina de la tradición oral comunitaria y un escaso hábito de creación literaria autónoma en la infancia, lo que limita el desarrollo de la imaginación y la comprensión lectora en el entorno escolar.`,
-      proposito: `Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa formal (inicio, desarrollo, nudo y desenlace), utilizando los libros de texto de la SEP (Proyectos de Aula 1º y 2º Grado / Múltiples Lenguajes).`,
+      titulo: `Laboratorio Matemático en Acción: "Fracciones, Repartos Justos y Soluciones Prácticas sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Dificultad en los estudiantes para visualizar las fracciones de forma tangible y aplicarlas en situaciones de la vida diaria como la preparación de recetas, la medición de terrenos y el reparto equitativo de recursos en el hogar.`,
+      proposito: `Comprender las fracciones como partes de la unidad y operadores de reparto equitativo mediante modelos manipulables, rectas numéricas y resolución de problemas cotidianos sobre "${capitalizedTopic}" (Libro SEP: Nuestros Saberes / Proyectos de Aula).`,
+      productoFinal: `Feria de Retos Fraccionarios con modelos manipulables a escala, tiras de fracciones equivalentes, recetario escolar ilustrado con cantidades fraccionarias y estación de juegos interactivos de retos matemáticos.`,
+      impactoSocial: `Promueve la justicia distributiva, la equidad en el reparto de alimentos y la aplicación práctica del razonamiento matemático en la economía familiar.`,
+      rubrica: {
+        criterio1: {
+          nombre: 'Modelado y Representación Gráfica de Fracciones',
+          sobresaliente: `Representa con exactitud fracciones propias, impropias y equivalentes usando material concreto, rectas numéricas y esquemas a escala.`,
+          satisfactorio: `Identifica y representa fracciones básicas correctamente en figuras geométricas y situaciones de reparto.`,
+          enProceso: `Confunde el numerador con el denominador o divide enteros en partes desiguales.`
+        },
+        criterio2: {
+          nombre: 'Resolución de Problemas de Reparto y Equivalencias',
+          sobresaliente: `Resuelve problemas complejos de suma, resta y comparación de fracciones con distintos métodos y justifica con elocuencia su razonamiento.`,
+          satisfactorio: `Resuelve problemas de reparto fraccionario con apoyo de material manipulable.`,
+          enProceso: `Presenta dificultades para calcular repartos básicos o identificar equivalencias simples.`
+        },
+        criterio3: {
+          nombre: 'Atención en la Estación Demostrativa y Mediación Lúdica',
+          sobresaliente: `Explica con claridad y entusiasmo los retos de fracciones a los visitantes de la feria con gran empatía y solvencia pedagógica.`,
+          satisfactorio: `Colabora en la atención de la estación y demuestra los modelos fraccionarios adecuadamente.`,
+          enProceso: `Participa con timidez o no logra explicar el funcionamiento de sus modelos manipulables.`
+        }
+      }
+    };
+  }
+
+  // 5. DOMINIO MATEMÁTICAS - GEOMETRÍA Y DISEÑO ESPACIAL
+  if (domain === 'mathematics_geometry') {
+    return {
+      titulo: `Taller de Arquitectura Escolar y Modelado Geométrico: "Diseño Espacial y Cuerpos del Entorno sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Los estudiantes requieren aplicar nociones de geometría espacial, perímetros, áreas y simetría al diseño de espacios escolares y comunitarios seguros y funcionales vinculados a "${capitalizedTopic}".`,
+      proposito: `Construir maquetas a escala y figuras geométricas tridimensionales aplicando fórmulas de área, perímetro y propiedades de los polígonos con base en los libros de texto SEP (Nuestros Saberes / Proyectos de Aula).`,
+      productoFinal: `Exposición interactiva "Geometría en Nuestra Escuela" con maquetas a escala, cuerpos geométricos elaborados con desarrollos planos, planos arquitectónicos del salón y catálogo de polígonos del entorno.`,
+      impactoSocial: `Permite a los estudiantes proponer mejoras tangibles al espacio escolar, mejorando la habitabilidad, accesibilidad y estética del entorno educativo.`,
+      rubrica: {
+        criterio1: {
+          nombre: 'Identificación de Propiedades Geométricas y Medición',
+          sobresaliente: `Identifica con precisión lados, vértices, aristas y ángulos en figuras y cuerpos, calculando perímetros y áreas sin errores.`,
+          satisfactorio: `Reconoce las figuras geométricas principales y aplica fórmulas básicas de medición.`,
+          enProceso: `Confunde figuras bidimensionales con cuerpos 3D o presenta errores constantes de medición.`
+        },
+        criterio2: {
+          nombre: 'Construcción de Maquetas y Desarrollos Planos',
+          sobresaliente: `Arma cuerpos geométricos y maquetas a escala con gran precisión, simetría, resistencia estructural y estética impecable.`,
+          satisfactorio: `Elabora sus modelos geométricos con orden y limpieza respetando las dimensiones básicas.`,
+          enProceso: `Los modelos geométricos son frágiles o deformes.`
+        },
+        criterio3: {
+          nombre: 'Socialización y Explicación del Diseño Espacial',
+          sobresaliente: `Explica con elocuencia las propiedades geométricas y la utilidad comunitaria de su diseño ante los visitantes de la muestra.`,
+          satisfactorio: `Expone su maqueta con claridad y amabilidad durante el recorrido escolar.`,
+          enProceso: `Muestra dificultad para justificar el uso de las figuras geométricas en su maqueta.`
+        }
+      }
+    };
+  }
+
+  // 6. DOMINIO MATEMÁTICAS - ÁLGEBRA Y FUNCIONES CUADRÁTICAS
+  if (domain === 'mathematics_algebra') {
+    return {
+      titulo: `Laboratorio de Modelación Cuadrática y Trayectorias: "Ecuaciones y Parábolas en la Vida Diaria sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Dificultad en los estudiantes de secundaria y preparatoria para comprender el significado físico y geométrico de las ecuaciones cuadráticas y funciones algebraicas en fenómenos del entorno.`,
+      proposito: `Modelar matemáticamente situaciones reales (tiro parabólico, arcos arquitectónicos, maximización de áreas y optimización de costos) utilizando herramientas algebraicas y software dinámico (Libros SEP: Saberes y Pensamiento Científico Secundaria).`,
+      productoFinal: `Muestra de Modelación Matemática con maquetas de catapultas y arcos a escala, gráficas analíticas de parábolas rotuladas con vértice, raíces y eje de simetría, y simulaciones dinámicas en GeoGebra.`,
+      impactoSocial: `Demuestra la utilidad del álgebra en la ingeniería, el deporte y la planeación económica comunitaria, fomentando vocaciones científicas y tecnológicas.`,
+      rubrica: {
+        criterio1: {
+          nombre: 'Dominio Algebraico y Solución de Ecuaciones',
+          sobresaliente: `Resuelve ecuaciones cuadráticas por factorización, fórmula general y completando cuadrados, interpretando el discriminante y las raíces físicas.`,
+          satisfactorio: `Aplica la fórmula general correctamente y obtiene las raíces de la ecuación.`,
+          enProceso: `Comete errores constantes en la sustitución de coeficientes o en el manejo de signos.`
+        },
+        criterio2: {
+          nombre: 'Modelación Gráfica y Simulación Dinámica',
+          sobresaliente: `Traza e interpreta con exactitud la curva parabólica, identificando el vértice y los parámetros a, b y c en software digital y papel milimétrico.`,
+          satisfactorio: `Grafica la parábola identificando su orientación y punto máximo o mínimo.`,
+          enProceso: `La gráfica no corresponde a los valores de la función cuadrática.`
+        },
+        criterio3: {
+          nombre: 'Divulgación Matemática y Explicación Aplicada',
+          sobresaliente: `Explica con claridad y rigor matemático cómo la parábola resuelve el problema concreto ante la comunidad escolar.`,
+          satisfactorio: `Expone su modelo matemático con orden y responde a las preguntas del panel.`,
+          enProceso: `Dificultad para explicar el vínculo entre la fórmula algebraica y el fenómeno físico.`
+        }
+      }
+    };
+  }
+
+  // 7. DOMINIO CIENCIAS NATURALES, ECOLOGÍA Y MEDIO AMBIENTE
+  if (domain === 'natural_sciences') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      return {
+        titulo: `Álbum de Exploradores de la Naturaleza: "Descubriendo y Cuidando ${capitalizedTopic}"`,
+        problematicaComunitaria: `Necesidad de promover desde la primera infancia el asombro por el mundo natural, la observación de seres vivos y el cuidado de los recursos naturales vinculados a "${capitalizedTopic}".`,
+        proposito: `Explorar de forma sensorial y guiada elementos de la naturaleza (plantas, agua, suelo, insectos) y plasmar sus descubrimientos en un álbum ilustrado con apoyo de los libros SEP (Múltiples Lenguajes / Nuestros Saberes).`,
+        productoFinal: `Álbum de campo infantil con dibujos y muestras secas de hojas, semillas o huellas, acompañado de una pequeña estación de germinación o cuidado del agua en el aula.`,
+        impactoSocial: `Siembra valores de respeto bioético hacia todos los seres vivos y promueve hábitos de ahorro del agua y protección de áreas verdes en la familia.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Curiosidad Científica y Observación Guiada',
+            sobresaliente: `Observa con atención los detalles de la naturaleza, describe características con sus sentidos y plantea preguntas ingeniosas sobre "${capitalizedTopic}".`,
+            satisfactorio: `Participa en la observación y describe lo que ve con apoyo del docente.`,
+            enProceso: `Muestra distracción o dificultad para enfocarse en la observación de los especímenes.`
+          },
+          criterio2: {
+            nombre: 'Registro Gráfico en el Álbum de Campo',
+            sobresaliente: `Dibuja con esmero seres vivos y elementos naturales, utilizando colores vivos y agregando rótulos descriptivos claros.`,
+            satisfactorio: `Completa las hojas de su álbum con limpieza y orden.`,
+            enProceso: `Los dibujos están incompletos o descuidados.`
+          },
+          criterio3: {
+            nombre: 'Cuidado Ambiental y Convivencia Escolar',
+            sobresaliente: `Trata con delicadeza las plantas y animales del entorno escolar y promueve el cuidado del agua entre sus compañeros.`,
+            satisfactorio: `Sigue las reglas de respeto a la naturaleza durante las actividades al aire libre.`,
+            enProceso: `Muestra conductas de descuido o maltrato a las plantas o materiales escolares.`
+          }
+        }
+      };
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      return {
+        titulo: `Guía Botánica de Campo y Estación Ecotécnica: "Indagación Empírica y Conservación de ${capitalizedTopic}"`,
+        problematicaComunitaria: `Deterioro de las áreas verdes y escasa cultura sobre la conservación de la biodiversidad, el ciclo del agua y el manejo sustentable de recursos relacionados con "${capitalizedTopic}" en la comunidad escolar.`,
+        proposito: `Investigar en libros de texto de la SEP (Proyectos Escolares y Nuestros Saberes) los ciclos biogeoquímicos, la interacción de los seres vivos y construir una ecotecnia o guía botánica comunitaria.`,
+        productoFinal: `Estación Demostrativa de Ciencias Naturales con herbario escolar clasificado, prototipo ecotécnico funcional (filtro de agua casero, germinador o composta) y guía ilustrada de biodiversidad local.`,
+        impactoSocial: `Fomenta la educación ambiental práctica, la reducción del desperdicio de agua y la regeneración de espacios verdes escolares con participación familiar.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Indagación Científica y Registro de Observaciones',
+            sobresaliente: `Registra datos de forma sistemática en bitácoras de campo, formula hipótesis fundamentadas y explica con precisión los ciclos biológicos vinculados a "${capitalizedTopic}".`,
+            satisfactorio: `Completa su registro de observaciones y describe los fenómenos naturales apoyándose en el libro SEP.`,
+            enProceso: `El registro de datos es incompleto o no explica las causas de los fenómenos observados.`
+          },
+          criterio2: {
+            nombre: 'Funcionalidad del Prototipo y Calidad del Herbario',
+            sobresaliente: `El prototipo ecotécnico opera con eficiencia demostrable y las muestras del herbario están impecablemente prensadas y rotuladas.`,
+            satisfactorio: `El prototipo funciona adecuadamente y las fichas botánicas contienen los datos principales.`,
+            enProceso: `El prototipo presenta fallas o las muestras botánicas están deterioradas.`
+          },
+          criterio3: {
+            nombre: 'Divulgación Ambiental y Compromiso Ecológico',
+            sobresaliente: `Comunica con pasión y elocuencia la importancia del cuidado ambiental ante la comunidad escolar, proponiendo compromisos tangibles.`,
+            satisfactorio: `Explica su trabajo con claridad y atiende con amabilidad a los visitantes de la estación.`,
+            enProceso: `Dificultad para explicar el impacto ecológico de su proyecto.`
+          }
+        }
+      };
+    } else {
+      return {
+        titulo: `Simposio de Indagación Científica y Proyecto de Sustentabilidad: "Modelos y Soluciones Ambientales sobre ${capitalizedTopic}"`,
+        problematicaComunitaria: `Impacto del cambio climático, la contaminación antropogénica y la pérdida de ecosistemas en nuestra cuenca regional vinculados a problemáticas de "${capitalizedTopic}".`,
+        proposito: `Diseñar y ejecutar un proyecto de investigación experimental o ecotecnológico sustentable fundamentado en las ciencias naturales y la bioética (MCCEMS / Colección Ximhai).`,
+        productoFinal: `Simposio Escolar de Ciencias con presentación de artículos de investigación formal, prototipos de mitigación ambiental y panel de debate con la comunidad sobre políticas de sostenibilidad.`,
+        impactoSocial: `Genera datos empíricos útiles para la gestión ambiental escolar y compromete a la juventud en la toma de decisiones ecológicas informadas.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Metodología Experimental y Rigor Científico',
+            sobresaliente: `Aplica el método científico experimental con control de variables, análisis estadístico de datos y conclusiones rigurosas sobre "${capitalizedTopic}".`,
+            satisfactorio: `Sigue los pasos de la investigación científica y reporta resultados claros.`,
+            enProceso: `Carece de rigor metodológico o no sustenta sus conclusiones con evidencias empíricas.`
+          },
+          criterio2: {
+            nombre: 'Innovación Tecnológica y Viabilidad Ambiental',
+            sobresaliente: `Diseña una propuesta de solución sustentable innovadora, de bajo costo y alto impacto comunitario.`,
+            satisfactorio: `La propuesta ambiental es viable y atiende la problemática planteada.`,
+            enProceso: `La propuesta es inviable o no se relaciona con los principios científicos estudiados.`
+          },
+          criterio3: {
+            nombre: 'Defensa Académica y Divulgación ante la Comunidad',
+            sobresaliente: `Defiende su investigación con solvencia conceptual, vocabulario científico preciso y capacidad de diálogo interdisciplinario en el simposio.`,
+            satisfactorio: `Expone su ponencia con fluidez y responde a las preguntas del comité evaluador.`,
+            enProceso: `Lectura insegura o dificultad para sustentar los datos experimentales.`
+          }
+        }
+      };
+    }
+  }
+
+  // 8. DOMINIO CIENCIAS DE LA SALUD, NUTRICIÓN Y CUERPO HUMANO
+  if (domain === 'health_nutrition') {
+    return {
+      titulo: `Feria Escolar de la Salud y Nutrición Consciente: "El Plato del Bien Comer y Hábitos Saludables frente a ${capitalizedTopic}"`,
+      problematicaComunitaria: `Elevada incidencia de consumo de alimentos ultraprocesados, hábitos sedentarios y falta de información accesible sobre el cuidado integral del cuerpo humano en torno a "${capitalizedTopic}".`,
+      proposito: `Analizar los grupos nutrimentales del Plato del Bien Comer, el funcionamiento de los sistemas del cuerpo y elaborar propuestas de menús saludables y rutinas de bienestar (Libro SEP: Nuestros Saberes / Proyectos Comunitarios).`,
+      productoFinal: `Montaje de la "Feria de la Salud Escolar" con puestos de degustación de colaciones nutritivas locales, recetario escolar ilustrado, infografías del sistema digestivo/circulatorio y estación de toma de signos vitales guiada.`,
+      impactoSocial: `Modifica positivamente los hábitos de alimentación familiar, disminuye el consumo de comida chatarra en la cooperativa escolar y previene enfermedades crónicas tempranas.`,
+      rubrica: {
+        criterio1: {
+          nombre: 'Comprensión Nutricional y Fisiológica del Cuerpo',
+          sobresaliente: `Explica con precisión la función de los nutrientes, los riesgos del consumo excesivo de azúcares y grasas, y la fisiología del cuerpo humano frente a "${capitalizedTopic}".`,
+          satisfactorio: `Identifica los grupos del Plato del Bien Comer y propone opciones de menús balanceados.`,
+          enProceso: `Confunde los grupos nutrimentales o desconoce la función básica de los órganos.`
+        },
+        criterio2: {
+          nombre: 'Elaboración del Recetario y Recursos Didácticos',
+          sobresaliente: `Crea recetas nutritivas con ingredientes económicos de la región, rotuladas con tablas de valor calórico y presentación gráfica impecable.`,
+          satisfactorio: `Presenta sus recetas y carteles con orden, limpieza e información comprensible.`,
+          enProceso: `Las recetas son poco saludables o los materiales visuales carecen de claridad.`
+        },
+        criterio3: {
+          nombre: 'Promoción de la Salud y Diálogo con las Familias',
+          sobresaliente: `Orienta con amabilidad y argumentos fundamentados a las familias en la feria de la salud, promoviendo compromisos de vida saludable.`,
+          satisfactorio: `Atiende su módulo con cordialidad y explica las recomendaciones nutricionales.`,
+          enProceso: `Muestra timidez o dificultad para dialogar sobre los hábitos saludables.`
+        }
+      }
+    };
+  }
+
+  // 9. DOMINIO TEXTOS EPISTOLARES Y CORRESPONDENCIA
+  if (domain === 'language_epistolar') {
+    return {
+      titulo: `El Cartero Escolar y el Buzón de la Amistad: "Cartas que Unen Corazones sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `La comunicación digital inmediata ha desplazado la correspondencia escrita, provocando que las niñas y niños desconozcan la función social de la carta, sus componentes estructurales y el valor de expresar afecto o peticiones ciudadanas mediante la palabra escrita.`,
+      proposito: `Desarrollar competencias integrales de lectoescritura con sentido social real, elaborando cartas personalizadas para miembros de la comunidad escolar y diseñando un buzón postal funcional (Libro SEP: Proyectos Comunitarios).`,
+      productoFinal: `Montaje del "Buzón Postal Comunitario" en el aula y patio escolar, con sobres decorados a mano, estampillas postales diseñadas por los alumnos y jornada de entrega postal en la comunidad escolar.`,
+      impactoSocial: `Fortalece los vínculos afectivos intergeneracionales, rescata el patrimonio de la correspondencia postal mexicana y estimula la escritura reflexiva y empática.`,
+      rubrica: {
+        criterio1: {
+          nombre: 'Estructura Epistolar y Calidad del Mensaje Escrito',
+          sobresaliente: `La carta incluye con absoluta precisión sus 6 partes (lugar/fecha, destinatario, saludo, cuerpo estructurado, despedida y firma), con excelente caligrafía y ortografía.`,
+          satisfactorio: `La carta contiene la mayoría de los elementos de la estructura epistolar con redacción comprensible.`,
+          enProceso: `El texto carece de encabezado o despedida, o las ideas están desordenadas.`
+        },
+        criterio2: {
+          nombre: 'Diseño del Sobre, Estampilla y Rotulación Postal',
+          sobresaliente: `El sobre está impecablemente rotulado con remitente y destinatario en las posiciones correctas, incluye código postal y una estampilla artística original.`,
+          satisfactorio: `El sobre contiene los datos principales de remitente y destinatario con buena presentación general.`,
+          enProceso: `El sobre confunde el remitente con el destinatario o carece de datos indispensables.`
+        },
+        criterio3: {
+          nombre: 'Participación en la Jornada del Buzón Comunitario',
+          sobresaliente: `Participa con entusiasmo y empatía en la construcción del buzón, asume con responsabilidad su rol de cartero y lee con elocuencia ante la comunidad.`,
+          satisfactorio: `Colabora adecuadamente en el montaje del buzón y entrega su correspondencia a tiempo.`,
+          enProceso: `Muestra poco interés en la entrega comunitaria o dificultad para integrarse en el equipo.`
+        }
+      }
+    };
+  }
+
+  // 10. DOMINIO NARRATIVA, CUENTOS Y RELATOS
+  if (domain === 'language_narrative') {
+    return {
+      titulo: `Antología Cartonera y Festival de Narrativa: "Voces y Relatos Comunitarios sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Pérdida paulatina de la tradición oral comunitaria y escaso hábito de creación literaria autónoma, lo que limita la imaginación y la comprensión lectora en el entorno escolar.`,
+      proposito: `Rescatar y recrear relatos locales mediante la producción colectiva de una antología de cuentos ilustrados con estructura narrativa formal (planteamiento, nudo y desenlace), utilizando libros SEP (Proyectos de Aula / Múltiples Lenguajes).`,
       productoFinal: `Libro cartonero antológico encuadernado y decorado a mano con material reciclable, presentado en una tertulia literaria comunitaria con lectura en atril y tendedero de cuentos en el patio escolar.`,
-      impactoSocial: `Fomenta el amor por la lectura comunitaria, recupera la memoria de los pueblos y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.`,
+      impactoSocial: `Fomenta el amor por la lectura comunitaria, recupera la memoria colectiva y dota a la biblioteca de aula de un acervo literario creado por las y los alumnos.`,
       rubrica: {
         criterio1: {
           nombre: 'Estructura Narrativa y Creatividad Literaria',
-          sobresaliente: `Desarrolla una trama original con personajes bien caracterizados, conflicto claro y desenlace creativo, empleando conectores temporales y adjetivos descriptivos.`,
+          sobresaliente: `Desarrolla una trama original con personajes bien caracterizados, conflicto claro y desenlace creativo, empleando conectores temporales y adjetivos descriptivos sobre "${capitalizedTopic}".`,
           satisfactorio: `El relato presenta inicio, desarrollo y final comprensibles con adecuada estructura de párrafos.`,
           enProceso: `La narración no tiene una secuencia lógica clara o queda inconclusa.`
         },
@@ -1849,238 +2690,49 @@ export function generateFinalProjectProposal(level: string, subject: string, top
     };
   }
 
-  // 4. PROYECTO DE MATEMÁTICAS: FRACCIONES Y REPARTO EQUITATIVO
-  if (isFractions) {
+  // 11. DOMINIO POESÍA, LÍRICA Y RIMA
+  if (domain === 'language_poetry') {
     return {
-      titulo: `La Panadería y Cocina Comunitaria: "Fracciones para Compartir con Equidad"`,
-      problematicaComunitaria: `Los estudiantes suelen concebir las fracciones de forma abstracta y descontextualizada, dificultando la comprensión del concepto de entero, medios, cuartos, octavos y su aplicación en la economía familiar y la cocina diaria.`,
-      proposito: `Comprender las fracciones como partes de la unidad y operadores de reparto equitativo mediante la simulación lúdica de una panadería comunitaria y la elaboración de recetas fraccionarias (Libro SEP: Proyectos de Aula 3º Grado, págs. 112-125).`,
-      productoFinal: `Feria Gastronómica Matemática con modelos manipulables de alimentos divididos en fracciones, recetario escolar ilustrado con cantidades fraccionarias y estación interactiva de retos de equivalencias.`,
-      impactoSocial: `Promueve la justicia distributiva, la equidad en el reparto de alimentos y la aplicación práctica de las matemáticas en la economía y cocina del hogar.`,
+      titulo: `Taller Lírico y Recital Escolar: "Coplas, Calaveritas y Versos sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Escaso acercamiento de los estudiantes al lenguaje poético, el ritmo métrico y los recursos sonoros del idioma en su vida cotidiana escolar.`,
+      proposito: `Explorar la lírica tradicional mexicana (calaveritas, coplas, rondas, décimas) y crear poemas originales para un recital escolar poético (Libro SEP: Múltiples Lenguajes / Proyectos Escolares).`,
+      productoFinal: `Plaquette poética ilustrada y recital en vivo en el patio escolar con acompañamiento rítmico, micrófonos y declamación abierta a familias y docentes.`,
+      impactoSocial: `Enriquece la sensibilidad estética, el vocabulario poético y fortalece la autoestima oral y la apreciación de la lírica tradicional mexicana.`,
       rubrica: {
         criterio1: {
-          nombre: 'Modelado y Representación Gráfica de Fracciones',
-          sobresaliente: `Representa con exactitud fracciones propias, impropias y equivalentes usando material concreto, rectas numéricas y dibujos a escala.`,
-          satisfactorio: `Identifica y representa medios, cuartos y octavos correctamente en figuras geométricas y alimentos.`,
-          enProceso: `Confunde el numerador con el denominador o divide enteros en partes desiguales.`
+          nombre: 'Métrica, Rima y Recursos Poéticos',
+          sobresaliente: `Emplea rima consonante o asonante, metáforas creativas y ritmo musical bien estructurado en sus estrofas poéticas sobre "${capitalizedTopic}".`,
+          satisfactorio: `Construye versos con rima y sentido poético básico con apego al tema.`,
+          enProceso: `Los versos carecen de musicalidad o se leen como texto en prosa sin ritmo.`
         },
         criterio2: {
-          nombre: 'Resolución de Problemas de Reparto y Equivalencias',
-          sobresaliente: `Resuelve problemas complejos de suma y comparación de fracciones con distintos métodos y justifica con elocuencia su razonamiento.`,
-          satisfactorio: `Resuelve problemas sencillos de reparto fraccionario con apoyo de material manipulable.`,
-          enProceso: `Presenta dificultades para calcular repartos básicos o identificar equivalencias simples.`
+          nombre: 'Diseño Editorial de la Plaquette Poética',
+          sobresaliente: `Diseña un poemario ilustrado con caligrafía artística, grecas decorativas y excelente presentación visual.`,
+          satisfactorio: `Presenta su hoja poética con limpieza, orden e ilustraciones pertinentes.`,
+          enProceso: `El diseño es descuidado o la letra es poco legible.`
         },
         criterio3: {
-          nombre: 'Atención en la Estación Demostrativa y Trabajo en Equipo',
-          sobresaliente: `Explica con claridad y entusiasmo los retos de fracciones a los visitantes de la feria gastronómica con gran empatía y solvencia.`,
-          satisfactorio: `Colabora en la atención de la estación y demuestra los modelos fraccionarios adecuadamente.`,
-          enProceso: `Participa con timidez o no logra explicar el funcionamiento de sus modelos manipulables.`
+          nombre: 'Declamación y Expresión Lírica en el Recital',
+          sobresaliente: `Declama con entonación emotiva, volumen adecuado, modulación y seguridad escénica ante la comunidad escolar.`,
+          satisfactorio: `Lee su poema en voz alta con claridad y postura adecuada.`,
+          enProceso: `Muestra timidez excesiva o dificultad para proyectar la voz ante el público.`
         }
       }
     };
   }
 
-  // 5. PROYECTO DE MATEMÁTICAS: LA TIENDITA, MONEDAS Y FINANZAS FAMILIARES
-  if (isMathStoreOrMoney) {
+  // 12. DOMINIO TEXTOS EXPOSITIVOS, PERIODISMO Y GACETA ESCOLAR
+  if (domain === 'language_expository') {
     return {
-      titulo: `Mercado Escolar y Tiendita Cooperativa: "Números, Monedas y Finanzas para el Bien Común"`,
-      problematicaComunitaria: `Los estudiantes requieren fortalecer el cálculo mental, la comprensión del valor posicional del dinero y el desarrollo de hábitos de consumo responsable y finanzas solidarias en su entorno comunitario.`,
-      proposito: `Diseñar e instalar una tiendita escolar cooperativa utilizando billetes y monedas didácticos para resolver problemas de adición, sustracción, cálculo de cambio y presupuesto familiar (Libro SEP: Proyectos de Aula 2º Grado, págs. 68-79 / Nuestros Saberes).`,
-      productoFinal: `Simulación del "Mercado Cooperativo Escolar" con puestos de productos sustentables, lista de precios calculada por los alumnos, billetes y monedas didácticas, libro de contabilidad escolar y guía de compra inteligente para las familias.`,
-      impactoSocial: `Fomenta la educación financiera temprana, el comercio justo, el consumo de alimentos locales y el ahorro familiar responsable.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Cálculo de Precios, Sumas y Cálculo de Cambio',
-          sobresaliente: `Realiza transacciones con exactitud, suma mentalmente precios y calcula el cambio correspondiente con rapidez y sin errores.`,
-          satisfactorio: `Calcula totales y cambios de forma correcta apoyándose en el registro escrito o fichas.`,
-          enProceso: `Presenta dificultades para sumar cantidades monetarias o calcular el cambio exacto.`
-        },
-        criterio2: {
-          nombre: 'Organización del Puesto y Clasificación de Productos',
-          sobresaliente: `Etiqueta productos con claridad, organiza el puesto con orden estético y promueve alimentos sanos y productos reciclados.`,
-          satisfactorio: `Mantiene su puesto ordenado y con precios visibles para los compradores.`,
-          enProceso: `El puesto carece de etiquetas de precios o está desorganizado.`
-        },
-        criterio3: {
-          nombre: 'Atención al Cliente y Convivencia Solidaria',
-          sobresaliente: `Atiende con amabilidad, honestidad y entusiasmo a sus compañeros clientes, promoviendo el diálogo respetuoso.`,
-          satisfactorio: `Participa adecuadamente en los turnos de comprador y vendedor.`,
-          enProceso: `Muestra desinterés en la dinámica del mercado o dificultad para convivir en equipo.`
-        }
-      }
-    };
-  }
-
-  // 6. PROYECTO DE MATEMÁTICAS: FUNCIONES CUADRÁTICAS Y PARÁBOLAS (SECUNDARIA)
-  if (isParabola) {
-    return {
-      titulo: `El Vértice de la Realidad: "Modelación de Parábolas en Puentes, Antenas y Deportes"`,
-      problematicaComunitaria: `Dificultad de los alumnos de secundaria para visualizar la relación entre el álgebra abstracta (ecuaciones de segundo grado) y los fenómenos físicos, arquitectónicos y tecnológicos del entorno.`,
-      proposito: `Modelar y resolver problemas reales mediante funciones cuadráticas (y = ax² + bx + c), analizando el vértice, eje de simetría, raíces y concavidad con herramientas digitales (GeoGebra) y maquetas a escala (Libro SEP: Saberes y Pensamiento Científico: Matemáticas 3º Secundaria, págs. 136-155).`,
-      productoFinal: `Galería STEM con maquetas a escala de puentes colgantes, lanzadores de proyectiles calibrados y dossier técnico de modelación matemática con GeoGebra.`,
-      impactoSocial: `Acerca la ingeniería y la física aplicada a la comunidad escolar, demostrando la utilidad de las matemáticas en la infraestructura pública y el diseño tecnológico.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Rigor Algebraico y Cálculo Analítico',
-          sobresaliente: `Calcula con precisión vértice, raíces y concavidad mediante factorización y fórmula general, interpretando su significado físico.`,
-          satisfactorio: `Obtiene el vértice y grafica la parábola correctamente con apoyo de tablas de valores.`,
-          enProceso: `Comete errores constantes de signo o no logra identificar el vértice de la función.`
-        },
-        criterio2: {
-          nombre: 'Construcción y Calibración de la Maqueta a Escala',
-          sobresaliente: `La maqueta representa con exactitud la curva parabólica calculada y demuestra el tiro parabólico con datos medibles.`,
-          satisfactorio: `La maqueta ilustra la forma parabólica con dimensiones estables y buen acabado.`,
-          enProceso: `La estructura no conserva la simetría parabólica o los cálculos no corresponden al modelo físico.`
-        },
-        criterio3: {
-          nombre: 'Exposición Técnica y Uso de Software Matemático',
-          sobresaliente: `Utiliza GeoGebra con destreza y expone con solvencia científica ante la comunidad escolar y padres de familia.`,
-          satisfactorio: `Explica los conceptos de su maqueta con claridad y lenguaje matemático apropiado.`,
-          enProceso: `Presenta dificultades para explicar el significado del vértice o la trayectoria parabólica.`
-        }
-      }
-    };
-  }
-
-  // 7. PROYECTO DE CIENCIAS: CUIDADO DEL AGUA Y FILTRACIÓN PLUVIAL
-  if (isWater) {
-    return {
-      titulo: `Guardianes del Agua: "Sistema Escolar de Filtración Pluvial y Uso Responsable del Agua"`,
-      problematicaComunitaria: `Escasez y desperdicio de agua en la escuela y los hogares, junto con la falta de infraestructura de captación pluvial y purificación casera de bajo costo en la comunidad.`,
-      proposito: `Diseñar e implementar un prototipo funcional de filtro de agua casero con materiales del entorno (arena, grava, carbón activado) e impulsar una campaña de concientización hídrica escolar (Libro SEP: Proyectos Comunitarios 3º Grado, págs. 142-155 / Nuestros Saberes).`,
-      productoFinal: `Prototipo funcional de filtro de agua multicapa instalado en la escuela, estación de pruebas de turbidez, decálogo comunitario del ahorro hídrico y patrulla escolar del agua.`,
-      impactoSocial: `Reduce el desperdicio de agua en la institución, enseña ecotecnias aplicables en los hogares de escasos recursos y fomenta el derecho humano al agua limpia y saneamiento.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Indagación Científica y Diseño del Filtro',
-          sobresaliente: `Explica con precisión la función de cada capa de filtrado, los ciclos del agua y demuestra la reducción de turbidez con pruebas empíricas rigurosas.`,
-          satisfactorio: `Construye el filtro con los materiales adecuados y explica el proceso general de purificación.`,
-          enProceso: `El prototipo presenta fugas o no logra filtrar adecuadamente el agua de muestra.`
-        },
-        criterio2: {
-          nombre: 'Campaña Escolar de Sensibilización',
-          sobresaliente: `Diseña infografías de alto impacto visual y lidera la patrulla del agua con propuestas medibles de ahorro en los sanitarios y áreas verdes.`,
-          satisfactorio: `Elabora carteles informativos claros y comparte recomendaciones con otros grupos.`,
-          enProceso: `Participa de forma pasiva en la difusión de las medidas de cuidado del agua.`
-        },
-        criterio3: {
-          nombre: 'Trabajo Colaborativo y Compromiso Ecológico',
-          sobresaliente: `Demuestra un liderazgo ejemplar en el mantenimiento del filtro y promueve compromisos firmados con las familias.`,
-          satisfactorio: `Colabora con entusiasmo en las tareas asignadas para el montaje del prototipo.`,
-          enProceso: `Muestra poco interés en el cuidado de los materiales o el trabajo en equipo.`
-        }
-      }
-    };
-  }
-
-  // 8. PROYECTO DE CIENCIAS: HUERTO ESCOLAR Y SOBERANÍA ALIMENTARIA
-  if (isGardenOrFood) {
-    return {
-      titulo: `El Huerto Escolar Agroecológico: "Siembra, Vida y Soberanía Alimentaria en Nuestra Escuela"`,
-      problematicaComunitaria: `Desconocimiento sobre el origen de los alimentos, alto consumo de productos ultraprocesados y falta de espacios verdes productivos en la comunidad escolar.`,
-      proposito: `Construir un huerto escolar sustentable con sistema de siembra orgánica, compostero y cultivo de hortalizas locales, integrando saberes del Plato del Bien Comer y la agroecología (Libro SEP: Proyectos Comunitarios 2º Grado, págs. 104-117).`,
-      productoFinal: `Camas de siembra de hortalizas y plantas medicinales activas en la escuela, compostero de residuos orgánicos, bitácora científica de germinación y recetario escolar de comida tradicional saludable.`,
-      impactoSocial: `Fomenta la soberanía alimentaria, mejora la nutrición de las familias, reduce la huella de carbono escolar y embellece los espacios comunes con biodiversidad.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Indagación Biológica y Registro en Bitácora',
-          sobresaliente: `Registra detalladamente el ciclo de vida de las plantas, factores bióticos/abióticos y nutrientes del suelo con dibujos y mediciones periódicas.`,
-          satisfactorio: `Lleva un registro ordenado de las etapas de crecimiento de su cultivo escolar.`,
-          enProceso: `El registro en bitácora es incompleto o no demuestra comprensión de los cuidados de la planta.`
-        },
-        criterio2: {
-          nombre: 'Implementación del Huerto y Compostero',
-          sobresaliente: `Aplica técnicas de siembra asociadas, riego por goteo casero y elaboración de abono orgánico con excelente esmero.`,
-          satisfactorio: `Participa activamente en la siembra, deshierbe y riego de las camas de cultivo.`,
-          enProceso: `Muestra descuido en el mantenimiento de las plantas asignadas a su equipo.`
-        },
-        criterio3: {
-          nombre: 'Promoción de la Salud y Nutrición Comunitaria',
-          sobresaliente: `Diseña propuestas atractivas para sustituir la comida chatarra por productos del huerto y expone su recetario ante los padres de familia.`,
-          satisfactorio: `Comparte información sobre los beneficios de las hortalizas con sus compañeros.`,
-          enProceso: `Dificultad para explicar el valor nutricional de los alimentos cosechados.`
-        }
-      }
-    };
-  }
-
-  // 9. PROYECTO DE CIENCIAS: BIODIGESTORES Y ENERGÍAS LIMPIAS
-  if (isCleanEnergy) {
-    return {
-      titulo: `Energías Verdes en Movimiento: "Prototipo de Biodigestor y Tecnologías Sustentables Escolares"`,
-      problematicaComunitaria: `Acumulación de residuos orgánicos sin tratamiento y falta de alternativas sustentables de generación de energía limpia en las comunidades escolares y rurales.`,
-      proposito: `Diseñar y construir un biodigestor anaeróbico a escala para la producción de biogás y biofertilizante (biol), investigando las transformaciones de la materia y la energía (Libro SEP: Proyectos Comunitarios 6º Grado, págs. 168-183).`,
-      productoFinal: `Prototipo funcional de biodigestor a escala con contenedor hermético, válvula de gas y trampa de agua, acompañado de una feria escolar de ecotecnias y guía comunitaria de aprovechamiento de biomasa.`,
-      impactoSocial: `Sensibiliza sobre la economía circular, la reducción de gases de efecto invernadero y ofrece soluciones prácticas para comunidades con acceso limitado a combustibles fósiles.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Rigor Científico y Comprensión del Proceso Anaeróbico',
-          sobresaliente: `Explica con precisión la fermentación metanogénica, el balance carbono-nitrógeno y las leyes de conservación de la materia con fundamentos científicos sólidos.`,
-          satisfactorio: `Describe adecuadamente cómo se transforma la materia orgánica en gas combustible y fertilizante.`,
-          enProceso: `Muestra confusión sobre el funcionamiento del biodigestor o los gases producidos.`
-        },
-        criterio2: {
-          nombre: 'Construcción y Hermeticidad del Prototipo',
-          sobresaliente: `El prototipo está sólidamente ensamblado, con sellado hermético verificado, válvulas funcionales y medidas de seguridad impecables.`,
-          satisfactorio: `Construye el prototipo siguiendo las especificaciones técnicas con buenos acabados.`,
-          enProceso: `El prototipo presenta fugas de aire o fallas en las conexiones.`
-        },
-        criterio3: {
-          nombre: 'Divulgación de Ecotecnias y Conciencia Ambiental',
-          sobresaliente: `Comunica con claridad y pasión los beneficios ecológicos del biogás ante la comunidad escolar, demostrando su utilidad práctica.`,
-          satisfactorio: `Explica el prototipo y su impacto ambiental de forma comprensible durante la feria.`,
-          enProceso: `Presenta dificultades para exponer la importancia de las energías renovables.`
-        }
-      }
-    };
-  }
-
-  // 10. PROYECTO DE CIVISMO, DERECHOS DE LA NIÑEZ Y CULTURA DE PAZ
-  if (isCivicsPeace) {
-    return {
-      titulo: `El Tribunal Escolar de la Amistad: "Acuerdos, Derechos de la Niñez y Mediación Comunitaria"`,
-      problematicaComunitaria: `Presencia de conductas de exclusión o conflictos no resueltos en el aula y patio escolar, junto con el desconocimiento de los mecanismos democráticos de mediación y defensa de los derechos infantiles.`,
-      proposito: `Construir un decálogo de convivencia escolar democrática y establecer una mesa de mediación de la amistad basada en los derechos fundamentales de las niñas y niños (Libro SEP: Proyectos de Aula / Nuestros Saberes).`,
-      productoFinal: `Asamblea Escolar de la Niñez con juramento cívico, decálogo ilustrado de acuerdos de convivencia, buzón de mediación pacífica y campaña escolar contra el acoso y la discriminación.`,
-      impactoSocial: `Crea un entorno escolar seguro, inclusivo y pacífico, empoderando a las y los estudiantes como agentes de cambio y defensores de los derechos humanos.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Comprensión y Defensa de los Derechos de la Niñez',
-          sobresaliente: `Reconoce y fundamenta con claridad los derechos de las niñas y niños (expresión, igualdad, no discriminación, educación) en casos prácticos del aula.`,
-          satisfactorio: `Identifica los derechos principales y explica su importancia para la convivencia diaria.`,
-          enProceso: `Confunde derechos con obligaciones o desconoce las garantías infantiles.`
-        },
-        criterio2: {
-          nombre: 'Elaboración de Acuerdos y Decálogo de Convivencia',
-          sobresaliente: `Redacta acuerdos inclusivos, propositivos y consensuados con excelente redacción, ilustrándolos de forma creativa y visible para todos.`,
-          satisfactorio: `Participa en la redacción de normas claras para el bienestar del salón de clases.`,
-          enProceso: `Propone normas punitivas o no respeta los consensos del grupo.`
-        },
-        criterio3: {
-          nombre: 'Habilidades de Mediación y Cultura de Paz',
-          sobresaliente: `Aplica la escucha activa y el diálogo asertivo para mediar diferencias entre compañeros, fomentando la empatía y la reconciliación.`,
-          satisfactorio: `Participa con respeto en las asambleas y acata los acuerdos pactados.`,
-          enProceso: `Muestra dificultad para dialogar pacíficamente ante desacuerdos.`
-        }
-      }
-    };
-  }
-
-  // 11. FALLBACK SITUADO Y AUTÉNTICO POR ASIGNATURA Y NIVEL (GARANTIZA CERO RESPUESTAS GENÉRICAS)
-  const isLanguageSubject = subject.toLowerCase().includes('leng') || subject.toLowerCase().includes('esp');
-  const isMathSubject = subject.toLowerCase().includes('mat');
-
-  if (isLanguageSubject) {
-    return {
-      titulo: `Gremio Editorial Infantil: "Gaceta Literaria y Mural Informativo sobre ${capitalizedTopic}"`,
-      problematicaComunitaria: `Falta de medios de difusión escolares donde los estudiantes puedan compartir investigaciones documentales, crónicas comunitarias y textos de opinión sobre "${capitalizedTopic}" para sensibilizar a su entorno.`,
-      proposito: `Desarrollar competencias de investigación, redacción periodística y diseño editorial para socializar el tema "${capitalizedTopic}" mediante una gaceta escolar impresa y digital (Libro SEP: Proyectos Escolares y Múltiples Lenguajes).`,
+      titulo: `Gaceta Escolar Comunitaria y Periódico Mural: "Periodismo y Artículos de Divulgación sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Falta de medios de difusión escolares donde los estudiantes puedan compartir investigaciones documentales, notas informativas y artículos de opinión verídicos sobre "${capitalizedTopic}".`,
+      proposito: `Desarrollar competencias de investigación periodística, redacción informativa y diseño editorial para socializar el tema "${capitalizedTopic}" mediante una gaceta escolar impresa y digital (Libro SEP: Proyectos Escolares).`,
       productoFinal: `Edición especial de la "Gaceta Escolar Comunitaria" con reportajes de campo, infografías ilustradas, entrevistas a personas de la localidad y artículos de divulgación elaborados por los alumnos.`,
       impactoSocial: `Democratiza el acceso a la información en la comunidad escolar, estimula la libertad de expresión responsable y revaloriza la voz de las niñas y niños.`,
       rubrica: {
         criterio1: {
-          nombre: 'Calidad de Redacción, Cohesión y Rigor Temático',
-          sobresaliente: `Redacta textos informativos y de opinión con excelente cohesión, variedad de vocabulario, ortografía impecable y apego riguroso al tema.`,
+          nombre: 'Calidad de Redacción, Cohesión y Rigor Informativo',
+          sobresaliente: `Redacta textos informativos con excelente cohesión, variedad de vocabulario, ortografía impecable y apego riguroso al tema "${capitalizedTopic}".`,
           satisfactorio: `Redacta artículos comprensibles con estructura básica de párrafos y pocos errores ortográficos.`,
           enProceso: `Los textos presentan ideas desordenadas, repetición de palabras o falta de coherencia.`
         },
@@ -2098,310 +2750,439 @@ export function generateFinalProjectProposal(level: string, subject: string, top
         }
       }
     };
-  } else if (isMathSubject) {
+  }
+
+  // 13. DOMINIO ARTES VISUALES, PLÁSTICAS Y ESCÉNICAS
+  if (domain === 'arts') {
     return {
-      titulo: `Laboratorio Matemático en Acción: "Feria de Soluciones Prácticas y Modelado sobre ${capitalizedTopic}"`,
-      problematicaComunitaria: `Necesidad de aplicar el razonamiento lógico-matemático a situaciones concretas del entorno vinculadas con "${capitalizedTopic}" para resolver retos cuantitativos en la escuela y el hogar.`,
-      proposito: `Diseñar modelos matemáticos manipulables, retos lúdicos y guías de cálculo aplicado para resolver problemas reales sobre "${capitalizedTopic}" (Libro SEP: Nuestros Saberes / Proyectos de Aula).`,
-      productoFinal: `Feria de Retos y Juegos Matemáticos Interactivos con estaciones demostrativas, materiales manipulables construidos por los alumnos y catálogo de soluciones cuantitativas comunitarias.`,
-      impactoSocial: `Desmitifica el aprendizaje de las matemáticas, promoviendo el gusto por el razonamiento numérico y su utilidad práctica en la vida diaria.`,
+      titulo: `Galería de Expresión Plástica y Arte Comunitario: "Formas, Colores y Emociones sobre ${capitalizedTopic}"`,
+      problematicaComunitaria: `Limitados espacios para la exploración de técnicas artísticas multidisciplinarias (pintura, grabado, escultura, arte efímero) y la valoración estética del entorno escolar vinculada a "${capitalizedTopic}".`,
+      proposito: `Explorar elementos de las artes visuales (punto, línea, forma, color, textura y espacio) para crear obras plásticas originales que transmitan emociones y mensajes comunitarios (Libro SEP: Múltiples Lenguajes / Proyectos de Aula).`,
+      productoFinal: `Montaje de la "Galería Escolar de Artes Plásticas" en los pasillos de la escuela, con cédulas de autor, cuadros en diversas técnicas (óleo pastel, acuarela, modelado) y recorrido guiado para las familias.`,
+      impactoSocial: `Embellece el entorno escolar, fomenta la sensibilidad artística infantil y ofrece canales no verbales de expresión emocional y pensamiento divergente.`,
       rubrica: {
         criterio1: {
-          nombre: 'Precisión en Algoritmos y Justificación Matemática',
-          sobresaliente: `Resuelve y modela problemas matemáticos sin errores, justificando con claridad cada paso y explorando múltiples rutas de solución.`,
-          satisfactorio: `Aplica los procedimientos matemáticos de forma correcta en la mayoría de los retos.`,
-          enProceso: `Presenta errores conceptuales constantes de cálculo o dificultad para elegir la operación adecuada.`
+          nombre: 'Exploración Técnica y Manejo de Materiales',
+          sobresaliente: `Aplica con destreza mezclas de color, texturas y composición plástica, demostrando dominio en la técnica artística elegida sobre "${capitalizedTopic}".`,
+          satisfactorio: `Utiliza los materiales artísticos con orden, limpieza y adecuada aplicación técnica.`,
+          enProceso: `Presenta dificultad en el manejo de materiales o los trabajos quedan inconclusos.`
         },
         criterio2: {
-          nombre: 'Diseño y Funcionalidad del Material Didáctico',
-          sobresaliente: `Construye materiales manipulables innovadores, resistentes y estéticos que facilitan la comprensión intuitiva del concepto.`,
-          satisfactorio: `El material didáctico es funcional y permite resolver los retos con orden.`,
-          enProceso: `El material es frágil, confuso o no corresponde al contenido matemático.`
+          nombre: 'Expresividad Estética y Mensaje Comunitario',
+          sobresaliente: `La obra transmite con profunda emotividad y originalidad un mensaje claro y reflexivo sobre "${capitalizedTopic}".`,
+          satisfactorio: `La obra refleja el tema propuesto con creatividad y elementos visuales reconocibles.`,
+          enProceso: `La obra carece de relación con la temática o es una copia mecánica sin intención expresiva.`
         },
         criterio3: {
-          nombre: 'Mediación Lúdica y Trabajo en Equipo',
-          sobresaliente: `Guía con paciencia y entusiasmo a los visitantes de su estación, explicando los retos con lenguaje accesible y motivador.`,
-          satisfactorio: `Atiende su estación de forma adecuada y colabora con su equipo.`,
-          enProceso: `Muestra desinterés en la atención de su estación o dificultad para explicar la dinámica.`
-        }
-      }
-    };
-  } else {
-    return {
-      titulo: `Muestra Científica y Comunitaria: "Investigación e Innovación Situada sobre ${capitalizedTopic}"`,
-      problematicaComunitaria: `Necesidad de fomentar el pensamiento científico sistemático y la indagación de campo para comprender y transformar retos del entorno escolar en torno a "${capitalizedTopic}".`,
-      proposito: `Diseñar y ejecutar una investigación experimental que culmine en prototipos funcionales y propuestas de mejora comunitaria basadas en los libros de texto de la SEP (Proyectos Comunitarios y Nuestros Saberes).`,
-      productoFinal: `Muestra de Indagación Científica Escolar con experimentos demostrativos en vivo, prototipos a escala, bitácoras de campo detalladas e infografías explicativas.`,
-      impactoSocial: `Fomenta la cultura científica, la toma de decisiones basada en evidencias y el compromiso comunitario con el desarrollo sostenible.`,
-      rubrica: {
-        criterio1: {
-          nombre: 'Metodología Científica e Indagación Experimental',
-          sobresaliente: `Plantea preguntas investigables, formula hipótesis fundamentadas, registra datos con rigor y obtiene conclusiones respaldadas por evidencia.`,
-          satisfactorio: `Sigue los pasos del método experimental y presenta resultados ordenados.`,
-          enProceso: `El registro de datos es incompleto o las conclusiones carecen de sustento empírico.`
-        },
-        criterio2: {
-          nombre: 'Calidad del Prototipo y Recursos Demostrativos',
-          sobresaliente: `El prototipo es funcional, seguro, creativo y demuestra claramente el principio científico estudiado.`,
-          satisfactorio: `El prototipo funciona adecuadamente y los apoyos visuales son claros.`,
-          enProceso: `El prototipo presenta fallas mecánicas o no logra demostrar el fenómeno.`
-        },
-        criterio3: {
-          nombre: 'Divulgación Científica y Comunicación Asertiva',
-          sobresaliente: `Explica conceptos científicos complejos con sencillez, elocuencia y vocabulario técnico adecuado ante diversas audiencias.`,
-          satisfactorio: `Expone su experimento con claridad y responde preguntas de los visitantes.`,
-          enProceso: `Dificultad para explicar el funcionamiento o la utilidad práctica de su investigación.`
+          nombre: 'Curaduría y Montaje de la Galería',
+          sobresaliente: `Colabora activamente en la iluminación, colocación de cédulas y atención respetuosa a los visitantes de la galería escolar.`,
+          satisfactorio: `Participa en el montaje de su cuadro y atiende su espacio durante la muestra.`,
+          enProceso: `Muestra desinterés en el cuidado y presentación colectiva de las obras.`
         }
       }
     };
   }
+
+  // 14. DOMINIO CÍVICA, ÉTICA, DERECHOS Y CULTURA DE PAZ
+  if (domain === 'civics_ethics') {
+    return {
+      titulo: `Asamblea Escolar y Campaña Comunitaria: "Construyendo Acuerdos, Inclusión y Cultura de Paz en Torno a ${capitalizedTopic}"`,
+      problematicaComunitaria: `Conflictos recurrentes en la convivencia escolar y necesidad de fortalecer la cultura del diálogo, el conocimiento de los derechos humanos y la resolución pacífica de controversias sobre "${capitalizedTopic}".`,
+      proposito: `Construir consensos democráticos a través de asambleas de aula, redactar un decálogo de convivencia y diseñar una campaña escolar de cultura de paz (Libro SEP: Ética, Naturaleza y Sociedades / Proyectos de Aula).`,
+      productoFinal: `Realización de la "Asamblea Escolar de la Convivencia y la Paz", con aprobación del Decálogo de Aula, instalación de carteles interactivos de mediación de conflictos y firma de compromisos colectivos.`,
+      impactoSocial: `Reduce incidentes de exclusión o violencia en el aula, fortalece el tejido social escolar y promueve la ciudadanía democrática activa desde la infancia.`,
+      rubrica: {
+        criterio1: {
+          nombre: 'Comprensión y Defensa de los Derechos y la Igualdad',
+          sobresaliente: `Reconoce y fundamenta con claridad los derechos de las niñas y niños (expresión, inclusión, respeto a las diferencias) en torno a "${capitalizedTopic}".`,
+          satisfactorio: `Identifica los derechos principales y explica su importancia para la convivencia pacífica.`,
+          enProceso: `Confunde derechos con obligaciones o desconoce las normas básicas de convivencia.`
+        },
+        criterio2: {
+          nombre: 'Elaboración de Acuerdos y Decálogo de Convivencia',
+          sobresaliente: `Redacta acuerdos inclusivos, propositivos y consensuados con excelente redacción, ilustrándolos de forma creativa y visible para todos.`,
+          satisfactorio: `Participa en la redacción de normas claras para el bienestar del salón de clases.`,
+          enProceso: `Propone normas punitivas o no respeta los consensos del grupo.`
+        },
+        criterio3: {
+          nombre: 'Habilidades de Mediación y Diálogo Asertivo',
+          sobresaliente: `Aplica la escucha activa y el diálogo constructivo para mediar diferencias entre compañeros, fomentando la empatía y la reconciliación.`,
+          satisfactorio: `Participa con respeto en las asambleas y acata los acuerdos pactados.`,
+          enProceso: `Muestra dificultad para dialogar pacíficamente ante desacuerdos.`
+        }
+      }
+    };
+  }
+
+  // 15. DOMINIO SOCIOEMOCIONAL, VIDA SALUDABLE Y EDUCACIÓN FÍSICA (Default situado general)
+  return {
+    titulo: `Círculo de Diálogo y Rally Deportivo Cooperativo: "Convivencia Saludable y Trabajo en Equipo sobre ${capitalizedTopic}"`,
+    problematicaComunitaria: `Necesidad de fortalecer el autoconocimiento socioemocional, la empatía y el desarrollo motriz a través de actividades lúdicas cooperativas vinculadas a "${capitalizedTopic}".`,
+    proposito: `Desarrollar habilidades socioemocionales y motrices mediante circuitos de retos colaborativos, diarios de emociones y asambleas de reflexión grupal (Libro SEP: De lo Humano y lo Comunitario / Proyectos de Aula).`,
+    productoFinal: `Circuito del "Rally Cooperativo Escolar" con estaciones de retos motrices y lúdicos, "Árbol de las Emociones" con compromisos afectivos rotulados y guía comunitaria de juegos tradicionales para el recreo.`,
+    impactoSocial: `Mejora el clima escolar, fomenta la salud mental y física de la niñez, previene el acoso escolar y promueve la integración comunitaria.`,
+    rubrica: {
+      criterio1: {
+        nombre: 'Reconocimiento y Gestión Emocional',
+        sobresaliente: `Identifica y nombra sus emociones con asertividad, aplicando estrategias de autorregulación y empatía hacia sus pares sobre "${capitalizedTopic}".`,
+        satisfactorio: `Expresa sus sentimientos con respeto y reconoce cómo se sienten sus compañeros.`,
+        enProceso: `Presenta dificultades para regular el enojo o la frustración durante los juegos.`
+      },
+      criterio2: {
+        nombre: 'Desempeño Motriz y Trabajo Cooperativo',
+        sobresaliente: `Participa activamente en los retos motores, colabora con entusiasmo para que todos logren la meta y respeta las reglas acordadas.`,
+        satisfactorio: `Completa los circuitos motrices y ayuda a los miembros de su equipo.`,
+        enProceso: `Muestra apatía motriz o desinterés en colaborar con su equipo.`
+      },
+      criterio3: {
+        nombre: 'Promoción del Juego Limpio y la Inclusión',
+        sobresaliente: `Lidera con generosidad, celebra los logros ajenos y se asegura de que nadie quede excluido en ninguna dinámica.`,
+        satisfactorio: `Juega con honestidad y comparte los espacios deportivos con amabilidad.`,
+        enProceso: `Presenta actitudes individualistas o excluyentes hacia sus compañeros.`
+      }
+    }
+  };
 }
 
 /**
  * Generador de Preguntas Detonadoras Situadas y No Genéricas (Apertura y Conflicto Cognitivo)
- * Estrictamente calibradas al nivel de desarrollo cognitivo de cada Fase NEM.
+ * Estrictamente calibradas al nivel de desarrollo cognitivo de cada Fase NEM y al dominio pedagógico del tema.
  */
 export function generateDetonatingQuestions(topic: string, level: string = 'primaria-baja', subject: string = ''): string[] {
   const cleanTopic = cleanCoreTopicName(topic);
-  const topicLower = cleanTopic.toLowerCase();
+  const capitalizedTopic = cleanTopic;
   const levelKey = level || 'primaria-baja';
-
-  const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
-  const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
-  const isLiterature = /cuento|leyenda|mito|fabula|poema|poes|rima|verso|cancion|teatro|dramat|relato|literat/i.test(topicLower);
-  const isFractions = /fraccion|equivalen|particion|reparto|denominador|numerador/i.test(topicLower);
-  const isMathStoreOrMoney = /tienda|mercado|dinero|moneda|compra|venta|precio|cambio|billete|ahorro|presupuesto/i.test(topicLower);
-  const isParabola = /parabol|cuadrat|segundo grado|tiro parab|algebra/i.test(topicLower);
-  const isWater = /agua|rio|lluvia|filtr|pozo|sequia|pluvial|hidrico/i.test(topicLower);
-  const isGardenOrFood = /huerto|siembra|cosecha|cultivo|semilla|alimento|nutric|plato del bien comer|comida|dieta|ultraproces/i.test(topicLower);
-  const isCleanEnergy = /biodigestor|biogas|energia|solar|eolica|renovable|ecotecnia|residu|recicl/i.test(topicLower);
-  const isCivicsPeace = /derecho|paz|acuerdo|convivenc|mediacion|inclusion|igualdad|genero|discrimin|democrac|ciudadan|justicia/i.test(topicLower);
+  const domain = classifyPedagogicalDomain(cleanTopic, subject);
 
   let rawQuestions: string[] = [];
 
-  if (isHistory) {
-    if (levelKey === 'preescolar') {
+  // 1. TRADICIONES Y PATRIMONIO BIOCULTURAL
+  if (domain === 'traditions_culture') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Qué historias nos cuentan en casa sobre cómo jugaban y vivían las familias hace muchos años?`,
-        `¿Por qué cantamos canciones y nos vestimos con trajes típicos en las fiestas patrias de México?`,
-        `¿Cómo nos ayudamos entre todas las niñas y niños para convivir con alegría y respeto en el salón?`
+        `¿Qué historias nos platican los abuelitos sobre los altares y qué olores ricos sentimos con el copal y las flores de cempasúchil en ${capitalizedTopic}?`,
+        `¿Por qué en nuestras casas y escuelas recordamos con tanto cariño, fiesta y comida rica a nuestros seres queridos?`,
+        `¿Cómo podemos ayudar con flores, semillas y dibujos bonitos a preparar la ofrenda tradicional de nuestro salón?`
       ];
-    } else if (levelKey === 'primaria-baja') {
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Cómo vestían, qué comían y a qué jugaban las niñas y los niños en la época de la Revolución Mexicana?`,
-        `¿Por qué las familias cantaban corridos populares para contar las noticias y relatos de los pueblos?`,
-        `¿Qué derechos y cosas buenas que hoy tenemos en nuestra escuela (como libros gratuitos y maestros) nacieron de esa época?`
-      ];
-    } else if (levelKey === 'primaria-media') {
-      rawQuestions = [
-        `¿Cuáles fueron las principales razones por las que campesinos y familias mexicanas participaron en el movimiento de 1910?`,
-        `¿Qué ideales defendían líderes como Francisco I. Madero y Emiliano Zapata en beneficio de los pueblos?`,
-        `¿Cómo influyeron los cambios de la Revolución Mexicana en las escuelas y comunidades de nuestro estado?`
-      ];
-    } else if (levelKey === 'primaria-alta') {
-      rawQuestions = [
-        `¿Cuáles fueron las principales causas económicas, laborales y agrarias que provocaron el estallido de la Revolución Mexicana?`,
-        `¿En qué se diferenciaban las demandas campesinas de Emiliano Zapata de los ideales políticos de Venustiano Carranza?`,
-        `¿De qué manera los Artículos 3º (Educación) y 123 (Trabajo) de la Constitución de 1917 protegen los derechos de nuestras familias?`
-      ];
-    } else if (levelKey === 'secundaria') {
-      rawQuestions = [
-        `¿Hasta qué punto la Revolución Mexicana logró desmantelar las estructuras de dominación socioeconómica del Porfiriato?`,
-        `¿Qué papel desempeñaron las diversas corrientes historiográficas, la prensa y la diplomacia en la legitimación de las facciones revolucionarias?`,
-        `¿Qué demandas agrarias, laborales y de soberanía consagradas en 1917 siguen siendo retos en el México del siglo XXI?`
+        `¿Qué elementos bioculturales (flores nativas, alimentos de temporada, cerámicas) se utilizan en nuestra entidad para conmemorar "${capitalizedTopic}" y qué simbolismo guardan?`,
+        `¿Por qué los relatos orales de nuestros abuelos y personas mayores son indispensables para comprender el sentido profundo de "${capitalizedTopic}" frente a modas foráneas?`,
+        `¿Cómo redactamos calaveritas literarias y elaboramos representaciones artísticas que combinen el ingenio, el humor respetuoso y la identidad cultural sin ofender a nadie?`
       ];
     } else {
       rawQuestions = [
-        `¿Cuáles son las contradicciones epistemológicas y estructurales entre el proyecto modernizador porfirista y el constitucionalismo revolucionario?`,
-        `¿De qué forma las fuentes primarias y los debates historiográficos contemporáneos resignifican la institucionalización del Estado posrevolucionario?`,
-        `¿Cómo influye la memoria histórica de 1910 en la conformación de la ciudadanía crítica y la defensa de los derechos sociales actuales?`
+        `¿De qué forma las tradiciones populares como "${capitalizedTopic}" actúan como actos de resistencia cultural y preservación de la memoria histórica frente a la homogenización global?`,
+        `¿Cómo se articulan los rituales de conmemoración colectiva y el sincretismo virreinal-prehispánico con los procesos de duelo y cohesión comunitaria en los jóvenes?`,
+        `¿Qué propuestas artísticas y etnográficas contemporáneas pueden resignificar los símbolos ancestrales de "${capitalizedTopic}" manteniendo viva su raíz comunitaria?`
       ];
     }
-  } else if (isEpistolar) {
+  }
+
+  // 2. HISTORIA, GEOGRAFÍA Y SOCIEDAD
+  else if (domain === 'history_society') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿A qué persona de tu familia o amigo te gustaría enviarle una carta o un dibujo con una sonrisa?`,
+        `¿Cómo se transportaban, qué comían y a qué jugaban las personas de nuestra comunidad hace muchos años cuando ocurrió "${capitalizedTopic}"?`,
+        `¿Por qué en nuestra comunidad y en la escuela celebramos con banderas, música y relatos las fechas cívicas de México?`,
+        `¿Qué personas o héroes importantes ayudaron a que hoy tengamos escuelas con libros y maestros para todas las niñas y niños?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cuáles fueron las principales causas sociales, territoriales y de injusticia que impulsaron a las personas de nuestra entidad a participar en "${capitalizedTopic}"?`,
+        `¿Cómo nos ayuda el análisis de cartas, fotografías antiguas y testimonios en los libros de la SEP a distinguir lo que realmente sucedió de los mitos sobre "${capitalizedTopic}"?`,
+        `¿Qué derechos, libertades y leyes que hoy nos protegen en la escuela y en nuestra familia nacieron a partir de las luchas históricas de "${capitalizedTopic}"?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Qué contradicciones socioeconómicas territoriales y disputas ideológicas determinaron el desarrollo y desenlace de "${capitalizedTopic}"?`,
+        `¿De qué forma las fuentes primarias facsimilares y los debates historiográficos contemporáneos desmienten las versiones oficiales lineales sobre "${capitalizedTopic}"?`,
+        `¿Qué demandas históricas de justicia social, soberanía y democracia consagradas en esa época siguen siendo retos vigentes en el México del siglo XXI?`
+      ];
+    }
+  }
+
+  // 3. MATEMÁTICAS - NÚMEROS, TIENDITA Y ARITMÉTICA
+  else if (domain === 'mathematics_numbers') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Cómo usamos nuestras monedas didácticas de 1, 2, 5 y 10 pesos para jugar a la tiendita y pagar exactamente lo que compramos?`,
+        `¿Qué pasa si tenemos 10 pesos y compramos una fruta de 6 pesos: cómo sabemos cuánto cambio nos tienen que regresar?`,
+        `¿Cómo contamos y agrupamos objetos de 10 en 10 para no equivocarnos al contar cantidades grandes en "${capitalizedTopic}"?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cómo nos ayuda el cálculo mental y el valor posicional a verificar rápidamente el costo total y el cambio en una compra comunitaria sobre "${capitalizedTopic}"?`,
+        `¿Qué diferencia existe entre un gasto necesario para el bienestar y un gasto impulsivo al planear el presupuesto de nuestra cooperativa escolar?`,
+        `¿De qué manera las operaciones matemáticas (multiplicación, división, porcentajes) nos permiten calcular descuentos y comparar precios con justicia?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se modelan matemáticamente los presupuestos, el valor del dinero en el tiempo y el interés en proyectos socioeconómicos comunitarios sobre "${capitalizedTopic}"?`,
+        `¿Qué indicadores estadísticos nos permiten evaluar la rentabilidad social y el balance costo-beneficio en una iniciativa productiva escolar?`,
+        `¿De qué forma el razonamiento cuantitativo y la educación financiera previenen el consumo desmedido y promueven la economía solidaria?`
+      ];
+    }
+  }
+
+  // 4. MATEMÁTICAS - FRACCIONES
+  else if (domain === 'mathematics_fractions') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Cómo podemos repartir 4 manzanas o panes entre 4 amigos para que a todos les toque exactamente la misma parte?`,
+        `¿Qué pasa cuando doblamos una hoja o una tortilla a la mitad y luego otra vez a la mitad: cuántas partes iguales tenemos?`,
+        `¿En qué momentos en la cocina o en los juegos usamos mitades y cuartos para compartir con alegría?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Por qué 2/4 representa exactamente la misma cantidad que 1/2 aunque se utilicen números diferentes en el numerador y denominador?`,
+        `¿Cómo resolvemos problemas de medición y reparto al preparar recetas con ingredientes en cuartos, medios y octavos de kilo o litro?`,
+        `¿De qué manera las fracciones nos ayudan a resolver desacuerdos cotidianos y asegurar repartos justos y equitativos en el salón?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se fundamenta formalmente el orden y la densidad en el conjunto de los números racionales a través de la recta numérica?`,
+        `¿Qué aplicaciones prácticas tienen las razones, proporciones y equivalencias fraccionarias en modelos físicos, químicos y financieros?`,
+        `¿Cómo optimizan los algoritmos fraccionarios la precisión en el diseño de proyectos tecnológicos y de construcción?`
+      ];
+    }
+  }
+
+  // 5. MATEMÁTICAS - GEOMETRÍA
+  else if (domain === 'mathematics_geometry') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Qué figuras geométricas (círculos, cuadrados, triángulos y rectángulos) podemos descubrir en las ventanas, puertas y objetos del salón sobre "${capitalizedTopic}"?`,
+        `¿En qué se diferencia una figura plana dibujada en papel de un cuerpo con volumen como una caja o pelota?`,
+        `¿Cómo podemos usar las piezas del tangram para inventar figuras de animales o casas divertidas?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cómo calculamos el perímetro y el área de espacios de nuestra escuela (canchas, jardines, salones) para proponer mejoras en "${capitalizedTopic}"?`,
+        `¿Qué características distinguen a los prismas de las pirámides cuando armamos sus desarrollos planos en cartulina?`,
+        `¿De qué manera la simetría y los ángulos rectos hacen que las construcciones y edificios de nuestra comunidad sean estables y resistentes?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se aplican los teoremas geométricos (Pitágoras, Tales) y las propiedades de semejanza en la medición indirecta de alturas y distancias en el entorno?`,
+        `¿Qué relación matemática existe entre la variación del perímetro y la variación del área o volumen en figuras a escala?`,
+        `¿De qué forma el diseño geométrico optimiza el uso de materiales y el espacio en la arquitectura sustentable comunitaria?`
+      ];
+    }
+  }
+
+  // 6. MATEMÁTICAS - ÁLGEBRA Y FUNCIONES
+  else if (domain === 'mathematics_algebra') {
+    rawQuestions = [
+      `¿Por qué la trayectoria de un proyectil o la forma de los arcos de un puente colgante describen con exactitud una curva parabólica (y = ax² + bx + c)?`,
+      `¿Qué significado físico tienen el vértice, el eje de simetría y las raíces en una ecuación cuadrática aplicada a situaciones cotidianas sobre "${capitalizedTopic}"?`,
+      `¿Cómo nos ayuda el software dinámico (GeoGebra) a predecir alcances máximos y optimizar dimensiones en problemas reales?`
+    ];
+  }
+
+  // 7. CIENCIAS NATURALES Y MEDIO AMBIENTE
+  else if (domain === 'natural_sciences') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Qué necesitan las plantitas y los animalitos de nuestro entorno para vivir felices y cómo podemos cuidarlos con amor en "${capitalizedTopic}"?`,
+        `¿Qué sienten nuestras manitas al tocar la tierra, el agua fresca y las hojas de las plantas del huerto escolar?`,
+        `¿Por qué es muy importante cerrar bien la llave del agua y apagar la luz que no usemos en la escuela y en casa?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Qué factores ambientales (agua, luz, temperatura, tipo de suelo) determinan el equilibrio biológico en los ecosistemas de nuestra entidad sobre "${capitalizedTopic}"?`,
+        `¿Cómo podemos comprobar mediante observaciones sistemáticas en la bitácora escolar cómo se transforma la materia y la energía en la naturaleza?`,
+        `¿Qué acciones concretas y medibles podemos implementar en la escuela para filtrar el agua, separar residuos o proteger la biodiversidad en "${capitalizedTopic}"?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Qué leyes de la termodinámica y principios ecológicos rigen los flujos de energía y ciclos de materia en los ecosistemas frente a "${capitalizedTopic}"?`,
+        `¿Qué impacto bioético y socioambiental generan las actividades antropogénicas en la pérdida de biodiversidad y la huella de carbono regional?`,
+        `¿Cómo se justifican científica y tecnológicamente las alternativas ecotécnicas (energías renovables, filtración pluvial) para mitigar el cambio climático?`
+      ];
+    }
+  }
+
+  // 8. SALUD, NUTRICIÓN Y CUERPO HUMANO
+  else if (domain === 'health_nutrition') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Por qué comer frutas de colores, verduras y tomar agua simple nos hace correr rápido y crecer sanos en lugar de comer comida chatarra?`,
+        `¿Cómo sentimos los latidos de nuestro corazón cuando saltamos la cuerda o bailamos en el patio escolar?`,
+        `¿Qué hábitos de higiene (lavado de manos con agua y jabón, cepillado de dientes) protegen nuestro cuerpo de enfermarse?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cómo se relacionan los grupos del Plato del Bien Comer y la Jarra del Buen Beber con el funcionamiento del sistema digestivo y circulatorio?`,
+        `¿Qué riesgos reales para la salud provocan el consumo frecuente de bebidas azucaradas y alimentos ultraprocesados en nuestra comunidad escolar?`,
+        `¿Qué propuesta de colaciones saludables y accesibles podemos promover en la cooperativa escolar para mejorar la nutrición de todos?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo influyen los determinantes socioeconómicos y la publicidad de la industria alimentaria en la prevalencia de enfermedades crónicas no transmisibles en México?`,
+        `¿Qué procesos metabólicos y fisiológicos explican la relación entre el estrés crónico, el sedentarismo y la salud cardiovascular en la juventud?`,
+        `¿Qué políticas de salud pública y soberanía alimentaria comunitaria pueden revertir el daño a la salud de la población?`
+      ];
+    }
+  }
+
+  // 9. LENGUAJES - EPISTOLAR
+  else if (domain === 'language_epistolar') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿A qué persona de tu familia o amigo te gustaría enviarle una carta o un dibujo bonito para decirle cuánto lo quieres?`,
         `¿Por qué una carta guardada en un sobre con estampilla se siente tan especial y bonita al recibirla?`,
-        `¿Qué datos y dibujos necesitamos poner en el sobre para que el cartero sepa a quién entregárselo?`
+        `¿Qué datos y dibujos necesitamos poner en el sobre para que el cartero sepa exactamente a quién entregárselo?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Por qué una carta formal o personal escrita con esmero transmite ideas con mayor calidez y claridad que un mensaje digital rápido?`,
-        `¿Qué partes indispensables (fecha, destinatario, saludo, cuerpo, despedida y firma) estructuran un texto epistolar?`,
-        `¿A qué autoridades o miembros de la comunidad escolar podemos plantearles una propuesta de mejora mediante una carta formal?`
+        `¿Por qué una carta formal o personal escrita a mano transmite ideas con mayor calidez y claridad que un mensaje digital rápido en torno a "${capitalizedTopic}"?`,
+        `¿Qué partes indispensables (lugar, fecha, destinatario, saludo, cuerpo, despedida y firma) estructuran un texto epistolar formal?`,
+        `¿A qué autoridades o miembros de la comunidad escolar podemos plantearles una propuesta de mejora colectiva mediante una carta de petición ciudadana?`
       ];
     } else {
       rawQuestions = [
-        `¿Cómo ha evolucionado el género epistolar como testimonio histórico, político y literario en la conformación de la esfera pública?`,
-        `¿Qué estrategias retóricas y registros lingüísticos distinguen a la correspondencia formal diplomática del ensayo personal?`,
-        `¿Qué valor ético conserva la privacidad de la correspondencia en la era de las comunicaciones digitales masivas?`
+        `¿Cómo ha evolucionado el género epistolar como testimonio histórico, político y literario en la conformación de la memoria pública de México?`,
+        `¿Qué estrategias retóricas y registros lingüísticos distinguen a la correspondencia diplomática de la correspondencia privada?`,
+        `¿Qué valor ético conserva la privacidad de la correspondencia en la era de la vigilancia y las comunicaciones digitales masivas?`
       ];
     }
-  } else if (isLiterature) {
+  }
+
+  // 10. LENGUAJES - NARRATIVA Y CUENTOS
+  else if (domain === 'language_narrative') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Qué cuentos o leyendas divertidas te han contado tus abuelitos o maestros en la escuela?`,
-        `¿Cómo podemos inventar personajes fantásticos y un final feliz para nuestra historia colectiva?`,
-        `¿Qué dibujos y colores le pondremos a la portada de nuestro libro de cuentos?`
+        `¿Qué cuentos o relatos divertidos te han contado tus abuelitos o maestros en la escuela sobre "${capitalizedTopic}"?`,
+        `¿Cómo podemos inventar personajes fantásticos, un misterio emocionante y un final feliz para nuestra historia?`,
+        `¿Qué dibujos, colores y letreros le pondremos a la portada de nuestro libro cartonero de cuentos?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Qué estructura narrativa (inicio, desarrollo, conflicto y desenlace) hace que una leyenda atrape la emoción del lector?`,
-        `¿Cómo nos ayudan las descripciones detalladas y los diálogos a transmitir la personalidad de los personajes?`,
+        `¿Qué estructura narrativa (planteamiento, nudo, clímax y desenlace) hace que un relato atrape el interés y la emoción del lector en "${capitalizedTopic}"?`,
+        `¿Cómo nos ayudan las descripciones detalladas de escenarios y los diálogos directos a transmitir la personalidad de los personajes?`,
         `¿De qué manera la elaboración de un libro cartonero escolar fomenta el amor por la lectura y el cuidado del medio ambiente?`
       ];
     } else {
       rawQuestions = [
-        `¿De qué forma las tradiciones orales y la narrativa ficcional reflejan la cosmovisión e identidad cultural de los pueblos?`,
-        `¿Qué recursos estilísticos, figuras retóricas y tropos literarios enriquecen la construcción dramática de un relato?`,
-        `¿Cómo influye la recepción crítica de una obra literaria en la resignificación de los dilemas éticos contemporáneos?`
+        `¿De qué forma las tradiciones orales y la narrativa contemporánea reflejan la cosmovisión e identidad cultural de nuestras comunidades?`,
+        `¿Qué recursos estilísticos, figuras retóricas y polifonía discursiva enriquecen la construcción dramática de un relato sobre "${capitalizedTopic}"?`,
+        `¿Cómo influye la recepción crítica de una obra literaria en la resignificación de los dilemas éticos y sociales de nuestro tiempo?`
       ];
     }
-  } else if (isFractions) {
+  }
+
+  // 11. LENGUAJES - POESÍA Y RIMA
+  else if (domain === 'language_poetry') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Cómo podemos repartir 4 manzanas o panes entre 4 amigos para que a todos les toque exactamente lo mismo?`,
-        `¿Qué pasa cuando doblamos una hoja de papel a la mitad o en 4 partes iguales?`,
-        `¿En qué momentos en la cocina o en los juegos de la escuela usamos mitades y cuartos?`
+        `¿Qué palabras suenan parecido y riman bonito como "canción" y "corazón" cuando cantamos sobre "${capitalizedTopic}"?`,
+        `¿Cómo se siente en nuestra voz y cuerpo decir versos y coplas populares con ritmo y alegría?`,
+        `¿A quién le dedicaremos un poema o calaverita bonita escrita con amor en el salón?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Por qué 2/4 de una pizza representa exactamente la misma porción que 1/2 aunque se escriban con números diferentes?`,
-        `¿Cómo podemos sumar fracciones con distinto denominador cuando medimos ingredientes para una receta comunitaria?`,
-        `¿De qué manera las fracciones nos ayudan a realizar repartos justos y resolver retos de compras y medidas en el mercado?`
+        `¿Cómo utilizamos la rima consonante, el conteo de sílabas y las metáforas para darle musicalidad a nuestros versos sobre "${capitalizedTopic}"?`,
+        `¿Qué diferencia existe entre un texto escrito en prosa y un poema estructurado en versos y estrofas?`,
+        `¿De qué manera la declamación poética nos ayuda a vencer la timidez y comunicar emociones profundas ante nuestra comunidad?`
       ];
     } else {
       rawQuestions = [
-        `¿Cómo se fundamenta algebraicamente la densidad y el orden en el conjunto de los números racionales?`,
-        `¿Qué aplicaciones prácticas tienen las razones, proporciones y fracciones en la física, la química y la economía aplicada?`,
-        `¿De qué forma los algoritmos de simplificación y conversión fraccionaria optimizan el cálculo en proyectos de ingeniería?`
+        `¿Cómo se articulan las vanguardias literarias, la métrica tradicional y el verso libre en la lírica mexicana contemporánea sobre "${capitalizedTopic}"?`,
+        `¿Qué tropos literarios (oxímoron, metonimia, alegoría) potencian la carga estética e ideológica de un texto poético?`,
+        `¿De qué forma la poesía actúa como vehículo de denuncia social y afirmación de la dignidad humana ante las crisis actuales?`
       ];
     }
-  } else if (isMathStoreOrMoney) {
+  }
+
+  // 12. LENGUAJES - EXPOSITIVO Y PERIODISMO
+  else if (domain === 'language_expository') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Qué monedas y billetes de juguete conocemos y cómo los usamos para jugar a la tiendita?`,
-        `¿Cómo contamos nuestras monedas de 1, 2, 5 y 10 pesos para saber cuánto dinero juntamos?`,
-        `¿Qué alimentos saludables de la tiendita escolar son los mejores para crecer fuertes?`
+        `¿Qué noticias interesantes o avisos importantes de nuestro salón queremos compartir en el periódico mural?`,
+        `¿Cómo le explicamos con dibujos claros a los demás niños cómo hacer una manualidad paso a paso en "${capitalizedTopic}"?`,
+        `¿Por qué es importante decir siempre la verdad cuando platicamos lo que pasó en la escuela?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Cómo calculamos con rapidez el costo total de varios productos y el cambio exacto al pagar con billetes grandes?`,
-        `¿Qué diferencia existe entre un gasto necesario para la salud y un gasto impulsivo en la economía del hogar?`,
-        `¿De qué manera las matemáticas nos permiten comparar precios por kilogramo y verificar si una oferta es conveniente?`
+        `¿Cómo distinguimos una noticia fundamentada en hechos reales de un rumor o información falsa sobre "${capitalizedTopic}"?`,
+        `¿Qué partes indispensables (titular, encabezado, cuerpo de la noticia, fotografía y pie de foto) organizan un artículo de divulgación?`,
+        `¿De qué manera nuestra gaceta escolar puede dar a conocer los problemas y soluciones de nuestra comunidad a las familias?`
       ];
     } else {
       rawQuestions = [
-        `¿Cómo se modelan matemáticamente los presupuestos, el valor del dinero en el tiempo y el interés compuesto en proyectos productivos?`,
-        `¿Qué indicadores estadísticos nos permiten evaluar el costo-beneficio y la rentabilidad social de una cooperativa escolar?`,
-        `¿De qué manera la educación financiera previene el sobreendeudamiento y promueve el consumo ético y sustentable?`
+        `¿Qué criterios epistemológicos y metodológicos nos permiten verificar la validez y confiabilidad de las fuentes en la era de la infodemia?`,
+        `¿Cómo se estructura un texto argumentativo formal para defender una postura crítica con evidencias sólidas sobre "${capitalizedTopic}"?`,
+        `¿Qué responsabilidad ética tienen los medios de comunicación y las redes digitales en la conformación de la opinión pública?`
       ];
     }
-  } else if (isParabola) {
-    rawQuestions = [
-      `¿Por qué la trayectoria de un balón en un tiro libre o el arco de un puente colgante describen una curva parabólica?`,
-      `¿Qué representan físicamente el vértice, el eje de simetría y las raíces en una ecuación cuadrática (y = ax² + bx + c)?`,
-      `¿Cómo nos ayuda el software de modelación matemática (GeoGebra) a predecir alturas máximas y alcances horizontales?`
-    ];
-  } else if (isWater) {
+  }
+
+  // 13. ARTES VISUALES
+  else if (domain === 'arts') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Por qué es importante cerrar bien las llaves del agua cuando nos lavamos las manitas en la escuela?`,
-        `¿De dónde viene el agua de lluvia y cómo ayuda a que crezcan las plantitas y los árboles?`,
-        `¿Qué acciones sencillas podemos hacer en casa y en el salón para no desperdiciar ni una gota de agua?`
+        `¿Qué colores alegres podemos mezclar con pintura para expresar cómo nos sentimos hoy sobre "${capitalizedTopic}"?`,
+        `¿Qué formas bonitas podemos crear modelando plastilina o masa con nuestras manos?`,
+        `¿Cómo organizamos nuestro salón para que parezca una galería de arte hermosa para las familias?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Cómo funcionan las capas de arena, grava y carbón activado para filtrar y limpiar el agua pluvial?`,
-        `¿Qué problemáticas de salud y escasez enfrenta nuestra comunidad cuando el agua potable no llega a tiempo?`,
-        `¿Qué compromisos medibles podemos establecer en la escuela para captar y reutilizar el agua en las áreas verdes?`
+        `¿Cómo nos ayudan los colores primarios, secundarios y los contrastes de luz y sombra a transmitir emociones en una pintura sobre "${capitalizedTopic}"?`,
+        `¿Qué materiales reutilizables (cartón, tapitas, papel) podemos transformar en esculturas o instalaciones artísticas con mensaje ecológico?`,
+        `¿De qué manera el arte comunitario rescata las historias y el patrimonio visual de nuestro barrio o municipio?`
       ];
     } else {
       rawQuestions = [
-        `¿Cuáles son las variables fisicoquímicas y microbiológicas que determinan la calidad del agua potable según las normas oficiales?`,
-        `¿Qué impacto socioeconómico y bioético genera la sobreexplotación de los mantos acuíferos en nuestra cuenca hidrográfica?`,
-        `¿Cómo diseñamos un sistema de captación y purificación pluvial sustentable de bajo costo para espacios comunitarios?`
+        `¿Cómo desafían las corrientes artísticas contemporáneas los cánones tradicionales de belleza y representación en torno a "${capitalizedTopic}"?`,
+        `¿Qué función social desempeña el arte efímero y el performance en la sensibilización comunitaria sobre las problemáticas actuales?`,
+        `¿De qué forma la curaduría artística propicia una experiencia dialógica transformadora en los espectadores?`
       ];
     }
-  } else if (isGardenOrFood) {
+  }
+
+  // 14. CÍVICA, ÉTICA Y CULTURA DE PAZ
+  else if (domain === 'civics_ethics') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Qué cuidados necesita una pequeña semilla con tierra, agua y sol para crecer y dar frutos?`,
-        `¿Por qué comer frutas y verduras frescas de colores nos llena de energía y salud en lugar de comer comida chatarra?`,
-        `¿Cómo podemos cuidar en equipo las plantitas de nuestro huerto escolar?`
-      ];
-    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
-      rawQuestions = [
-        `¿Qué nutrientes del suelo y factores climáticos determinan el ciclo de germinación y crecimiento de las hortalizas?`,
-        `¿Cómo se relaciona la producción de alimentos en el huerto escolar con los grupos del Plato del Bien Comer y la salud familiar?`,
-        `¿De qué manera la elaboración de composta con residuos orgánicos reduce la basura escolar y nutre la tierra?`
-      ];
-    } else {
-      rawQuestions = [
-        `¿Qué principios de la agroecología y la soberanía alimentaria desafían los modelos de monocultivo industrial?`,
-        `¿Cómo influye la calidad nutricional de la dieta en la prevención de enfermedades crónicas no transmisibles a nivel poblacional?`,
-        `¿Qué diseño de policultivo y riego tecnificado optimiza el rendimiento y la biodiversidad en un huerto comunitario?`
-      ];
-    }
-  } else if (isCleanEnergy) {
-    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
-      rawQuestions = [
-        `¿Cómo nos da luz y calor el sol para que vivan las plantas, los animales y las personas?`,
-        `¿Por qué es importante apagar los focos que no estemos usando para cuidar el planeta?`,
-        `¿Qué materiales que ya no usamos en casa podemos reciclar y transformar en cosas bonitas?`
-      ];
-    } else {
-      rawQuestions = [
-        `¿Cómo se transforman los residuos orgánicos y el estiércol en gas combustible y biofertilizante mediante digestión anaeróbica?`,
-        `¿Qué ventajas ambientales y económicas tienen las energías renovables (solar, eólica, biogás) frente al uso de combustibles fósiles?`,
-        `¿De qué manera el diseño e instalación de un biodigestor escolar contribuye a mitigar el cambio climático en nuestra comunidad?`
-      ];
-    }
-  } else if (isCivicsPeace) {
-    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
-      rawQuestions = [
-        `¿Por qué es bonito tener acuerdos de convivencia en el salón para jugar y aprender con respeto y amistad?`,
+        `¿Por qué es bonito tener acuerdos de convivencia en el salón para jugar y aprender con respeto y amistad en "${capitalizedTopic}"?`,
         `¿Cómo podemos resolver un desacuerdo en el recreo platicando con calma y escuchando a los demás?`,
         `¿Qué derechos tienen todas las niñas y niños para sentirse queridos, seguros y felices en la escuela?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Por qué los acuerdos construidos democráticamente en asamblea son más respetados que las reglas impuestas?`,
-        `¿Qué estrategias de mediación de la amistad y diálogo asertivo podemos aplicar cuando surja un conflicto en el aula?`,
+        `¿Por qué los acuerdos construidos democráticamente en asamblea de aula son más respetados que las reglas impuestas desde afuera?`,
+        `¿Qué estrategias de mediación de la amistad y diálogo asertivo podemos aplicar cuando surja un conflicto en el recreo o salón en torno a "${capitalizedTopic}"?`,
         `¿De qué manera defendemos y promovemos la igualdad de género y la inclusión de todas y todos en las actividades escolares?`
       ];
     } else {
       rawQuestions = [
-        `¿Cómo se articulan los derechos humanos, el estado de derecho y la justicia restaurativa en la resolución de controversias sociales?`,
-        `¿Qué dilemas éticos contemporáneos desafían la construcción de una cultura de paz y no violencia en los espacios públicos?`,
+        `¿Cómo se articulan los derechos humanos, el estado de derecho y la justicia restaurativa en la resolución de controversias sociales sobre "${capitalizedTopic}"?`,
+        `¿Qué dilemas éticos contemporáneos desafían la construcción de una cultura de paz y no violencia en los espacios públicos juveniles?`,
         `¿Qué mecanismos de participación ciudadana y mediación institucional fortalecen el tejido social y la convivencia democrática?`
       ];
     }
-  } else {
-    // Fallback Situado Calibrado por Nivel (Cero Frases Genéricas)
+  }
+
+  // 15. SOCIOEMOCIONAL Y FÍSICA (Default situado general)
+  else {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
-        `¿Qué personas, objetos o historias de nuestra familia y comunidad conocemos sobre ${cleanTopic}?`,
-        `¿Cómo nos ayudamos en equipo para investigar, dibujar y aprender con nuestros libros de texto de la SEP?`,
-        `¿Qué dibujo, manualidad o cartel bonito compartiremos con nuestros compañeros al final del proyecto?`
+        `¿Qué personas, actividades o juegos de nuestra familia y escuela nos hacen sentir alegres, fuertes y seguros sobre "${capitalizedTopic}"?`,
+        `¿Cómo nos ayudamos en equipo para investigar, dibujar y aprender juntos en nuestros libros de texto de la SEP?`,
+        `¿Qué trabajo bonito y terminado compartiremos con orgullo con nuestras familias al final del proyecto?`
       ];
     } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
       rawQuestions = [
-        `¿Qué preguntas nos hacemos sobre "${cleanTopic}" y qué podemos indagar en nuestros libros escolares de la SEP?`,
-        `¿Cómo podemos comprobar nuestras ideas trabajando en equipo y haciendo registros organizados en nuestro cuaderno?`,
-        `¿Qué propuesta o producto podemos mostrar a la escuela para ayudar a comprender mejor este tema?`
-      ];
-    } else if (levelKey === 'secundaria') {
-      rawQuestions = [
-        `¿Qué contradicciones o retos éticos, científicos o sociales identificamos en torno a "${cleanTopic}"?`,
-        `¿Cómo podemos contrastar diferentes fuentes de información y formular argumentos fundamentados con evidencias?`,
-        `¿Qué propuesta transformadora, reporte de investigación o prototipo presentaremos en la muestra escolar?`
+        `¿Qué causas originan los retos principales vinculados a "${capitalizedTopic}" en nuestra comunidad y cómo podemos comprobarlas con datos y evidencias?`,
+        `¿Cómo nos organizamos en equipos colaborativos para que cada integrante aporte sus mejores habilidades y conocimientos al proyecto?`,
+        `¿Qué propuesta tangible, creativa y sustentable podemos presentar a la escuela para resolver problemas en torno a "${capitalizedTopic}"?`
       ];
     } else {
       rawQuestions = [
-        `¿Cuáles son las implicaciones epistemológicas, éticas y estructurales de "${cleanTopic}" en el contexto actual?`,
-        `¿De qué forma los marcos teóricos y cuantitativos nos permiten analizar rigurosamente este fenómeno?`,
-        `¿Qué proyecto de impacto social o indagación académica sustentada podemos formular para incidir en nuestro entorno?`
+        `¿Cuáles son las implicaciones éticas, sociales y científicas de "${capitalizedTopic}" en el contexto actual de nuestro país?`,
+        `¿De qué forma los marcos teóricos y el pensamiento crítico nos permiten analizar rigurosamente este fenómeno sin prejuicios?`,
+        `¿Qué proyecto de impacto social transformador podemos liderar para incidir positivamente en nuestra comunidad escolar?`
       ];
     }
   }
@@ -2457,8 +3238,9 @@ export function detectCurriculumPdasForTopic(
   const subLower = (subjectIdOrName || '').toLowerCase();
   const levelKey = level || 'primaria-baja';
 
-  // Identificación de dominios temáticos
-  const isHistoryOrCivics = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
+  // Identificación exhaustiva de dominios temáticos
+  const isTraditionsOrCulture = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad|carnaval|charro|mariachi|indigena|originario|lengua materna/i.test(topicLower);
+  const isHistoryOrCivics = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria|comunidad|entidad|region|localidad/i.test(topicLower);
   const isMath = /matemat|fraccion|suma|resta|multiplic|division|numero|conteo|algebra|ecuacion|cuadrat|parabol|geometr|tangram|area|perimetr|volumen|probabil|estadist|porcentaj|proporc|vector|recta|plano/i.test(topicLower);
   const isScience = /cienc|natur|biolog|fisic|quimic|plan|animal|cuerpo|organo|salud|nutric|ecosistem|agua|aire|suelo|materia|energia|fuerza|movimient|celul|atomo|combust|calor|optica|luz|universo|planeta|medio ambiente|biodivers|huerto|recicl/i.test(topicLower);
   const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
@@ -2469,6 +3251,7 @@ export function detectCurriculumPdasForTopic(
   const isHealth = /salud|higiene|aliment|plato del bien comer|ejercicio|deport|emocion|socioemocional|motriz/i.test(topicLower);
 
   const pdasByPhase: Record<string, {
+    traditions: string[];
     history: string[];
     math: string[];
     science: string[];
@@ -2479,6 +3262,12 @@ export function detectCurriculumPdasForTopic(
     general: string[];
   }> = {
     'preescolar': {
+      traditions: [
+        `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre Día de Muertos y festividades locales, reconociendo la diversidad cultural y el respeto a sus compañeros.`,
+        `Fase 2 (Preescolar) - Lenguajes: Expresa mediante dibujos, modelado con masa y canciones tradicionales sus impresiones sobre las ofrendas y personajes de las festividades de su comunidad.`,
+        `Fase 2 (Preescolar) - De lo Humano y lo Comunitario: Identifica que forma parte de una familia y comunidad con costumbres propias, participando con respeto y alegría en celebraciones colectivas.`,
+        `Fase 2 (Preescolar) - Saberes y Pensamiento Científico: Observa los elementos naturales de temporada (flores de cempasúchil, frutas, semillas y hojas), describiendo colores, formas y texturas.`
+      ],
       history: [
         `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre "${capitalizedTopic}", reconociendo la historia de su entorno y festividades de su comunidad.`,
         `Fase 2 (Preescolar) - Lenguajes: Expresa mediante dibujos, cantos y dramatizaciones infantiles sucesos y personajes representativos de "${capitalizedTopic}".`
@@ -2510,11 +3299,17 @@ export function detectCurriculumPdasForTopic(
       ]
     },
     'primaria-baja': {
+      traditions: [
+        `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios comunitarios el origen y los cambios en las tradiciones y festividades de su localidad (como Día de Muertos y conmemoraciones patronales), reconociendo el patrimonio biocultural.`,
+        `Fase 3 (1º y 2º Primaria) - Lenguajes: Escribe de manera autónoma y mediante dictado al docente coplas, rimas y descripciones sencillas sobre las ofrendas y personajes tradicionales de su comunidad.`,
+        `Fase 3 (1º y 2º Primaria) - Lenguajes (Artes): Explora elementos plásticos (papel picado, calaveritas de barro o plastilina, aserrín de colores) para recrear altares y manifestaciones de la tradición popular.`,
+        `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Reconoce que las tradiciones y festividades familiares fortalecen los lazos afectivos, el respeto intergeneracional y el sentido de pertenencia colectiva.`,
+        `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Describe y clasifica elementos naturales de temporada (cempasúchil, mandarinas, calabaza, copal) y observa sus transformaciones físicas cotidianas.`
+      ],
       history: [
-        `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios los acontecimientos clave de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y la comunidad.`,
-        `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta narraciones orales, coplas, corridos y descripciones ilustradas sobre "${capitalizedTopic}", valorando la memoria histórica de su país.`,
-        `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Organiza secuencias temporales (antes, durante y después), calendarios y líneas del tiempo ilustradas con acontecimientos de "${capitalizedTopic}".`,
-        `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Dialoga sobre los derechos humanos, la igualdad y los valores de justicia colectiva a partir de las historias de "${capitalizedTopic}".`
+        `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios las tradiciones, historia y cambios de "${capitalizedTopic}" en su comunidad.`,
+        `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico (Conocimiento del Medio): Describe y registra los elementos naturales y socioculturales de su entorno vinculados a "${capitalizedTopic}".`,
+        `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Valora la diversidad cultural y el patrimonio histórico local en celebraciones y proyectos sobre "${capitalizedTopic}".`
       ],
       math: [
         isMath && /fraccion/i.test(topicLower) 
@@ -2547,10 +3342,22 @@ export function detectCurriculumPdasForTopic(
       ]
     },
     'primaria-media': {
+      traditions: [
+        `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades (La Entidad donde Vivo): Reconoce y valora las prácticas culturales, expresiones artísticas, rituales, ofrendas y festividades tradicionales (como Día de Muertos) como parte del patrimonio biocultural y la memoria colectiva de su entidad federativa y pueblos originarios.`,
+        `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades (Historia Regional): Indaga en fuentes orales, escritas y testimonios familiares sobre el origen histórico, continuidades y transformaciones de las celebraciones populares en las diversas regiones de su estado.`,
+        `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades (Geografía y Territorio): Localiza y analiza en el mapa de su entidad federativa los lugares, pueblos originarios y regiones donde se preservan las festividades tradicionales y conmemoraciones colectivas.`,
+        `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Identifica la composición pluricultural de su entidad federativa, reconociendo el aporte de los pueblos indígenas y afromexicanos en la preservación de costumbres y fiestas comunitarias.`,
+        `Fase 4 (3º y 4º Primaria) - Lenguajes (Calaveritas Literarias): Lee, comprende y produce calaveritas literarias y coplas populares, explorando la rima, el ritmo lírico, la sátira humorística y las figuras retóricas de la tradición lírica mexicana.`,
+        `Fase 4 (3º y 4º Primaria) - Lenguajes (Artes Visuales): Analiza las características estéticas, cromáticas y simbólicas de las manifestaciones artísticas del Día de Muertos (altares, tapetes florales, catrinas y arte efímero), interpretando sus significados culturales.`,
+        `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico (Botánica Biocultural): Indaga y describe las propiedades botánicas y usos de flores tradicionales (cempasúchil, terciopelo), semillas y frutos de temporada en las expresiones culturales de la región, reconociendo su ciclo biológico y su preservación ecológica.`,
+        `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico (Cambios de Estado): Experimenta y explica los cambios de estado físico de la materia (fusión de cera, combustión de incienso y copal, sublimación aromática) observados en las prácticas culturales de su entorno.`,
+        `Fase 4 (3º y 4º Primaria) - De lo Humano y lo Comunitario (Identidad y Pertenencia): Identifica eventos y celebraciones importantes de la historia familiar y comunitaria, reconociendo que fortalecen la identidad colectiva, el sentido de pertenencia y la transmisión intergeneracional de saberes y afectos.`,
+        `Fase 4 (3º y 4º Primaria) - De lo Humano y lo Comunitario: Colabora en la planeación y montaje de proyectos culturales escolares, reconociendo la diversidad de formas de pensar, celebrar y convivir de las familias del grupo.`
+      ],
       history: [
+        `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades (La Entidad donde Vivo): Reconoce los cambios en los paisajes, las costumbres, tradiciones y patrimonio biocultural de su entidad federativa en torno a "${capitalizedTopic}".`,
         `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Investiga en fuentes primarias y secundarias las causas, personajes y consecuencias de "${capitalizedTopic}" en su entidad federativa y en México, valorando el patrimonio cultural y cívico.`,
-        `Fase 4 (3º y 4º Primaria) - Lenguajes: Redacta textos expositivos, reseñas históricas y biografías ilustradas acerca de "${capitalizedTopic}", utilizando conectores temporales y ortografía convencional.`,
-        `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Interpreta mapas geográficos, líneas de tiempo y tablas estadísticas sobre la distribución y cronología de "${capitalizedTopic}".`
+        `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Localiza y representa en mapas de su entidad federativa la distribución espacial, legado y relevancia comunitaria de "${capitalizedTopic}".`
       ],
       math: [
         `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Resuelve problemas de fracciones equivalentes, multiplicación, división, cálculo de perímetros y áreas contextualizados en situaciones reales de "${capitalizedTopic}".`,
@@ -2578,9 +3385,15 @@ export function detectCurriculumPdasForTopic(
       ]
     },
     'primaria-alta': {
+      traditions: [
+        `Fase 5 (5º y 6º Primaria) - Ética, Naturaleza y Sociedades: Analiza críticamente el origen prehispánico, virreinal y contemporáneo de la cosmovisión sobre la vida y la muerte en México, valorando el Día de Muertos como Patrimonio Cultural Inmaterial de la Humanidad.`,
+        `Fase 5 (5º y 6º Primaria) - Lenguajes: Elabora crónicas comunitarias, ensayos descriptivos y una antología comentada de calaveritas literarias, empleando figuras retóricas complejas, recursos de cohesión y ortografía normativa.`,
+        `Fase 5 (5º y 6º Primaria) - Saberes y Pensamiento Científico: Investiga los saberes agrícolas ancestrales en el cultivo del cempasúchil y alimentos de temporada, analizando el impacto de las prácticas agroecológicas vs el uso de agroquímicos en los suelos locales.`,
+        `Fase 5 (5º y 6º Primaria) - De lo Humano y lo Comunitario: Promueve el diálogo intercultural y el respeto a la diversidad de cosmovisiones y prácticas funerarias o conmemorativas de distintas regiones del país y del mundo.`
+      ],
       history: [
-        `Fase 5 (5º y 6º Primaria) - Ética, Naturaleza y Sociedades: Analiza críticamente las causas económicas, políticas y sociales de "${capitalizedTopic}", la promulgación de leyes y la vigencia de los derechos colectivos en el México contemporáneo.`,
-        `Fase 5 (5º y 6º Primaria) - Lenguajes: Elabora ensayos históricos, debates argumentados y periódicos murales sobre las distintas posturas ideológicas y testimonios en torno a "${capitalizedTopic}".`,
+        `Fase 5 (5º y 6º Primaria) - Ética, Naturaleza y Sociedades (Historia): Analiza críticamente las causas económicas, políticas y sociales de "${capitalizedTopic}", la promulgación de leyes y la vigencia de los derechos colectivos en el México contemporáneo.`,
+        `Fase 5 (5º y 6º Primaria) - Ética, Naturaleza y Sociedades (Geografía): Analiza las relaciones espaciales, ambientales y socioeconómicas de "${capitalizedTopic}" en México mediante fuentes cartográficas.`,
         `Fase 5 (5º y 6º Primaria) - Ética, Naturaleza y Sociedades: Evalúa el impacto de "${capitalizedTopic}" en la soberanía, la justicia social y la conformación de la identidad nacional.`
       ],
       math: [
@@ -2609,9 +3422,15 @@ export function detectCurriculumPdasForTopic(
       ]
     },
     'secundaria': {
+      traditions: [
+        `Fase 6 (Secundaria) - Ética, Naturaleza y Sociedades (Historia): Investiga desde fuentes historiográficas el sincretismo cultural y la resignificación de las festividades de muertos durante la época novohispana y su impacto en la conformación de la identidad nacional mexicana.`,
+        `Fase 6 (Secundaria) - Lenguajes (Español): Escribe calaveras literarias de sátira política y ensayos críticos que reflexionan sobre la vigencia y mercantilización de las tradiciones populares mexicanas frente a influencias globales.`,
+        `Fase 6 (Secundaria) - Lenguajes (Artes): Diseña instalaciones plásticas contemporáneas o montajes teatrales que resignifican los elementos simbólicos del altar tradicional, integrando lenguajes artísticos híbridos.`,
+        `Fase 6 (Secundaria) - De lo Humano y lo Comunitario: Reflexiona sobre los procesos de duelo, la memoria de los antepasados y la resignificación de la pérdida, canalizando emociones mediante la creación artística y el diálogo comunitario.`
+      ],
       history: [
         `Fase 6 (Secundaria) - Ética, Naturaleza y Sociedades (Historia): Analiza críticamente desde diversas corrientes historiográficas las contradicciones socioeconómicas, los planes y movimientos de "${capitalizedTopic}" y su legado en las instituciones actuales.`,
-        `Fase 6 (Secundaria) - Lenguajes: Redacta ensayos académicos estructurados y realiza mesas redondas con citas bibliográficas formales sobre las repercusiones de "${capitalizedTopic}".`,
+        `Fase 6 (Secundaria) - Ética, Naturaleza y Sociedades (Geografía): Interpreta representaciones cartográficas y analiza la dinámica territorial, sociocultural y ambiental vinculada a "${capitalizedTopic}".`,
         `Fase 6 (Secundaria) - Ética, Naturaleza y Sociedades (Formación Cívica y Ética): Evalúa los avances y retos en materia de derechos humanos, legalidad y justicia social derivados de "${capitalizedTopic}".`
       ],
       math: [
@@ -2642,6 +3461,10 @@ export function detectCurriculumPdasForTopic(
       ]
     },
     'preparatoria': {
+      traditions: [
+        `Bachillerato (MCCEMS) - Conciencia Histórica y Humanidades: Examina con aparato crítico el sincretismo biocultural, la filosofía indígena de la muerte y la construcción de la identidad nacional mexicana a través de sus tradiciones populares.`,
+        `Bachillerato (MCCEMS) - Lengua y Comunicación: Produce ensayos argumentativos y piezas líricas de alta complejidad sobre la preservación de las tradiciones mexicanas y el derecho a la memoria biocultural.`
+      ],
       history: [
         `Bachillerato (MCCEMS) - Ciencias Sociales y Conciencia Histórica: Evalúa con aparato crítico las transformaciones estructurales, reformas agrarias e institucionales derivadas de "${capitalizedTopic}" en el México contemporáneo.`,
         `Bachillerato (MCCEMS) - Lengua y Comunicación: Produce discursos argumentativos y ensayos preuniversitarios formalmente citados sobre la trascendencia de "${capitalizedTopic}".`
@@ -2672,58 +3495,163 @@ export function detectCurriculumPdasForTopic(
 
   const levelPdas = pdasByPhase[levelKey] || pdasByPhase['primaria-baja'];
 
-  // Selección inteligente y priorización por materia
+  // Identificación del dominio pedagógico según la asignatura seleccionada
+  let primaryDomain: 'history' | 'civics' | 'math' | 'science' | 'language' | 'art' | 'health' | null = null;
+
+  if (
+    subLower.includes('mat') || 
+    subLower.includes('algebra') || 
+    subLower.includes('calc') || 
+    subLower.includes('aritmet') || 
+    subLower.includes('-mat')
+  ) {
+    primaryDomain = 'math';
+  } else if (
+    subLower.includes('cien') || 
+    subLower.includes('nat') || 
+    subLower.includes('bio') || 
+    subLower.includes('fis') || 
+    subLower.includes('quim') || 
+    subLower.includes('medio') || 
+    subLower.includes('tec') || 
+    subLower.includes('-cie') || 
+    subLower.includes('-con')
+  ) {
+    primaryDomain = 'science';
+  } else if (
+    subLower.includes('ent') || 
+    subLower.includes('his') || 
+    subLower.includes('geo') || 
+    subLower.includes('soc') || 
+    subLower.includes('conciencia') || 
+    subLower.includes('-ent') || 
+    subLower.includes('-his') || 
+    subLower.includes('-geo')
+  ) {
+    primaryDomain = 'history';
+  } else if (
+    subLower.includes('civ') || 
+    subLower.includes('etic') || 
+    subLower.includes('ciudadan') || 
+    subLower.includes('derech') || 
+    subLower.includes('paz') || 
+    subLower.includes('-civ')
+  ) {
+    primaryDomain = 'civics';
+  } else if (
+    subLower.includes('art') || 
+    subLower.includes('mus') || 
+    subLower.includes('teat') || 
+    subLower.includes('danz') || 
+    subLower.includes('plastic') || 
+    subLower.includes('-art')
+  ) {
+    primaryDomain = 'art';
+  } else if (
+    subLower.includes('hum') || 
+    subLower.includes('fisic') || 
+    subLower.includes('deport') || 
+    subLower.includes('salud') || 
+    subLower.includes('socio') || 
+    subLower.includes('tut') || 
+    subLower.includes('emo') || 
+    subLower.includes('-hum') || 
+    subLower.includes('-efi') || 
+    subLower.includes('-tut')
+  ) {
+    primaryDomain = 'health';
+  } else if (
+    subLower.includes('esp') || 
+    subLower.includes('leng') || 
+    subLower.includes('comun') || 
+    subLower.includes('lect') || 
+    subLower.includes('ing') || 
+    subLower.includes('dig') || 
+    subLower.includes('-esp') || 
+    subLower.includes('-len') || 
+    subLower.includes('-ing')
+  ) {
+    primaryDomain = 'language';
+  }
+
+  // Selección inteligente y exhaustiva de PDAs según rigor temático oficial
   const candidateLists: string[][] = [];
 
-  const isSubjectSpanish = subLower.includes('esp') || subLower.includes('leng') || subLower.includes('comun') || subLower.includes('lect');
-  const isSubjectMath = subLower.includes('mat') || subLower.includes('algebra') || subLower.includes('calc');
-  const isSubjectScience = subLower.includes('cien') || subLower.includes('nat') || subLower.includes('fis') || subLower.includes('quim') || subLower.includes('bio') || subLower.includes('medio');
-  const isSubjectHistory = subLower.includes('his') || subLower.includes('soc') || subLower.includes('civ') || subLower.includes('geo') || subLower.includes('ent') || subLower.includes('etic');
-  const isSubjectArt = subLower.includes('art') || subLower.includes('mus') || subLower.includes('teat');
-  const isSubjectHealth = subLower.includes('hum') || subLower.includes('fisic') || subLower.includes('deport') || subLower.includes('salud') || subLower.includes('tut');
+  if (isTraditionsOrCulture) {
+    if (primaryDomain === 'history') {
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Ética') || p.includes('Entidad') || p.includes('Historia') || p.includes('Geografía')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Lenguajes') || p.includes('Artes')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Humano') || p.includes('Saberes')));
+    } else if (primaryDomain === 'language') {
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Lenguajes') || p.includes('Artes')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Ética') || p.includes('Entidad') || p.includes('Historia')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Humano') || p.includes('Saberes')));
+    } else if (primaryDomain === 'art') {
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Artes') || p.includes('Lenguajes')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Ética') || p.includes('Entidad')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Humano')));
+    } else if (primaryDomain === 'health') {
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Humano')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Ética') || p.includes('Lenguajes')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Saberes')));
+    } else if (primaryDomain === 'science') {
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Saberes')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Ética') || p.includes('Lenguajes')));
+      candidateLists.push(levelPdas.traditions.filter(p => p.includes('Humano')));
+    } else {
+      candidateLists.push(levelPdas.traditions);
+    }
+  } else {
+    if (primaryDomain === 'history') {
+      candidateLists.push(levelPdas.history);
+      candidateLists.push(levelPdas.civics);
+      if (isLanguageGeneral) candidateLists.push(levelPdas.language);
+    } else if (primaryDomain === 'civics') {
+      candidateLists.push(levelPdas.civics);
+      candidateLists.push(levelPdas.history);
+    } else if (primaryDomain === 'math') {
+      candidateLists.push(levelPdas.math);
+    } else if (primaryDomain === 'science') {
+      candidateLists.push(levelPdas.science);
+    } else if (primaryDomain === 'language') {
+      candidateLists.push(levelPdas.language);
+      candidateLists.push(levelPdas.art);
+    } else if (primaryDomain === 'art') {
+      candidateLists.push(levelPdas.art);
+      candidateLists.push(levelPdas.language);
+    } else if (primaryDomain === 'health') {
+      candidateLists.push(levelPdas.health);
+      candidateLists.push(levelPdas.civics);
+    }
 
-  // 1. Primero la lista que coincida con el tema O la materia seleccionada
-  if (isHistoryOrCivics || isSubjectHistory) {
-    candidateLists.push(levelPdas.history);
-  }
-  if (isMath || isSubjectMath) {
-    candidateLists.push(levelPdas.math);
-  }
-  if (isScience || isSubjectScience) {
-    candidateLists.push(levelPdas.science);
-  }
-  if (isLanguageGeneral || isSubjectSpanish) {
-    candidateLists.push(levelPdas.language);
-  }
-  if (isCivicsRights) {
-    candidateLists.push(levelPdas.civics);
-  }
-  if (isArt || isSubjectArt) {
-    candidateLists.push(levelPdas.art);
-  }
-  if (isHealth || isSubjectHealth) {
-    candidateLists.push(levelPdas.health);
+    // Coincidencia temática secundaria
+    if (isHistoryOrCivics && primaryDomain !== 'history' && primaryDomain !== 'civics') {
+      candidateLists.push(levelPdas.history);
+      candidateLists.push(levelPdas.civics);
+    }
+    if (isMath && primaryDomain !== 'math') {
+      candidateLists.push(levelPdas.math);
+    }
+    if (isScience && primaryDomain !== 'science') {
+      candidateLists.push(levelPdas.science);
+    }
+    if (isLanguageGeneral && primaryDomain !== 'language') {
+      candidateLists.push(levelPdas.language);
+    }
+    if (isArt && primaryDomain !== 'art') {
+      candidateLists.push(levelPdas.art);
+    }
+    if (isHealth && primaryDomain !== 'health') {
+      candidateLists.push(levelPdas.health);
+    }
+
+    candidateLists.push(levelPdas.general);
   }
 
-  // 2. Si no hubo coincidencia temática específica, agregar la categoría de la asignatura
-  if (candidateLists.length === 0) {
-    if (isSubjectSpanish) candidateLists.push(levelPdas.language);
-    else if (isSubjectMath) candidateLists.push(levelPdas.math);
-    else if (isSubjectScience) candidateLists.push(levelPdas.science);
-    else if (isSubjectHistory) candidateLists.push(levelPdas.history);
-    else candidateLists.push(levelPdas.general);
-  }
-
-  // 3. Agregar secundariamente las demás categorías para ofrecer opciones articuladas/transversales
-  candidateLists.push(levelPdas.general);
-  candidateLists.push(levelPdas.language);
-  candidateLists.push(levelPdas.history);
-  candidateLists.push(levelPdas.science);
-  candidateLists.push(levelPdas.math);
-
-  // Aplanar y eliminar duplicados manteniendo el orden de relevancia
+  // Aplanar y eliminar duplicados manteniendo el estricto orden de relevancia
   const result: string[] = [];
   for (const list of candidateLists) {
+    if (!list) continue;
     for (const pdaText of list) {
       if (pdaText && !result.includes(pdaText)) {
         result.push(pdaText);

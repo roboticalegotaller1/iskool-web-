@@ -220,7 +220,8 @@ interface PlanningTabProps {
 
 const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => {
   const capitalizedTopic = cleanCoreTopicName(rawTopic);
-  const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(capitalizedTopic);
+  const isTradition = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad/i.test(capitalizedTopic);
+  const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(capitalizedTopic);
   const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(capitalizedTopic);
   const isAdditionOrSubtraction = /suma|resta|agregar|quitar|conteo|numero|agrupacion|reagrupa/i.test(capitalizedTopic);
   const isGeometry = /figura|cuerpo|geometric|tangram|plano|cara|arista/i.test(capitalizedTopic);
@@ -233,38 +234,66 @@ const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => 
     'preescolar': {
       ecology:   `Fase 2 (Preescolar) - Saberes y Pensamiento Científico: Observa con atención seres vivos y elementos naturales en la naturaleza, describe sus características y propone formas sencillas de cuidarla.`,
       health:    `Fase 2 (Preescolar) - De lo Humano y lo Comunitario: Practica hábitos de higiene, hidratación y alimentación sana del Plato del Bien Comer para mantenerse sano.`,
-      history:   `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre "${capitalizedTopic}", reconociendo la historia de su entorno y festividades de su comunidad.`,
+      history:   isTradition
+        ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre Día de Muertos y festividades de su comunidad, reconociendo la diversidad cultural.`
+        : `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre "${capitalizedTopic}", reconociendo la historia de su entorno y festividades de su comunidad.`,
       art:       `Fase 2 (Preescolar) - Lenguajes (Artes): Representa de forma creativa ideas y sentimientos sobre "${capitalizedTopic}" usando pintura, modelado con plastilina o música.`,
       tech:      `Fase 2 (Preescolar) - Reconoce herramientas y objetos de "${capitalizedTopic}" que se usan en casa y en la escuela de forma segura.`,
       math:      `Fase 2 (Preescolar) - Saberes y Pensamiento Científico: Cuenta objetos de su entorno, reconoce números en su contexto y utiliza nociones espaciales en juegos relacionados con "${capitalizedTopic}".`,
       civics:    `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Colabora con sus compañeros en actividades sobre "${capitalizedTopic}" respetando las reglas y acuerdos del salón.`,
       language:  `Fase 2 (Preescolar) - Lenguajes: Expresa oralmente sus ideas y emociones sobre "${capitalizedTopic}" y disfruta de narraciones, rimas y cantos infantiles.`,
       social:    `Fase 2 (Preescolar) - Conoce lugares de su comunidad que se relacionan con "${capitalizedTopic}" y platica sobre lo que hacen ahí.`,
-      default:   isHistory ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y costumbres familiares sobre "${capitalizedTopic}", reconociendo elementos y festividades históricas de su comunidad.` : `Fase 2 (Preescolar) - Explora su entorno descubriendo aspectos de "${capitalizedTopic}", y los comparte con sus compañeros mediante expresiones orales y producciones gráficas.`
+      default:   isTradition
+        ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y costumbres familiares sobre Día de Muertos y festividades locales, conviviendo con respeto.`
+        : (isHistory ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y costumbres familiares sobre "${capitalizedTopic}", reconociendo elementos y festividades históricas de su comunidad.` : `Fase 2 (Preescolar) - Explora su entorno descubriendo aspectos de "${capitalizedTopic}", y los comparte con sus compañeros mediante expresiones orales y producciones gráficas.`)
     },
     'primaria-baja': {
-      ecology:   isScience ? `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Reconoce las características de plantas, animales y estados físicos del agua en relación con "${capitalizedTopic}"; propone y practica acciones colectivas de cuidado ambiental en su escuela.` : `Fase 3 (1º y 2º Primaria) - Reconoce la importancia de "${capitalizedTopic}" en su entorno inmediato mediante exploración sensorial y elabora registros gráficos.`,
-      health:    `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Reconoce los órganos de los sentidos y hábitos del Plato del Bien Comer vinculados a "${capitalizedTopic}" para favorecer el bienestar escolar y familiar.`,
-      history:   isHistory ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios los acontecimientos y personajes de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las familias.` : `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga la historia personal, familiar y comunitaria sobre "${capitalizedTopic}" a través de relatos orales, fotografías y acuerdos de convivencia pacífica.`,
+      ecology:   isTradition
+        ? `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Describe y clasifica elementos naturales de temporada (cempasúchil, mandarinas, calabaza, copal) y observa sus transformaciones físicas cotidianas.`
+        : (isScience ? `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Reconoce las características de plantas, animales y estados físicos del agua en relación con "${capitalizedTopic}"; propone y practica acciones colectivas de cuidado ambiental en su escuela.` : `Fase 3 (1º y 2º Primaria) - Reconoce la importancia de "${capitalizedTopic}" en su entorno inmediato mediante exploración sensorial y elabora registros gráficos.`),
+      health:    isTradition
+        ? `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Reconoce que las tradiciones y festividades familiares fortalecen los lazos afectivos, el respeto intergeneracional y el sentido de pertenencia colectiva.`
+        : `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Reconoce los órganos de los sentidos y hábitos del Plato del Bien Comer vinculados a "${capitalizedTopic}" para favorecer el bienestar escolar y familiar.`,
+      history:   isTradition
+        ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios comunitarios el origen y los cambios en las tradiciones y festividades de su localidad (como Día de Muertos y fiestas patronales), reconociendo el patrimonio biocultural.`
+        : (isHistory ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios los acontecimientos y personajes de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las familias.` : `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga la historia personal, familiar y comunitaria sobre "${capitalizedTopic}" a través de relatos orales, fotografías y acuerdos de convivencia pacífica.`),
       art:       `Fase 3 (1º y 2º Primaria) - Lenguajes (Artes): Explora texturas, formas, colores, rondas tradicionales y modelado con plastilina sobre "${capitalizedTopic}" para expresar emociones libremente.`,
       tech:      `Fase 3 (1º y 2º Primaria) - Identifica usos cotidianos de herramientas y materiales en "${capitalizedTopic}", construyendo artefactos sencillos con material reciclable.`,
       math:      isAdditionOrSubtraction ? `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico (Construcción de la noción de suma y resta): Resuelve problemas vinculados a su contexto que implican agregar, quitar, juntar, comparar y completar cantidades mediante material concreto (fichas base 10, semillas, taparroscas), recta numérica y cálculo mental con números de hasta dos y tres cifras.` : isGeometry ? `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Figuras geométricas y sus características: Manipula objetos del entorno y construye composiciones geométricas y tangram identificando lados rectos y curvos.` : `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Estudio de los números: Cuenta, lee, escribe y representa colecciones vinculadas a "${capitalizedTopic}" mediante valor posicional (centenas, decenas y unidades) y resolución de problemas cotidianos.`,
       civics:    `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Construye normas y acuerdos de convivencia en el aula inspirados en "${capitalizedTopic}", fomentando el diálogo, la inclusión y la cultura de paz.`,
-      language:  isEpistolar ? `Fase 3 (1º y 2º Primaria) - Lenguajes (Producción y lectura de textos epistolares): Reconoce la estructura de la carta (lugar, fecha, destinatario, saludo, cuerpo, despedida, firma y remitente), escribe cartas a familiares y compañeros con propósitos reales y utiliza el buzón escolar para la entrega de correspondencia comunitaria.` : isReading ? `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta textos breves, cuentos, coplas, instructivos y descripciones sobre "${capitalizedTopic}"; aplica la correspondencia grafofonética, el dictado colectivo y signos de puntuación básicos.` : `Fase 3 (1º y 2º Primaria) - Lenguajes: Describe de forma oral y escrita objetos, personas y eventos relacionados con "${capitalizedTopic}" mediante el dibujo y la escritura autónoma.`,
+      language:  isTradition
+        ? `Fase 3 (1º y 2º Primaria) - Lenguajes: Escribe de manera autónoma y mediante dictado al docente coplas, rimas y descripciones sencillas sobre las ofrendas y personajes tradicionales de su comunidad.`
+        : (isEpistolar ? `Fase 3 (1º y 2º Primaria) - Lenguajes (Producción y lectura de textos epistolares): Reconoce la estructura de la carta (lugar, fecha, destinatario, saludo, cuerpo, despedida, firma y remitente), escribe cartas a familiares y compañeros con propósitos reales y utiliza el buzón escolar para la entrega de correspondencia comunitaria.` : isReading ? `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta textos breves, cuentos, coplas, instructivos y descripciones sobre "${capitalizedTopic}"; aplica la correspondencia grafofonética, el dictado colectivo y signos de puntuación básicos.` : `Fase 3 (1º y 2º Primaria) - Lenguajes: Describe de forma oral y escrita objetos, personas y eventos relacionados con "${capitalizedTopic}" mediante el dibujo y la escritura autónoma.`),
       social:    `Fase 3 (1º y 2º Primaria) - Identifica los cambios y tradiciones de su localidad relacionados con "${capitalizedTopic}" a través de entrevistas familiares y cartografía infantil.`,
-      default:   isHistory ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios de su comunidad los hechos de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las personas.` : `Fase 3 (1º y 2º Primaria) - Identifica y describe con sus palabras las principales características de "${capitalizedTopic}" en su contexto escolar y comunitario, registrando sus observaciones con material manipulativo y gráfico.`
+      default:   isTradition
+        ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares y testimonios de su comunidad el origen de las tradiciones y celebraciones locales.`
+        : (isHistory ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios de su comunidad los hechos de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las personas.` : `Fase 3 (1º y 2º Primaria) - Identifica y describe con sus palabras las principales características de "${capitalizedTopic}" en su contexto escolar y comunitario, registrando sus observaciones con material manipulativo y gráfico.`)
     },
     'primaria-media': {
-      ecology:   `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Analiza las relaciones entre factores bióticos y abióticos en relación con "${capitalizedTopic}", diseñando acciones de conservación de la biodiversidad local.`,
-      health:    `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Describe el funcionamiento de los sistemas del cuerpo humano e investiga la influencia de "${capitalizedTopic}" en la salud comunitaria.`,
-      history:   `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Investiga la historia regional y el legado cívico y cultural vinculado a "${capitalizedTopic}", valorando la justicia y los derechos de todos.`,
-      art:       `Fase 4 (3º y 4º Primaria) - Lenguajes (Artes): Crea producciones visuales y escénicas que resignifican el tema "${capitalizedTopic}" con técnicas mixtas.`,
+      ecology:   isTradition
+        ? `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Indaga y describe las propiedades botánicas y usos de flores tradicionales (cempasúchil, terciopelo), semillas y frutos de temporada en las expresiones culturales de la región, reconociendo su ciclo biológico y cambios de estado físico (cera y copal).`
+        : `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Analiza las relaciones entre factores bióticos y abióticos en relación con "${capitalizedTopic}", diseñando acciones de conservación de la biodiversidad local.`,
+      health:    isTradition
+        ? `Fase 4 (3º y 4º Primaria) - De lo Humano y lo Comunitario: Identifica eventos y celebraciones importantes de la historia familiar y comunitaria, reconociendo que fortalecen la identidad colectiva, el sentido de pertenencia y la transmisión intergeneracional de saberes y afectos.`
+        : `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Describe el funcionamiento de los sistemas del cuerpo humano e investiga la influencia de "${capitalizedTopic}" en la salud comunitaria.`,
+      history:   isTradition
+        ? `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades (La Entidad donde Vivo): Reconoce y valora las prácticas culturales, expresiones artísticas, rituales, ofrendas y celebraciones tradicionales (como Día de Muertos) como parte del patrimonio biocultural y la memoria colectiva de su entidad federativa y pueblos originarios.`
+        : `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Investiga la historia regional y el legado cívico y cultural vinculado a "${capitalizedTopic}", valorando la justicia y los derechos de todos.`,
+      art:       isTradition
+        ? `Fase 4 (3º y 4º Primaria) - Lenguajes (Artes): Analiza las características estéticas, cromáticas y simbólicas de las manifestaciones artísticas del Día de Muertos (altares, tapetes florales, catrinas y arte efímero), interpretando sus significados culturales.`
+        : `Fase 4 (3º y 4º Primaria) - Lenguajes (Artes): Crea producciones visuales y escénicas que resignifican el tema "${capitalizedTopic}" con técnicas mixtas.`,
       tech:      `Fase 4 (3º y 4º Primaria) - Diseña prototipos tecnológicos y circuitos sencillos aplicando conceptos de "${capitalizedTopic}".`,
       math:      `Fase 4 (3º y 4º Primaria) - Saberes y Pensamiento Científico: Resuelve problemas de fracciones equivalentes, multiplicación, división y geometría aplicados a "${capitalizedTopic}".`,
-      civics:    `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Analiza los derechos de la niñez y diseña propuestas colectivas sobre "${capitalizedTopic}".`,
-      language:  `Fase 4 (3º y 4º Primaria) - Lenguajes: Redacta textos expositivos, narrativos y resúmenes estructurados sobre "${capitalizedTopic}".`,
+      civics:    isTradition
+        ? `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Identifica la composición pluricultural de su entidad federativa, reconociendo el aporte de los pueblos indígenas y afromexicanos en la preservación de costumbres y fiestas comunitarias.`
+        : `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Analiza los derechos de la niñez y diseña propuestas colectivas sobre "${capitalizedTopic}".`,
+      language:  isTradition
+        ? `Fase 4 (3º y 4º Primaria) - Lenguajes: Lee, comprende y produce calaveritas literarias y coplas populares, explorando la rima, el ritmo lírico, la sátira humorística y las figuras retóricas de la tradición lírica mexicana.`
+        : `Fase 4 (3º y 4º Primaria) - Lenguajes: Redacta textos expositivos, narrativos y resúmenes estructurados sobre "${capitalizedTopic}".`,
       social:    `Fase 4 (3º y 4º Primaria) - Analiza la diversidad geográfica y socioeconómica de México en torno a "${capitalizedTopic}".`,
-      default:   isHistory ? `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Investiga en fuentes primarias y secundarias las causas, personajes y consecuencias de "${capitalizedTopic}" en su entidad federativa y en México.` : `Fase 4 (3º y 4º Primaria) - Indaga, sistematiza y comunica hallazgos sobre "${capitalizedTopic}" con herramientas formales de la NEM.`
+      default:   isTradition
+        ? `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades (La Entidad donde Vivo): Reconoce y valora las prácticas culturales, expresiones artísticas, rituales, ofrendas y celebraciones tradicionales (como Día de Muertos) como parte del patrimonio biocultural y la memoria colectiva de su entidad federativa y pueblos originarios.`
+        : (isHistory ? `Fase 4 (3º y 4º Primaria) - Ética, Naturaleza y Sociedades: Investiga en fuentes primarias y secundarias las causas, personajes y consecuencias de "${capitalizedTopic}" en su entidad federativa y en México.` : `Fase 4 (3º y 4º Primaria) - Indaga, sistematiza y comunica hallazgos sobre "${capitalizedTopic}" con herramientas formales de la NEM.`)
     },
     'primaria-alta': {
       ecology:   `Fase 5 (5º y 6º Primaria) - Saberes y Pensamiento Científico: Analiza el impacto de "${capitalizedTopic}" en los ecosistemas locales, plantea hipótesis sobre causas y consecuencias, y diseña propuestas sustentables.`,
@@ -315,15 +344,24 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     .map(s => s.subjectId);
 
   // Helper to map subject ID/name to curriculum database category keys
-  const mapSubjectToCurriculumKey = (subjectId: string, subjectName: string): 'matematicas' | 'ciencias' | 'lenguajes' => {
+  const mapSubjectToCurriculumKey = (subjectId: string, subjectName: string): string => {
     const cleanId = (subjectId || '').toLowerCase();
     const cleanName = (subjectName || '').toLowerCase();
     
-    if (cleanId.includes('math') || cleanId.includes('matemat') || cleanName.includes('matemat')) {
+    if (cleanId.includes('math') || cleanId.includes('matemat') || cleanName.includes('matemat') || cleanId.includes('-mat')) {
       return 'matematicas';
     }
-    if (cleanId.includes('sci') || cleanId.includes('cienc') || cleanName.includes('cienc') || cleanName.includes('quim') || cleanName.includes('fisic') || cleanName.includes('biolog') || cleanName.includes('natural')) {
+    if (cleanId.includes('sci') || cleanId.includes('cienc') || cleanName.includes('cienc') || cleanName.includes('quim') || cleanName.includes('fisic') || cleanName.includes('biolog') || cleanName.includes('natural') || cleanId.includes('-cie') || cleanId.includes('-con')) {
       return 'ciencias';
+    }
+    if (cleanId.includes('ent') || cleanId.includes('his') || cleanId.includes('geo') || cleanId.includes('soc') || cleanName.includes('historia') || cleanName.includes('entidad') || cleanName.includes('geografia') || cleanName.includes('civica') || cleanName.includes('sociedades') || cleanId.includes('-ent') || cleanId.includes('-his') || cleanId.includes('-civ')) {
+      return 'historia';
+    }
+    if (cleanId.includes('art') || cleanName.includes('arte') || cleanName.includes('musica') || cleanId.includes('-art')) {
+      return 'artes';
+    }
+    if (cleanId.includes('hum') || cleanId.includes('fisic') || cleanName.includes('fisica') || cleanName.includes('salud') || cleanName.includes('emocional') || cleanId.includes('-hum') || cleanId.includes('-efi')) {
+      return 'humano';
     }
     return 'lenguajes';
   };
@@ -538,13 +576,42 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   // Materias oficiales base según el nivel educativo seleccionado (Preescolar a Preparatoria)
   const displaySubjects = LEVEL_BASE_SUBJECTS[selectedLevel] || LEVEL_BASE_SUBJECTS['primaria-baja'];
 
+  // Referencias para rastrear el último nivel y materia seleccionados
+  const lastLevelRef = useRef(selectedLevel);
+  const lastSubjectRef = useRef(selectedSubject);
+
+  // Recálculo inmediato en tiempo real de sugerencias de PDAs oficiales según nivel y asignatura
+  const recalculatePdasNow = (topic: string, level: string, subjectId: string) => {
+    if (!topic || topic.trim().length < 2) {
+      setPdaSuggestions([]);
+      setSelectedSuggestedPda('');
+      return;
+    }
+    const subjects = LEVEL_BASE_SUBJECTS[level] || LEVEL_BASE_SUBJECTS['primaria-baja'];
+    const subjectObj = subjects.find(s => s.id === subjectId);
+    const subjectName = subjectObj ? subjectObj.name : subjectId;
+    const freshPdas = detectCurriculumPdasForTopic(topic, level, subjectName);
+    setPdaSuggestions(freshPdas);
+    if (freshPdas.length > 0) {
+      setSelectedSuggestedPda(freshPdas[0]);
+    } else {
+      setSelectedSuggestedPda('');
+    }
+    lastLevelRef.current = level;
+    lastSubjectRef.current = subjectId;
+  };
+
   // Sincronizar materia seleccionada automáticamente al cambiar de nivel educativo
   useEffect(() => {
     const validSubjects = LEVEL_BASE_SUBJECTS[selectedLevel] || LEVEL_BASE_SUBJECTS['primaria-baja'];
     if (!selectedSubject || !validSubjects.some(s => s.id === selectedSubject)) {
-      setSelectedSubject(validSubjects[0]?.id || '');
+      const fallbackSubject = validSubjects[0]?.id || '';
+      setSelectedSubject(fallbackSubject);
+      if (inputText && inputText.trim().length >= 2) {
+        recalculatePdasNow(inputText, selectedLevel, fallbackSubject);
+      }
     }
-  }, [selectedLevel, selectedSubject]);
+  }, [selectedLevel, selectedSubject, inputText]);
 
   // Sincronizar materia seleccionada
   useEffect(() => {
@@ -557,7 +624,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const [uploadedFile, setUploadedFile] = useState<{ name: string; type: 'image' | 'pdf'; size: string } | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  // Sugerencias inteligentes y contextuales de PDAs (Debounce)
+  // Sugerencias inteligentes y contextuales de PDAs (Debounce para escritura fluida en el input)
   useEffect(() => {
     if (!inputText || inputText.trim().length < 2) {
       setPdaSuggestions([]);
@@ -593,15 +660,20 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
         const subjectName = subjectObj ? subjectObj.name : selectedSubject;
         const detectedPdas = detectCurriculumPdasForTopic(inputText, selectedLevel, subjectName);
 
+        // Los detectados según la asignatura siempre van al principio
         const combined = Array.from(new Set([...detectedPdas, ...dbSuggestions]));
         setPdaSuggestions(combined);
 
-        // Auto-seleccionar el primer PDA sugerido si no hay uno activo o el previo ya no es válido
+        // Si cambió el nivel o la materia seleccionada, seleccionar el PDA principal de la materia nueva
+        const subjectChanged = lastSubjectRef.current !== selectedSubject;
+        const levelChanged = lastLevelRef.current !== selectedLevel;
+        lastSubjectRef.current = selectedSubject;
+        lastLevelRef.current = selectedLevel;
+
         if (combined.length > 0) {
-          setSelectedSuggestedPda(prev => {
-            if (prev && combined.includes(prev)) return prev;
-            return combined[0];
-          });
+          if (subjectChanged || levelChanged || !selectedSuggestedPda || !combined.includes(selectedSuggestedPda)) {
+            setSelectedSuggestedPda(combined[0]);
+          }
         } else {
           setSelectedSuggestedPda('');
         }
@@ -613,7 +685,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
     }, 250);
 
     return () => clearTimeout(delayDebounce);
-  }, [inputText, selectedLevel, selectedSubject, displaySubjects]);
+  }, [inputText, selectedLevel, selectedSubject, displaySubjects, selectedSuggestedPda]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // --- Estados de Clave de IA ---
@@ -641,15 +713,19 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
   const [activePlanning, setActivePlanning] = useState<any | null>(null);
   const [planningsHistory, setPlanningsHistory] = useState<any[]>([]);
 
-  // Inicializar Asignatura según las disponibles para el maestro
+  // Inicializar Asignatura según las disponibles para el maestro si aún no hay una seleccionada
   useEffect(() => {
-    const teacherSchedules = schedulesList.filter(s => s.teacherId === currentTeacher.id);
-    if (teacherSchedules.length > 0) {
-      setSelectedSubject(teacherSchedules[0].subjectId);
-    } else if (displaySubjects.length > 0) {
-      setSelectedSubject(displaySubjects[0].id);
+    if (!selectedSubject) {
+      const validSubjects = LEVEL_BASE_SUBJECTS[selectedLevel] || LEVEL_BASE_SUBJECTS['primaria-baja'];
+      const teacherSchedules = schedulesList.filter(s => s.teacherId === currentTeacher.id);
+      const matchedTeacherSubject = teacherSchedules.find(ts => validSubjects.some(vs => vs.id === ts.subjectId));
+      if (matchedTeacherSubject) {
+        setSelectedSubject(matchedTeacherSubject.subjectId);
+      } else if (validSubjects.length > 0) {
+        setSelectedSubject(validSubjects[0].id);
+      }
     }
-  }, [schedulesList, currentTeacher, displaySubjects]);
+  }, [schedulesList, currentTeacher, selectedLevel, selectedSubject]);
 
   // Cargar historial de planeaciones al montar
   useEffect(() => {
@@ -801,17 +877,32 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
           resultPlanning = await callAiService(inputText, selectedLevel, currKey, sessionCount, imagePreview, selectedSuggestedPda);
         } catch (err) {
           console.error("Fallo llamada al servicio de IA, usando motor pedagógico local", err);
-          resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount, selectedSuggestedPda);
+          resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount, selectedSuggestedPda, currentSubjectObj);
         }
       } else {
-        resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount, selectedSuggestedPda);
+        resultPlanning = generateLocalNEMPlanning(inputText, selectedLevel, currKey, sessionCount, selectedSuggestedPda, currentSubjectObj);
       }
     }
 
     if (resultPlanning) {
+      const levelNames: Record<string, string> = {
+        'preescolar':     'Preescolar (Fase 2: 1º a 3º)',
+        'primaria-baja':  'Primaria Baja (Fase 3: 1º y 2º Grado)',
+        'primaria-media': 'Primaria Media (Fase 4: 3º y 4º Grado)',
+        'primaria-alta':  'Primaria Alta (Fase 5: 5º y 6º Grado)',
+        'secundaria':     'Secundaria (Fase 6: 1º a 3º Grado)',
+        'preparatoria':   'Preparatoria / Bachillerato General'
+      };
+
       resultPlanning.subjectId = selectedSubject;
-      resultPlanning.subjectName = displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
-      if (selectedSuggestedPda && !foundInVault) {
+      resultPlanning.subjectName = currentSubjectObj?.name || displaySubjects.find(s => s.id === selectedSubject)?.name || 'Asignatura';
+      if (currentSubjectObj?.campoFormativo) {
+        resultPlanning.campoFormativo = currentSubjectObj.campoFormativo;
+      }
+      resultPlanning.levelId = selectedLevel;
+      resultPlanning.levelName = levelNames[selectedLevel] || selectedLevel;
+      resultPlanning.duration = `${sessionCount} ${sessionCount === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${sessionCount * 50} min)`;
+      if (selectedSuggestedPda) {
         resultPlanning.pda = selectedSuggestedPda;
       }
 
@@ -1018,7 +1109,8 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
     level: string, 
     subject: string, 
     totalSessions: number = 10,
-    customPda?: string
+    customPda?: string,
+    customSubjectObj?: BaseSubjectDef
   ): CompleteNEMPlanning => {
     const count = Math.max(1, Math.min(30, Number(totalSessions) || 10));
     const durationStr = `${count} ${count === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${count * 50} min)`;
@@ -1032,6 +1124,8 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
         effectiveTopic = level.includes('secundaria') ? 'Modelación y Exploración de Funciones Cuadráticas' : 'Fracciones y Pensamiento Numérico con Material Concreto';
       } else if (subject === 'ciencias') {
         effectiveTopic = level.includes('secundaria') ? 'Indagación Científica y Fenómenos Químicos del Entorno' : 'Ecosistemas Locales y Conservación Ambiental';
+      } else if (subject === 'historia' || (customSubjectObj && (customSubjectObj.id.includes('ent') || customSubjectObj.id.includes('his')))) {
+        effectiveTopic = 'Costumbres, Paisajes y Tradiciones de Nuestra Entidad y Localidad';
       } else {
         effectiveTopic = level.includes('secundaria') ? 'Textos Argumentativos y Expresión Dialéctica' : 'Narración y Creación de Cuentos Colectivos';
       }
@@ -1052,30 +1146,42 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
     const subjectNames: Record<string, string> = {
       'matematicas': 'Matemáticas (Saberes y Pensamiento Científico)',
       'ciencias':    'Ciencias Naturales y Conocimiento del Medio (Saberes y Pensamiento Científico)',
-      'lenguajes':   'Español / Lenguajes (Lenguajes)'
+      'lenguajes':   'Español / Lenguajes (Lenguajes)',
+      'historia':    'Historia y La Entidad donde Vivo (Ética, Naturaleza y Sociedades)',
+      'artes':       'Artes (Lenguajes)',
+      'humano':      'De lo Humano y lo Comunitario'
     };
 
-    const isLanguage = subject === 'lenguajes' || (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(cleanTopic));
-    const isMath = subject === 'matematicas' || (!subject && !isLanguage && /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(cleanTopic));
-    const isScience = subject === 'ciencias' || (!subject && !isLanguage && !isMath && /planta|animal|cuerpo|salud|luz|materia|ecosist|ambiente/i.test(cleanTopic));
-    const campo = isLanguage ? 'Lenguajes' : (isMath || isScience ? 'Saberes y Pensamiento Científico' : 'Lenguajes');
+    const subName = customSubjectObj?.name || subjectNames[subject] || 'Asignatura';
+    const subCampo = customSubjectObj?.campoFormativo;
+
+    const isLanguage = subCampo === 'Lenguajes' || subject === 'lenguajes' || (!subCampo && (!subject && /cuento|fabula|leyenda|mito|carta|epistol|mensaje|buzon|correo|poema|narrat|lectura|escrib/i.test(cleanTopic)));
+    const isMath = (subCampo === 'Saberes y Pensamiento Científico' && (subject.includes('mat') || /num|suma|resta|multiplic|fracc|geom|parabol|cuadrat|conteo|tangram/i.test(cleanTopic)));
+    const isScience = subCampo === 'Saberes y Pensamiento Científico' && !isMath;
+    const isHistory = subCampo === 'Ética, Naturaleza y Sociedades' || subject === 'historia';
+    const isHuman = subCampo === 'De lo Humano y lo Comunitario' || subject === 'humano';
+
+    const campo = subCampo || (isLanguage ? 'Lenguajes' : isHistory ? 'Ética, Naturaleza y Sociedades' : isHuman ? 'De lo Humano y lo Comunitario' : 'Saberes y Pensamiento Científico');
     const ejes = ['Pensamiento Crítico', 'Inclusión', 'Vida Saludable', 'Apropiación de las Culturas a través de la Lectura y la Escritura'];
 
+    const isTradition = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad/i.test(cleanTopic);
     const pdaMap = getPdaMap(capitalizedTopic);
-    const pdaKey = isLanguage ? 'language' : isMath ? 'math' : isScience ? 'ecology' : 'default';
+    const pdaKey = isTradition
+      ? (isLanguage ? 'language' : isHuman ? 'health' : isScience ? 'ecology' : 'history')
+      : (isHistory ? 'history' : isHuman ? 'health' : isLanguage ? 'language' : isMath ? 'math' : isScience ? 'ecology' : 'default');
     const rawPda = customPda || pdaMap[level]?.[pdaKey] || pdaMap['primaria-baja']?.['default'] || `Fase correspondiente: Desarrolla y aplica habilidades prácticas y conceptuales sobre "${capitalizedTopic}" para resolver retos comunitarios.`;
     const pda = sanitizeSpanishPedagogicalGrammar(rawPda);
 
-    const sesionesList = generateChronometerSessions(level, subject, cleanTopic, count);
-    const pdasArticulados = getArticulatedPdas(level, subject, cleanTopic);
-    const proyectoIntegrador = generateFinalProjectProposal(level, subject, cleanTopic);
-    const preguntasDetonadoras = generateDetonatingQuestions(cleanTopic, level, subject);
+    const sesionesList = generateChronometerSessions(level, subName, cleanTopic, count);
+    const pdasArticulados = getArticulatedPdas(level, subName, cleanTopic);
+    const proyectoIntegrador = generateFinalProjectProposal(level, subName, cleanTopic);
+    const preguntasDetonadoras = generateDetonatingQuestions(cleanTopic, level, subName);
 
     return {
       id: 'plan-' + Date.now(),
       title: sanitizeSpanishPedagogicalGrammar(`Proyecto didáctico: ${capitalizedTopic} — ${levelNames[level] || level}`),
-      subjectId: subject,
-      subjectName: subjectNames[subject] || 'Asignatura',
+      subjectId: customSubjectObj?.id || subject,
+      subjectName: subName,
       levelId: level,
       levelName: levelNames[level] || 'Nivel Educativo',
       campoFormativo: campo,
@@ -1242,7 +1348,16 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
             <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider">Nivel Educativo</label>
             <select
               value={selectedLevel}
-              onChange={(e) => setSelectedLevel(e.target.value)}
+              onChange={(e) => {
+                const newLevel = e.target.value;
+                setSelectedLevel(newLevel);
+                const validSubjects = LEVEL_BASE_SUBJECTS[newLevel] || LEVEL_BASE_SUBJECTS['primaria-baja'];
+                const newSubId = validSubjects.some(s => s.id === selectedSubject) 
+                  ? selectedSubject 
+                  : (validSubjects[0]?.id || '');
+                setSelectedSubject(newSubId);
+                recalculatePdasNow(inputText, newLevel, newSubId);
+              }}
               className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
             >
               <option value="preescolar">Preescolar (Fase 2: 1º a 3º)</option>
@@ -1258,7 +1373,11 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
             <label className="text-[9.5px] text-zinc-400 uppercase tracking-wider">Asignatura</label>
             <select
               value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
+              onChange={(e) => {
+                const newSubId = e.target.value;
+                setSelectedSubject(newSubId);
+                recalculatePdasNow(inputText, selectedLevel, newSubId);
+              }}
               className="w-full p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 font-bold"
             >
               {displaySubjects?.map(sub => (
@@ -1324,7 +1443,16 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
           <textarea
             rows={4}
             value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
+            onChange={(e) => {
+              const newText = e.target.value;
+              setInputText(newText);
+              if (newText.trim().length >= 2) {
+                recalculatePdasNow(newText, selectedLevel, selectedSubject);
+              } else {
+                setPdaSuggestions([]);
+                setSelectedSuggestedPda('');
+              }
+            }}
             placeholder="Escribe el tema de la clase, ejemplo: 'fracciones equivalentes con pizza', 'cuidado del agua', 'biodigestores', 'leyendas prehispánicas'..."
             className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-150 focus:outline-none focus:border-blue-500 leading-relaxed font-semibold resize-none"
           />
@@ -1581,6 +1709,29 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
                 </button>
               </div>
             </div>
+
+            {/* Aviso de Insumos Modificados en Tiempo Real */}
+            {activePlanning && (activePlanning.levelId !== selectedLevel || activePlanning.subjectId !== selectedSubject || (activePlanning.sesiones?.length !== sessionCount)) && (
+              <div className="bg-blue-50/90 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 rounded-2xl p-3.5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-blue-950 dark:text-blue-100 no-print animate-fade-in">
+                <div className="flex items-center gap-2.5">
+                  <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 animate-pulse" />
+                  <div>
+                    <span className="font-black text-blue-700 dark:text-blue-300">Insumos Actualizados en Tiempo Real:</span>{' '}
+                    <span>
+                      {displaySubjects.find(s => s.id === selectedSubject)?.name || 'Nueva Asignatura'} • {sessionCount} {sessionCount === 1 ? 'sesión' : 'sesiones'}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={handleGenerate}
+                  disabled={isGenerating}
+                  className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition-colors shadow-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
+                  Regenerar con Nuevos Insumos
+                </button>
+              </div>
+            )}
 
             {/* Contenedor Imprimible */}
             <div 

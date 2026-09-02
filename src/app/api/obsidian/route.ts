@@ -236,6 +236,7 @@ export async function GET(request: NextRequest) {
       if (cleanSub.includes('civ') || cleanSub.includes('form') || cleanSub.includes('etic')) subKeywords.push('formacion_civica_y_etica', 'civ', 'etica');
       if (cleanSub.includes('fisic') || cleanSub.includes('deport')) subKeywords.push('educacion_fisica', 'fis');
       if (cleanSub.includes('socio') || cleanSub.includes('tutor')) subKeywords.push('educacion_socioemocional', 'tutoria', 'tut');
+      if (cleanSub.includes('ent') || cleanSub.includes('his') || cleanSub.includes('geo') || cleanSub.includes('soc')) subKeywords.push('la_entidad_donde_vivo', 'entidad', 'historia', 'geografia', 'sociedades', 'ent', 'his', 'geo');
 
       const filtered = candidateNodes.filter(n => subKeywords.some(kw => n.cleanPath.includes(kw)));
       if (filtered.length > 0) candidateNodes = filtered;
@@ -325,13 +326,36 @@ export async function GET(request: NextRequest) {
 
       const normLevel = levelParam || 'primaria-baja';
       const cleanSub = cleanString(subjectParam || subjectName || campoFormativo);
-      const normSubject = (cleanSub.includes('leng') || cleanSub.includes('esp')) ? 'lenguajes' : (cleanSub.includes('cien') || cleanSub.includes('medio')) ? 'ciencias' : 'matematicas';
+      let normSubject = 'lenguajes';
+      if (cleanSub.includes('mat') || cleanSub.includes('algebra') || cleanSub.includes('calc') || cleanSub.includes('aritmet')) {
+        normSubject = 'matematicas';
+      } else if (cleanSub.includes('cien') || cleanSub.includes('medio') || cleanSub.includes('nat') || cleanSub.includes('bio') || cleanSub.includes('fis') || cleanSub.includes('quim')) {
+        normSubject = 'ciencias';
+      } else if (cleanSub.includes('his') || cleanSub.includes('ent') || cleanSub.includes('geo') || cleanSub.includes('soc') || cleanSub.includes('civ') || cleanSub.includes('etic')) {
+        normSubject = 'historia';
+      } else if (cleanSub.includes('art') || cleanSub.includes('mus')) {
+        normSubject = 'artes';
+      } else if (cleanSub.includes('hum') || cleanSub.includes('salud') || cleanSub.includes('deport') || cleanSub.includes('emoc')) {
+        normSubject = 'humano';
+      }
       const cleanTopic = cleanCoreTopicName(title);
       const sesionesList = generateChronometerSessions(normLevel, normSubject, cleanTopic, sessionCount);
       const pdasArticulados = getArticulatedPdas(normLevel, normSubject, cleanTopic);
       const proyectoIntegrador = generateFinalProjectProposal(normLevel, normSubject, cleanTopic);
       const detonatingQuestions = generateDetonatingQuestions(cleanTopic, normLevel, normSubject);
       const durationStr = `${sessionCount} ${sessionCount === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${sessionCount * 50} min)`;
+
+      const isGenericOrMismatchedPregunta = (q: string) => {
+        const qLow = q.toLowerCase();
+        if (qLow.includes('¿qué preguntas nos hacemos sobre') || qLow.includes('que preguntas nos hacemos sobre')) return true;
+        if (qLow.includes('libros escolares de la sep') && qLow.includes('indagar')) return true;
+        if (qLow.includes('haciendo registros organizados en nuestro cuaderno')) return true;
+        if (qLow.includes('revolución mexicana') && !cleanTopic.toLowerCase().includes('revoluc')) return true;
+        if (qLow.includes('madero') && !cleanTopic.toLowerCase().includes('madero') && !cleanTopic.toLowerCase().includes('revoluc')) return true;
+        return false;
+      };
+      const filteredPreguntas = preguntas.filter(p => !isGenericOrMismatchedPregunta(p));
+      const finalPreguntas = filteredPreguntas.length >= 3 ? filteredPreguntas.map(p => sanitizeSpanishPedagogicalGrammar(p)) : detonatingQuestions;
 
       return NextResponse.json({
         found: true,
@@ -347,7 +371,7 @@ export async function GET(request: NextRequest) {
           pda: sanitizeSpanishPedagogicalGrammar(pda),
           pdasArticulados,
           duration: durationStr,
-          preguntasDetonadoras: preguntas.length > 0 ? preguntas.map(p => sanitizeSpanishPedagogicalGrammar(p)) : detonatingQuestions,
+          preguntasDetonadoras: finalPreguntas,
           sesiones: sesionesList,
           proyectoIntegrador,
           inicio: fase1Match ? sanitizeSpanishPedagogicalGrammar(fase1Match[1].trim()) : sesionesList[0]?.actividadInicio + '\n' + sesionesList[0]?.actividadDesarrollo + '\n' + sesionesList[0]?.actividadCierre,
