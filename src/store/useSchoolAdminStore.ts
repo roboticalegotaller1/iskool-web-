@@ -103,26 +103,48 @@ export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: str
   if (!schoolId) return allStudents;
 
   const filtered = allStudents.filter(s => {
-    if (s.school_id) return s.school_id === schoolId;
-    if (schoolId === 'sch-test-case') {
-      return s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo');
+    // Si tiene school_id explícito
+    if (s.school_id) {
+      if (s.school_id !== schoolId) return false;
+      if (schoolId === 'sch-jjrosseau') {
+        const isPrepa = s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep');
+        return !isPrepa && (s.level === 'primaria' || s.level === 'secundaria');
+      }
+      return true;
     }
+
+    // Colegio Test Case / Demo
+    if (schoolId === 'sch-test-case') {
+      const isTestPrep = s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep');
+      const isTestId = s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo');
+      return isTestPrep || isTestId;
+    }
+
+    // UP Juan Jacobo Rosseau: Solo Primaria y Secundaria oficiales
     if (schoolId === 'sch-jjrosseau') {
       const isTest = s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test');
       const isOther = (s.campus_name || '').toLowerCase().includes('montessori') || (s.campus_name || '').toLowerCase().includes('demo');
-      return !isTest && !isOther;
+      const isPrepa = s.level === 'preparatoria' || (s.grade || '').toLowerCase().includes('semestre') || (s.group_id || '').includes('prep');
+      return !isTest && !isOther && !isPrepa && (s.level === 'primaria' || s.level === 'secundaria');
     }
+
+    // Cualquier otra institución
     if (schoolCampuses && schoolCampuses.length > 0) {
       return schoolCampuses.some(c => c.name.toLowerCase() === (s.campus_name || '').toLowerCase() || c.id === s.campus_id);
     }
     return false;
   });
 
-  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
-    return DETAILED_STUDENTS_SEED.filter(s => s.id !== 'std-pb' && s.id !== 'std-pa' && s.id !== 'std-sec' && s.id !== 'std-prep');
-  }
-
-  return filtered;
+  return filtered.map(s => {
+    if (s.campus_name && s.campus_name !== 'Primaria Jardines') return s;
+    if (s.level === 'secundaria') return { ...s, campus_name: 'Secundaria Torres' };
+    if (s.level === 'primaria') {
+      const gradeNum = parseInt(s.grade || '1');
+      return { ...s, campus_name: gradeNum >= 4 ? 'Primaria Torres' : 'Primaria Jardines' };
+    }
+    if (s.level === 'preparatoria') return { ...s, campus_name: 'Campus Laboratorio Demo' };
+    return s;
+  });
 };
 
 export const getSchoolTeachers = (teachersList: UserProfile[], schoolId: string | null, schoolCampuses?: Campus[]): UserProfile[] => {
