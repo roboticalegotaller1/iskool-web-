@@ -47,12 +47,23 @@ export const TeacherCommunityView: React.FC = () => {
 
   const teacherId = user?.id || 'usr-teacher-1';
 
+  const deduplicateActivities = (list: CommunityActivity[]): CommunityActivity[] => {
+    const map = new Map<string, CommunityActivity>();
+    for (const item of list) {
+      if (item && item.id && !map.has(item.id)) {
+        map.set(item.id, item);
+      }
+    }
+    return Array.from(map.values());
+  };
+
   // Cargar actividades comunitarias y votos del profesor
   const fetchCommunityData = async () => {
     setIsLoading(true);
     try {
       const independenceActivities = getIndependenceCommunityActivities();
       const logicActivities = getMathematicalLogicCommunityActivities();
+      const mockActivities = getMockCommunityActivities();
 
       // 1. Obtener actividades creadas en la BD
       const { data: activitiesData, error: actError } = await supabase
@@ -61,20 +72,23 @@ export const TeacherCommunityView: React.FC = () => {
         .order('upvotes', { ascending: false });
 
       if (actError) {
-        console.warn('Supabase fetch error, combinando con mock data:', actError);
-        setActivities([...logicActivities, ...independenceActivities, ...getMockCommunityActivities()]);
+        console.warn('Supabase fetch notice, combinando con catalogos oficiales:', actError?.message || actError);
+        const combined = deduplicateActivities([...logicActivities, ...independenceActivities, ...mockActivities]);
+        setActivities(combined);
       } else if (activitiesData && activitiesData.length > 0) {
         // Combinar actividades creadas por usuarios en Supabase con los catálogos oficiales
         const dbIds = new Set(activitiesData.map(a => a.id));
-        const combined = [
+        const combined = deduplicateActivities([
           ...(activitiesData as CommunityActivity[]),
           ...logicActivities.filter(a => !dbIds.has(a.id)),
-          ...independenceActivities.filter(a => !dbIds.has(a.id))
-        ];
+          ...independenceActivities.filter(a => !dbIds.has(a.id)),
+          ...mockActivities.filter(a => !dbIds.has(a.id))
+        ]);
         combined.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
         setActivities(combined);
       } else {
-        setActivities([...logicActivities, ...independenceActivities, ...getMockCommunityActivities()]);
+        const combined = deduplicateActivities([...logicActivities, ...independenceActivities, ...mockActivities]);
+        setActivities(combined);
       }
 
       // 2. Obtener votos emitidos por el profesor actual
@@ -91,7 +105,7 @@ export const TeacherCommunityView: React.FC = () => {
       }
     } catch (err) {
       console.error('Error cargando comunidad:', err);
-      setActivities(getMockCommunityActivities());
+      setActivities(deduplicateActivities([...getIndependenceCommunityActivities(), ...getMockCommunityActivities()]));
     } finally {
       setIsLoading(false);
     }
@@ -477,12 +491,12 @@ export const TeacherCommunityView: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredActivities.map(activity => {
+          {deduplicateActivities(filteredActivities).map((activity, index) => {
             const hasVoted = votedActivityIds.has(activity.id);
 
             return (
               <div
-                key={activity.id}
+                key={activity.id || `activity-${index}`}
                 className="group bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-zinc-800/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col justify-between space-y-5"
               >
                 <div className="space-y-4">
@@ -572,8 +586,6 @@ export const TeacherCommunityView: React.FC = () => {
 
 // Plantillas de ejemplo por defecto para previsualizar si la BD aún no tiene registros
 function getMockCommunityActivities(): CommunityActivity[] {
-  const independenceActivities = getIndependenceCommunityActivities();
-  
   const baseActivities: CommunityActivity[] = [
     {
       id: 'act-mock-1',
@@ -632,5 +644,5 @@ function getMockCommunityActivities(): CommunityActivity[] {
     }
   ];
 
-  return [...independenceActivities, ...baseActivities];
+  return baseActivities;
 }
