@@ -56,7 +56,7 @@ import {
   getSchoolGroups,
   getSchoolSubjects
 } from '@/store/useSchoolAdminStore';
-import { DetailedStudent, Subject, GroupAnnualPlan, SyllabusTopic } from '@/types';
+import { DetailedStudent, Subject, GroupAnnualPlan, SyllabusTopic, Campus, Group } from '@/types';
 
 type AdminTab = 'overview' | 'teachers' | 'students' | 'campuses' | 'subjects' | 'config';
 
@@ -85,7 +85,13 @@ export default function SuperUserAdminPage() {
     createSubject,
     deleteSubject,
     updateGroupAnnualPlan,
-    updateSubjectSyllabus
+    updateSubjectSyllabus,
+    createCampus,
+    updateCampus,
+    deleteCampus,
+    createGroup,
+    updateGroup,
+    deleteGroup
   } = useSchoolAdminStore();
 
   useEffect(() => {
@@ -251,6 +257,38 @@ export default function SuperUserAdminPage() {
   const workshopImageRef = useRef<HTMLInputElement | null>(null);
   const workshopSyllabusRef = useRef<HTMLInputElement | null>(null);
 
+  // Estados para Gestión Detallada de Planteles & Grupos
+  const [selectedCampusDetail, setSelectedCampusDetail] = useState<Campus | null>(null);
+  const [campusDetailTab, setCampusDetailTab] = useState<'grupos' | 'alumnos' | 'profesores' | 'config'>('grupos');
+  const [campusSearchStudent, setCampusSearchStudent] = useState('');
+
+  // Estados para Creación y Edición de Planteles
+  const [showAddCampusModal, setShowAddCampusModal] = useState(false);
+  const [newCampusForm, setNewCampusForm] = useState({
+    name: '',
+    level: 'primaria' as 'primaria' | 'secundaria' | 'preparatoria',
+    address: '',
+    phone: '',
+    grades: ['1º', '2º', '3º', '4º', '5º', '6º']
+  });
+
+  // Estado para Creación de Grupo en Plantel
+  const [showAddGroupModal, setShowAddGroupModal] = useState(false);
+  const [newGroupForm, setNewGroupForm] = useState({
+    name: 'B',
+    grade: '1º'
+  });
+
+  // Estado para Edición de Plantel
+  const [showEditCampusModal, setShowEditCampusModal] = useState(false);
+  const [editingCampusForm, setEditingCampusForm] = useState({
+    id: '',
+    name: '',
+    level: 'primaria' as 'primaria' | 'secundaria' | 'preparatoria',
+    address: '',
+    phone: ''
+  });
+
   // Métrica Total de Tokens de IA Pedagógica
   const totalAITokens = useMemo(() => {
     const fromTeachers = (teachersList || []).reduce((acc, t) => acc + (t.ai_tokens_consumed || 0), 0);
@@ -310,6 +348,84 @@ export default function SuperUserAdminPage() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  // Manejo de Creación de Nuevo Plantel
+  const handleCreateCampus = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCampusForm.name.trim()) {
+      alert('Ingresa el nombre del plantel.');
+      return;
+    }
+
+    const assignedGrades = newCampusForm.level === 'primaria' 
+      ? ['1º', '2º', '3º', '4º', '5º', '6º'] 
+      : newCampusForm.level === 'secundaria' 
+      ? ['1º', '2º', '3º'] 
+      : ['1º Sem', '2º Sem', '3º Sem', '4º Sem', '5º Sem', '6º Sem'];
+
+    createCampus({
+      name: newCampusForm.name.trim(),
+      level: newCampusForm.level,
+      address: newCampusForm.address || 'Ciudad de México',
+      phone: newCampusForm.phone || '55-4160-8800',
+      grades: assignedGrades,
+      school_id: activeSchoolId || 'sch-jjrosseau'
+    });
+
+    showToast(`🏢 ¡Plantel "${newCampusForm.name}" creado con éxito!`);
+    setShowAddCampusModal(false);
+    setNewCampusForm({
+      name: '',
+      level: 'primaria',
+      address: '',
+      phone: '',
+      grades: ['1º', '2º', '3º', '4º', '5º', '6º']
+    });
+  };
+
+  // Manejo de Creación de Grupo en Plantel
+  const handleCreateGroup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedCampusDetail) return;
+
+    createGroup({
+      name: newGroupForm.name.toUpperCase().trim(),
+      grade: newGroupForm.grade,
+      campus_name: selectedCampusDetail.name,
+      campus_id: selectedCampusDetail.id,
+      level: selectedCampusDetail.level,
+      school_id: activeSchoolId || 'sch-jjrosseau'
+    });
+
+    showToast(`✅ Grupo "${newGroupForm.grade} ${newGroupForm.name.toUpperCase().trim()}" creado en ${selectedCampusDetail.name}`);
+    setShowAddGroupModal(false);
+  };
+
+  // Manejo de Actualización de Plantel
+  const handleUpdateCampus = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingCampusForm.id) return;
+
+    updateCampus(editingCampusForm.id, {
+      name: editingCampusForm.name,
+      level: editingCampusForm.level,
+      address: editingCampusForm.address,
+      phone: editingCampusForm.phone
+    });
+
+    if (selectedCampusDetail && selectedCampusDetail.id === editingCampusForm.id) {
+      setSelectedCampusDetail({
+        ...selectedCampusDetail,
+        name: editingCampusForm.name,
+        level: editingCampusForm.level,
+        address: editingCampusForm.address,
+        phone: editingCampusForm.phone
+      });
+    }
+
+    showToast('✏️ Datos del plantel actualizados con éxito.');
+    setShowEditCampusModal(false);
   };
 
   // Listas con Particionado y Aislamiento Escolar Estricto
@@ -1788,58 +1904,171 @@ export default function SuperUserAdminPage() {
           </div>
         )}
 
-        {/* TAB 4: CAMPUSES & GROUPS */}
+        {/* TAB 2: PLANTELES & GRUPOS (TARJETAS INTERACTIVAS Y GESTIÓN COMPLETA) */}
         {activeTab === 'campuses' && (
           <div className="space-y-6">
-            {schoolCampuses.map(campus => {
-              const campusGroups = schoolGroups.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
-              
-              return (
-                <div key={campus.id} className="p-6 rounded-2xl bg-slate-900 border border-white/10 shadow-xl space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-4">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-lg font-black text-white">{campus.name}</h3>
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                          {campus.level.toUpperCase()}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-2">
-                        <span><MapPin className="h-3 w-3 inline text-slate-500" /> {campus.address}</span>
-                        <span>·</span>
-                        <span><Phone className="h-3 w-3 inline text-slate-500" /> {campus.phone}</span>
-                      </p>
-                    </div>
+            {/* Encabezado y Barra de Acción */}
+            <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-900/90 backdrop-blur-md p-5 rounded-3xl border border-white/10 shadow-xl">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-indigo-400" />
+                  <h3 className="text-base font-black text-white tracking-tight">Planteles & Red de Grupos Escolares</h3>
+                </div>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Haz clic en cualquier tarjeta de plantel para gestionar sus grupos, grados, plantilla docente y alumnos inscritos.
+                </p>
+              </div>
 
-                    <div className="text-right">
-                      <span className="text-xs font-mono text-slate-400 block">{campusGroups.length} Grupos Configurados</span>
-                    </div>
-                  </div>
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={() => {
+                    setNewCampusForm({
+                      name: '',
+                      level: 'primaria',
+                      address: '',
+                      phone: '',
+                      grades: ['1º', '2º', '3º', '4º', '5º', '6º']
+                    });
+                    setShowAddCampusModal(true);
+                  }}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg shadow-indigo-600/30 transition-all hover:scale-102 cursor-pointer"
+                >
+                  <Plus className="h-4 w-4" /> + Dar de Alta Nuevo Plantel
+                </button>
+              </div>
+            </div>
 
-                  {/* Groups Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                    {campus.grades.map(grade => {
-                      const studentCount = schoolStudents.filter(s => s.campus_name?.toLowerCase() === campus.name.toLowerCase() && s.grade === grade).length;
+            {/* Grid de Tarjetas de Planteles */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {schoolCampuses.map(campus => {
+                const campusStudents = schoolStudents.filter(s => s.campus_name?.toLowerCase() === campus.name.toLowerCase());
+                const campusTeachers = schoolTeachers.filter(t => t.campus_name?.toLowerCase() === campus.name.toLowerCase() || t.campus_name === 'Todos los Planteles');
+                const campusGroups = schoolGroups.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
 
-                      return (
-                        <div key={grade} className="p-3.5 rounded-xl bg-slate-950 border border-white/10 flex flex-col justify-between gap-2 hover:border-indigo-500/30 transition-all">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-black text-indigo-400">{grade} Grado</span>
-                            <span className="text-[10px] font-mono text-slate-500">Grupo A</span>
-                          </div>
-                          <div className="text-lg font-black text-white">
-                            {studentCount} <span className="text-[10px] text-slate-400 font-normal">alumnos</span>
-                          </div>
-                          <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-                            <CheckCircle2 className="h-3 w-3" /> Operativo
+                return (
+                  <div
+                    key={campus.id}
+                    onClick={() => {
+                      setSelectedCampusDetail(campus);
+                      setCampusDetailTab('grupos');
+                    }}
+                    className="rounded-3xl bg-slate-900 border border-white/10 hover:border-indigo-500/60 shadow-xl hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer relative"
+                  >
+                    {/* Header del Plantel */}
+                    <div className="p-6 space-y-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="h-13 w-13 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 shrink-0 group-hover:scale-105 transition-transform">
+                          <School className="h-7 w-7" />
+                        </div>
+
+                        <div className="flex flex-col items-end gap-1">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                            campus.level === 'secundaria'
+                              ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                              : campus.level === 'preparatoria'
+                              ? 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                              : 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30'
+                          }`}>
+                            NIVEL {campus.level.toUpperCase()}
+                          </span>
+                          <span className="text-[10px] font-mono text-slate-400 bg-white/5 px-2 py-0.5 rounded-md">
+                            {campus.grades.length} Grados Escolares
                           </span>
                         </div>
-                      );
-                    })}
+                      </div>
+
+                      <div>
+                        <h4 className="text-lg font-black text-white group-hover:text-indigo-300 transition-colors">
+                          {campus.name}
+                        </h4>
+                        <div className="text-xs text-slate-400 space-y-1 mt-1.5">
+                          <p className="flex items-center gap-1.5 truncate">
+                            <MapPin className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                            <span className="truncate">{campus.address || 'Domicilio Oficial del Plantel'}</span>
+                          </p>
+                          {campus.phone && (
+                            <p className="flex items-center gap-1.5 font-mono text-[11px]">
+                              <Phone className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                              <span>{campus.phone}</span>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Métricas Clave del Plantel */}
+                      <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/5 text-center">
+                        <div className="p-2.5 rounded-xl bg-slate-950/80 border border-white/5">
+                          <span className="text-base font-black text-blue-400 block">{campusStudents.length}</span>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase">Alumnos</span>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-slate-950/80 border border-white/5">
+                          <span className="text-base font-black text-emerald-400 block">{campusTeachers.length}</span>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase">Docentes</span>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-slate-950/80 border border-white/5">
+                          <span className="text-base font-black text-purple-400 block">{campusGroups.length || campus.grades.length}</span>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase">Grupos</span>
+                        </div>
+                      </div>
+
+                      {/* Chips de Grados */}
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                          Matrícula por Grado:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {campus.grades.map(grade => {
+                            const gradeCount = campusStudents.filter(s => s.grade === grade).length;
+                            return (
+                              <span key={grade} className="px-2 py-1 rounded-lg bg-white/5 border border-white/5 text-[11px] font-semibold text-slate-300 flex items-center gap-1">
+                                <strong className="text-indigo-400">{grade}</strong>: {gradeCount} alum.
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Botón de Acción Principal en la Tarjeta */}
+                    <div className="p-4 bg-slate-950/90 border-t border-white/10 flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-indigo-400 group-hover:underline flex items-center gap-1">
+                        <Layers className="h-4 w-4" /> Administrar Plantel & Grupos
+                      </span>
+                      <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-indigo-600 transition-all">
+                        <ChevronRight className="h-4 w-4" />
+                      </div>
+                    </div>
                   </div>
+                );
+              })}
+
+              {/* TARJETA + AGREGAR NUEVO PLANTEL */}
+              <div
+                onClick={() => {
+                  setNewCampusForm({
+                    name: '',
+                    level: 'primaria',
+                    address: '',
+                    phone: '',
+                    grades: ['1º', '2º', '3º', '4º', '5º', '6º']
+                  });
+                  setShowAddCampusModal(true);
+                }}
+                className="rounded-3xl border-2 border-dashed border-white/15 hover:border-indigo-500/60 bg-slate-900/30 hover:bg-indigo-950/20 p-8 flex flex-col items-center justify-center text-center space-y-4 cursor-pointer transition-all duration-300 group min-h-[320px]"
+              >
+                <div className="h-16 w-16 rounded-3xl bg-indigo-600/15 group-hover:bg-indigo-600/25 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+                  <Plus className="h-8 w-8" />
                 </div>
-              );
-            })}
+                <div className="space-y-1">
+                  <h4 className="text-base font-black text-white group-hover:text-indigo-300 transition-colors">
+                    + Agregar Nuevo Plantel
+                  </h4>
+                  <p className="text-xs text-slate-400 max-w-xs">
+                    Registra una nueva sede o nivel educativo con su dirección, teléfono y configuración de grados.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -3481,6 +3710,609 @@ export default function SuperUserAdminPage() {
                   className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black shadow-lg cursor-pointer"
                 >
                   Crear Institución & Desplegar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 10: ADMINISTRACIÓN Y DETALLE COMPLETO DEL PLANTEL (CLICK EN TARJETA) */}
+      {selectedCampusDetail && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-4xl bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto flex flex-col">
+            
+            {/* Encabezado del Plantel */}
+            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-4">
+              <div className="flex items-center gap-3.5">
+                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 shrink-0">
+                  <School className="h-8 w-8" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-black text-white">{selectedCampusDetail.name}</h3>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                      selectedCampusDetail.level === 'secundaria'
+                        ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                        : selectedCampusDetail.level === 'preparatoria'
+                        ? 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                        : 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30'
+                    }`}>
+                      NIVEL {selectedCampusDetail.level.toUpperCase()}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1 flex flex-wrap items-center gap-3">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="h-3.5 w-3.5 text-slate-500" />
+                      {selectedCampusDetail.address || 'Domicilio Oficial del Plantel'}
+                    </span>
+                    {selectedCampusDetail.phone && (
+                      <span className="flex items-center gap-1 font-mono">
+                        <Phone className="h-3.5 w-3.5 text-slate-500" />
+                        {selectedCampusDetail.phone}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    setEditingCampusForm({
+                      id: selectedCampusDetail.id,
+                      name: selectedCampusDetail.name,
+                      level: selectedCampusDetail.level,
+                      address: selectedCampusDetail.address || '',
+                      phone: selectedCampusDetail.phone || ''
+                    });
+                    setShowEditCampusModal(true);
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10 text-xs font-bold transition-all cursor-pointer"
+                >
+                  <Edit3 className="h-3.5 w-3.5 text-amber-400" /> Editar Plantel
+                </button>
+                <button
+                  onClick={() => setSelectedCampusDetail(null)}
+                  className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Pestañas de Navegación Interna del Plantel */}
+            <div className="flex items-center gap-2 border-b border-white/5 pb-2">
+              <button
+                onClick={() => setCampusDetailTab('grupos')}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  campusDetailTab === 'grupos'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Layers className="h-4 w-4" /> Grupos & Grados ({
+                  schoolGroups.filter(g => g.campus_name?.toLowerCase() === selectedCampusDetail.name.toLowerCase()).length || selectedCampusDetail.grades.length
+                })
+              </button>
+
+              <button
+                onClick={() => setCampusDetailTab('alumnos')}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  campusDetailTab === 'alumnos'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <GraduationCap className="h-4 w-4" /> Alumnos Matriculados ({
+                  schoolStudents.filter(s => s.campus_name?.toLowerCase() === selectedCampusDetail.name.toLowerCase()).length
+                })
+              </button>
+
+              <button
+                onClick={() => setCampusDetailTab('profesores')}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  campusDetailTab === 'profesores'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Users className="h-4 w-4" /> Plantilla Docente ({
+                  schoolTeachers.filter(t => t.campus_name?.toLowerCase() === selectedCampusDetail.name.toLowerCase() || t.campus_name === 'Todos los Planteles').length
+                })
+              </button>
+
+              <button
+                onClick={() => setCampusDetailTab('config')}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  campusDetailTab === 'config'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <ShieldCheck className="h-4 w-4" /> Configuración Sede
+              </button>
+            </div>
+
+            {/* TAB CONTENIDO 1: GRUPOS & GRADOS */}
+            {campusDetailTab === 'grupos' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-300">
+                    Aulas y Grupos Escolares en {selectedCampusDetail.name}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setNewGroupForm({
+                        name: 'B',
+                        grade: selectedCampusDetail.grades[0] || '1º'
+                      });
+                      setShowAddGroupModal(true);
+                    }}
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow transition-all cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" /> + Agregar Nuevo Grupo
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+                  {selectedCampusDetail.grades.map(grade => {
+                    const gradeStudents = schoolStudents.filter(s => s.campus_name?.toLowerCase() === selectedCampusDetail.name.toLowerCase() && s.grade === grade);
+
+                    return (
+                      <div key={grade} className="p-4 rounded-2xl bg-slate-950 border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col justify-between gap-3 shadow-lg">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <span className="text-sm font-black text-white block">{grade} de {selectedCampusDetail.level === 'primaria' ? 'Primaria' : selectedCampusDetail.level === 'secundaria' ? 'Secundaria' : 'Preparatoria'}</span>
+                            <span className="text-[11px] font-mono text-indigo-400 font-bold">Grupo "A" · Salón 10{grade.replace('º', '')}</span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                            Activo
+                          </span>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-400 font-bold">Matrícula:</span>
+                            <span className="text-white font-black">{gradeStudents.length} Alumnos</span>
+                          </div>
+                          <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className="bg-indigo-500 h-full rounded-full transition-all"
+                              style={{ width: `${Math.min(100, (gradeStudents.length / 30) * 100)}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs">
+                          <button
+                            onClick={() => {
+                              setNewStudentForm(prev => ({
+                                ...prev,
+                                campus_name: selectedCampusDetail.name,
+                                level: selectedCampusDetail.level as any,
+                                grade: grade
+                              }));
+                              setShowAddStudentModal(true);
+                            }}
+                            className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer"
+                          >
+                            <Plus className="h-3 w-3" /> Inscribir Alumno
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setCampusDetailTab('alumnos');
+                              setCampusSearchStudent(grade);
+                            }}
+                            className="text-[11px] font-bold text-slate-400 hover:text-white cursor-pointer"
+                          >
+                            Ver Lista →
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENIDO 2: ALUMNOS DEL PLANTEL */}
+            {campusDetailTab === 'alumnos' && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-950 p-3 rounded-2xl border border-white/10">
+                  <div className="relative flex-1 min-w-[220px]">
+                    <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-500" />
+                    <input
+                      type="text"
+                      value={campusSearchStudent}
+                      onChange={(e) => setCampusSearchStudent(e.target.value)}
+                      placeholder="Buscar alumnos en este plantel por nombre, CURP o grado..."
+                      className="w-full bg-slate-900 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500 transition-all"
+                    />
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setNewStudentForm(prev => ({
+                        ...prev,
+                        campus_name: selectedCampusDetail.name,
+                        level: selectedCampusDetail.level as any
+                      }));
+                      setShowAddStudentModal(true);
+                    }}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow transition-all cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" /> + Inscribir Alumno en {selectedCampusDetail.name}
+                  </button>
+                </div>
+
+                <div className="bg-slate-950 border border-white/10 rounded-2xl overflow-hidden shadow-xl max-h-[350px] overflow-y-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-900 text-slate-400 font-bold uppercase text-[10px] tracking-wider sticky top-0 z-10 border-b border-white/10">
+                      <tr>
+                        <th className="p-3">Alumno</th>
+                        <th className="p-3">Grado</th>
+                        <th className="p-3">CURP / Matrícula</th>
+                        <th className="p-3 text-center">Beca</th>
+                        <th className="p-3 text-center">Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-slate-200">
+                      {schoolStudents
+                        .filter(s => s.campus_name?.toLowerCase() === selectedCampusDetail.name.toLowerCase())
+                        .filter(s => {
+                          const fullName = `${s.first_name} ${s.last_name_1}`.toLowerCase();
+                          const q = campusSearchStudent.toLowerCase();
+                          return fullName.includes(q) || (s.curp && s.curp.toLowerCase().includes(q)) || (s.grade && s.grade.toLowerCase().includes(q));
+                        })
+                        .map(st => (
+                          <tr key={st.id} className="hover:bg-white/5 transition-colors">
+                            <td className="p-3">
+                              <div className="font-bold text-white">{st.first_name} {st.last_name_1} {st.last_name_2 || ''}</div>
+                              <span className="text-[10px] text-slate-400">{st.email || 'Sin correo asignado'}</span>
+                            </td>
+                            <td className="p-3 font-bold text-indigo-400">{st.grade}</td>
+                            <td className="p-3 font-mono text-[11px] text-slate-400">{st.curp || st.id}</td>
+                            <td className="p-3 text-center">
+                              {st.scholarship_percentage ? (
+                                <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                  {st.scholarship_percentage}% Beca
+                                </span>
+                              ) : (
+                                <span className="text-[10px] text-slate-500">Regular</span>
+                              )}
+                            </td>
+                            <td className="p-3 text-center">
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300">
+                                Activo
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENIDO 3: PROFESORES DEL PLANTEL */}
+            {campusDetailTab === 'profesores' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-300">
+                    Docentes asignados a {selectedCampusDetail.name}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setNewTeacherForm(prev => ({
+                        ...prev,
+                        campus_name: selectedCampusDetail.name
+                      }));
+                      setShowAddTeacherModal(true);
+                    }}
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow transition-all cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" /> + Asignar Nuevo Profesor
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {schoolTeachers
+                    .filter(t => t.campus_name?.toLowerCase() === selectedCampusDetail.name.toLowerCase() || t.campus_name === 'Todos los Planteles')
+                    .map(teacher => (
+                      <div key={teacher.id} className="p-4 rounded-2xl bg-slate-950 border border-white/10 flex flex-col justify-between gap-3 shadow-lg">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h5 className="text-sm font-black text-white">{teacher.first_name} {teacher.last_name}</h5>
+                            <span className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
+                              <Mail className="h-3 w-3 text-slate-500" /> {teacher.email}
+                            </span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+                            {teacher.campus_name || 'Plantel Asignado'}
+                          </span>
+                        </div>
+
+                        <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs">
+                          <span className="text-[11px] font-mono text-amber-400 font-bold bg-slate-900 px-2 py-0.5 rounded-md">
+                            Clave: {teacher.temporary_password || '008805'}
+                          </span>
+                          <span className="text-[10px] text-emerald-400 font-semibold">● Activo en Ciclo 2026</span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENIDO 4: CONFIGURACIÓN DEL PLANTEL */}
+            {campusDetailTab === 'config' && (
+              <div className="space-y-4">
+                <div className="p-5 rounded-2xl bg-slate-950 border border-white/10 space-y-4 text-xs">
+                  <h4 className="text-sm font-black text-white">Parámetros Operativos del Plantel</h4>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-slate-400 font-bold block mb-1">Nombre del Plantel</label>
+                      <input
+                        type="text"
+                        disabled
+                        value={selectedCampusDetail.name}
+                        className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-slate-200 font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-slate-400 font-bold block mb-1">Nivel Educativo</label>
+                      <input
+                        type="text"
+                        disabled
+                        value={`Nivel ${selectedCampusDetail.level.toUpperCase()}`}
+                        className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-slate-200 uppercase font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-slate-400 font-bold block mb-1">Dirección Oficial</label>
+                    <input
+                      type="text"
+                      disabled
+                      value={selectedCampusDetail.address || 'Ciudad de México'}
+                      className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-slate-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-slate-400 font-bold block mb-1">Teléfono</label>
+                    <input
+                      type="text"
+                      disabled
+                      value={selectedCampusDetail.phone || '55-4160-8800'}
+                      className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-slate-300 font-mono"
+                    />
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      onClick={() => {
+                        setEditingCampusForm({
+                          id: selectedCampusDetail.id,
+                          name: selectedCampusDetail.name,
+                          level: selectedCampusDetail.level,
+                          address: selectedCampusDetail.address || '',
+                          phone: selectedCampusDetail.phone || ''
+                        });
+                        setShowEditCampusModal(true);
+                      }}
+                      className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black shadow cursor-pointer flex items-center gap-1.5"
+                    >
+                      <Edit3 className="h-4 w-4" /> Editar Datos del Plantel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 11: ALTA DE NUEVO PLANTEL */}
+      {showAddCampusModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h3 className="text-base font-black text-white flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-indigo-400" /> Alta de Nuevo Plantel
+              </h3>
+              <button onClick={() => setShowAddCampusModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
+            </div>
+
+            <form onSubmit={handleCreateCampus} className="space-y-3.5 text-xs">
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Nombre del Plantel *</label>
+                <input
+                  type="text"
+                  required
+                  value={newCampusForm.name}
+                  onChange={(e) => setNewCampusForm({ ...newCampusForm, name: e.target.value })}
+                  placeholder="Ej. Primaria Campestre, Campus Sur..."
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Nivel Educativo *</label>
+                <select
+                  value={newCampusForm.level}
+                  onChange={(e) => setNewCampusForm({ ...newCampusForm, level: e.target.value as any })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white font-bold outline-none focus:border-indigo-500"
+                >
+                  <option value="primaria">Primaria (1º a 6º de Primaria)</option>
+                  <option value="secundaria">Secundaria (1º a 3º de Secundaria)</option>
+                  <option value="preparatoria">Preparatoria / Bachillerato (1º a 6º Semestre)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Dirección del Plantel</label>
+                <input
+                  type="text"
+                  value={newCampusForm.address}
+                  onChange={(e) => setNewCampusForm({ ...newCampusForm, address: e.target.value })}
+                  placeholder="Ej. Av. De las Rosas 500, CDMX"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Teléfono</label>
+                <input
+                  type="text"
+                  value={newCampusForm.phone}
+                  onChange={(e) => setNewCampusForm({ ...newCampusForm, phone: e.target.value })}
+                  placeholder="Ej. 55-4160-8800"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500 font-mono"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowAddCampusModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black shadow-lg cursor-pointer"
+                >
+                  Crear Plantel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 12: ALTA DE NUEVO GRUPO EN PLANTEL */}
+      {showAddGroupModal && selectedCampusDetail && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h3 className="text-base font-black text-white flex items-center gap-2">
+                <Layers className="h-5 w-5 text-indigo-400" /> Crear Grupo
+              </h3>
+              <button onClick={() => setShowAddGroupModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
+            </div>
+
+            <form onSubmit={handleCreateGroup} className="space-y-3.5 text-xs">
+              <div className="p-3 rounded-xl bg-slate-950 border border-white/5 text-[11px] text-slate-300">
+                Plantel: <strong className="text-white">{selectedCampusDetail.name}</strong>
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Grado Escolar *</label>
+                <select
+                  value={newGroupForm.grade}
+                  onChange={(e) => setNewGroupForm({ ...newGroupForm, grade: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white font-bold outline-none focus:border-indigo-500"
+                >
+                  {selectedCampusDetail.grades.map(g => (
+                    <option key={g} value={g}>{g} de Grado</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Letra / Identificador de Grupo *</label>
+                <input
+                  type="text"
+                  required
+                  value={newGroupForm.name}
+                  onChange={(e) => setNewGroupForm({ ...newGroupForm, name: e.target.value.toUpperCase() })}
+                  placeholder="Ej. B, C, D..."
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-indigo-500 uppercase"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowAddGroupModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black shadow-lg cursor-pointer"
+                >
+                  Crear Grupo
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 13: EDICIÓN DE DATOS DEL PLANTEL */}
+      {showEditCampusModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h3 className="text-base font-black text-white flex items-center gap-2">
+                <Edit3 className="h-5 w-5 text-amber-400" /> Editar Plantel
+              </h3>
+              <button onClick={() => setShowEditCampusModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
+            </div>
+
+            <form onSubmit={handleUpdateCampus} className="space-y-3.5 text-xs">
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Nombre del Plantel *</label>
+                <input
+                  type="text"
+                  required
+                  value={editingCampusForm.name}
+                  onChange={(e) => setEditingCampusForm({ ...editingCampusForm, name: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Dirección</label>
+                <input
+                  type="text"
+                  value={editingCampusForm.address}
+                  onChange={(e) => setEditingCampusForm({ ...editingCampusForm, address: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-bold block mb-1">Teléfono</label>
+                <input
+                  type="text"
+                  value={editingCampusForm.phone}
+                  onChange={(e) => setEditingCampusForm({ ...editingCampusForm, phone: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowEditCampusModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black shadow-lg cursor-pointer"
+                >
+                  Guardar Cambios
                 </button>
               </div>
             </form>

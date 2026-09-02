@@ -72,8 +72,10 @@ const mapGroupIdToUuid = (id: string): string => {
 // ==========================================
 
 export const getSchoolCampuses = (campusesList: Campus[], schoolId: string | null): Campus[] => {
-  if (!schoolId) return campusesList || [];
-  return (campusesList || []).filter(c => {
+  const allCampuses = (campusesList && campusesList.length > 0) ? campusesList : CAMPUSES_SEED;
+  if (!schoolId) return allCampuses;
+
+  const filtered = allCampuses.filter(c => {
     if (c.school_id) return c.school_id === schoolId;
     if (schoolId === 'sch-jjrosseau') {
       return !c.name.toLowerCase().includes('montessori') && !c.name.toLowerCase().includes('demo') && !c.name.toLowerCase().includes('laboratorio');
@@ -83,11 +85,24 @@ export const getSchoolCampuses = (campusesList: Campus[], schoolId: string | nul
     }
     return false;
   });
+
+  if (filtered.length === 0) {
+    if (schoolId === 'sch-jjrosseau') {
+      return CAMPUSES_SEED.filter(c => c.school_id === 'sch-jjrosseau');
+    }
+    if (schoolId === 'sch-test-case') {
+      return CAMPUSES_SEED.filter(c => c.school_id === 'sch-test-case');
+    }
+  }
+
+  return filtered;
 };
 
 export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: string | null, schoolCampuses?: Campus[]): DetailedStudent[] => {
-  if (!schoolId) return studentsList || [];
-  return (studentsList || []).filter(s => {
+  const allStudents = (studentsList && studentsList.length > 0) ? studentsList : DETAILED_STUDENTS_SEED;
+  if (!schoolId) return allStudents;
+
+  const filtered = allStudents.filter(s => {
     if (s.school_id) return s.school_id === schoolId;
     if (schoolId === 'sch-test-case') {
       return s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo');
@@ -102,11 +117,19 @@ export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: str
     }
     return false;
   });
+
+  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
+    return DETAILED_STUDENTS_SEED.filter(s => s.id !== 'std-pb' && s.id !== 'std-pa' && s.id !== 'std-sec' && s.id !== 'std-prep');
+  }
+
+  return filtered;
 };
 
 export const getSchoolTeachers = (teachersList: UserProfile[], schoolId: string | null, schoolCampuses?: Campus[]): UserProfile[] => {
-  if (!schoolId) return teachersList || [];
-  return (teachersList || []).filter(t => {
+  const allTeachers = (teachersList && teachersList.length > 0) ? teachersList : TEACHERS_LIST_SEED;
+  if (!schoolId) return allTeachers;
+
+  const filtered = allTeachers.filter(t => {
     if (t.school_id) return t.school_id === schoolId;
     if (schoolId === 'sch-test-case') {
       return t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || t.last_name.toLowerCase().includes('test') || (t.campus_name || '').toLowerCase().includes('demo');
@@ -121,11 +144,19 @@ export const getSchoolTeachers = (teachersList: UserProfile[], schoolId: string 
     }
     return false;
   });
+
+  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
+    return TEACHERS_LIST_SEED;
+  }
+
+  return filtered;
 };
 
 export const getSchoolGroups = (groupsList: Group[], schoolId: string | null, schoolCampuses?: Campus[]): Group[] => {
-  if (!schoolId) return groupsList || [];
-  return (groupsList || []).filter(g => {
+  const allGroups = (groupsList && groupsList.length > 0) ? groupsList : GROUPS_SEED;
+  if (!schoolId) return allGroups;
+
+  const filtered = allGroups.filter(g => {
     if (g.school_id) return g.school_id === schoolId;
     if (schoolCampuses && schoolCampuses.length > 0) {
       return schoolCampuses.some(c => c.name.toLowerCase() === (g.campus_name || '').toLowerCase() || c.id === g.campus_id);
@@ -135,11 +166,19 @@ export const getSchoolGroups = (groupsList: Group[], schoolId: string | null, sc
     }
     return false;
   });
+
+  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
+    return GROUPS_SEED;
+  }
+
+  return filtered;
 };
 
 export const getSchoolSubjects = (subjectsList: Subject[], schoolId: string | null, schoolCampuses?: Campus[]): Subject[] => {
-  if (!schoolId) return subjectsList || [];
-  return (subjectsList || []).filter(sub => {
+  const allSubjects = (subjectsList && subjectsList.length > 0) ? subjectsList : SUBJECTS_SEED;
+  if (!schoolId) return allSubjects;
+
+  const filtered = allSubjects.filter(sub => {
     if (sub.school_id) return sub.school_id === schoolId;
     if (schoolId === 'sch-test-case') {
       return sub.campus_name?.toLowerCase().includes('demo') || sub.id.includes('test');
@@ -152,6 +191,12 @@ export const getSchoolSubjects = (subjectsList: Subject[], schoolId: string | nu
     }
     return false;
   });
+
+  if (filtered.length === 0 && schoolId === 'sch-jjrosseau') {
+    return SUBJECTS_SEED;
+  }
+
+  return filtered;
 };
 
 interface SchoolAdminStoreState {
@@ -202,6 +247,8 @@ interface SchoolAdminStoreState {
   assignStudentToGroup: (studentId: string, groupId: string) => void;
   createSchedule: (scheduleData: Omit<ClassSchedule, 'id'>) => void;
   deleteSchedule: (scheduleId: string) => Promise<void>;
+  createGroup: (groupData: Partial<Group>) => Group;
+  updateGroup: (groupId: string, data: Partial<Group>) => void;
   deleteGroup: (groupId: string) => Promise<void>;
   saveAttendanceList: (records: Omit<Attendance, 'id' | 'created_at' | 'registered_by'>[]) => void;
   sendParentMessage: (msg: Omit<ParentMessage, 'id' | 'sent_at' | 'is_read'>) => void;
@@ -795,6 +842,35 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       deleteCampus: (campusId) => {
         set((state) => ({
           campusesList: (state.campusesList || []).filter(c => c.id !== campusId)
+        }));
+      },
+
+      createGroup: (groupData) => {
+        const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
+        const newGroup: Group = {
+          id: groupData.id || `grp-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          school_id: groupData.school_id || activeSchool,
+          campus_id: groupData.campus_id,
+          campus_name: groupData.campus_name || 'Primaria Jardines',
+          level_grade_id: groupData.level_grade_id || 'lvl-pri-1',
+          academic_year_id: groupData.academic_year_id || 'ay-2025-2026',
+          name: groupData.name || 'A',
+          grade: groupData.grade || '1º',
+          level: groupData.level || 'primaria',
+          student_ids: groupData.student_ids || [],
+          created_at: new Date().toISOString()
+        };
+        set((state) => ({
+          groupsList: [...(state.groupsList || []), newGroup]
+        }));
+        return newGroup;
+      },
+
+      updateGroup: (groupId, data) => {
+        set((state) => ({
+          groupsList: (state.groupsList || []).map(g => 
+            g.id === groupId ? { ...g, ...data } : g
+          )
         }));
       },
 
