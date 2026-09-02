@@ -449,21 +449,30 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         set((state) => {
           const updated = (state.institutionsList || []).map(inst => {
             if (inst.id === schoolId) {
-              const updatedInst = { ...inst, ...data };
-              if (data.logoUrl !== undefined && updatedInst.settings) {
-                updatedInst.settings = { ...updatedInst.settings, logoUrl: data.logoUrl };
-              }
-              if (data.name !== undefined && updatedInst.settings) {
-                updatedInst.settings = { ...updatedInst.settings, name: data.name };
-              }
-              return updatedInst;
+              const currentSettings = inst.settings || state.schoolSettings;
+              const updatedSettings: SchoolSettings = {
+                ...currentSettings,
+                name: data.name !== undefined ? data.name : (currentSettings.name || inst.name),
+                cct: data.cct !== undefined ? data.cct : (currentSettings.cct || inst.cct),
+                address: data.address !== undefined ? data.address : (currentSettings.address || inst.address || ''),
+                phone: data.phone !== undefined ? data.phone : (currentSettings.phone || inst.phone || ''),
+                website: data.website !== undefined ? data.website : (currentSettings.website || inst.website || ''),
+                logoUrl: data.logoUrl !== undefined ? data.logoUrl : (currentSettings.logoUrl || inst.logoUrl || ''),
+                coordinators: data.coordinatorName !== undefined ? [data.coordinatorName] : (currentSettings.coordinators || ['Dirección General'])
+              };
+
+              return {
+                ...inst,
+                ...data,
+                settings: updatedSettings
+              };
             }
             return inst;
           });
 
-          // Si es el colegio activo, sincronizar schoolSettings
+          // Si es el colegio activo o no hay colegio activo seleccionado, sincronizar schoolSettings
           let updatedSettings = state.schoolSettings;
-          if (state.activeSchoolId === schoolId) {
+          if (!state.activeSchoolId || state.activeSchoolId === schoolId) {
             const target = updated.find(i => i.id === schoolId);
             if (target?.settings) {
               updatedSettings = target.settings;

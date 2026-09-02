@@ -45,7 +45,8 @@ import {
   Layers,
   ExternalLink,
   X,
-  Edit3
+  Edit3,
+  Save
 } from 'lucide-react';
 import { 
   useSchoolAdminStore, 
@@ -300,6 +301,68 @@ export default function SuperUserAdminPage() {
   const currentSchool = useMemo(() => {
     return (institutionsList || []).find(i => i.id === activeSchoolId) || null;
   }, [institutionsList, activeSchoolId]);
+
+  // Estado para Edición de Ficha Institucional en Tab Config
+  const [instEditForm, setInstEditForm] = useState({
+    name: '',
+    cct: '',
+    tagline: '',
+    address: '',
+    phone: '',
+    website: '',
+    coordinatorName: '',
+    logoUrl: ''
+  });
+
+  // Sincronizar instEditForm cuando cambie el colegio activo o institutionsList
+  useEffect(() => {
+    if (currentSchool) {
+      setInstEditForm({
+        name: currentSchool.name || '',
+        cct: currentSchool.cct || '',
+        tagline: currentSchool.tagline || '',
+        address: currentSchool.address || currentSchool.settings?.address || '',
+        phone: currentSchool.phone || currentSchool.settings?.phone || '',
+        website: currentSchool.website || currentSchool.settings?.website || '',
+        coordinatorName: currentSchool.coordinatorName || currentSchool.settings?.coordinators?.[0] || 'Dirección General',
+        logoUrl: currentSchool.logoUrl || currentSchool.settings?.logoUrl || ''
+      });
+    } else if (schoolSettings) {
+      setInstEditForm({
+        name: schoolSettings.name || 'UP Juan Jacobo Rosseau',
+        cct: schoolSettings.cct || '09PPR2026R',
+        tagline: 'Institución de Excelencia Académica',
+        address: schoolSettings.address || '',
+        phone: schoolSettings.phone || '',
+        website: schoolSettings.website || '',
+        coordinatorName: schoolSettings.coordinators?.[0] || 'Dirección General',
+        logoUrl: schoolSettings.logoUrl || ''
+      });
+    }
+  }, [currentSchool, schoolSettings, activeSchoolId]);
+
+  // Manejo de Guardado de Ficha Institucional
+  const handleSaveInstitutionalInfo = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!instEditForm.name.trim() || !instEditForm.cct.trim()) {
+      alert('El nombre institucional y el CCT son obligatorios.');
+      return;
+    }
+
+    const schoolId = activeSchoolId || 'sch-jjrosseau';
+    updateInstitution(schoolId, {
+      name: instEditForm.name.trim(),
+      cct: instEditForm.cct.trim().toUpperCase(),
+      tagline: instEditForm.tagline.trim(),
+      address: instEditForm.address.trim(),
+      phone: instEditForm.phone.trim(),
+      website: instEditForm.website.trim(),
+      coordinatorName: instEditForm.coordinatorName.trim(),
+      logoUrl: instEditForm.logoUrl
+    });
+
+    showToast(`✅ Ficha institucional de "${instEditForm.name}" guardada y actualizada con éxito.`);
+  };
 
   // Manejo de Creación de Nuevo Colegio
   const handleCreateSchool = (e: React.FormEvent) => {
@@ -2258,54 +2321,171 @@ export default function SuperUserAdminPage() {
           </div>
         )}
 
-        {/* TAB 6: INSTITUTIONAL CONFIG & SECURITY */}
+        {/* TAB 6: INSTITUTIONAL CONFIG & SECURITY (FICHA EDITABLE Y PARÁMETROS) */}
         {activeTab === 'config' && (
-          <div className="max-w-3xl mx-auto space-y-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-white/10 shadow-xl space-y-4">
-              <div className="border-b border-white/5 pb-3">
-                <h3 className="text-base font-black text-white">Ficha Institucional · UP Juan Jacobo Rosseau</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Parámetros corporativos y claves de centro de trabajo oficiales.</p>
+          <div className="max-w-4xl mx-auto space-y-6">
+            <form onSubmit={handleSaveInstitutionalInfo} className="p-6 rounded-3xl bg-slate-900 border border-white/10 shadow-2xl space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Building2 className="h-5 w-5 text-indigo-400" />
+                    <h3 className="text-base font-black text-white">
+                      Ficha Institucional · {currentSchool?.name || schoolSettings.name}
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Modifica y personaliza los parámetros oficiales, datos de contacto, CCT y logotipo de esta institución.
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-black shadow-lg shadow-indigo-600/30 transition-all hover:scale-102 cursor-pointer"
+                >
+                  <Save className="h-4 w-4" /> Guardar Cambios Institucionales
+                </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              {/* Logotipo y Vista Previa */}
+              <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="h-16 w-16 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                    {instEditForm.logoUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={instEditForm.logoUrl} alt="Logo Institucional" className="h-full w-full object-contain p-1" />
+                    ) : (
+                      <School className="h-8 w-8 text-indigo-400" />
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black text-white">Logotipo Institucional</h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">Se mostrará en credenciales oficiales, portal docente y reportes.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <label className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-white/10 flex items-center gap-1.5 text-xs cursor-pointer transition-all">
+                    <ImageIcon className="h-4 w-4 text-indigo-400" />
+                    <span>Cambiar Imagen</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setInstEditForm(prev => ({ ...prev, logoUrl: reader.result as string }));
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                  {instEditForm.logoUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setInstEditForm(prev => ({ ...prev, logoUrl: '' }))}
+                      className="px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold transition-all cursor-pointer"
+                    >
+                      Quitar
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Campos Editables */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <label className="text-slate-400 font-bold block mb-1">Nombre Institucional</label>
+                  <label className="text-slate-300 font-bold block mb-1">Nombre Institucional Oficial *</label>
                   <input
                     type="text"
-                    disabled
-                    value={schoolSettings.name}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-slate-200 font-bold"
+                    required
+                    value={instEditForm.name}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, name: e.target.value })}
+                    placeholder="Ej. Colegio Montessori del Valle"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-white font-bold outline-none focus:border-indigo-500 transition-all shadow-inner"
                   />
                 </div>
+
                 <div>
-                  <label className="text-slate-400 font-bold block mb-1">Clave de Centro de Trabajo (CCT)</label>
+                  <label className="text-slate-300 font-bold block mb-1">Clave de Centro de Trabajo (CCT / SEP) *</label>
                   <input
                     type="text"
-                    disabled
-                    value={schoolSettings.cct}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 font-mono text-slate-200 font-bold"
+                    required
+                    value={instEditForm.cct}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, cct: e.target.value.toUpperCase() })}
+                    placeholder="Ej. 09PPR8800M"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 font-mono text-amber-300 font-bold uppercase outline-none focus:border-indigo-500 transition-all shadow-inner"
                   />
                 </div>
+
                 <div>
-                  <label className="text-slate-400 font-bold block mb-1">Dirección Corporativa</label>
+                  <label className="text-slate-300 font-bold block mb-1">Lema o Tagline Institucional</label>
                   <input
                     type="text"
-                    disabled
-                    value={schoolSettings.address}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-slate-200"
+                    value={instEditForm.tagline}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, tagline: e.target.value })}
+                    placeholder="Ej. Excelencia educativa con valores y tecnología"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-200 outline-none focus:border-indigo-500 transition-all"
                   />
                 </div>
+
                 <div>
-                  <label className="text-slate-400 font-bold block mb-1">Teléfono Institucional</label>
+                  <label className="text-slate-300 font-bold block mb-1">Director / Coordinador General</label>
                   <input
                     type="text"
-                    disabled
-                    value={schoolSettings.phone}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 font-mono text-slate-200"
+                    value={instEditForm.coordinatorName}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, coordinatorName: e.target.value })}
+                    placeholder="Ej. Dirección General"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-200 outline-none focus:border-indigo-500 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Dirección Corporativa Principal</label>
+                  <input
+                    type="text"
+                    value={instEditForm.address}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, address: e.target.value })}
+                    placeholder="Ej. Av. Universidad 1200, Col. Del Valle, CDMX"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-200 outline-none focus:border-indigo-500 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Teléfono Institucional</label>
+                  <input
+                    type="text"
+                    value={instEditForm.phone}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, phone: e.target.value })}
+                    placeholder="Ej. 55-0000-0000"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 font-mono text-slate-200 outline-none focus:border-indigo-500 transition-all"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="text-slate-300 font-bold block mb-1">Sitio Web Oficial</label>
+                  <input
+                    type="text"
+                    value={instEditForm.website}
+                    onChange={(e) => setInstEditForm({ ...instEditForm, website: e.target.value })}
+                    placeholder="Ej. https://montessoridelvalle.edu.mx"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-200 outline-none focus:border-indigo-500 transition-all"
                   />
                 </div>
               </div>
-            </div>
+
+              <div className="pt-3 border-t border-white/10 flex justify-end">
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg shadow-indigo-600/30 transition-all hover:scale-102 cursor-pointer"
+                >
+                  <Save className="h-4 w-4" /> Guardar y Actualizar Ficha Institucional
+                </button>
+              </div>
+            </form>
 
             <div className="p-6 rounded-2xl bg-slate-900 border border-white/10 shadow-xl space-y-3">
               <h4 className="text-sm font-bold text-white flex items-center gap-2">
