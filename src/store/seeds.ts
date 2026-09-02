@@ -29,7 +29,7 @@ import {
 export const CAMPUSES_SEED: Campus[] = [
   {
     id: 'cmp-pri-jardines',
-    school_id: 'sch-jjr',
+    school_id: 'sch-jjrosseau',
     name: 'Primaria Jardines',
     level: 'primaria',
     grades: ['1º', '2º', '3º', '4º', '5º', '6º'],
@@ -39,7 +39,7 @@ export const CAMPUSES_SEED: Campus[] = [
   },
   {
     id: 'cmp-pri-torres',
-    school_id: 'sch-jjr',
+    school_id: 'sch-jjrosseau',
     name: 'Primaria Torres',
     level: 'primaria',
     grades: ['1º', '2º', '3º', '4º', '5º', '6º'],
@@ -49,12 +49,32 @@ export const CAMPUSES_SEED: Campus[] = [
   },
   {
     id: 'cmp-sec-torres',
-    school_id: 'sch-jjr',
+    school_id: 'sch-jjrosseau',
     name: 'Secundaria Torres',
     level: 'secundaria',
     grades: ['1º', '2º', '3º'],
     address: 'Calzada de las Torres 892, Col. Campestre, CDMX',
     phone: '55-4160-8803',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-test-pri',
+    school_id: 'sch-test-case',
+    name: 'Primaria Laboratorio Demo',
+    level: 'primaria',
+    grades: ['1º', '2º', '3º', '4º', '5º', '6º'],
+    address: 'Campus Digital de Innovación, CDMX',
+    phone: '55-8000-TEST',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'cmp-test-sec',
+    school_id: 'sch-test-case',
+    name: 'Secundaria Laboratorio Demo',
+    level: 'secundaria',
+    grades: ['1º', '2º', '3º'],
+    address: 'Campus Digital de Innovación, CDMX',
+    phone: '55-8000-TEST',
     created_at: new Date().toISOString()
   }
 ];

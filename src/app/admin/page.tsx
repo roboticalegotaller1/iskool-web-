@@ -47,7 +47,15 @@ import {
   X,
   Edit3
 } from 'lucide-react';
-import { useSchoolAdminStore, generateRandomPassword } from '@/store/useSchoolAdminStore';
+import { 
+  useSchoolAdminStore, 
+  generateRandomPassword,
+  getSchoolCampuses,
+  getSchoolStudents,
+  getSchoolTeachers,
+  getSchoolGroups,
+  getSchoolSubjects
+} from '@/store/useSchoolAdminStore';
 import { DetailedStudent, Subject, GroupAnnualPlan, SyllabusTopic } from '@/types';
 
 type AdminTab = 'overview' | 'teachers' | 'students' | 'campuses' | 'subjects' | 'config';
@@ -304,9 +312,30 @@ export default function SuperUserAdminPage() {
     }
   };
 
-  // Filtrado de Alumnos
+  // Listas con Particionado y Aislamiento Escolar Estricto
+  const schoolCampuses = useMemo(() => {
+    return getSchoolCampuses(campusesList, activeSchoolId);
+  }, [campusesList, activeSchoolId]);
+
+  const schoolStudents = useMemo(() => {
+    return getSchoolStudents(detailedStudents, activeSchoolId, schoolCampuses);
+  }, [detailedStudents, activeSchoolId, schoolCampuses]);
+
+  const schoolTeachers = useMemo(() => {
+    return getSchoolTeachers(teachersList, activeSchoolId, schoolCampuses);
+  }, [teachersList, activeSchoolId, schoolCampuses]);
+
+  const schoolGroups = useMemo(() => {
+    return getSchoolGroups(groupsList, activeSchoolId, schoolCampuses);
+  }, [groupsList, activeSchoolId, schoolCampuses]);
+
+  const schoolSubjects = useMemo(() => {
+    return getSchoolSubjects(subjectsList, activeSchoolId, schoolCampuses);
+  }, [subjectsList, activeSchoolId, schoolCampuses]);
+
+  // Filtrado de Alumnos (dentro del colegio activo)
   const filteredStudents = useMemo(() => {
-    return (detailedStudents || []).filter(s => {
+    return schoolStudents.filter(s => {
       const fullName = `${s.first_name} ${s.second_name || ''} ${s.last_name_1} ${s.last_name_2 || ''}`.toLowerCase();
       const matchesSearch = fullName.includes(studentSearch.toLowerCase()) || 
         (s.curp && s.curp.toLowerCase().includes(studentSearch.toLowerCase())) ||
@@ -319,11 +348,11 @@ export default function SuperUserAdminPage() {
 
       return matchesSearch && matchesCampus && matchesGrade && matchesStatus;
     });
-  }, [detailedStudents, studentSearch, selectedCampus, studentGradeFilter, studentStatusFilter]);
+  }, [schoolStudents, studentSearch, selectedCampus, studentGradeFilter, studentStatusFilter]);
 
-  // Filtrado de Profesores
+  // Filtrado de Profesores (dentro del colegio activo)
   const filteredTeachers = useMemo(() => {
-    return (teachersList || []).filter(t => {
+    return schoolTeachers.filter(t => {
       const fullName = `${t.first_name} ${t.last_name}`.toLowerCase();
       const matchesSearch = fullName.includes(teacherSearch.toLowerCase()) || 
         (t.email && t.email.toLowerCase().includes(teacherSearch.toLowerCase()));
@@ -333,7 +362,7 @@ export default function SuperUserAdminPage() {
 
       return matchesSearch && matchesCampus;
     });
-  }, [teachersList, teacherSearch, selectedCampus]);
+  }, [schoolTeachers, teacherSearch, selectedCampus]);
 
   // Manejo de Creación de Alumno Individual
   const handleCreateStudent = (e: React.FormEvent) => {
@@ -942,10 +971,13 @@ export default function SuperUserAdminPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {institutionsList.map((inst) => {
                   const isTest = inst.isTestCase;
-                  const instStudentsCount = isTest ? 12 : detailedStudents.length;
-                  const instTeachersCount = isTest ? 4 : teachersList.length;
-                  const instCampusesCount = inst.campusesCount || (isTest ? 2 : campusesList.length);
-                  const instTokens = inst.aiTokensConsumed || (isTest ? 48200 : totalAITokens);
+                  const instCampuses = getSchoolCampuses(campusesList, inst.id);
+                  const instStudents = getSchoolStudents(detailedStudents, inst.id, instCampuses);
+                  const instTeachers = getSchoolTeachers(teachersList, inst.id, instCampuses);
+                  const instStudentsCount = instStudents.length;
+                  const instTeachersCount = instTeachers.length;
+                  const instCampusesCount = instCampuses.length;
+                  const instTokens = inst.aiTokensConsumed || (isTest ? 48200 : (inst.id === 'sch-jjrosseau' ? 345350 : 0));
 
                   return (
                     <div
@@ -1155,11 +1187,11 @@ export default function SuperUserAdminPage() {
                   <p className="text-xs text-slate-400 flex items-center gap-3 mt-0.5">
                     <span>CCT: <strong className="text-slate-300">{currentSchool?.cct || schoolSettings.cct}</strong></span>
                     <span>·</span>
-                    <span>{campusesList.length} Planteles Oficiales</span>
+                    <span>{schoolCampuses.length} Planteles Oficiales</span>
                     <span>·</span>
-                    <span>{detailedStudents.length} Alumnos</span>
+                    <span>{schoolStudents.length} Alumnos</span>
                     <span>·</span>
-                    <span>{teachersList.length} Profesores</span>
+                    <span>{schoolTeachers.length} Profesores</span>
                   </p>
                 </div>
               </div>
@@ -1232,7 +1264,7 @@ export default function SuperUserAdminPage() {
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
-                <Users className="h-4 w-4" /> Profesores & Tokens IA ({teachersList.length})
+                <Users className="h-4 w-4" /> Profesores & Tokens IA ({schoolTeachers.length})
               </button>
 
               <button
@@ -1243,7 +1275,7 @@ export default function SuperUserAdminPage() {
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
-                <GraduationCap className="h-4 w-4" /> Alumnos & Carga Rápida ({detailedStudents.length})
+                <GraduationCap className="h-4 w-4" /> Alumnos & Carga Rápida ({schoolStudents.length})
               </button>
 
               <button
@@ -1254,7 +1286,7 @@ export default function SuperUserAdminPage() {
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
-                <BookOpen className="h-4 w-4" /> Materias & Talleres ({subjectsList.length})
+                <BookOpen className="h-4 w-4" /> Materias & Talleres ({schoolSubjects.length})
               </button>
 
               <button
@@ -1278,7 +1310,7 @@ export default function SuperUserAdminPage() {
                 className="bg-slate-800 border border-white/10 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold outline-none focus:border-indigo-500 transition-all cursor-pointer"
               >
                 <option value="all">🏢 Todos los Planteles</option>
-                {campusesList.map(c => (
+                {schoolCampuses.map(c => (
                   <option key={c.id} value={c.name}>{c.name}</option>
                 ))}
               </select>
@@ -1301,9 +1333,9 @@ export default function SuperUserAdminPage() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-black text-white">{detailedStudents.length}</span>
+                  <span className="text-3xl font-black text-white">{schoolStudents.length}</span>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    {detailedStudents.filter(s => !s.is_blocked && s.status === 'activo').length} activos · {detailedStudents.filter(s => s.is_blocked).length} bloqueados
+                    {schoolStudents.filter(s => !s.is_blocked && s.status === 'activo').length} activos · {schoolStudents.filter(s => s.is_blocked).length} bloqueados
                   </p>
                 </div>
               </div>
@@ -1316,9 +1348,9 @@ export default function SuperUserAdminPage() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-black text-white">{teachersList.length}</span>
+                  <span className="text-3xl font-black text-white">{schoolTeachers.length}</span>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    {teachersList.filter(t => !t.is_blocked).length} profesores activos
+                    {schoolTeachers.filter(t => !t.is_blocked).length} profesores activos
                   </p>
                 </div>
               </div>
@@ -1332,13 +1364,15 @@ export default function SuperUserAdminPage() {
                 </div>
                 <div className="mt-3">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-3xl font-black text-purple-400">{totalAITokens.toLocaleString()}</span>
+                    <span className="text-3xl font-black text-purple-400">
+                      {((currentSchool?.aiTokensConsumed || (currentSchool?.isTestCase ? 48200 : (currentSchool?.id === 'sch-jjrosseau' ? 345350 : 0)))).toLocaleString()}
+                    </span>
                     <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                      ≈ ${(totalAITokens * 0.000015).toFixed(2)} MXN
+                      ≈ ${(((currentSchool?.aiTokensConsumed || (currentSchool?.isTestCase ? 48200 : (currentSchool?.id === 'sch-jjrosseau' ? 345350 : 0)))) * 0.000015).toFixed(2)} MXN
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    Equiv. comercial: <strong className="text-slate-200">${(totalAITokens * 0.000015).toFixed(2)} MXN</strong> ($0.80 USD/1M tokens)
+                    Equiv. comercial: <strong className="text-slate-200">${(((currentSchool?.aiTokensConsumed || (currentSchool?.isTestCase ? 48200 : (currentSchool?.id === 'sch-jjrosseau' ? 345350 : 0)))) * 0.000015).toFixed(2)} MXN</strong> ($0.80 USD/1M tokens)
                   </p>
                 </div>
               </div>
@@ -1351,9 +1385,9 @@ export default function SuperUserAdminPage() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-black text-white">{campusesList.length}</span>
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    2 Primarias + 1 Secundaria
+                  <span className="text-3xl font-black text-white">{schoolCampuses.length}</span>
+                  <p className="text-[11px] text-slate-400 mt-1 truncate">
+                    {schoolCampuses.map(c => c.name).join(' · ') || 'Planteles Institucionales'}
                   </p>
                 </div>
               </div>
@@ -1363,10 +1397,10 @@ export default function SuperUserAdminPage() {
             <div className="space-y-3">
               <h3 className="text-sm font-black text-slate-300 uppercase tracking-wider">Planteles de la Unidad Pedagógica</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {campusesList.map(campus => {
-                  const campusStudents = detailedStudents.filter(s => s.campus_name?.toLowerCase() === campus.name.toLowerCase());
-                  const campusTeachers = teachersList.filter(t => t.campus_name?.toLowerCase() === campus.name.toLowerCase() || t.campus_name === 'Todos los Planteles');
-                  const campusGroups = groupsList.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
+                {schoolCampuses.map(campus => {
+                  const campusStudents = schoolStudents.filter(s => s.campus_name?.toLowerCase() === campus.name.toLowerCase());
+                  const campusTeachers = schoolTeachers.filter(t => t.campus_name?.toLowerCase() === campus.name.toLowerCase() || t.campus_name === 'Todos los Planteles');
+                  const campusGroups = schoolGroups.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
 
                   return (
                     <div 
@@ -1757,8 +1791,8 @@ export default function SuperUserAdminPage() {
         {/* TAB 4: CAMPUSES & GROUPS */}
         {activeTab === 'campuses' && (
           <div className="space-y-6">
-            {campusesList.map(campus => {
-              const campusGroups = groupsList.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
+            {schoolCampuses.map(campus => {
+              const campusGroups = schoolGroups.filter(g => g.campus_name?.toLowerCase() === campus.name.toLowerCase());
               
               return (
                 <div key={campus.id} className="p-6 rounded-2xl bg-slate-900 border border-white/10 shadow-xl space-y-4">
@@ -1785,7 +1819,7 @@ export default function SuperUserAdminPage() {
                   {/* Groups Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
                     {campus.grades.map(grade => {
-                      const studentCount = detailedStudents.filter(s => s.campus_name === campus.name && s.grade === grade).length;
+                      const studentCount = schoolStudents.filter(s => s.campus_name?.toLowerCase() === campus.name.toLowerCase() && s.grade === grade).length;
 
                       return (
                         <div key={grade} className="p-3.5 rounded-xl bg-slate-950 border border-white/10 flex flex-col justify-between gap-2 hover:border-indigo-500/30 transition-all">
@@ -1843,14 +1877,14 @@ export default function SuperUserAdminPage() {
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-amber-400" />
                   <h4 className="text-xs font-black uppercase tracking-wider text-amber-400">
-                    Materias Optativas & Talleres Extracurriculares ({subjectsList.filter(s => s.is_elective || s.category === 'optativa').length})
+                    Materias Optativas & Talleres Extracurriculares ({schoolSubjects.filter(s => s.is_elective || s.category === 'optativa').length})
                   </h4>
                 </div>
                 <span className="text-[11px] text-slate-400">Haz clic en cualquier taller para abrir su información, temario, planeación por grupo y alumnos</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {subjectsList.filter(s => s.is_elective || s.category === 'optativa').map(opt => {
+                {schoolSubjects.filter(s => s.is_elective || s.category === 'optativa').map(opt => {
                   const IconComp = getWorkshopIcon(opt);
 
                   return (
@@ -1973,7 +2007,7 @@ export default function SuperUserAdminPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-slate-200">
-                    {subjectsList.filter(s => !s.is_elective && s.category !== 'optativa').map(sub => (
+                    {schoolSubjects.filter(s => !s.is_elective && s.category !== 'optativa').map(sub => (
                       <tr key={sub.id} className="hover:bg-white/5 transition-colors">
                         <td className="p-4 font-bold text-white text-sm">{sub.name}</td>
                         <td className="p-4 font-semibold text-slate-300 uppercase">{sub.level_grade_id}</td>
@@ -2498,7 +2532,7 @@ export default function SuperUserAdminPage() {
                     })}
                     className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
                   >
-                    {campusesList.map(c => (
+                    {schoolCampuses.map(c => (
                       <option key={c.id} value={c.name}>{c.name}</option>
                     ))}
                   </select>
@@ -2782,10 +2816,10 @@ export default function SuperUserAdminPage() {
                   onChange={(e) => setNewTeacherForm({ ...newTeacherForm, campus_name: e.target.value })}
                   className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
                 >
-                  <option value="Primaria Jardines">Primaria Jardines</option>
-                  <option value="Primaria Torres">Primaria Torres</option>
-                  <option value="Secundaria Torres">Secundaria Torres</option>
                   <option value="Todos los Planteles">Todos los Planteles</option>
+                  {schoolCampuses.map(c => (
+                    <option key={c.id} value={c.name}>{c.name}</option>
+                  ))}
                 </select>
               </div>
 
@@ -2901,9 +2935,9 @@ export default function SuperUserAdminPage() {
                     className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500 cursor-pointer"
                   >
                     <option value="Todos los Planteles">🏢 Todos los Planteles</option>
-                    <option value="Primaria Jardines">Primaria Jardines</option>
-                    <option value="Primaria Torres">Primaria Torres</option>
-                    <option value="Secundaria Torres">Secundaria Torres</option>
+                    {schoolCampuses.map(c => (
+                      <option key={c.id} value={c.name}>{c.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -2917,7 +2951,7 @@ export default function SuperUserAdminPage() {
                     onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, instructor_name: e.target.value })}
                     className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500 cursor-pointer"
                   >
-                    {teachersList.map(t => (
+                    {schoolTeachers.map(t => (
                       <option key={t.id} value={`${t.first_name} ${t.last_name}`}>
                         {t.first_name} {t.last_name} ({t.campus_name || 'General'})
                       </option>

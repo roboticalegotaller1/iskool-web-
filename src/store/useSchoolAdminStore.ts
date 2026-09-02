@@ -67,6 +67,93 @@ const mapGroupIdToUuid = (id: string): string => {
   return 'a00a0eeb-9c0b-4ef8-bb6d-' + hex;
 };
 
+// ==========================================
+// FUNCIONES DE PARTICIONADO Y AISLAMIENTO ESCOLAR (MULTI-COLEGIO)
+// ==========================================
+
+export const getSchoolCampuses = (campusesList: Campus[], schoolId: string | null): Campus[] => {
+  if (!schoolId) return campusesList || [];
+  return (campusesList || []).filter(c => {
+    if (c.school_id) return c.school_id === schoolId;
+    if (schoolId === 'sch-jjrosseau') {
+      return !c.name.toLowerCase().includes('montessori') && !c.name.toLowerCase().includes('demo') && !c.name.toLowerCase().includes('laboratorio');
+    }
+    if (schoolId === 'sch-test-case') {
+      return c.name.toLowerCase().includes('demo') || c.name.toLowerCase().includes('laboratorio') || c.id.includes('test');
+    }
+    return false;
+  });
+};
+
+export const getSchoolStudents = (studentsList: DetailedStudent[], schoolId: string | null, schoolCampuses?: Campus[]): DetailedStudent[] => {
+  if (!schoolId) return studentsList || [];
+  return (studentsList || []).filter(s => {
+    if (s.school_id) return s.school_id === schoolId;
+    if (schoolId === 'sch-test-case') {
+      return s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test') || (s.campus_name || '').toLowerCase().includes('demo');
+    }
+    if (schoolId === 'sch-jjrosseau') {
+      const isTest = s.id === 'std-pb' || s.id === 'std-pa' || s.id === 'std-sec' || s.id === 'std-prep' || s.id.includes('test');
+      const isOther = (s.campus_name || '').toLowerCase().includes('montessori') || (s.campus_name || '').toLowerCase().includes('demo');
+      return !isTest && !isOther;
+    }
+    if (schoolCampuses && schoolCampuses.length > 0) {
+      return schoolCampuses.some(c => c.name.toLowerCase() === (s.campus_name || '').toLowerCase() || c.id === s.campus_id);
+    }
+    return false;
+  });
+};
+
+export const getSchoolTeachers = (teachersList: UserProfile[], schoolId: string | null, schoolCampuses?: Campus[]): UserProfile[] => {
+  if (!schoolId) return teachersList || [];
+  return (teachersList || []).filter(t => {
+    if (t.school_id) return t.school_id === schoolId;
+    if (schoolId === 'sch-test-case') {
+      return t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || t.last_name.toLowerCase().includes('test') || (t.campus_name || '').toLowerCase().includes('demo');
+    }
+    if (schoolId === 'sch-jjrosseau') {
+      const isTest = t.id?.includes('test') || t.first_name.toLowerCase().includes('test') || t.last_name.toLowerCase().includes('test');
+      const isOther = (t.campus_name || '').toLowerCase().includes('montessori') || (t.campus_name || '').toLowerCase().includes('demo');
+      return !isTest && !isOther;
+    }
+    if (schoolCampuses && schoolCampuses.length > 0) {
+      return schoolCampuses.some(c => c.name.toLowerCase() === (t.campus_name || '').toLowerCase() || t.campus_name === 'Todos los Planteles');
+    }
+    return false;
+  });
+};
+
+export const getSchoolGroups = (groupsList: Group[], schoolId: string | null, schoolCampuses?: Campus[]): Group[] => {
+  if (!schoolId) return groupsList || [];
+  return (groupsList || []).filter(g => {
+    if (g.school_id) return g.school_id === schoolId;
+    if (schoolCampuses && schoolCampuses.length > 0) {
+      return schoolCampuses.some(c => c.name.toLowerCase() === (g.campus_name || '').toLowerCase() || c.id === g.campus_id);
+    }
+    if (schoolId === 'sch-jjrosseau') {
+      return !g.campus_name?.toLowerCase().includes('montessori') && !g.campus_name?.toLowerCase().includes('demo');
+    }
+    return false;
+  });
+};
+
+export const getSchoolSubjects = (subjectsList: Subject[], schoolId: string | null, schoolCampuses?: Campus[]): Subject[] => {
+  if (!schoolId) return subjectsList || [];
+  return (subjectsList || []).filter(sub => {
+    if (sub.school_id) return sub.school_id === schoolId;
+    if (schoolId === 'sch-test-case') {
+      return sub.campus_name?.toLowerCase().includes('demo') || sub.id.includes('test');
+    }
+    if (schoolId === 'sch-jjrosseau') {
+      return !sub.campus_name?.toLowerCase().includes('montessori') && !sub.campus_name?.toLowerCase().includes('demo');
+    }
+    if (schoolCampuses && schoolCampuses.length > 0) {
+      return schoolCampuses.some(c => c.name.toLowerCase() === (sub.campus_name || '').toLowerCase() || sub.campus_name === 'Todos los Planteles');
+    }
+    return false;
+  });
+};
+
 interface SchoolAdminStoreState {
   institutionsList: Institution[];
   activeSchoolId: string | null; // null = Directorio General Multi-Colegios
@@ -447,6 +534,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       registerStudent: (studentData) => {
         const newId = (studentData as any).id || `std-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
         const tempPassword = studentData.temporary_password || generateRandomPassword(6);
+        const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
         
         let campusName = studentData.campus_name || 'Primaria Jardines';
         if (studentData.level === 'secundaria' && !studentData.campus_name) {
@@ -463,6 +551,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         const newStudent: DetailedStudent = {
           ...studentData,
           id: newId,
+          school_id: studentData.school_id || activeSchool,
           campus_id: campusObj?.id || 'cmp-pri-jardines',
           campus_name: campusName,
           temporary_password: tempPassword,
@@ -531,6 +620,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       },
 
       bulkRegisterStudents: (studentsList) => {
+        const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
         const createdList: DetailedStudent[] = [];
         const createdBilling: FamilyBillingRecord[] = [];
         const tuitionPricings = get().tuitionPricings || TUITION_PRICINGS_SEED;
@@ -552,6 +642,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
 
           const newStudent: DetailedStudent = {
             id: newId,
+            school_id: st.school_id || activeSchool,
             first_name: st.first_name.trim(),
             second_name: st.second_name?.trim() || '',
             last_name_1: st.last_name_1.trim(),
@@ -681,9 +772,11 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       },
 
       createCampus: (campusData) => {
+        const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
         const newCampus: Campus = {
           ...campusData,
           id: `cmp-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          school_id: campusData.school_id || activeSchool,
           created_at: new Date().toISOString()
         };
         set((state) => ({
@@ -1077,9 +1170,11 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   },
 
   createSubject: (subjectData) => {
+    const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
     const newSubject: Subject = {
       ...subjectData,
       id: `sub-${Date.now()}`,
+      school_id: subjectData.school_id || activeSchool,
       created_at: new Date().toISOString()
     };
     set((state) => ({
@@ -1145,9 +1240,11 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   },
 
       registerTeacher: (teacherData) => {
+        const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
         const newTeacher: UserProfile = {
           ...teacherData,
           id: `usr-teacher-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          school_id: teacherData.school_id || activeSchool,
           role: 'teacher',
           ai_tokens_consumed: 0,
           is_blocked: false,
