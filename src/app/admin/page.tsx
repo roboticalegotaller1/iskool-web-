@@ -595,26 +595,57 @@ export default function SuperUserAdminPage() {
   // Manejo de Creación de Profesor con Permisos Exclusivos de Docente
   const handleCreateTeacher = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTeacherForm.first_name || !newTeacherForm.last_name) {
+    if (!newTeacherForm.first_name.trim() || !newTeacherForm.last_name.trim()) {
       alert('Por favor completa el nombre del profesor.');
       return;
     }
 
+    const domain = activeSchoolId === 'sch-test-case' 
+      ? 'sandbox.iskool.edu.mx' 
+      : activeSchoolId === 'sch-montessori' 
+      ? 'montessoridelvalle.edu.mx' 
+      : 'jjrosseau.edu.mx';
+
     const formattedEmail = newTeacherForm.email.trim() || 
-      `${newTeacherForm.first_name.toLowerCase().replace(/[^a-z0-9]/g, '')}.${newTeacherForm.last_name.toLowerCase().replace(/[^a-z0-9]/g, '')}@jjrosseau.edu.mx`;
+      `${newTeacherForm.first_name.toLowerCase().replace(/[^a-z0-9]/g, '')}.${newTeacherForm.last_name.toLowerCase().replace(/[^a-z0-9]/g, '')}@${domain}`;
+
+    const campusName = newTeacherForm.campus_name || selectedCampusDetail?.name || schoolCampuses[0]?.name || 'Primaria Jardines';
+    const campusObj = schoolCampuses.find(c => c.name.toLowerCase() === campusName.toLowerCase());
+
+    const assignedSubs = newTeacherForm.assigned_subjects
+      ? newTeacherForm.assigned_subjects.split(',').map(s => s.trim()).filter(Boolean)
+      : ['Matemáticas', 'Robótica'];
+
+    const assignedGrps = newTeacherForm.assigned_groups
+      ? newTeacherForm.assigned_groups.split(',').map(g => g.trim()).filter(Boolean)
+      : [];
+
+    const tempPassword = generateRandomPassword(6);
 
     registerTeacher({
-      first_name: newTeacherForm.first_name,
-      last_name: newTeacherForm.last_name,
+      first_name: newTeacherForm.first_name.trim(),
+      last_name: newTeacherForm.last_name.trim(),
       email: formattedEmail,
-      phone: newTeacherForm.phone,
-      campus_name: newTeacherForm.campus_name,
-      assigned_subjects: newTeacherForm.assigned_subjects.split(',').map(s => s.trim()),
-      assigned_groups: newTeacherForm.assigned_groups.split(',').map(g => g.trim())
+      phone: newTeacherForm.phone || '55-4160-8800',
+      campus_name: campusName,
+      campus_id: campusObj?.id || selectedCampusDetail?.id || 'cmp-pri-jardines',
+      assigned_subjects: assignedSubs,
+      assigned_groups: assignedGrps,
+      school_id: activeSchoolId || 'sch-jjrosseau',
+      temporary_password: tempPassword
     });
 
-    showToast(`✅ Profesor ${newTeacherForm.first_name} ${newTeacherForm.last_name} dado de alta con acceso exclusivo a la vista docente.`);
+    showToast(`👨‍🏫 ¡Profesor ${newTeacherForm.first_name} ${newTeacherForm.last_name} dado de alta con éxito! (Clave: ${tempPassword})`);
     setShowAddTeacherModal(false);
+    setNewTeacherForm({
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: '',
+      campus_name: selectedCampusDetail?.name || schoolCampuses[0]?.name || 'Primaria Jardines',
+      assigned_subjects: 'Matemáticas, Robótica',
+      assigned_groups: '1ºA Jardines'
+    });
   };
 
   // Manejo de Subida de Imagen del Taller
@@ -2873,7 +2904,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 1: ALTA INDIVIDUAL DE ALUMNO */}
       {showAddStudentModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-black text-white">Alta Individual de Alumno</h3>
@@ -3021,7 +3052,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 2: CARGA RÁPIDA (EXCEL / CSV / PEGAR LISTA) */}
       {showBulkUploadModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-2xl bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
@@ -3127,7 +3158,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 3: CAMBIO DIRECTO DE CONTRASEÑA */}
       {showPasswordModal.isOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
@@ -3182,7 +3213,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 4: ALTA DE PROFESOR (ACCESO EXCLUSIVO DOCENTE) */}
       {showAddTeacherModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
@@ -3269,7 +3300,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 5: ALTA DE NUEVO TALLER ACADÉMICO / OPTATIVA */}
       {showAddWorkshopModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-xl bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2.5">
@@ -3506,7 +3537,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 6: EDITAR / RECIBIR PLANEACIÓN ANUAL DE GRUPO */}
       {showEditAnnualPlanModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-white/15 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
@@ -3603,7 +3634,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 7: AGREGAR BLOQUE TEMÁTICO AL TEMARIO */}
       {showAddTopicModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-black text-white">Agregar Bloque al Temario</h3>
@@ -3692,7 +3723,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 8: ALTA DE MATERIA CURRICULAR SIMPLE */}
       {showAddSubjectModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-black text-white">Agregar Materia Curricular Oficial</h3>
@@ -3745,7 +3776,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 9: ALTA DE NUEVO COLEGIO / INSTITUCIÓN ESCOLAR */}
       {showAddSchoolModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
@@ -4299,7 +4330,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 11: ALTA DE NUEVO PLANTEL */}
       {showAddCampusModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-black text-white flex items-center gap-2">
@@ -4378,7 +4409,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 12: ALTA DE NUEVO GRUPO EN PLANTEL */}
       {showAddGroupModal && selectedCampusDetail && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-black text-white flex items-center gap-2">
@@ -4439,7 +4470,7 @@ export default function SuperUserAdminPage() {
 
       {/* MODAL 13: EDICIÓN DE DATOS DEL PLANTEL */}
       {showEditCampusModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-black text-white flex items-center gap-2">
