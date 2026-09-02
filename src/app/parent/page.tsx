@@ -9,7 +9,7 @@ import { Header } from '@/components/Header';
 import { 
   Heart, MessageSquare, Send, CheckCircle2, 
   Trophy, Flame, Coins, Smile, Landmark, Award, Mic,
-  Bell, Mail, Check, Clock, AlertTriangle
+  Bell, Mail, Check, Clock, AlertTriangle, Lock
 } from 'lucide-react';
 import { FormattedDate } from '@/components/FormattedDate';
 
@@ -48,8 +48,12 @@ export default function ParentDashboard() {
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
+    if (!loading) {
+      if (!user) {
+        router.push('/login');
+      } else if (user.role === 'student') {
+        router.push('/student');
+      }
     }
   }, [user, loading, router]);
 
@@ -152,6 +156,37 @@ export default function ParentDashboard() {
       </div>
     );
   };
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white">
+        <div className="flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-emerald-500" />
+          <p className="text-xs font-bold text-zinc-400">Verificando sesión familiar...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (user && user.role === 'student') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white p-6">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-zinc-900 border border-white/10 text-center space-y-4 shadow-2xl">
+          <div className="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 mx-auto flex items-center justify-center">
+            <Lock className="h-7 w-7" />
+          </div>
+          <h2 className="text-lg font-black text-white">Acceso Restringido</h2>
+          <p className="text-xs text-zinc-400">El portal de tutores es de uso exclusivo para padres de familia. Como alumno dispones de tu propio portal de misiones.</p>
+          <button
+            onClick={() => router.push('/student')}
+            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-lg shadow-emerald-600/30 cursor-pointer transition-all"
+          >
+            Ir a mi Portal de Alumno
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950">

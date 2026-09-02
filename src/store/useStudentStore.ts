@@ -6,6 +6,7 @@ import { STATS_MAP_SEED, AVATAR_MAP_SEED, STUDENT_INVENTORY_SEED, STUDENT_MESSAG
 import { supabase } from '@/lib/supabaseClient';
 import { calculateAcademicPower, AcademicPowerResult } from '@/utils/academicPower';
 import { useGamificationStore } from './useGamificationStore';
+import { useSchoolAdminStore } from './useSchoolAdminStore';
 
 let statsChannel: any = null;
 
@@ -1130,6 +1131,20 @@ export const useCurrentStudentProfile = () => {
   const activeStudentId = useStudentStore(state => state.activeStudentId);
   return useMemo(() => {
     const norm = normalizeStudentId(activeStudentId);
+    try {
+      const adminStudent = useSchoolAdminStore.getState().detailedStudents?.find(s => s.id === activeStudentId || s.id === norm);
+      if (adminStudent) {
+        return {
+          id: adminStudent.id,
+          first_name: adminStudent.first_name,
+          last_name: `${adminStudent.last_name_1} ${adminStudent.last_name_2 || ''}`.trim(),
+          role: 'student' as const,
+          email: adminStudent.email || `${adminStudent.first_name.toLowerCase()}@jjrosseau.edu.mx`,
+          created_at: (adminStudent as any).created_at || new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+      }
+    } catch {}
     return STUDENTS_LIST_SEED.find(s => s.id === norm) || STUDENTS_LIST_SEED.find(s => s.id === activeStudentId) || STUDENTS_LIST_SEED[1];
   }, [activeStudentId]);
 };

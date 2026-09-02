@@ -98,8 +98,12 @@ export default function TeacherGrades() {
   };
 
   useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
+    if (!loading) {
+      if (!user) {
+        router.push('/login');
+      } else if (user.role === 'student') {
+        router.push('/student');
+      }
     }
   }, [user, loading, router]);
 

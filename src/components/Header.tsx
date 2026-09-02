@@ -268,8 +268,8 @@ export const Header: React.FC = () => {
 
         {/* Stats & Role Switcher */}
         <div className="flex items-center gap-4">
-          {/* Quick Level Simulator (Cambiar alumno activo) */}
-          {currentRole === 'student' && (
+          {/* Quick Level Simulator (Solo para admin en demo) */}
+          {currentRole === 'student' && user?.role === 'admin' && (
             <div className="flex items-center gap-1.5 bg-blue-50/50 dark:bg-blue-950/20 px-2 py-1 rounded-xl border border-blue-200/30 dark:border-blue-900/30">
               <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1">Demo:</span>
               <select
@@ -300,60 +300,70 @@ export const Header: React.FC = () => {
                 <span>{stats.coins}</span>
               </div>
               <div className="h-3 w-px bg-zinc-300 dark:bg-zinc-700" />
-              <div className="flex items-center gap-1 text-blue-500" title="Nivel actual del estudiante">
+              <div className="flex items-center gap-1 text-indigo-500" title="Nivel actual de personaje">
                 <Trophy className="h-4 w-4" />
                 <span>Nivel {stats.level}</span>
               </div>
             </div>
           )}
 
-          {/* Quick Role Selector */}
-          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg" role="group" aria-label="Cambio rápido de vista por rol">
-            <Link
-              href="/student"
-              aria-label="Cambiar vista a Alumno"
-              className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
-                currentRole === 'student'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
-              }`}
-            >
-              Alumno
-            </Link>
-            <Link
-              href="/teacher"
-              aria-label="Cambiar vista a Profesor"
-              className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
-                currentRole === 'teacher'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
-              }`}
-            >
-              Profesor
-            </Link>
-            <Link
-              href="/parent"
-              aria-label="Cambiar vista a Tutor"
-              className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
-                currentRole === 'parent'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
-              }`}
-            >
-              Tutor
-            </Link>
-            <Link
-              href="/coordinator"
-              aria-label="Cambiar vista a Coordinador"
-              className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
-                currentRole === 'coordinator'
-                  ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
-              }`}
-            >
-              Coordinador
-            </Link>
-          </div>
+          {/* Student Profile Info Badge */}
+          {user?.role === 'student' && (
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{user.first_name} {user.last_name}</span>
+            </div>
+          )}
+
+          {/* Quick Role Selector (Exclusivo para administradores) */}
+          {user?.role === 'admin' && (
+            <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg" role="group" aria-label="Cambio rápido de vista por rol">
+              <Link
+                href="/student"
+                aria-label="Cambiar vista a Alumno"
+                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                  currentRole === 'student'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Alumno
+              </Link>
+              <Link
+                href="/teacher"
+                aria-label="Cambiar vista a Profesor"
+                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                  currentRole === 'teacher'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Profesor
+              </Link>
+              <Link
+                href="/parent"
+                aria-label="Cambiar vista a Tutor"
+                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                  currentRole === 'parent'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Tutor
+              </Link>
+              <Link
+                href="/coordinator"
+                aria-label="Cambiar vista a Coordinador"
+                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                  currentRole === 'coordinator'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                }`}
+              >
+                Coordinador
+              </Link>
+            </div>
+          )}
 
           {/* Reset Button */}
           <button

@@ -35,6 +35,28 @@ const getDemoUser = (email: string): UserProfile => {
         role: 'teacher'
       };
     }
+
+    // 2. Verificar si coincide con alumnos registrados en el Super Usuario
+    const adminStudents = useSchoolAdminStore.getState().detailedStudents || [];
+    const matchedStudent = adminStudents.find(s => 
+      s.email?.toLowerCase() === emailLower || 
+      s.id === emailLower ||
+      s.curp?.toLowerCase() === emailLower ||
+      s.enrollment_id?.toLowerCase() === emailLower ||
+      `${s.first_name.toLowerCase()}.${s.last_name_1.toLowerCase()}` === emailLower.replace('@jjrosseau.edu.mx', '')
+    );
+    if (matchedStudent) {
+      return {
+        id: matchedStudent.id,
+        first_name: matchedStudent.first_name,
+        last_name: `${matchedStudent.last_name_1} ${matchedStudent.last_name_2 || ''}`.trim(),
+        role: 'student',
+        email: matchedStudent.email || emailLower,
+        is_blocked: matchedStudent.is_blocked || matchedStudent.status === 'suspendido',
+        created_at: (matchedStudent as any).created_at || new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+    }
   } catch {
     // fallback si store no está montado
   }

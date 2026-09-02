@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { 
   Building2, 
   Users, 
@@ -49,6 +51,9 @@ import { DetailedStudent, Subject, GroupAnnualPlan, SyllabusTopic } from '@/type
 type AdminTab = 'overview' | 'teachers' | 'students' | 'campuses' | 'subjects' | 'config';
 
 export default function SuperUserAdminPage() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+
   const {
     schoolSettings,
     campusesList,
@@ -66,6 +71,18 @@ export default function SuperUserAdminPage() {
     updateGroupAnnualPlan,
     updateSubjectSyllabus
   } = useSchoolAdminStore();
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user) {
+        router.push('/login');
+      } else if (user.role === 'student') {
+        router.push('/student');
+      } else if (user.role === 'teacher') {
+        router.push('/teacher');
+      }
+    }
+  }, [user, authLoading, router]);
 
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
   const [selectedCampus, setSelectedCampus] = useState<string>('all');
@@ -636,6 +653,41 @@ export default function SuperUserAdminPage() {
       updated_at: new Date().toISOString()
     };
   }, [selectedWorkshopDetail, selectedGroupForPlan, groupsList]);
+
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
+        <div className="flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-indigo-500" />
+          <p className="text-xs font-bold text-slate-400">Verificando sesión institucional...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (user && (user.role === 'student' || user.role === 'teacher')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white p-6">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-slate-900 border border-white/10 text-center space-y-4 shadow-2xl">
+          <div className="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 mx-auto flex items-center justify-center">
+            <Lock className="h-7 w-7" />
+          </div>
+          <h2 className="text-lg font-black text-white">Acceso Denegado</h2>
+          <p className="text-xs text-slate-400">
+            {user.role === 'student' 
+              ? 'Esta consola es exclusiva para la Dirección Escolar (Super Usuario). Como alumno dispones de tu propio portal de misiones y recompensas.'
+              : 'Esta consola es exclusiva para la Dirección Escolar. Como docente dispones de tu Portal Académico.'}
+          </p>
+          <button
+            onClick={() => router.push(user.role === 'student' ? '/student' : '/teacher')}
+            className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs shadow-lg shadow-indigo-600/30 cursor-pointer transition-all"
+          >
+            {user.role === 'student' ? 'Ir a mi Portal de Alumno' : 'Ir a mi Portal Docente'}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-indigo-500 selection:text-white">

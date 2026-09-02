@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { SUBJECTS_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
@@ -8,12 +10,14 @@ import {
   Users, UserPlus, Calendar, Plus, Trash2, Search, Filter, 
   BookOpen, Calculator, Activity, Clock, ShieldAlert, MapPin, 
   Phone, Mail, CheckCircle2, ChevronRight, User, AlertCircle, Sparkles, X, Heart, Globe, Building2, Upload, RefreshCw, Edit3,
-  Landmark
+  Landmark, Lock
 } from 'lucide-react';
 import { DetailedStudent, ClassSchedule, Group, SchoolSettings, UserProfile } from '@/types';
 import { getStudentAvatarUrl } from '@/utils/studentAvatar';
 
 export default function CoordinatorDashboard() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
   const groupsList = useSchoolAdminStore(state => state.groupsList);
   const schedulesList = useSchoolAdminStore(state => state.schedulesList);
@@ -89,6 +93,17 @@ export default function CoordinatorDashboard() {
       accent: '142 71% 45%'
     }
   });
+
+  // Redirección si es alumno
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user) {
+        router.push('/login');
+      } else if (user.role === 'student') {
+        router.push('/student');
+      }
+    }
+  }, [user, authLoading, router]);
 
   // Mantener sincronizada la lista de profesores registrada en el sistema con el abordaje de onboarding
   useEffect(() => {
@@ -499,6 +514,37 @@ export default function CoordinatorDashboard() {
     if (subjectId === 'sub-span') return BookOpen;
     return Activity;
   };
+
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white">
+        <div className="flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-violet-500" />
+          <p className="text-xs font-bold text-zinc-400">Verificando credenciales de Coordinación...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (user && user.role === 'student') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white p-6">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-zinc-900 border border-white/10 text-center space-y-4 shadow-2xl">
+          <div className="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 mx-auto flex items-center justify-center">
+            <Lock className="h-7 w-7" />
+          </div>
+          <h2 className="text-lg font-black text-white">Acceso Restringido</h2>
+          <p className="text-xs text-zinc-400">El módulo de Coordinación y Control Escolar es de uso administrativo. Como alumno dispones de tu propio portal de misiones.</p>
+          <button
+            onClick={() => router.push('/student')}
+            className="w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-black text-xs shadow-lg shadow-violet-600/30 cursor-pointer transition-all"
+          >
+            Ir a mi Portal de Alumno
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50">
