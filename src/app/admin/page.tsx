@@ -29,10 +29,17 @@ import {
   Phone, 
   Mail, 
   MapPin, 
-  CheckCircle2
+  CheckCircle2,
+  Trash2,
+  FileText,
+  FileDown,
+  Palette,
+  Brain,
+  Globe2,
+  ImageIcon
 } from 'lucide-react';
 import { useSchoolAdminStore, generateRandomPassword } from '@/store/useSchoolAdminStore';
-import { DetailedStudent } from '@/types';
+import { DetailedStudent, Subject } from '@/types';
 
 type AdminTab = 'overview' | 'teachers' | 'students' | 'campuses' | 'subjects' | 'config';
 
@@ -49,7 +56,8 @@ export default function SuperUserAdminPage() {
     registerStudent,
     bulkRegisterStudents,
     registerTeacher,
-    createSubject
+    createSubject,
+    deleteSubject
   } = useSchoolAdminStore();
 
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
@@ -67,6 +75,12 @@ export default function SuperUserAdminPage() {
   const [showBulkUploadModal, setShowBulkUploadModal] = useState(false);
   const [showAddTeacherModal, setShowAddTeacherModal] = useState(false);
   const [showAddSubjectModal, setShowAddSubjectModal] = useState(false);
+  const [showAddWorkshopModal, setShowAddWorkshopModal] = useState(false);
+  const [viewSyllabusModal, setViewSyllabusModal] = useState<{ isOpen: boolean; workshopName: string; syllabusUrl?: string; filename?: string }>({
+    isOpen: false,
+    workshopName: ''
+  });
+
   const [showPasswordModal, setShowPasswordModal] = useState<{ isOpen: boolean; userId: string; userName: string; role: 'teacher' | 'student'; currentPassword?: string }>({
     isOpen: false,
     userId: '',
@@ -119,13 +133,27 @@ export default function SuperUserAdminPage() {
     assigned_groups: '1ºA Jardines'
   });
 
-  // Formulario de Materia
+  // Formulario de Materia Curricular Simple
   const [newSubjectForm, setNewSubjectForm] = useState({
     name: '',
     sep_code: '',
-    category: 'optativa' as 'curricular' | 'optativa',
-    is_elective: true,
+    category: 'curricular' as 'curricular' | 'optativa',
+    is_elective: false,
     level_grade_id: 'all'
+  });
+
+  // Formulario Extendido para Nuevo Taller Académico / Optativa
+  const [newWorkshopForm, setNewWorkshopForm] = useState({
+    name: '',
+    sep_code: '',
+    workshop_category: 'tecnologico' as 'deportivo' | 'tecnologico' | 'artistico' | 'academico' | 'cientifico',
+    campus_name: 'Todos los Planteles',
+    instructor_name: 'Prof. Israel López',
+    schedule: 'Martes y Jueves 16:00 - 17:30',
+    description: '',
+    image_url: '',
+    syllabus_url: '',
+    syllabus_filename: ''
   });
 
   // Carga Masiva: Texto o Archivo
@@ -134,6 +162,8 @@ export default function SuperUserAdminPage() {
   const [, setIsParsingBulk] = useState(false);
   const [bulkGeneratedResults, setBulkGeneratedResults] = useState<DetailedStudent[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const workshopImageRef = useRef<HTMLInputElement | null>(null);
+  const workshopSyllabusRef = useRef<HTMLInputElement | null>(null);
 
   // Métrica Total de Tokens de IA Pedagógica
   const totalAITokens = useMemo(() => {
@@ -238,7 +268,79 @@ export default function SuperUserAdminPage() {
     setShowAddTeacherModal(false);
   };
 
-  // Manejo de Creación de Materia
+  // Manejo de Subida de Imagen del Taller
+  const handleWorkshopImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewWorkshopForm(prev => ({ ...prev, image_url: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Manejo de Subida de Temario / Programa PDF
+  const handleWorkshopSyllabusUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewWorkshopForm(prev => ({
+          ...prev,
+          syllabus_url: reader.result as string,
+          syllabus_filename: file.name
+        }));
+        showToast(`📄 Temario cargado: ${file.name}`);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Manejo de Creación de Nuevo Taller Académico
+  const handleCreateWorkshop = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newWorkshopForm.name.trim()) {
+      alert('Por favor ingresa el nombre del taller.');
+      return;
+    }
+
+    const sepCode = newWorkshopForm.sep_code.trim() || `OPT-${newWorkshopForm.name.substring(0, 3).toUpperCase()}`;
+
+    createSubject({
+      school_id: 'sch-jjr',
+      level_grade_id: 'all',
+      name: newWorkshopForm.name.trim(),
+      sep_code: sepCode,
+      category: 'optativa',
+      is_elective: true,
+      workshop_category: newWorkshopForm.workshop_category,
+      campus_name: newWorkshopForm.campus_name,
+      instructor_name: newWorkshopForm.instructor_name,
+      schedule: newWorkshopForm.schedule,
+      description: newWorkshopForm.description,
+      image_url: newWorkshopForm.image_url,
+      syllabus_url: newWorkshopForm.syllabus_url,
+      syllabus_filename: newWorkshopForm.syllabus_filename
+    });
+
+    showToast(`🎉 ¡Taller "${newWorkshopForm.name}" agregado y publicado exitosamente!`);
+    setShowAddWorkshopModal(false);
+    setNewWorkshopForm({
+      name: '',
+      sep_code: '',
+      workshop_category: 'tecnologico',
+      campus_name: 'Todos los Planteles',
+      instructor_name: 'Prof. Israel López',
+      schedule: 'Martes y Jueves 16:00 - 17:30',
+      description: '',
+      image_url: '',
+      syllabus_url: '',
+      syllabus_filename: ''
+    });
+  };
+
+  // Manejo de Creación de Materia Básica
   const handleCreateSubject = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newSubjectForm.name) return;
@@ -247,20 +349,13 @@ export default function SuperUserAdminPage() {
       school_id: 'sch-jjr',
       level_grade_id: newSubjectForm.level_grade_id,
       name: newSubjectForm.name,
-      sep_code: newSubjectForm.sep_code || `OPT-${newSubjectForm.name.substring(0, 3).toUpperCase()}`,
+      sep_code: newSubjectForm.sep_code || `CURR-${newSubjectForm.name.substring(0, 3).toUpperCase()}`,
       category: newSubjectForm.category,
       is_elective: newSubjectForm.is_elective
     });
 
-    showToast(`✅ Materia ${newSubjectForm.name} agregada al catálogo.`);
+    showToast(`✅ Materia ${newSubjectForm.name} agregada.`);
     setShowAddSubjectModal(false);
-    setNewSubjectForm({
-      name: '',
-      sep_code: '',
-      category: 'optativa',
-      is_elective: true,
-      level_grade_id: 'all'
-    });
   };
 
   // Parseo de Texto / Pegado de Excel para Carga Masiva
@@ -375,6 +470,23 @@ export default function SuperUserAdminPage() {
     setShowPasswordModal(prev => ({ ...prev, currentPassword: updatedPass }));
   };
 
+  // Icon Helper for Workshop Card
+  const getWorkshopIcon = (sub: Subject) => {
+    if (sub.workshop_category === 'deportivo') return Dumbbell;
+    if (sub.workshop_category === 'tecnologico') return Bot;
+    if (sub.workshop_category === 'artistico') return Palette;
+    if (sub.workshop_category === 'cientifico') return Brain;
+    if (sub.workshop_category === 'academico') return Globe2;
+
+    const name = sub.name.toLowerCase();
+    if (name.includes('física') || name.includes('actividad')) return Activity;
+    if (name.includes('basquetbol') || name.includes('deporte')) return Dumbbell;
+    if (name.includes('música')) return Music;
+    if (name.includes('robótica')) return Bot;
+    if (name.includes('danza')) return Sparkles;
+    return Sparkles;
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-indigo-500 selection:text-white">
       
@@ -485,7 +597,7 @@ export default function SuperUserAdminPage() {
                 : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
             }`}
           >
-            <BookOpen className="h-4 w-4" /> Materias & Optativas ({subjectsList.length})
+            <BookOpen className="h-4 w-4" /> Materias & Talleres ({subjectsList.length})
           </button>
 
           <button
@@ -1033,66 +1145,160 @@ export default function SuperUserAdminPage() {
           </div>
         )}
 
-        {/* TAB 5: SUBJECTS & ELECTIVES */}
+        {/* TAB 5: SUBJECTS & WORKSHOPS */}
         {activeTab === 'subjects' && (
           <div className="space-y-6">
             {/* Header & Add Elective Button */}
             <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-900 p-4 rounded-2xl border border-white/10">
               <div>
-                <h3 className="text-sm font-black text-white">Catálogo Curricular & Materias Optativas</h3>
+                <h3 className="text-sm font-black text-white">Catálogo Curricular & Talleres Académicos</h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Materias oficiales alineadas a la Nueva Escuela Mexicana y talleres extracurriculares requeridos.
+                  Gestiona las materias oficiales NEM y da de alta nuevos talleres extracurriculares con temario y logotipo.
                 </p>
               </div>
 
-              <button
-                onClick={() => setShowAddSubjectModal(true)}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg transition-all cursor-pointer hover:scale-102"
-              >
-                <Plus className="h-4 w-4" /> Agregar Materia u Optativa
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowAddSubjectModal(true)}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold border border-white/10 transition-all cursor-pointer"
+                >
+                  <Plus className="h-4 w-4" /> Materia Curricular
+                </button>
+                <button
+                  onClick={() => setShowAddWorkshopModal(true)}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-black shadow-lg shadow-amber-500/25 transition-all cursor-pointer hover:scale-102"
+                >
+                  <Sparkles className="h-4 w-4" /> + Agregar Nuevo Taller Académico
+                </button>
+              </div>
             </div>
 
-            {/* Materias Optativas Highlighted Grid */}
+            {/* Materias Optativas / Talleres Académicos Cards */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-amber-400" />
-                <h4 className="text-xs font-black uppercase tracking-wider text-amber-400">
-                  Materias Optativas & Talleres Extracurriculares
-                </h4>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-amber-400" />
+                  <h4 className="text-xs font-black uppercase tracking-wider text-amber-400">
+                    Materias Optativas & Talleres Extracurriculares ({subjectsList.filter(s => s.is_elective || s.category === 'optativa').length})
+                  </h4>
+                </div>
+                <span className="text-[11px] text-slate-400">Haz clic en un taller para consultar o descargar su programa de estudio</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {subjectsList.filter(s => s.is_elective || s.category === 'optativa').map(opt => {
-                  let IconComponent = Sparkles;
-                  if (opt.name.toLowerCase().includes('física') || opt.name.toLowerCase().includes('actividad')) IconComponent = Activity;
-                  if (opt.name.toLowerCase().includes('basquetbol') || opt.name.toLowerCase().includes('deporte')) IconComponent = Dumbbell;
-                  if (opt.name.toLowerCase().includes('música')) IconComponent = Music;
-                  if (opt.name.toLowerCase().includes('robótica')) IconComponent = Bot;
-                  if (opt.name.toLowerCase().includes('danza')) IconComponent = Sparkles;
+                  const IconComp = getWorkshopIcon(opt);
 
                   return (
-                    <div key={opt.id} className="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/20 shadow-lg flex flex-col justify-between gap-3 hover:border-amber-500/50 transition-all">
-                      <div className="flex items-center justify-between">
-                        <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
-                          <IconComponent className="h-5 w-5" />
+                    <div 
+                      key={opt.id} 
+                      className="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/20 shadow-lg flex flex-col justify-between gap-3 hover:border-amber-500/60 transition-all group relative"
+                    >
+                      {/* Top Bar: Icon/Image + Category Badge + Delete */}
+                      <div className="flex items-start justify-between gap-2">
+                        {opt.image_url ? (
+                          <div className="h-10 w-10 rounded-xl overflow-hidden border border-amber-500/30 bg-slate-950 shrink-0">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={opt.image_url} alt={opt.name} className="h-full w-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                            <IconComp className="h-5 w-5" />
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-amber-300 font-bold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/20 uppercase">
+                            {opt.workshop_category || 'Optativa'}
+                          </span>
+
+                          <button
+                            onClick={() => {
+                              if (confirm(`¿Eliminar el taller "${opt.name}"?`)) {
+                                deleteSubject(opt.id);
+                                showToast(`Taller "${opt.name}" eliminado.`);
+                              }
+                            }}
+                            title="Eliminar Taller"
+                            className="p-1 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
                         </div>
-                        <span className="text-[10px] font-mono text-amber-300 font-bold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/20">
-                          OPTATIVA
-                        </span>
                       </div>
-                      <div>
-                        <h5 className="text-sm font-black text-white">{opt.name}</h5>
-                        <p className="text-[11px] text-slate-400 mt-0.5">Clave SEP: {opt.sep_code || 'OPT-2026'}</p>
+
+                      {/* Info */}
+                      <div className="space-y-1">
+                        <h5 className="text-sm font-black text-white group-hover:text-amber-300 transition-colors">
+                          {opt.name}
+                        </h5>
+                        <p className="text-[11px] text-slate-400 font-mono">Clave SEP: {opt.sep_code || 'OPT-2026'}</p>
+                        
+                        {opt.instructor_name && (
+                          <p className="text-[11px] text-slate-300 flex items-center gap-1 pt-1">
+                            <Users className="h-3 w-3 text-slate-500 shrink-0" />
+                            <span>Instructor: <strong className="text-slate-200">{opt.instructor_name}</strong></span>
+                          </p>
+                        )}
+
+                        {opt.campus_name && (
+                          <p className="text-[10px] text-slate-400 flex items-center gap-1">
+                            <Building2 className="h-3 w-3 text-slate-500 shrink-0" />
+                            <span>{opt.campus_name}</span>
+                          </p>
+                        )}
+
+                        {opt.schedule && (
+                          <p className="text-[10px] text-indigo-300 font-mono bg-indigo-500/10 px-2 py-0.5 rounded-md border border-indigo-500/20 inline-block mt-1">
+                            🕒 {opt.schedule}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Syllabus / Temario Action */}
+                      <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
+                        {opt.syllabus_url ? (
+                          <button
+                            onClick={() => setViewSyllabusModal({
+                              isOpen: true,
+                              workshopName: opt.name,
+                              syllabusUrl: opt.syllabus_url,
+                              filename: opt.syllabus_filename
+                            })}
+                            className="flex items-center gap-1 text-[11px] font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-1 rounded-lg border border-amber-500/20 transition-all cursor-pointer"
+                          >
+                            <FileText className="h-3.5 w-3.5" /> Ver Temario PDF
+                          </button>
+                        ) : (
+                          <span className="text-[10px] text-slate-500 italic">Sin temario adjunto</span>
+                        )}
+
+                        <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3" /> Activo
+                        </span>
                       </div>
                     </div>
                   );
                 })}
+
+                {/* Card "+ Agregar Taller" */}
+                <button
+                  onClick={() => setShowAddWorkshopModal(true)}
+                  className="p-5 rounded-2xl bg-slate-900/40 border-2 border-dashed border-amber-500/30 hover:border-amber-500/70 hover:bg-amber-500/5 transition-all flex flex-col items-center justify-center gap-3 text-center cursor-pointer min-h-[180px] group"
+                >
+                  <div className="h-11 w-11 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Plus className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-black text-amber-400 block">+ Agregar Nuevo Taller</span>
+                    <span className="text-[10px] text-slate-400">Subir logotipo, temario y asignación</span>
+                  </div>
+                </button>
               </div>
             </div>
 
             {/* Curricular Subjects Table */}
-            <div className="space-y-3">
+            <div className="space-y-3 pt-4">
               <h4 className="text-xs font-black uppercase tracking-wider text-slate-400">
                 Materias Curriculares Oficiales NEM (Fases 3, 4, 5 y 6)
               </h4>
@@ -1553,12 +1759,301 @@ export default function SuperUserAdminPage() {
         </div>
       )}
 
-      {/* MODAL 5: ALTA DE MATERIA U OPTATIVA */}
+      {/* MODAL 5: AGREGAR NUEVO TALLER ACADÉMICO / OPTATIVA (CON SUBIDA DE IMAGEN Y TEMARIO) */}
+      {showAddWorkshopModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-xl bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="h-8 w-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                  <Sparkles className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-white">Alta de Nuevo Taller Académico</h3>
+                  <p className="text-xs text-slate-400">Configura la información oficial, horario, temario y logotipo.</p>
+                </div>
+              </div>
+              <button onClick={() => setShowAddWorkshopModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
+            </div>
+
+            <form onSubmit={handleCreateWorkshop} className="space-y-3.5 text-xs">
+              
+              {/* Nombre y Clave SEP */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="sm:col-span-2">
+                  <label className="text-slate-300 font-bold block mb-1">Nombre del Taller Académico *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newWorkshopForm.name}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setNewWorkshopForm(prev => ({
+                        ...prev,
+                        name: val,
+                        sep_code: prev.sep_code || (val.length >= 3 ? `OPT-${val.substring(0, 3).toUpperCase()}` : '')
+                      }));
+                    }}
+                    placeholder="Ej. Ajedrez Estratégico, Programación con Python..."
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500 font-bold"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Clave Oficial / SEP</label>
+                  <input
+                    type="text"
+                    value={newWorkshopForm.sep_code}
+                    onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, sep_code: e.target.value.toUpperCase() })}
+                    placeholder="Ej. OPT-AJE"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-amber-400 font-mono font-bold outline-none focus:border-amber-500"
+                  />
+                </div>
+              </div>
+
+              {/* Categoría y Plantel */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Categoría del Taller *</label>
+                  <select
+                    value={newWorkshopForm.workshop_category}
+                    onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, workshop_category: e.target.value as any })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500 cursor-pointer"
+                  >
+                    <option value="tecnologico">🤖 Tecnológico (Robótica, Programación, IA)</option>
+                    <option value="deportivo">🏃‍♂️ Deportivo (Basquetbol, Fútbol, Atletismo)</option>
+                    <option value="artistico">🎨 Artístico (Música, Danza, Pintura, Teatro)</option>
+                    <option value="cientifico">🔬 Científico (Astronomía, Experimentos, Ecología)</option>
+                    <option value="academico">♟️ Académico / Lógica (Ajedrez, Debate, Idiomas)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Plantel(es) donde se imparte *</label>
+                  <select
+                    value={newWorkshopForm.campus_name}
+                    onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, campus_name: e.target.value })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500 cursor-pointer"
+                  >
+                    <option value="Todos los Planteles">🏢 Todos los Planteles</option>
+                    <option value="Primaria Jardines">Primaria Jardines</option>
+                    <option value="Primaria Torres">Primaria Torres</option>
+                    <option value="Secundaria Torres">Secundaria Torres</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Instructor y Horario */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Profesor / Instructor Responsable</label>
+                  <select
+                    value={newWorkshopForm.instructor_name}
+                    onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, instructor_name: e.target.value })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500 cursor-pointer"
+                  >
+                    {teachersList.map(t => (
+                      <option key={t.id} value={`${t.first_name} ${t.last_name}`}>
+                        {t.first_name} {t.last_name} ({t.campus_name || 'General'})
+                      </option>
+                    ))}
+                    <option value="Instructor Externo / Especialista">Instructor Externo / Especialista</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Horario y Días</label>
+                  <input
+                    type="text"
+                    value={newWorkshopForm.schedule}
+                    onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, schedule: e.target.value })}
+                    placeholder="Ej. Martes y Jueves 16:00 - 17:30"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500 font-mono"
+                  />
+                </div>
+              </div>
+
+              {/* Descripción */}
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Objetivos Pedagógicos y Descripción</label>
+                <textarea
+                  rows={2}
+                  value={newWorkshopForm.description}
+                  onChange={(e) => setNewWorkshopForm({ ...newWorkshopForm, description: e.target.value })}
+                  placeholder="Describe las competencias que desarrollarán los alumnos en este taller..."
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl p-2.5 text-xs text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* ARCHIVOS: Portada / Logotipo y Temario PDF */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                
+                {/* 1. Subida de Imagen/Portada */}
+                <div className="p-3.5 rounded-2xl bg-slate-950 border border-dashed border-white/15 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-amber-400 flex items-center gap-1.5">
+                      <ImageIcon className="h-3.5 w-3.5" /> Portada / Logotipo
+                    </span>
+                    {newWorkshopForm.image_url && (
+                      <span className="text-[10px] text-emerald-400 font-semibold">✔ Imagen lista</span>
+                    )}
+                  </div>
+
+                  <input
+                    type="file"
+                    ref={workshopImageRef}
+                    accept="image/*"
+                    onChange={handleWorkshopImageUpload}
+                    className="hidden"
+                  />
+
+                  {newWorkshopForm.image_url ? (
+                    <div className="flex items-center gap-2">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={newWorkshopForm.image_url} alt="Preview" className="h-10 w-10 rounded-lg object-cover border border-amber-500/30" />
+                      <button
+                        type="button"
+                        onClick={() => setNewWorkshopForm(prev => ({ ...prev, image_url: '' }))}
+                        className="text-[10px] text-red-400 hover:underline cursor-pointer"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => workshopImageRef.current?.click()}
+                      className="w-full py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-white/10 transition-all cursor-pointer"
+                    >
+                      🖼 Seleccionar Imagen (PNG/JPG)
+                    </button>
+                  )}
+                </div>
+
+                {/* 2. Subida de Temario / Programa PDF */}
+                <div className="p-3.5 rounded-2xl bg-slate-950 border border-dashed border-white/15 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-indigo-400 flex items-center gap-1.5">
+                      <FileDown className="h-3.5 w-3.5" /> Temario / Programa (PDF)
+                    </span>
+                    {newWorkshopForm.syllabus_filename && (
+                      <span className="text-[10px] text-emerald-400 font-semibold">✔ Documento listo</span>
+                    )}
+                  </div>
+
+                  <input
+                    type="file"
+                    ref={workshopSyllabusRef}
+                    accept=".pdf,.doc,.docx,.txt"
+                    onChange={handleWorkshopSyllabusUpload}
+                    className="hidden"
+                  />
+
+                  {newWorkshopForm.syllabus_filename ? (
+                    <div className="flex items-center justify-between gap-1 bg-white/5 p-1.5 rounded-lg">
+                      <span className="text-[10px] text-slate-300 truncate max-w-[130px] font-mono">
+                        {newWorkshopForm.syllabus_filename}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setNewWorkshopForm(prev => ({ ...prev, syllabus_url: '', syllabus_filename: '' }))}
+                        className="text-[10px] text-red-400 hover:underline cursor-pointer"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => workshopSyllabusRef.current?.click()}
+                      className="w-full py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-white/10 transition-all cursor-pointer"
+                    >
+                      📄 Subir Archivo PDF / Doc
+                    </button>
+                  )}
+                </div>
+
+              </div>
+
+              {/* Botones de Acción */}
+              <div className="flex justify-end gap-2 pt-3 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowAddWorkshopModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black shadow-lg shadow-amber-500/30 cursor-pointer transition-all hover:scale-102"
+                >
+                  Guardar y Publicar Taller
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 6: VER / DESCARGAR TEMARIO DEL TALLER */}
+      {viewSyllabusModal.isOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div>
+                <h3 className="text-base font-black text-white">Programa de Estudio / Temario</h3>
+                <p className="text-xs text-amber-400 font-bold mt-0.5">{viewSyllabusModal.workshopName}</p>
+              </div>
+              <button 
+                onClick={() => setViewSyllabusModal({ isOpen: false, workshopName: '' })} 
+                className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer"
+              >
+                ✕ Cerrar
+              </button>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950 border border-white/10 space-y-3 text-center">
+              <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mx-auto flex items-center justify-center">
+                <FileText className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-white block">
+                  {viewSyllabusModal.filename || 'Temario Oficial del Taller.pdf'}
+                </span>
+                <span className="text-[11px] text-slate-400">Documento pedagógico oficial para el ciclo escolar 2026.</span>
+              </div>
+
+              {viewSyllabusModal.syllabusUrl && (
+                <a
+                  href={viewSyllabusModal.syllabusUrl}
+                  download={viewSyllabusModal.filename || 'temario.pdf'}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg transition-all"
+                >
+                  <Download className="h-4 w-4" /> Descargar Archivo
+                </a>
+              )}
+            </div>
+
+            <div className="flex justify-end pt-1">
+              <button
+                type="button"
+                onClick={() => setViewSyllabusModal({ isOpen: false, workshopName: '' })}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 7: ALTA DE MATERIA CURRICULAR SIMPLE */}
       {showAddSubjectModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="text-base font-black text-white">Agregar Materia u Optativa</h3>
+              <h3 className="text-base font-black text-white">Agregar Materia Curricular Oficial</h3>
               <button onClick={() => setShowAddSubjectModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
             </div>
 
@@ -1570,25 +2065,20 @@ export default function SuperUserAdminPage() {
                   required
                   value={newSubjectForm.name}
                   onChange={(e) => setNewSubjectForm({ ...newSubjectForm, name: e.target.value })}
-                  placeholder="Ej. Robótica Avanzada"
-                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500"
+                  placeholder="Ej. Lengua Extranjera Inglés"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-indigo-500 font-bold"
                 />
               </div>
 
               <div>
-                <label className="text-slate-400 font-bold block mb-1">Tipo de Materia</label>
-                <select
-                  value={newSubjectForm.category}
-                  onChange={(e) => setNewSubjectForm({ 
-                    ...newSubjectForm, 
-                    category: e.target.value as any,
-                    is_elective: e.target.value === 'optativa'
-                  })}
-                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
-                >
-                  <option value="optativa">Optativa / Taller Extracurricular</option>
-                  <option value="curricular">Curricular Oficial NEM</option>
-                </select>
+                <label className="text-slate-400 font-bold block mb-1">Clave Curricular</label>
+                <input
+                  type="text"
+                  value={newSubjectForm.sep_code}
+                  onChange={(e) => setNewSubjectForm({ ...newSubjectForm, sep_code: e.target.value })}
+                  placeholder="Ej. NEM-ING"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono outline-none focus:border-indigo-500"
+                />
               </div>
 
               <div className="flex justify-end gap-2 pt-2 border-t border-white/10">

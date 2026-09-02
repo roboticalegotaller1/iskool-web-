@@ -142,11 +142,19 @@ export interface Subject {
   id: string;
   school_id: string;
   campus_id?: string;
+  campus_name?: string;
   level_grade_id: string;
   name: string; // e.g., "Matemáticas", "Robótica", "Basquetbol"
   sep_code?: string;
   is_elective?: boolean; // true para materias optativas (Actividad Física, Basquetbol, Música, Robótica, Danza)
   category?: 'curricular' | 'optativa';
+  workshop_category?: 'deportivo' | 'tecnologico' | 'artistico' | 'academico' | 'cientifico';
+  description?: string;
+  instructor_name?: string;
+  schedule?: string;
+  image_url?: string; // Portada o logotipo personalizado del taller
+  syllabus_url?: string; // Archivo del temario / plan de estudio subido
+  syllabus_filename?: string; // Nombre del archivo del temario
   created_at: string;
 }
 
