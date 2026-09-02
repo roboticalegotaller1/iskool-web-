@@ -323,7 +323,25 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
   },
   {
     level: 'primaria-baja',
-    topicRegex: /revoluci|independ|historia|heroe|patria/i,
+    topicRegex: /independ|hidalgo|morelos|josefa|dolores|allende|aldama/i,
+    bookTitle: 'Proyectos de Aula 2º Grado',
+    projectTitle: 'Proyecto de Aula: "El Grito de Independencia y los Héroes que nos dieron Patria"',
+    pageStart: 82,
+    pageEnd: 95,
+    description: 'Movimiento de Independencia de 1810, personajes insurgentes, libertad y símbolos patrios'
+  },
+  {
+    level: 'primaria-baja',
+    topicRegex: /revoluci|madero|zapata|villa|carranza|1910|adelita/i,
+    bookTitle: 'Proyectos Escolares 2º Grado',
+    projectTitle: 'Proyecto Escolar: "Relatos y corridos de la Revolución Mexicana"',
+    pageStart: 96,
+    pageEnd: 109,
+    description: 'Movimiento revolucionario de 1910, personajes históricos, vida cotidiana y corridos'
+  },
+  {
+    level: 'primaria-baja',
+    topicRegex: /historia|heroe|patria|bandera|himno|simbolo/i,
     bookTitle: 'Proyectos de Aula 2º Grado',
     projectTitle: 'Proyecto de Aula: "Viajeros del tiempo: personajes y fechas de México"',
     pageStart: 82,
@@ -379,12 +397,30 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
   },
   {
     level: 'primaria-media',
-    topicRegex: /revoluci|independ|historia|virreinato|conquista/i,
+    topicRegex: /independ|hidalgo|morelos|josefa|insurgente|allende/i,
     bookTitle: 'Nuestros Saberes 4º Grado',
+    projectTitle: 'Proyecto Histórico: "Causas y Voces del Movimiento de Independencia en Nuestra Entidad"',
+    pageStart: 148,
+    pageEnd: 161,
+    description: 'Causas de la Independencia en Nueva España, etapas insurgentes y libertad'
+  },
+  {
+    level: 'primaria-media',
+    topicRegex: /revoluci|madero|zapata|villa|porfir|1910/i,
+    bookTitle: 'Nuestros Saberes 4º Grado',
+    projectTitle: 'Proyecto Histórico: "La Revolución Mexicana y las Demandas de Nuestra Gente"',
+    pageStart: 162,
+    pageEnd: 175,
+    description: 'Causas de la Revolución de 1910, reparto agrario y derechos constitucionales'
+  },
+  {
+    level: 'primaria-media',
+    topicRegex: /historia|virreinato|conquista|prehispan/i,
+    bookTitle: 'Cartografía de México y el Mundo (4º Grado)',
     projectTitle: 'Proyecto Histórico: "Acontecimientos y transformaciones de nuestro país"',
     pageStart: 160,
     pageEnd: 175,
-    description: 'Causas históricas, movimientos sociales y derechos constitucionales'
+    description: 'Procesos históricos, patrimonio cultural y transformaciones sociales'
   },
 
   // --- FASE 5: PRIMARIA ALTA (5º Y 6º) ---
@@ -423,6 +459,15 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
     pageStart: 168,
     pageEnd: 183,
     description: 'Aprovechamiento de biomasa, producción de biogás y huella ecológica'
+  },
+  {
+    level: 'primaria-alta',
+    topicRegex: /independ|hidalgo|morelos|guerrero|iturbide|iguala|cordoba|1810|1821/i,
+    bookTitle: 'Proyectos Escolares 5º Grado',
+    projectTitle: 'Proyecto Histórico: "De la Conspiración de Querétaro a la Consumación de la Independencia"',
+    pageStart: 170,
+    pageEnd: 185,
+    description: 'Las 4 etapas de la Independencia, Tratados de Córdoba, Plan de Iguala y soberanía nacional'
   },
   {
     level: 'primaria-alta',
@@ -482,12 +527,21 @@ const OFFICIAL_SEP_PROJECTS: SepProjectRange[] = [
   },
   {
     level: 'secundaria',
-    topicRegex: /revoluci|porfiriato|constituc|soberania|guerra|independencia/i,
+    topicRegex: /independ|hidalgo|morelos|sentimientos de la nacion|apatzingan|trigarante|1810|1821|insurg/i,
+    bookTitle: 'Ética, Naturaleza y Sociedades: Historia 2º de Secundaria',
+    projectTitle: 'Proyecto Histórico: "Procesos de Emancipación: Del Virreinato a la Independencia Nacional"',
+    pageStart: 78,
+    pageEnd: 95,
+    description: 'Crisis colonial novohispana, ideario insurgente, Sentimientos de la Nación y consumación de la Independencia'
+  },
+  {
+    level: 'secundaria',
+    topicRegex: /revoluci|porfiriato|constituc|madero|zapata|villa|carranza|1910|1917/i,
     bookTitle: 'Ética, Naturaleza y Sociedades: Historia 3º de Secundaria',
     projectTitle: 'Proyecto Histórico: "Transformaciones revolucionarias, soberanía y justicia social"',
     pageStart: 140,
     pageEnd: 159,
-    description: 'Procesos revolucionarios, reformas sociales y vigencia constitucional'
+    description: 'Procesos revolucionarios, reformas sociales, Artículo 3º y 123 y vigencia constitucional'
   },
   {
     level: 'secundaria',
@@ -566,7 +620,10 @@ export function cleanCoreTopicName(topic: string): string {
   // Eliminar prefijos de proyectos o planeaciones
   cleaned = cleaned.replace(/^(?:📚\s*)?(?:Proyecto\s+didáctico(?:\s+integral)?|Planeación(?:\s+didáctica)?|Secuencia(?:\s+didáctica)?|Unidad(?:\s+didáctica)?|Tema|Propuesta(?:\s+pedagógica)?):\s*/i, '');
   
-  // Eliminar sufijos de nivel o fase (ej. "— Primaria Baja (Fase 3: 1º y 2º Grado)")
+    // Eliminar sufijos de nivel, grado o destinatarios (ej. "para alumnos de segundo", "para segundo grado", "de segundo", "para 2do")
+  cleaned = cleaned.replace(/\s*(?:para|de)\s+(?:los\s+)?alumnos?\s+(?:de\s+)?(?:primer[oa]?|segundo|tercer[oa]?|cuarto|quinto|sexto|\d+[º°]?(?:\s*grado)?).*$/i, '');
+  cleaned = cleaned.replace(/\s*(?:para|de)\s+(?:primer[oa]?|segundo|tercer[oa]?|cuarto|quinto|sexto|\d+[º°]?)\s+grado.*$/i, '');
+  cleaned = cleaned.replace(/\s*(?:para|de)\s+segundo(?:\s+de\s+primaria|\s+de\s+secundaria)?.*$/i, '');
   cleaned = cleaned.replace(/\s*—\s*(?:Preescolar|Primaria\s+(?:Baja|Media|Alta)|Secundaria|Preparatoria|Bachillerato|Fase\s+\d+).*$/i, '');
   cleaned = cleaned.replace(/\s*\(Fase\s+\d+.*?\)$/i, '');
 
@@ -578,11 +635,11 @@ export function cleanCoreTopicName(topic: string): string {
   // Corregir duplicación de palabras pequeñas
   cleaned = cleaned.replace(/\b(de|la|el|los|las|un|una|en|que|y|a|con|por|sobre)\s+\1\b/gi, '$1');
 
-  // Normalización canónica para temas frecuentes de la NEM
+  // Normalización canónica para temas frecuentes de la NEM (con tolerancia a erratas y variantes)
   const lower = cleaned.toLowerCase();
   if (/muert|difunt|ofrend|calaver|cempasuchil|altar/i.test(lower)) return 'Tradiciones y Día de Muertos';
-  if (/revoluci/i.test(lower) && /mexic/i.test(lower)) return 'Revolución Mexicana';
-  if (/independen/i.test(lower) && /mexic/i.test(lower)) return 'Independencia de México';
+  if (/independ|hidalgo|morelos|allende|aldama|josefa|iturbide|dolores/i.test(lower)) return 'Independencia de México';
+  if (/revoluci|madero|zapata|villa|carranza/i.test(lower)) return 'Revolución Mexicana';
   if (/porfiriato/i.test(lower)) return 'El Porfiriato y sus Contradicciones Sociales';
   if (/constituc/i.test(lower) && /1917/i.test(lower)) return 'La Constitución de 1917 y los Derechos Sociales';
   if (/fraccion/i.test(lower)) return 'Fracciones y Reparto Equitativo';
@@ -638,6 +695,8 @@ export function sanitizeSpanishPedagogicalGrammar(text: string): string {
 
 export type PedagogicalDomain = 
   | 'traditions_culture'
+  | 'history_independence'
+  | 'history_revolution'
   | 'history_society'
   | 'civics_ethics'
   | 'natural_sciences'
@@ -725,8 +784,18 @@ export function classifyPedagogicalDomain(topic: string, subject: string = ''): 
     return 'socioemotional_physical';
   }
 
-  // 14. Historia, Geografía y Sociedad
-  if (/revoluci|independen|porfir|reforma|mexic|histori|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria|entidad|region|localidad|geografia|mapa|territorio/i.test(cleanTopic) || cleanSub.includes('his') || cleanSub.includes('ent') || cleanSub.includes('geo') || cleanSub.includes('soc')) {
+  // 14.1 Historia - Independencia de México
+  if (/independ|hidalgo|morelos|allende|aldama|josefa|iturbide|guerrero|trigarante|dolores|grito|sentimientos de la nacion|apatzingan|cordoba|iguala|insurg/i.test(cleanTopic)) {
+    return 'history_independence';
+  }
+
+  // 14.2 Historia - Revolución Mexicana
+  if (/revoluci|madero|zapata|villa|carranza|obregon|porfiriato|diaz|huerta|adelita|1910|1917|constitucion de 1917|tierra y libertad|sufragio efectivo/i.test(cleanTopic)) {
+    return 'history_revolution';
+  }
+
+  // 14.3 Historia, Geografía y Sociedad General
+  if (/porfir|reforma|mexic|histori|juarez|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria|entidad|region|localidad|geografia|mapa|territorio/i.test(cleanTopic) || cleanSub.includes('his') || cleanSub.includes('ent') || cleanSub.includes('geo') || cleanSub.includes('soc')) {
     return 'history_society';
   }
 
@@ -1616,7 +1685,9 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
 
   // Identificación precisa del dominio temático
   const isTraditionsOrCulture = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad|carnaval|charro|mariachi|indigena|originario|lengua materna/i.test(topicLower);
-  const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
+  const isIndependence = /independ|hidalgo|morelos|allende|aldama|josefa|iturbide|guerrero|trigarante|dolores|grito|sentimientos de la nacion|apatzingan|cordoba|iguala|insurg/i.test(topicLower);
+  const isRevolution = !isIndependence && /revoluci|madero|zapata|villa|carranza|obregon|porfiriato|diaz|huerta|adelita|1910|1917|constitucion de 1917|tierra y libertad|sufragio efectivo/i.test(topicLower);
+  const isHistoryGeneral = !isIndependence && !isRevolution && /porfir|reforma|mexic|histori|juarez|virrein|prehispan|colonia|patrimon|tradicion|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(topicLower);
   const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
   const isLiterature = /cuento|leyenda|mito|fabula|poema|poes|rima|verso|cancion|teatro|dramat|relato|literat/i.test(topicLower);
   const isFractions = /fraccion|equivalen|particion|reparto|denominador|numerador/i.test(topicLower);
@@ -1771,8 +1842,151 @@ export function getArticulatedPdas(level: string, subject: string, topic: string
     }
   }
 
-  // 1. DOMINIO HISTÓRICO Y CÍVICO (Ej. Revolución Mexicana, Independencia, Tradiciones)
-  if (isHistory) {
+  // 1.1 DOMINIO HISTÓRICO - INDEPENDENCIA DE MÉXICO (1810-1821)
+  if (isIndependence) {
+    if (levelKey === 'preescolar') {
+      return [
+        {
+          campoFormativo: 'Lenguajes (Preescolar - Fase 2)',
+          pda: `Expresa oralmente relatos, poemas y cantos tradicionales sobre el inicio de la Independencia y los héroes de la patria (Hidalgo, Josefa Ortiz de Domínguez) mediante el juego dramático, títeres y dibujo libre.`,
+          relacion: 'Oralidad infantil, apreciación de símbolos patrios e iniciación en la memoria colectiva.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Identifica nociones temporales (hace muchos años, antes y hoy), ordena láminas históricas y clasifica banderas y estandartes por formas geométricas y colores.`,
+          relacion: 'Noción temporal intuitiva, clasificación perceptual y observación de cambios en el entorno.'
+        },
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades',
+          pda: `Reconoce que forma parte de México y conmemora con orgullo las fiestas patrias de septiembre, compartiendo anécdotas de su familia sobre la Independencia y el respeto a los símbolos nacionales.`,
+          relacion: 'Sentido de pertenencia nacional, identidad comunitaria y valoración de las fiestas cívicas.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Participa con alegría en rondas cívicas y representaciones del Grito de Dolores, practicando el respeto, la libertad y la igualdad entre niñas y niños.`,
+          relacion: 'Convivencia armónica, expresión motriz y valoración de los derechos de todas las personas.'
+        }
+      ];
+    } else if (levelKey === 'primaria-baja') {
+      return [
+        {
+          campoFormativo: 'Lenguajes (Primaria Baja - Fase 3)',
+          pda: `Produce e interpreta narraciones orales, coplas patrióticas y dibujos sobre la Independencia de México y el Grito de Dolores, dialogando con familiares sobre Miguel Hidalgo, Josefa Ortiz de Domínguez e Ignacio Allende.`,
+          relacion: 'Alfabetización inicial con sentido social, rescate de la tradición oral y expresión artística de la memoria histórica.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Organiza secuencias temporales en calendarios y líneas del tiempo sencillas (el año 1810, el paso del tiempo y las celebraciones escolares actuales), cuantificando años y colecciones de imágenes históricas.`,
+          relacion: 'Uso del calendario escolar, noción matemática de tiempo histórico y resolución de problemas de conteo con datos reales.'
+        },
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades',
+          pda: `Indaga a través de relatos orales, lecturas guiadas e imágenes los hechos del inicio de la Independencia de México, reconociendo por qué lucharon por la libertad, la justicia y la igualdad de las personas.`,
+          relacion: 'Compromiso cívico, valoración del derecho a la libertad, rechazo a la discriminación y memoria comunitaria.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Participa en dramatizaciones cívicas y juegos de roles sobre los personajes insurgentes, valorando la valentía, el trabajo en equipo y la cultura de paz.`,
+          relacion: 'Trabajo colaborativo, reconocimiento del papel de las mujeres en la Independencia y convivencia pacífica.'
+        }
+      ];
+    } else if (levelKey === 'primaria-media') {
+      return [
+        {
+          campoFormativo: 'Lenguajes (Primaria Media - Fase 4)',
+          pda: `Redacta textos expositivos, biografías ilustradas y reseñas históricas sobre las causas de la Independencia en su entidad federativa y las campañas de Morelos y los insurgentes.`,
+          relacion: 'Comprensión lectora de fuentes históricas, redacción de párrafos cronológicos y uso de conectores temporales.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Interpreta mapas históricos regionales de las rutas insurgentes, calcula distancias geográficas y organiza datos cronológicos de 1810 a 1821 en tablas y líneas del tiempo.`,
+          relacion: 'Pensamiento geoespacial, cálculo de distancias y tratamiento de datos estadísticos históricos.'
+        },
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades',
+          pda: `Analiza las desigualdades sociales de la Nueva España que provocaron la lucha armada de Independencia, valorando los ideales de soberanía y los derechos de los pueblos originarios.`,
+          relacion: 'Conciencia histórica regional, defensa de los derechos humanos y valoración del ideario emancipador.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Reflexiona sobre los valores de libertad y soberanía popular, proponiendo acuerdos escolares para prevenir la discriminación y promover la inclusión comunitaria.`,
+          relacion: 'Formación ciudadana crítica, liderazgo colaborativo y construcción de acuerdos democráticos.'
+        }
+      ];
+    } else if (levelKey === 'primaria-alta') {
+      return [
+        {
+          campoFormativo: 'Lenguajes (Primaria Alta - Fase 5)',
+          pda: `Elabora ensayos históricos, periódicos murales y debates fundamentados sobre las cuatro etapas de la Independencia y el ideario plasmado en los "Sentimientos de la Nación".`,
+          relacion: 'Pensamiento discursivo crítico, análisis de fuentes primarias y secundarias y argumentación oral rigurosa.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Analiza censos coloniales, proporciones demográficas de las castas en la Nueva España y modela datos geoespaciales de 1810 a 1821 con porcentajes y mapas a escala.`,
+          relacion: 'Aplicación de porcentajes, proporcionalidad y análisis cuantitativo de la realidad sociohistórica.'
+        },
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades',
+          pda: `Analiza críticamente las causas internas y externas de la guerra de Independencia, los Tratados de Córdoba y el Plan de Iguala en la consumación de la soberanía nacional.`,
+          relacion: 'Conciencia histórica nacional, soberanía popular, abolición de la esclavitud y construcción del Estado mexicano.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Diseña iniciativas escolares para fomentar el patriotismo cívico, la equidad de género y los derechos fundamentales, inspiradas en los ideales insurgentes.`,
+          relacion: 'Liderazgo social transformador, empatía histórica y promoción de los derechos humanos universales.'
+        }
+      ];
+    } else if (levelKey === 'secundaria') {
+      return [
+        {
+          campoFormativo: 'Ética, Naturaleza y Sociedades (Secundaria - Fase 6)',
+          pda: `Analiza críticamente desde diversas corrientes historiográficas la crisis novohispana, el impacto de la Ilustración, las conspiraciones criollas, el ideario insurgente (Morelos, Hidalgo) y la conformación del primer Estado mexicano independiente.`,
+          relacion: 'Rigor historiográfico, análisis de fuentes primarias documentales y comprensión de procesos emancipadores continentales.'
+        },
+        {
+          campoFormativo: 'Lenguajes (Español / Lengua Extranjera)',
+          pda: `Produce ensayos académicos, discursos y mesas redondas con aparato crítico sobre el constitucionalismo emancipador (Constitución de Apatzingán) y los manifiestos de la Independencia.`,
+          relacion: 'Argumentación dialéctica formal, análisis de textos fundacionales y oratoria deliberativa.'
+        },
+        {
+          campoFormativo: 'Saberes y Pensamiento Científico',
+          pda: `Modela cuantitativamente las variables económicas, pérdidas territoriales, endeudamiento y reorganización fiscal de México tras la consumación de la Independencia en 1821.`,
+          relacion: 'Modelación matemática de fenómenos macroeconómicos y análisis estadístico crítico.'
+        },
+        {
+          campoFormativo: 'De lo Humano y lo Comunitario',
+          pda: `Evalúa los retos contemporáneos de la soberanía nacional, la autodeterminación de los pueblos y la cohesión social a partir de la memoria histórica de la emancipación.`,
+          relacion: 'Conciencia cívica participativa, proyecto ético de vida y compromiso con la soberanía popular.'
+        }
+      ];
+    } else {
+      return [
+        {
+          campoFormativo: 'Conciencia Histórica y Humanidades (MCCEMS)',
+          pda: `Examina con rigor historiográfico los procesos de emancipación en América Latina, el ideario ilustrado novohispano y la construcción de la soberanía popular en el México independiente.`,
+          relacion: 'Pensamiento histórico crítico preuniversitario, juicio epistemológico y análisis de la soberanía nacional.'
+        },
+        {
+          campoFormativo: 'Lengua y Comunicación',
+          pda: `Construye discursos argumentativos y ensayos académicos rigurosamente citados sobre el pensamiento político de Morelos y el republicanismo emancipador.`,
+          relacion: 'Escritura académica superior, rigor discursivo y dialéctica sociopolítica.'
+        },
+        {
+          campoFormativo: 'Pensamiento Matemático',
+          pda: `Modela variables demográficas, territoriales y hacendarias de la transición de la Nueva España al México independiente mediante análisis estadístico avanzado.`,
+          relacion: 'Modelación analítica formal y análisis cuantitativo de la economía política histórica.'
+        },
+        {
+          campoFormativo: 'Recursos Socioemocionales',
+          pda: `Coordina foros de debate y proyectos cívicos sobre la soberanía y la autodeterminación comunitaria en el México actual.`,
+          relacion: 'Responsabilidad social, liderazgo ético transformador y compromiso comunitario.'
+        }
+      ];
+    }
+  }
+
+  // 1.2 DOMINIO HISTÓRICO - REVOLUCIÓN MEXICANA (1910-1917)
+  if (isRevolution || isHistoryGeneral) {
     if (levelKey === 'preescolar') {
       return [
         {
@@ -2295,7 +2509,185 @@ export function generateFinalProjectProposal(level: string, subject: string, top
     }
   }
 
-  // 2. DOMINIO HISTORIA, GEOGRAFÍA Y SOCIEDAD
+  // 1.1 DOMINIO HISTÓRICO - INDEPENDENCIA DE MÉXICO
+  if (domain === 'history_independence') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      return {
+        titulo: `Galería Infantil de los Héroes de la Patria: "El Grito de Dolores y el Nacimiento de Nuestra Independencia"`,
+        problematicaComunitaria: `En nuestra comunidad escolar y familiar se requiere fortalecer el conocimiento sobre las raíces históricas de México, comprendiendo por qué conmemoramos el 16 de septiembre y qué valores de libertad, igualdad y valentía nos heredaron los héroes insurgentes.`,
+        proposito: `Investigar a través de relatos familiares, canciones patrióticas y libros de texto gratuitos de la SEP (Proyectos de Aula 2º Grado / Nuestros Saberes) los acontecimientos del inicio de la Independencia y la vida de Miguel Hidalgo, Josefa Ortiz de Domínguez e Ignacio Allende para montar una feria cívica escolar.`,
+        productoFinal: `Instalación de la "Feria Cívica Infantil de la Independencia" en el salón, con dibujos rotulados de los héroes insurgentes, dramatización infantil guiada del Grito de Dolores con campanas simbólicas y recital de coplas patrióticas ante las familias.`,
+        impactoSocial: `Inicia a las niñas y niños en la comprensión del valor de la libertad y la justicia, despierta el respeto a los símbolos patrios y fortalece los lazos de convivencia escolar con las familias.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Reconocimiento de los Héroes Insurgentes y su Lucha',
+            sobresaliente: `Reconoce a Miguel Hidalgo, Josefa Ortiz de Domínguez y Allende, explicando con sus palabras por qué lucharon por la libertad y la igualdad de las personas.`,
+            satisfactorio: `Identifica a los héroes principales y relata aspectos básicos del Grito de Dolores.`,
+            enProceso: `Muestra dificultad para identificar a los personajes históricos o confunde las conmemoraciones.`
+          },
+          criterio2: {
+            nombre: 'Expresión Artística y Narración Oral del Grito',
+            sobresaliente: `Elabora dibujos expresivos y coloridos de los héroes y símbolos patrios, y participa con entusiasmo en la dramatización cívica con lenguaje claro.`,
+            satisfactorio: `Realiza sus dibujos y participa en la dramatización con apoyo del docente.`,
+            enProceso: `Presenta timidez o desinterés en las actividades artísticas y narrativas del proyecto.`
+          },
+          criterio3: {
+            nombre: 'Convivencia y Respeto en la Muestra Cívica',
+            sobresaliente: `Muestra actitud de respeto y alegría durante la ceremonia cívica, colabora en el arreglo del salón y escucha con atención a sus compañeros.`,
+            satisfactorio: `Participa con orden en la presentación y comparte sus trabajos con las familias.`,
+            enProceso: `Le cuesta mantener el orden o colaborar con su equipo de trabajo.`
+          }
+        }
+      };
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      return {
+        titulo: `Museo Viviente de la Emancipación: "De la Conspiración de Querétaro a la Consumación de la Independencia de México"`,
+        problematicaComunitaria: `Los estudiantes requieren profundizar en el análisis crítico de las cuatro etapas del movimiento insurgente, contrastando los ideales de justicia social de los "Sentimientos de la Nación" con la realidad de nuestra entidad federativa.`,
+        proposito: `Analizar fuentes primarias y libros de texto de la SEP (Nuestros Saberes 4º / Proyectos Escolares 5º) para diseñar salas temáticas interactivas del proceso emancipador de 1810 a 1821.`,
+        productoFinal: `Montaje del "Museo Histórico Viviente de la Independencia" en el patio cívico, con 4 módulos temáticos atendidos por estudiantes caracterizados, periódicos facsimilares de época, mapas de las campañas de Morelos e Hidalgo y debate con la comunidad escolar.`,
+        impactoSocial: `Sensibiliza sobre la soberanía nacional, los derechos fundamentales y la vigencia del ideario de justicia social en el México contemporáneo.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Análisis de las Etapas e Ideario Insurgente',
+            sobresaliente: `Explica con rigor cronológico las 4 etapas de la Independencia y la trascendencia de los Sentimientos de la Nación en la abolición de la esclavitud y la igualdad.`,
+            satisfactorio: `Identifica los momentos centrales de la lucha insurgente apoyándose en lecturas y líneas de tiempo.`,
+            enProceso: `Presenta confusiones cronológicas entre las etapas o desconoce los documentos fundacionales.`
+          },
+          criterio2: {
+            nombre: 'Producción Museográfica y Cédulas Históricas',
+            sobresaliente: `Elabora cédulas museográficas ilustradas, mapas de batallas y periódicos de época con redacción impecable y creatividad histórica.`,
+            satisfactorio: `Diseña su material expositivo con orden, limpieza y datos históricos correctos.`,
+            enProceso: `El material es incompleto o carece de sustento documental.`
+          },
+          criterio3: {
+            nombre: 'Conducción y Diálogo Crítico con Visitantes',
+            sobresaliente: `Explica con elocuencia y dominio temático su módulo a las familias, respondiendo preguntas y vinculando la historia con los derechos actuales.`,
+            satisfactorio: `Atiende su estación de forma adecuada y comunica con amabilidad lo aprendido.`,
+            enProceso: `Muestra inseguridad o dificultad para expresarse ante el público.`
+          }
+        }
+      };
+    } else {
+      return {
+        titulo: `Coloquio Historiográfico y Archivo Documental: "Pensamiento Ilustrado, Insurgencia Popular y Soberanía Nacional en la Independencia de México"`,
+        problematicaComunitaria: `Necesidad de examinar críticamente las contradicciones de la sociedad novohispana, el impacto de las reformas borbónicas y los proyectos de nación en pugna durante el proceso emancipador.`,
+        proposito: `Realizar una investigación historiográfica rigurosa analizando fuentes primarias (Constitución de Apatzingán, Sentimientos de la Nación, Plan de Iguala, Tratados de Córdoba) para debatir en un coloquio académico juvenil (Colección Ximhai / MCCEMS).`,
+        productoFinal: `Coloquio estudiantil "Voces y Documentos de la Independencia", edición de revista facsimilar comentada y podcast de divulgación histórica comunitaria.`,
+        impactoSocial: `Desarrolla el pensamiento crítico preuniversitario, fortalece la identidad ciudadana y defiende la soberanía popular.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Rigor Historiográfico y Análisis de Fuentes Primarias',
+            sobresaliente: `Examina con aparato crítico fuentes primarias novohispanas e insurgentes, contrastando interpretaciones historiográficas y citando formalmente.`,
+            satisfactorio: `Sustenta su ensayo histórico con documentos clave y argumentos coherentes.`,
+            enProceso: `Carece de aparato crítico o reproduce relatos anecdóticos sin sustento.`
+          },
+          criterio2: {
+            nombre: 'Argumentación Dialéctica en Ponencia y Revista',
+            sobresaliente: `Escribe y expone con solvencia teórica su ponencia, defendiendo con claridad sus tesis sobre la soberanía popular y el Estado constitucional.`,
+            satisfactorio: `Presenta su ponencia con estructura académica y claridad discursiva.`,
+            enProceso: `Dificultad para estructurar argumentos o responder a contraargumentos.`
+          },
+          criterio3: {
+            nombre: 'Liderazgo Académico y Divulgación Comunitaria',
+            sobresaliente: `Modera mesas de debate con apertura democrática y coordina la edición digital de la revista con excelencia técnica.`,
+            satisfactorio: `Participa activamente en las mesas de debate y colabora en la revista escolar.`,
+            enProceso: `Poca participación o falta de compromiso con las tareas de difusión.`
+          }
+        }
+      };
+    }
+  }
+
+  // 1.2 DOMINIO HISTÓRICO - REVOLUCIÓN MEXICANA
+  if (domain === 'history_revolution') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      return {
+        titulo: `Galería y Corridos de la Revolución Mexicana: "Personajes, Relatos y Adelitas de 1910"`,
+        problematicaComunitaria: `En nuestra comunidad escolar se requiere rescatar la memoria histórica sobre la Revolución Mexicana, valorando las demandas campesinas y la lucha por la educación pública.`,
+        proposito: `Investigar relatos y corridos populares de 1910 en libros SEP (Proyectos Escolares 2º Grado) para montar una galería de personajes históricos y canciones tradicionales.`,
+        productoFinal: `Galería histórica infantil con dibujos de Madero, Zapata, Villa y las Adelitas, recital de corridos tradicionales y pequeña dramatización de la vida campesina.`,
+        impactoSocial: `Fortalece el sentido de justicia, equidad y respeto a los derechos humanos desde la primera infancia.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Reconocimiento de Personajes de la Revolución',
+            sobresaliente: `Identifica a Madero, Zapata, Villa y las Adelitas, explicando por qué lucharon por la tierra y la educación.`,
+            satisfactorio: `Reconoce a los personajes principales y sus características representativas.`,
+            enProceso: `Confunde los personajes o hechos de la Revolución Mexicana.`
+          },
+          criterio2: {
+            nombre: 'Expresión Musical y Plástica Tradicional',
+            sobresaliente: `Canta fragmentos de corridos y elabora dibujos detallados con vestuario de época.`,
+            satisfactorio: `Participa en los cantos y dibujos con orden y entusiasmo.`,
+            enProceso: `Muestra desinterés en las actividades plásticas o musicales.`
+          },
+          criterio3: {
+            nombre: 'Trabajo Colaborativo en el Montaje Escolar',
+            sobresaliente: `Colabora activamente en equipo y comparte sus trabajos con orgullo ante las familias.`,
+            satisfactorio: `Participa con amabilidad en el salón durante la muestra escolar.`,
+            enProceso: `Presenta dificultades para convivir o trabajar en equipo.`
+          }
+        }
+      };
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      return {
+        titulo: `Museo Viviente de la Revolución Mexicana: "Causas, Corridos y la Constitución de 1917"`,
+        problematicaComunitaria: `Necesidad de analizar críticamente las desigualdades sociales del Porfiriato y cómo la lucha revolucionaria forjó los derechos agrarios, laborales y educativos.`,
+        proposito: `Indagar en libros SEP (Proyectos Comunitarios 5º / Nuestros Saberes 4º) para crear estaciones museográficas interactivas sobre la Revolución de 1910.`,
+        productoFinal: `Museo viviente escolar con estaciones temáticas (El Porfiriato, La Lucha Agraria, Las Mujeres en la Revolución, La Constitución de 1917) y periódico facsimilar "El Maderista Escolar".`,
+        impactoSocial: `Fomenta la conciencia cívica sobre los derechos laborales y el valor de la educación pública gratuita.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Comprensión Histórica de las Causas y Leyes',
+            sobresaliente: `Explica las causas del estallido de 1910 y la importancia de los Artículos 3º, 27 y 123 de la Constitución.`,
+            satisfactorio: `Identifica las demandas principales de la Revolución y los líderes del movimiento.`,
+            enProceso: `Presenta dificultades para explicar las causas o la trascendencia de la Constitución.`
+          },
+          criterio2: {
+            nombre: 'Calidad del Periódico de Época y Cédulas',
+            sobresaliente: `Redacta noticias históricas con rigor cronológico, diseño facsimilar creativo y ortografía impecable.`,
+            satisfactorio: `Elabora su periódico mural o notas con datos correctos y orden visual.`,
+            enProceso: `El material es incompleto o contiene anacronismos evidentes.`
+          },
+          criterio3: {
+            nombre: 'Guía y Mediación Museográfica ante Familias',
+            sobresaliente: `Conduce su estación con seguridad, elocuencia y empatía hacia los visitantes de la comunidad.`,
+            satisfactorio: `Explica su sección del museo con amabilidad y datos claros.`,
+            enProceso: `Muestra timidez o dificultad para transmitir las ideas históricas.`
+          }
+        }
+      };
+    } else {
+      return {
+        titulo: `Coloquio Historiográfico: "Facciones Revolucionarias, Transformación Constitucional y Vigencia Social de 1917"`,
+        problematicaComunitaria: `Examen crítico de las demandas zapatistas, villistas y constitucionalistas, y su grado de cumplimiento en el México del siglo XXI.`,
+        proposito: `Desarrollar un análisis historiográfico riguroso con fuentes primarias (Planes de San Luis, Ayala y Guadalupe) que culmine en un simposio estudiantil.`,
+        productoFinal: `Coloquio estudiantil con mesas redondas, edición de revista digital histórica y podcast de divulgación sobre las conquistas sociales de la Revolución.`,
+        impactoSocial: `Promueve el compromiso cívico de las juventudes con la democracia sustantiva y la justicia social.`,
+        rubrica: {
+          criterio1: {
+            nombre: 'Rigor Historiográfico y Análisis de Planes',
+            sobresaliente: `Contrasta con aparato crítico los planes revolucionarios y sus fundamentos ideológicos con fuentes primarias.`,
+            satisfactorio: `Analiza los planes de la Revolución con argumentos fundamentados.`,
+            enProceso: `Falta de sustento documental o visión simplista del conflicto.`
+          },
+          criterio2: {
+            nombre: 'Argumentación Dialéctica en el Coloquio',
+            sobresaliente: `Expone ponencias con elocuencia académica y defiende posturas críticas sobre los derechos sociales.`,
+            satisfactorio: `Presenta su investigación con claridad y orden expositivo.`,
+            enProceso: `Dificultad para articular argumentos ante el auditorio.`
+          },
+          criterio3: {
+            nombre: 'Liderazgo Cívico y Producción Editorial',
+            sobresaliente: `Coordina la revista y mesas de trabajo con alto sentido ético y profesionalismo académico.`,
+            satisfactorio: `Colabora eficazmente en la producción editorial y logística del simposio.`,
+            enProceso: `Poca participación en las actividades colectivas.`
+          }
+        }
+      };
+    }
+  }
+
+  // 2. DOMINIO HISTORIA, GEOGRAFÍA Y SOCIEDAD GENERAL
   if (domain === 'history_society') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       return {
@@ -2879,7 +3271,53 @@ export function generateDetonatingQuestions(topic: string, level: string = 'prim
     }
   }
 
-  // 2. HISTORIA, GEOGRAFÍA Y SOCIEDAD
+  // 1.1 HISTORIA - INDEPENDENCIA DE MÉXICO
+  else if (domain === 'history_independence') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Por qué en septiembre tocamos campanas, ondeamos banderas y gritamos "¡Viva México!" para recordar a Hidalgo y a doña Josefa Ortiz?`,
+        `¿Qué historias nos cuentan en casa y en la escuela sobre cómo vivían las personas antes de que México fuera un país libre e independiente?`,
+        `¿Cómo podemos dibujar y dramatizar con respeto a las mujeres y hombres valientes que lucharon por nuestra libertad y la igualdad de todos?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cuáles fueron las principales injusticias y desigualdades sociales en la Nueva España que impulsaron al cura Hidalgo, a Morelos y al pueblo a levantarse en armas en 1810?`,
+        `¿Cómo nos ayuda el estudio de documentos como los "Sentimientos de la Nación" a entender qué país de igualdad y justicia soñaban construir los insurgentes?`,
+        `¿De qué manera los ideales de libertad, soberanía y abolición de la esclavitud de la Independencia siguen vivos en las leyes de nuestro México actual?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Qué papel jugaron las reformas borbónicas, la invasión napoleónica a España y el pensamiento ilustrado en el estallido insurgente de 1810?`,
+        `¿Cómo contrastan los proyectos de nación y soberanía de Hidalgo, Morelos e Iturbide a lo largo de las cuatro etapas emancipadoras?`,
+        `¿En qué medida los Tratados de Córdoba y el Plan de Iguala consolidaron la soberanía o dejaron compromisos sociales pendientes con las clases populares?`
+      ];
+    }
+  }
+
+  // 1.2 HISTORIA - REVOLUCIÓN MEXICANA
+  else if (domain === 'history_revolution') {
+    if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
+      rawQuestions = [
+        `¿Por qué el 20 de noviembre recordamos a Francisco I. Madero, Emiliano Zapata y las Adelitas con vestuarios y canciones tradicionales?`,
+        `¿Qué cosas cambiaron en la vida del campo y las escuelas después de la Revolución Mexicana?`,
+        `¿Cómo podemos cantar corridos y dramatizar historias de la Revolución Mexicana valorando la justicia y la paz?`
+      ];
+    } else if (levelKey === 'primaria-media' || levelKey === 'primaria-alta') {
+      rawQuestions = [
+        `¿Cuáles fueron las causas del Porfiriato y las desigualdades en el campo y las fábricas que provocaron el estallido de la Revolución de 1910?`,
+        `¿Por qué la Constitución de 1917 fue tan importante al establecer por primera vez en el mundo el derecho a la educación gratuita (Art. 3º) y el trabajo digno (Art. 123)?`,
+        `¿Qué ideales de tierra, justicia y democracia de la Revolución siguen siendo compromisos indispensables en nuestras comunidades?`
+      ];
+    } else {
+      rawQuestions = [
+        `¿Cómo se articuló la heterogeneidad de los proyectos maderista, zapatista, villista y constitucionalista durante el proceso revolucionario de 1910 a 1920?`,
+        `¿Cuál fue la trascendencia geopolítica y social de la Constitución de 1917 como pacto refundacional del Estado mexicano moderno?`,
+        `¿Qué continuidades y rupturas existen entre las demandas agrarias y laborales de la Revolución y las transformaciones sociopolíticas contemporáneas?`
+      ];
+    }
+  }
+
+  // 2. HISTORIA, GEOGRAFÍA Y SOCIEDAD GENERAL
   else if (domain === 'history_society') {
     if (levelKey === 'preescolar' || levelKey === 'primaria-baja') {
       rawQuestions = [
@@ -3240,7 +3678,9 @@ export function detectCurriculumPdasForTopic(
 
   // Identificación exhaustiva de dominios temáticos
   const isTraditionsOrCulture = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad|carnaval|charro|mariachi|indigena|originario|lengua materna/i.test(topicLower);
-  const isHistoryOrCivics = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria|comunidad|entidad|region|localidad/i.test(topicLower);
+  const isIndependence = /independ|hidalgo|morelos|allende|aldama|josefa|iturbide|guerrero|trigarante|dolores|grito|sentimientos de la nacion|apatzingan|cordoba|iguala|insurg/i.test(topicLower);
+  const isRevolution = !isIndependence && /revoluci|madero|zapata|villa|carranza|obregon|porfiriato|diaz|huerta|adelita|1910|1917|constitucion de 1917|tierra y libertad/i.test(topicLower);
+  const isHistoryOrCivics = isIndependence || isRevolution || /porfir|reforma|mexic|histori|constituc|juarez|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria|comunidad|entidad|region|localidad/i.test(topicLower);
   const isMath = /matemat|fraccion|suma|resta|multiplic|division|numero|conteo|algebra|ecuacion|cuadrat|parabol|geometr|tangram|area|perimetr|volumen|probabil|estadist|porcentaj|proporc|vector|recta|plano/i.test(topicLower);
   const isScience = /cienc|natur|biolog|fisic|quimic|plan|animal|cuerpo|organo|salud|nutric|ecosistem|agua|aire|suelo|materia|energia|fuerza|movimient|celul|atomo|combust|calor|optica|luz|universo|planeta|medio ambiente|biodivers|huerto|recicl/i.test(topicLower);
   const isEpistolar = /carta|epistol|mensaje|buzon|cartero|correspondencia|sobre\b|postal/i.test(topicLower);
@@ -3252,6 +3692,8 @@ export function detectCurriculumPdasForTopic(
 
   const pdasByPhase: Record<string, {
     traditions: string[];
+    independence?: string[];
+    revolution?: string[];
     history: string[];
     math: string[];
     science: string[];
@@ -3267,6 +3709,13 @@ export function detectCurriculumPdasForTopic(
         `Fase 2 (Preescolar) - Lenguajes: Expresa mediante dibujos, modelado con masa y canciones tradicionales sus impresiones sobre las ofrendas y personajes de las festividades de su comunidad.`,
         `Fase 2 (Preescolar) - De lo Humano y lo Comunitario: Identifica que forma parte de una familia y comunidad con costumbres propias, participando con respeto y alegría en celebraciones colectivas.`,
         `Fase 2 (Preescolar) - Saberes y Pensamiento Científico: Observa los elementos naturales de temporada (flores de cempasúchil, frutas, semillas y hojas), describiendo colores, formas y texturas.`
+      ],
+      independence: [
+        `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y dibujos sobre la Independencia de México, Miguel Hidalgo y los símbolos patrios, reconociendo el valor de la libertad.`,
+        `Fase 2 (Preescolar) - Lenguajes: Expresa oralmente relatos, poemas y canciones sobre los héroes patrios mediante el juego dramático y títeres.`
+      ],
+      revolution: [
+        `Fase 2 (Preescolar) - Lenguajes: Expresa mediante dibujos y canciones relatos sobre personajes de la Revolución Mexicana.`
       ],
       history: [
         `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre "${capitalizedTopic}", reconociendo la historia de su entorno y festividades de su comunidad.`,
@@ -3305,6 +3754,18 @@ export function detectCurriculumPdasForTopic(
         `Fase 3 (1º y 2º Primaria) - Lenguajes (Artes): Explora elementos plásticos (papel picado, calaveritas de barro o plastilina, aserrín de colores) para recrear altares y manifestaciones de la tradición popular.`,
         `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Reconoce que las tradiciones y festividades familiares fortalecen los lazos afectivos, el respeto intergeneracional y el sentido de pertenencia colectiva.`,
         `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Describe y clasifica elementos naturales de temporada (cempasúchil, mandarinas, calabaza, copal) y observa sus transformaciones físicas cotidianas.`
+      ],
+      independence: [
+        `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos históricos, lecturas compartidas e imágenes los acontecimientos y personajes del inicio de la Independencia de México (Miguel Hidalgo, Josefa Ortiz de Domínguez, Ignacio Allende), reconociendo por qué conmemoramos esta fecha cívica y valorando la libertad y la justicia.`,
+        `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta narraciones orales, coplas patrióticas y dibujos sobre los héroes y heroínas de la Independencia de México, dialogando con sus compañeros sobre el valor de la libertad y el respeto a los símbolos patrios.`,
+        `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Organiza secuencias temporales y líneas del tiempo sencillas (el Grito de 1810, el paso de los años y la celebración actual en nuestra escuela y comunidad).`,
+        `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Participa en dramatizaciones, rondas y representaciones cívicas sobre los valores de valentía, solidaridad e igualdad heredados del movimiento de Independencia.`
+      ],
+      revolution: [
+        `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios de su comunidad los hechos de la Revolución Mexicana, reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las personas.`,
+        `Fase 3 (1º y 2º Primaria) - Lenguajes: Produce e interpreta narraciones orales, coplas, corridos y dibujos sobre la Revolución Mexicana (Madero, Zapata, Villa y las Adelitas).`,
+        `Fase 3 (1º y 2º Primaria) - Saberes y Pensamiento Científico: Organiza secuencias temporales en calendarios y líneas del tiempo sencillas (antes de 1910, durante la lucha y la época actual).`,
+        `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Participa en dramatizaciones y juegos de roles sobre personajes históricos de la Revolución, valorando la igualdad y la justicia.`
       ],
       history: [
         `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios las tradiciones, historia y cambios de "${capitalizedTopic}" en su comunidad.`,
@@ -3602,6 +4063,12 @@ export function detectCurriculumPdasForTopic(
       candidateLists.push(levelPdas.traditions);
     }
   } else {
+    if (isIndependence && levelPdas.independence) {
+      candidateLists.push(levelPdas.independence);
+    } else if (isRevolution && levelPdas.revolution) {
+      candidateLists.push(levelPdas.revolution);
+    }
+
     if (primaryDomain === 'history') {
       candidateLists.push(levelPdas.history);
       candidateLists.push(levelPdas.civics);

@@ -221,7 +221,9 @@ interface PlanningTabProps {
 const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => {
   const capitalizedTopic = cleanCoreTopicName(rawTopic);
   const isTradition = /muert|difunt|ofrend|calaver|altar|cempasuchil|pan de muerto|costumbre|festividad|tradicion|patrimonio biocultural|celebrac|panteon|copal|sahumerio|alfeñique|papel picado|fiesta patronal|guelaguetza|posada|navidad/i.test(capitalizedTopic);
-  const isHistory = /revoluci|independen|porfir|reforma|mexic|histori|constituc|madero|zapata|villa|juarez|hidalgo|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(capitalizedTopic);
+  const isIndependence = /independ|hidalgo|morelos|allende|aldama|josefa|iturbide|dolores/i.test(capitalizedTopic);
+  const isRevolution = !isIndependence && /revoluci|madero|zapata|villa|carranza|porfir/i.test(capitalizedTopic);
+  const isHistory = isIndependence || isRevolution || /reforma|mexic|histori|constituc|juarez|virrein|prehispan|colonia|patrimon|cultura|efemerid|civilizac|conquista|batalla|heroes|monumento|patria/i.test(capitalizedTopic);
   const isParabola = /parabol|cuadrat|segundo grado|tiro parab/i.test(capitalizedTopic);
   const isAdditionOrSubtraction = /suma|resta|agregar|quitar|conteo|numero|agrupacion|reagrupa/i.test(capitalizedTopic);
   const isGeometry = /figura|cuerpo|geometric|tangram|plano|cara|arista/i.test(capitalizedTopic);
@@ -236,6 +238,10 @@ const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => 
       health:    `Fase 2 (Preescolar) - De lo Humano y lo Comunitario: Practica hábitos de higiene, hidratación y alimentación sana del Plato del Bien Comer para mantenerse sano.`,
       history:   isTradition
         ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre Día de Muertos y festividades de su comunidad, reconociendo la diversidad cultural.`
+        : isIndependence
+        ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y dibujos sobre la Independencia de México, Miguel Hidalgo y los símbolos patrios, reconociendo el valor de la libertad.`
+        : isRevolution
+        ? `Fase 2 (Preescolar) - Lenguajes: Expresa mediante dibujos y canciones relatos sobre personajes de la Revolución Mexicana.`
         : `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos, costumbres y tradiciones familiares sobre "${capitalizedTopic}", reconociendo la historia de su entorno y festividades de su comunidad.`,
       art:       `Fase 2 (Preescolar) - Lenguajes (Artes): Representa de forma creativa ideas y sentimientos sobre "${capitalizedTopic}" usando pintura, modelado con plastilina o música.`,
       tech:      `Fase 2 (Preescolar) - Reconoce herramientas y objetos de "${capitalizedTopic}" que se usan en casa y en la escuela de forma segura.`,
@@ -245,6 +251,8 @@ const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => 
       social:    `Fase 2 (Preescolar) - Conoce lugares de su comunidad que se relacionan con "${capitalizedTopic}" y platica sobre lo que hacen ahí.`,
       default:   isTradition
         ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y costumbres familiares sobre Día de Muertos y festividades locales, conviviendo con respeto.`
+        : isIndependence
+        ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y dibujos sobre la Independencia de México, Miguel Hidalgo y los símbolos patrios.`
         : (isHistory ? `Fase 2 (Preescolar) - Ética, Naturaleza y Sociedades: Comparte relatos y costumbres familiares sobre "${capitalizedTopic}", reconociendo elementos y festividades históricas de su comunidad.` : `Fase 2 (Preescolar) - Explora su entorno descubriendo aspectos de "${capitalizedTopic}", y los comparte con sus compañeros mediante expresiones orales y producciones gráficas.`)
     },
     'primaria-baja': {
@@ -256,6 +264,10 @@ const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => 
         : `Fase 3 (1º y 2º Primaria) - De lo Humano y lo Comunitario: Reconoce los órganos de los sentidos y hábitos del Plato del Bien Comer vinculados a "${capitalizedTopic}" para favorecer el bienestar escolar y familiar.`,
       history:   isTradition
         ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios comunitarios el origen y los cambios en las tradiciones y festividades de su localidad (como Día de Muertos y fiestas patronales), reconociendo el patrimonio biocultural.`
+        : isIndependence
+        ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos históricos, lecturas compartidas e imágenes los acontecimientos y personajes del inicio de la Independencia de México (Miguel Hidalgo, Josefa Ortiz de Domínguez, Ignacio Allende), reconociendo por qué conmemoramos esta fecha cívica y valorando la libertad y la justicia.`
+        : isRevolution
+        ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios de su comunidad los hechos de la Revolución Mexicana, reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las personas.`
         : (isHistory ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos orales, fotografías familiares y testimonios comunitarios los acontecimientos y personajes de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las familias.` : `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga la historia personal, familiar y comunitaria sobre "${capitalizedTopic}" a través de relatos orales, fotografías y acuerdos de convivencia pacífica.`),
       art:       `Fase 3 (1º y 2º Primaria) - Lenguajes (Artes): Explora texturas, formas, colores, rondas tradicionales y modelado con plastilina sobre "${capitalizedTopic}" para expresar emociones libremente.`,
       tech:      `Fase 3 (1º y 2º Primaria) - Identifica usos cotidianos de herramientas y materiales en "${capitalizedTopic}", construyendo artefactos sencillos con material reciclable.`,
@@ -267,6 +279,10 @@ const getPdaMap = (rawTopic: string): Record<string, Record<string, string>> => 
       social:    `Fase 3 (1º y 2º Primaria) - Identifica los cambios y tradiciones de su localidad relacionados con "${capitalizedTopic}" a través de entrevistas familiares y cartografía infantil.`,
       default:   isTradition
         ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares y testimonios de su comunidad el origen de las tradiciones y celebraciones locales.`
+        : isIndependence
+        ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga a través de relatos históricos, lecturas compartidas e imágenes los acontecimientos y personajes del inicio de la Independencia de México (Miguel Hidalgo, Josefa Ortiz de Domínguez, Ignacio Allende), reconociendo por qué conmemoramos esta fecha cívica y valorando la libertad y la justicia.`
+        : isRevolution
+        ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios de su comunidad los hechos de la Revolución Mexicana, reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las personas.`
         : (isHistory ? `Fase 3 (1º y 2º Primaria) - Ética, Naturaleza y Sociedades: Indaga en relatos familiares, fotografías y testimonios de su comunidad los hechos de "${capitalizedTopic}", reconociendo cómo transformaron la vida cotidiana, la escuela y los derechos de las personas.` : `Fase 3 (1º y 2º Primaria) - Identifica y describe con sus palabras las principales características de "${capitalizedTopic}" en su contexto escolar y comunitario, registrando sus observaciones con material manipulativo y gráfico.`)
     },
     'primaria-media': {
@@ -820,6 +836,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
 
     setIsGenerating(true);
     setGenerationStep(0);
+    setActivePlanning(null); // Limpiar resultado previo para garantizar que no se mezcle estado anterior
 
     // Animación de pasos de IA
     const interval = setInterval(() => {
@@ -846,15 +863,37 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
           authHeaders['Authorization'] = `Bearer ${sessionData.session.access_token}`;
         }
 
-        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(currKey)}&sessions=${encodeURIComponent(sessionCount.toString())}`, {
+        const obsRes = await fetch(`/api/obsidian?q=${encodeURIComponent(inputText.trim())}&level=${encodeURIComponent(selectedLevel)}&subject=${encodeURIComponent(currKey)}&sessions=${encodeURIComponent(sessionCount.toString())}&_t=${Date.now()}`, {
+          cache: 'no-store',
           headers: authHeaders
         });
         if (obsRes.ok) {
           const obsData = await obsRes.json();
           if (obsData.found && obsData.planning) {
-            resultPlanning = obsData.planning;
-            foundInVault = true;
-            console.log("📚 [Bóveda Curricular]: Planeación existente recuperada con éxito:", obsData.filename);
+            // VERIFICACIÓN ESTRICTA DE COINCIDENCIA TEMÁTICA PARA PREVENIR MEZCLAS:
+            const inputTopicCore = cleanCoreTopicName(inputText).toLowerCase();
+            const retrievedTitle = (obsData.planning.title || '').toLowerCase();
+            const retrievedPda = (obsData.planning.pda || '').toLowerCase();
+
+            const inputIsIndep = /independ/i.test(inputTopicCore);
+            const inputIsRev = !inputIsIndep && /revoluc/i.test(inputTopicCore);
+
+            const retrievedIsIndep = /independ|hidalgo|morelos|allende|aldama|josefa/i.test(retrievedTitle) || /independ|hidalgo|morelos|allende|aldama|josefa/i.test(retrievedPda);
+            const retrievedIsRev = /revoluc|madero|zapata|villa|carranza|porfir/i.test(retrievedTitle) || /revoluc|madero|zapata|villa|carranza|porfir/i.test(retrievedPda);
+
+            const isThemeMismatched = 
+              (inputIsIndep && retrievedIsRev) ||
+              (inputIsRev && retrievedIsIndep) ||
+              (inputIsIndep && !retrievedIsIndep) ||
+              (inputIsRev && !retrievedIsRev);
+
+            if (isThemeMismatched) {
+              console.warn("⚠️ [Bóveda Curricular]: Discordancia temático-curricular detectada y descartada para evitar mezclas:", retrievedTitle);
+            } else {
+              resultPlanning = obsData.planning;
+              foundInVault = true;
+              console.log("📚 [Bóveda Curricular]: Planeación existente recuperada con éxito:", obsData.filename);
+            }
           }
         }
       } catch (e) {
@@ -902,7 +941,7 @@ export function PlanningTab({ currentTeacher, subjects, schedulesList, groupsLis
       resultPlanning.levelId = selectedLevel;
       resultPlanning.levelName = levelNames[selectedLevel] || selectedLevel;
       resultPlanning.duration = `${sessionCount} ${sessionCount === 1 ? 'sesión' : 'sesiones'} de 50 minutos (Total: ${sessionCount * 50} min)`;
-      if (selectedSuggestedPda) {
+      if (selectedSuggestedPda && !foundInVault) {
         resultPlanning.pda = selectedSuggestedPda;
       }
 
@@ -1446,6 +1485,14 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
             onChange={(e) => {
               const newText = e.target.value;
               setInputText(newText);
+              // Al modificar el tema, desvincular la planeación activa previa si ya no concuerda para evitar mezclas
+              if (activePlanning) {
+                const prevTitle = (activePlanning.title || '').toLowerCase();
+                const newTextCore = cleanCoreTopicName(newText).toLowerCase();
+                if (newTextCore.length >= 3 && !prevTitle.includes(newTextCore) && !newTextCore.includes(cleanCoreTopicName(prevTitle).toLowerCase())) {
+                  setActivePlanning(null); // Evitar mostrar o mezclar con la planeación anterior en pantalla
+                }
+              }
               if (newText.trim().length >= 2) {
                 recalculatePdasNow(newText, selectedLevel, selectedSubject);
               } else {

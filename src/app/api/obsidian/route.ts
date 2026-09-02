@@ -51,6 +51,17 @@ const ObsidianPlanningSchema = z.object({
   isSuperUser: z.boolean().optional()
 });
 
+const SPANISH_STOPWORDS = new Set([
+  'de', 'la', 'el', 'los', 'las', 'un', 'una', 'unos', 'unas',
+  'en', 'y', 'a', 'para', 'por', 'con', 'sin', 'al', 'del',
+  'que', 'como', 'sobre', 'su', 'sus', 'mi', 'mis', 'tu', 'tus',
+  'alumnos', 'alumnas', 'estudiantes', 'ninos', 'ninas',
+  'segundo', 'tercero', 'cuarto', 'quinto', 'sexto', 'primer', 'primero',
+  'grado', 'grados', 'fase', 'fases', 'clase', 'tema', 'planeacion',
+  'planeaciones', 'proyecto', 'proyectos', 'sesion', 'sesiones',
+  'hice', 'daba', 'resultado', 'hacer', 'crear', 'generar', 'verificar'
+]);
+
 function cleanString(str: string) {
   return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
@@ -173,8 +184,28 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ found: false, note: null });
     }
 
-    const cleanQuery = cleanString(query);
-    let queryWords = cleanQuery.split(/[\s,;+-_/]+/).filter(w => w.length >= 2);
+    const isSearchingIndependence = /independ|hidalgo|morelos|allende|aldama|josefa|iturbide|dolores/i.test(query);
+    const isSearchingRevolution = !isSearchingIndependence && /revoluc|madero|zapata|villa|carranza|porfir/i.test(query);
+
+    let cleanQuery = cleanString(query);
+    if (isSearchingIndependence) {
+      cleanQuery = cleanQuery.replace(/independ[a-z]*/i, 'independencia');
+    }
+    if (isSearchingRevolution) {
+      cleanQuery = cleanQuery.replace(/revoluc[a-z]*/i, 'revolucion');
+    }
+
+    let queryWords = cleanQuery
+      .split(/[\s,;+-_/]+/)
+      .map(w => w.trim())
+      .filter(w => w.length >= 3 && !SPANISH_STOPWORDS.has(w));
+
+    if (isSearchingIndependence && !queryWords.includes('independencia')) {
+      queryWords.push('independencia');
+    }
+    if (isSearchingRevolution && !queryWords.includes('revolucion')) {
+      queryWords.push('revolucion');
+    }
 
     // Expansión semántica para términos matemáticos y científicos
     if (/(?:x\^?\{?2\}?|x²|x2|cuadrat)/i.test(query)) {
@@ -192,7 +223,7 @@ export async function GET(request: NextRequest) {
 
     const planningsDir = path.join(OBSIDIAN_VAULT_PATH, 'planeaciones');
     if (!fs.existsSync(planningsDir)) {
-      return NextResponse.json({ found: false, note: null });
+      return NextResponse.json({ found: false, note: null }, { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0' } });
     }
 
     const allIndexed = getOrBuildVaultIndex(planningsDir);
@@ -246,20 +277,44 @@ export async function GET(request: NextRequest) {
     let bestScore = 0;
 
     for (const node of candidateNodes) {
+      // Exclusión absoluta entre Revolución e Independencia para evitar mezclas aberrantes
+      if (isSearchingIndependence) {
+        if (/revoluci|madero|zapata|villa|carranza/i.test(node.cleanFilename) || /revoluci|madero|zapata|villa|carranza/i.test(node.cleanTopic)) {
+          continue; // Descartar notas de Revolución si el docente busca Independencia
+        }
+        if (!/independ|hidalgo|morelos|allende|aldama|josefa|iturbide|dolores|insurg/i.test(node.cleanFilename) && !/independ|hidalgo|morelos|allende|aldama|josefa|iturbide|dolores|insurg/i.test(node.cleanTopic)) {
+          continue; // La nota debe abordar directamente la Independencia
+        }
+      } else if (isSearchingRevolution) {
+        if (/independ|hidalgo|morelos|allende|aldama|josefa|iturbide/i.test(node.cleanFilename) || /independ|hidalgo|morelos|allende|aldama|josefa|iturbide/i.test(node.cleanTopic)) {
+          continue; // Descartar notas de Independencia si el docente busca Revolución
+        }
+        if (!/revoluc|madero|zapata|villa|carranza|porfir/i.test(node.cleanFilename) && !/revoluc|madero|zapata|villa|carranza|porfir/i.test(node.cleanTopic)) {
+          continue; // La nota debe abordar directamente la Revolución
+        }
+      }
+
       let score = 0;
       let topicMatches = 0;
       queryWords.forEach(word => {
-        if (node.cleanFilename.includes(word)) { score += 4; topicMatches++; }
-        else if (node.cleanTopic.includes(word)) { score += 3; topicMatches++; }
-        else if (node.cleanPath.includes(word)) { score += 2; }
+        const isGenericContextWord = word === 'mexico' || word === 'historia' || word === 'sociedad';
+        if (node.cleanFilename.includes(word)) {
+          score += isGenericContextWord ? 1 : 5;
+          if (!isGenericContextWord) topicMatches++;
+        } else if (node.cleanTopic.includes(word)) {
+          score += isGenericContextWord ? 1 : 4;
+          if (!isGenericContextWord) topicMatches++;
+        } else if (node.cleanPath.includes(word)) {
+          score += isGenericContextWord ? 0.5 : 2;
+        }
       });
 
-      if (levelParam && node.cleanPath.includes(cleanString(levelParam))) score += 1;
-      if (gradeParam && node.cleanPath.includes(cleanString(gradeParam))) score += 1;
-      if (subjectParam && node.cleanPath.includes(cleanString(subjectParam))) score += 1;
+      if (levelParam && node.cleanPath.includes(cleanString(levelParam))) score += 2;
+      if (gradeParam && node.cleanPath.includes(cleanString(gradeParam))) score += 2;
+      if (subjectParam && node.cleanPath.includes(cleanString(subjectParam))) score += 2;
 
-      // Requiere coincidencia directa con el tema y puntaje mínimo
-      if (topicMatches > 0 && score >= 3 && score > bestScore) {
+      // Requiere coincidencia directa con el tema central y puntaje mínimo sólido (>= 6)
+      if (topicMatches > 0 && score >= 6 && score > bestScore) {
         bestScore = score;
         bestMatchNode = node;
       }
@@ -382,10 +437,18 @@ export async function GET(request: NextRequest) {
           createdAt,
           isFromVault: true
         }
+      }, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+        }
       });
     }
 
-    return NextResponse.json({ found: false, note: null });
+    return NextResponse.json({ found: false, note: null }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+      }
+    });
   } catch (error: any) {
     console.error("Error al buscar en Bóveda Curricular:", error);
     return NextResponse.json({ found: false, error: 'Error interno al procesar la búsqueda.' }, { status: 500 });
@@ -492,6 +555,7 @@ ${planning.materiales || ''}
 `;
 
     fs.writeFileSync(filePath, markdownContent, 'utf8');
+    vaultIndexCache = null; // Invalidar caché en memoria para refrescar búsquedas inmediatamente
     console.log(`✅ Planeación guardada en Bóveda Curricular estructurada por Nivel/Grado/Materia: ${filePath}`);
 
     // Sincronización Automática con Repositorio Remoto
