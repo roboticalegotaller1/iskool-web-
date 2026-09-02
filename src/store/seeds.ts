@@ -148,12 +148,221 @@ export const SUBJECTS_SEED: Subject[] = [
   { id: 'sub-his-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Historia de México y Ciudadanía', sep_code: 'ENS-HIS', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
   { id: 'sub-fcye-sec', school_id: 'sch-jjr', level_grade_id: 'secundaria', name: 'Formación Cívica y Ética', sep_code: 'ENS-FCYE', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },
 
-  // Materias Optativas / Talleres Oficiales Solicitados
-  { id: 'sub-opt-act-fisica', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Actividad Física', sep_code: 'OPT-ACF', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
-  { id: 'sub-opt-basquetbol', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Basquetbol', sep_code: 'OPT-BKB', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
-  { id: 'sub-opt-musica', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Música', sep_code: 'OPT-MUS', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
-  { id: 'sub-opt-robotica', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Robótica', sep_code: 'OPT-ROB', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
-  { id: 'sub-opt-danza', school_id: 'sch-jjr', level_grade_id: 'all', name: 'Danza', sep_code: 'OPT-DAN', category: 'optativa', is_elective: true, created_at: new Date().toISOString() },
+  // Materias Optativas / Talleres Oficiales Solicitados con Temarios y Multi-Grupo
+  { 
+    id: 'sub-opt-robotica', 
+    school_id: 'sch-jjr', 
+    level_grade_id: 'all', 
+    name: 'Robótica & Automatización', 
+    sep_code: 'OPT-ROB', 
+    category: 'optativa', 
+    workshop_category: 'tecnologico',
+    is_elective: true, 
+    instructor_name: 'Prof. Israel López',
+    campus_name: 'Todos los Planteles',
+    schedule: 'Lunes y Miércoles 16:00 - 17:30',
+    description: 'Taller de robótica educativa, diseño mecatrónico, sensores y programación con bloques y microcontroladores.',
+    assigned_group_ids: ['grp-jar-4a', 'grp-jar-5a', 'grp-tor-4a', 'grp-sec-1a'],
+    syllabus_topics: [
+      { block: 'Bloque 1', title: 'Fundamentos de Robótica y Mecanismos', weeks: '4 Semanas', description: 'Estructuras rígidas, engranes, poleas y cinemática básica aplicada a prototipos móviles.', deliverable: 'Prototipo de vehículo con tracción por engranajes' },
+      { block: 'Bloque 2', title: 'Electrónica, Sensores y Actuadores', weeks: '6 Semanas', description: 'Conexión de sensores ultrasónicos, infrarrojos, servomotores y lectura de señales analógicas/digitales.', deliverable: 'Robot seguidor de línea autónomo' },
+      { block: 'Bloque 3', title: 'Lógica de Control y Programación', weeks: '6 Semanas', description: 'Bucles condicionales, variables de telemetría y algoritmos de evasión de obstáculos.', deliverable: 'Rover explorador con mapeo de obstáculos' },
+      { block: 'Bloque 4', title: 'Proyecto Integrador y Concurso Escolar', weeks: '4 Semanas', description: 'Integración final de hardware y software para el Torneo de Robótica Inter-Planteles.', deliverable: 'Desafío de laberinto y rescate cronometrado' }
+    ],
+    group_annual_plans: {
+      'grp-jar-4a': {
+        group_id: 'grp-jar-4a',
+        group_name: '4ºA',
+        campus_name: 'Primaria Jardines',
+        grade: '4º',
+        plan_title: 'Planeación Anual de Robótica 4º Primaria Jardines',
+        term_1: 'Trimestre 1: Construcción mecánica y ensambles estructurales con piezas LEGO.',
+        term_2: 'Trimestre 2: Integración de servomotores y sensores de proximidad con bloques gráficos.',
+        term_3: 'Trimestre 3: Programación de misiones espaciales y exhibición en el patio central.',
+        pda_focus: 'Pensamiento algorítmico y resolución colaborativa de problemas técnicos.',
+        project_title: 'Eco-Robot Clasificador de Residuos',
+        updated_at: new Date().toISOString()
+      },
+      'grp-jar-5a': {
+        group_id: 'grp-jar-5a',
+        group_name: '5ºA',
+        campus_name: 'Primaria Jardines',
+        grade: '5º',
+        plan_title: 'Planeación Anual de Robótica 5º Primaria Jardines',
+        term_1: 'Trimestre 1: Cinemática aplicada y cálculo de relaciones de transmisión.',
+        term_2: 'Trimestre 2: Programación con variables, sensores de color y giroscopio.',
+        term_3: 'Trimestre 3: Torneo de sumo robótico y diseño de chasis optimizado.',
+        pda_focus: 'Modelación matemática de trayectorias y optimización mecánica.',
+        project_title: 'Robot Rescatista Autónomo',
+        updated_at: new Date().toISOString()
+      },
+      'grp-tor-4a': {
+        group_id: 'grp-tor-4a',
+        group_name: '4ºA',
+        campus_name: 'Primaria Torres',
+        grade: '4º',
+        plan_title: 'Planeación Anual de Robótica 4º Primaria Torres',
+        term_1: 'Trimestre 1: Fundamentos de máquinas simples y fuentes de energía limpia.',
+        term_2: 'Trimestre 2: Sensores de luz y sonido con retos cronometrados.',
+        term_3: 'Trimestre 3: Presentación de proyectos en la Feria de Ciencias Torres.',
+        pda_focus: 'Creatividad técnica y documentación en bitácora de ingeniería.',
+        project_title: 'Invernadero Automatizado con Sensor de Humedad',
+        updated_at: new Date().toISOString()
+      },
+      'grp-sec-1a': {
+        group_id: 'grp-sec-1a',
+        group_name: '1ºA',
+        campus_name: 'Secundaria Torres',
+        grade: '1º Sec',
+        plan_title: 'Planeación Anual de Robótica 1º Secundaria Torres',
+        term_1: 'Trimestre 1: Programación en C++/Python y microcontroladores Arduino/ESP32.',
+        term_2: 'Trimestre 2: Comunicación inalámbrica Bluetooth/WiFi y telemetría en tiempo real.',
+        term_3: 'Trimestre 3: Brazo robótico de 4 grados de libertad con interfaz gráfica.',
+        pda_focus: 'Sistemas mecatrónicos embebidos y análisis de código estructurado.',
+        project_title: 'Brazo Robótico para Clasificación Industrial',
+        updated_at: new Date().toISOString()
+      }
+    },
+    created_at: new Date().toISOString() 
+  },
+  { 
+    id: 'sub-opt-act-fisica', 
+    school_id: 'sch-jjr', 
+    level_grade_id: 'all', 
+    name: 'Actividad Física & Salud Integral', 
+    sep_code: 'OPT-ACF', 
+    category: 'optativa', 
+    workshop_category: 'deportivo',
+    is_elective: true, 
+    instructor_name: 'Prof. Fernando Rangel',
+    campus_name: 'Todos los Planteles',
+    schedule: 'Lunes a Jueves 07:30 - 08:30',
+    description: 'Desarrollo de capacidades motrices, hábitos saludables, resistencia cardiovascular y trabajo en equipo.',
+    assigned_group_ids: ['grp-jar-1a', 'grp-jar-4a', 'grp-tor-1a', 'grp-sec-1a'],
+    syllabus_topics: [
+      { block: 'Bloque 1', title: 'Acondicionamiento Físico y Evaluación Diagnóstica', weeks: '4 Semanas', description: 'Medición de frecuencia cardíaca, flexibilidad, fuerza y coordinación general.', deliverable: 'Ficha diagnóstica antropométrica' },
+      { block: 'Bloque 2', title: 'Coordinación Motriz y Circuitos Funcionales', weeks: '6 Semanas', description: 'Ejercicios de agilidad, velocidad de reacción, salto y postura corporal correcta.', deliverable: 'Circuito funcional por estaciones' },
+      { block: 'Bloque 3', title: 'Deportes Alternativos y Juegos Cooperativos', weeks: '6 Semanas', description: 'Ultimate frisbee, tochito bandera, atletismo de relevos y dinámica de inclusión.', deliverable: 'Torneo de relevos cooperativos' },
+      { block: 'Bloque 4', title: 'Hábitos de Vida Saludable y Maratón Escolar', weeks: '4 Semanas', description: 'Nutrición balanceada, hidratación en el deporte y carrera recreativa 2K.', deliverable: 'Participación en el Maratón Familiar Rosseau' }
+    ],
+    created_at: new Date().toISOString() 
+  },
+  { 
+    id: 'sub-opt-basquetbol', 
+    school_id: 'sch-jjr', 
+    level_grade_id: 'all', 
+    name: 'Basquetbol Formativo y Competitivo', 
+    sep_code: 'OPT-BKB', 
+    category: 'optativa', 
+    workshop_category: 'deportivo',
+    is_elective: true, 
+    instructor_name: 'Prof. David Navarrete',
+    campus_name: 'Todos los Planteles',
+    schedule: 'Martes y Jueves 15:30 - 17:00',
+    description: 'Técnica individual de bote, pase, tiro, táctica defensiva y ofensiva, y competencia deportiva formativa.',
+    assigned_group_ids: ['grp-jar-4a', 'grp-tor-4a', 'grp-sec-1a'],
+    syllabus_topics: [
+      { block: 'Bloque 1', title: 'Fundamentos Técnicos: Bote y Manejo de Balón', weeks: '4 Semanas', description: 'Cambios de mano, bote de protección, paradas en un tiempo y pivoteos.', deliverable: 'Prueba de destreza y control de balón' },
+      { block: 'Bloque 2', title: 'Técnica de Tiro y Pases Dinámicos', weeks: '6 Semanas', description: 'Mecánica de tiro (BEEF), entrada en bandeja, pases de pecho, picado y béisbol.', deliverable: 'Concurso de tiro de media distancia y tiros libres' },
+      { block: 'Bloque 3', title: 'Estrategia de Juego: Defensa y Ataque', weeks: '6 Semanas', description: 'Defensa individual, cajón y uno, rompimiento rápido y juego en transición.', deliverable: 'Scouting de jugadas preestablecidas' },
+      { block: 'Bloque 4', title: 'Torneo de Liga Escolar y Convivencia', weeks: '4 Semanas', description: 'Partidos oficiales inter-grupos con arbitraje formativo y estadísticas individuales.', deliverable: 'Finales de Torneo de Basquetbol Rosseau' }
+    ],
+    created_at: new Date().toISOString() 
+  },
+  { 
+    id: 'sub-opt-musica', 
+    school_id: 'sch-jjr', 
+    level_grade_id: 'all', 
+    name: 'Música & Ensamble Instrumental', 
+    sep_code: 'OPT-MUS', 
+    category: 'optativa', 
+    workshop_category: 'artistico',
+    is_elective: true, 
+    instructor_name: 'Profa. María Fernández',
+    campus_name: 'Todos los Planteles',
+    schedule: 'Miércoles y Viernes 16:00 - 17:30',
+    description: 'Solfeo rítmico, apreciación musical, práctica de instrumentos (teclado, guitarra, percusión) y coro escolar.',
+    assigned_group_ids: ['grp-jar-1a', 'grp-jar-4a', 'grp-tor-4a'],
+    syllabus_topics: [
+      { block: 'Bloque 1', title: 'Iniciación Rítmica y Lectura de Pentagrama', weeks: '4 Semanas', description: 'Figuras rítmicas básicas (negras, corcheas), métrica 4/4 y ejercicios con percusión corporal.', deliverable: 'Ensamble de percusión corporal en grupo' },
+      { block: 'Bloque 2', title: 'Técnica Instrumental y Práctica de Melodía', weeks: '6 Semanas', description: 'Digitación en flauta dulce, teclados y acordes iniciales en ukelele/guitarra.', deliverable: 'Interpretación de pieza folclórica tradicional' },
+      { block: 'Bloque 3', title: 'Armonía y Ensamble Polifónico', weeks: '6 Semanas', description: 'Acompañamiento armónico, dinámicas musicales (piano, forte) y canto coral.', deliverable: 'Grabación de audio del ensamble escolar' },
+      { block: 'Bloque 4', title: 'Concierto de Gala de Fin de Curso', weeks: '4 Semanas', description: 'Montaje de repertorio clásico y contemporáneo para el recital escolar.', deliverable: 'Presentación en vivo para la comunidad de padres' }
+    ],
+    created_at: new Date().toISOString() 
+  },
+  { 
+    id: 'sub-opt-danza', 
+    school_id: 'sch-jjr', 
+    level_grade_id: 'all', 
+    name: 'Danza Contemporánea & Folclor Mexicano', 
+    sep_code: 'OPT-DAN', 
+    category: 'optativa', 
+    workshop_category: 'artistico',
+    is_elective: true, 
+    instructor_name: 'Profa. Carmen Morales',
+    campus_name: 'Todos los Planteles',
+    schedule: 'Lunes y Miércoles 16:00 - 17:30',
+    description: 'Expresión corporal, ritmo, coordinación escénica, bailes regionales mexicanos y coreografía moderna.',
+    assigned_group_ids: ['grp-jar-4a', 'grp-tor-1a', 'grp-tor-4a'],
+    syllabus_topics: [
+      { block: 'Bloque 1', title: 'Conciencia Corporal, Flexibilidad y Postura', weeks: '4 Semanas', description: 'Alineación de columna, extensiones, balance y calentamiento articular preventivo.', deliverable: 'Secuencia básica de barra y centro' },
+      { block: 'Bloque 2', title: 'Zapateado y Danza Regional de México', weeks: '6 Semanas', description: 'Pasos de son jarocho, son jalisciense, faldeo y coordinación rítmica con calzado de danza.', deliverable: 'Coreografía regional de Veracruz y Jalisco' },
+      { block: 'Bloque 3', title: 'Expresión Contemporánea y Creación Coreográfica', weeks: '6 Semanas', description: 'Improvisación con música contemporánea, niveles espaciales y dramaturgia del movimiento.', deliverable: 'Diseño de coreografía grupal inédita' },
+      { block: 'Bloque 4', title: 'Función de Gala en el Auditorio Central', weeks: '4 Semanas', description: 'Vestuario, maquillaje escénico y puesta en escena para el Festival de las Artes.', deliverable: 'Gala Anual de Danza Juan Jacobo Rosseau' }
+    ],
+    created_at: new Date().toISOString() 
+  },
+  { 
+    id: 'sub-opt-ajedrez', 
+    school_id: 'sch-jjr', 
+    level_grade_id: 'all', 
+    name: 'Ajedrez Estratégico & Pensamiento Lógico', 
+    sep_code: 'OPT-AJE', 
+    category: 'optativa', 
+    workshop_category: 'academico',
+    is_elective: true, 
+    instructor_name: 'Prof. Roberto Díaz',
+    campus_name: 'Todos los Planteles',
+    schedule: 'Lunes y Miércoles 16:00 - 17:30',
+    description: 'Desarrollo del pensamiento crítico, cálculo de variantes, estrategia posicional y preparación para torneos.',
+    assigned_group_ids: ['grp-jar-4a', 'grp-jar-5a', 'grp-tor-4a', 'grp-sec-1a'],
+    syllabus_topics: [
+      { block: 'Bloque 1', title: 'Fundamentos del Tablero y Principios de Apertura', weeks: '4 Semanas', description: 'Control del centro, desarrollo rápido de piezas menores y seguridad del Rey.', deliverable: 'Resolución de 30 problemas de apertura y mates en 1' },
+      { block: 'Bloque 2', title: 'Táctica de Medio Juego y Patrones de Ataque', weeks: '6 Semanas', description: 'Clavadas, ataques dobles (horquillas), enfiladas, piezas sobrecargadas y sacrificios temáticos.', deliverable: 'Torneo Suizo de Táctica Rápida' },
+      { block: 'Bloque 3', title: 'Estrategia Posicional y Estructuras de Peones', weeks: '6 Semanas', description: 'Casillas débiles, columnas abiertas, puestos avanzados de caballos y planes a largo plazo.', deliverable: 'Análisis anotado de una partida magistral' },
+      { block: 'Bloque 4', title: 'Finales Fundamentales y Campeonato Escolar', weeks: '4 Semanas', description: 'Finales de Rey y Peón (regla del cuadrado, oposición), finales de torres y reloj digital.', deliverable: 'Torneo Inter-Colegial UP Juan Jacobo Rosseau' }
+    ],
+    group_annual_plans: {
+      'grp-jar-4a': {
+        group_id: 'grp-jar-4a',
+        group_name: '4ºA',
+        campus_name: 'Primaria Jardines',
+        grade: '4º',
+        plan_title: 'Planeación Anual de Ajedrez 4º Primaria Jardines',
+        term_1: 'Trimestre 1: Geometría del tablero, movimiento armonioso de piezas y valor relativo.',
+        term_2: 'Trimestre 2: Patrones de jaque mate básicos (pasillo, beso de la muerte, mate árabe).',
+        term_3: 'Trimestre 3: Partidas con reloj y registro en planilla de notación algebraica.',
+        pda_focus: 'Pensamiento lógico deductivo, anticipación de consecuencias y paciencia.',
+        project_title: 'Tablero Humano y Simultánea Escolar',
+        updated_at: new Date().toISOString()
+      },
+      'grp-sec-1a': {
+        group_id: 'grp-sec-1a',
+        group_name: '1ºA',
+        campus_name: 'Secundaria Torres',
+        grade: '1º Sec',
+        plan_title: 'Planeación Anual de Ajedrez 1º Secundaria Torres',
+        term_1: 'Trimestre 1: Teoría de aperturas modernas (Defensa Siciliana, Gambito de Dama).',
+        term_2: 'Trimestre 2: Cálculo profundo de árboles de variantes y profilaxis posicional.',
+        term_3: 'Trimestre 3: Preparación competitiva con software de análisis y bases de datos.',
+        pda_focus: 'Toma de decisiones bajo presión temporal y pensamiento probabilístico.',
+        project_title: 'Gran Maestro Rosseau: Torneo ELO Interno',
+        updated_at: new Date().toISOString()
+      }
+    },
+    created_at: new Date().toISOString() 
+  },
 
   // Compatibilidad con IDs previos de misiones
   { id: 'sub-math', school_id: 'sch-jjr', level_grade_id: 'lg-4', name: 'Matemáticas', sep_code: 'MAT-4A', category: 'curricular', is_elective: false, created_at: new Date().toISOString() },

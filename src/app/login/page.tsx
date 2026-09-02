@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { GraduationCap, Shield, Sparkles, User, Key, ArrowRight, Loader2, BookOpen } from 'lucide-react';
 import { useStudentStore } from '@/store/useStudentStore';
+import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
 import { STUDENTS_LIST_SEED } from '@/store/seeds';
 
 const DEMO_ACCOUNTS = [
@@ -117,7 +118,16 @@ export default function LoginPage() {
       if (result.success) {
         const matchedDemo = DEMO_ACCOUNTS.find(d => d.email.toLowerCase() === email.toLowerCase());
         const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email.toLowerCase() === email.toLowerCase());
-        await routeUserByRole(email, matchedDemo?.role || (matchedStudent ? 'student' : undefined), matchedDemo?.id || matchedStudent?.id);
+        
+        let detectedRole = matchedDemo?.role;
+        try {
+          const adminTeachers = useSchoolAdminStore.getState().teachersList || [];
+          const isTeacher = adminTeachers.some((t: any) => t.email.toLowerCase() === email.toLowerCase());
+          if (isTeacher) detectedRole = 'teacher';
+        } catch {}
+
+        if (!detectedRole && matchedStudent) detectedRole = 'student';
+        await routeUserByRole(email, detectedRole, matchedDemo?.id || matchedStudent?.id);
       } else {
         setErrorMsg(result.error || 'Credenciales inválidas.');
       }

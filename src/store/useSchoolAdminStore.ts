@@ -68,9 +68,10 @@ interface SchoolAdminStoreState {
   sendParentMessage: (msg: Omit<ParentMessage, 'id' | 'sent_at' | 'is_read'>) => void;
   replyToParentMessage: (messageId: string, replyText: string) => void;
   markMessageAsRead: (messageId: string) => void;
-  
   createSubject: (subjectData: Omit<Subject, 'id' | 'created_at'>) => void;
   deleteSubject: (subjectId: string) => Promise<void>;
+  updateGroupAnnualPlan: (subjectId: string, groupId: string, planData: Partial<import('@/types').GroupAnnualPlan>) => void;
+  updateSubjectSyllabus: (subjectId: string, topics: import('@/types').SyllabusTopic[]) => void;
   registerTeacher: (teacherData: Omit<UserProfile, 'id' | 'role' | 'created_at' | 'updated_at'>) => void;
   updateTeacher: (teacherId: string, updatedData: Partial<UserProfile>) => void;
   deleteTeacher: (teacherId: string) => void;
@@ -763,6 +764,49 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       console.error('Error deleting subject:', err);
       set({ syncError: errorMsg });
     }
+  },
+
+  updateGroupAnnualPlan: (subjectId, groupId, planData) => {
+    set((state) => ({
+      subjectsList: (state.subjectsList || []).map((sub) => {
+        if (sub.id !== subjectId) return sub;
+
+        const currentPlans = sub.group_annual_plans || {};
+        const currentGroupPlan = currentPlans[groupId] || {
+          group_id: groupId,
+          group_name: groupId,
+          campus_name: 'General',
+          grade: '1º',
+          plan_title: `Planeación Anual - ${sub.name}`,
+          term_1: '',
+          term_2: '',
+          term_3: '',
+          updated_at: new Date().toISOString()
+        };
+
+        const updatedGroupPlan = {
+          ...currentGroupPlan,
+          ...planData,
+          updated_at: new Date().toISOString()
+        };
+
+        return {
+          ...sub,
+          group_annual_plans: {
+            ...currentPlans,
+            [groupId]: updatedGroupPlan
+          }
+        };
+      })
+    }));
+  },
+
+  updateSubjectSyllabus: (subjectId, topics) => {
+    set((state) => ({
+      subjectsList: (state.subjectsList || []).map((sub) => 
+        sub.id === subjectId ? { ...sub, syllabus_topics: topics } : sub
+      )
+    }));
   },
 
       registerTeacher: (teacherData) => {

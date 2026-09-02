@@ -131,6 +131,30 @@ export interface Group {
   academic_year?: AcademicYear;
 }
 
+export interface GroupAnnualPlan {
+  group_id: string;
+  group_name: string;
+  campus_name: string;
+  grade: string;
+  plan_title: string;
+  term_1: string;
+  term_2: string;
+  term_3: string;
+  pda_focus?: string;
+  project_title?: string;
+  file_url?: string;
+  file_name?: string;
+  updated_at: string;
+}
+
+export interface SyllabusTopic {
+  block: string;
+  title: string;
+  weeks: string;
+  description: string;
+  deliverable?: string;
+}
+
 /**
  * @interface Subject
  * @description Materia académica dictada en el colegio (e.g., Matemáticas, Robótica).
@@ -155,6 +179,9 @@ export interface Subject {
   image_url?: string; // Portada o logotipo personalizado del taller
   syllabus_url?: string; // Archivo del temario / plan de estudio subido
   syllabus_filename?: string; // Nombre del archivo del temario
+  syllabus_topics?: SyllabusTopic[];
+  group_annual_plans?: Record<string, GroupAnnualPlan>;
+  assigned_group_ids?: string[];
   created_at: string;
 }
 

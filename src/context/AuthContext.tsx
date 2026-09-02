@@ -6,6 +6,8 @@ import { UserProfile } from '@/types';
 import { useRouter } from 'next/navigation';
 import { STUDENTS_LIST_SEED, TEACHER_SEED, PARENT_SEED } from '@/store/seeds';
 
+import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+
 interface AuthContextType {
   session: any | null;
   user: UserProfile | null;
@@ -18,6 +20,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const getDemoUser = (email: string): UserProfile => {
   const emailLower = email.toLowerCase().trim();
+
+  // 1. Verificar si coincide con profesores registrados en el Super Usuario
+  try {
+    const adminTeachers = useSchoolAdminStore.getState().teachersList || [];
+    const matchedTeacher = adminTeachers.find(t => 
+      t.email.toLowerCase() === emailLower || 
+      t.id === emailLower ||
+      `${t.first_name.toLowerCase()}.${t.last_name.toLowerCase()}` === emailLower.replace('@jjrosseau.edu.mx', '')
+    );
+    if (matchedTeacher) {
+      return {
+        ...matchedTeacher,
+        role: 'teacher'
+      };
+    }
+  } catch {
+    // fallback si store no está montado
+  }
+
   if (emailLower.includes('admin') || emailLower.includes('vega') || emailLower.includes('director')) {
     return {
       id: 'usr-admin-1',
@@ -126,6 +147,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const password = 'ISkoolPassword2026!';
     const resolvedUser = getDemoUser(email);
     
+    if (resolvedUser.is_blocked) {
+      setLoading(false);
+      return { 
+        success: false, 
+        error: '⛔ Esta cuenta ha sido bloqueada o cancelada por la Dirección Escolar en el Portal de Super Usuario.' 
+      };
+    }
+
     try {
       // 1. Intentar autenticación remota
       const signInResult = await supabase.auth.signInWithPassword({ email, password }).catch(() => null);

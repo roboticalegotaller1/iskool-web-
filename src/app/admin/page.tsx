@@ -36,10 +36,15 @@ import {
   Palette,
   Brain,
   Globe2,
-  ImageIcon
+  ImageIcon,
+  Calendar,
+  Layers,
+  ExternalLink,
+  X,
+  Edit3
 } from 'lucide-react';
 import { useSchoolAdminStore, generateRandomPassword } from '@/store/useSchoolAdminStore';
-import { DetailedStudent, Subject } from '@/types';
+import { DetailedStudent, Subject, GroupAnnualPlan, SyllabusTopic } from '@/types';
 
 type AdminTab = 'overview' | 'teachers' | 'students' | 'campuses' | 'subjects' | 'config';
 
@@ -57,7 +62,9 @@ export default function SuperUserAdminPage() {
     bulkRegisterStudents,
     registerTeacher,
     createSubject,
-    deleteSubject
+    deleteSubject,
+    updateGroupAnnualPlan,
+    updateSubjectSyllabus
   } = useSchoolAdminStore();
 
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
@@ -76,6 +83,34 @@ export default function SuperUserAdminPage() {
   const [showAddTeacherModal, setShowAddTeacherModal] = useState(false);
   const [showAddSubjectModal, setShowAddSubjectModal] = useState(false);
   const [showAddWorkshopModal, setShowAddWorkshopModal] = useState(false);
+  
+  // Modal de Detalle del Taller Académico (Información + Temario + Multi-Grupo + Alumnos)
+  const [selectedWorkshopDetail, setSelectedWorkshopDetail] = useState<Subject | null>(null);
+  const [workshopDetailTab, setWorkshopDetailTab] = useState<'syllabus' | 'annual_plans' | 'students'>('syllabus');
+  const [selectedGroupForPlan, setSelectedGroupForPlan] = useState<string>('grp-jar-4a');
+  const [workshopStudentSearch, setWorkshopStudentSearch] = useState('');
+  const [showEditAnnualPlanModal, setShowEditAnnualPlanModal] = useState(false);
+  const [showAddTopicModal, setShowAddTopicModal] = useState(false);
+
+  // Formulario de edición de planeación anual de grupo
+  const [annualPlanForm, setAnnualPlanForm] = useState({
+    plan_title: '',
+    project_title: '',
+    pda_focus: '',
+    term_1: '',
+    term_2: '',
+    term_3: ''
+  });
+
+  // Formulario de nuevo bloque para el temario
+  const [newTopicForm, setNewTopicForm] = useState({
+    block: 'Bloque 5',
+    title: '',
+    weeks: '4 Semanas',
+    description: '',
+    deliverable: ''
+  });
+
   const [viewSyllabusModal, setViewSyllabusModal] = useState<{ isOpen: boolean; workshopName: string; syllabusUrl?: string; filename?: string }>({
     isOpen: false,
     workshopName: ''
@@ -246,7 +281,7 @@ export default function SuperUserAdminPage() {
     });
   };
 
-  // Manejo de Creación de Profesor
+  // Manejo de Creación de Profesor con Permisos Exclusivos de Docente
   const handleCreateTeacher = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTeacherForm.first_name || !newTeacherForm.last_name) {
@@ -254,17 +289,20 @@ export default function SuperUserAdminPage() {
       return;
     }
 
+    const formattedEmail = newTeacherForm.email.trim() || 
+      `${newTeacherForm.first_name.toLowerCase().replace(/[^a-z0-9]/g, '')}.${newTeacherForm.last_name.toLowerCase().replace(/[^a-z0-9]/g, '')}@jjrosseau.edu.mx`;
+
     registerTeacher({
       first_name: newTeacherForm.first_name,
       last_name: newTeacherForm.last_name,
-      email: newTeacherForm.email || `${newTeacherForm.first_name.toLowerCase().replace(/[^a-z0-9]/g, '')}.${newTeacherForm.last_name.toLowerCase().replace(/[^a-z0-9]/g, '')}@jjrosseau.edu.mx`,
+      email: formattedEmail,
       phone: newTeacherForm.phone,
       campus_name: newTeacherForm.campus_name,
       assigned_subjects: newTeacherForm.assigned_subjects.split(',').map(s => s.trim()),
       assigned_groups: newTeacherForm.assigned_groups.split(',').map(g => g.trim())
     });
 
-    showToast(`✅ Profesor ${newTeacherForm.first_name} ${newTeacherForm.last_name} registrado.`);
+    showToast(`✅ Profesor ${newTeacherForm.first_name} ${newTeacherForm.last_name} dado de alta con acceso exclusivo a la vista docente.`);
     setShowAddTeacherModal(false);
   };
 
@@ -321,7 +359,14 @@ export default function SuperUserAdminPage() {
       description: newWorkshopForm.description,
       image_url: newWorkshopForm.image_url,
       syllabus_url: newWorkshopForm.syllabus_url,
-      syllabus_filename: newWorkshopForm.syllabus_filename
+      syllabus_filename: newWorkshopForm.syllabus_filename,
+      assigned_group_ids: ['grp-jar-4a', 'grp-jar-5a', 'grp-tor-4a', 'grp-sec-1a'],
+      syllabus_topics: [
+        { block: 'Bloque 1', title: 'Fundamentos e Introducción Práctica', weeks: '4 Semanas', description: 'Conceptos clave, normas de seguridad y dinámicas de integración grupal.', deliverable: 'Evaluación diagnóstica y bitácora inicial' },
+        { block: 'Bloque 2', title: 'Desarrollo de Competencias y Técnicas', weeks: '6 Semanas', description: 'Metodología estructurada de ejercicios y retos individuales.', deliverable: 'Portafolio de evidencias de medio término' },
+        { block: 'Bloque 3', title: 'Proyectos Colaborativos y Estrategia', weeks: '6 Semanas', description: 'Trabajo en equipo, análisis de casos y resolución de problemas.', deliverable: 'Proyecto integrador de aplicación' },
+        { block: 'Bloque 4', title: 'Exhibición Escolar y Evaluación de Cierre', weeks: '4 Semanas', description: 'Presentación final y torneo de convivencia entre planteles.', deliverable: 'Demostración práctica en la Gala de Talleres' }
+      ]
     });
 
     showToast(`🎉 ¡Taller "${newWorkshopForm.name}" agregado y publicado exitosamente!`);
@@ -338,6 +383,60 @@ export default function SuperUserAdminPage() {
       syllabus_url: '',
       syllabus_filename: ''
     });
+  };
+
+  // Guardar Edición de Planeación Anual de Grupo
+  const handleSaveAnnualPlan = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedWorkshopDetail) return;
+
+    updateGroupAnnualPlan(selectedWorkshopDetail.id, selectedGroupForPlan, {
+      plan_title: annualPlanForm.plan_title || `Planeación Anual - ${selectedWorkshopDetail.name}`,
+      project_title: annualPlanForm.project_title,
+      pda_focus: annualPlanForm.pda_focus,
+      term_1: annualPlanForm.term_1,
+      term_2: annualPlanForm.term_2,
+      term_3: annualPlanForm.term_3
+    });
+
+    showToast(`✅ Planeación Anual actualizada para el grupo seleccionado.`);
+    setShowEditAnnualPlanModal(false);
+
+    // Actualizar referencia local en modal
+    const updated = subjectsList.find(s => s.id === selectedWorkshopDetail.id);
+    if (updated) setSelectedWorkshopDetail(updated);
+  };
+
+  // Agregar Nuevo Bloque al Temario del Taller
+  const handleAddSyllabusTopic = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedWorkshopDetail || !newTopicForm.title.trim()) return;
+
+    const currentTopics = selectedWorkshopDetail.syllabus_topics || [];
+    const updatedTopics = [
+      ...currentTopics,
+      {
+        block: newTopicForm.block,
+        title: newTopicForm.title.trim(),
+        weeks: newTopicForm.weeks,
+        description: newTopicForm.description,
+        deliverable: newTopicForm.deliverable
+      }
+    ];
+
+    updateSubjectSyllabus(selectedWorkshopDetail.id, updatedTopics);
+    showToast(`✅ Nuevo bloque "${newTopicForm.title}" agregado al temario.`);
+    setShowAddTopicModal(false);
+    setNewTopicForm({
+      block: `Bloque ${updatedTopics.length + 1}`,
+      title: '',
+      weeks: '4 Semanas',
+      description: '',
+      deliverable: ''
+    });
+
+    const updated = subjectsList.find(s => s.id === selectedWorkshopDetail.id);
+    if (updated) setSelectedWorkshopDetail(updated);
   };
 
   // Manejo de Creación de Materia Básica
@@ -486,6 +585,57 @@ export default function SuperUserAdminPage() {
     if (name.includes('danza')) return Sparkles;
     return Sparkles;
   };
+
+  // Grupos disponibles para un taller
+  const availableGroupsForWorkshop = useMemo(() => {
+    if (!selectedWorkshopDetail) return groupsList;
+    if (selectedWorkshopDetail.campus_name && selectedWorkshopDetail.campus_name !== 'Todos los Planteles') {
+      return groupsList.filter(g => g.campus_name === selectedWorkshopDetail.campus_name);
+    }
+    return groupsList;
+  }, [groupsList, selectedWorkshopDetail]);
+
+  // Alumnos del grupo seleccionado en el taller
+  const studentsInSelectedWorkshopGroup = useMemo(() => {
+    if (!selectedGroupForPlan) return [];
+    const targetGroup = groupsList.find(g => g.id === selectedGroupForPlan);
+    
+    return detailedStudents.filter(st => {
+      const matchGroup = st.group_id === selectedGroupForPlan || 
+        (targetGroup && st.campus_name === targetGroup.campus_name && st.grade === targetGroup.grade);
+      
+      const matchSearch = workshopStudentSearch === '' || 
+        `${st.first_name} ${st.last_name_1}`.toLowerCase().includes(workshopStudentSearch.toLowerCase()) ||
+        (st.curp && st.curp.toLowerCase().includes(workshopStudentSearch.toLowerCase()));
+
+      return matchGroup && matchSearch;
+    });
+  }, [detailedStudents, groupsList, selectedGroupForPlan, workshopStudentSearch]);
+
+  // Planeación anual activa para el grupo seleccionado
+  const activeGroupPlan: GroupAnnualPlan | null = useMemo(() => {
+    if (!selectedWorkshopDetail) return null;
+    const plans = selectedWorkshopDetail.group_annual_plans || {};
+    if (plans[selectedGroupForPlan]) {
+      return plans[selectedGroupForPlan];
+    }
+    
+    // Default generado
+    const targetGrp = groupsList.find(g => g.id === selectedGroupForPlan);
+    return {
+      group_id: selectedGroupForPlan,
+      group_name: targetGrp?.name || 'Grupo A',
+      campus_name: targetGrp?.campus_name || 'Primaria Jardines',
+      grade: targetGrp?.grade || '4º',
+      plan_title: `Planeación Anual de ${selectedWorkshopDetail.name} - ${targetGrp?.grade || '4º'} ${targetGrp?.name || 'A'}`,
+      term_1: `Trimestre 1: Diagnóstico inicial, fundamentos de ${selectedWorkshopDetail.name} y dinámicas de integración.`,
+      term_2: `Trimestre 2: Desarrollo técnico, proyectos colaborativos y aplicación práctica según programa de estudio.`,
+      term_3: `Trimestre 3: Evaluación formativa continua, portafolio de evidencias y exhibición final.`,
+      pda_focus: `Desarrollo de habilidades motrices, cognitivas y socioemocionales aplicadas a ${selectedWorkshopDetail.name}.`,
+      project_title: `Proyecto Integrador Comunitario: ${selectedWorkshopDetail.name} en Acción`,
+      updated_at: new Date().toISOString()
+    };
+  }, [selectedWorkshopDetail, selectedGroupForPlan, groupsList]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-indigo-500 selection:text-white">
@@ -1153,7 +1303,7 @@ export default function SuperUserAdminPage() {
               <div>
                 <h3 className="text-sm font-black text-white">Catálogo Curricular & Talleres Académicos</h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Gestiona las materias oficiales NEM y da de alta nuevos talleres extracurriculares con temario y logotipo.
+                  Gestiona las materias oficiales NEM y da de alta nuevos talleres extracurriculares con temario, planeación multi-grupo y listas de alumnos.
                 </p>
               </div>
 
@@ -1182,7 +1332,7 @@ export default function SuperUserAdminPage() {
                     Materias Optativas & Talleres Extracurriculares ({subjectsList.filter(s => s.is_elective || s.category === 'optativa').length})
                   </h4>
                 </div>
-                <span className="text-[11px] text-slate-400">Haz clic en un taller para consultar o descargar su programa de estudio</span>
+                <span className="text-[11px] text-slate-400">Haz clic en cualquier taller para abrir su información, temario, planeación por grupo y alumnos</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -1192,7 +1342,11 @@ export default function SuperUserAdminPage() {
                   return (
                     <div 
                       key={opt.id} 
-                      className="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/20 shadow-lg flex flex-col justify-between gap-3 hover:border-amber-500/60 transition-all group relative"
+                      onClick={() => {
+                        setSelectedWorkshopDetail(opt);
+                        setWorkshopDetailTab('syllabus');
+                      }}
+                      className="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/20 shadow-lg flex flex-col justify-between gap-3 hover:border-amber-500/70 hover:scale-[1.01] transition-all group relative cursor-pointer"
                     >
                       {/* Top Bar: Icon/Image + Category Badge + Delete */}
                       <div className="flex items-start justify-between gap-2">
@@ -1213,7 +1367,8 @@ export default function SuperUserAdminPage() {
                           </span>
 
                           <button
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               if (confirm(`¿Eliminar el taller "${opt.name}"?`)) {
                                 deleteSubject(opt.id);
                                 showToast(`Taller "${opt.name}" eliminado.`);
@@ -1229,8 +1384,9 @@ export default function SuperUserAdminPage() {
 
                       {/* Info */}
                       <div className="space-y-1">
-                        <h5 className="text-sm font-black text-white group-hover:text-amber-300 transition-colors">
-                          {opt.name}
+                        <h5 className="text-sm font-black text-white group-hover:text-amber-300 transition-colors flex items-center justify-between">
+                          <span>{opt.name}</span>
+                          <ChevronRight className="h-4 w-4 text-slate-600 group-hover:text-amber-400 transition-colors" />
                         </h5>
                         <p className="text-[11px] text-slate-400 font-mono">Clave SEP: {opt.sep_code || 'OPT-2026'}</p>
                         
@@ -1256,22 +1412,10 @@ export default function SuperUserAdminPage() {
                       </div>
 
                       {/* Syllabus / Temario Action */}
-                      <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
-                        {opt.syllabus_url ? (
-                          <button
-                            onClick={() => setViewSyllabusModal({
-                              isOpen: true,
-                              workshopName: opt.name,
-                              syllabusUrl: opt.syllabus_url,
-                              filename: opt.syllabus_filename
-                            })}
-                            className="flex items-center gap-1 text-[11px] font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-1 rounded-lg border border-amber-500/20 transition-all cursor-pointer"
-                          >
-                            <FileText className="h-3.5 w-3.5" /> Ver Temario PDF
-                          </button>
-                        ) : (
-                          <span className="text-[10px] text-slate-500 italic">Sin temario adjunto</span>
-                        )}
+                      <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2 text-xs">
+                        <span className="text-[11px] font-bold text-amber-400 group-hover:underline flex items-center gap-1">
+                          <Layers className="h-3.5 w-3.5" /> Ver Temario & Grupos
+                        </span>
 
                         <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
                           <CheckCircle2 className="h-3 w-3" /> Activo
@@ -1394,6 +1538,7 @@ export default function SuperUserAdminPage() {
                 <li>Generación aleatoria de contraseñas de 6 dígitos alfanuméricos (`[A-Za-z0-9]`).</li>
                 <li>Capacidad de cambio directo de contraseñas por el Super Usuario en tiempo real.</li>
                 <li>Bloqueo y cancelación instantánea de credenciales para docentes y estudiantes.</li>
+                <li>Los profesores registrados disponen únicamente de acceso al panel docente (`/teacher`).</li>
                 <li>Sincronización en segundo plano con la base de datos central en Supabase.</li>
               </ul>
             </div>
@@ -1401,6 +1546,371 @@ export default function SuperUserAdminPage() {
         )}
 
       </main>
+
+      {/* MODAL PRINCIPAL: INFORMACIÓN DEL CURSO / TALLER ACADÉMICO (TEMARIO + MULTI-GRUPO + ALUMNOS) */}
+      {selectedWorkshopDetail && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-4xl bg-slate-900 border border-white/15 rounded-3xl p-6 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
+            
+            {/* Header del Curso / Taller */}
+            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-4">
+              <div className="flex items-start gap-3.5">
+                {selectedWorkshopDetail.image_url ? (
+                  <div className="h-14 w-14 rounded-2xl overflow-hidden border border-amber-500/40 bg-slate-950 shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={selectedWorkshopDetail.image_url} alt={selectedWorkshopDetail.name} className="h-full w-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0">
+                    <Sparkles className="h-7 w-7" />
+                  </div>
+                )}
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="text-lg font-black text-white">{selectedWorkshopDetail.name}</h2>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      {selectedWorkshopDetail.workshop_category || 'TALLER OPTATIVO'}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono text-slate-400 bg-white/5 border border-white/10">
+                      Clave: {selectedWorkshopDetail.sep_code || 'OPT-2026'}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-400 mt-1 flex flex-wrap items-center gap-3">
+                    {selectedWorkshopDetail.instructor_name && (
+                      <span className="text-slate-300 font-semibold flex items-center gap-1">
+                        <Users className="h-3.5 w-3.5 text-slate-500" /> Instructor: {selectedWorkshopDetail.instructor_name}
+                      </span>
+                    )}
+                    <span>·</span>
+                    <span className="flex items-center gap-1">
+                      <Building2 className="h-3.5 w-3.5 text-slate-500" /> {selectedWorkshopDetail.campus_name || 'Todos los Planteles'}
+                    </span>
+                    {selectedWorkshopDetail.schedule && (
+                      <>
+                        <span>·</span>
+                        <span className="text-indigo-300 font-mono">🕒 {selectedWorkshopDetail.schedule}</span>
+                      </>
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setSelectedWorkshopDetail(null)} 
+                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Descripción del Taller */}
+            {selectedWorkshopDetail.description && (
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-white/10 text-xs text-slate-300 leading-relaxed">
+                <strong className="text-amber-400 block mb-0.5">Objetivos y Enfoque Pedagógico:</strong>
+                {selectedWorkshopDetail.description}
+              </div>
+            )}
+
+            {/* Tabs del Detalle */}
+            <div className="flex items-center gap-2 border-b border-white/10 pb-2">
+              <button
+                onClick={() => setWorkshopDetailTab('syllabus')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  workshopDetailTab === 'syllabus'
+                    ? 'bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <FileText className="h-4 w-4" /> 1. Temario & Programa de Estudio
+              </button>
+
+              <button
+                onClick={() => setWorkshopDetailTab('annual_plans')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  workshopDetailTab === 'annual_plans'
+                    ? 'bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <Calendar className="h-4 w-4" /> 2. Planeación Anual por Grupo (Multi-Grupo)
+              </button>
+
+              <button
+                onClick={() => setWorkshopDetailTab('students')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  workshopDetailTab === 'students'
+                    ? 'bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <GraduationCap className="h-4 w-4" /> 3. Alumnos Inscritos del Grupo
+              </button>
+            </div>
+
+            {/* CONTENIDO TAB 1: TEMARIO Y PROGRAMA DE ESTUDIO */}
+            {workshopDetailTab === 'syllabus' && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h4 className="text-sm font-black text-white">Estructura Modular & Temario del Taller</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Módulos cronometrados, semanas de ejecución y entregables oficiales.</p>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {selectedWorkshopDetail.syllabus_url && (
+                      <a
+                        href={selectedWorkshopDetail.syllabus_url}
+                        download={selectedWorkshopDetail.syllabus_filename || `${selectedWorkshopDetail.name}_Temario.pdf`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-md transition-all"
+                      >
+                        <FileDown className="h-4 w-4" /> Descargar Archivo ({selectedWorkshopDetail.syllabus_filename || 'PDF'})
+                      </a>
+                    )}
+                    <button
+                      onClick={() => setShowAddTopicModal(true)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold border border-white/10 transition-all cursor-pointer"
+                    >
+                      <Plus className="h-4 w-4" /> + Agregar Bloque Temático
+                    </button>
+                  </div>
+                </div>
+
+                {/* Topics Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  {(selectedWorkshopDetail.syllabus_topics || [
+                    { block: 'Bloque 1', title: 'Fundamentos e Iniciación Práctica', weeks: '4 Semanas', description: 'Conceptos base y diagnóstico motriz/analítico de inicio.', deliverable: 'Bitácora diagnóstica' },
+                    { block: 'Bloque 2', title: 'Desarrollo de Técnicas Especializadas', weeks: '6 Semanas', description: 'Ejercicios secuenciales y retos estructurados.', deliverable: 'Evaluación intermedia' },
+                    { block: 'Bloque 3', title: 'Proyectos y Aplicación en Escenario Real', weeks: '6 Semanas', description: 'Diseño de estrategias y trabajo colaborativo.', deliverable: 'Proyecto grupal' },
+                    { block: 'Bloque 4', title: 'Exhibición Escolar y Cierre Anual', weeks: '4 Semanas', description: 'Presentación final y torneo de convivencia escolar.', deliverable: 'Demostración práctica comunitaria' }
+                  ]).map((topic: SyllabusTopic, idx: number) => (
+                    <div key={idx} className="p-4 rounded-2xl bg-slate-950 border border-white/10 space-y-2 hover:border-amber-500/40 transition-all">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
+                          {topic.block}
+                        </span>
+                        <span className="text-[11px] font-mono text-slate-400 font-semibold">{topic.weeks}</span>
+                      </div>
+                      <h5 className="text-xs font-black text-white">{topic.title}</h5>
+                      <p className="text-[11px] text-slate-400 leading-relaxed">{topic.description}</p>
+                      {topic.deliverable && (
+                        <div className="pt-2 border-t border-white/5 flex items-center gap-1 text-[10px] text-emerald-400 font-semibold">
+                          <CheckCircle2 className="h-3 w-3 shrink-0" /> Entregable: {topic.deliverable}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* CONTENIDO TAB 2: PLANEACIÓN ANUAL POR GRUPO (MULTI-GRUPO) */}
+            {workshopDetailTab === 'annual_plans' && (
+              <div className="space-y-4">
+                <div className="p-3.5 rounded-xl bg-indigo-950/40 border border-indigo-500/20 text-xs text-indigo-200">
+                  💡 <strong>Materia Optativa Multi-Grupo:</strong> Este taller se imparte a distintos grupos en varios planteles. Selecciona un grupo para consultar o actualizar su planeación anual específica adaptada a su grado académico.
+                </div>
+
+                {/* Group Selector Strip */}
+                <div>
+                  <label className="text-xs font-bold text-slate-400 block mb-2">Selecciona el Grupo Escolar:</label>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {availableGroupsForWorkshop.map(grp => (
+                      <button
+                        key={grp.id}
+                        onClick={() => setSelectedGroupForPlan(grp.id)}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                          selectedGroupForPlan === grp.id
+                            ? 'bg-amber-500 text-slate-950 font-black shadow-lg shadow-amber-500/25'
+                            : 'bg-slate-950 text-slate-300 hover:bg-white/5 border border-white/10'
+                        }`}
+                      >
+                        <Building2 className="h-3.5 w-3.5" />
+                        <span>{grp.campus_name} · {grp.grade} {grp.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Active Group Annual Plan Card */}
+                {activeGroupPlan && (
+                  <div className="p-5 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-4 shadow-xl">
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-sm font-black text-white">{activeGroupPlan.plan_title}</h4>
+                          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+                            Vigente 2026
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-0.5">
+                          Plantel: <strong className="text-slate-300">{activeGroupPlan.campus_name}</strong> · Grado: <strong className="text-slate-300">{activeGroupPlan.grade} {activeGroupPlan.group_name}</strong>
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          setAnnualPlanForm({
+                            plan_title: activeGroupPlan.plan_title,
+                            project_title: activeGroupPlan.project_title || '',
+                            pda_focus: activeGroupPlan.pda_focus || '',
+                            term_1: activeGroupPlan.term_1,
+                            term_2: activeGroupPlan.term_2,
+                            term_3: activeGroupPlan.term_3
+                          });
+                          setShowEditAnnualPlanModal(true);
+                        }}
+                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black shadow-md cursor-pointer transition-all hover:scale-102"
+                      >
+                        <Edit3 className="h-4 w-4" /> Editar / Recibir Planeación Anual
+                      </button>
+                    </div>
+
+                    {/* PDA and Project Badges */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      {activeGroupPlan.pda_focus && (
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                          <span className="text-[10px] uppercase font-bold text-amber-400 block">Eje Formativo / PDA Oficial:</span>
+                          <p className="text-slate-200">{activeGroupPlan.pda_focus}</p>
+                        </div>
+                      )}
+                      {activeGroupPlan.project_title && (
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                          <span className="text-[10px] uppercase font-bold text-indigo-400 block">Proyecto Comunitario del Grupo:</span>
+                          <p className="text-slate-200">{activeGroupPlan.project_title}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Term 1, 2, 3 Breakdown */}
+                    <div className="space-y-2.5 text-xs">
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-white/5 space-y-1">
+                        <span className="text-xs font-black text-amber-400 block">📅 Trimestre 1 (Diagnóstico y Fundamentación)</span>
+                        <p className="text-slate-300 leading-relaxed">{activeGroupPlan.term_1}</p>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-white/5 space-y-1">
+                        <span className="text-xs font-black text-indigo-400 block">📅 Trimestre 2 (Desarrollo y Proyectos Intermedios)</span>
+                        <p className="text-slate-300 leading-relaxed">{activeGroupPlan.term_2}</p>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-white/5 space-y-1">
+                        <span className="text-xs font-black text-emerald-400 block">📅 Trimestre 3 (Evaluación Formativa y Cierre)</span>
+                        <p className="text-slate-300 leading-relaxed">{activeGroupPlan.term_3}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* CONTENIDO TAB 3: ALUMNOS INSCRITOS EN ESTE GRUPO */}
+            {workshopDetailTab === 'students' && (
+              <div className="space-y-4">
+                {/* Group Selector for Students */}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-bold text-slate-400">Grupo:</span>
+                    {availableGroupsForWorkshop.map(grp => (
+                      <button
+                        key={grp.id}
+                        onClick={() => setSelectedGroupForPlan(grp.id)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          selectedGroupForPlan === grp.id
+                            ? 'bg-amber-500 text-slate-950 font-black'
+                            : 'bg-slate-950 text-slate-400 hover:bg-white/5 border border-white/10'
+                        }`}
+                      >
+                        {grp.campus_name} · {grp.grade} {grp.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="relative min-w-[200px]">
+                    <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-500" />
+                    <input
+                      type="text"
+                      value={workshopStudentSearch}
+                      onChange={(e) => setWorkshopStudentSearch(e.target.value)}
+                      placeholder="Buscar alumno en grupo..."
+                      className="w-full bg-slate-950 border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white outline-none focus:border-amber-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Enrolled Students Table */}
+                <div className="bg-slate-950 border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+                  <div className="p-3 bg-slate-900 border-b border-white/5 flex items-center justify-between text-xs">
+                    <span className="font-bold text-slate-200">
+                      Alumnos inscritos en este taller ({studentsInSelectedWorkshopGroup.length})
+                    </span>
+                    <span className="text-[11px] text-slate-400">Sincronizado con base de datos de ISkool</span>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-slate-950 text-slate-400 font-bold uppercase text-[10px] tracking-wider border-b border-white/10">
+                        <tr>
+                          <th className="p-3.5">Estudiante</th>
+                          <th className="p-3.5">CURP</th>
+                          <th className="p-3.5">Plantel & Grado</th>
+                          <th className="p-3.5 text-center">Nivel / XP</th>
+                          <th className="p-3.5 text-right">Estado</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5 text-slate-200">
+                        {studentsInSelectedWorkshopGroup.length === 0 ? (
+                          <tr>
+                            <td colSpan={5} className="p-6 text-center text-slate-500 text-xs">
+                              No hay alumnos registrados para este grupo específico con los filtros actuales.
+                            </td>
+                          </tr>
+                        ) : (
+                          studentsInSelectedWorkshopGroup.map(st => (
+                            <tr key={st.id} className="hover:bg-white/5 transition-colors">
+                              <td className="p-3.5 font-bold text-white flex items-center gap-2.5">
+                                <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-[10px] font-black text-white shrink-0">
+                                  {st.first_name.charAt(0)}{st.last_name_1.charAt(0)}
+                                </div>
+                                <div>
+                                  <div>{st.first_name} {st.second_name || ''} {st.last_name_1} {st.last_name_2 || ''}</div>
+                                  <div className="text-[10px] text-slate-500 font-normal">{st.email}</div>
+                                </div>
+                              </td>
+                              <td className="p-3.5 font-mono text-slate-400 text-[11px]">{st.curp || 'SIN-CURP'}</td>
+                              <td className="p-3.5 text-slate-300 font-semibold">
+                                {st.campus_name} · {st.grade}
+                              </td>
+                              <td className="p-3.5 text-center font-mono">
+                                <span className="px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-300 border border-purple-500/30 text-[10px] font-bold">
+                                  Nivel {typeof st.level === 'number' ? st.level : 1} ({(st as any).total_xp || 150} XP)
+                                </span>
+                              </td>
+                              <td className="p-3.5 text-right">
+                                <span className="text-emerald-400 font-bold text-xs">✔ Inscrito</span>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-3 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => setSelectedWorkshopDetail(null)}
+                className="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer"
+              >
+                Cerrar Detalle
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MODAL 1: ALTA INDIVIDUAL DE ALUMNO */}
       {showAddStudentModal && (
@@ -1679,12 +2189,15 @@ export default function SuperUserAdminPage() {
         </div>
       )}
 
-      {/* MODAL 4: ALTA DE PROFESOR */}
+      {/* MODAL 4: ALTA DE PROFESOR (ACCESO EXCLUSIVO DOCENTE) */}
       {showAddTeacherModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="text-base font-black text-white">Registrar Nuevo Profesor</h3>
+              <div>
+                <h3 className="text-base font-black text-white">Registrar Nuevo Profesor</h3>
+                <p className="text-xs text-slate-400">El docente tendrá acceso exclusivo al Portal Docente (/teacher).</p>
+              </div>
               <button onClick={() => setShowAddTeacherModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
             </div>
 
@@ -1739,6 +2252,10 @@ export default function SuperUserAdminPage() {
                 />
               </div>
 
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-300">
+                🔒 Al dar de alta este docente, podrá ingresar con su correo y contraseña de 6 dígitos con permisos restringidos exclusivamente a la vista de profesor.
+              </div>
+
               <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
                 <button
                   type="button"
@@ -1759,7 +2276,7 @@ export default function SuperUserAdminPage() {
         </div>
       )}
 
-      {/* MODAL 5: AGREGAR NUEVO TALLER ACADÉMICO / OPTATIVA (CON SUBIDA DE IMAGEN Y TEMARIO) */}
+      {/* MODAL 5: ALTA DE NUEVO TALLER ACADÉMICO / OPTATIVA */}
       {showAddWorkshopModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-xl bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
@@ -1996,59 +2513,193 @@ export default function SuperUserAdminPage() {
         </div>
       )}
 
-      {/* MODAL 6: VER / DESCARGAR TEMARIO DEL TALLER */}
-      {viewSyllabusModal.isOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
+      {/* MODAL 6: EDITAR / RECIBIR PLANEACIÓN ANUAL DE GRUPO */}
+      {showEditAnnualPlanModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-white/15 rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
-                <h3 className="text-base font-black text-white">Programa de Estudio / Temario</h3>
-                <p className="text-xs text-amber-400 font-bold mt-0.5">{viewSyllabusModal.workshopName}</p>
+                <h3 className="text-base font-black text-white">Planeación Anual Oficial del Grupo</h3>
+                <p className="text-xs text-amber-400">{selectedWorkshopDetail?.name} · Grupo {selectedGroupForPlan}</p>
               </div>
-              <button 
-                onClick={() => setViewSyllabusModal({ isOpen: false, workshopName: '' })} 
-                className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer"
-              >
-                ✕ Cerrar
-              </button>
+              <button onClick={() => setShowEditAnnualPlanModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-950 border border-white/10 space-y-3 text-center">
-              <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mx-auto flex items-center justify-center">
-                <FileText className="h-6 w-6" />
-              </div>
+            <form onSubmit={handleSaveAnnualPlan} className="space-y-3 text-xs">
               <div>
-                <span className="text-xs font-bold text-white block">
-                  {viewSyllabusModal.filename || 'Temario Oficial del Taller.pdf'}
-                </span>
-                <span className="text-[11px] text-slate-400">Documento pedagógico oficial para el ciclo escolar 2026.</span>
+                <label className="text-slate-300 font-bold block mb-1">Título de la Planeación Anual</label>
+                <input
+                  type="text"
+                  required
+                  value={annualPlanForm.plan_title}
+                  onChange={(e) => setAnnualPlanForm({ ...annualPlanForm, plan_title: e.target.value })}
+                  placeholder="Ej. Planeación Anual 2026 - Robótica 4º Primaria Jardines"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-amber-500"
+                />
               </div>
 
-              {viewSyllabusModal.syllabusUrl && (
-                <a
-                  href={viewSyllabusModal.syllabusUrl}
-                  download={viewSyllabusModal.filename || 'temario.pdf'}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg transition-all"
-                >
-                  <Download className="h-4 w-4" /> Descargar Archivo
-                </a>
-              )}
-            </div>
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Eje Formativo / PDA Oficial de la SEP</label>
+                <input
+                  type="text"
+                  value={annualPlanForm.pda_focus}
+                  onChange={(e) => setAnnualPlanForm({ ...annualPlanForm, pda_focus: e.target.value })}
+                  placeholder="Ej. Pensamiento analítico y resolución colaborativa..."
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500"
+                />
+              </div>
 
-            <div className="flex justify-end pt-1">
-              <button
-                type="button"
-                onClick={() => setViewSyllabusModal({ isOpen: false, workshopName: '' })}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer"
-              >
-                Cerrar
-              </button>
-            </div>
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Proyecto Comunitario Integrador</label>
+                <input
+                  type="text"
+                  value={annualPlanForm.project_title}
+                  onChange={(e) => setAnnualPlanForm({ ...annualPlanForm, project_title: e.target.value })}
+                  placeholder="Ej. Eco-Robot Comunitario para el patio escolar"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Trimestre 1 (Objetivos & Actividades)</label>
+                <textarea
+                  rows={2}
+                  value={annualPlanForm.term_1}
+                  onChange={(e) => setAnnualPlanForm({ ...annualPlanForm, term_1: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl p-2.5 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Trimestre 2 (Objetivos & Actividades)</label>
+                <textarea
+                  rows={2}
+                  value={annualPlanForm.term_2}
+                  onChange={(e) => setAnnualPlanForm({ ...annualPlanForm, term_2: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl p-2.5 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Trimestre 3 (Objetivos & Actividades)</label>
+                <textarea
+                  rows={2}
+                  value={annualPlanForm.term_3}
+                  onChange={(e) => setAnnualPlanForm({ ...annualPlanForm, term_3: e.target.value })}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl p-2.5 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowEditAnnualPlanModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black shadow-lg cursor-pointer"
+                >
+                  Guardar Planeación Anual
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
 
-      {/* MODAL 7: ALTA DE MATERIA CURRICULAR SIMPLE */}
+      {/* MODAL 7: AGREGAR BLOQUE TEMÁTICO AL TEMARIO */}
+      {showAddTopicModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h3 className="text-base font-black text-white">Agregar Bloque al Temario</h3>
+              <button onClick={() => setShowAddTopicModal(false)} className="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
+            </div>
+
+            <form onSubmit={handleAddSyllabusTopic} className="space-y-3 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Identificador de Bloque</label>
+                  <input
+                    type="text"
+                    required
+                    value={newTopicForm.block}
+                    onChange={(e) => setNewTopicForm({ ...newTopicForm, block: e.target.value })}
+                    placeholder="Ej. Bloque 5"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-amber-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Duración (Semanas)</label>
+                  <input
+                    type="text"
+                    required
+                    value={newTopicForm.weeks}
+                    onChange={(e) => setNewTopicForm({ ...newTopicForm, weeks: e.target.value })}
+                    placeholder="Ej. 4 Semanas"
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Título del Módulo o Tema *</label>
+                <input
+                  type="text"
+                  required
+                  value={newTopicForm.title}
+                  onChange={(e) => setNewTopicForm({ ...newTopicForm, title: e.target.value })}
+                  placeholder="Ej. Aplicaciones Avanzadas y Torneo Escolar"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white font-bold outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Descripción de Contenidos</label>
+                <textarea
+                  rows={2}
+                  value={newTopicForm.description}
+                  onChange={(e) => setNewTopicForm({ ...newTopicForm, description: e.target.value })}
+                  placeholder="Temas que se impartirán en este bloque..."
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl p-2.5 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-bold block mb-1">Entregable Tangible / Evaluación</label>
+                <input
+                  type="text"
+                  value={newTopicForm.deliverable}
+                  onChange={(e) => setNewTopicForm({ ...newTopicForm, deliverable: e.target.value })}
+                  placeholder="Ej. Rúbrica y prototipo final"
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2 text-white outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowAddTopicModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black shadow-lg cursor-pointer"
+                >
+                  Guardar Bloque
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 8: ALTA DE MATERIA CURRICULAR SIMPLE */}
       {showAddSubjectModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4">
