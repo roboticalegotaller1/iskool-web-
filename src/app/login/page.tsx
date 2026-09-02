@@ -42,10 +42,10 @@ const DEMO_ACCOUNTS = [
     id: "std-prep"
   },
   {
-    name: "Prof. Israel López",
+    name: "Prof. Israel López Ángeles",
     role: "teacher",
-    grade: "Docente Evaluador",
-    email: "israel.lopez@iskool.edu.mx",
+    grade: "Docente (Acceso Multi-Módulo)",
+    email: "israel.lopez@jjrosseau.edu.mx",
     avatarColor: "bg-rose-500",
     id: "usr-teacher-1"
   },
@@ -76,22 +76,21 @@ const DEMO_ACCOUNTS = [
 ];
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('ISkoolPassword2026!');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { login, loading: authLoading } = useAuth();
   const switchStudent = useStudentStore(state => state.switchStudent);
   const router = useRouter();
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('********');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
 
   const routeUserByRole = async (userEmail: string, role?: string, studentId?: string) => {
-    if (studentId) {
+    if (studentId && (role === 'student' || !role)) {
       await switchStudent(studentId);
     }
     if (role === 'student') {
       router.push('/student');
-    } else if (role === 'teacher' || userEmail === 'israel.lopez@iskool.edu.mx') {
+    } else if (role === 'teacher' || userEmail.toLowerCase().includes('israel.lopez')) {
       router.push('/teacher');
     } else if (role === 'coordinator' || userEmail.includes('coord')) {
       router.push('/coordinator');
@@ -114,7 +113,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
     
     try {
-      const result = await login(email);
+      const result = await login(email, password);
       if (result.success) {
         const matchedDemo = DEMO_ACCOUNTS.find(d => d.email.toLowerCase() === email.toLowerCase());
         const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email.toLowerCase() === email.toLowerCase());
@@ -140,10 +139,14 @@ export default function LoginPage() {
 
   const handleSelectDemo = async (demo: typeof DEMO_ACCOUNTS[0]) => {
     setEmail(demo.email);
+    if (demo.email.toLowerCase().includes('israel.lopez')) {
+      setPassword('008805');
+    }
     setErrorMsg('');
     setIsSubmitting(true);
     try {
-      const result = await login(demo.email);
+      const pass = demo.email.toLowerCase().includes('israel.lopez') ? '008805' : undefined;
+      const result = await login(demo.email, pass);
       if (result.success) {
         await routeUserByRole(demo.email, demo.role, demo.id);
       } else {

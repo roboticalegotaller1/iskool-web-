@@ -12,7 +12,7 @@ interface AuthContextType {
   session: any | null;
   user: UserProfile | null;
   loading: boolean;
-  login: (email: string) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, userPassword?: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
 }
 
@@ -83,8 +83,23 @@ const getDemoUser = (email: string): UserProfile => {
       updated_at: new Date().toISOString()
     };
   }
-  if (emailLower === TEACHER_SEED.email.toLowerCase() || emailLower.includes('teacher') || emailLower.includes('prof') || emailLower.includes('docente') || emailLower.includes('israel.lopez')) {
-    return TEACHER_SEED;
+   if (
+    emailLower === TEACHER_SEED.email.toLowerCase() || 
+    emailLower === 'israel.lopez@iskool.edu.mx' ||
+    emailLower === 'israel@iskool.edu.mx' ||
+    emailLower === 'israel.lopez@ejemplo.com' ||
+    emailLower.includes('israel.lopez') ||
+    emailLower.includes('israel') ||
+    emailLower.includes('prof') || 
+    emailLower.includes('docente')
+  ) {
+    return {
+      ...TEACHER_SEED,
+      first_name: 'Israel',
+      last_name: 'López Ángeles',
+      email: emailLower.includes('israel') ? emailLower : TEACHER_SEED.email,
+      temporary_password: '008805'
+    };
   }
   if (emailLower === PARENT_SEED.email.toLowerCase() || emailLower.includes('parent') || emailLower.includes('tutor') || emailLower.includes('ejemplo') || emailLower.includes('familia')) {
     return PARENT_SEED;
@@ -115,24 +130,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const router = useRouter();
 
   useEffect(() => {
-    // Check session on load
+    // Check active session on mount
     const checkSession = async () => {
       try {
-        const { data, error } = await supabase.auth.getSession();
-        if (error && (error.message?.includes('JWT') || error.message?.includes('future'))) {
-          console.warn("Stale or skewed JWT detected on startup, clearing session:", error.message);
-          await supabase.auth.signOut().catch(() => {});
-        }
-        const initialSession = data?.session;
-        if (initialSession?.user) {
-          setSession(initialSession);
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        setSession(currentSession);
+        if (currentSession?.user) {
+          const u = currentSession.user;
           setUser({
-            id: initialSession.user.id,
-            first_name: initialSession.user.user_metadata?.first_name || 'Usuario',
-            last_name: initialSession.user.user_metadata?.last_name || '',
-            role: (initialSession.user.user_metadata?.role || 'student') as any,
-            email: initialSession.user.email || '',
-            created_at: initialSession.user.created_at,
+            id: u.id,
+            first_name: u.user_metadata?.first_name || 'Usuario',
+            last_name: u.user_metadata?.last_name || '',
+            role: (u.user_metadata?.role || 'student') as any,
+            email: u.email || '',
+            created_at: u.created_at,
             updated_at: new Date().toISOString()
           });
         }
@@ -164,9 +175,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  const login = async (email: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (email: string, userPassword?: string): Promise<{ success: boolean; error?: string }> => {
     setLoading(true);
-    const password = 'ISkoolPassword2026!';
     const resolvedUser = getDemoUser(email);
     
     if (resolvedUser.is_blocked) {
@@ -176,6 +186,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         error: '⛔ Esta cuenta ha sido bloqueada o cancelada por la Dirección Escolar en el Portal de Super Usuario.' 
       };
     }
+
+    if (userPassword && userPassword.trim().length > 0) {
+      const isIsrael = (resolvedUser.email || '').toLowerCase().includes('israel') || resolvedUser.id === 'usr-teacher-1';
+      if (isIsrael && userPassword !== '008805' && userPassword !== 'ISkoolPassword2026!') {
+        setLoading(false);
+        return {
+          success: false,
+          error: 'Contraseña incorrecta. Introduce la clave asignada (008805).'
+        };
+      }
+    }
+
+    const password = userPassword || 'ISkoolPassword2026!';
 
     try {
       // 1. Intentar autenticación remota

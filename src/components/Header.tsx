@@ -54,6 +54,16 @@ export const Header: React.FC = () => {
 
   const currentRole = getRoleFromPath();
 
+  const isIsraelLopez = Boolean(
+    user && (
+      (user.email || '').toLowerCase().includes('israel') ||
+      (user.first_name || '').toLowerCase().includes('israel') ||
+      user.id === 'usr-teacher-1'
+    )
+  );
+
+  const canSwitchRoles = user?.role === 'admin' || isIsraelLopez;
+
   const getStudentLevelLabel = (id: string) => {
     const studentProfile = detailedStudents?.find(s => s.id === id);
     if (!studentProfile) return 'Preparatoria';
@@ -239,16 +249,18 @@ export const Header: React.FC = () => {
               >
                 Facturación SAT
               </Link>
-              <Link
-                href="/admin"
-                aria-label="Ir al panel de administración general"
-                style={pathname === '/admin' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/admin' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                Panel Administrador
-              </Link>
+              {user?.role === 'admin' && (
+                <Link
+                  href="/admin"
+                  aria-label="Ir al panel de administración general"
+                  style={pathname === '/admin' ? { color: 'var(--brand-primary)' } : undefined}
+                  className={`text-sm font-semibold transition-colors ${
+                    pathname === '/admin' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                  }`}
+                >
+                  Panel Administrador
+                </Link>
+              )}
             </>
           )}
 
@@ -315,8 +327,8 @@ export const Header: React.FC = () => {
             </div>
           )}
 
-          {/* Quick Role Selector (Exclusivo para administradores) */}
-          {user?.role === 'admin' && (
+          {/* Quick Role Selector (Para administradores y educadores con multi-módulo como Israel López) */}
+          {canSwitchRoles && (
             <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg" role="group" aria-label="Cambio rápido de vista por rol">
               <Link
                 href="/student"
