@@ -66,11 +66,11 @@ const DEMO_ACCOUNTS = [
     id: "usr-parent-001"
   },
   {
-    name: "Mtro. Carlos Vega",
+    name: "Admin",
     role: "admin",
-    grade: "Dirección General",
-    email: "admin@iskool.edu.mx",
-    avatarColor: "bg-slate-700",
+    grade: "Super Usuario (Acceso Total a Todo el Sistema)",
+    email: "admin",
+    avatarColor: "bg-slate-800",
     id: "usr-admin-1"
   }
 ];
@@ -88,7 +88,9 @@ export default function LoginPage() {
     if (studentId && (role === 'student' || !role)) {
       await switchStudent(studentId);
     }
-    if (role === 'student') {
+    if (role === 'admin' || userEmail.toLowerCase().includes('admin')) {
+      router.push('/admin');
+    } else if (role === 'student') {
       router.push('/student');
     } else if (role === 'teacher' || userEmail.toLowerCase().includes('israel.lopez')) {
       router.push('/teacher');
@@ -96,8 +98,6 @@ export default function LoginPage() {
       router.push('/coordinator');
     } else if (role === 'parent' || userEmail.includes('ejemplo') || userEmail.includes('parent')) {
       router.push('/parent');
-    } else if (role === 'admin' || userEmail.includes('admin')) {
-      router.push('/admin');
     } else {
       router.push('/');
     }
@@ -106,7 +106,7 @@ export default function LoginPage() {
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      setErrorMsg('Por favor introduce tu correo electrónico.');
+      setErrorMsg('Por favor introduce tu correo o identificador de cuenta.');
       return;
     }
     setErrorMsg('');
@@ -126,6 +126,7 @@ export default function LoginPage() {
         } catch {}
 
         if (!detectedRole && matchedStudent) detectedRole = 'student';
+        if (email.toLowerCase().includes('admin')) detectedRole = 'admin';
         await routeUserByRole(email, detectedRole, matchedDemo?.id || matchedStudent?.id);
       } else {
         setErrorMsg(result.error || 'Credenciales inválidas.');
@@ -139,13 +140,13 @@ export default function LoginPage() {
 
   const handleSelectDemo = async (demo: typeof DEMO_ACCOUNTS[0]) => {
     setEmail(demo.email);
-    if (demo.email.toLowerCase().includes('israel.lopez')) {
+    if (demo.email.toLowerCase().includes('israel.lopez') || demo.role === 'admin' || demo.email.toLowerCase().includes('admin')) {
       setPassword('008805');
     }
     setErrorMsg('');
     setIsSubmitting(true);
     try {
-      const pass = demo.email.toLowerCase().includes('israel.lopez') ? '008805' : undefined;
+      const pass = (demo.email.toLowerCase().includes('israel.lopez') || demo.role === 'admin' || demo.email.toLowerCase().includes('admin')) ? '008805' : undefined;
       const result = await login(demo.email, pass);
       if (result.success) {
         await routeUserByRole(demo.email, demo.role, demo.id);

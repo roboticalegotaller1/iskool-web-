@@ -61,13 +61,22 @@ const getDemoUser = (email: string): UserProfile => {
     // fallback si store no está montado
   }
 
-  if (emailLower.includes('admin') || emailLower.includes('vega') || emailLower.includes('director')) {
+  if (
+    emailLower === 'admin' || 
+    emailLower === 'admin@jjrosseau.edu.mx' || 
+    emailLower === 'admin@iskool.edu.mx' || 
+    emailLower.includes('admin') || 
+    emailLower.includes('vega') || 
+    emailLower.includes('director') || 
+    emailLower.includes('super')
+  ) {
     return {
       id: 'usr-admin-1',
-      first_name: 'Carlos',
-      last_name: 'Vega (Dirección General)',
+      first_name: 'Admin',
+      last_name: '(Super Usuario)',
       role: 'admin',
-      email: emailLower,
+      email: emailLower.includes('@') ? emailLower : 'admin@jjrosseau.edu.mx',
+      temporary_password: '008805',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
@@ -189,6 +198,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (userPassword && userPassword.trim().length > 0) {
       const isIsrael = (resolvedUser.email || '').toLowerCase().includes('israel') || resolvedUser.id === 'usr-teacher-1';
+      const isAdmin = resolvedUser.role === 'admin' || (resolvedUser.email || '').toLowerCase().includes('admin');
+      
+      if (isAdmin && userPassword !== '008805' && userPassword !== 'ISkoolPassword2026!') {
+        setLoading(false);
+        return {
+          success: false,
+          error: 'Contraseña incorrecta para Administrador. Introduce la clave asignada (008805).'
+        };
+      }
+
       if (isIsrael && userPassword !== '008805' && userPassword !== 'ISkoolPassword2026!') {
         setLoading(false);
         return {
