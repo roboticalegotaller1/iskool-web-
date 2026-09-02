@@ -1059,7 +1059,7 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     teacher_notes: []
   },
   {
-    id: 'std-pa',
+    id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a01',
     first_name: 'Lucas',
     second_name: 'Caelum',
     last_name_1: 'Skywalker',
@@ -1379,7 +1379,7 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     teacher_notes: []
   },
   {
-    id: 'std-sec',
+    id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a42',
     first_name: 'Elena',
     second_name: 'Natasha',
     last_name_1: 'Rostova',
@@ -1705,7 +1705,7 @@ export const DETAILED_STUDENTS_SEED: DetailedStudent[] = [
     teacher_notes: []
   },
   {
-    id: 'std-prep',
+    id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a44',
     first_name: 'Mateo',
     second_name: 'Benjamín',
     last_name_1: 'Díaz',

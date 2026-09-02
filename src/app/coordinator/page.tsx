@@ -760,12 +760,12 @@ export default function CoordinatorDashboard() {
                         </td>
                       </tr>
                     ) : (
-                      sortedStudents.map(student => {
+                      sortedStudents.map((student, idx) => {
                         const age = calculateAge(student.birth_date);
                         const assignedGroup = groupsList.find(g => g.id === student.group_id);
                         
                         return (
-                          <tr key={student.id} className="hover:bg-zinc-50/55 dark:hover:bg-zinc-850/40 transition-colors">
+                          <tr key={`${student.id}-${student.curp || idx}`} className="hover:bg-zinc-50/55 dark:hover:bg-zinc-850/40 transition-colors">
                             <td className="p-4 px-6 font-mono text-[10.5px]">
                               <span className="font-extrabold text-zinc-900 dark:text-white block">{student.enrollment_id}</span>
                               <span className="text-zinc-400 block mt-0.5">{student.curp}</span>

@@ -609,17 +609,33 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
       if (groupId) {
         const groupStudents = schoolAdminStore.detailedStudents
           .filter(s => s.group_id === groupId)
-          .map(s => mapStudentIdToUuid(s.id));
+          .map(s => mapStudentIdToUuid(s.id))
+          .filter(isUuid);
           
         if (groupStudents.length > 0) {
           query = query.in('student_id', groupStudents);
         } else {
-          set({ portfolioItems: [], isLoadingPortfolio: false, portfolioError: null });
+          // Filtrado en memoria para alumnos y grupos creados localmente
+          const localFiltered = (get().portfolioItems || []).filter(p => {
+            const st = schoolAdminStore.detailedStudents.find(s => s.id === p.student_id);
+            return st?.group_id === groupId;
+          });
+          set({ portfolioItems: localFiltered.length > 0 ? localFiltered : PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
           return;
         }
       } else if (targetStudentId) {
         const dbStudentId = mapStudentIdToUuid(targetStudentId);
-        query = query.eq('student_id', dbStudentId);
+        if (isUuid(dbStudentId)) {
+          query = query.eq('student_id', dbStudentId);
+        } else {
+          // Si el ID es local (e.g. std-1788...), filtrar del catálogo local
+          const localItems = (get().portfolioItems || []).filter(p => 
+            p.student_id === targetStudentId || 
+            normalizeStudentId(p.student_id) === normalizeStudentId(targetStudentId)
+          );
+          set({ portfolioItems: localItems.length > 0 ? localItems : PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
+          return;
+        }
       }
 
       const response = await query;
@@ -715,8 +731,9 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
         set({ portfolioItems: [...mappedItems, ...extraSeeds], isLoadingPortfolio: false, portfolioError: null });
       }
     } catch (err: any) {
-      console.error('Error fetching portfolio items:', err.message);
-      set({ portfolioError: err.message || 'Error al conectar con la base de datos' });
+      console.warn('Uso de catálogo de portafolio local diferido:', err.message);
+      // Mantener catálogo local activo y sin error intrusivo en UI
+      set({ portfolioError: null, isLoadingPortfolio: false });
     } finally {
       set({ isLoadingPortfolio: false });
     }

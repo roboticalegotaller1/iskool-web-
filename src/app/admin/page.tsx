@@ -1199,12 +1199,12 @@ export default function SuperUserAdminPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-slate-200">
-                    {filteredStudents.map(student => {
+                    {filteredStudents.map((student, idx) => {
                       const isBlocked = student.is_blocked || student.status === 'suspendido';
                       const tempPass = student.temporary_password || 'San7K4';
 
                       return (
-                        <tr key={student.id} className={`hover:bg-white/5 transition-colors ${isBlocked ? 'bg-red-950/10 opacity-70' : ''}`}>
+                        <tr key={`${student.id}-${student.curp || idx}`} className={`hover:bg-white/5 transition-colors ${isBlocked ? 'bg-red-950/10 opacity-70' : ''}`}>
                           <td className="p-4">
                             <div className="font-bold text-white text-sm">
                               {student.first_name} {student.second_name || ''} {student.last_name_1} {student.last_name_2 || ''}
