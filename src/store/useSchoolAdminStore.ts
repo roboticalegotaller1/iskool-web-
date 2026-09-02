@@ -338,9 +338,9 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         coordinators: ['Lic. Alejandro Valdés', 'Mtra. Patricia Mendoza'],
         teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar', 'Prof. Fernando Rangel'],
         themeColors: {
-          primary: '221 83% 53%',
-          secondary: '250 84% 54%',
-          accent: '142 71% 45%'
+          primary: '221 83% 53%',   // Azul Zafiro (Rigor, Confianza, Académico)
+          secondary: '268 85% 58%', // Púrpura / Violeta Mágico (Minuto 6:25 - Magia, Exclusividad, IA)
+          accent: '158 72% 40%'     // Verde Esmeralda (Crecimiento, Bienestar, Comunidad)
         }
       },
       campusesList: CAMPUSES_SEED,
@@ -406,8 +406,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
             teachers: ['Prof. Coordinador Inicial'],
             themeColors: {
               primary: '221 83% 53%',
-              secondary: '250 84% 54%',
-              accent: '142 71% 45%'
+              secondary: '268 85% 58%',
+              accent: '158 72% 40%'
             }
           }
         };
@@ -1429,8 +1429,8 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
             teachers: ['Prof. Israel López', 'Profa. María Fernández', 'Prof. Roberto Díaz', 'Profa. Carmen Morales', 'Prof. David Navarrete', 'Profa. Elena Salazar', 'Prof. Fernando Rangel'],
             themeColors: {
               primary: '221 83% 53%',
-              secondary: '250 84% 54%',
-              accent: '142 71% 45%'
+              secondary: '268 85% 58%',
+              accent: '158 72% 40%'
             }
           },
           campusesList: CAMPUSES_SEED,

@@ -107,42 +107,46 @@ export const Header: React.FC = () => {
               <Link
                 href="/student"
                 aria-label="Ir al mapa de misiones académicas"
-                style={pathname === '/student' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/student' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
+                  pathname === '/student' 
+                    ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/60 shadow-xs' 
+                    : 'text-zinc-600 hover:text-amber-600 dark:text-zinc-400 dark:hover:text-amber-400'
                 }`}
               >
-                Misiones
+                🗺️ Misiones
               </Link>
               <Link
                 href="/student/portfolio"
                 aria-label="Ir a mi portafolio digital de evidencias"
-                style={pathname === '/student/portfolio' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/student/portfolio' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
+                  pathname === '/student/portfolio' 
+                    ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-800/60 shadow-xs' 
+                    : 'text-zinc-600 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400'
                 }`}
               >
-                Mi Portafolio
+                📋 Mi Portafolio
               </Link>
               <Link
                 href="/student/avatar"
                 aria-label="Personalizar mi avatar y mascota"
-                style={pathname === '/student/avatar' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/student/avatar' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
+                  pathname === '/student/avatar' 
+                    ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60 shadow-xs' 
+                    : 'text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400'
                 }`}
               >
-                Avatar & Mascota
+                🐾 Avatar & Mascota
               </Link>
               <Link
                 href="/student/shop"
                 aria-label="Ir a la tienda de artefactos y mejoras"
-                style={pathname === '/student/shop' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/student/shop' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
+                  pathname === '/student/shop' 
+                    ? 'bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 border border-purple-200/60 dark:border-purple-800/60 shadow-xs glow-studio' 
+                    : 'text-zinc-600 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-purple-400'
                 }`}
               >
-                Tienda Mágica
+                ✨ Tienda Mágica
               </Link>
             </>
           )}
@@ -152,42 +156,46 @@ export const Header: React.FC = () => {
               <Link
                 href="/teacher"
                 aria-label="Ir a planeaciones NEM y revisión de evidencias"
-                style={pathname === '/teacher' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/teacher' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
+                  pathname === '/teacher' 
+                    ? 'bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 border border-blue-200/70 dark:border-blue-800/70 shadow-xs glow-blue' 
+                    : 'text-zinc-600 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400'
                 }`}
               >
-                Planeación & Portafolio
+                📖 Planeación & Portafolio
               </Link>
               <Link
                 href="/teacher/studio"
                 aria-label="Ir al estudio creador de actividades"
-                style={pathname === '/teacher/studio' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/teacher/studio' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
+                  pathname === '/teacher/studio' 
+                    ? 'bg-purple-50 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 border border-purple-200/70 dark:border-purple-800/70 shadow-xs glow-studio' 
+                    : 'text-zinc-600 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-purple-400'
                 }`}
               >
-                Estudio Docente
+                🎨 Estudio Docente
               </Link>
               <Link
                 href="/teacher/community"
                 aria-label="Ir a la comunidad docente"
-                style={pathname === '/teacher/community' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/teacher/community' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
+                  pathname === '/teacher/community' 
+                    ? 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border border-emerald-200/70 dark:border-emerald-800/70 shadow-xs glow-emerald' 
+                    : 'text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400'
                 }`}
               >
-                Comunidad Docente
+                🌍 Comunidad Docente
               </Link>
               <Link
                 href="/teacher/grades"
                 aria-label="Ir a boleta de calificaciones formativas SEP"
-                style={pathname === '/teacher/grades' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/teacher/grades' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
+                  pathname === '/teacher/grades' 
+                    ? 'bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 border border-amber-200/70 dark:border-amber-800/70 shadow-xs glow-gold' 
+                    : 'text-zinc-600 hover:text-amber-600 dark:text-zinc-400 dark:hover:text-amber-400'
                 }`}
               >
-                Boleta SEP
+                ⭐ Boleta SEP
               </Link>
             </>
           )}
@@ -299,21 +307,19 @@ export const Header: React.FC = () => {
             </div>
           )}
 
-          {/* Stats for Student */}
+          {/* Stats for Student con psicología del color y glow */}
           {currentRole === 'student' && (
-            <div className="hidden md:flex items-center gap-3 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 rounded-full text-xs font-semibold">
-              <div className="flex items-center gap-1 text-amber-500" title="Racha de días activos">
-                <Flame className="h-4 w-4 fill-current animate-pulse" />
+            <div className="hidden md:flex items-center gap-2 text-xs font-black">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-50 dark:bg-orange-950/60 border border-orange-200/60 dark:border-orange-800/60 text-orange-600 dark:text-orange-400 shadow-xs" title="Racha de días activos">
+                <Flame className="h-4 w-4 fill-orange-500 text-orange-500 animate-pulse" />
                 <span>{stats.current_streak} d</span>
               </div>
-              <div className="h-3 w-px bg-zinc-300 dark:bg-zinc-700" />
-              <div className="flex items-center gap-1 text-yellow-500" title="Monedas ganadas">
-                <Coins className="h-4 w-4 fill-current" />
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200/60 dark:border-amber-800/60 text-amber-600 dark:text-amber-400 shadow-xs glow-gold" title="Monedas de oro">
+                <Coins className="h-4 w-4 fill-amber-400 text-amber-500" />
                 <span>{stats.coins}</span>
               </div>
-              <div className="h-3 w-px bg-zinc-300 dark:bg-zinc-700" />
-              <div className="flex items-center gap-1 text-indigo-500" title="Nivel actual de personaje">
-                <Trophy className="h-4 w-4" />
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/60 dark:border-purple-800/60 text-purple-600 dark:text-purple-400 shadow-xs glow-studio" title="Nivel y Rango actual">
+                <Trophy className="h-4 w-4 text-purple-500" />
                 <span>Nivel {stats.level}</span>
               </div>
             </div>

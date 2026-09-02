@@ -748,80 +748,90 @@ export default function TeacherDashboard() {
                 </button>
 
                 <div>
-                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1 rounded-md">
-                    {currentMenuTab === 'canvas' ? '✨ ISkool Canvas IA' :
-                     currentMenuTab === 'community' ? '🌍 Comunidad Docente' :
+                  {/* Badge temático con identidad cromática de área */}
+                  <span className={`text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border shadow-xs inline-flex items-center gap-1.5 ${
+                    currentMenuTab === 'canvas' ? 'text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/80 border-purple-200/60 dark:border-purple-800/60' :
+                    currentMenuTab === 'community' ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/80 border-emerald-200/60 dark:border-emerald-800/60' :
+                    currentMenuTab === 'classroom' ? 'text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 border-indigo-200/60 dark:border-indigo-800/60' :
+                    currentMenuTab === 'evaluation' ? 'text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 border-amber-200/60 dark:border-amber-800/60' : 
+                    currentMenuTab === 'attendance' ? 'text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/80 border-sky-200/60 dark:border-sky-800/60' : 
+                    currentMenuTab === 'design' ? 'text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/80 border-purple-200/60 dark:border-purple-800/60' : 
+                    currentMenuTab === 'planning' ? 'text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-800/60' : 
+                    'text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/80 border-orange-200/60 dark:border-orange-800/60'
+                  }`}>
+                    {currentMenuTab === 'canvas' ? '✨ Estudio de Creación IA' :
+                     currentMenuTab === 'community' ? '🌍 Red Comunitaria Docente' :
                      currentMenuTab === 'classroom' ? '🏛️ Aula Digital & Gremio' :
-                     currentMenuTab === 'evaluation' ? 'Módulo de Evaluación Formativa' : 
-                     currentMenuTab === 'attendance' ? 'Módulo de Asistencia Diaria' : 
-                     currentMenuTab === 'design' ? 'Módulo de Planificación y Diseño' : 
-                     currentMenuTab === 'planning' ? 'Planeación Didáctica NEM' : 'Módulo de Avisos y Tareas'}
+                     currentMenuTab === 'evaluation' ? '⭐ Evaluación Formativa & XP' : 
+                     currentMenuTab === 'attendance' ? '📋 Control de Asistencia Diaria' : 
+                     currentMenuTab === 'design' ? '🎨 Planificación & Diseño' : 
+                     currentMenuTab === 'planning' ? '📖 Planeación Curricular NEM' : '🔥 Tareas, Retos & Alertas'}
                   </span>
                   <h1 className="text-2xl font-black text-zinc-950 dark:text-white mt-1">
                     {currentMenuTab === 'canvas' ? 'Estudio de Creación de Actividades' :
                      currentMenuTab === 'community' ? 'Red de Recursos Docentes Compartidos' :
                      currentMenuTab === 'classroom' ? 'Tablón de Edictos, Dinámicas & Entregas' :
-                     currentMenuTab === 'evaluation' ? 'Alineación Estructural NEM' :
+                     currentMenuTab === 'evaluation' ? 'Alineación Estructural NEM & Portafolio' :
                      currentMenuTab === 'attendance' ? 'Control de Asistencia de Grupos' :
                      currentMenuTab === 'design' ? 'Diseño y Planeación de Tareas NEM' :
-                     currentMenuTab === 'planning' ? 'Generador de Planeación con IA' : 'Seguimiento de Tareas y Alertas a Padres'}
+                     currentMenuTab === 'planning' ? 'Generador de Planeación con Inteligencia Pedagógica' : 'Seguimiento de Tareas y Alertas a Padres'}
                   </h1>
                 </div>
               </div>
 
-              {/* Pestañas rápidas dentro de Mis Clases */}
+              {/* Pestañas rápidas dentro de Mis Clases con Identidad Cromática */}
               {(currentMenuTab !== 'canvas' && currentMenuTab !== 'community') && (
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
-                  <div className="flex flex-wrap gap-1 bg-zinc-100 dark:bg-zinc-950 p-1.5 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 w-full xl:w-auto">
+                  <div className="flex flex-wrap gap-1.5 bg-zinc-100 dark:bg-zinc-950 p-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 w-full xl:w-auto shadow-inner">
                     <button
                       onClick={() => setCurrentMenuTab('classroom')}
-                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
                         currentMenuTab === 'classroom'
-                          ? 'bg-indigo-600 text-white shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                          ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-md shadow-indigo-500/25 glow-indigo'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white/50'
                       }`}
                     >
                       🏛️ Aula & Gremio
                     </button>
                     <button
                       onClick={() => setCurrentMenuTab('evaluation')}
-                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
                         currentMenuTab === 'evaluation'
-                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                          ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 shadow-md shadow-amber-400/25 glow-gold'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-white/50'
                       }`}
                     >
-                      Evaluación Formativa
+                      ⭐ Evaluación & XP
                     </button>
                     <button
                       onClick={() => setCurrentMenuTab('planning')}
-                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
                         currentMenuTab === 'planning'
-                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 glow-blue'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/50'
                       }`}
                     >
-                      Planeación
+                      📖 Planeación NEM
                     </button>
                     <button
                       onClick={() => setCurrentMenuTab('attendance')}
-                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
                         currentMenuTab === 'attendance'
-                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                          ? 'bg-gradient-to-r from-sky-500 to-cyan-600 text-white shadow-md shadow-sky-500/25'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-white/50'
                       }`}
                     >
-                      Pasar Lista
+                      📋 Pasar Lista
                     </button>
                     <button
                       onClick={() => setCurrentMenuTab('tasks')}
-                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all ${
+                      className={`flex-1 xl:flex-initial px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
                         currentMenuTab === 'tasks'
-                          ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
+                          ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-md shadow-orange-500/25 glow-orange'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-white/50'
                       }`}
                     >
-                      Seguimiento
+                      🔥 Tareas & Retos
                     </button>
                   </div>
                   
@@ -847,9 +857,9 @@ export default function TeacherDashboard() {
 
                     <button
                       onClick={() => router.push('/teacher/studio')}
-                      className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-black shadow-md shadow-purple-500/20 flex items-center gap-1.5 transition-all hover:scale-102 cursor-pointer shrink-0"
+                      className="px-4 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white rounded-2xl text-xs font-black shadow-md shadow-purple-500/25 glow-studio flex items-center gap-1.5 transition-all hover:scale-102 cursor-pointer shrink-0"
                     >
-                      <Palette className="w-3.5 h-3.5" />
+                      <Palette className="w-3.5 h-3.5 text-yellow-300" />
                       <span>Estudio Docente</span>
                     </button>
                   </div>

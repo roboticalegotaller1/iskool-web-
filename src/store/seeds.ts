@@ -2976,8 +2976,8 @@ export const INSTITUTIONS_SEED: import('../types').Institution[] = [
       teachers: [],
       themeColors: {
         primary: '221 83% 53%',
-        secondary: '250 84% 54%',
-        accent: '142 71% 45%'
+        secondary: '268 85% 58%',
+        accent: '158 72% 40%'
       }
     }
   },
