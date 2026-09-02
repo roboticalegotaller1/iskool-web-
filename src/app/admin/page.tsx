@@ -562,9 +562,14 @@ export default function SuperUserAdminPage() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-black text-purple-400">{totalAITokens.toLocaleString()}</span>
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-3xl font-black text-purple-400">{totalAITokens.toLocaleString()}</span>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                      ≈ ${(totalAITokens * 0.000015).toFixed(2)} MXN
+                    </span>
+                  </div>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    Asistente Pedagógico IA · Planeaciones y Rúbricas
+                    Equiv. comercial: <strong className="text-slate-200">${(totalAITokens * 0.000015).toFixed(2)} MXN</strong> ($0.80 USD/1M tokens)
                   </p>
                 </div>
               </div>
@@ -727,9 +732,14 @@ export default function SuperUserAdminPage() {
                             </div>
                           </td>
                           <td className="p-4 text-center font-mono">
-                            <span className="px-2.5 py-1 rounded-full text-xs font-black bg-purple-500/15 text-purple-300 border border-purple-500/30">
-                              {tokens.toLocaleString()} tokens
-                            </span>
+                            <div className="flex flex-col items-center gap-0.5">
+                              <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                                {tokens.toLocaleString()} tokens
+                              </span>
+                              <span className="text-[10px] text-emerald-400 font-semibold">
+                                ≈ ${(tokens * 0.000015).toFixed(2)} MXN
+                              </span>
+                            </div>
                           </td>
                           <td className="p-4 text-center font-mono">
                             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950 border border-white/10 text-xs font-bold text-amber-400">
