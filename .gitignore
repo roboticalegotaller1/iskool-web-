@@ -22,6 +22,8 @@
 
 # misc
 .DS_Store
+Thumbs.db
+desktop.ini
 *.pem
 
 # debug
@@ -30,7 +32,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 
 # vercel
@@ -40,8 +42,19 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# obsidian test files
+# docs / temp
 /iskool-docs/
 temp_frames/
 
+# Knowledge vault workspace files
+.obsidian/workspace
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/cache/
+.smart-env/
+.obsidian/plugins/smart-connections/.smart-connections/
+.obsidian/plugins/smart-connections/embeddings.json
+.obsidian/plugins/smart-connections/embeddings.db
+.obsidian/plugins/smart-connections/smart-connections-cache.json
 
