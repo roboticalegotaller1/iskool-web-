@@ -65,6 +65,19 @@ export const TeacherCommunityView: React.FC = () => {
       const logicActivities = getMathematicalLogicCommunityActivities();
       const mockActivities = getMockCommunityActivities();
 
+      // Función para asegurar que la Clase Magistral del Prof. Israel López Ángeles sea estrictamente la #1
+      const prioritizeMasterclass = (list: CommunityActivity[]): CommunityActivity[] => {
+        const master = list.find(a => 
+          a.id === '18101821-cafe-4000-8000-000000000001' || 
+          a.title.toLowerCase().includes('gesta heroica') ||
+          (a.title.toLowerCase().includes('independencia de méxico') && a.template_type === 'custom_builder')
+        );
+        if (!master) return list;
+        const others = list.filter(a => a.id !== master.id);
+        others.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
+        return [master, ...others];
+      };
+
       // 1. Obtener actividades creadas en la BD
       const { data: activitiesData, error: actError } = await supabase
         .from('community_activities')
@@ -73,22 +86,21 @@ export const TeacherCommunityView: React.FC = () => {
 
       if (actError) {
         console.warn('Supabase fetch notice, combinando con catalogos oficiales:', actError?.message || actError);
-        const combined = deduplicateActivities([...logicActivities, ...independenceActivities, ...mockActivities]);
-        setActivities(combined);
+        const combined = deduplicateActivities([...independenceActivities, ...logicActivities, ...mockActivities]);
+        setActivities(prioritizeMasterclass(combined));
       } else if (activitiesData && activitiesData.length > 0) {
         // Combinar actividades creadas por usuarios en Supabase con los catálogos oficiales
         const dbIds = new Set(activitiesData.map(a => a.id));
         const combined = deduplicateActivities([
           ...(activitiesData as CommunityActivity[]),
-          ...logicActivities.filter(a => !dbIds.has(a.id)),
           ...independenceActivities.filter(a => !dbIds.has(a.id)),
+          ...logicActivities.filter(a => !dbIds.has(a.id)),
           ...mockActivities.filter(a => !dbIds.has(a.id))
         ]);
-        combined.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
-        setActivities(combined);
+        setActivities(prioritizeMasterclass(combined));
       } else {
-        const combined = deduplicateActivities([...logicActivities, ...independenceActivities, ...mockActivities]);
-        setActivities(combined);
+        const combined = deduplicateActivities([...independenceActivities, ...logicActivities, ...mockActivities]);
+        setActivities(prioritizeMasterclass(combined));
       }
 
       // 2. Obtener votos emitidos por el profesor actual
@@ -432,12 +444,18 @@ export const TeacherCommunityView: React.FC = () => {
       {/* Modal Reproductor Visual (Fábrica de Actividades ISkool) con Portal al Viewport */}
       {mounted && selectedActivity && createPortal(
         <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-sm flex items-start justify-center p-3 sm:p-4 pt-6 sm:pt-10 overflow-y-auto animate-fade-in">
-          <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-2xl overflow-hidden animate-scale-in my-auto sm:my-2">
+          <div className={`relative w-full ${
+            selectedActivity.template_type === 'custom_builder' || 
+            selectedActivity.template_type === 'activity_flow' || 
+            Boolean((selectedActivity.content_json as any)?.blocks) 
+              ? 'max-w-5xl' 
+              : 'max-w-2xl'
+          } bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 shadow-2xl overflow-hidden animate-scale-in my-auto sm:my-2`}>
             {/* Barra Superior Integrada y Compacta */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 dark:border-zinc-800 bg-slate-50/90 dark:bg-zinc-850/90">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border border-purple-200/50">
-                  {selectedActivity.template_type.toUpperCase()}
+                  {selectedActivity.template_type === 'custom_builder' ? 'FLUJO STUDIO' : selectedActivity.template_type.toUpperCase()}
                 </span>
                 <h3 className="text-xs font-black text-slate-800 dark:text-zinc-200 line-clamp-1">
                   {selectedActivity.title}
@@ -493,17 +511,35 @@ export const TeacherCommunityView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {deduplicateActivities(filteredActivities).map((activity, index) => {
             const hasVoted = votedActivityIds.has(activity.id);
+            const isMasterclass = activity.id === '18101821-cafe-4000-8000-000000000001' || 
+              activity.title.toLowerCase().includes('gesta heroica');
 
             return (
               <div
                 key={activity.id || `activity-${index}`}
-                className="group bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-zinc-800/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col justify-between space-y-5"
+                className={`group bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border ${
+                  isMasterclass 
+                    ? 'border-amber-400 dark:border-amber-500 shadow-xl shadow-amber-500/10 ring-2 ring-amber-400/30' 
+                    : 'border-slate-200/80 dark:border-zinc-800/80 shadow-sm hover:border-emerald-500/40'
+                } rounded-3xl p-6 hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5`}
               >
                 <div className="space-y-4">
+                  {/* Badge de Clase Magistral Destacada */}
+                  {isMasterclass && (
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[11px] font-black tracking-wide shadow-sm w-fit">
+                      <Sparkles className="w-3.5 h-3.5 fill-white" />
+                      <span>⭐ CLASE MAGISTRAL DESTACADA (6 NODOS)</span>
+                    </div>
+                  )}
+
                   {/* Tipo de Plantilla & Votos */}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-black px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 border border-purple-200/40 uppercase tracking-wider">
-                      🎮 {activity.template_type}
+                    <span className={`text-xs font-black px-3 py-1 rounded-full border uppercase tracking-wider ${
+                      isMasterclass 
+                        ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-300' 
+                        : 'bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 border-purple-200/40'
+                    }`}>
+                      {isMasterclass ? '🎨 Flujo Multimodal Studio' : `🎮 ${activity.template_type}`}
                     </span>
 
                     <button
@@ -535,7 +571,7 @@ export const TeacherCommunityView: React.FC = () => {
                     <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-zinc-400 mt-1.5">
                       <User className="w-3.5 h-3.5 text-purple-400" />
                       <span className="font-bold text-slate-700 dark:text-zinc-300">
-                        Autor: {activity.teacher_name || (activity.content_json as any)?.author_name || 'Prof. Elena Rostova'}
+                        Autor: {activity.teacher_name || (isMasterclass ? 'Prof. Israel López Ángeles' : 'Prof. Israel López Ángeles')}
                       </span>
                     </div>
 
@@ -544,11 +580,18 @@ export const TeacherCommunityView: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Metadata de Preguntas */}
-                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-slate-500 dark:text-zinc-400">
-                    <BrainCircuit className="w-3.5 h-3.5 text-purple-500" />
-                    <span>{activity.content_json?.questions?.length || 4} Preguntas Interactivas</span>
-                  </div>
+                  {/* Metadata de Preguntas / Nodos */}
+                  {isMasterclass ? (
+                    <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-amber-600 dark:text-amber-400">
+                      <Award className="w-3.5 h-3.5 text-amber-500" />
+                      <span>6 Nodos Gamificados (Diálogo, Cronología, Match, Escape Room, Jefe RPG, Recompensa)</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-slate-500 dark:text-zinc-400">
+                      <BrainCircuit className="w-3.5 h-3.5 text-purple-500" />
+                      <span>{activity.content_json?.questions?.length || 4} Preguntas Interactivas</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Acciones de la Tarjeta */}
@@ -557,7 +600,11 @@ export const TeacherCommunityView: React.FC = () => {
                     type="button"
                     onClick={() => setSelectedActivity(activity)}
                     aria-label={`Previsualizar y jugar ${activity.title}`}
-                    className="py-2.5 px-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    className={`py-2.5 px-3.5 rounded-2xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                      isMasterclass 
+                        ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-500/20' 
+                        : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-500/20'
+                    }`}
                   >
                     <Play className="w-3.5 h-3.5 fill-white" />
                     <span>Previsualizar</span>

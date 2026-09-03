@@ -10,6 +10,7 @@ import { FlashcardsPlayer } from '@/components/games/FlashcardsPlayer';
 import { GenericGameStub } from '@/components/games/GenericGameStub';
 import { InteractiveUniversalGamePlayer } from '@/components/games/InteractiveUniversalGamePlayer';
 import { LogicMathInteractivePlayer } from '@/components/studio/player/LogicMathInteractivePlayer';
+import { StudioFlowPlayer } from '@/components/studio/player/StudioFlowPlayer';
 import { LogicActivityPreset } from '@/data/mathematicalLogicActivities';
 
 interface ISkoolActivityPlayerProps {
@@ -27,6 +28,41 @@ export const ISkoolActivityPlayer: React.FC<ISkoolActivityPlayerProps> = ({
 }) => {
   const renderGameComponent = () => {
     const normTemplate = templateType.toLowerCase();
+
+    // 1. Soporte para flujos multimodales de Studio (Clase Magistral Gamificada)
+    if (normTemplate === 'custom_builder' || normTemplate === 'activity_flow' || Boolean((activity as any).blocks)) {
+      const blocks = (activity as any).blocks || [];
+      const connections = (activity as any).connections || [];
+      const meta = (activity as any).metadata || {
+        title: activity.title || 'Clase Gamificada',
+        description: activity.description || '',
+        subject: 'Historia y Formación Cívica',
+        subjectId: 'sub-hist',
+        targetAge: (activity as any).targetAge || 'Primaria Alta y Secundaria (10 - 15 años)',
+        campoFormativo: (activity as any).campoFormativo || 'Ética, Naturaleza y Sociedades',
+        camposFormativos: ['Ética, Naturaleza y Sociedades'],
+        ejesArticuladores: ['Pensamiento Crítico'],
+        faseNem: (activity as any).faseNem || 'Fase 5',
+        pdaNem: (activity as any).pdaNem || '',
+        pdas: [],
+        taskType: 'activity_flow',
+        xpReward: (activity as any).xpReward || 350,
+        coinsReward: (activity as any).coinsReward || 60,
+        totalTimeLimit: 0,
+        livesCount: 3,
+        streakMultiplier: true,
+      };
+
+      return (
+        <StudioFlowPlayer
+          blocks={blocks}
+          connections={connections}
+          metadata={meta}
+          onClose={onClose}
+          onComplete={onComplete}
+        />
+      );
+    }
 
     if (normTemplate === 'logic_math' || normTemplate === 'logica_matematica' || (activity as any).logicChallengeData) {
       const challengeData = (activity as any).logicChallengeData || {};

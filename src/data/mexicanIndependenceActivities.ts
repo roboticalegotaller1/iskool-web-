@@ -1,4 +1,9 @@
 import { CanvasActivityJSON, CommunityActivity } from '@/types';
+import { 
+  MEXICAN_INDEPENDENCE_BLOCKS, 
+  MEXICAN_INDEPENDENCE_METADATA, 
+  MEXICAN_INDEPENDENCE_CONNECTIONS 
+} from '@/data/mexicanIndependenceStudioFlow';
 
 export interface IndependenceGamePreset {
   id: string;
@@ -1074,17 +1079,43 @@ export const MEXICAN_INDEPENDENCE_GAMES: IndependenceGamePreset[] = [
 
 /**
  * Función utilitaria para transformar un preset de Independencia en una CommunityActivity lista para la Comunidad Docente.
+ * Sitúa la Clase Magistral del Prof. Israel López Ángeles como la primera y principal actividad destacada.
  */
 export function getIndependenceCommunityActivities(): CommunityActivity[] {
-  return MEXICAN_INDEPENDENCE_GAMES.map((game, index) => ({
+  const masterclass: CommunityActivity = {
+    id: '18101821-cafe-4000-8000-000000000001',
+    teacher_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
+    title: 'La Gesta Heroica de la Independencia de México (1810 - 1821)',
+    template_type: 'custom_builder',
+    content_json: {
+      title: 'La Gesta Heroica de la Independencia de México (1810 - 1821)',
+      description: 'Clase magistral interactiva y gamificada. Recorre las 4 etapas de la lucha armada mediante diálogo inmersivo con Miguel Hidalgo, reto cronológico de etapas, emparejamiento táctico de próceres, acertijo de escape room de la conspiración, combate épico en Monte de las Cruces y el Cofre Legendario de la Patria.',
+      subject: 'Historia y Formación Cívica',
+      targetAge: 'Primaria Alta y Secundaria (10 - 15 años)',
+      faseNem: 'Fase 5',
+      campoFormativo: 'Ética, Naturaleza y Sociedades',
+      pdaNem: 'Fase 5 - Ética, Naturaleza y Sociedades: Analiza las causas y las cuatro etapas del movimiento de Independencia de la Nueva España, valorando el ideario de los Sentimientos de la Nación y los derechos de soberanía e igualdad.',
+      metadata: MEXICAN_INDEPENDENCE_METADATA,
+      blocks: MEXICAN_INDEPENDENCE_BLOCKS,
+      connections: MEXICAN_INDEPENDENCE_CONNECTIONS,
+    } as any,
+    upvotes: 980,
+    created_at: new Date().toISOString(),
+    teacher_name: 'Prof. Israel López Ángeles',
+    user_has_voted: false
+  };
+
+  const standardGames = MEXICAN_INDEPENDENCE_GAMES.map((game, index) => ({
     id: `indep-comm-${game.id}`,
     teacher_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
     title: game.title,
     template_type: game.templateType,
     content_json: game.content,
-    upvotes: 15 + ((index * 7) % 35),
+    upvotes: 45 + ((index * 7) % 35),
     created_at: new Date(Date.now() - (index * 86400000)).toISOString(),
-    teacher_name: 'Elena Rostova',
+    teacher_name: 'Prof. Israel López Ángeles',
     user_has_voted: false
   }));
+
+  return [masterclass, ...standardGames];
 }
