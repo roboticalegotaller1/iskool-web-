@@ -31,6 +31,7 @@ import {
   FinalProjectProposal,
   CompleteNEMPlanning
 } from '@/lib/curriculumEngine';
+import { PedagogicalSuggestionsSection } from '@/components/teacher/PedagogicalSuggestionsSection';
 
 // ==========================================
 // BASE DE DATOS CURRICULAR DE LA NEM 2022
@@ -2328,6 +2329,12 @@ Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructu
               </div>
 
             </div>
+
+            {/* SECCIÓN DE SUGERENCIAS PEDAGÓGICAS (5 VIDEOS, PORTAL Y 3 FUENTES CON PURGA INMEDIATA) */}
+            <PedagogicalSuggestionsSection 
+              planning={activePlanning}
+              currentTeacherName={`${currentTeacher.first_name} ${currentTeacher.last_name}`}
+            />
           </>
         )}
 
