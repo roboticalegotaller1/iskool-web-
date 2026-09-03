@@ -34,11 +34,11 @@ function searchYoutubeHtml(query) {
 
 (async () => {
   const queries = [
-    'Fracciones equivalentes Daniel Carreon',
-    'Que son las fracciones CuriosaMente',
-    'Fracciones Khan Academy Español',
-    'Ecosistemas y cadenas troficas CuriosaMente',
-    'Biodiversidad de Mexico CONABIO'
+    'independencia de mexico para ninos preescolar',
+    'cuento de la independencia de mexico preescolar',
+    'el grito de dolores para ninos pequenos preescolar',
+    'aprende en casa preescolar historia de mexico',
+    'cancion independencia de mexico preescolar'
   ];
 
   for (const q of queries) {
@@ -50,13 +50,13 @@ function searchYoutubeHtml(query) {
       if (!ids.includes(match[1])) ids.push(match[1]);
     }
     console.log('Query:', q, 'Found IDs:', ids.length);
-    let verifiedCount = 0;
+    let count = 0;
     for (const id of ids) {
-      if (verifiedCount >= 2) break;
+      if (count >= 2) break;
       const res = await checkYoutubeOembed(id);
       if (res.status === 200) {
-        console.log(' -> VERIFIED 200:', JSON.stringify(res));
-        verifiedCount++;
+        console.log(' -> PREESCOLAR 200:', JSON.stringify(res));
+        count++;
       }
     }
   }

@@ -13,6 +13,8 @@ export interface PedagogicalVideo {
   description: string;
   thumbnailBadge?: string;
   suggestedMoment: 'inicio' | 'desarrollo' | 'cierre' | 'profundizacion';
+  targetLevel?: 'preescolar' | 'primaria-baja' | 'primaria-media' | 'primaria-alta' | 'secundaria' | 'preparatoria' | 'todos';
+  targetAgeRange?: string; // ej. "3 a 5 años", "6 a 8 años", "10 a 12 años"
 }
 
 export interface PedagogicalWebPortal {

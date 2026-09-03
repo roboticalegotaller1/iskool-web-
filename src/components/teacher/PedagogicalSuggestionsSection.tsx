@@ -26,7 +26,10 @@ import {
   ResearchSource, 
   PlanningPedagogicalSuggestions 
 } from '@/types/pedagogicalSuggestions';
-import { getPedagogicalSuggestionsForPlanning } from '@/lib/pedagogicalSuggestionsEngine';
+import { 
+  getPedagogicalSuggestionsForPlanning, 
+  resolveNormalizedLevel 
+} from '@/lib/pedagogicalSuggestionsEngine';
 import { useBrokenLinksStore } from '@/store/useBrokenLinksStore';
 
 interface PedagogicalSuggestionsSectionProps {
@@ -35,6 +38,8 @@ interface PedagogicalSuggestionsSectionProps {
     subjectName?: string;
     pda?: string;
     campoFormativo?: string;
+    levelId?: string;
+    levelName?: string;
   };
   currentTeacherName?: string;
 }
@@ -51,6 +56,16 @@ export const PedagogicalSuggestionsSection: React.FC<PedagogicalSuggestionsSecti
   currentTeacherName = 'Docente Titular'
 }) => {
   const { reportBrokenLink, brokenLinks } = useBrokenLinksStore();
+
+  // Nivel escolar detectado y conmutador forzado
+  const detectedLevel = useMemo(() => resolveNormalizedLevel(planning), [planning]);
+  const [selectedLevelOverride, setSelectedLevelOverride] = useState<'preescolar' | 'primaria' | 'secundaria' | null>(null);
+  const activeLevel = selectedLevelOverride || detectedLevel;
+
+  // Sincronizar si cambia la planeación activa
+  useEffect(() => {
+    setSelectedLevelOverride(null);
+  }, [planning?.levelId, planning?.levelName, planning?.title]);
 
   // Estado para el modal de confirmación de reporte manual
   const [reportModalItem, setReportModalItem] = useState<{
@@ -69,10 +84,10 @@ export const PedagogicalSuggestionsSection: React.FC<PedagogicalSuggestionsSecti
   const [lastCheckTimestamp, setLastCheckTimestamp] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Obtener sugerencias para la planeación activa y filtrar enlaces reportados
+  // Obtener sugerencias para la planeación activa FORZANDO el nivel académico seleccionado
   const suggestions: PlanningPedagogicalSuggestions = useMemo(() => {
-    return getPedagogicalSuggestionsForPlanning(planning);
-  }, [planning, brokenLinks]);
+    return getPedagogicalSuggestionsForPlanning(planning, activeLevel);
+  }, [planning, brokenLinks, activeLevel]);
 
   // Función para forzar la comprobación en vivo de todos los recursos
   const forceVerifyAllResources = useCallback(async (isManualTrigger = false) => {
@@ -235,6 +250,56 @@ export const PedagogicalSuggestionsSection: React.FC<PedagogicalSuggestionsSecti
         </div>
       </div>
 
+      {/* Selector Forzado de Nivel Académico y Grupo de Edad */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-zinc-900 p-3.5 rounded-2xl border border-slate-200 dark:border-zinc-800 mb-5 shadow-xs">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-[11px] font-black uppercase text-slate-500 dark:text-zinc-400">
+            Adecuación Curricular:
+          </span>
+          <span className="text-xs font-black text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 px-2.5 py-0.5 rounded-lg border border-slate-200 dark:border-zinc-700 flex items-center gap-1.5">
+            {activeLevel === 'preescolar' && '🧸 Preescolar (Fase 2 • 3 a 5 años)'}
+            {activeLevel === 'primaria' && '🎒 Primaria (Fases 3, 4 y 5 • 6 a 12 años)'}
+            {activeLevel === 'secundaria' && '🏫 Secundaria (Fase 6 • 12 a 15 años)'}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-zinc-800/80 p-1 rounded-xl border border-slate-200 dark:border-zinc-700 self-start sm:self-auto flex-wrap">
+          <button
+            type="button"
+            onClick={() => setSelectedLevelOverride('preescolar')}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+              activeLevel === 'preescolar'
+                ? 'bg-amber-500 text-white shadow-xs scale-102'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 hover:bg-slate-200/60'
+            }`}
+          >
+            🧸 Preescolar (3-5 años)
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedLevelOverride('primaria')}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+              activeLevel === 'primaria'
+                ? 'bg-blue-600 text-white shadow-xs scale-102'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 hover:bg-slate-200/60'
+            }`}
+          >
+            🎒 Primaria (6-12 años)
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedLevelOverride('secundaria')}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+              activeLevel === 'secundaria'
+                ? 'bg-purple-600 text-white shadow-xs scale-102'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 hover:bg-slate-200/60'
+            }`}
+          >
+            🏫 Secundaria (12-15 años)
+          </button>
+        </div>
+      </div>
+
       {lastCheckTimestamp && (
         <div className="mb-4 text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-1.5 px-1 font-mono">
           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -299,6 +364,19 @@ export const PedagogicalSuggestionsSection: React.FC<PedagogicalSuggestionsSecti
                         </span>
                       )}
                     </div>
+
+                    {vid.targetAgeRange && (
+                      <div className="flex items-center gap-1.5 pt-0.5 flex-wrap">
+                        <span className="text-[9px] font-black px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 border border-amber-200 flex items-center gap-1">
+                          👶 Edad: {vid.targetAgeRange}
+                        </span>
+                        {vid.thumbnailBadge && (
+                          <span className="text-[9px] font-bold text-slate-500 dark:text-zinc-400">
+                            • {vid.thumbnailBadge}
+                          </span>
+                        )}
+                      </div>
+                    )}
 
                     <h5 className="text-xs font-black text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors line-clamp-2 leading-snug">
                       {vid.title}
