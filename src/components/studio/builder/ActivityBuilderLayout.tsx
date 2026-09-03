@@ -38,6 +38,10 @@ import {
 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { StudioBlock } from '@/types/studioBlocks';
+import { 
+  MEXICAN_INDEPENDENCE_BLOCKS, 
+  MEXICAN_INDEPENDENCE_METADATA 
+} from '@/data/mexicanIndependenceStudioFlow';
 
 // Catálogo Oficial de Ejes Articuladores NEM
 const EJES_ARTICULADORES_CATALOG = [
@@ -111,7 +115,13 @@ export const ActivityBuilderLayout: React.FC = () => {
   };
 
   // Cargar Plantillas Pedagógicas Rápidas (NEM Presets)
-  const applyPresetTemplate = (presetType: 'homework_portfolio' | 'boss_exam' | 'timed_reading' | 'phet_science') => {
+  const applyPresetTemplate = (presetType: 'mexican_independence' | 'homework_portfolio' | 'boss_exam' | 'timed_reading' | 'phet_science') => {
+    if (presetType === 'mexican_independence') {
+      loadPresetBlocks(MEXICAN_INDEPENDENCE_BLOCKS, MEXICAN_INDEPENDENCE_METADATA);
+      setIsTemplatesModalOpen(false);
+      showToast('🇲🇽 ¡Gesta Heroica de la Independencia cargada con 6 nodos gamificados!');
+      return;
+    }
     if (presetType === 'homework_portfolio') {
       const presetBlocks: StudioBlock[] = [
         {
@@ -369,31 +379,32 @@ export const ActivityBuilderLayout: React.FC = () => {
     }
   };
 
+  const [mobileStudioTab, setMobileStudioTab] = useState<'sidebar' | 'canvas'>('canvas');
   const serializedData = serializeToActivityJSON();
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-5 sm:space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-[99999] bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-purple-500/40 flex items-center gap-3 animate-fade-in">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-          <span className="text-xs font-bold">{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 z-[99999] bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl border border-purple-500/40 flex items-center gap-2.5 animate-fade-in">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="text-xs font-semibold">{toastMessage}</span>
         </div>
       )}
 
-      {/* Barra de Herramientas Superior del Estudio */}
-      <header className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 p-4 sm:p-5 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      {/* Barra de Herramientas Superior del Estudio - Jerarquía Visual Limpia */}
+      <header className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/80 dark:border-zinc-800/80 p-3.5 sm:p-5 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 sm:gap-4">
         {/* Título de la Actividad y Metadatos */}
-        <div className="space-y-1 min-w-0 max-w-xl">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border border-purple-200/50">
-              Lienzo Interactivo de Bloques
+        <div className="space-y-1 w-full lg:max-w-md xl:max-w-lg min-w-0">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-800/50">
+              Lienzo de Bloques
             </span>
-            <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200/40">
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200/50 dark:border-blue-800/40">
               {metadata.faseNem || 'Fase 4'} • {metadata.campoFormativo || 'Saberes'}
             </span>
-            <span className="text-xs font-bold text-slate-400">
-              {blocks.length} Bloques configurados
+            <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">
+              {blocks.length} Bloques
             </span>
           </div>
 
@@ -402,126 +413,152 @@ export const ActivityBuilderLayout: React.FC = () => {
             value={metadata.title}
             onChange={(e) => updateMetadata({ title: e.target.value })}
             placeholder="Título de la Actividad..."
-            className="text-lg sm:text-xl font-black text-slate-900 dark:text-white bg-transparent border-b border-transparent hover:border-slate-300 dark:hover:border-zinc-700 focus:border-purple-500 focus:outline-none w-full truncate"
+            className="text-base sm:text-lg lg:text-xl font-bold text-slate-900 dark:text-white bg-transparent border-b border-transparent hover:border-slate-300 dark:hover:border-zinc-700 focus:border-purple-500 focus:outline-none w-full truncate transition-colors py-0.5"
           />
         </div>
 
-        {/* Acciones Globales: Plantillas / Deshacer / Rehacer / Zoom / Probar / Publicar */}
-        <div className="flex flex-wrap items-center gap-2 shrink-0">
+        {/* Acciones Globales: Plantillas / Historial / Zoom / Probar / Publicar */}
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full lg:w-auto justify-start lg:justify-end shrink-0">
           {/* Botón de Plantillas Pedagógicas NEM */}
           <button
             type="button"
             onClick={() => setIsTemplatesModalOpen(true)}
-            title="Cargar Plantillas Pedagógicas NEM oficiales (Tareas, Exámenes, Lecturas)"
-            className="px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-black text-xs shadow-md shadow-orange-500/20 flex items-center gap-1.5 transition-all transform active:scale-95 cursor-pointer"
+            title="Cargar Plantillas Pedagógicas NEM oficiales"
+            className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-slate-700 dark:text-zinc-200 font-semibold text-xs border border-slate-200/80 dark:border-zinc-700/80 flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <FolderKanban className="w-4 h-4" />
+            <FolderKanban className="w-3.5 h-3.5 text-amber-500" />
             <span className="hidden sm:inline">Plantillas NEM</span>
           </button>
 
-          {/* Deshacer / Rehacer */}
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-zinc-800 p-1 rounded-2xl border border-slate-200 dark:border-zinc-750">
+          {/* Deshacer / Rehacer / Limpiar */}
+          <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-zinc-800 p-0.5 rounded-xl border border-slate-200/80 dark:border-zinc-750">
             <button
               type="button"
               onClick={undo}
               disabled={historyIndex <= 0}
-              title="Deshacer acción (Ctrl+Z)"
-              className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 disabled:opacity-30 transition-all cursor-pointer"
+              title="Deshacer (Ctrl+Z)"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 disabled:opacity-30 transition-all cursor-pointer"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
             </button>
             <button
               type="button"
               onClick={redo}
               disabled={historyIndex >= history.length - 1}
-              title="Rehacer acción (Ctrl+Y)"
-              className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 disabled:opacity-30 transition-all cursor-pointer"
+              title="Rehacer (Ctrl+Y)"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 disabled:opacity-30 transition-all cursor-pointer"
             >
-              <RotateCw className="w-4 h-4" />
+              <RotateCw className="w-3.5 h-3.5" />
             </button>
             <button
               type="button"
               onClick={resetWorkspace}
               title="Limpiar y empezar en blanco"
-              className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-all cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-zinc-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-all cursor-pointer"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-3.5 h-3.5" />
             </button>
           </div>
 
           {/* Controles de Zoom */}
-          <div className="hidden sm:flex items-center gap-1 bg-slate-100 dark:bg-zinc-800 p-1 rounded-2xl border border-slate-200 dark:border-zinc-750">
+          <div className="hidden sm:flex items-center gap-0.5 bg-slate-100 dark:bg-zinc-800 p-0.5 rounded-xl border border-slate-200/80 dark:border-zinc-750">
             <button
               type="button"
               onClick={() => setZoomLevel(zoomLevel - 0.05)}
               title="Alejar zoom"
-              className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 transition-all cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 transition-all cursor-pointer"
             >
-              <ZoomOut className="w-3.5 h-3.5" />
+              <ZoomOut className="w-3 h-3" />
             </button>
-            <span className="text-[10px] font-black px-1.5 text-slate-600 dark:text-zinc-300">
+            <span className="text-[11px] font-semibold px-1 text-slate-600 dark:text-zinc-300 font-mono">
               {Math.round(zoomLevel * 100)}%
             </span>
             <button
               type="button"
               onClick={() => setZoomLevel(zoomLevel + 0.05)}
               title="Acercar zoom"
-              className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 transition-all cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700 transition-all cursor-pointer"
             >
-              <ZoomIn className="w-3.5 h-3.5" />
+              <ZoomIn className="w-3 h-3" />
             </button>
           </div>
 
-          {/* Ajustes de la Actividad */}
+          {/* Ajustes */}
           <button
             type="button"
             onClick={() => setIsSettingsOpen(true)}
-            title="Ajustes Pedagógicos y NEM (Campos Formativos, Ejes Articuladores, PDA, Recompensas)"
-            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-750 text-slate-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
+            title="Ajustes Pedagógicos y NEM"
+            className="p-2 sm:px-3 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-slate-700 dark:text-zinc-300 font-semibold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-slate-200/80 dark:border-zinc-700/80"
           >
-            <Settings className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+            <Settings className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
             <span className="hidden sm:inline">Ajustes</span>
           </button>
 
-          {/* Botón de Previsualización en Vivo */}
+          {/* Probar Juego */}
           <button
             type="button"
             onClick={() => setIsPreviewOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 flex items-center gap-1.5 transition-all transform active:scale-95 cursor-pointer"
+            className="px-3 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-semibold text-xs border border-indigo-200/80 dark:border-indigo-800/80 flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <Play className="w-4 h-4 fill-white" />
-            <span>Probar Juego</span>
+            <Play className="w-3.5 h-3.5 fill-indigo-600 text-indigo-600 dark:fill-indigo-400 dark:text-indigo-400" />
+            <span>Probar</span>
           </button>
 
-          {/* Botón de Publicar en la Comunidad */}
+          {/* Botón de Publicar */}
           <button
             type="button"
             onClick={handlePublishToCommunity}
             disabled={isPublishing}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black text-xs shadow-lg shadow-purple-500/25 flex items-center gap-1.5 transition-all transform active:scale-95 cursor-pointer disabled:opacity-50"
+            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold text-xs shadow-md shadow-purple-600/20 flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
           >
-            <Share2 className="w-4 h-4" />
+            <Share2 className="w-3.5 h-3.5" />
             <span>{isPublishing ? 'Publicando...' : 'Publicar'}</span>
           </button>
 
-          {/* Botón de Asignar a Alumnos */}
+          {/* Botón de Asignar */}
           <button
             type="button"
             onClick={() => setIsAssignModalOpen(true)}
-            className="px-3.5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-500/20 flex items-center gap-1.5 transition-all transform active:scale-95 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md shadow-emerald-600/20 flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <Rocket className="w-4 h-4 text-yellow-300" />
+            <Rocket className="w-3.5 h-3.5 text-amber-200" />
             <span>Asignar</span>
           </button>
         </div>
       </header>
 
+      {/* Conmutador de Vistas para Pantallas Táctiles y Móviles (< lg) */}
+      <div className="lg:hidden flex items-center p-1 bg-slate-100 dark:bg-zinc-800 rounded-2xl border border-slate-200 dark:border-zinc-700 max-w-sm mx-auto">
+        <button
+          type="button"
+          onClick={() => setMobileStudioTab('canvas')}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
+            mobileStudioTab === 'canvas'
+              ? 'bg-white dark:bg-zinc-900 text-purple-700 dark:text-purple-300 shadow-xs'
+              : 'text-slate-600 dark:text-zinc-400'
+          }`}
+        >
+          🗺️ Lienzo de Flujo ({blocks.length})
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileStudioTab('sidebar')}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
+            mobileStudioTab === 'sidebar'
+              ? 'bg-white dark:bg-zinc-900 text-purple-700 dark:text-purple-300 shadow-xs'
+              : 'text-slate-600 dark:text-zinc-400'
+          }`}
+        >
+          📦 Biblioteca de Bloques
+        </button>
+      </div>
+
       {/* Contenido Principal: Panel de Agrupaciones (Izquierda) + Tablero de Trabajo (Central) */}
       <div className="flex flex-col lg:flex-row items-start gap-6 relative">
-        <div className="w-full lg:w-72 xl:w-80 shrink-0 relative z-30">
+        <div className={`w-full lg:w-72 xl:w-80 shrink-0 relative z-30 ${mobileStudioTab === 'sidebar' ? 'block' : 'hidden lg:block'}`}>
           <SidebarToolbar />
         </div>
-        <div className="flex-1 w-full min-w-0 relative z-10">
+        <div className={`flex-1 w-full min-w-0 relative z-10 ${mobileStudioTab === 'canvas' ? 'block' : 'hidden lg:block'}`}>
           <WorkspaceArea />
         </div>
       </div>
@@ -596,6 +633,42 @@ export const ActivityBuilderLayout: React.FC = () => {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Plantilla Destacada: Independencia de México */}
+              <div 
+                onClick={() => applyPresetTemplate('mexican_independence')}
+                className="p-5 rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-600 bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/80 dark:from-emerald-950/40 dark:via-zinc-850/80 dark:to-amber-950/30 hover:shadow-xl cursor-pointer transition-all flex flex-col justify-between group col-span-1 sm:col-span-2 relative overflow-hidden ring-4 ring-emerald-500/10"
+              >
+                <div className="space-y-2 relative z-10">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 flex items-center gap-1">
+                        <span>🇲🇽 GESTA PATRIÓTICA NEM (FASE 5)</span>
+                      </span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                        6 Nodos Gamificados
+                      </span>
+                    </div>
+                    <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 font-mono">+350 XP • 60 🪙</span>
+                  </div>
+                  <h4 className="text-base font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors flex items-center gap-2">
+                    <span>🔔 La Gesta Heroica de la Independencia de México (1810 - 1821)</span>
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
+                    Aventura interactiva con diálogo inmersivo de Miguel Hidalgo, orden cronológico de las 4 etapas, emparejamiento de próceres, acertijo de escape room de la conspiración secreta, combate épico en Monte de las Cruces y Cofre Legendario de la Patria.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-emerald-100 dark:border-zinc-800 text-xs font-black text-emerald-600 dark:text-emerald-400 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-zinc-400">
+                    <span>📖 Ética, Naturaleza y Sociedades</span>
+                    <span>•</span>
+                    <span>Lenguajes</span>
+                  </span>
+                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    Cargar Plantilla Épica ➔
+                  </span>
+                </div>
+              </div>
+
               {/* Plantilla 1: Tarea con Portafolio */}
               <div 
                 onClick={() => applyPresetTemplate('homework_portfolio')}

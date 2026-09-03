@@ -1580,34 +1580,36 @@ export const StudioFlowPlayer: React.FC<Props> = ({
 
           {/* ================= 10. TEXTO / NARRATIVA ================= */}
           {activeBlock?.type === 'text_narrative' && (
-            <div className="space-y-4">
-              <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-50/70 to-indigo-50/70 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800/60 space-y-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
-                    <BookOpen className="w-4 h-4" />
+            <div className="space-y-4 animate-fade-in">
+              <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-50/90 via-indigo-50/60 to-purple-50/60 dark:from-blue-950/40 dark:via-zinc-850 dark:to-indigo-950/40 border-2 border-blue-200/80 dark:border-blue-800/80 shadow-lg space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-blue-500/25 shrink-0 animate-pulse">
+                    {activeBlock.data.speakerAvatar || <BookOpen className="w-6 h-6" />}
                   </div>
                   <div>
-                    <span className="text-[10px] font-black uppercase text-blue-600 dark:text-blue-400">
-                      {activeBlock.data.speakerName || 'Instrucción Pedagógica'}
+                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-100/80 dark:bg-blue-950 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
+                      {activeBlock.data.speakerName || 'Narrativa Histórica'}
                     </span>
-                    <h3 className="text-sm font-black text-slate-900 dark:text-white">
+                    <h3 className="text-base font-black text-slate-900 dark:text-white pt-0.5">
                       {activeBlock.title}
                     </h3>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-200 leading-relaxed whitespace-pre-wrap">
-                  {activeBlock.data.content}
-                </p>
+                <div className="relative p-4 rounded-2xl bg-white/80 dark:bg-zinc-900/80 border border-blue-100 dark:border-blue-900/60 shadow-inner">
+                  <p className="text-xs sm:text-sm text-slate-800 dark:text-zinc-200 leading-relaxed whitespace-pre-wrap font-medium">
+                    {activeBlock.data.content}
+                  </p>
+                </div>
               </div>
 
               <div className="flex justify-end pt-2">
                 <button
                   type="button"
-                  onClick={() => handleNextStep(15)}
-                  className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 text-white font-black text-xs shadow-md shadow-blue-500/20 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
+                  onClick={() => handleNextStep(25)}
+                  className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-blue-500/25 flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer"
                 >
-                  <span>Continuar Lectura (+15 XP)</span>
+                  <span>¡Comprendido, Libertador! Avanzar (+25 XP)</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -1728,10 +1730,14 @@ export const StudioFlowPlayer: React.FC<Props> = ({
                   />
                 </div>
 
-                {/* Avatar del Monstruo */}
+                {/* Avatar del Monstruo o Jefe Histórico */}
                 <div className="py-4 text-center">
                   <div className={`w-20 h-20 rounded-full bg-rose-600/30 border-2 border-rose-500 flex items-center justify-center mx-auto shadow-2xl text-3xl transition-transform ${isBossDefeated ? 'opacity-40 grayscale scale-75' : 'animate-pulse'}`}>
-                    {activeBlock.data.spriteKey === 'blood_dragon' ? '🐉' : activeBlock.data.spriteKey === 'shadow_golem' ? '🗿' : '👾'}
+                    {activeBlock.data.bossName?.toLowerCase().includes('realista') || activeBlock.data.bossName?.toLowerCase().includes('trujillo') || activeBlock.data.bossName?.toLowerCase().includes('comandante')
+                      ? '💂‍♂️⚔️' 
+                      : activeBlock.data.spriteKey === 'blood_dragon' ? '🐉' 
+                      : activeBlock.data.spriteKey === 'shadow_golem' ? '🗿' 
+                      : '👾'}
                   </div>
                 </div>
 
@@ -1752,7 +1758,7 @@ export const StudioFlowPlayer: React.FC<Props> = ({
                     className="p-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs shadow-md shadow-rose-500/25 flex flex-col items-center gap-1 cursor-pointer transition-transform active:scale-95"
                   >
                     <Zap className="w-4 h-4 text-yellow-300" />
-                    <span>Ataque Crítico</span>
+                    <span>Ataque Insurgente</span>
                   </button>
                   <button
                     type="button"
@@ -1760,7 +1766,7 @@ export const StudioFlowPlayer: React.FC<Props> = ({
                     className="p-3 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-black text-xs shadow-md shadow-purple-500/25 flex flex-col items-center gap-1 cursor-pointer transition-transform active:scale-95"
                   >
                     <Sparkles className="w-4 h-4 text-cyan-300" />
-                    <span>Hechizo Didáctico</span>
+                    <span>Ideario Patriótico</span>
                   </button>
                   <button
                     type="button"
@@ -1768,7 +1774,7 @@ export const StudioFlowPlayer: React.FC<Props> = ({
                     className="p-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-500/25 flex flex-col items-center gap-1 cursor-pointer transition-transform active:scale-95"
                   >
                     <Shield className="w-4 h-4 text-emerald-200" />
-                    <span>Poción de Enfoque</span>
+                    <span>Resistencia Heroica</span>
                   </button>
                 </div>
               ) : (

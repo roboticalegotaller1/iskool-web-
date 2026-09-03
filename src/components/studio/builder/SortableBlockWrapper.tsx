@@ -56,14 +56,16 @@ export const BLOCK_META: Record<StudioBlockType, { label: string; icon: any; col
     icon: BookOpen,
     colorScheme: 'border-blue-200/90 dark:border-blue-900/60 shadow-blue-500/5',
     badgeBg: 'bg-blue-100/90 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border-blue-200/60',
-    glow: 'hover:border-blue-400 dark:hover:border-blue-700 hover:shadow-blue-500/10'
+    glow: 'hover:border-blue-400 dark:hover:border-blue-700 hover:shadow-blue-500/10',
+    color: 'from-blue-600 to-indigo-600'
   },
   quiz_question: {
     label: 'Pregunta de Opción Múltiple',
     icon: HelpCircle,
     colorScheme: 'border-purple-200/90 dark:border-purple-900/60 shadow-purple-500/5',
     badgeBg: 'bg-purple-100/90 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border-purple-200/60',
-    glow: 'hover:border-purple-400 dark:hover:border-purple-700 hover:shadow-purple-500/10'
+    glow: 'hover:border-purple-400 dark:hover:border-purple-700 hover:shadow-purple-500/10',
+    color: 'from-purple-600 to-pink-600'
   },
   timed_reading_block: {
     label: 'Lectura Cronometrada & PPM',
@@ -78,70 +80,80 @@ export const BLOCK_META: Record<StudioBlockType, { label: string; icon: any; col
     icon: Sparkles,
     colorScheme: 'border-amber-200/90 dark:border-amber-900/60 shadow-amber-500/5',
     badgeBg: 'bg-amber-100/90 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-200/60',
-    glow: 'hover:border-amber-400 dark:hover:border-amber-700 hover:shadow-amber-500/10'
+    glow: 'hover:border-amber-400 dark:hover:border-amber-700 hover:shadow-amber-500/10',
+    color: 'from-amber-500 to-yellow-400'
   },
   boss_enemy: {
     label: 'Combate Pixi / Boss',
     icon: Swords,
     colorScheme: 'border-rose-200/90 dark:border-rose-900/60 shadow-rose-500/5',
     badgeBg: 'bg-rose-100/90 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border-rose-200/60',
-    glow: 'hover:border-rose-400 dark:hover:border-rose-700 hover:shadow-rose-500/10'
+    glow: 'hover:border-rose-400 dark:hover:border-rose-700 hover:shadow-rose-500/10',
+    color: 'from-rose-600 to-red-700'
   },
   youtube_video: {
     label: 'Video Educativo YouTube',
     icon: Video,
     colorScheme: 'border-red-200/90 dark:border-red-900/60 shadow-red-500/5',
     badgeBg: 'bg-red-100/90 dark:bg-red-950 text-red-700 dark:text-red-300 border-red-200/60',
-    glow: 'hover:border-red-400 dark:hover:border-red-700 hover:shadow-red-500/10'
+    glow: 'hover:border-red-400 dark:hover:border-red-700 hover:shadow-red-500/10',
+    color: 'from-red-600 to-rose-600'
   },
   external_embed: {
     label: 'Simulador / Iframe Web',
     icon: Globe,
     colorScheme: 'border-cyan-200/90 dark:border-cyan-900/60 shadow-cyan-500/5',
     badgeBg: 'bg-cyan-100/90 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border-cyan-200/60',
-    glow: 'hover:border-cyan-400 dark:hover:border-cyan-700 hover:shadow-cyan-500/10'
+    glow: 'hover:border-cyan-400 dark:hover:border-cyan-700 hover:shadow-cyan-500/10',
+    color: 'from-cyan-600 to-blue-600'
   },
   drag_drop_match: {
     label: 'Emparejamiento / Drag & Drop',
     icon: Link2,
     colorScheme: 'border-violet-200/90 dark:border-violet-900/60 shadow-violet-500/5',
     badgeBg: 'bg-violet-100/90 dark:bg-violet-950 text-violet-700 dark:text-violet-300 border-violet-200/60',
-    glow: 'hover:border-violet-400 dark:hover:border-violet-700 hover:shadow-violet-500/10'
+    glow: 'hover:border-violet-400 dark:hover:border-violet-700 hover:shadow-violet-500/10',
+    color: 'from-violet-600 to-purple-600'
   },
   ordering_sequence: {
     label: 'Ordenar Secuencia / Cronología',
     icon: ListOrdered,
     colorScheme: 'border-blue-200/90 dark:border-blue-900/60 shadow-blue-500/5',
     badgeBg: 'bg-blue-100/90 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border-blue-200/60',
-    glow: 'hover:border-blue-400 dark:hover:border-blue-700 hover:shadow-blue-500/10'
+    glow: 'hover:border-blue-400 dark:hover:border-blue-700 hover:shadow-blue-500/10',
+    color: 'from-blue-600 to-cyan-600'
   },
   fill_in_blanks: {
     label: 'Completar Espacios / Texto Mutilado',
     icon: FileEdit,
     colorScheme: 'border-teal-200/90 dark:border-teal-900/60 shadow-teal-500/5',
     badgeBg: 'bg-teal-100/90 dark:bg-teal-950 text-teal-700 dark:text-teal-300 border-teal-200/60',
-    glow: 'hover:border-teal-400 dark:hover:border-teal-700 hover:shadow-teal-500/10'
+    glow: 'hover:border-teal-400 dark:hover:border-teal-700 hover:shadow-teal-500/10',
+    color: 'from-teal-600 to-emerald-600'
   },
   open_poll_wordcloud: {
     label: 'Pregunta Abierta & Reflexión IA',
     icon: MessageSquare,
     colorScheme: 'border-fuchsia-200/90 dark:border-fuchsia-900/60 shadow-fuchsia-500/5',
     badgeBg: 'bg-fuchsia-100/90 dark:bg-fuchsia-950 text-fuchsia-700 dark:text-fuchsia-300 border-fuchsia-200/60',
-    glow: 'hover:border-fuchsia-400 dark:hover:border-fuchsia-700 hover:shadow-fuchsia-500/10'
+    glow: 'hover:border-fuchsia-400 dark:hover:border-fuchsia-700 hover:shadow-fuchsia-500/10',
+    color: 'from-fuchsia-600 to-pink-600'
   },
   secret_code_puzzle: {
     label: 'Misterio & Código Secreto',
     icon: KeyRound,
     colorScheme: 'border-amber-200/90 dark:border-amber-900/60 shadow-amber-500/5',
     badgeBg: 'bg-amber-100/90 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-200/60',
-    glow: 'hover:border-amber-400 dark:hover:border-amber-700 hover:shadow-amber-500/10'
+    glow: 'hover:border-amber-400 dark:hover:border-amber-700 hover:shadow-amber-500/10',
+    color: 'from-amber-500 to-orange-600'
   },
   minigame_action: {
     label: 'Minijuego Gamificado',
     icon: Gamepad2,
     colorScheme: 'border-emerald-200/90 dark:border-emerald-900/60 shadow-emerald-500/5',
     badgeBg: 'bg-emerald-100/90 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border-emerald-200/60',
-    glow: 'hover:border-emerald-400 dark:hover:border-emerald-700 hover:shadow-emerald-500/10'
+    glow: 'hover:border-emerald-400 dark:hover:border-emerald-700 hover:shadow-emerald-500/10',
+    color: 'from-emerald-600 to-teal-600'
   },
   logic_branch: {
     label: 'Condición & Ramificación',

@@ -3,6 +3,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useActivityBuilderStore } from '@/store/useActivityBuilderStore';
 import { StudioBlock, StudioBlockType, FlowConnection, FlowNodePosition } from '@/types/studioBlocks';
+import { 
+  MEXICAN_INDEPENDENCE_BLOCKS, 
+  MEXICAN_INDEPENDENCE_METADATA 
+} from '@/data/mexicanIndependenceStudioFlow';
 import { BLOCK_META } from './SortableBlockWrapper';
 import { 
   Sparkles, 
@@ -196,70 +200,9 @@ export const NodeGraphBoard: React.FC = () => {
     return `M ${x1} ${y1} C ${cx1} ${y1}, ${cx2} ${y2}, ${x2} ${y2}`;
   };
 
-  // Cargar plantilla temática de Independencia de México
+  // Cargar plantilla temática magistral de la Independencia de México (6 Nodos)
   const handleLoadIndependencePreset = () => {
-    const presetBlocks: StudioBlock[] = [
-      {
-        id: `blk-${Date.now()}-1`,
-        type: 'text_narrative',
-        title: 'El Grito de Dolores (1810)',
-        isCollapsed: false,
-        position: { x: 80, y: 150 },
-        isStartNode: true,
-        data: {
-          content: 'En la madrugada del 16 de septiembre de 1810, el cura Miguel Hidalgo convocó al pueblo para iniciar la lucha por la libertad.',
-          style: 'instruction',
-          speakerName: 'Profesor de Historia',
-        }
-      },
-      {
-        id: `blk-${Date.now()}-2`,
-        type: 'quiz_question',
-        title: 'Personajes Insurgentes',
-        isCollapsed: false,
-        position: { x: 420, y: 150 },
-        data: {
-          question: '¿Quién es conocida como "La Corregidora", pieza clave en la conspiración de Querétaro?',
-          options: ['Josefa Ortiz de Domínguez (Correcta)', 'Leona Vicario', 'Sor Juana Inés', 'Gertrudis Bocanegra'],
-          correctIndex: 0,
-          explanation: 'Josefa Ortiz de Domínguez alertó a los insurgentes de que la conspiración había sido descubierta.',
-          timeLimitSeconds: 30,
-        }
-      },
-      {
-        id: `blk-${Date.now()}-3`,
-        type: 'secret_code_puzzle',
-        title: 'Enigma del Estandarte',
-        isCollapsed: false,
-        position: { x: 760, y: 150 },
-        data: {
-          clueText: 'Descifra la palabra clave del lema insurgente: L _ _ _ _ T A D',
-          secretAnswer: 'LIBERTAD',
-          hintText: 'Ideal supremo que buscaban los caudillos de 1810.'
-        }
-      },
-      {
-        id: `blk-${Date.now()}-4`,
-        type: 'reward_chest',
-        title: 'Botín de la Patria',
-        isCollapsed: false,
-        position: { x: 1100, y: 150 },
-        data: {
-          xpAmount: 200,
-          coinsAmount: 50,
-          badgeName: 'Héroe de la Independencia',
-          chestRarity: 'legendary'
-        }
-      }
-    ];
-
-    loadPresetBlocks(presetBlocks, {
-      title: 'Misión Histórica: Independencia de México',
-      description: 'Aventura interactiva para explorar los sucesos de 1810 con lecturas, enigmas y preguntas formativas.',
-      subject: 'Ética, Naturaleza y Sociedades',
-      campoFormativo: 'Ética, Naturaleza y Sociedades',
-      pdaNem: 'Identifica las causas y figuras centrales del movimiento de Independencia de 1810.',
-    });
+    loadPresetBlocks(MEXICAN_INDEPENDENCE_BLOCKS, MEXICAN_INDEPENDENCE_METADATA);
   };
 
   return (
@@ -436,9 +379,9 @@ export const NodeGraphBoard: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleLoadIndependencePreset}
-                  className="px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black text-xs shadow-lg shadow-purple-500/25 flex items-center gap-2 hover:scale-105 transition-all cursor-pointer"
+                  className="px-5 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-black text-xs shadow-lg shadow-emerald-500/25 flex items-center gap-2 hover:scale-105 transition-all cursor-pointer"
                 >
-                  <span>🇲🇽 Cargar Misión Flujo: Independencia de México (4 Nodos)</span>
+                  <span>🇲🇽 Cargar Clase Gamificada: Independencia de México (6 Nodos Épicos)</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -536,42 +479,80 @@ export const NodeGraphBoard: React.FC = () => {
                   )}
 
                   {block.type === 'text_narrative' && (
-                    <p className="text-[11px] text-slate-600 dark:text-zinc-400 line-clamp-2 italic">
-                      &ldquo;{block.data.content}&rdquo;
-                    </p>
+                    <div className="space-y-1">
+                      {block.data.speakerName && (
+                        <div className="flex items-center gap-1.5 text-[10px] font-black text-blue-600 dark:text-blue-400">
+                          <span>{block.data.speakerAvatar || '👤'}</span>
+                          <span>{block.data.speakerName}</span>
+                        </div>
+                      )}
+                      <p className="text-[11px] text-slate-600 dark:text-zinc-400 line-clamp-2 italic">
+                        &ldquo;{block.data.content}&rdquo;
+                      </p>
+                    </div>
+                  )}
+
+                  {block.type === 'ordering_sequence' && (
+                    <div className="p-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/50 text-[11px] font-bold text-blue-700 dark:text-blue-300 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <ListOrdered className="w-3.5 h-3.5 shrink-0 text-blue-600" />
+                        <span>{block.data.stepsInCorrectOrder?.length || 4} Fases Cronológicas</span>
+                      </span>
+                      <span className="text-[9px] bg-blue-200/80 dark:bg-blue-900/60 px-1.5 py-0.5 rounded-md shrink-0">
+                        Ordenar
+                      </span>
+                    </div>
+                  )}
+
+                  {block.type === 'drag_drop_match' && (
+                    <div className="p-2 rounded-xl bg-violet-50/70 dark:bg-violet-950/40 border border-violet-200/50 text-[11px] font-bold text-violet-700 dark:text-violet-300 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <Link2 className="w-3.5 h-3.5 shrink-0 text-violet-600" />
+                        <span>{block.data.pairs?.length || 4} Parejas Didácticas</span>
+                      </span>
+                      <span className="text-[9px] bg-violet-200/80 dark:bg-violet-900/60 px-1.5 py-0.5 rounded-md shrink-0">
+                        Conectar
+                      </span>
+                    </div>
                   )}
 
                   {block.type === 'reward_chest' && (
-                    <div className="flex items-center justify-between text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-2 rounded-xl">
-                      <span>🎁 +{block.data.xpAmount} XP</span>
-                      <span>+{block.data.coinsAmount} Monedas</span>
+                    <div className="flex items-center justify-between text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-2 rounded-xl border border-amber-200/50">
+                      <span className="flex items-center gap-1">🎁 +{block.data.xpAmount} XP</span>
+                      <span className="text-amber-600 font-mono">+{block.data.coinsAmount} 🪙</span>
                     </div>
                   )}
 
                   {block.type === 'boss_enemy' && (
-                    <div className="flex items-center justify-between text-[11px] font-bold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 p-2 rounded-xl">
-                      <span>⚔️ {block.data.bossName}</span>
-                      <span>{block.data.maxHp} HP</span>
+                    <div className="flex items-center justify-between text-[11px] font-bold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 p-2 rounded-xl border border-rose-200/50">
+                      <span className="truncate">⚔️ {block.data.bossName}</span>
+                      <span className="text-[10px] bg-rose-200/80 dark:bg-rose-900/60 px-1.5 py-0.5 rounded-md shrink-0">{block.data.maxHp} HP</span>
                     </div>
                   )}
 
                   {block.type === 'youtube_video' && (
                     <div className="flex items-center gap-1.5 text-[11px] text-red-600 dark:text-red-400 font-bold">
-                      <Video className="w-3.5 h-3.5" />
+                      <Video className="w-3.5 h-3.5 shrink-0" />
                       <span className="truncate">{block.data.videoTitle || 'Video YouTube'}</span>
                     </div>
                   )}
 
                   {block.type === 'external_embed' && (
                     <div className="flex items-center gap-1.5 text-[11px] text-cyan-600 dark:text-cyan-400 font-bold">
-                      <Globe className="w-3.5 h-3.5" />
+                      <Globe className="w-3.5 h-3.5 shrink-0" />
                       <span className="truncate">{block.data.resourceTitle || 'Simulador Web'}</span>
                     </div>
                   )}
 
                   {block.type === 'secret_code_puzzle' && (
-                    <div className="text-[11px] text-amber-700 dark:text-amber-300 font-bold bg-amber-50 dark:bg-amber-950/40 p-1.5 rounded-lg truncate">
-                      🗝️ Clave: {block.data.secretAnswer}
+                    <div className="p-2 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/50 text-[11px] font-bold text-amber-800 dark:text-amber-300 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <KeyRound className="w-3.5 h-3.5 shrink-0 text-amber-600" />
+                        <span>Clave: {block.data.secretAnswer}</span>
+                      </span>
+                      <span className="text-[9px] bg-amber-200/80 dark:bg-amber-900/60 px-1.5 py-0.5 rounded-md shrink-0">
+                        Candado
+                      </span>
                     </div>
                   )}
                 </div>

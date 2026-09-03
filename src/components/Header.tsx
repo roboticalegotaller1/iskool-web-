@@ -7,12 +7,14 @@ import { useStudentStore, useCurrentStudentStats } from '../store/useStudentStor
 import { useSchoolAdminStore, applyThemeCssVariables } from '../store/useSchoolAdminStore';
 import { useGamificationStore } from '../store/useGamificationStore';
 import { usePortfolioStore } from '../store/usePortfolioStore';
-import { Flame, Coins, Trophy, RefreshCw, GraduationCap, Users, User, ArrowRight, LogOut, HelpCircle } from 'lucide-react';
+import { Flame, Coins, Trophy, RefreshCw, GraduationCap, Users, User, ArrowRight, LogOut, HelpCircle, Menu, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+
 export const Header: React.FC = () => {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const activeStudentId = useStudentStore(state => state.activeStudentId);
   const switchStudent = useStudentStore(state => state.switchStudent);
   const stats = useCurrentStudentStats();
@@ -24,6 +26,11 @@ export const Header: React.FC = () => {
       applyThemeCssVariables(schoolSettings.themeColors);
     }
   }, [schoolSettings?.themeColors]);
+
+  // Cerrar menú móvil al navegar
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
   
   const studentsList = detailedStudents.map(ds => ({
     id: ds.id,
@@ -76,273 +83,135 @@ export const Header: React.FC = () => {
     return 'Preparatoria';
   };
 
+  // Enlaces de navegación según rol activo
+  const getNavLinks = () => {
+    if (currentRole === 'student') {
+      return [
+        { href: '/student', label: 'Misiones', icon: '🗺️' },
+        { href: '/student/portfolio', label: 'Mi Portafolio', icon: '📋' },
+        { href: '/student/avatar', label: 'Avatar & Mascota', icon: '🐾' },
+        { href: '/student/shop', label: 'Tienda Mágica', icon: '✨' },
+      ];
+    }
+    if (currentRole === 'teacher') {
+      return [
+        { href: '/teacher', label: 'Planeación & Portafolio', icon: '📖' },
+        { href: '/teacher/studio', label: 'Estudio Docente', icon: '🎨' },
+        { href: '/teacher/community', label: 'Comunidad Docente', icon: '🌍' },
+        { href: '/teacher/grades', label: 'Boleta SEP', icon: '⭐' },
+      ];
+    }
+    if (currentRole === 'parent') {
+      return [
+        { href: '/parent', label: 'Muro de Logros', icon: '🏆' },
+        { href: '/parent/financial', label: 'Estado de Cuenta & Pagos', icon: '💳' },
+      ];
+    }
+    if (currentRole === 'coordinator') {
+      const links = [
+        { href: '/coordinator', label: 'Control Escolar', icon: '📚' },
+        { href: '/coordinator/billing', label: 'Cobranza', icon: '💵' },
+        { href: '/coordinator/fiscal', label: 'Facturación SAT', icon: '📑' },
+      ];
+      if (user?.role === 'admin') {
+        links.push({ href: '/admin', label: 'Panel Administrador', icon: '🏫' });
+      }
+      return links;
+    }
+    return [];
+  };
+
+  const navLinks = getNavLinks();
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 shrink-0 mr-6">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/90 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/90">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8 gap-2 sm:gap-4">
+        {/* Logo e Identidad */}
+        <div className="flex items-center gap-2.5 shrink-0">
           {schoolSettings.logoUrl ? (
             <img 
               src={schoolSettings.logoUrl} 
               alt={schoolSettings.name || "Logo Institucional"} 
-              className="h-9 w-9 object-contain rounded-lg"
+              className="h-8 w-8 sm:h-9 sm:w-9 object-contain rounded-lg"
             />
           ) : (
-            <GraduationCap className="h-8 w-8" style={{ color: 'var(--brand-primary)' }} />
+            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8" style={{ color: 'var(--brand-primary)' }} />
           )}
           <Link 
             href="/" 
             aria-label="Página de inicio de ISkool Académico"
-            className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-2"
+            className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5"
           >
             <span>{schoolSettings.name || 'ISkool'}</span>
-            <span className="font-medium text-xs hidden sm:inline" style={{ color: 'var(--brand-primary)' }}>Académico</span>
+            <span className="font-semibold text-[10px] sm:text-xs text-blue-600 dark:text-blue-400">Académico</span>
           </Link>
         </div>
 
-        {/* Navigation by Role */}
-        <nav className="hidden lg:flex items-center gap-6" aria-label="Navegación principal">
-          {currentRole === 'student' && (
-            <>
+        {/* Navegación de Escritorio (Desktop >= lg) */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Navegación principal">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
               <Link
-                href="/student"
-                aria-label="Ir al mapa de misiones académicas"
-                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
-                  pathname === '/student' 
-                    ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/60 shadow-xs' 
-                    : 'text-zinc-600 hover:text-amber-600 dark:text-zinc-400 dark:hover:text-amber-400'
+                key={link.href}
+                href={link.href}
+                className={`text-xs xl:text-sm font-semibold transition-all px-2.5 xl:px-3 py-1.5 rounded-xl flex items-center gap-1.5 ${
+                  isActive
+                    ? 'bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200/70 dark:border-blue-800/70 shadow-xs'
+                    : 'text-zinc-600 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400 hover:bg-zinc-100/60 dark:hover:bg-zinc-850'
                 }`}
               >
-                🗺️ Misiones
+                <span>{link.icon}</span>
+                <span>{link.label}</span>
               </Link>
-              <Link
-                href="/student/portfolio"
-                aria-label="Ir a mi portafolio digital de evidencias"
-                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
-                  pathname === '/student/portfolio' 
-                    ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-800/60 shadow-xs' 
-                    : 'text-zinc-600 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400'
-                }`}
-              >
-                📋 Mi Portafolio
-              </Link>
-              <Link
-                href="/student/avatar"
-                aria-label="Personalizar mi avatar y mascota"
-                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
-                  pathname === '/student/avatar' 
-                    ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60 shadow-xs' 
-                    : 'text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400'
-                }`}
-              >
-                🐾 Avatar & Mascota
-              </Link>
-              <Link
-                href="/student/shop"
-                aria-label="Ir a la tienda de artefactos y mejoras"
-                className={`text-sm font-bold transition-all px-2.5 py-1 rounded-xl ${
-                  pathname === '/student/shop' 
-                    ? 'bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 border border-purple-200/60 dark:border-purple-800/60 shadow-xs glow-studio' 
-                    : 'text-zinc-600 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-purple-400'
-                }`}
-              >
-                ✨ Tienda Mágica
-              </Link>
-            </>
-          )}
-
-          {currentRole === 'teacher' && (
-            <>
-              <Link
-                href="/teacher"
-                aria-label="Ir a planeaciones NEM y revisión de evidencias"
-                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
-                  pathname === '/teacher' 
-                    ? 'bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 border border-blue-200/70 dark:border-blue-800/70 shadow-xs glow-blue' 
-                    : 'text-zinc-600 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400'
-                }`}
-              >
-                📖 Planeación & Portafolio
-              </Link>
-              <Link
-                href="/teacher/studio"
-                aria-label="Ir al estudio creador de actividades"
-                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
-                  pathname === '/teacher/studio' 
-                    ? 'bg-purple-50 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 border border-purple-200/70 dark:border-purple-800/70 shadow-xs glow-studio' 
-                    : 'text-zinc-600 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-purple-400'
-                }`}
-              >
-                🎨 Estudio Docente
-              </Link>
-              <Link
-                href="/teacher/community"
-                aria-label="Ir a la comunidad docente"
-                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
-                  pathname === '/teacher/community' 
-                    ? 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border border-emerald-200/70 dark:border-emerald-800/70 shadow-xs glow-emerald' 
-                    : 'text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400'
-                }`}
-              >
-                🌍 Comunidad Docente
-              </Link>
-              <Link
-                href="/teacher/grades"
-                aria-label="Ir a boleta de calificaciones formativas SEP"
-                className={`text-sm font-bold transition-all px-3 py-1 rounded-xl ${
-                  pathname === '/teacher/grades' 
-                    ? 'bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 border border-amber-200/70 dark:border-amber-800/70 shadow-xs glow-gold' 
-                    : 'text-zinc-600 hover:text-amber-600 dark:text-zinc-400 dark:hover:text-amber-400'
-                }`}
-              >
-                ⭐ Boleta SEP
-              </Link>
-            </>
-          )}
-
-          {currentRole === 'parent' && (
-            <>
-              <Link
-                href="/parent"
-                aria-label="Ver muro de evidencias y logros de mi hijo"
-                style={pathname === '/parent' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/parent' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                Muro de Logros
-              </Link>
-              <Link
-                href="/parent/financial"
-                aria-label="Ir al estado de cuenta, pagos y facturación"
-                style={pathname === '/parent/financial' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/parent/financial' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                Estado de Cuenta & Pagos
-              </Link>
-            </>
-          )}
-
-          {currentRole === 'coordinator' && (
-            <>
-              <Link
-                href="/coordinator"
-                aria-label="Ir a control escolar, grupos y horarios"
-                style={pathname === '/coordinator' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/coordinator' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                Control Escolar
-              </Link>
-              <Link
-                href="/coordinator/billing"
-                aria-label="Ir al módulo de cobranza y conciliación"
-                style={pathname === '/coordinator/billing' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/coordinator/billing' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                Cobranza
-              </Link>
-              <Link
-                href="/coordinator/fiscal"
-                aria-label="Ir a facturación SAT CFDI 4.0"
-                style={pathname === '/coordinator/fiscal' ? { color: 'var(--brand-primary)' } : undefined}
-                className={`text-sm font-semibold transition-colors ${
-                  pathname === '/coordinator/fiscal' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                Facturación SAT
-              </Link>
-              {user?.role === 'admin' && (
-                <Link
-                  href="/admin"
-                  aria-label="Ir al panel de administración general"
-                  style={pathname === '/admin' ? { color: 'var(--brand-primary)' } : undefined}
-                  className={`text-sm font-semibold transition-colors ${
-                    pathname === '/admin' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
-                  }`}
-                >
-                  Panel Administrador
-                </Link>
-              )}
-            </>
-          )}
+            );
+          })}
 
           {/* Enlace Global a Guía & Ayuda */}
           <Link
             href={`/guide${currentRole !== 'none' ? `?role=${currentRole}` : ''}`}
             aria-label="Ir a la guía y centro de ayuda"
-            style={pathname === '/guide' ? { color: 'var(--brand-primary)' } : undefined}
-            className={`text-sm font-semibold transition-colors flex items-center gap-1 ${
-              pathname === '/guide' ? '' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+            className={`text-xs xl:text-sm font-semibold transition-all px-2.5 py-1.5 rounded-xl flex items-center gap-1 ${
+              pathname === '/guide' 
+                ? 'bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200/70' 
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100/60 dark:hover:bg-zinc-850'
             }`}
           >
-            <HelpCircle className="w-4 h-4" />
+            <HelpCircle className="w-3.5 h-3.5" />
             <span>Guía</span>
           </Link>
         </nav>
 
-        {/* Stats & Role Switcher */}
-        <div className="flex items-center gap-4">
-          {/* Quick Level Simulator (Solo para admin en demo) */}
-          {currentRole === 'student' && user?.role === 'admin' && (
-            <div className="flex items-center gap-1.5 bg-blue-50/50 dark:bg-blue-950/20 px-2 py-1 rounded-xl border border-blue-200/30 dark:border-blue-900/30">
-              <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 px-1">Demo:</span>
-              <select
-                value={activeStudentId}
-                aria-label="Seleccionar alumno activo para la simulación"
-                onChange={(e) => switchStudent(e.target.value)}
-                className="bg-transparent text-xs font-bold text-zinc-700 dark:text-zinc-200 border-none outline-none cursor-pointer pr-1 focus:ring-0"
-              >
-                {studentsList.map((std) => (
-                  <option key={std.id} value={std.id} className="bg-white dark:bg-zinc-900 text-zinc-800 dark:text-white">
-                    {std.first_name} ({getStudentLevelLabel(std.id)})
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {/* Stats for Student con psicología del color y glow */}
+        {/* Stats, Switcher de Roles y Acciones de Usuario */}
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          {/* Stats para Estudiante */}
           {currentRole === 'student' && (
-            <div className="hidden md:flex items-center gap-2 text-xs font-black">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-50 dark:bg-orange-950/60 border border-orange-200/60 dark:border-orange-800/60 text-orange-600 dark:text-orange-400 shadow-xs" title="Racha de días activos">
-                <Flame className="h-4 w-4 fill-orange-500 text-orange-500 animate-pulse" />
-                <span>{stats.current_streak} d</span>
+            <div className="hidden md:flex items-center gap-1.5 text-xs font-bold">
+              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/60 border border-orange-200/60 text-orange-600 dark:text-orange-400" title="Racha">
+                <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
+                <span>{stats.current_streak}d</span>
               </div>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200/60 dark:border-amber-800/60 text-amber-600 dark:text-amber-400 shadow-xs glow-gold" title="Monedas de oro">
-                <Coins className="h-4 w-4 fill-amber-400 text-amber-500" />
+              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200/60 text-amber-600 dark:text-amber-400" title="Monedas">
+                <Coins className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
                 <span>{stats.coins}</span>
               </div>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/60 dark:border-purple-800/60 text-purple-600 dark:text-purple-400 shadow-xs glow-studio" title="Nivel y Rango actual">
-                <Trophy className="h-4 w-4 text-purple-500" />
-                <span>Nivel {stats.level}</span>
+              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/60 text-purple-600 dark:text-purple-400" title="Nivel">
+                <Trophy className="h-3.5 w-3.5 text-purple-500" />
+                <span>Nv.{stats.level}</span>
               </div>
             </div>
           )}
 
-          {/* Student Profile Info Badge */}
-          {user?.role === 'student' && (
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>{user.first_name} {user.last_name}</span>
-            </div>
-          )}
-
-          {/* Quick Role Selector (Para administradores y educadores con multi-módulo como Israel López) */}
+          {/* Selector Rápido de Roles (Desktop / Tablet >= sm) */}
           {canSwitchRoles && (
-            <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg" role="group" aria-label="Cambio rápido de vista por rol">
+            <div className="hidden sm:flex items-center gap-0.5 bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-xl border border-zinc-200/70 dark:border-zinc-800" role="group" aria-label="Cambio rápido de vista por rol">
               <Link
                 href="/student"
                 aria-label="Cambiar vista a Alumno"
-                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                   currentRole === 'student'
-                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-xs'
+                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Alumno
@@ -350,10 +219,10 @@ export const Header: React.FC = () => {
               <Link
                 href="/teacher"
                 aria-label="Cambiar vista a Profesor"
-                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                   currentRole === 'teacher'
-                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-xs'
+                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Profesor
@@ -361,10 +230,10 @@ export const Header: React.FC = () => {
               <Link
                 href="/parent"
                 aria-label="Cambiar vista a Tutor"
-                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                   currentRole === 'parent'
-                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-xs'
+                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
                 Tutor
@@ -372,21 +241,21 @@ export const Header: React.FC = () => {
               <Link
                 href="/coordinator"
                 aria-label="Cambiar vista a Coordinador"
-                className={`px-2 py-1 rounded text-xs font-semibold transition-all ${
+                className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                   currentRole === 'coordinator'
-                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-600 dark:text-blue-400 shadow-xs'
+                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
               >
-                Coordinador
+                Coord.
               </Link>
               {user?.role === 'admin' && (
                 <Link
                   href="/admin"
                   aria-label="Directorio Central de Colegios"
-                  className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                  className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                     pathname.startsWith('/admin')
-                      ? 'bg-indigo-600 text-white shadow-sm'
+                      ? 'bg-indigo-600 text-white shadow-xs'
                       : 'text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
                   }`}
                 >
@@ -396,37 +265,111 @@ export const Header: React.FC = () => {
             </div>
           )}
 
-          {/* Reset Button */}
+          {/* Selector Compacto de Rol para Móvil (< sm) */}
+          {canSwitchRoles && (
+            <div className="sm:hidden flex items-center">
+              <select
+                value={currentRole}
+                aria-label="Cambiar rol en móvil"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === 'admin') window.location.href = '/admin';
+                  else if (val !== 'none') window.location.href = `/${val}`;
+                }}
+                className="bg-zinc-100 dark:bg-zinc-900 text-[11px] font-semibold text-zinc-800 dark:text-zinc-200 py-1 px-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 focus:outline-none"
+              >
+                <option value="student">Alumno</option>
+                <option value="teacher">Profesor</option>
+                <option value="parent">Tutor</option>
+                <option value="coordinator">Coord.</option>
+                {user?.role === 'admin' && <option value="admin">Colegios</option>}
+              </select>
+            </div>
+          )}
+
+          {/* Botón de Reiniciar Datos */}
           <button
             type="button"
             onClick={() => setIsResetConfirmOpen(true)}
             aria-label="Reiniciar datos de prueba"
             title="Reiniciar Datos"
-            className="p-2 rounded-full text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 transition-colors"
           >
             <RefreshCw className="h-4 w-4" />
           </button>
 
-          {/* Logout Button */}
+          {/* Botón de Cerrar Sesión */}
           {user && (
             <button
               type="button"
               onClick={logout}
               aria-label="Cerrar sesión de usuario"
               title="Cerrar Sesión"
-              className="p-2 rounded-full text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 transition-colors"
+              className="p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900 transition-colors"
             >
               <LogOut className="h-4 w-4" />
             </button>
           )}
+
+          {/* Botón de Menú Hamburguesa para Móvil y Tablet (< lg) */}
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
+            className="lg:hidden p-1.5 sm:p-2 rounded-xl text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors border border-zinc-200/80 dark:border-zinc-800"
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
-      {/* Custom Reset Confirmation Modal */}
+      {/* Cajón de Navegación Desplegable Móvil & Tablet (< lg) */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-xl animate-fade-in">
+          <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400 px-1">
+            <span>Módulos de ISkool</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 font-bold uppercase">
+              {currentRole === 'teacher' ? 'Docente' : currentRole === 'student' ? 'Estudiante' : currentRole === 'parent' ? 'Tutor' : 'Coordinación'}
+            </span>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                    isActive
+                      ? 'bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shadow-xs'
+                      : 'text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400 hover:bg-zinc-100 dark:hover:bg-zinc-900'
+                  }`}
+                >
+                  <span className="text-base">{link.icon}</span>
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
+
+            <Link
+              href={`/guide${currentRole !== 'none' ? `?role=${currentRole}` : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+            >
+              <HelpCircle className="w-4 h-4 text-zinc-500" />
+              <span>Centro de Guía & Ayuda</span>
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Confirmación de Reinicio */}
       {isResetConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl p-6 border border-zinc-200 dark:border-zinc-800">
-            <h3 className="text-lg font-black text-zinc-900 dark:text-white flex items-center gap-2 mb-2">
+            <h3 className="text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2 mb-2">
               ⚠️ ¿Restablecer Datos Simulados?
             </h3>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-6 leading-relaxed">

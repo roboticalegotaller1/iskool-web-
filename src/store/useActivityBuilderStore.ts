@@ -25,6 +25,11 @@ import {
   TimedReadingBlock
 } from '@/types/studioBlocks';
 import { StudioActivityJSON } from '@/types';
+import { 
+  MEXICAN_INDEPENDENCE_BLOCKS, 
+  MEXICAN_INDEPENDENCE_CONNECTIONS, 
+  MEXICAN_INDEPENDENCE_METADATA 
+} from '@/data/mexicanIndependenceStudioFlow';
 
 interface ActivityBuilderState {
   // Metadatos de la Actividad
@@ -527,12 +532,12 @@ const createDefaultBlock = (type: StudioBlockType, index: number = 0): StudioBlo
 export const useActivityBuilderStore = create<ActivityBuilderState>()(
   persist(
     (set, get) => ({
-      metadata: DEFAULT_METADATA,
-      blocks: [],
-      selectedBlockId: null,
-      connections: [],
-      startNodeId: null,
-      history: [[]],
+      metadata: MEXICAN_INDEPENDENCE_METADATA,
+      blocks: MEXICAN_INDEPENDENCE_BLOCKS,
+      selectedBlockId: MEXICAN_INDEPENDENCE_BLOCKS[0].id,
+      connections: MEXICAN_INDEPENDENCE_CONNECTIONS,
+      startNodeId: MEXICAN_INDEPENDENCE_BLOCKS[0].id,
+      history: [MEXICAN_INDEPENDENCE_BLOCKS],
       historyIndex: 0,
       isExtendedMenuOpen: false,
       isPreviewModalOpen: false,

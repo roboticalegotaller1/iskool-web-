@@ -44,16 +44,16 @@ export const GlobalHelpFab: React.FC = () => {
 
   return (
     <>
-      {/* Botón Flotante No Invasivo en la esquina inferior izquierda (libre de interferencias) */}
-      <aside aria-label="Asistencia Rápida" className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-40">
+      {/* Botón Flotante No Invasivo en la esquina inferior derecha */}
+      <aside aria-label="Asistencia Rápida" className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2 p-3 sm:px-3.5 sm:py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black text-xs shadow-xl shadow-purple-500/30 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer border border-white/20"
+          className="group flex items-center gap-2 p-2.5 sm:px-3.5 sm:py-2 rounded-full bg-slate-900/90 hover:bg-slate-900 text-white font-semibold text-xs shadow-lg shadow-slate-900/20 hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer border border-white/15 backdrop-blur-md"
           title="Abrir Centro de Ayuda & Guía"
         >
-          <HelpCircle className="w-4 h-4 transition-transform group-hover:rotate-12" />
-          <span className="hidden sm:inline font-bold text-xs">Ayuda & Guía</span>
+          <HelpCircle className="w-4 h-4 text-purple-400 transition-transform group-hover:rotate-12" />
+          <span className="hidden sm:inline text-xs">Ayuda & Guía</span>
         </button>
       </aside>
 
