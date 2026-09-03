@@ -18,6 +18,7 @@ import {
   RefreshCw, 
   CheckCircle2, 
   BrainCircuit, 
+  Brain,
   User, 
   Search,
   MessageSquare,
@@ -66,16 +67,27 @@ export const TeacherCommunityView: React.FC = () => {
       const mockActivities = getMockCommunityActivities();
 
       // Función para asegurar que la Clase Magistral del Prof. Israel López Ángeles sea estrictamente la #1
-      const prioritizeMasterclass = (list: CommunityActivity[]): CommunityActivity[] => {
-        const master = list.find(a => 
+      // Función para asegurar que la Clase Magistral (#1) y el Desafío Progrentis (#2) del Prof. Israel López Ángeles estén al frente
+      const prioritizeMasterclasses = (list: CommunityActivity[]): CommunityActivity[] => {
+        const master1 = list.find(a => 
           a.id === '18101821-cafe-4000-8000-000000000001' || 
-          a.title.toLowerCase().includes('gesta heroica') ||
-          (a.title.toLowerCase().includes('independencia de méxico') && a.template_type === 'custom_builder')
+          a.title.toLowerCase().includes('gesta heroica')
         );
-        if (!master) return list;
-        const others = list.filter(a => a.id !== master.id);
+        const master2 = list.find(a => 
+          a.id === '18101821-cafe-4000-8000-000000000002' || 
+          a.title.toLowerCase().includes('progrentis') ||
+          (a.title.toLowerCase().includes('héroes y heroínas') && a.template_type === 'custom_builder')
+        );
+
+        const priorityList: CommunityActivity[] = [];
+        if (master1) priorityList.push(master1);
+        if (master2) priorityList.push(master2);
+
+        const priorityIds = new Set(priorityList.map(a => a.id));
+        const others = list.filter(a => !priorityIds.has(a.id));
         others.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
-        return [master, ...others];
+
+        return [...priorityList, ...others];
       };
 
       // 1. Obtener actividades creadas en la BD
@@ -87,7 +99,7 @@ export const TeacherCommunityView: React.FC = () => {
       if (actError) {
         console.warn('Supabase fetch notice, combinando con catalogos oficiales:', actError?.message || actError);
         const combined = deduplicateActivities([...independenceActivities, ...logicActivities, ...mockActivities]);
-        setActivities(prioritizeMasterclass(combined));
+        setActivities(prioritizeMasterclasses(combined));
       } else if (activitiesData && activitiesData.length > 0) {
         // Combinar actividades creadas por usuarios en Supabase con los catálogos oficiales
         const dbIds = new Set(activitiesData.map(a => a.id));
@@ -97,10 +109,10 @@ export const TeacherCommunityView: React.FC = () => {
           ...logicActivities.filter(a => !dbIds.has(a.id)),
           ...mockActivities.filter(a => !dbIds.has(a.id))
         ]);
-        setActivities(prioritizeMasterclass(combined));
+        setActivities(prioritizeMasterclasses(combined));
       } else {
         const combined = deduplicateActivities([...independenceActivities, ...logicActivities, ...mockActivities]);
-        setActivities(prioritizeMasterclass(combined));
+        setActivities(prioritizeMasterclasses(combined));
       }
 
       // 2. Obtener votos emitidos por el profesor actual
@@ -513,6 +525,9 @@ export const TeacherCommunityView: React.FC = () => {
             const hasVoted = votedActivityIds.has(activity.id);
             const isMasterclass = activity.id === '18101821-cafe-4000-8000-000000000001' || 
               activity.title.toLowerCase().includes('gesta heroica');
+            const isProgrentis = activity.id === '18101821-cafe-4000-8000-000000000002' || 
+              activity.title.toLowerCase().includes('progrentis') ||
+              activity.title.toLowerCase().includes('desafío cognitivo');
 
             return (
               <div
@@ -520,15 +535,24 @@ export const TeacherCommunityView: React.FC = () => {
                 className={`group bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border ${
                   isMasterclass 
                     ? 'border-amber-400 dark:border-amber-500 shadow-xl shadow-amber-500/10 ring-2 ring-amber-400/30' 
+                    : isProgrentis
+                    ? 'border-cyan-500 dark:border-cyan-400 shadow-xl shadow-cyan-500/15 ring-2 ring-cyan-400/30'
                     : 'border-slate-200/80 dark:border-zinc-800/80 shadow-sm hover:border-emerald-500/40'
                 } rounded-3xl p-6 hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5`}
               >
                 <div className="space-y-4">
-                  {/* Badge de Clase Magistral Destacada */}
+                  {/* Badge de Actividad Destacada */}
                   {isMasterclass && (
                     <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[11px] font-black tracking-wide shadow-sm w-fit">
                       <Sparkles className="w-3.5 h-3.5 fill-white" />
                       <span>⭐ CLASE MAGISTRAL DESTACADA (6 NODOS)</span>
+                    </div>
+                  )}
+
+                  {isProgrentis && (
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 text-white text-[11px] font-black tracking-wide shadow-sm w-fit">
+                      <Brain className="w-3.5 h-3.5 fill-white" />
+                      <span>⚡ DESTREZAS COGNITIVAS (PROGRENTIS • 6 NODOS)</span>
                     </div>
                   )}
 
@@ -537,9 +561,15 @@ export const TeacherCommunityView: React.FC = () => {
                     <span className={`text-xs font-black px-3 py-1 rounded-full border uppercase tracking-wider ${
                       isMasterclass 
                         ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-300' 
+                        : isProgrentis
+                        ? 'bg-cyan-50 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border-cyan-300'
                         : 'bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 border-purple-200/40'
                     }`}>
-                      {isMasterclass ? '🎨 Flujo Multimodal Studio' : `🎮 ${activity.template_type}`}
+                      {isMasterclass 
+                        ? '🎨 Flujo Multimodal Studio' 
+                        : isProgrentis 
+                        ? '🧠 Gimnasio Cognitivo PPM' 
+                        : `🎮 ${activity.template_type}`}
                     </span>
 
                     <button
@@ -571,7 +601,7 @@ export const TeacherCommunityView: React.FC = () => {
                     <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-zinc-400 mt-1.5">
                       <User className="w-3.5 h-3.5 text-purple-400" />
                       <span className="font-bold text-slate-700 dark:text-zinc-300">
-                        Autor: {activity.teacher_name || (isMasterclass ? 'Prof. Israel López Ángeles' : 'Prof. Israel López Ángeles')}
+                        Autor: {activity.teacher_name || 'Prof. Israel López Ángeles'}
                       </span>
                     </div>
 
@@ -585,6 +615,11 @@ export const TeacherCommunityView: React.FC = () => {
                     <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-amber-600 dark:text-amber-400">
                       <Award className="w-3.5 h-3.5 text-amber-500" />
                       <span>6 Nodos Gamificados (Diálogo, Cronología, Match, Escape Room, Jefe RPG, Recompensa)</span>
+                    </div>
+                  ) : isProgrentis ? (
+                    <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-cyan-600 dark:text-cyan-400">
+                      <Brain className="w-3.5 h-3.5 text-cyan-500" />
+                      <span>6 Nodos Cognitivos: Lectura Veloz PPM, Inferencia Lógica, Criptografía, Jerarquía, Duelo Pixi, Medalla</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-slate-500 dark:text-zinc-400">
@@ -603,6 +638,8 @@ export const TeacherCommunityView: React.FC = () => {
                     className={`py-2.5 px-3.5 rounded-2xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                       isMasterclass 
                         ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-500/20' 
+                        : isProgrentis
+                        ? 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-cyan-500/20'
                         : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-500/20'
                     }`}
                   >
