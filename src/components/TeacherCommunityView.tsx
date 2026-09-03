@@ -66,8 +66,7 @@ export const TeacherCommunityView: React.FC = () => {
       const logicActivities = getMathematicalLogicCommunityActivities();
       const mockActivities = getMockCommunityActivities();
 
-      // Función para asegurar que la Clase Magistral del Prof. Israel López Ángeles sea estrictamente la #1
-      // Función para asegurar que la Clase Magistral (#1) y el Desafío Progrentis (#2) del Prof. Israel López Ángeles estén al frente
+      // Función para asegurar que la Clase Magistral (#1) y el Gimnasio Cerebral (#2) del Prof. Israel López Ángeles estén al frente
       const prioritizeMasterclasses = (list: CommunityActivity[]): CommunityActivity[] => {
         const master1 = list.find(a => 
           a.id === '18101821-cafe-4000-8000-000000000001' || 
@@ -75,7 +74,7 @@ export const TeacherCommunityView: React.FC = () => {
         );
         const master2 = list.find(a => 
           a.id === '18101821-cafe-4000-8000-000000000002' || 
-          a.title.toLowerCase().includes('progrentis') ||
+          a.title.toLowerCase().includes('gimnasio cerebral') ||
           (a.title.toLowerCase().includes('héroes y heroínas') && a.template_type === 'custom_builder')
         );
 
@@ -525,9 +524,10 @@ export const TeacherCommunityView: React.FC = () => {
             const hasVoted = votedActivityIds.has(activity.id);
             const isMasterclass = activity.id === '18101821-cafe-4000-8000-000000000001' || 
               activity.title.toLowerCase().includes('gesta heroica');
-            const isProgrentis = activity.id === '18101821-cafe-4000-8000-000000000002' || 
-              activity.title.toLowerCase().includes('progrentis') ||
-              activity.title.toLowerCase().includes('desafío cognitivo');
+            const isCognitiveChallenge = activity.id === '18101821-cafe-4000-8000-000000000002' || 
+              activity.title.toLowerCase().includes('gimnasio cerebral') ||
+              activity.title.toLowerCase().includes('destrezas del pensamiento') ||
+              (activity.title.toLowerCase().includes('héroes y heroínas') && activity.template_type === 'custom_builder');
 
             return (
               <div
@@ -535,7 +535,7 @@ export const TeacherCommunityView: React.FC = () => {
                 className={`group bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border ${
                   isMasterclass 
                     ? 'border-amber-400 dark:border-amber-500 shadow-xl shadow-amber-500/10 ring-2 ring-amber-400/30' 
-                    : isProgrentis
+                    : isCognitiveChallenge
                     ? 'border-cyan-500 dark:border-cyan-400 shadow-xl shadow-cyan-500/15 ring-2 ring-cyan-400/30'
                     : 'border-slate-200/80 dark:border-zinc-800/80 shadow-sm hover:border-emerald-500/40'
                 } rounded-3xl p-6 hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5`}
@@ -549,10 +549,10 @@ export const TeacherCommunityView: React.FC = () => {
                     </div>
                   )}
 
-                  {isProgrentis && (
+                  {isCognitiveChallenge && (
                     <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 text-white text-[11px] font-black tracking-wide shadow-sm w-fit">
                       <Brain className="w-3.5 h-3.5 fill-white" />
-                      <span>⚡ DESTREZAS COGNITIVAS (PROGRENTIS • 6 NODOS)</span>
+                      <span>⚡ GIMNASIO COGNITIVO Y LECTURA VELOZ (6 NODOS)</span>
                     </div>
                   )}
 
@@ -561,13 +561,13 @@ export const TeacherCommunityView: React.FC = () => {
                     <span className={`text-xs font-black px-3 py-1 rounded-full border uppercase tracking-wider ${
                       isMasterclass 
                         ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-300' 
-                        : isProgrentis
+                        : isCognitiveChallenge
                         ? 'bg-cyan-50 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border-cyan-300'
                         : 'bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 border-purple-200/40'
                     }`}>
                       {isMasterclass 
                         ? '🎨 Flujo Multimodal Studio' 
-                        : isProgrentis 
+                        : isCognitiveChallenge 
                         ? '🧠 Gimnasio Cognitivo PPM' 
                         : `🎮 ${activity.template_type}`}
                     </span>
@@ -616,7 +616,7 @@ export const TeacherCommunityView: React.FC = () => {
                       <Award className="w-3.5 h-3.5 text-amber-500" />
                       <span>6 Nodos Gamificados (Diálogo, Cronología, Match, Escape Room, Jefe RPG, Recompensa)</span>
                     </div>
-                  ) : isProgrentis ? (
+                  ) : isCognitiveChallenge ? (
                     <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800 text-[11px] font-bold text-cyan-600 dark:text-cyan-400">
                       <Brain className="w-3.5 h-3.5 text-cyan-500" />
                       <span>6 Nodos Cognitivos: Lectura Veloz PPM, Inferencia Lógica, Criptografía, Jerarquía, Duelo Pixi, Medalla</span>
@@ -638,7 +638,7 @@ export const TeacherCommunityView: React.FC = () => {
                     className={`py-2.5 px-3.5 rounded-2xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                       isMasterclass 
                         ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-500/20' 
-                        : isProgrentis
+                        : isCognitiveChallenge
                         ? 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-cyan-500/20'
                         : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-500/20'
                     }`}

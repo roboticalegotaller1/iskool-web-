@@ -5,10 +5,10 @@ import {
   MEXICAN_INDEPENDENCE_CONNECTIONS 
 } from '@/data/mexicanIndependenceStudioFlow';
 import { 
-  HEROES_PROGRENTIS_BLOCKS, 
-  HEROES_PROGRENTIS_METADATA, 
-  HEROES_PROGRENTIS_CONNECTIONS 
-} from '@/data/heroesIndependenceProgrentisFlow';
+  HEROES_COGNITIVE_BLOCKS, 
+  HEROES_COGNITIVE_METADATA, 
+  HEROES_COGNITIVE_CONNECTIONS 
+} from '@/data/heroesIndependenceCognitiveFlow';
 
 export interface IndependenceGamePreset {
   id: string;
@@ -1110,22 +1110,22 @@ export function getIndependenceCommunityActivities(): CommunityActivity[] {
     user_has_voted: false
   };
 
-  const progrentisActivity: CommunityActivity = {
+  const cognitiveHeroesActivity: CommunityActivity = {
     id: '18101821-cafe-4000-8000-000000000002',
     teacher_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
-    title: 'Desafío Cognitivo Progrentis: Héroes y Heroínas de la Independencia',
+    title: 'Gimnasio Cerebral: Héroes y Heroínas de la Independencia',
     template_type: 'custom_builder',
     content_json: {
-      title: 'Desafío Cognitivo Progrentis: Héroes y Heroínas de la Independencia',
-      description: 'Gimnasio cerebral de comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
+      title: 'Gimnasio Cerebral: Héroes y Heroínas de la Independencia',
+      description: 'Entrenamiento cognitivo de alto rendimiento: comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
       subject: 'Historia, Formación Cívica y Lenguajes',
       targetAge: 'Primaria Alta (10 - 12 años • 5° y 6° Grado)',
       faseNem: 'Fase 5',
       campoFormativo: 'Ética, Naturaleza y Sociedades',
       pdaNem: 'Fase 5 - Ética, Naturaleza y Sociedades: Analiza críticamente los proyectos de nación e ideales de los héroes y heroínas de la Independencia, valorando el papel histórico de las mujeres insurgentes y la defensa de la justicia social.',
-      metadata: HEROES_PROGRENTIS_METADATA,
-      blocks: HEROES_PROGRENTIS_BLOCKS,
-      connections: HEROES_PROGRENTIS_CONNECTIONS,
+      metadata: HEROES_COGNITIVE_METADATA,
+      blocks: HEROES_COGNITIVE_BLOCKS,
+      connections: HEROES_COGNITIVE_CONNECTIONS,
     } as any,
     upvotes: 920,
     created_at: new Date(Date.now() - 1800000).toISOString(),
@@ -1145,5 +1145,5 @@ export function getIndependenceCommunityActivities(): CommunityActivity[] {
     user_has_voted: false
   }));
 
-  return [masterclass, progrentisActivity, ...standardGames];
+  return [masterclass, cognitiveHeroesActivity, ...standardGames];
 }

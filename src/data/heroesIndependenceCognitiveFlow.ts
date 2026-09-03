@@ -1,12 +1,12 @@
 import { StudioBlock, ActivityBuilderMetadata, FlowConnection } from '@/types/studioBlocks';
 
 /**
- * Metadatos Curriculares NEM 2024 para la Actividad Tipo Progrentis:
+ * Metadatos Curriculares NEM 2024 para el Gimnasio Cerebral de Destrezas del Pensamiento:
  * Comprensión Lectora Rápida, Pensamiento Visual y Agilidad Cognitiva (Fase 5 - Primaria Alta)
  */
-export const HEROES_PROGRENTIS_METADATA: ActivityBuilderMetadata = {
-  title: 'Desafío Cognitivo Progrentis: Héroes y Heroínas de la Independencia',
-  description: 'Gimnasio cerebral de comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
+export const HEROES_COGNITIVE_METADATA: ActivityBuilderMetadata = {
+  title: 'Gimnasio Cerebral: Héroes y Heroínas de la Independencia',
+  description: 'Entrenamiento cognitivo de alto rendimiento: comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
   subject: 'Historia, Formación Cívica y Lenguajes',
   subjectId: 'sub-hist-lang',
   targetAge: 'Primaria Alta (10 - 12 años • 5° y 6° Grado)',
@@ -32,9 +32,9 @@ export const HEROES_PROGRENTIS_METADATA: ActivityBuilderMetadata = {
 };
 
 /**
- * Los 6 Nodos Didácticos Interactivos (Estilo Progrentis con Motor ISkool)
+ * Los 6 Nodos Didácticos del Gimnasio Cognitivo (Motor Pedagógico ISkool)
  */
-export const HEROES_PROGRENTIS_BLOCKS: StudioBlock[] = [
+export const HEROES_COGNITIVE_BLOCKS: StudioBlock[] = [
   // Nodo 1: Lectura Cronometrada & Comprensión Lectora (PPM)
   {
     id: 'node-prog-1',
@@ -189,7 +189,7 @@ En marzo de 1813, uno de sus mensajeros fue interceptado. Alertada del peligro, 
       coinsAmount: 80,
       badgeName: 'Estratega del Pensamiento Crítico 🧠🇲🇽',
       badgeIcon: 'Award',
-      badgeUnlockId: 'badge-heroes-progrentis-2026'
+      badgeUnlockId: 'badge-heroes-cognitive-2026'
     }
   }
 ];
@@ -197,7 +197,7 @@ En marzo de 1813, uno de sus mensajeros fue interceptado. Alertada del peligro, 
 /**
  * Conexiones Direccionales del Grafo de Aprendizaje
  */
-export const HEROES_PROGRENTIS_CONNECTIONS: FlowConnection[] = [
+export const HEROES_COGNITIVE_CONNECTIONS: FlowConnection[] = [
   { id: 'conn-prog-1-2', sourceNodeId: 'node-prog-1', targetNodeId: 'node-prog-2', label: 'next' },
   { id: 'conn-prog-2-3', sourceNodeId: 'node-prog-2', targetNodeId: 'node-prog-3', label: 'next' },
   { id: 'conn-prog-3-4', sourceNodeId: 'node-prog-3', targetNodeId: 'node-prog-4', label: 'next' },

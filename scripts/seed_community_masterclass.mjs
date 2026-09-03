@@ -145,26 +145,26 @@ const masterclassPayload = {
   }
 };
 
-// 2. Actividad #2: Desafío Cognitivo Progrentis - Héroes y Heroínas (920 Votos)
-const progrentisPayload = {
+// 2. Actividad #2: Gimnasio Cerebral - Héroes y Heroínas (920 Votos)
+const cognitivePayload = {
   id: '18101821-cafe-4000-8000-000000000002',
   teacher_id: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55',
   teacher_name: 'Prof. Israel López Ángeles',
-  title: 'Desafío Cognitivo Progrentis: Héroes y Heroínas de la Independencia',
+  title: 'Gimnasio Cerebral: Héroes y Heroínas de la Independencia',
   template_type: 'custom_builder',
   upvotes: 920,
   created_at: new Date().toISOString(),
   content_json: {
-    title: 'Desafío Cognitivo Progrentis: Héroes y Heroínas de la Independencia',
-    description: 'Gimnasio cerebral de comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
+    title: 'Gimnasio Cerebral: Héroes y Heroínas de la Independencia',
+    description: 'Entrenamiento cognitivo de alto rendimiento: comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
     subject: 'Historia, Formación Cívica y Lenguajes',
     targetAge: 'Primaria Alta (10 - 12 años • 5° y 6° Grado)',
     faseNem: 'Fase 5',
     campoFormativo: 'Ética, Naturaleza y Sociedades',
     pdaNem: 'Fase 5 - Ética, Naturaleza y Sociedades: Analiza críticamente los proyectos de nación e ideales de los héroes y heroínas de la Independencia, valorando el papel histórico de las mujeres insurgentes y la defensa de la justicia social.',
     metadata: {
-      title: 'Desafío Cognitivo Progrentis: Héroes y Heroínas de la Independencia',
-      description: 'Gimnasio cerebral de comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
+      title: 'Gimnasio Cerebral: Héroes y Heroínas de la Independencia',
+      description: 'Entrenamiento cognitivo de alto rendimiento: comprensión lectora rápida (PPM), inferencia textual, discriminación de información y lógica histórica. Descubre las decisiones estratégicas de Leona Vicario, Miguel Hidalgo, José María Morelos y Vicente Guerrero.',
       subject: 'Historia, Formación Cívica y Lenguajes',
       subjectId: 'sub-hist-lang',
       targetAge: 'Primaria Alta (10 - 12 años • 5° y 6° Grado)',
@@ -310,7 +310,7 @@ const progrentisPayload = {
           coinsAmount: 80,
           badgeName: 'Estratega del Pensamiento Crítico 🧠🇲🇽',
           badgeIcon: 'Award',
-          badgeUnlockId: 'badge-heroes-progrentis-2026'
+          badgeUnlockId: 'badge-heroes-cognitive-2026'
         }
       }
     ],
@@ -328,7 +328,7 @@ async function seed() {
   console.log('Insertando o actualizando ambas actividades maestras en Supabase community_activities...');
   const { data, error } = await supabase
     .from('community_activities')
-    .upsert([masterclassPayload, progrentisPayload], { onConflict: 'id' })
+    .upsert([masterclassPayload, cognitivePayload], { onConflict: 'id' })
     .select('id, title, upvotes, teacher_name');
 
   if (error) {
