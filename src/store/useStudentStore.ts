@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { calculateAcademicPower, AcademicPowerResult } from '@/utils/academicPower';
 import { useGamificationStore } from './useGamificationStore';
 import { useSchoolAdminStore } from './useSchoolAdminStore';
+import { getStudentAcademicLevelInfo, StudentAcademicLevelInfo } from '@/lib/academicLevels';
 
 let statsChannel: any = null;
 
@@ -81,34 +82,47 @@ export const useStudentStore = create<StudentStoreState>()(
         console.warn('Silent auth fallback for switchStudent:', authErr);
       }
 
-      // Fetch stats to sync
+      // Fetch stats to sync for this specific student
       try {
-        const response = await supabase.from('student_stats').select('*');
-        if (response && response.data && response.data.length > 0) {
-          set((state) => ({
-            allStats: {
-              ...state.allStats,
-              [studentId]: response.data[0]
-            }
-          }));
+        const dbStudentId = mapStudentIdToUuid(studentId);
+        if (isUuid(dbStudentId)) {
+          const { data: dbStat } = await supabase
+            .from('student_stats')
+            .select('*')
+            .eq('student_id', dbStudentId)
+            .maybeSingle();
+          if (dbStat) {
+            set((state) => ({
+              allStats: {
+                ...state.allStats,
+                [studentId]: dbStat
+              }
+            }));
+          }
         }
       } catch (statErr) {
         console.warn("Could not sync stats from Supabase:", statErr);
       }
 
-      // Fetch avatar to sync
+      // Fetch avatar to sync for this specific student
       try {
-        const avResponse = await supabase.from('student_avatars').select('*');
-        if (avResponse && avResponse.data && avResponse.data.length > 0) {
-          const dbAv = avResponse.data[0];
-          const normalizedId = normalizeStudentId(dbAv.student_id || studentId);
-          set((state) => ({
-            allAvatars: {
-              ...state.allAvatars,
-              [studentId]: dbAv,
-              [normalizedId]: dbAv
-            }
-          }));
+        const dbStudentId = mapStudentIdToUuid(studentId);
+        if (isUuid(dbStudentId)) {
+          const { data: dbAv } = await supabase
+            .from('student_avatars')
+            .select('*')
+            .eq('student_id', dbStudentId)
+            .maybeSingle();
+          if (dbAv) {
+            const normalizedId = normalizeStudentId(dbAv.student_id || studentId);
+            set((state) => ({
+              allAvatars: {
+                ...state.allAvatars,
+                [studentId]: dbAv,
+                [normalizedId]: dbAv
+              }
+            }));
+          }
         }
       } catch (err) {
         console.warn('Could not sync avatar from Supabase:', err);
@@ -1127,12 +1141,43 @@ export const useCurrentStudentAvatar = () => {
   }, [avatar, activeStudentId]);
 };
 
+export const useCurrentStudentAcademicLevel = (): StudentAcademicLevelInfo => {
+  const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
+  
+  return useMemo(() => {
+    const norm = normalizeStudentId(activeStudentId);
+    const adminStudent = detailedStudents?.find(s => 
+      s.id === activeStudentId || 
+      s.id === norm ||
+      mapStudentIdToUuid(s.id) === activeStudentId
+    );
+    if (adminStudent) {
+      return getStudentAcademicLevelInfo(adminStudent);
+    }
+    const seedStudent = STUDENTS_LIST_SEED.find(s => s.id === norm || s.id === activeStudentId);
+    if (seedStudent) {
+      if (seedStudent.id === 'std-pb') return getStudentAcademicLevelInfo({ level: 'primaria', grade: '1º' });
+      if (seedStudent.id === 'std-pa') return getStudentAcademicLevelInfo({ level: 'primaria', grade: '4º' });
+      if (seedStudent.id === 'std-sec') return getStudentAcademicLevelInfo({ level: 'secundaria', grade: '2º' });
+      if (seedStudent.id === 'std-prep') return getStudentAcademicLevelInfo({ level: 'preparatoria', grade: '4º Semestre' });
+    }
+    // Fallback pedagógico predeterminado a Primaria Baja (1º de Primaria)
+    return getStudentAcademicLevelInfo({ level: 'primaria', grade: '1º' });
+  }, [activeStudentId, detailedStudents]);
+};
+
 export const useCurrentStudentProfile = () => {
   const activeStudentId = useStudentStore(state => state.activeStudentId);
+  const academicLevel = useCurrentStudentAcademicLevel();
   return useMemo(() => {
     const norm = normalizeStudentId(activeStudentId);
     try {
-      const adminStudent = useSchoolAdminStore.getState().detailedStudents?.find(s => s.id === activeStudentId || s.id === norm);
+      const adminStudent = useSchoolAdminStore.getState().detailedStudents?.find(s => 
+        s.id === activeStudentId || 
+        s.id === norm ||
+        mapStudentIdToUuid(s.id) === activeStudentId
+      );
       if (adminStudent) {
         return {
           id: adminStudent.id,
@@ -1140,13 +1185,24 @@ export const useCurrentStudentProfile = () => {
           last_name: `${adminStudent.last_name_1} ${adminStudent.last_name_2 || ''}`.trim(),
           role: 'student' as const,
           email: adminStudent.email || `${adminStudent.first_name.toLowerCase()}@jjrosseau.edu.mx`,
+          level: adminStudent.level,
+          grade: adminStudent.grade,
+          campus_name: adminStudent.campus_name,
+          group_id: adminStudent.group_id,
+          academicLevel,
           created_at: (adminStudent as any).created_at || new Date().toISOString(),
           updated_at: new Date().toISOString()
         };
       }
     } catch {}
-    return STUDENTS_LIST_SEED.find(s => s.id === norm) || STUDENTS_LIST_SEED.find(s => s.id === activeStudentId) || STUDENTS_LIST_SEED[1];
-  }, [activeStudentId]);
+    const seed = STUDENTS_LIST_SEED.find(s => s.id === norm) || STUDENTS_LIST_SEED.find(s => s.id === activeStudentId) || STUDENTS_LIST_SEED[1];
+    return {
+      ...seed,
+      level: academicLevel.level,
+      grade: academicLevel.grade,
+      academicLevel
+    };
+  }, [activeStudentId, academicLevel]);
 };
 
 export const useCurrentStudentAcademicPower = (activeMissionQuests: Quest[] = []): AcademicPowerResult => {

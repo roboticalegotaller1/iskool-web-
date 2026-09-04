@@ -317,7 +317,7 @@ export const useGamificationStore = create<GamificationStoreState>()(
           created_at: new Date().toISOString()
         });
       } catch (err) {
-        console.error('Error insertando intento en Supabase:', err);
+        console.warn('Aviso al insertar intento en Supabase:', err);
       }
     }
 
@@ -434,7 +434,7 @@ export const useGamificationStore = create<GamificationStoreState>()(
           created_at: new Date().toISOString()
         });
       } catch (err) {
-        console.error('Error insertando intento de examen en Supabase:', err);
+        console.warn('Aviso al insertar intento de examen en Supabase:', err);
       }
     }
 
@@ -943,32 +943,48 @@ export const useGamificationStore = create<GamificationStoreState>()(
   },
 
   fetchQuestAttempts: async (studentId: string) => {
+    if (!studentId) return;
     try {
+      const dbStudentId = mapStudentIdToUuid(studentId);
+      if (!isUuid(dbStudentId)) {
+        return;
+      }
       const { data, error } = await supabase
         .from('quest_attempts')
         .select('*')
-        .eq('student_id', studentId);
+        .eq('student_id', dbStudentId);
       
-      if (error) throw error;
-      set({ questAttempts: data || [] });
+      if (error) {
+        console.warn('Aviso al recuperar intentos de retos (modo local/offline):', error.message || error);
+        return;
+      }
+      if (data) {
+        set({ questAttempts: data });
+      }
     } catch (err) {
-      console.error('Error fetching quest attempts:', err);
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      console.warn('Aviso al recuperar intentos de retos:', errorMsg);
     }
   },
 
   subscribeToGamificationChanges: (studentId: string) => {
+    if (!studentId) return () => {};
+    const dbStudentId = mapStudentIdToUuid(studentId);
+    if (!isUuid(dbStudentId)) {
+      return () => {};
+    }
     const channel = supabase
-      .channel(`gamification_realtime_${studentId}`)
+      .channel(`gamification_realtime_${dbStudentId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'quest_attempts', filter: `student_id=eq.${studentId}` },
+        { event: '*', schema: 'public', table: 'quest_attempts', filter: `student_id=eq.${dbStudentId}` },
         async (payload) => {
           console.log('Realtime quest_attempts update:', payload);
           // Reload all attempts when a change occurs
           const { data, error } = await supabase
             .from('quest_attempts')
             .select('*')
-            .eq('student_id', studentId);
+            .eq('student_id', dbStudentId);
           if (!error && data) {
             set({ questAttempts: data });
           }

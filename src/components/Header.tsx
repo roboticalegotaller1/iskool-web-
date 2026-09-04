@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useStudentStore, useCurrentStudentStats } from '../store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, useCurrentStudentAcademicLevel } from '../store/useStudentStore';
 import { useSchoolAdminStore, applyThemeCssVariables } from '../store/useSchoolAdminStore';
+import { getStudentAcademicLevelInfo } from '@/lib/academicLevels';
 import { useGamificationStore } from '../store/useGamificationStore';
 import { usePortfolioStore } from '../store/usePortfolioStore';
 import { Flame, Coins, Trophy, RefreshCw, GraduationCap, Users, User, ArrowRight, LogOut, HelpCircle, Menu, X } from 'lucide-react';
@@ -18,6 +19,7 @@ export const Header: React.FC = () => {
   const activeStudentId = useStudentStore(state => state.activeStudentId);
   const switchStudent = useStudentStore(state => state.switchStudent);
   const stats = useCurrentStudentStats();
+  const currentAcademicLevel = useCurrentStudentAcademicLevel();
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
   const schoolSettings = useSchoolAdminStore(state => state.schoolSettings);
 
@@ -61,26 +63,12 @@ export const Header: React.FC = () => {
 
   const currentRole = getRoleFromPath();
 
-  const isIsraelLopez = Boolean(
-    user && (
-      (user.email || '').toLowerCase().includes('israel') ||
-      (user.first_name || '').toLowerCase().includes('israel') ||
-      user.id === 'usr-teacher-1'
-    )
-  );
-
-  const canSwitchRoles = user?.role === 'admin' || isIsraelLopez;
+  // Únicamente el Super Usuario (admin) puede alternar vistas para pruebas de supervisión
+  const canSwitchRoles = user?.role === 'admin';
 
   const getStudentLevelLabel = (id: string) => {
     const studentProfile = detailedStudents?.find(s => s.id === id);
-    if (!studentProfile) return 'Preparatoria';
-    if (studentProfile.level === 'primaria') {
-      const gradeNum = parseInt(studentProfile.grade);
-      if (gradeNum <= 3) return 'Primaria Baja';
-      return 'Primaria Alta';
-    }
-    if (studentProfile.level === 'secundaria') return 'Secundaria';
-    return 'Preparatoria';
+    return getStudentAcademicLevelInfo(studentProfile).fullGradeLabel;
   };
 
   // Enlaces de navegación según rol activo
@@ -121,29 +109,41 @@ export const Header: React.FC = () => {
     return [];
   };
 
+  // Destino del enlace institucional: sólo el Super Usuario (admin) puede ver todas las opciones
+  const getHomeHref = () => {
+    if (user?.role === 'admin') return '/';
+    if (user?.role === 'student' || currentRole === 'student') return '/student';
+    if (user?.role === 'teacher' || currentRole === 'teacher') return '/teacher';
+    if (user?.role === 'parent' || currentRole === 'parent') return '/parent';
+    if (user?.role === 'coordinator' || currentRole === 'coordinator') return '/coordinator';
+    return '/login';
+  };
+
   const navLinks = getNavLinks();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/90 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/90">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8 gap-2 sm:gap-4">
-        {/* Logo e Identidad */}
+        {/* Logo e Identidad Institucional (Dirige al portal específico del usuario, o a todas las opciones sólo si es Super Usuario) */}
         <div className="flex items-center gap-2.5 shrink-0">
-          {schoolSettings.logoUrl ? (
-            <img 
-              src={schoolSettings.logoUrl} 
-              alt={schoolSettings.name || "Logo Institucional"} 
-              className="h-8 w-8 sm:h-9 sm:w-9 object-contain rounded-lg"
-            />
-          ) : (
-            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8" style={{ color: 'var(--brand-primary)' }} />
-          )}
           <Link 
-            href="/" 
-            aria-label="Página de inicio de ISkool Académico"
-            className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5"
+            href={getHomeHref()} 
+            aria-label="Página de inicio institucional"
+            className="flex items-center gap-2.5 group hover:opacity-90 transition-opacity"
           >
-            <span>{schoolSettings.name || 'ISkool'}</span>
-            <span className="font-semibold text-[10px] sm:text-xs text-blue-600 dark:text-blue-400">Académico</span>
+            {schoolSettings.logoUrl ? (
+              <img 
+                src={schoolSettings.logoUrl} 
+                alt={schoolSettings.name || "Logo Institucional"} 
+                className="h-8 w-8 sm:h-9 sm:w-9 object-contain rounded-lg group-hover:scale-105 transition-transform"
+              />
+            ) : (
+              <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 group-hover:scale-105 transition-transform" style={{ color: 'var(--brand-primary)' }} />
+            )}
+            <div className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-baseline gap-1.5">
+              <span className="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{schoolSettings.name || 'ISkool'}</span>
+              <span className="font-semibold text-[10px] sm:text-xs text-blue-600 dark:text-blue-400">Académico</span>
+            </div>
           </Link>
         </div>
 
@@ -187,6 +187,10 @@ export const Header: React.FC = () => {
           {/* Stats para Estudiante */}
           {currentRole === 'student' && (
             <div className="hidden md:flex items-center gap-1.5 text-xs font-bold">
+              <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/70 border border-blue-200/70 dark:border-blue-800/70 text-blue-700 dark:text-blue-300 font-bold" title="Nivel Académico del Alumno">
+                <span>🎒</span>
+                <span>{currentAcademicLevel.fullGradeLabel}</span>
+              </div>
               <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/60 border border-orange-200/60 text-orange-600 dark:text-orange-400" title="Racha">
                 <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
                 <span>{stats.current_streak}d</span>
@@ -195,7 +199,7 @@ export const Header: React.FC = () => {
                 <Coins className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
                 <span>{stats.coins}</span>
               </div>
-              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/60 text-purple-600 dark:text-purple-400" title="Nivel">
+              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/60 text-purple-600 dark:text-purple-400" title="Nivel de Gamificación">
                 <Trophy className="h-3.5 w-3.5 text-purple-500" />
                 <span>Nv.{stats.level}</span>
               </div>

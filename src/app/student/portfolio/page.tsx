@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
-import { useStudentStore, useCurrentStudentAvatar, mapStudentIdToUuid } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentAvatar, mapStudentIdToUuid, normalizeStudentId } from '@/store/useStudentStore';
 import { supabase } from '@/lib/supabaseClient';
 import { Header } from '@/components/Header';
 import { 
@@ -48,13 +48,27 @@ export default function StudentPortfolio() {
 
   useEffect(() => {
     if (user?.id && user?.role === 'student') {
-      fetchPortfolioItems();
+      fetchPortfolioItems(undefined, user.id);
       subscribeToPortfolioChanges();
       return () => {
         unsubscribeFromPortfolioChanges();
       };
     }
   }, [user?.id, user?.role, fetchPortfolioItems, subscribeToPortfolioChanges, unsubscribeFromPortfolioChanges]);
+
+  const myPortfolioItems = useMemo(() => {
+    if (!user?.id) return [];
+    const uid = user.id;
+    const normUid = normalizeStudentId(uid);
+    const uuid = mapStudentIdToUuid(uid);
+    return portfolioItems.filter(item => 
+      item.student_id === uid || 
+      item.student_id === normUid || 
+      item.student_id === uuid ||
+      normalizeStudentId(item.student_id) === normUid ||
+      mapStudentIdToUuid(item.student_id) === uuid
+    );
+  }, [portfolioItems, user?.id]);
 
   // Fetch PDAs and mastered state
   const fetchSkillsData = async () => {
@@ -296,7 +310,7 @@ export default function StudentPortfolio() {
             }`}
           >
             <BookOpen className="h-4.5 w-4.5" />
-            Evidencias Digitales ({portfolioItems.length})
+            Evidencias Digitales ({myPortfolioItems.length})
           </button>
           <button
             onClick={() => setActiveTab('skills')}
@@ -313,7 +327,7 @@ export default function StudentPortfolio() {
 
         {/* TAB 1: EVIDENCE PORTFOLIO */}
         {activeTab === 'evidence' && (
-          portfolioItems.length === 0 ? (
+          myPortfolioItems.length === 0 ? (
             <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-12 text-center flex flex-col items-center justify-center gap-4 shadow-xs">
               <HelpCircle className="h-16 w-16 text-zinc-400 animate-pulse" />
               <div>
@@ -325,7 +339,7 @@ export default function StudentPortfolio() {
             </div>
           ) : (
             <div className="flex flex-col gap-8">
-              {portfolioItems.map((item) => {
+              {myPortfolioItems.map((item) => {
                 const isImage = item.file_type === 'image';
                 
                 return (

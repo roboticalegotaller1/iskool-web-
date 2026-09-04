@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { getStudentAcademicLevelInfo } from '@/lib/academicLevels';
 import { STATS_MAP_SEED, AVATAR_MAP_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
 import { 
@@ -225,10 +226,15 @@ export default function TeacherGrades() {
 
   const getStudentLevelLabel = (id: string) => {
     const norm = normalizeStudentId(id);
+    const studentProfile = detailedStudents?.find(s => s.id === id || s.id === norm);
+    if (studentProfile) {
+      return getStudentAcademicLevelInfo(studentProfile).fullGradeLabel;
+    }
     if (norm === 'std-pb') return '1º Primaria (Baja)';
     if (norm === 'std-pa') return '4º Primaria (Alta)';
     if (norm === 'std-sec') return '2º Secundaria';
-    return '4º Semestre Preparatoria';
+    if (norm === 'std-prep') return '4º Semestre Preparatoria';
+    return getStudentAcademicLevelInfo({ level: 'primaria', grade: '1º' }).fullGradeLabel;
   };
 
   return (

@@ -84,22 +84,31 @@ export default function LoginPage() {
   const switchStudent = useStudentStore(state => state.switchStudent);
   const router = useRouter();
 
-  const routeUserByRole = async (userEmail: string, role?: string, studentId?: string) => {
-    if (studentId && (role === 'student' || !role)) {
+  const routeUserByRole = async (userProfile: any) => {
+    const role = userProfile?.role || 'student';
+    const studentId = userProfile?.id;
+
+    if (role === 'student' && studentId) {
       await switchStudent(studentId);
     }
-    if (role === 'admin' || userEmail.toLowerCase().includes('admin')) {
-      router.push('/admin');
-    } else if (role === 'student') {
-      router.push('/student');
-    } else if (role === 'teacher' || userEmail.toLowerCase().includes('israel.lopez')) {
-      router.push('/teacher');
-    } else if (role === 'coordinator' || userEmail.includes('coord')) {
-      router.push('/coordinator');
-    } else if (role === 'parent' || userEmail.includes('ejemplo') || userEmail.includes('parent')) {
-      router.push('/parent');
-    } else {
-      router.push('/');
+
+    switch (role) {
+      case 'admin':
+        router.push('/admin');
+        break;
+      case 'teacher':
+        router.push('/teacher');
+        break;
+      case 'coordinator':
+        router.push('/coordinator');
+        break;
+      case 'parent':
+        router.push('/parent');
+        break;
+      case 'student':
+      default:
+        router.push('/student');
+        break;
     }
   };
 
@@ -114,20 +123,8 @@ export default function LoginPage() {
     
     try {
       const result = await login(email, password);
-      if (result.success) {
-        const matchedDemo = DEMO_ACCOUNTS.find(d => d.email.toLowerCase() === email.toLowerCase());
-        const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email.toLowerCase() === email.toLowerCase());
-        
-        let detectedRole = matchedDemo?.role;
-        try {
-          const adminTeachers = useSchoolAdminStore.getState().teachersList || [];
-          const isTeacher = adminTeachers.some((t: any) => t.email.toLowerCase() === email.toLowerCase());
-          if (isTeacher) detectedRole = 'teacher';
-        } catch {}
-
-        if (!detectedRole && matchedStudent) detectedRole = 'student';
-        if (email.toLowerCase().includes('admin')) detectedRole = 'admin';
-        await routeUserByRole(email, detectedRole, matchedDemo?.id || matchedStudent?.id);
+      if (result.success && result.user) {
+        await routeUserByRole(result.user);
       } else {
         setErrorMsg(result.error || 'Credenciales inválidas.');
       }
@@ -140,16 +137,17 @@ export default function LoginPage() {
 
   const handleSelectDemo = async (demo: typeof DEMO_ACCOUNTS[0]) => {
     setEmail(demo.email);
-    if (demo.email.toLowerCase().includes('israel.lopez') || demo.role === 'admin' || demo.email.toLowerCase().includes('admin')) {
+    const requiresPass = demo.email.toLowerCase().includes('israel.lopez') || demo.role === 'admin';
+    if (requiresPass) {
       setPassword('008805');
     }
     setErrorMsg('');
     setIsSubmitting(true);
     try {
-      const pass = (demo.email.toLowerCase().includes('israel.lopez') || demo.role === 'admin' || demo.email.toLowerCase().includes('admin')) ? '008805' : undefined;
+      const pass = requiresPass ? '008805' : undefined;
       const result = await login(demo.email, pass);
-      if (result.success) {
-        await routeUserByRole(demo.email, demo.role, demo.id);
+      if (result.success && result.user) {
+        await routeUserByRole(result.user);
       } else {
         setErrorMsg(result.error || 'Error al iniciar sesión con cuenta demo.');
       }

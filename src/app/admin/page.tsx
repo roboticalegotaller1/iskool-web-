@@ -204,7 +204,7 @@ export default function SuperUserAdminPage() {
     last_name_1: '',
     last_name_2: '',
     campus_name: 'Primaria Jardines',
-    level: 'primaria' as 'primaria' | 'secundaria',
+    level: 'primaria' as 'primaria' | 'secundaria' | 'preparatoria',
     grade: '1º',
     group_id: 'grp-jar-1a',
     curp: '',
@@ -2872,8 +2872,14 @@ export default function SuperUserAdminPage() {
                                 {st.campus_name} · {st.grade}
                               </td>
                               <td className="p-3.5 text-center font-mono">
-                                <span className="px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-300 border border-purple-500/30 text-[10px] font-bold">
-                                  Nivel {typeof st.level === 'number' ? st.level : 1} ({(st as any).total_xp || 150} XP)
+                                <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold border ${
+                                  st.level === 'primaria' 
+                                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                                    : st.level === 'secundaria'
+                                      ? 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                                      : 'bg-blue-500/15 text-blue-300 border-blue-500/30'
+                                }`}>
+                                  {st.level === 'primaria' ? 'Primaria' : st.level === 'secundaria' ? 'Secundaria' : 'Preparatoria'} · {st.grade}
                                 </span>
                               </td>
                               <td className="p-3.5 text-right">
@@ -2960,21 +2966,27 @@ export default function SuperUserAdminPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="text-slate-400 font-bold block mb-1">Plantel *</label>
+                  <label className="text-slate-400 font-bold block mb-1">Nivel Educativo *</label>
                   <select
-                    value={newStudentForm.campus_name}
-                    onChange={(e) => setNewStudentForm({ 
-                      ...newStudentForm, 
-                      campus_name: e.target.value,
-                      level: e.target.value.includes('Secundaria') ? 'secundaria' : 'primaria'
-                    })}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
+                    value={newStudentForm.level}
+                    onChange={(e) => {
+                      const lvl = e.target.value as 'primaria' | 'secundaria' | 'preparatoria';
+                      const defaultGrade = lvl === 'preparatoria' ? '1º Sem' : '1º';
+                      const matchingCampus = schoolCampuses.find(c => c.level === lvl) || schoolCampuses[0];
+                      setNewStudentForm({
+                        ...newStudentForm,
+                        level: lvl,
+                        grade: defaultGrade,
+                        campus_name: matchingCampus?.name || newStudentForm.campus_name
+                      });
+                    }}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white font-bold outline-none focus:border-indigo-500"
                   >
-                    {schoolCampuses.map(c => (
-                      <option key={c.id} value={c.name}>{c.name}</option>
-                    ))}
+                    <option value="primaria">Primaria (1º - 6º)</option>
+                    <option value="secundaria">Secundaria (1º - 3º)</option>
+                    <option value="preparatoria">Preparatoria (1º - 6º Sem)</option>
                   </select>
                 </div>
                 <div>
@@ -2982,14 +2994,54 @@ export default function SuperUserAdminPage() {
                   <select
                     value={newStudentForm.grade}
                     onChange={(e) => setNewStudentForm({ ...newStudentForm, grade: e.target.value })}
+                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white font-bold outline-none focus:border-indigo-500"
+                  >
+                    {newStudentForm.level === 'primaria' && (
+                      <>
+                        <option value="1º">1º de Primaria (Baja)</option>
+                        <option value="2º">2º de Primaria (Baja)</option>
+                        <option value="3º">3º de Primaria (Baja)</option>
+                        <option value="4º">4º de Primaria (Alta)</option>
+                        <option value="5º">5º de Primaria (Alta)</option>
+                        <option value="6º">6º de Primaria (Alta)</option>
+                      </>
+                    )}
+                    {newStudentForm.level === 'secundaria' && (
+                      <>
+                        <option value="1º">1º de Secundaria</option>
+                        <option value="2º">2º de Secundaria</option>
+                        <option value="3º">3º de Secundaria</option>
+                      </>
+                    )}
+                    {newStudentForm.level === 'preparatoria' && (
+                      <>
+                        <option value="1º Sem">1º Semestre</option>
+                        <option value="2º Sem">2º Semestre</option>
+                        <option value="3º Sem">3º Semestre</option>
+                        <option value="4º Sem">4º Semestre</option>
+                        <option value="5º Sem">5º Semestre</option>
+                        <option value="6º Sem">6º Semestre</option>
+                      </>
+                    )}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-slate-400 font-bold block mb-1">Plantel / Sede *</label>
+                  <select
+                    value={newStudentForm.campus_name}
+                    onChange={(e) => {
+                      const selCampus = schoolCampuses.find(c => c.name === e.target.value);
+                      setNewStudentForm({ 
+                        ...newStudentForm, 
+                        campus_name: e.target.value,
+                        level: selCampus?.level || newStudentForm.level
+                      });
+                    }}
                     className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500"
                   >
-                    <option value="1º">1º de Grado</option>
-                    <option value="2º">2º de Grado</option>
-                    <option value="3º">3º de Grado</option>
-                    <option value="4º">4º de Grado</option>
-                    <option value="5º">5º de Grado</option>
-                    <option value="6º">6º de Grado</option>
+                    {schoolCampuses.map(c => (
+                      <option key={c.id} value={c.name}>{c.name} ({c.level.toUpperCase()})</option>
+                    ))}
                   </select>
                 </div>
               </div>

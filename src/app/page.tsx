@@ -1,9 +1,48 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GraduationCap, Trophy, Users, ShieldAlert, Sparkles, BookOpen, Compass, Heart, ArrowRight } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { Loader } from "@/components/Loader";
 
 export default function Home() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        // Redirigir al login si no hay sesión activa
+        router.replace('/login');
+      } else if (user.role !== 'admin') {
+        // Redirigir a cada cuenta exclusivamente a su propio portal
+        switch (user.role) {
+          case 'student':
+            router.replace('/student');
+            break;
+          case 'teacher':
+            router.replace('/teacher');
+            break;
+          case 'parent':
+            router.replace('/parent');
+            break;
+          case 'coordinator':
+            router.replace('/coordinator');
+            break;
+          default:
+            router.replace('/login');
+            break;
+        }
+      }
+    }
+  }, [user, loading, router]);
+
+  // Si está comprobando sesión o el usuario no es Super Usuario, bloquear visualización
+  if (loading || !user || user.role !== 'admin') {
+    return <Loader message="Verificando permisos de super usuario..." />;
+  }
   return (
     <div className="min-h-screen flex flex-col justify-between bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 font-sans">
       

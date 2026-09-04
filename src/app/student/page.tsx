@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar, normalizeStudentId } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar, useCurrentStudentAcademicLevel, normalizeStudentId } from '@/store/useStudentStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
@@ -132,7 +132,7 @@ export default function StudentDashboard() {
         fetchStats();
       }
 
-      fetchPortfolioItems();
+      fetchPortfolioItems(undefined, user.id);
       fetchMissions();
 
       // Cargar los intentos de retos (quest attempts) en tiempo real
@@ -177,9 +177,15 @@ export default function StudentDashboard() {
   const normalizedId = normalizeStudentId(activeStudentId);
   const ownedArtifactIds = studentInventoryMap[activeStudentId] || studentInventoryMap[normalizedId] || [];
 
-  const activeStudent = detailedStudents?.find(s => s.id === normalizedId) || detailedStudents?.find(s => s.id === activeStudentId);
-  const activeLevel = activeStudent?.level || 'preparatoria';
-  const activeGrade = activeStudent?.grade || '1º';
+  const academicLevel = useCurrentStudentAcademicLevel();
+  const activeStudent = detailedStudents?.find(s => 
+    s.id === normalizedId || 
+    s.id === activeStudentId ||
+    (user?.id && s.id === user.id) ||
+    (user?.email && s.email?.toLowerCase() === user.email.toLowerCase())
+  );
+  const activeLevel = academicLevel.level;
+  const activeGrade = academicLevel.grade;
 
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
   const [isPetModalOpen, setIsPetModalOpen] = useState(false);

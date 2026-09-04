@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useStudentStore, useCurrentStudentAvatar } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentAvatar, useCurrentStudentAcademicLevel } from '@/store/useStudentStore';
 import { AnimeAvatarSprite } from '@/components/AnimeAvatarSprite';
 import { Header } from '@/components/Header';
 import { Loader } from '@/components/Loader';
@@ -23,6 +23,7 @@ export default function AvatarCustomizerPage() {
   const changeAvatar = useStudentStore(state => state.changeAvatar);
   const fetchStats = useStudentStore(state => state.fetchStats);
   const avatar = useCurrentStudentAvatar();
+  const academicLevel = useCurrentStudentAcademicLevel();
   const ownedArtifactIds = studentInventoryMap[activeStudentId] || [];
 
   const isItemUnlocked = (itemId: string) => {
@@ -242,12 +243,15 @@ export default function AvatarCustomizerPage() {
             className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm font-semibold group self-start"
           >
             <ChevronLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
-            Volver al Gremio
+            {academicLevel.backButtonLabel}
           </button>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 flex-wrap">
             <span className="bg-purple-500/15 border border-purple-500/30 text-purple-400 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 animate-pulse cursor-default select-none">
-              <Sparkles className="h-3.5 w-3.5" /> Personalizador 2D Anime
+              <Sparkles className="h-3.5 w-3.5" /> {academicLevel.tagLabel}
+            </span>
+            <span className="bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 cursor-default select-none">
+              🎓 {academicLevel.fullGradeLabel} · {academicLevel.nemPhase}
             </span>
           </div>
         </div>
@@ -255,9 +259,9 @@ export default function AvatarCustomizerPage() {
         {/* Title */}
         <div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-purple-400 via-indigo-200 to-cyan-300 bg-clip-text text-transparent">
-            Edita tu Avatar de Secundaria
+            {academicLevel.avatarTitle}
           </h1>
-          <p className="text-zinc-400 text-xs sm:text-sm mt-1">Crea la apariencia perfecta para tu héroe y lúcelo en la arena de combate.</p>
+          <p className="text-zinc-400 text-xs sm:text-sm mt-1">{academicLevel.avatarSubtitle}</p>
         </div>
 
         {/* Main Interface Grid */}
@@ -570,7 +574,7 @@ export default function AvatarCustomizerPage() {
                 className="flex-1 py-3.5 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:from-purple-500 hover:to-indigo-500 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-lg shadow-purple-950/20 active:scale-95 flex items-center justify-center gap-2 border border-purple-500/30"
               >
                 <Save className="h-4 w-4" />
-                Guardar y Regresar al Gremio
+                Guardar y {academicLevel.backButtonLabel}
               </button>
             </div>
 
@@ -651,7 +655,11 @@ export default function AvatarCustomizerPage() {
                     placeholder="Escribe el nombre de tu avatar..."
                   />
                   <p className="text-[10px] text-zinc-500 text-center">
-                    Será visible en el panel del gremio y la clasificación.
+                    {academicLevel.level === 'primaria'
+                      ? 'Será visible en tu aula, misiones escolares y perfil del alumno.'
+                      : academicLevel.level === 'secundaria'
+                        ? 'Será visible en el panel del gremio y la clasificación.'
+                        : 'Será visible en tu portafolio, campus e iniciativas académicas.'}
                   </p>
                 </div>
 

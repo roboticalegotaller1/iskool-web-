@@ -5,6 +5,8 @@ import { Loader } from '@/components/Loader';
 import { useAuth } from '@/context/AuthContext';
 import { useStudentStore } from '@/store/useStudentStore';
 
+import { RoleGuard } from '@/components/auth/RoleGuard';
+
 function StudentSyncProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
 
@@ -12,7 +14,6 @@ function StudentSyncProvider({ children }: { children: React.ReactNode }) {
     if (user && user.role === 'student') {
       const currentActiveId = useStudentStore.getState().activeStudentId;
       if (currentActiveId !== user.id) {
-        console.log('Sincronizando activeStudentId con el usuario logueado:', user.id);
         useStudentStore.setState({ activeStudentId: user.id });
       }
     }
@@ -28,9 +29,11 @@ export default function StudentLayout({
 }) {
   return (
     <Suspense fallback={<Loader />}>
-      <StudentSyncProvider>
-        {children}
-      </StudentSyncProvider>
+      <RoleGuard allowedRoles={['student']}>
+        <StudentSyncProvider>
+          {children}
+        </StudentSyncProvider>
+      </RoleGuard>
     </Suspense>
   );
 }

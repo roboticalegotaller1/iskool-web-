@@ -12,7 +12,7 @@ interface AuthContextType {
   session: any | null;
   user: UserProfile | null;
   loading: boolean;
-  login: (email: string, userPassword?: string) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, userPassword?: string) => Promise<{ success: boolean; user?: UserProfile; error?: string }>;
   logout: () => Promise<void>;
 }
 
@@ -61,62 +61,74 @@ const getDemoUser = (email: string): UserProfile => {
     // fallback si store no está montado
   }
 
+  // 3. Super Usuario Demo (Coincidencia exacta)
   if (
     emailLower === 'admin' || 
     emailLower === 'admin@jjrosseau.edu.mx' || 
-    emailLower === 'admin@iskool.edu.mx' || 
-    emailLower.includes('admin') || 
-    emailLower.includes('vega') || 
-    emailLower.includes('director') || 
-    emailLower.includes('super')
+    emailLower === 'admin@iskool.edu.mx'
   ) {
     return {
       id: 'usr-admin-1',
       first_name: 'Admin',
       last_name: '(Super Usuario)',
       role: 'admin',
-      email: emailLower.includes('@') ? emailLower : 'admin@jjrosseau.edu.mx',
+      email: 'admin@iskool.edu.mx',
       temporary_password: '008805',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
   }
-  if (emailLower.includes('coord') || emailLower.includes('morales') || emailLower.includes('beatriz')) {
+
+  // 4. Coordinación Demo (Coincidencia exacta)
+  if (
+    emailLower === 'beatriz.morales@iskool.edu.mx' ||
+    emailLower === 'coordinacion@iskool.edu.mx' ||
+    emailLower === 'coord@iskool.edu.mx'
+  ) {
     return {
       id: 'usr-coord-1',
       first_name: 'Beatriz',
       last_name: 'Morales (Coordinación)',
       role: 'coordinator',
-      email: emailLower,
+      email: 'beatriz.morales@iskool.edu.mx',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
   }
-   if (
+
+  // 5. Profesor Demo (Coincidencia exacta)
+  if (
     emailLower === TEACHER_SEED.email.toLowerCase() || 
     emailLower === 'israel.lopez@iskool.edu.mx' ||
-    emailLower === 'israel@iskool.edu.mx' ||
-    emailLower === 'israel.lopez@ejemplo.com' ||
-    emailLower.includes('israel.lopez') ||
-    emailLower.includes('israel') ||
-    emailLower.includes('prof') || 
-    emailLower.includes('docente')
+    emailLower === 'profesor@iskool.edu.mx'
   ) {
     return {
       ...TEACHER_SEED,
       first_name: 'Israel',
       last_name: 'López Ángeles',
-      email: emailLower.includes('israel') ? emailLower : TEACHER_SEED.email,
+      email: TEACHER_SEED.email,
       temporary_password: '008805'
     };
   }
-  if (emailLower === PARENT_SEED.email.toLowerCase() || emailLower.includes('parent') || emailLower.includes('tutor') || emailLower.includes('ejemplo') || emailLower.includes('familia')) {
+
+  // 6. Tutor / Padre Demo (Coincidencia exacta)
+  if (
+    emailLower === PARENT_SEED.email.toLowerCase() ||
+    emailLower === 'tutor@iskool.edu.mx' ||
+    emailLower === 'padre@iskool.edu.mx' ||
+    emailLower === 'israel.lopez@ejemplo.com'
+  ) {
     return PARENT_SEED;
   }
-  const matchedStudent = STUDENTS_LIST_SEED.find(s => s.email.toLowerCase() === emailLower);
-  if (matchedStudent) return matchedStudent;
 
-  // Fallback inteligente para cualquier correo ingresado
+  // 7. Alumnos Demo de semillas (Coincidencia exacta)
+  const matchedSeedStudent = STUDENTS_LIST_SEED.find(s => 
+    s.email.toLowerCase() === emailLower || 
+    s.id.toLowerCase() === emailLower
+  );
+  if (matchedSeedStudent) return matchedSeedStudent;
+
+  // 8. Fallback para nuevo alumno con correo personalizado
   const nameParts = emailLower.split('@')[0].split('.');
   const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Usuario';
   const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'Escolar';
@@ -184,7 +196,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  const login = async (email: string, userPassword?: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (email: string, userPassword?: string): Promise<{ success: boolean; user?: UserProfile; error?: string }> => {
     setLoading(true);
     const resolvedUser = getDemoUser(email);
     
@@ -197,8 +209,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     if (userPassword && userPassword.trim().length > 0) {
-      const isIsrael = (resolvedUser.email || '').toLowerCase().includes('israel') || resolvedUser.id === 'usr-teacher-1';
-      const isAdmin = resolvedUser.role === 'admin' || (resolvedUser.email || '').toLowerCase().includes('admin');
+      const isTeacherSeed = resolvedUser.role === 'teacher' && (resolvedUser.id === 'usr-teacher-1' || resolvedUser.email === TEACHER_SEED.email);
+      const isAdmin = resolvedUser.role === 'admin' || resolvedUser.id === 'usr-admin-1';
       
       if (isAdmin && userPassword !== '008805' && userPassword !== 'ISkoolPassword2026!') {
         setLoading(false);
@@ -208,7 +220,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       }
 
-      if (isIsrael && userPassword !== '008805' && userPassword !== 'ISkoolPassword2026!') {
+      if (isTeacherSeed && userPassword !== '008805' && userPassword !== 'ISkoolPassword2026!') {
         setLoading(false);
         return {
           success: false,
@@ -247,8 +259,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       }
 
-      setSession(sessionObj);
-      setUser({
+      const finalUser: UserProfile = {
         id: userObj.id,
         first_name: userObj.user_metadata?.first_name || resolvedUser.first_name,
         last_name: userObj.user_metadata?.last_name || resolvedUser.last_name,
@@ -256,10 +267,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: userObj.email || resolvedUser.email,
         created_at: userObj.created_at || new Date().toISOString(),
         updated_at: new Date().toISOString()
-      });
+      };
+
+      setSession(sessionObj);
+      setUser(finalUser);
 
       setLoading(false);
-      return { success: true };
+      return { success: true, user: finalUser };
     } catch (err: any) {
       console.warn("Acceso libre activado de contingencia:", err);
       setUser(resolvedUser);
@@ -276,7 +290,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       });
       setLoading(false);
-      return { success: true };
+      return { success: true, user: resolvedUser };
     }
   };
 

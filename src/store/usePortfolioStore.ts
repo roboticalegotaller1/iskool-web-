@@ -633,7 +633,7 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
             p.student_id === targetStudentId || 
             normalizeStudentId(p.student_id) === normalizeStudentId(targetStudentId)
           );
-          set({ portfolioItems: localItems.length > 0 ? localItems : PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
+          set({ portfolioItems: localItems, isLoadingPortfolio: false, portfolioError: null });
           return;
         }
       }
@@ -708,27 +708,35 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
           title: dbItem.title,
           description: dbItem.description,
           file_url: dbItem.file_url,
-          file_type: dbItem.file_type,
-          status: dbItem.status,
+          file_type: dbItem.file_type || 'image',
+          status: dbItem.status || 'submitted',
           self_reflection: dbItem.self_reflection,
+          teacher_comment: dbItem.teacher_comment,
           peer_review_score: dbItem.peer_review_score,
           peer_review_comments: dbItem.peer_review_comments,
+          xp_awarded: dbItem.xp_awarded,
+          campos_formativos: dbItem.campos_formativos || [],
+          pdas: dbItem.pdas || [],
+          ejes_articuladores: dbItem.ejes_articuladores || [],
           created_at: dbItem.created_at,
           updated_at: dbItem.updated_at,
-          student_profile: currentStudent,
+          student: currentStudent,
           subject: finalSubject,
           feedbacks: feedbacks
         } as PortfolioItem;
       });
 
-      // Merge with seed items if database items are fewer than seed items to preserve offline/demo UX
-      if (mappedItems.length === 0) {
+      // Si se consulta para un alumno específico, guardar únicamente sus evidencias (sin mezclar con otros)
+      if (targetStudentId) {
+        set({ portfolioItems: mappedItems, isLoadingPortfolio: false, portfolioError: null });
+        return;
+      }
+
+      // Para el panel general de profesor/coordinador
+      if (mappedItems.length === 0 && !groupId) {
         set({ portfolioItems: PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
       } else {
-        // Dedup DB items and non-overlapping SEED items
-        const dbIds = new Set(mappedItems.map(i => i.id));
-        const extraSeeds = PORTFOLIO_SEED.filter(s => !dbIds.has(s.id));
-        set({ portfolioItems: [...mappedItems, ...extraSeeds], isLoadingPortfolio: false, portfolioError: null });
+        set({ portfolioItems: mappedItems, isLoadingPortfolio: false, portfolioError: null });
       }
     } catch (err: any) {
       console.warn('Uso de catálogo de portafolio local diferido:', err.message);

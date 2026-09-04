@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useStudentStore, useCurrentStudentStats, useCurrentStudentAvatar, useCurrentStudentProfile } from '@/store/useStudentStore';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { getStudentAcademicLevelInfo } from '@/lib/academicLevels';
 import { PARENT_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
 import { 
@@ -78,11 +79,12 @@ export default function ParentDashboard() {
   // Filtrar los portafolios del hijo actual
   const childItems = portfolioItems.filter(item => item.student_id === currentStudent.id);
 
-  const getStudentLevelLabel = (id: string) => {
-    if (id === 'std-pb') return '1º Primaria (Baja)';
-    if (id === 'std-pa') return '4º Primaria (Alta)';
-    if (id === 'std-sec') return '2º Secundaria';
-    return '4º Semestre Preparatoria';
+  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
+  const adminStudent = detailedStudents?.find(s => s.id === currentStudent?.id || s.email === currentStudent?.email);
+  const childLevelInfo = getStudentAcademicLevelInfo(adminStudent || (currentStudent as any));
+
+  const getStudentLevelLabel = (_id?: string) => {
+    return childLevelInfo.fullGradeLabel;
   };
 
   const handleCommentSubmit = (e: React.FormEvent, itemId: string) => {
@@ -104,52 +106,52 @@ export default function ParentDashboard() {
 
   // --- RENDER STATS POR NIVEL (Para mostrar al Padre) ---
   const renderChildStats = () => {
-    if (currentStudent.id === 'std-pb') {
+    if (childLevelInfo.subLevel === 'primaria_baja') {
       return (
         <div className="bg-emerald-50 dark:bg-emerald-950/20 p-4 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30 text-xs">
-          <h3 className="font-bold text-emerald-700 dark:text-emerald-400 mb-2">Estado de su Mascota ({avatar.pet_name})</h3>
+          <h3 className="font-bold text-emerald-700 dark:text-emerald-400 mb-2">Estado de su Mascota ({avatar.pet_name || 'Compañero'})</h3>
           <div className="flex flex-col gap-1.5">
-            <div>Felicidad: <strong>{avatar.pet_happiness}%</strong></div>
-            <div>Hambre: <strong>{avatar.pet_hunger}%</strong></div>
+            <div>Felicidad: <strong>{avatar.pet_happiness ?? 50}%</strong></div>
+            <div>Hambre: <strong>{avatar.pet_hunger ?? 50}%</strong></div>
             <div>Racha Activa: <strong>{stats.current_streak} días</strong></div>
           </div>
         </div>
       );
     }
 
-    if (currentStudent.id === 'std-sec') {
+    if (childLevelInfo.subLevel === 'secundaria') {
       return (
         <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-2xl border border-purple-100/50 dark:border-purple-900/30 text-xs">
-          <h3 className="font-bold text-purple-700 dark:text-purple-400 mb-2">Personaje de Rol (Secundaria)</h3>
+          <h3 className="font-bold text-purple-700 dark:text-purple-400 mb-2">Personaje de Rol ({childLevelInfo.levelLabel})</h3>
           <div className="grid grid-cols-2 gap-2">
-            <div>Clase: <strong>{stats.rpg_class?.toUpperCase()}</strong></div>
+            <div>Clase: <strong>{stats.rpg_class?.toUpperCase() || 'MAGO'}</strong></div>
             <div>Nivel de Rol: <strong>{stats.level}</strong></div>
-            <div>Fuerza: <strong>{stats.attribute_strength}</strong></div>
-            <div>Inteligencia: <strong>{stats.attribute_intelligence}</strong></div>
+            <div>Fuerza: <strong>{stats.attribute_strength ?? 10}</strong></div>
+            <div>Inteligencia: <strong>{stats.attribute_intelligence ?? 10}</strong></div>
           </div>
         </div>
       );
     }
 
-    if (currentStudent.id === 'std-prep') {
+    if (childLevelInfo.subLevel === 'preparatoria') {
       return (
         <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-2xl border border-blue-100/50 dark:border-blue-900/30 text-xs">
-          <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-2">Desempeño del Proyecto</h3>
+          <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-2">Desempeño del Proyecto ({childLevelInfo.levelLabel})</h3>
           <div className="flex flex-col gap-1.5">
             <div>Calificación de Coevaluación: <strong>9.2 / 10</strong></div>
-            <div>Créditos de Financiamiento: <strong>{stats.funding_credits} 💰</strong></div>
-            <div>Nivel Académico: <strong>{stats.level}</strong></div>
+            <div>Créditos de Financiamiento: <strong>{stats.funding_credits ?? 1000} 💰</strong></div>
+            <div>Nivel Académico: <strong>{childLevelInfo.fullGradeLabel}</strong></div>
           </div>
         </div>
       );
     }
 
-    // Default (Primaria Alta)
+    // Default (Primaria Alta: 4º a 6º)
     return (
       <div className="bg-zinc-100 dark:bg-zinc-900 p-4 rounded-2xl text-xs">
-        <h3 className="font-bold mb-2">Estadísticas de Exploración</h3>
+        <h3 className="font-bold mb-2">Estadísticas de Exploración ({childLevelInfo.levelLabel})</h3>
         <div className="flex flex-col gap-1.5">
-          <div>Rango: <strong>Nivel {stats.level}</strong></div>
+          <div>Rango Escolar: <strong>Nivel {stats.level}</strong></div>
           <div>Monedas Acumuladas: <strong>{stats.coins} 🪙</strong></div>
           <div>Racha Activa: <strong>{stats.current_streak} días</strong></div>
         </div>

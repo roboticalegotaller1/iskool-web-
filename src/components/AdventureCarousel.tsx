@@ -11,7 +11,7 @@ import { useHydration } from '@/hooks/useHydration';
 import { Loader } from '@/components/Loader';
 import { Mission } from '@/types';
 import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
-import { useStudentStore, useCurrentStudentStats, normalizeStudentId, mapStudentIdToUuid } from '@/store/useStudentStore';
+import { useStudentStore, useCurrentStudentStats, useCurrentStudentAcademicLevel, normalizeStudentId, mapStudentIdToUuid } from '@/store/useStudentStore';
 
 interface AdventureCarouselProps {
   missions: Mission[];
@@ -59,9 +59,36 @@ export default function AdventureCarousel({ missions }: AdventureCarouselProps) 
     .filter(s => s.groupId === studentGroupId)
     .map(s => s.subjectId);
 
-  // Filter active missions by student's subjects
+  const academicLevel = useCurrentStudentAcademicLevel();
+  const currentLevel = academicLevel.level;
+  const currentGrade = academicLevel.grade;
+
+  // Filter active missions by student's subjects and educational level
   const filteredMissions = missions.filter(m => {
     if (m.is_active === false) return false;
+
+    // 1. Filtrado por nivel académico
+    if (m.level_grade_id) {
+      if (currentLevel === 'primaria') {
+        const gradeNum = parseInt(currentGrade) || 1;
+        if (m.level_grade_id.includes('sec') || m.level_grade_id.includes('prep')) {
+          return false;
+        }
+        if (gradeNum <= 3 && (m.level_grade_id === 'primaria-4º' || m.level_grade_id === 'lg-4')) {
+          return false;
+        }
+      } else if (currentLevel === 'secundaria') {
+        if (!m.level_grade_id.includes('sec') && !m.level_grade_id.includes('lg-sec') && !m.level_grade_id.includes('secundaria')) {
+          return false;
+        }
+      } else if (currentLevel === 'preparatoria') {
+        if (!m.level_grade_id.includes('prep') && !m.level_grade_id.includes('lg-prep') && !m.level_grade_id.includes('preparatoria')) {
+          return false;
+        }
+      }
+    }
+
+    // 2. Filtrado por materia del horario del grupo
     if (studentSubjectIds.length > 0) {
       return studentSubjectIds.some(subId => {
         if (subId === m.subject_id) return true;
