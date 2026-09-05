@@ -3,7 +3,7 @@ import { PortfolioItem, FeedbackAuthorRole, PortfolioItemStatus, PortfolioFeedba
 import { PORTFOLIO_SEED, SUBJECTS_SEED, TEACHER_SEED, PARENT_SEED, STUDENTS_LIST_SEED, BADGES_SEED } from './seeds';
 import { useStudentStore, normalizeStudentId, mapStudentIdToUuid } from './useStudentStore';
 import { useGamificationStore } from './useGamificationStore';
-import { useSchoolAdminStore } from './useSchoolAdminStore';
+import { useSchoolAdminStore, getSchoolStudents } from './useSchoolAdminStore';
 import { supabase } from '@/lib/supabaseClient';
 
 const isUuid = (str?: string): boolean => {
@@ -589,6 +589,13 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
     }
     try {
       const schoolAdminStore = useSchoolAdminStore.getState();
+      const activeSchoolId = schoolAdminStore.activeSchoolId;
+      const schoolStudents = activeSchoolId 
+        ? getSchoolStudents(schoolAdminStore.detailedStudents, activeSchoolId, schoolAdminStore.campusesList)
+        : schoolAdminStore.detailedStudents;
+      const allowedStudentIds = new Set(schoolStudents.map(s => s.id));
+      const allowedStudentUuids = new Set(schoolStudents.map(s => mapStudentIdToUuid(s.id)));
+
       let query = supabase
         .from('portfolio_items')
         .select(`
@@ -607,7 +614,7 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
         .order('created_at', { ascending: false });
 
       if (groupId) {
-        const groupStudents = schoolAdminStore.detailedStudents
+        const groupStudents = schoolStudents
           .filter(s => s.group_id === groupId)
           .map(s => mapStudentIdToUuid(s.id))
           .filter(isUuid);
@@ -617,10 +624,11 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
         } else {
           // Filtrado en memoria para alumnos y grupos creados localmente
           const localFiltered = (get().portfolioItems || []).filter(p => {
-            const st = schoolAdminStore.detailedStudents.find(s => s.id === p.student_id);
+            const st = schoolStudents.find(s => s.id === p.student_id);
             return st?.group_id === groupId;
           });
-          set({ portfolioItems: localFiltered.length > 0 ? localFiltered : PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
+          const seedForSchool = activeSchoolId === 'sch-jjrosseau' ? [] : PORTFOLIO_SEED;
+          set({ portfolioItems: localFiltered.length > 0 ? localFiltered : seedForSchool, isLoadingPortfolio: false, portfolioError: null });
           return;
         }
       } else if (targetStudentId) {
@@ -635,6 +643,11 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
           );
           set({ portfolioItems: localItems, isLoadingPortfolio: false, portfolioError: null });
           return;
+        }
+      } else if (activeSchoolId) {
+        const studentUuidsArray = Array.from(allowedStudentUuids).filter(isUuid);
+        if (studentUuidsArray.length > 0) {
+          query = query.in('student_id', studentUuidsArray);
         }
       }
 
@@ -732,11 +745,18 @@ export const usePortfolioStore = create<PortfolioStoreState>((set, get) => ({
         return;
       }
 
-      // Para el panel general de profesor/coordinador
-      if (mappedItems.length === 0 && !groupId) {
-        set({ portfolioItems: PORTFOLIO_SEED, isLoadingPortfolio: false, portfolioError: null });
+      // Para el panel general de profesor/coordinador: aislar estrictamente por colegio
+      const schoolFilteredItems = activeSchoolId
+        ? mappedItems.filter((item: PortfolioItem) => allowedStudentIds.has(item.student_id) || allowedStudentUuids.has(item.student_id))
+        : mappedItems;
+
+      if (schoolFilteredItems.length === 0 && !groupId) {
+        const seedForSchool = (activeSchoolId === 'sch-jjrosseau')
+          ? []
+          : PORTFOLIO_SEED.filter(p => allowedStudentIds.has(p.student_id) || allowedStudentUuids.has(p.student_id));
+        set({ portfolioItems: seedForSchool, isLoadingPortfolio: false, portfolioError: null });
       } else {
-        set({ portfolioItems: mappedItems, isLoadingPortfolio: false, portfolioError: null });
+        set({ portfolioItems: schoolFilteredItems, isLoadingPortfolio: false, portfolioError: null });
       }
     } catch (err: any) {
       console.warn('Uso de catálogo de portafolio local diferido:', err.message);

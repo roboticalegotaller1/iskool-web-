@@ -5,7 +5,7 @@
  * Cero Gamificación • Seguridad Bancaria • Marca Blanca
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Building2, 
@@ -42,7 +42,13 @@ import {
   Sparkles,
   GraduationCap
 } from 'lucide-react';
-import { useSchoolAdminStore, getTuitionFeeForStudent } from '@/store/useSchoolAdminStore';
+import { 
+  useSchoolAdminStore, 
+  getTuitionFeeForStudent, 
+  getSchoolBillingRecords, 
+  getSchoolTuitionPricings, 
+  getSchoolStudents 
+} from '@/store/useSchoolAdminStore';
 import { FamilyBillingRecord, TuitionPricing, DetailedStudent } from '@/types';
 import { TUITION_PRICINGS_SEED, BILLING_RECORDS_SEED } from '@/store/seeds';
 
@@ -57,14 +63,26 @@ export default function CoordinatorBillingDashboardPage() {
   const {
     billingRecords: storeBillingRecords,
     tuitionPricings: storeTuitionPricings,
-    detailedStudents,
+    detailedStudents: storeDetailedStudents,
+    activeSchoolId,
     updateTuitionPricing,
     assignScholarship,
     recordBillingPayment
   } = useSchoolAdminStore();
 
-  const records = storeBillingRecords && storeBillingRecords.length > 0 ? storeBillingRecords : BILLING_RECORDS_SEED;
-  const tuitionPricings = storeTuitionPricings && storeTuitionPricings.length > 0 ? storeTuitionPricings : TUITION_PRICINGS_SEED;
+  const detailedStudents = useMemo(() => {
+    return getSchoolStudents(storeDetailedStudents, activeSchoolId);
+  }, [storeDetailedStudents, activeSchoolId]);
+
+  const records = useMemo(() => {
+    const raw = storeBillingRecords && storeBillingRecords.length > 0 ? storeBillingRecords : BILLING_RECORDS_SEED;
+    return getSchoolBillingRecords(raw, activeSchoolId, detailedStudents);
+  }, [storeBillingRecords, activeSchoolId, detailedStudents]);
+
+  const tuitionPricings = useMemo(() => {
+    const raw = storeTuitionPricings && storeTuitionPricings.length > 0 ? storeTuitionPricings : TUITION_PRICINGS_SEED;
+    return getSchoolTuitionPricings(raw, activeSchoolId);
+  }, [storeTuitionPricings, activeSchoolId]);
 
   // Estado del modal de recordatorio Magic Link
   const [activeModalRecord, setActiveModalRecord] = useState<FamilyBillingRecord | null>(null);
@@ -80,6 +98,10 @@ export default function CoordinatorBillingDashboardPage() {
   // Modal: Configuración de Aranceles & Colegiaturas por Nivel
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [editingPricings, setEditingPricings] = useState<TuitionPricing[]>(tuitionPricings);
+
+  useEffect(() => {
+    setEditingPricings(tuitionPricings);
+  }, [tuitionPricings]);
 
   // Modal: Expediente Financiero & Asignación de Beca
   const [activeScholarshipStudent, setActiveScholarshipStudent] = useState<{
@@ -182,7 +204,10 @@ export default function CoordinatorBillingDashboardPage() {
   // Guardar edición de aranceles
   const handleSavePricings = () => {
     editingPricings.forEach(p => {
-      updateTuitionPricing(p.id, p);
+      updateTuitionPricing(p.id, {
+        ...p,
+        school_id: p.school_id || activeSchoolId || 'sch-test-case'
+      });
     });
     showToast('Catálogo de aranceles y colegiaturas actualizado exitosamente.');
     setShowPricingModal(false);

@@ -293,6 +293,7 @@ export type AttendanceStatus = 'presente' | 'falta' | 'retardo' | 'justificado';
  */
 export interface Attendance {
   id: string;
+  school_id?: string;
   student_id: string;
   group_id: string;
   subject_id?: string; // null para asistencia general del día, o específico por materia
@@ -312,6 +313,7 @@ export interface Attendance {
  */
 export interface Grade {
   id: string;
+  school_id?: string;
   student_id: string;
   subject_id: string;
   period_id: string; // references AcademicPeriod
@@ -330,6 +332,7 @@ export interface Grade {
  */
 export interface StudentStats {
   student_id: string;
+  school_id?: string;
   xp: number;
   level: number;
   coins: number;
@@ -762,6 +765,7 @@ export interface DetailedStudent {
 
 export interface TuitionPricing {
   id: string;
+  school_id?: string;
   level: 'primaria_baja' | 'primaria_alta' | 'secundaria' | 'preparatoria';
   name: string;
   description: string;
@@ -773,6 +777,7 @@ export interface TuitionPricing {
 
 export interface FamilyBillingRecord {
   id: string;
+  school_id?: string;
   invoiceNumber: string;
   studentId?: string;
   parentName: string;
@@ -803,6 +808,7 @@ export interface FamilyBillingRecord {
  */
 export interface ClassSchedule {
   id: string;
+  school_id?: string;
   groupId: string;
   subjectId: string;
   teacherId: string;
@@ -819,6 +825,7 @@ export interface ClassSchedule {
  */
 export interface ParentMessage {
   id: string;
+  school_id?: string;
   parent_id: string;
   student_id: string;
   student_name: string;

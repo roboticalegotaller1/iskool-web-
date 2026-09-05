@@ -2823,6 +2823,7 @@ export const PARENT_MESSAGES_SEED: ParentMessage[] = [
 export const TUITION_PRICINGS_SEED: import('../types').TuitionPricing[] = [
   {
     id: 'prc-pri-baja',
+    school_id: 'sch-jjrosseau',
     level: 'primaria_baja',
     name: 'Primaria Baja (1º a 3º Grado)',
     description: 'Planteles Jardines y Torres · Jornada regular con materias base y talleres formativos iniciales.',
@@ -2833,6 +2834,7 @@ export const TUITION_PRICINGS_SEED: import('../types').TuitionPricing[] = [
   },
   {
     id: 'prc-pri-alta',
+    school_id: 'sch-jjrosseau',
     level: 'primaria_alta',
     name: 'Primaria Alta (4º a 6º Grado)',
     description: 'Planteles Jardines y Torres · Incluye laboratorio de ciencias, robótica y talleres optativos.',
@@ -2843,6 +2845,7 @@ export const TUITION_PRICINGS_SEED: import('../types').TuitionPricing[] = [
   },
   {
     id: 'prc-sec',
+    school_id: 'sch-jjrosseau',
     level: 'secundaria',
     name: 'Secundaria Torres (1º a 3º Grado)',
     description: 'Secundaria Torres · Especialidades técnicas, laboratorio avanzado, robótica y preparación académica.',
@@ -2853,6 +2856,7 @@ export const TUITION_PRICINGS_SEED: import('../types').TuitionPricing[] = [
   },
   {
     id: 'prc-prep',
+    school_id: 'sch-jjrosseau',
     level: 'preparatoria',
     name: 'Preparatoria / Bachillerato',
     description: 'Bachillerato general con orientación propedéutica y certificaciones.',
@@ -2866,6 +2870,7 @@ export const TUITION_PRICINGS_SEED: import('../types').TuitionPricing[] = [
 export const BILLING_RECORDS_SEED: import('../types').FamilyBillingRecord[] = [
   {
     id: 'inv-101',
+    school_id: 'sch-test-case',
     invoiceNumber: 'COL-2026-00452',
     studentId: 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380d09',
     parentName: 'Israel López Ángeles',
@@ -2885,6 +2890,7 @@ export const BILLING_RECORDS_SEED: import('../types').FamilyBillingRecord[] = [
   },
   {
     id: 'inv-102',
+    school_id: 'sch-test-case',
     invoiceNumber: 'COL-2026-00453',
     studentId: 'std-pb',
     parentName: 'Aurelio Gómez Morales',
@@ -2904,6 +2910,7 @@ export const BILLING_RECORDS_SEED: import('../types').FamilyBillingRecord[] = [
   },
   {
     id: 'inv-103',
+    school_id: 'sch-test-case',
     invoiceNumber: 'COL-2026-00389',
     studentId: 'std-sec',
     parentName: 'Mauricio Salazar',
@@ -2923,6 +2930,7 @@ export const BILLING_RECORDS_SEED: import('../types').FamilyBillingRecord[] = [
   },
   {
     id: 'inv-104',
+    school_id: 'sch-test-case',
     invoiceNumber: 'COL-2026-00410',
     studentId: 'std-pa',
     parentName: 'Roberto Hernández',

@@ -11,6 +11,7 @@ create extension if not exists "uuid-ossp";
  */
 create table public.profiles (
   id uuid references auth.users on delete cascade primary key,
+  school_id uuid references public.schools(id) on delete set null,
   first_name text not null,
   last_name text not null,
   role text not null check (role in ('superadmin', 'admin', 'director', 'coordinator', 'teacher', 'student', 'parent')),
@@ -22,6 +23,15 @@ create table public.profiles (
 
 -- Enable RLS for Profiles
 alter table public.profiles enable row level security;
+
+create policy "Aislamiento de perfiles por colegio"
+  on public.profiles for all
+  to authenticated
+  using (
+    id = auth.uid() 
+    or (school_id is not null and school_id in (select p.school_id from public.profiles p where p.id = auth.uid()))
+    or exists (select 1 from public.profiles where id = auth.uid() and role = 'superadmin')
+  );
 
 /**
  * @table schools
@@ -190,6 +200,7 @@ alter table public.teacher_assignments enable row level security;
  */
 create table public.attendance (
   id uuid default uuid_generate_v4() primary key,
+  school_id uuid references public.schools(id) on delete cascade not null,
   student_id uuid references public.students(id) on delete cascade not null,
   group_id uuid references public.groups(id) on delete cascade not null,
   subject_id uuid references public.subjects(id) on delete cascade, -- null if general school attendance
@@ -202,6 +213,16 @@ create table public.attendance (
 
 alter table public.attendance enable row level security;
 
+create policy "Aislamiento de asistencias por colegio"
+  on public.attendance for all
+  to authenticated
+  using (
+    student_id = auth.uid()
+    or school_id in (select p.school_id from public.profiles p where p.id = auth.uid())
+    or exists (select 1 from public.profiles where id = auth.uid() and role = 'superadmin')
+    or exists (select 1 from public.parent_student ps where ps.student_id = attendance.student_id and ps.parent_id = auth.uid())
+  );
+
 /**
  * @table grades
  * @description Calificaciones cuantitativas de exámenes u ordinarias (SEP).
@@ -209,6 +230,7 @@ alter table public.attendance enable row level security;
  */
 create table public.grades (
   id uuid default uuid_generate_v4() primary key,
+  school_id uuid references public.schools(id) on delete cascade not null,
   student_id uuid references public.students(id) on delete cascade not null,
   subject_id uuid references public.subjects(id) on delete cascade not null,
   period_id uuid references public.academic_periods(id) on delete cascade not null,
@@ -219,6 +241,16 @@ create table public.grades (
 );
 
 alter table public.grades enable row level security;
+
+create policy "Aislamiento de calificaciones por colegio"
+  on public.grades for all
+  to authenticated
+  using (
+    student_id = auth.uid()
+    or school_id in (select p.school_id from public.profiles p where p.id = auth.uid())
+    or exists (select 1 from public.profiles where id = auth.uid() and role = 'superadmin')
+    or exists (select 1 from public.parent_student ps where ps.student_id = grades.student_id and ps.parent_id = auth.uid())
+  );
 
 -- Insert initial levels and grades
 insert into public.levels_grades (level_name, grade_name) values

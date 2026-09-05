@@ -43,16 +43,23 @@ create table public.student_stats (
 
 alter table public.student_stats enable row level security;
 
--- Políticas RLS para student_stats (Protección de datos y atributos individuales)
-create policy "Permitir lectura de student_stats a alumnos dueños, docentes y administradores"
+-- Políticas RLS para student_stats (Aislamiento por colegio)
+create policy "Aislamiento estricto de student_stats por colegio"
   on public.student_stats for select
   to authenticated
   using (
     auth.uid() = student_id 
     or exists (
-      select 1 from public.profiles 
-      where profiles.id = auth.uid() 
-        and profiles.role in ('teacher', 'admin', 'director', 'superadmin')
+      select 1 from public.profiles p
+      where p.id = auth.uid() 
+        and p.role = 'superadmin'
+    )
+    or exists (
+      select 1 from public.students s
+      join public.profiles p on p.school_id = s.school_id
+      where s.id = student_stats.student_id
+        and p.id = auth.uid()
+        and p.role in ('teacher', 'admin', 'director', 'coordinator')
     )
   );
 
@@ -281,16 +288,23 @@ create table public.quest_attempts (
 
 alter table public.quest_attempts enable row level security;
 
--- Políticas RLS para quest_attempts (Aislamiento de intentos por estudiante)
-create policy "Permitir lectura de intentos al propio alumno, docentes o administradores"
+-- Políticas RLS para quest_attempts (Aislamiento por colegio)
+create policy "Aislamiento estricto de quest_attempts por colegio"
   on public.quest_attempts for select
   to authenticated
   using (
     auth.uid() = student_id 
     or exists (
-      select 1 from public.profiles 
-      where profiles.id = auth.uid() 
-        and profiles.role in ('teacher', 'admin', 'director', 'superadmin')
+      select 1 from public.profiles p
+      where p.id = auth.uid() 
+        and p.role = 'superadmin'
+    )
+    or exists (
+      select 1 from public.students s
+      join public.profiles p on p.school_id = s.school_id
+      where s.id = quest_attempts.student_id
+        and p.id = auth.uid()
+        and p.role in ('teacher', 'admin', 'director', 'coordinator')
     )
   );
 
@@ -334,16 +348,28 @@ create table public.portfolio_items (
 
 alter table public.portfolio_items enable row level security;
 
--- Políticas RLS para portfolio_items (Aislamiento de portafolio entre alumnos)
-create policy "Permitir lectura de evidencias al estudiante dueño, docentes o tutores"
+-- Políticas RLS para portfolio_items (Aislamiento de portafolio por colegio)
+create policy "Aislamiento estricto de portfolio_items por colegio"
   on public.portfolio_items for select
   to authenticated
   using (
     auth.uid() = student_id 
     or exists (
-      select 1 from public.profiles 
-      where profiles.id = auth.uid() 
-        and profiles.role in ('teacher', 'admin', 'director', 'superadmin', 'parent')
+      select 1 from public.profiles p
+      where p.id = auth.uid() 
+        and p.role = 'superadmin'
+    )
+    or exists (
+      select 1 from public.students s
+      join public.profiles p on p.school_id = s.school_id
+      where s.id = portfolio_items.student_id
+        and p.id = auth.uid()
+        and p.role in ('teacher', 'admin', 'director', 'coordinator')
+    )
+    or exists (
+      select 1 from public.parent_student ps
+      where ps.student_id = portfolio_items.student_id 
+        and ps.parent_id = auth.uid()
     )
     or peer_review_score is not null
   );

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { usePortfolioStore } from '@/store/usePortfolioStore';
 import { useGamificationStore } from '@/store/useGamificationStore';
-import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { useSchoolAdminStore, getSchoolStudents, getSchoolSchedules } from '@/store/useSchoolAdminStore';
 import { getStudentAcademicLevelInfo } from '@/lib/academicLevels';
 import { STATS_MAP_SEED, AVATAR_MAP_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
@@ -71,6 +71,17 @@ export default function TeacherGrades() {
   const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
   const schedulesList = useSchoolAdminStore(state => state.schedulesList);
   const groupsList = useSchoolAdminStore(state => state.groupsList);
+  const activeSchoolId = useSchoolAdminStore(state => state.activeSchoolId);
+
+  const targetSchoolId = (user as any)?.school_id || activeSchoolId || null;
+
+  const schoolDetailedStudents = useMemo(() => {
+    return getSchoolStudents(detailedStudents, targetSchoolId);
+  }, [detailedStudents, targetSchoolId]);
+
+  const schoolSchedulesList = useMemo(() => {
+    return getSchoolSchedules(schedulesList, targetSchoolId);
+  }, [schedulesList, targetSchoolId]);
   
   const missionsList = useGamificationStore(state => state.missionsList);
   const fetchMissions = useGamificationStore(state => state.fetchMissions);
@@ -210,11 +221,11 @@ export default function TeacherGrades() {
 
   // Auth Group Filtering - Directly using user.id mapping for seed schedules matching
   const teacherId = user?.id === 'c00a0eeb-9c0b-4ef8-bb6d-6bb9bd380a55' ? 'usr-teacher-1' : user?.id;
-  const teacherGroupIds = schedulesList
+  const teacherGroupIds = schoolSchedulesList
     .filter(s => s.teacherId === teacherId)
     .map(s => s.groupId);
 
-  const myStudents = detailedStudents.filter(s => s.group_id && teacherGroupIds.includes(s.group_id));
+  const myStudents = schoolDetailedStudents.filter(s => s.group_id && teacherGroupIds.includes(s.group_id));
 
   const sortedStudents = useMemo(() => {
     return [...myStudents].sort((a, b) => {
@@ -222,11 +233,9 @@ export default function TeacherGrades() {
     });
   }, [myStudents]);
 
-
-
   const getStudentLevelLabel = (id: string) => {
     const norm = normalizeStudentId(id);
-    const studentProfile = detailedStudents?.find(s => s.id === id || s.id === norm);
+    const studentProfile = schoolDetailedStudents?.find(s => s.id === id || s.id === norm);
     if (studentProfile) {
       return getStudentAcademicLevelInfo(studentProfile).fullGradeLabel;
     }

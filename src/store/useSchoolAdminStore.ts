@@ -205,10 +205,70 @@ export const getSchoolSubjects = (subjectsList: Subject[], schoolId: string | nu
 
   const currentCampuses = schoolCampuses && schoolCampuses.length > 0 ? schoolCampuses : [];
   return allSubjects.filter(sub => {
-    if (sub.school_id) return sub.school_id === schoolId;
+    if (sub.school_id) return sub.school_id === schoolId || (schoolId === 'sch-jjrosseau' && sub.school_id === 'sch-jjr');
     if (currentCampuses.length > 0) {
       return currentCampuses.some(c => c.name.toLowerCase() === (sub.campus_name || '').toLowerCase() || sub.campus_name === 'Todos los Planteles');
     }
+    return false;
+  });
+};
+
+export const getSchoolAttendance = (attendanceList: Attendance[], schoolId: string | null, schoolStudents?: DetailedStudent[]): Attendance[] => {
+  const allAttendance = (attendanceList && attendanceList.length > 0) ? attendanceList : ATTENDANCE_SEED;
+  if (!schoolId) return allAttendance;
+
+  const studentIds = new Set((schoolStudents || []).map(s => s.id));
+  return allAttendance.filter(att => {
+    if (att.school_id) return att.school_id === schoolId || (schoolId === 'sch-jjrosseau' && att.school_id === 'sch-jjr');
+    if (studentIds.size > 0) return studentIds.has(att.student_id);
+    if (schoolId === 'sch-jjrosseau') {
+      return !att.student_id.includes('test') && !att.student_id.startsWith('c00a0eeb');
+    }
+    return true;
+  });
+};
+
+export const getSchoolBillingRecords = (billingList: FamilyBillingRecord[], schoolId: string | null, schoolStudents?: DetailedStudent[]): FamilyBillingRecord[] => {
+  const allRecords = (billingList && billingList.length > 0) ? billingList : BILLING_RECORDS_SEED;
+  if (!schoolId) return allRecords;
+
+  const studentIds = new Set((schoolStudents || []).map(s => s.id));
+  return allRecords.filter(rec => {
+    if (rec.school_id) return rec.school_id === schoolId || (schoolId === 'sch-jjrosseau' && rec.school_id === 'sch-jjr');
+    if (rec.studentId && studentIds.size > 0) return studentIds.has(rec.studentId);
+    if (schoolId === 'sch-jjrosseau') {
+      return !rec.studentId?.includes('test') && !rec.studentName.toLowerCase().includes('demo');
+    }
+    return true;
+  });
+};
+
+export const getSchoolTuitionPricings = (pricingsList: TuitionPricing[], schoolId: string | null): TuitionPricing[] => {
+  const allPricings = (pricingsList && pricingsList.length > 0) ? pricingsList : TUITION_PRICINGS_SEED;
+  if (!schoolId) return allPricings;
+  return allPricings.filter(p => !p.school_id || p.school_id === schoolId || (schoolId === 'sch-jjrosseau' && p.school_id === 'sch-jjr'));
+};
+
+export const getSchoolParentMessages = (messagesList: ParentMessage[], schoolId: string | null, schoolStudents?: DetailedStudent[]): ParentMessage[] => {
+  const allMessages = (messagesList && messagesList.length > 0) ? messagesList : PARENT_MESSAGES_SEED;
+  if (!schoolId) return allMessages;
+
+  const studentIds = new Set((schoolStudents || []).map(s => s.id));
+  return allMessages.filter(msg => {
+    if (msg.school_id) return msg.school_id === schoolId || (schoolId === 'sch-jjrosseau' && msg.school_id === 'sch-jjr');
+    if (studentIds.size > 0) return studentIds.has(msg.student_id);
+    return false;
+  });
+};
+
+export const getSchoolSchedules = (schedulesList: ClassSchedule[], schoolId: string | null, schoolGroups?: Group[]): ClassSchedule[] => {
+  const allSchedules = (schedulesList && schedulesList.length > 0) ? schedulesList : SCHEDULES_SEED;
+  if (!schoolId) return allSchedules;
+
+  const groupIds = new Set((schoolGroups || []).map(g => g.id));
+  return allSchedules.filter(sch => {
+    if (sch.school_id) return sch.school_id === schoolId || (schoolId === 'sch-jjrosseau' && sch.school_id === 'sch-jjr');
+    if (groupIds.size > 0) return groupIds.has(sch.groupId);
     return false;
   });
 };
@@ -554,8 +614,10 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
       },
 
       createManualBillingCharge: (chargeData) => {
+        const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
         const newRecord: FamilyBillingRecord = {
           ...chargeData,
+          school_id: chargeData.school_id || activeSchool,
           id: `inv-custom-${Date.now()}`,
           invoiceNumber: `COL-2026-${Math.floor(10000 + Math.random() * 90000)}`
         };
@@ -634,6 +696,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         // Generar folio de cobro en el portal de finanzas institucional
         const newBillingRecord: FamilyBillingRecord = {
           id: `inv-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+          school_id: newStudent.school_id || activeSchool,
           invoiceNumber: `COL-2026-${Math.floor(10000 + Math.random() * 90000)}`,
           studentId: newId,
           parentName: newStudent.tutor_name || newStudent.father_name || newStudent.mother_name || `${newStudent.last_name_1} ${newStudent.last_name_2 || ''}`.trim() || 'Tutor Familiar',
@@ -917,9 +980,11 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
     set((state) => {
       const student = (state.detailedStudents || []).find(s => s.id === studentId);
       const studentName = student ? `${student.first_name} ${student.last_name_1}` : 'El Alumno';
+      const activeSchool = student?.school_id || state.activeSchoolId || 'sch-jjrosseau';
 
       const notificationMsg: ParentMessage = {
         id: `msg-tnote-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        school_id: activeSchool,
         parent_id: 'prt-1',
         student_id: studentId,
         student_name: studentName,
@@ -945,9 +1010,11 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
     set((state) => {
       const student = (state.detailedStudents || []).find(s => s.id === studentId);
       const studentName = student ? `${student.first_name} ${student.last_name_1}` : 'El Alumno';
+      const activeSchool = student?.school_id || state.activeSchoolId || 'sch-jjrosseau';
 
       const notificationMsg: ParentMessage = {
         id: `msg-brep-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        school_id: activeSchool,
         parent_id: 'prt-1',
         student_id: studentId,
         student_name: studentName,
@@ -998,6 +1065,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   generateGroupsForGrade: (level, grade, groupNames) => {
     set((state) => {
       const activeLevelGradeKey = `${level}-${grade.replace(/\s+/g, '')}`;
+      const activeSchool = state.activeSchoolId || 'sch-jjrosseau';
       
       // Buscar grupos existentes para este nivel y grado
       const existingForGrade = state.groupsList.filter(g => 
@@ -1016,7 +1084,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
         if (!existingNamesMap.has(upperName)) {
           const newGrp: Group = {
             id: `grp-${level.slice(0, 3)}-${grade.replace(/[^0-9a-zA-Z]/g, '')}-${upperName.toLowerCase()}-${Date.now()}-${idx}`,
-            school_id: 'sch-1',
+            school_id: activeSchool,
             level_grade_id: activeLevelGradeKey,
             academic_year_id: 'ay-25-26',
             name: upperName,
@@ -1129,8 +1197,10 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   },
 
   createSchedule: (scheduleData) => {
+    const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
     const newSchedule: ClassSchedule = {
       ...scheduleData,
+      school_id: scheduleData.school_id || activeSchool,
       id: `sch-${Date.now()}`
     };
     set((state) => ({
@@ -1171,6 +1241,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   saveAttendanceList: (records) => {
     const timestamp = new Date().toISOString();
     const registered_by = 'usr-teacher-1';
+    const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
 
     set((state) => {
       const cleanPrev = state.attendanceList.filter(att => {
@@ -1185,6 +1256,7 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
 
       const newRecords: Attendance[] = records.map((rec, idx) => ({
         ...rec,
+        school_id: rec.school_id || activeSchool,
         id: `att-${Date.now()}-${idx}-${Math.random().toString(36).substr(2, 4)}`,
         registered_by,
         created_at: timestamp
@@ -1197,8 +1269,10 @@ export const useSchoolAdminStore = create<SchoolAdminStoreState>()(
   },
 
   sendParentMessage: (msgData) => {
+    const activeSchool = get().activeSchoolId || 'sch-jjrosseau';
     const newMsg: ParentMessage = {
       ...msgData,
+      school_id: msgData.school_id || activeSchool,
       id: `msg-${Date.now()}`,
       sent_at: new Date().toISOString(),
       is_read: false

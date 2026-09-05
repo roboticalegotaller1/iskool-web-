@@ -3,7 +3,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { useSchoolAdminStore } from '@/store/useSchoolAdminStore';
+import { 
+  useSchoolAdminStore, 
+  getSchoolCampuses, 
+  getSchoolStudents, 
+  getSchoolGroups, 
+  getSchoolSubjects, 
+  getSchoolTeachers, 
+  getSchoolSchedules 
+} from '@/store/useSchoolAdminStore';
 import { SUBJECTS_SEED } from '@/store/seeds';
 import { Header } from '@/components/Header';
 import { 
@@ -18,10 +26,40 @@ import { getStudentAvatarUrl } from '@/utils/studentAvatar';
 export default function CoordinatorDashboard() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const detailedStudents = useSchoolAdminStore(state => state.detailedStudents);
-  const groupsList = useSchoolAdminStore(state => state.groupsList);
-  const schedulesList = useSchoolAdminStore(state => state.schedulesList);
+
+  const activeSchoolId = useSchoolAdminStore(state => state.activeSchoolId);
+  const campusesList = useSchoolAdminStore(state => state.campusesList);
+  const detailedStudentsRaw = useSchoolAdminStore(state => state.detailedStudents);
+  const groupsListRaw = useSchoolAdminStore(state => state.groupsList);
+  const schedulesListRaw = useSchoolAdminStore(state => state.schedulesList);
+  const subjectsListRaw = useSchoolAdminStore(state => state.subjectsList);
+  const teachersListRaw = useSchoolAdminStore(state => state.teachersList);
   const schoolSettings = useSchoolAdminStore(state => state.schoolSettings);
+
+  // Aislamiento Multi-Colegio Estricto: Ningún dato de otro colegio es visible para este coordinador
+  const schoolCampuses = React.useMemo(() => {
+    return getSchoolCampuses(campusesList, activeSchoolId);
+  }, [campusesList, activeSchoolId]);
+
+  const detailedStudents = React.useMemo(() => {
+    return getSchoolStudents(detailedStudentsRaw, activeSchoolId, schoolCampuses);
+  }, [detailedStudentsRaw, activeSchoolId, schoolCampuses]);
+
+  const groupsList = React.useMemo(() => {
+    return getSchoolGroups(groupsListRaw, activeSchoolId, schoolCampuses);
+  }, [groupsListRaw, activeSchoolId, schoolCampuses]);
+
+  const subjectsList = React.useMemo(() => {
+    return getSchoolSubjects(subjectsListRaw, activeSchoolId, schoolCampuses);
+  }, [subjectsListRaw, activeSchoolId, schoolCampuses]);
+
+  const teachersList = React.useMemo(() => {
+    return getSchoolTeachers(teachersListRaw, activeSchoolId, schoolCampuses);
+  }, [teachersListRaw, activeSchoolId, schoolCampuses]);
+
+  const schedulesList = React.useMemo(() => {
+    return getSchoolSchedules(schedulesListRaw, activeSchoolId, groupsList);
+  }, [schedulesListRaw, activeSchoolId, groupsList]);
 
   const registerStudent = useSchoolAdminStore(state => state.registerStudent);
   const generateGroupsForGrade = useSchoolAdminStore(state => state.generateGroupsForGrade);
@@ -38,8 +76,6 @@ export default function CoordinatorDashboard() {
   const deleteGroup = useSchoolAdminStore(state => state.deleteGroup);
   const saveSchoolSettings = useSchoolAdminStore(state => state.saveSchoolSettings);
 
-  const subjectsList = useSchoolAdminStore(state => state.subjectsList);
-  const teachersList = useSchoolAdminStore(state => state.teachersList);
   const createSubject = useSchoolAdminStore(state => state.createSubject);
   const deleteSubject = useSchoolAdminStore(state => state.deleteSubject);
   const registerTeacher = useSchoolAdminStore(state => state.registerTeacher);
